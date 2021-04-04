@@ -44,7 +44,7 @@
 	* Pasta em que definiremos os models da aplicação. Os models são aqueles que interagem em mais baixo nível com as entidades de dados que temos na aplicação. São eles os responsáveis por buscar dados em uma tabela, inserir dados em uma tabela, etc. No caso, precisamos de um model para cada entidade do banco de dados (usuário, pedido, produto, ...) - não sendo necessário definir models para tabelas relacionais, como orders_products, e um para cada entidade de dados externa - como o Firebase.
 
 	**-> screens**
-	* Pasta em que definiremos as telas que podem aparecer em diferentes rotas ou ter diferentes formas de renderização. Os componentes definidos aqui devem corresponder a telas completas e devem receber as informações necessárias à sua renderização por *props*. Assim, a forma de buscar essas props e renderizar será externalizada para a rota que utilizar o componente.
+	* Pasta em que definiremos as telas que podem aparecer em diferentes rotas ou ter diferentes formas de renderização. Os componentes definidos aqui devem corresponder a telas completas e devem receber as informações necessárias à sua renderização por *props*. Assim, a forma de buscar essas props e renderizar será externalizada para a rota que utilizar o componente. Para cada tela, criaremos uma pasta com o nome do componente e um arquivo index.js dentro dessa pasta. Caso sejam necessários mais arquivos, não tem problema, mas esse é o mínimo necessário.
 
 ### Convenções gerais
 #### Forma de renderização
