@@ -1,78 +1,59 @@
-# Example app with styled-components
+# Pet System
+### Estrutura de Diretórios
 
-This example features how you use a different styling solution than [styled-jsx](https://github.com/zeit/styled-jsx) that also supports universal styles. That means we can serve the required styles for the first render within the HTML and then load the rest in the client. In this case we are using [styled-components](https://github.com/styled-components/styled-components).
+    -> pages
+	    -> api
+    -> src
+	    -> components
+	    -> controllers
+	    -> database
+		    -> migrations
+		    -> seeds
+	    -> models
+	    -> screens
 
-For this purpose we are extending the `<Document />` and injecting the server side rendered styles into the `<head>`, and also adding the `babel-plugin-styled-components` (which is required for server side rendering). Additionally we set up a global [theme](https://www.styled-components.com/docs/advanced#theming) for styled-components using NextJS custom [`<App>`](https://nextjs.org/docs/advanced-features/custom-app) component.
+**-> pages**
+* Pasta em que serão colocados os arquivos correspondentes a uma rota do frontend. Cada arquivo representará uma rota e, portanto, uma página. Caso existam subrotas ou rotas que recebem parâmetros, será necessário criar uma pasta para a rota principal, com arquivos para as subrotas.
 
-## Deploy your own
+	**-> api**
+	* Pasta em que ficarão as rotas de backend da aplicação. Cada arquivo é um endpoint da API e deve encaminhar para o controller correspondente. Caso um endpoint precise ser capaz de receber requisições de diferentes métodos HTTP (por exemplo, um endpoint /api/user pode precisar de conseguir cadastrar um usuário ou buscar um usuário), deve-se tratar esses casos dentro desse arquivo do endpoint e chamar a função correspondente do controller (no exemplo citado, deve-se verificar qual o método e chamar uma função do tipo createUser no caso POST e uma função do tipo getUserById no caso GET). Os arquivos de endpoint aqui definidos devem APENAS definir qual a tarefa a ser feita, de acordo com o método HTTP, e encaminhar para que a função do Controller se encarregue do restante.
 
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example):
+**-> src**
+* Pasta onde ficará o restante do nosso código, sendo ele dividido da seguinte forma:
+	**-> components**
+	* Pasta em que ficarão os componentes reaproveitáveis da aplicação, que poderão aparecer nas diversas páginas. Para cada componente, criaremos uma pasta com o nome do componente e um arquivo index.js dentro dessa pasta. Caso sejam necessários mais arquivos, não tem problema, mas esse é o mínimo necessário.
+	
+	**-> controllers**
+	* Pasta em que ficarão os controllers definidos para a aplicação. Cada entidade de dados definida deve ter um controller próprio, capaz de realizar a sua função. Apenas as entidades devem ter controllers, sendo que as tabelas relacionais não precisam de um. Um controller é responsável por organizar as informações recebidas da rota e se comunicar com os diferentes models necessários para realizar aquela ação (ex.: uma função de getOrder em um orderController precisa se comunicar com o orderModel, para pegar o pedido, mas pode precisar se comunicar com um productModel para pegar os produtos daquele pedido e com um userModel para pegar o usuário que fez aquele pedido), para então organizar a resposta a ser dada.
+	* Cada controller consiste em um conjunto de funções a ser realizadas para aquela entidade.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/vercel/next.js/tree/canary/examples/with-styled-components&project-name=with-styled-components&repository-name=with-styled-components)
+	**-> database**
+	* Pasta em que é configurado o banco de dados, com auxílio do Knex. Os arquivos knexfile.js e connection.js configuram a conexão com o banco de dados, o arquivo db.sqlite é o banco de dados de desenvolvimento propriamente dito e há ainda as pastas que se seguem:
+	
+		**-> migrations**
+		* Pasta em que guardamos as migrations, isto é, as instruções para criar, editar e deletar as colunas de cada uma das tabelas (os campos que cada tabela tem). São importantes para conseguirmos desconstruir e reconstruir o noss banco de dados de acordo com a necessidade.
+		* Para criar uma nova migration, usamos o comando `npx knex migrate:make nome_da_migration_aqui` e editamos o arquivo criado. É MUITO IMPORTANTE que a função "down" desfaça TUDO o que a função "up" fez. Se "up" adicionou colunas, "down" deve removê-las. Se criou uma tabela, "down" deve destruir essa tabela.
+		* Para rodar as migrations e aplicar as suas alterações, deve-se rodar o comando `npx knex migrate:latest`.
 
-## How to use
+		**-> seeds**
+		* Pasta em que guardamos as seeds, isto é, os dados iniciais com os quais queremos preencher as linhas da tabela. São úteis para que tenhamos dados para teste de fácil acesso ainda que precisemos destruir parte do banco de dados.
+		* Para criar uma nova seed, usamos o comando `npx knex seed:make nome_da_migration_aqui` e editamos o arquivo criado. 
+		* Para rodar as seeds e aplicar os seus dados, deve-se rodar o comando `npx knex seed:run`.
 
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init) or [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/) to bootstrap the example:
+	**-> models**
+	* Pasta em que definiremos os models da aplicação. Os models são aqueles que interagem em mais baixo nível com as entidades de dados que temos na aplicação. São eles os responsáveis por buscar dados em uma tabela, inserir dados em uma tabela, etc. No caso, precisamos de um model para cada entidade do banco de dados (usuário, pedido, produto, ...) - não sendo necessário definir models para tabelas relacionais, como orders_products, e um para cada entidade de dados externa - como o Firebase.
 
-```bash
-npx create-next-app --example with-styled-components with-styled-components-app
-# or
-yarn create next-app --example with-styled-components with-styled-components-app
-```
+	**-> screens**
+	* Pasta em que definiremos as telas que podem aparecer em diferentes rotas ou ter diferentes formas de renderização. Os componentes definidos aqui devem corresponder a telas completas e devem receber as informações necessárias à sua renderização por *props*. Assim, a forma de buscar essas props e renderizar será externalizada para a rota que utilizar o componente.
 
-Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
-
-### Try it on CodeSandbox
-
-[Open this example on CodeSandbox](https://codesandbox.io/s/github/vercel/next.js/tree/canary/examples/with-styled-components)
-
-### Notes
-
-When wrapping a [Link](https://nextjs.org/docs/api-reference/next/link) from `next/link` within a styled-component, the [as](https://styled-components.com/docs/api#as-polymorphic-prop) prop provided by `styled` will collide with the Link's `as` prop and cause styled-components to throw an `Invalid tag` error. To avoid this, you can either use the recommended [forwardedAs](https://styled-components.com/docs/api#forwardedas-prop) prop from styled-components or use a different named prop to pass to a `styled` Link.
-
-<details>
-<summary>Click to expand workaround example</summary>
-<br />
-
-**components/StyledLink.js**
-
-```javascript
-import Link from 'next/link'
-import styled from 'styled-components'
-
-const StyledLink = ({ as, children, className, href }) => (
-  <Link href={href} as={as} passHref>
-    <a className={className}>{children}</a>
-  </Link>
-)
-
-export default styled(StyledLink)`
-  color: #0075e0;
-  text-decoration: none;
-  transition: all 0.2s ease-in-out;
-
-  &:hover {
-    color: #40a9ff;
-  }
-
-  &:focus {
-    color: #40a9ff;
-    outline: none;
-    border: 0;
-  }
-`
-```
-
-**pages/index.js**
-
-```javascript
-import StyledLink from '../components/StyledLink'
-
-export default () => (
-  <StyledLink href="/post/[pid]" forwardedAs="/post/abc">
-    First post
-  </StyledLink>
-)
-```
-
-</details>
+### Convenções gerais
+#### Forma de renderização
+No topo de cada arquivo de página (na pasta *pages*, deve-se ter um comentário estabelecendo a forma de renderização adotada para aquela página. Assim, adotaremos a seguinte convenção. A primeira linha do arquivo será um comentário com uma das siglas abaixo:
+* **SSG** (*Static Site Generation*) - usado quando a geração da página for estática, isto é, não estiver sujeita a mudanças que podem ocorrer no banco de dados. Para páginas que serão SEMPRE IGUAIS. Quando não usarmos getServerSideProps.
+	* Ex.: página institucional, descrevendo o Igor.
+* **ISR** (*Incremental Static Regeneration*) - usado quando a renderização da página depender dos dados no banco de dados, mas for esperado que a página tenha muitos acessos em que os dados serão iguais e que não haja muito problema em ter um pequeno atraso na atualização. Também é necessário que o número de renderizações possíveis seja finito. Quando adotarmos essa forma de renderização, adotaremos revalidação temporizada para verificar se a página deve ser novamente renderizada. Comumente vem com getStaticProps e getStaticPaths, porém usando a opção "revalidate".
+	* Ex.: página de um produto. Será acessada por diversas pessoas, apresentando as mesmas informações. Assim, ao usar o ISR poupamos o custo de processamento de renderizar essa página diversas vezes.
+* **SSR** (*Server Side Rendering*) - usada quando cada renderização tende a ser única, não fazendo sentido reaproveitar renderizações anteriores. Usada também quando não podemos ter qualquer atraso na propagação de uma informação sensível do banco de dados e quando temos mudanças muito frequentes nos dados. Também usamos quando a renderização pode ser feita de infinitas formas diferentes. Nesse caso, usamos getServerSideProps
+	* Ex.: uma página de busca pode vir com qualquer termo de busca associado, portanto faz sentido usar SSR.
+*  **CSR** (*Client Side Rendering*) - usada em páginas extremamente dinâmicas e para as quais o SEO não importa, uma vez que os dados só chegam depois da renderização. Frequentemente utilizada em dashboards de administradores e afins. Nessa forma de renderização, tradicional do React, os dados são buscados após a renderização, com uso de um useEffect ou de funções desencadeadas por ações do usuário.
+	* Ex.: Dashboard com gráficos que precisam estar atualizados, mas que não tem que ser encontradas pelo Google.
