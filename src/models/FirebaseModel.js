@@ -22,11 +22,43 @@ admin.initializeApp({
 module.exports = {
   async createNewUser(email, password) {
     firebase.auth().createUserWithEmailAndPassword(email, password)
-      .then((result) => {
-        resolve(result.user.uid);
-      })
+      .then((result) => (result.user.uid))
       .catch((error) => {
-        reject(error);
+        throw new Error(error);
+      });
+  },
+
+  async deleteUser(id) {
+    admin.auth().deleteUser(id)
+      .then((result) => result)
+      .catch((error) => {
+        console.error(error);
+        const errorMessage = error.message;
+        throw new Error(errorMessage);
+      });
+  },
+
+  async changeUserEmail(uid, newEmail) {
+    admin.auth().updateUser(uid, {
+      email: newEmail,
+    })
+      .then((result) => result)
+      .catch((error) => {
+        console.error(error);
+        const errorMessage = error.message;
+        throw new Error(errorMessage);
+      });
+  },
+
+  async changeUserPassword(id, newPassword) {
+    admin.auth().updateUser(id, {
+      password: newPassword,
+    })
+      .then((result) => result)
+      .catch((error) => {
+        console.error(error);
+        const errorMessage = error.message;
+        throw new Error(errorMessage);
       });
   },
 };

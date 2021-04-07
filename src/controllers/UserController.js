@@ -66,15 +66,15 @@ module.exports = {
 
       if (password) {
         const user = await UserModel.getUserById(id);
-        const firebaseUid = user.firebase;
-        await FirebaseModel.changeUserPassword(firebaseUid, password);
+        const firebaseId = user.firebase;
+        await FirebaseModel.changeUserPassword(firebaseId, password);
         delete newUser.password;
       }
 
       if (email) {
         const user = await UserModel.getUserById(id);
-        const firebaseUid = user.firebase;
-        await FirebaseModel.changeUserEmail(firebaseUid, email);
+        const firebaseId = user.firebase;
+        await FirebaseModel.changeUserEmail(firebaseId, email);
       }
 
       await UserModel.updateUser(newUser, id);
@@ -92,7 +92,6 @@ module.exports = {
         Email.retailerAprovalMail(data)
       }
       */
-
       return response.status(200).json({ message: 'Sucesso!' });
     } catch (error) {
       console.error(error);
