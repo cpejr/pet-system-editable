@@ -21,14 +21,12 @@ admin.initializeApp({
 
 module.exports = {
   async createNewUser(email, password) {
-    return new Promise((resolve, reject) => {
-      firebase.auth().createUserWithEmailAndPassword(email, password)
-        .then((result) => {
-          resolve(result.user.uid);
-        })
-        .catch((error) => {
-          reject(error);
-        });
-    });
+    firebase.auth().createUserWithEmailAndPassword(email, password)
+      .then((result) => {
+        resolve(result.user.uid);
+      })
+      .catch((error) => {
+        reject(error);
+      });
   },
 };
