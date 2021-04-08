@@ -31,6 +31,7 @@ export default function App({ Component, pageProps }) {
       <Head>
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Poiret+One&family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet" />
       </Head>
       <GlobalStyle />
       <ThemeProvider theme={theme}>
