@@ -7,7 +7,7 @@ module.exports = {
   async getUserById(id) {
     try {
       const user = await connection('Users')
-        .where('firebase', id)
+        .where('firebase_id', id)
         .select('*')
         .first();
       return user;

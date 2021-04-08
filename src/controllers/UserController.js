@@ -21,7 +21,6 @@ module.exports = {
       user.firebase = firebaseId;
 
       delete user.password;
-      await connection('Users').insert(user);
       /*
       const data = {
         to: user.email,
