@@ -8,6 +8,7 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     box-sizing: border-box;
     font-family: 'Quicksand', sans-serif;
+    background-color: #F8F8F8;
   }
 `;
 
@@ -16,9 +17,11 @@ const theme = {
     primary: '#0070f3',
     rose: '#F6C8CA',
     lightGreen: '#A6DAD8',
-    darkGreen: '#609694',
+    mediumGreen: '#609694',
+    darkGreen: '#426A69',
+    mediumRed: '#AA4545',
+    darkRed: '#9C1D1D',
     baseGray: '#AAABB0',
-    red: '#AA4545',
   },
 };
 
