@@ -22,6 +22,7 @@ const theme = {
     mediumRed: '#AA4545',
     darkRed: '#9C1D1D',
     baseGray: '#AAABB0',
+    white: '#F2F2F2'
   },
 };
 
