@@ -108,14 +108,12 @@ module.exports = {
 
       try {
         firebase_id = await FirebaseModel.login(email, password);
-        res.status(200).json({ message: 'ok' });
+        const user = await UserModel.getUserById(firebase_id);
+        const accessToken = jwt.sign({ user });
+        return res.status(200).json({ accessToken, user });
       } catch (error) {
         return res.status(400).json({ message: 'Email ou senha incorreto' });
       }
-      const user = await UserModel.getUserById(firebase_id);
-
-      const accessToken = jwt.sign({ user });
-      return res.status(200).json({ accessToken, user });
     } catch (error) {
       return res.status(500).json({ message: err.message });
     }
