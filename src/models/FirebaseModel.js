@@ -1,10 +1,10 @@
-const admin = require('firebase'); // Alterar o require
+const admin = require('firebase');
 const firebase = require('firebase/app');
 
 require('firebase/auth');
 
 const firebaseConfig = {
-  apiKey: process.env.FIREBASE_APIKEY,
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_APIKEY,
   authDomain: process.env.FIREBASE_AUTHDOMAIN,
   databaseURL: process.env.FIREBASE_DATABASEURL,
   projectId: process.env.FIREBASE_PROJECTID,
@@ -13,19 +13,23 @@ const firebaseConfig = {
   appId: process.env.FIREBASE_APPID,
 };
 
-firebase.initializeApp(firebaseConfig);
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  // Inserir o databaseURL
-});
+if (!firebase.apps.length) {
+  try {
+    firebase.initializeApp(firebaseConfig);
+  } catch (err) {
+    console.error('Firebase initialization error raised', err.stack);
+  }
+}
 
 module.exports = {
   async createNewUser(email, password) {
-    firebase.auth().createUserWithEmailAndPassword(email, password)
-      .then((result) => (result.user.uid))
-      .catch((error) => {
-        throw new Error(error);
-      });
+    try {
+      const response = await firebase.auth().createUserWithEmailAndPassword(email, password);
+      console.log(response);
+      return response.user.uid;
+    } catch (err) {
+      throw new Error(err);
+    }
   },
 
   async deleteUser(id) {
