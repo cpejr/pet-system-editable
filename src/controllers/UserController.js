@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken');
-const connection = require('../database/connection');
 const FirebaseModel = require('../models/FirebaseModel');
 const UserModel = require('../models/UserModel');
 
@@ -13,28 +12,16 @@ module.exports = {
 
   async create(request, response) {
     const user = request.body;
-    if (user.type === 'retailer') {
-      user.user_status = 'approved';
-    }
-    let firebaseId;
-    try {
-      firebaseId = await FirebaseModel.createNewUser(user.email, user.password);
-      user.firebase = firebaseId;
+    let firebase_id;
 
+    try {
+      firebase_id = await FirebaseModel.createNewUser(user.email, user.password);
+      user.firebase_id = firebase_id;
       delete user.password;
-      await connection('Users').insert(user);
-      /*
-      const data = {
-        to: user.email,
-        subject: 'Bem Vindo',
-        text: 'Loja Casulus',
-        user_name: user.name,
-      };
-      Email.registerMail(data);
-      */
+      await UserModel.createNewUser(user);
     } catch (err) {
-      if (firebaseId) {
-        FirebaseModel.deleteUser(firebaseId);
+      if (firebase_id) {
+        FirebaseModel.deleteUser(firebase_id);
       }
       if (err.message) {
         return response.status(400).json({ notification: err.message });
@@ -67,33 +54,18 @@ module.exports = {
 
       if (password) {
         const user = await UserModel.getUserById(id);
-        const firebaseUid = user.firebase;
-        await FirebaseModel.changeUserPassword(firebaseUid, password);
+        const firebaseId = user.firebase;
+        await FirebaseModel.changeUserPassword(firebaseId, password);
         delete newUser.password;
       }
 
       if (email) {
         const user = await UserModel.getUserById(id);
-        const firebaseUid = user.firebase;
-        await FirebaseModel.changeUserEmail(firebaseUid, email);
+        const firebaseId = user.firebase;
+        await FirebaseModel.changeUserEmail(firebaseId, email);
       }
 
       await UserModel.updateUser(newUser, id);
-
-      /*
-      const user_ = await UserModel.getUserById(id);
-      if(user_.type === "retailer" && user_.user_status === "approved"){
-        const data = {
-          to: user_.email,
-          subject: 'Bem Vindo',
-          text: 'Loja Casulus',
-          user_name: user_.name
-        }
-
-        Email.retailerAprovalMail(data)
-      }
-      */
-
       return response.status(200).json({ message: 'Sucesso!' });
     } catch (error) {
       console.error(error);
