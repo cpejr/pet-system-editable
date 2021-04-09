@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import Header from '../../src/components/Header';
 import Body from '../../src/components/Body';
+import Image from 'next/image';
+
 
 
 
@@ -19,7 +21,7 @@ const Fields = styled.div`
 
 const Title = styled.h1`
   margin-top: 100px; 
-  font-size: 50px;
+  font-size: 40px;
 `;
 
 const Subtitle = styled.p`
@@ -104,6 +106,7 @@ TextBox.DDD=styled.input`
     background: ${props => props.theme.colors.white};
 `;
 
+
 const Submit = styled.button`
     margin-top: 30px;
     height: 40px;
@@ -131,8 +134,10 @@ export default function Login() {
       <Body>
       
         <Body.Left>
-        <hr width="0" display="block" size="500" />
+          <Image src="/images/doguinho.jpg" alt="" width="420" height="363" />
+        
         </Body.Left>
+        <hr width="0" display="block" size="500" />
         <Body.Right>
             
           <Title>Bora Começar!</Title>
