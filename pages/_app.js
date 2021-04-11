@@ -8,6 +8,7 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     box-sizing: border-box;
     font-family: 'Quicksand', sans-serif;
+    background-color: #F8F8F8;
   }
 `;
 
@@ -16,9 +17,11 @@ const theme = {
     primary: '#0070f3',
     rose: '#F6C8CA',
     lightGreen: '#A6DAD8',
-    darkGreen: '#609694',
+    mediumGreen: '#609694',
+    darkGreen: '#426A69',
+    mediumRed: '#AA4545',
+    darkRed: '#9C1D1D',
     baseGray: '#AAABB0',
-    red: '#AA4545',
   },
 };
 
@@ -28,6 +31,7 @@ export default function App({ Component, pageProps }) {
       <Head>
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Poiret+One&family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet" />
       </Head>
       <GlobalStyle />
       <ThemeProvider theme={theme}>
