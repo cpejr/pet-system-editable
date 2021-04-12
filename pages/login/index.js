@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
+// import axios from 'axios';
+import Link from 'next/link';
 import Header from '../../src/components/Header';
 import Body from '../../src/components/Body';
 
@@ -76,37 +78,42 @@ CreateAccount.Right = styled.p`
   color: ${({ theme }) => theme.colors.mediumRed};
 `;
 
-export default function Login() {
-  return (
-    <div>
-      <Header />
+const Login = ({ email, password }) => (
+  <div>
+    <Header />
 
-      <Body>
-        <Body.Left>
-          <Image src="/images/BannerLogin.jpg" alt="" width="600" height="400" />
-        </Body.Left>
+    <Body>
+      <Body.Left>
+        <Image src="/images/BannerLogin.jpg" alt="" width="600" height="400" />
+      </Body.Left>
 
-        <hr width="1" display="block" size="600" />
+      <hr width="1" display="block" size="600" />
 
-        <Body.Right>
-          <Title>Bem vindo de volta!</Title>
-          <Subtitle>Por favor, entre com seu email e sua senha:</Subtitle>
+      <Body.Right>
+        <Title>Bem vindo de volta!</Title>
+        <Subtitle>Por favor, entre com seu email e sua senha:</Subtitle>
 
-          <Fields>
-            <TextBox type="text" placeholder="Email" />
-            <TextBox type="text" placeholder="Senha" />
-            <ForgotPassword>Esqueceu a senha?</ForgotPassword>
-          </Fields>
+        <Fields>
+          <TextBox type="text" placeholder="Email">{email}</TextBox>
+          <TextBox type="text" placeholder="Senha">{password}</TextBox>
+          <ForgotPassword>Esqueceu a senha?</ForgotPassword>
+        </Fields>
+        <Link href="http://localhost:3000/api/login">
+          <Submit onClick="location.href='http://localhost:3000/api/login'">Próximo</Submit>
+        </Link>
+        <UnderFields>
+          <CreateAccount>Não tem uma conta?</CreateAccount>
+          <CreateAccount.Right>Cadastre-se</CreateAccount.Right>
+        </UnderFields>
+      </Body.Right>
+    </Body>
 
-          <Submit>Próximo</Submit>
+  </div>
+);
 
-          <UnderFields>
-            <CreateAccount>Não tem uma conta?</CreateAccount>
-            <CreateAccount.Right>Cadastre-se</CreateAccount.Right>
-          </UnderFields>
-        </Body.Right>
-      </Body>
+Login.getInitialProps = async () => {
+  const { response } = await fetch('http://localhost:3000/api/login');
+  return { email: response, password: response };
+};
 
-    </div>
-  );
-}
+export default Login;
