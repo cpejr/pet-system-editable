@@ -7,11 +7,17 @@
     "start": "next start"
   },
   "dependencies": {
+    "@date-io/date-fns": "1.x",
+    "@material-ui/core": "^4.11.3",
+    "@material-ui/pickers": "^3.3.10",
+    "bootstrap": "^4.6.0",
+    "date-fns": "^2.20.3",
     "firebase": "^8.3.2",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.95.4",
     "next": "latest",
     "react": "^16.8.0",
+    "react-bootstrap": "^1.5.2",
     "react-dom": "^16.8.0",
     "react-is": "^16.8.0",
     "sqlite3": "^5.0.2",

@@ -1,169 +1,155 @@
-import React from 'react';
-import styled from 'styled-components';
-import Header from '../../src/components/Header';
 import Body from '../../src/components/Body';
+import React,{useState} from "react";
+import Header from '../../src/components/Header';
+import Link from 'next/link'
+import { Form, FormControl, Button, FormLabel, FormGroup } from 'react-bootstrap'
+import styled from 'styled-components';
 import Image from 'next/image';
+import {KeyboardDatePicker, MuiPickersUtilsProvider} from '@material-ui/pickers';
+import  'date-fns';
+import DateFnsUtils  from '@date-io/date-fns';
 
 
-
-
-const Number =styled.div`
-`;
-const Password =styled.div`
-`;
-const Name =styled.div`
-`;
-const Fields = styled.div`
-    align-items: center;
-    display: flex;
-    flex-direction: column;
+const MyFormGroup=styled(FormGroup)`
+display : flex;
+flex-direction: column;
+align-items: flex-start;
 `;
 
-const Title = styled.h1`
-  margin-top: 100px; 
-  font-size: 40px;
+const Name=styled.div`
+display:flex;
+flex-direction:row;
+`;
+
+const MyFormControl=styled(FormControl)`
+
 `;
 
 const Subtitle = styled.p`
   font-size: 20px;
+`;4
+const Birth = styled.div`
+  
 `;
-
-const TextBox = styled.input`
-    margin-top: 30px;
-    height: 40px;
-    width: 500px;
-    border-radius: 5px;
-    border: 0.3px solid #000000;
-    background: ${props => props.theme.colors.white};
-`;
-TextBox.Name = styled.input`
-    
-    margin-top: 30px;
-    height: 40px;
-    width: 200px;
-    border-radius: 5px;
-    border: 0.3px solid #000000;
-    background: ${props => props.theme.colors.white};
-`;
-TextBox.lastname = styled.input`
-    margin-left: 25px;
-    margin-top: 30px;
-    height: 40px;
-    width: 300px;
-    border-radius: 5px;
-    border-color:  ${props => props.theme.colors.white};
-    border: 0.3px solid #000000;
-    background: ${props => props.theme.colors.white};
-`;
-
-TextBox.email = styled.input`  
-    
-    margin-top: 30px;
-    height: 40px;
-    width: 535px;
-    border-radius: 5px;
-    border: 0.3px solid #000000;
-    background: ${props => props.theme.colors.white};
-
-`;
-TextBox.telephone = styled.input`  
-    
-    margin-top: 30px;
-    height: 40px;
-    width: 200px;
-    border-radius: 5px;
-    border: 0.3px solid #000000;
-    background: ${props => props.theme.colors.white};
-
-`;
-TextBox.password= styled.input`
-    margin-right: 10px;
-    margin-left: 10px;
-    margin-top: 30px;
-    height: 40px;
-    width: 255px;
-    border-radius: 5px;
-    border: 0.3px solid #000000;
-    background: ${props => props.theme.colors.white};
-
-`;
-TextBox.CPF =styled.input`
-    margin-right: 21px;
-    margin-top: 30px;
-    height: 40px;
-    width: 260px;
-    border-radius: 5px;
-    border: 0.3px solid #000000;
-    background: ${props => props.theme.colors.white};
-`;
-TextBox.DDD=styled.input`
-    margin-right: 10px;
-    margin-top: 30px;
-    height: 40px;
-    width: 30px;
-    border-radius: 5px;
-    border: 1px solid #000000;
-    background: ${props => props.theme.colors.white};
+const Register = styled.div`
+  
 `;
 
 
-const Submit = styled.button`
-    margin-top: 30px;
-    height: 40px;
-    width: 140px;
-    background-color: ${props => props.theme.colors.mediumGreen};
-    color: white;
-    border: 0;
 
-`;
-        
+export default function Signup() {
 
+const [name,setName ]=useState(false)
+const [lastName,setLastName ]=useState(false)
+const [email,setEmail]=useState(false)
+const [passaword,setPassaword]=useState(false)
+const [confirmPassaword,setConfirmPassaword]=useState(false)
+const [cpf,setCpf]=useState(false)
+const [ddd,setddd]=useState(false)
+const [telephone,setTelephone]=useState(false)
+const [date,setDate]=useState(new Date())
 
-export default function Login() {
-  return (
-    <div>
-      <Header>
-        <Header.Top>
-          
-        </Header.Top>
-        <Header.Bottom>
-          
-        </Header.Bottom>
-      </Header>
+function handleEmailChange(event) {
 
-      <Body>
-      
-        <Body.Left>
-          <Image src="/images/doguinho.jpg" alt="" width="420" height="363" />
-        
-        </Body.Left>
-        <hr width="0" display="block" size="500" />
-        <Body.Right>
-            
-          <Title>Bora Começar!</Title>
-          <Subtitle>Por favor, preencha os campos abaixo.</Subtitle>
-          <Fields>
-              <Name>
-          <TextBox.Name type="text" placeholder="Nome" />
-          <TextBox.lastname type="text" placeholder="Sobrenome" />
-          </Name>
-
-            <TextBox.email type="text" placeholder="Email" />
-                <Password>
-            <TextBox.password type="text" placeholder="Senha" />
-            <TextBox.password type="text" placeholder="Confirmar Senha" />
-            </Password>
-           
-            <Number>
-            <TextBox.CPF type="numbers" max="11" placeholder="CPF" />
-            <TextBox.DDD type="numbers" max="11" placeholder="DDD" />
-            <TextBox.telephone type="numbers" max="11" placeholder="Telefone" />
-            </Number>
-            
-            <Submit>Finalizar</Submit>
-          </Fields>
-        </Body.Right>
-      </Body>
-    </div>
-  );
 }
+
+
+
+    
+
+      
+  return (
+      <>
+        <Header/>
+      <Body>
+        <Body.Left>
+       
+          <Image src="/images/doguinho.jpg" alt="" width="420" height="363" />
+          </Body.Left>
+
+          <Body.Right>
+            <Register>
+                <Form>
+                    
+                    <Subtitle>Vamos Começar?</Subtitle>
+                    <Name>
+                    <MyFormGroup>
+                        <FormLabel>Nome</FormLabel>
+                        <MyFormControl type="text" placeholder="Nome"
+                        required="true" />
+                    </MyFormGroup>
+                    <MyFormGroup>
+                        <FormLabel>Sobrenome</FormLabel>
+                        <FormControl type="text" placeholder="Sobrenome" 
+                        required="true"  />
+                    </MyFormGroup>
+                    </Name>
+                  
+                  
+                   
+             <MyFormGroup>
+              <label>Data de Nascimento</label>
+              <MuiPickersUtilsProvider utils={DateFnsUtils}>
+              <KeyboardDatePicker 
+              value={date}
+              onChange={(newDate)=>{setDate(newDate)}}
+              variant='inline'
+              format='dd/MM/yyyy'
+  
+              />
+              </MuiPickersUtilsProvider>
+              
+             
+            </MyFormGroup>
+
+            <MyFormGroup>
+                        <FormLabel>CPF</FormLabel>
+                        <FormControl type="number" placeholder="CPF"  pattern="[0-9]$"
+                        required="true" title="Digite um email válido" />
+                    </MyFormGroup>
+            <MyFormGroup>
+                        <FormLabel>Email</FormLabel>
+                        <FormControl type="email" placeholder="Email"  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                        required="true" title="Digite um email válido" />
+                    </MyFormGroup>
+                    <MyFormGroup>
+                        <FormLabel>Senha</FormLabel>
+                        <FormControl type="password" placeholder="Senha" required="true" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                        title="Must contain at least one  number and one uppercase and lowercase letter, and at least 8 or more characters"
+                         />
+                    </MyFormGroup>
+                    <MyFormGroup>
+                        <FormLabel>Confirmar Senha</FormLabel>
+                        <FormControl type="password" placeholder="Senha" required="true" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                        title="Must contain at least one  number and one uppercase and lowercase letter, and at least 8 or more characters"
+                         />
+                    </MyFormGroup>
+                    <MyFormGroup>
+                        <FormLabel>DDD</FormLabel>
+                        <FormControl type="number" placeholder="(00)"  pattern="[0-9]$"
+                        required="true" title="Digite um email válido" />
+                    </MyFormGroup>
+                    <MyFormGroup>
+                        <FormLabel>Telefone</FormLabel>
+                        <FormControl type="number" placeholder="00000-0000"  pattern="[0-9]$"
+                        required="true" title="Digite um email válido" />
+                    </MyFormGroup>
+
+                 
+                    <Button  type="submit" variant="primary">Finalizar</Button>
+                
+                    <br/>
+                    <FormGroup>
+                        <FormLabel align="center">
+                         Você já tem Cadarstro?<Link href="/"><a>Login</a></Link>
+                          </FormLabel>
+                    </FormGroup>
+                </Form>
+        </Register>
+            </Body.Right>
+
+     </Body>
+      </>
+  )
+}
+  
