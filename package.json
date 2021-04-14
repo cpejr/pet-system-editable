@@ -7,13 +7,18 @@
     "start": "next start"
   },
   "dependencies": {
+    "@material-ui/core": "^4.11.3",
     "axios": "^0.21.1",
+    "bootstrap": "^4.6.0",
     "firebase": "^8.3.2",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.95.4",
     "next": "latest",
     "react": "^16.8.0",
+    "react-bootstrap": "^1.5.2",
+    "react-confirm-alert": "^2.7.0",
     "react-dom": "^16.8.0",
+    "react-icons": "^4.2.0",
     "react-is": "^16.8.0",
     "sqlite3": "^5.0.2",
     "styled-components": "^5.0.0"

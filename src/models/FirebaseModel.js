@@ -67,10 +67,9 @@ module.exports = {
 
   async login(email, password) {
     try {
-      firebase.auth().signInWithEmailAndPassword(email, password)
-        .then((result) => {
-          resolve(result.user.uid);
-        });
+      const result = await firebase.auth()
+        .signInWithEmailAndPassword(email, password);
+      return result.user.uid;
     } catch (error) {
       throw new Error(error);
     }

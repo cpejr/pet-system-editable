@@ -102,7 +102,7 @@ const YourSpaceContainer = styled.div`
 display:flex;
 align-items:center;
 justify-content:center;
-width:10%;
+width:11%;
 height:100%;
 `;
 
@@ -163,7 +163,7 @@ export default function Header() {
           <YourSpace>
             <BsFillPersonFill />
             <YourSpace.Word>
-              Perfil
+              Seu espaço
             </YourSpace.Word>
           </YourSpace>
         </YourSpaceContainer>
