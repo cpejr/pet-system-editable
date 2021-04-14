@@ -22,7 +22,9 @@ const theme = {
     mediumRed: '#AA4545',
     darkRed: '#9C1D1D',
     baseGray: '#AAABB0',
-    white: '#F2F2F2'
+    background: '#F8F8F8',
+    hoverBackground: 'rgba(96, 150, 148, 0.3)',
+    borderBoxColor: 'rgba(0, 0, 0, 0.2)',
   },
 };
 
