@@ -15,7 +15,7 @@ exports.up = function (knex) {
     table.string('logo_img').notNullable();
     table.timestamp('created_at').notNullable().defaultTo(knex.fn.now());
     table.float('evaluation').notNullable();
-    table.string('string').notNullable();
+    table.string('status').notNullable();
   });
 };
 

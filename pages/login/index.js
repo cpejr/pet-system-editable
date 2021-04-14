@@ -97,6 +97,7 @@ const Login = () => {
       const resp = await axios.post('http://localhost:3000/api/login', { email, password });
 
       localStorage.setItem('accessToken', resp.data.accessToken);
+      console.log(localStorage.getItem('accessToken'));
     } catch (error) {
       console.error(error);
     }

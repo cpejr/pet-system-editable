@@ -1,4 +1,3 @@
-const jwt = require('jsonwebtoken');
 const FirebaseModel = require('../models/FirebaseModel');
 const UserModel = require('../models/UserModel');
 
@@ -72,27 +71,6 @@ module.exports = {
     } catch (error) {
       console.error(error);
       return response.status(500).json({ notification: 'Internal server error while trying to delete user' });
-    }
-  },
-
-  async signin(req, res) {
-    try {
-      const { email, password } = req.body;
-      let firebase_id;
-
-      try {
-        firebase_id = await FirebaseModel.login(email, password);
-        const user = await UserModel.getUserById(firebase_id);
-        const accessToken = jwt
-          .sign({ user }, process.env.NEXT_PUBLIC_JWT_SECRET);
-
-        return res.status(200).json({ accessToken, user });
-      } catch (error) {
-        console.log(error);
-        return res.status(400).json({ message: 'Email ou senha incorreto' });
-      }
-    } catch (error) {
-      return res.status(500).json({ message: err.message });
     }
   },
 };

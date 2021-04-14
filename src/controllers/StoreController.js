@@ -1,6 +1,6 @@
 const StoreModel = require('../models/StoreModel');
 const UserModel = require('../models/UserModel');
-const FireBaseModel = require('../models/FirebaseModel');
+const FirebaseModel = require('../models/FirebaseModel');
 
 module.exports = {
   async getOne(request, response) {
@@ -16,7 +16,7 @@ module.exports = {
 
     try {
       // Criacao de usuario:
-      firebase_id = await FireBaseModel.createNewUser(user.email, user.password);
+      firebase_id = await FirebaseModel.createNewUser(user.email, user.password);
       user.firebase_id = firebase_id;
       delete user.password;
       await UserModel.createNewUser(user);
