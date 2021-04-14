@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
-// import axios from 'axios';
+import axios from 'axios';
 import Link from 'next/link';
 import Header from '../../src/components/Header';
 import Body from '../../src/components/Body';
@@ -78,42 +78,75 @@ CreateAccount.Right = styled.p`
   color: ${({ theme }) => theme.colors.mediumRed};
 `;
 
-const Login = ({ email, password }) => (
-  <div>
-    <Header />
+const Login = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-    <Body>
-      <Body.Left>
-        <Image src="/images/BannerLogin.jpg" alt="" width="600" height="400" />
-      </Body.Left>
+  function handleEmailChange(event) {
+    setEmail(event.target.value);
+  }
 
-      <hr width="1" display="block" size="600" />
+  function handlePasswordChange(event) {
+    setPassword(event.target.value);
+  }
 
-      <Body.Right>
-        <Title>Bem vindo de volta!</Title>
-        <Subtitle>Por favor, entre com seu email e sua senha:</Subtitle>
+  async function handleSubmit(event) {
+    try {
+      event.preventDefault();
 
-        <Fields>
-          <TextBox type="text" placeholder="Email">{email}</TextBox>
-          <TextBox type="text" placeholder="Senha">{password}</TextBox>
-          <ForgotPassword>Esqueceu a senha?</ForgotPassword>
-        </Fields>
-        <Link href="http://localhost:3000/api/login">
-          <Submit onClick="location.href='http://localhost:3000/api/login'">Próximo</Submit>
-        </Link>
-        <UnderFields>
-          <CreateAccount>Não tem uma conta?</CreateAccount>
-          <CreateAccount.Right>Cadastre-se</CreateAccount.Right>
-        </UnderFields>
-      </Body.Right>
-    </Body>
+      const resp = await axios.post('http://localhost:3000/api/login', { email, password });
 
-  </div>
-);
+      localStorage.setItem('accessToken', resp.data.accessToken);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
-Login.getInitialProps = async () => {
-  const { response } = await fetch('http://localhost:3000/api/login');
-  return { email: response, password: response };
+  return (
+    <div>
+      <Header />
+
+      <Body>
+        <Body.Left>
+          <Image src="/images/BannerLogin.jpg" alt="" width="600" height="400" />
+        </Body.Left>
+
+        <hr width="1" display="block" size="600" />
+
+        <Body.Right>
+          <Title>Bem vindo de volta!</Title>
+          <Subtitle>Por favor, entre com seu email e sua senha:</Subtitle>
+
+          <Fields>
+            <form onSubmit={handleSubmit}>
+              <TextBox
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={handleEmailChange}
+              />
+              <TextBox
+                type="password"
+                placeholder="Senha"
+                value={password}
+                onChange={handlePasswordChange}
+              />
+              <button type="submit">Enviar</button>
+            </form>
+            <ForgotPassword>Esqueceu a senha?</ForgotPassword>
+          </Fields>
+          <Link href="http://localhost:3000/api/login">
+            <Submit onClick="location.href='http://localhost:3000/api/login'">Próximo</Submit>
+          </Link>
+          <UnderFields>
+            <CreateAccount>Não tem uma conta?</CreateAccount>
+            <CreateAccount.Right>Cadastre-se</CreateAccount.Right>
+          </UnderFields>
+        </Body.Right>
+      </Body>
+
+    </div>
+  );
 };
 
 export default Login;

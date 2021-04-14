@@ -15,7 +15,9 @@ module.exports = {
     let firebase_id;
 
     try {
-      firebase_id = await FirebaseModel.createNewUser(user.email, user.password);
+      firebase_id = await FirebaseModel
+        .createNewUser(user.email, user.password);
+
       user.firebase_id = firebase_id;
       delete user.password;
       await UserModel.createNewUser(user);
@@ -81,9 +83,12 @@ module.exports = {
       try {
         firebase_id = await FirebaseModel.login(email, password);
         const user = await UserModel.getUserById(firebase_id);
-        const accessToken = jwt.sign({ user });
+        const accessToken = jwt
+          .sign({ user }, process.env.NEXT_PUBLIC_JWT_SECRET);
+
         return res.status(200).json({ accessToken, user });
       } catch (error) {
+        console.log(error);
         return res.status(400).json({ message: 'Email ou senha incorreto' });
       }
     } catch (error) {

@@ -24,7 +24,9 @@ if (!firebase.apps.length) {
 module.exports = {
   async createNewUser(email, password) {
     try {
-      const response = await firebase.auth().createUserWithEmailAndPassword(email, password);
+      const response = await firebase
+        .auth()
+        .createUserWithEmailAndPassword(email, password);
       return response.user.uid;
     } catch (err) {
       throw new Error(err);
@@ -67,10 +69,13 @@ module.exports = {
 
   async login(email, password) {
     try {
-      firebase.auth().signInWithEmailAndPassword(email, password)
-        .then((result) => {
-          resolve(result.user.uid);
-        });
+      const result = await firebase
+        .auth()
+        .signInWithEmailAndPassword(email, String(password));
+
+      const firebaseId = result.user.uid;
+
+      return firebaseId;
     } catch (error) {
       throw new Error(error);
     }
