@@ -11,18 +11,35 @@ flex-direction:row;
 FullRequest.Col1 = styled.div`
 margin-left:5%;
 width:30%;
+@media(max-width:560px){
+    display:flex;
+    margin-left:1%;
+    margin-right:1%;
+    width:20%;
+    }
 `;
 FullRequest.Col2 = styled.div`
 width:50%;
+@media(max-width:560px){
+  font-size:14px;
+}
 `;
 FullRequest.Col2.Row2 = styled.div`
 margin-top:5%;
 margin-bottom:8%;
 color:#AAABB0;
+@media(max-width:560px){
+    display:flex;
+    flex-direction:column;
+    font-size:14px;
+    }
 `;
 FullRequest.Col2.Row3 = styled.div`
 display:flex;
 flex-direction:row;
+@media(max-width:560px){
+    display:none;
+    }
 `;
 const Box = styled.button`
 border-color:black;
@@ -40,6 +57,12 @@ FullRequest.Col3 = styled.div`
 display:flex;
 align-items:center;
 width:20%;
+@media(max-width:560px){
+    display:flex;
+    align-items:center;
+    justify-content:center;
+   width:30%;
+    }
 `;
 
 const Submit = styled.button`
@@ -54,6 +77,15 @@ const Submit = styled.button`
     border-radius: 5px;
     cursor:pointer;
     outline:none;
+    @media(max-width:560px){
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:14px;
+    width:80%;
+    height:30px;
+    border-radius:20px;
+    }
 `;
 export default function MyRequest() {
   return (
@@ -66,7 +98,8 @@ export default function MyRequest() {
         <FullRequest.Col2>
           <h3>PetShop do Matheus</h3>
           <FullRequest.Col2.Row2>
-            <p1>• 1 item por R$12,98 • 23 de mar, Em preparação</p1>
+            <p1>• 1 item por R$12,98</p1>
+            <p1> • 23 de mar, Em preparação</p1>
           </FullRequest.Col2.Row2>
           <FullRequest.Col2.Row3>
             <Box>1</Box>

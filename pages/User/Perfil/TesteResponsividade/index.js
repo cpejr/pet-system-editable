@@ -1,8 +1,10 @@
-// import React from 'react';
-// import { render } from 'react-dom';
+// import React, { useEffect } from 'react';
 // import styled from 'styled-components';
+// // import Link from 'next/link';
 
 // const Title = styled.h1`
+// display:flex;
+// justify-content:center;
 // align-items:initial;
 // display:flex;
 // margin-left:5%;
@@ -10,27 +12,59 @@
 // margin-bottom:1%;
 // font-family: Roboto;
 // `;
+// // const YourSpace = styled.button`
+// //     display:flex;
+// //     flex-direction:row;
+// //     align-items:center;
+// //     justify-content:center;
+// //     width: 10%;
+// //     height:20px;
+// //     font-family: Roboto;
+// //     font-size: 20px;
+// //     font-weight: 300;
+// //     background-color: ${({ theme }) => theme.colors.mediumGreen};
+// //     color: white;
+// //     border: 0;
+// //     border-radius: 5px;
+// //     cursor:pointer;
+// //     @media(max-width: 800px){
+// //         display:none;
+// //         background-color:red;
+// //     }
+// // `;
 
-// export default function Perfil() {
-//   function render() {
+// const Perfil = () => {
+//   useEffect(() => {
 //     const width = window.innerWidth;
 //     const isMobile = width <= 500;
-//     if (isMobile) {
-//       return (
-//         <div>
+//   });
 
-//           <p>Meu Perfil Mobile</p>
-
-//         </div>
-
-//       );
-//     }
+//   if (isMobile) {
 //     return (
 //       <div>
 
-//         <Title>Meu Perfil:</Title>
+//         <p>Meu Perfil Mobile</p>
 
 //       </div>
+
 //     );
 //   }
-// }
+//   return (
+//     <div>
+
+//       <Title>Meu Perfil:</Title>
+
+//     </div>
+//   );
+// };
+
+// export default Perfil;
+
+// // export default function Perfil() {
+// //   return (
+// //     <div>
+// //       <Title>Titulo em web</Title>
+// //       <YourSpace>MATHEUS</YourSpace>
+// //     </div>
+// //   );
+// // }
