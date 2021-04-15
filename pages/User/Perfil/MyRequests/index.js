@@ -5,6 +5,7 @@ import Header from '../../../../src/components/Header';
 import MyRequest from '../../../../src/components/MyRequest';
 import MyLogOut from '../../../../src/components/MyLogOut';
 import WordsDivider from '../../../../src/components/WordsDivider';
+import FooterMobile from '../../../../src/components/Mobile/FooterMobile';
 
 const Title = styled.h1`
 display:flex;
@@ -115,6 +116,7 @@ export default function Perfil() {
         <OldType>Pedidos Anteriores</OldType>
         <MyRequest />
 
+        <FooterMobile />
       </createGlobalStyle>
 
     </div>

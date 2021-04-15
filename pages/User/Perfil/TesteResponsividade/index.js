@@ -35,8 +35,8 @@
 
 // const Perfil = () => {
 //   useEffect(() => {
-//     const width = window.innerWidth;
-//     const isMobile = width <= 500;
+//     // const width = window.innerWidth;
+//     // const isMobile = width <= 500;
 //   });
 
 //   if (isMobile) {
@@ -68,3 +68,25 @@
 // //     </div>
 // //   );
 // // }
+
+import React from 'react';
+import styled from 'styled-components';
+import MySellerRequest from '../../../../src/components/MySellerRequest';
+
+const Container = styled.div`
+display:flex;
+align-items:center;
+justify-content:center;
+width:100%;
+flex-direction:column;
+`;
+
+export default function MyDatasMobile() {
+  return (
+    <div>
+      <Container>
+        <MySellerRequest />
+      </Container>
+    </div>
+  );
+}

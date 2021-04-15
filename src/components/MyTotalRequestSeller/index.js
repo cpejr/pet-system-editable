@@ -7,6 +7,9 @@ align-items:center;
 justify-content:center;
 flex-direction:row;
 width:50vw;
+@media(max-width:560px){
+  display:none;
+}
 
 `;
 

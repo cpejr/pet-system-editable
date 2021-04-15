@@ -23,6 +23,10 @@ height:100%;
 border-style:solid;
 border-width:1px;   
 border-color:${({ theme }) => theme.colors.borderBoxColor};
+@media(max-width:560px){
+  width:90%;
+
+}
 `;
 
 const UserBox = styled.div`
@@ -34,6 +38,10 @@ justify-content:center;
 border-bottom-style:solid;
 border-bottom-width:1px;
 border-bottom-color:${({ theme }) => theme.colors.borderBoxColor};
+@media(max-width:560px){
+  font-size:13px;
+
+}
 `;
 
 UserBox.Col1 = styled.p`

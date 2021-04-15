@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { GrRadial, GrRadialSelected } from 'react-icons/gr';
 
 const Container = styled.div`
 display:flex;
@@ -57,32 +56,6 @@ justify-content:center;
     outline:none;
 `;
 
-const PaymentContainer = styled.div`
-display:flex;
-align-items:center;
-justify-content:center;
-width:100%;
-flex-direction:row;
-`;
-PaymentContainer.Col1 = styled.div`
-display:flex;
-align-items:flex-end;
-justify-content:center;
-flex-direction:column;
-width:30%;
-margin-right:2%;
-color: ${({ theme }) => theme.colors.mediumGreen};
-`;
-
-PaymentContainer.Col2 = styled.h4`
-display:flex;
-justify-content:center;
-width:70%;
-flex-direction:column;
-font-family:Roboto;
-margin:0;
-`;
-
 export default function MyDatasMobile() {
   return (
     <div>
@@ -96,21 +69,6 @@ export default function MyDatasMobile() {
         <ConfirmButton>
           <Submit>Confirmar</Submit>
         </ConfirmButton>
-        <Title>Alterar Forma de Pagamento:</Title>
-        <PaymentContainer>
-          <PaymentContainer.Col1>
-            <p><GrRadialSelected style={{ color: '#609694' }} /></p>
-            <p><GrRadial /></p>
-            <p><GrRadial /></p>
-          </PaymentContainer.Col1>
-
-          <PaymentContainer.Col2>
-
-            <p>Débito</p>
-            <p>Crédito</p>
-            <p>Dinheiro</p>
-          </PaymentContainer.Col2>
-        </PaymentContainer>
       </Container>
     </div>
   );

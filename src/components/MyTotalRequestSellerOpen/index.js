@@ -6,6 +6,10 @@ const Description = styled.div`
 display:flex;
 flex-direction:row;
 width:50vw;
+@media(max-width:560px){
+  display:none;
+}
+
 `;
 
 Description.Adress = styled.div`
@@ -27,6 +31,10 @@ display:flex;
 justify-content:center;
 flex-direction:column;
 width:50vw;
+@media(max-width:560px){
+  display:none;
+}
+
 `;
 Payment.Title = styled.h3`
 display:flex;
@@ -58,6 +66,10 @@ justify-content:center;
 flex-direction:row;
 width:50vw;
 margin-top:2%;
+@media(max-width:560px){
+  display:none;
+}
+
 `;
 
 TotalSellerContainer.Col1 = styled.div`

@@ -34,7 +34,7 @@ letter-spacing:30%;
 const Icon = styled.div`
 width:10%;
 display:flex;
-justify-content:flex-end
+justify-content:flex-end;
 `;
 
 export default function MyAdresses() {
