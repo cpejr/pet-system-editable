@@ -27,7 +27,6 @@ display:flex;
 flex-direction:column;
 justify-content:center;
 width:50%;
-
 @media(max-width:560px){
   font-size:14px;
 }
@@ -49,6 +48,10 @@ color:#AAABB0;
 FullRequest.Col2.Row3 = styled.div`
 display:flex;
 flex-direction:row;
+@media(max-width:1000px){
+  margin-bottom:2%;
+  font-size:14px;
+}
 @media(max-width:560px){
     display:none;
     }
