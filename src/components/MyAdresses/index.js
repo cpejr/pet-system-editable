@@ -26,7 +26,7 @@ line-height:20%;
 border-style: solid;
 border-width:1px;
 margin-right:2%;
-@media(max-width:10750px){
+@media(max-width:1050px){
 width:50%;
 margin-bottom:2%;
 }
