@@ -29,33 +29,43 @@ justify-content:center;
 width:50%;
 @media(max-width:560px){
   font-size:14px;
+  line-height:20px;
 }
+
+`;
+FullRequest.Col2.Row1 = styled.h3`
+display:flex;
+@media(max-width:560px){
+  font-size:14px;
+  margin:0;
+}
+
 `;
 FullRequest.Col2.Row2 = styled.div`
 margin-bottom:8%;
 color:#AAABB0;
 @media(max-width:1000px){
   margin-bottom:2%;
-  font-size:14px;
+  font-size:13px;
 }
 
 @media(max-width:560px){
     display:flex;
     flex-direction:column;
-    font-size:14px;
+    font-size:13px;
     }
 `;
 FullRequest.Col2.Row3 = styled.div`
 display:flex;
 flex-direction:row;
 @media(max-width:1000px){
-  margin-bottom:2%;
-  font-size:14px;
-}
+  display:none;
 @media(max-width:560px){
     display:none;
     }
+}
 `;
+
 const Box = styled.button`
 border-color:black;
 width:30px;
@@ -73,15 +83,15 @@ FullRequest.Col3 = styled.div`
 display:flex;
 align-items:center;
 width:20%;
-@media(max-width:1000px){
- width:30%;
-}
-@media(max-width:560px){
-    display:flex;
-    align-items:center;
-    justify-content:center;
-   width:30%;
-    }
+  @media(max-width:1000px){
+  width:30%;
+  }
+  @media(max-width:560px){
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    width:30%;
+      }
 `;
 
 const Submit = styled.button`
@@ -115,16 +125,37 @@ const Submit = styled.button`
     border-radius:20px;
     }
 `;
+
+const ImgLittle = styled.div`
+display:none;
+@media(max-width:560px){
+display:flex;
+}
+`;
+const ImgNormal = styled.div`
+display:flex;
+@media(max-width:560px){
+display:none;
+}
+`;
+
 export default function MyRequest() {
   return (
     <div>
 
       <FullRequest>
         <FullRequest.Col1>
-          <Image src="/images/pet2.jpg" alt="" width="350" height="188" />
+          <ImgLittle>
+            <Image src="/images/pet2Little.png" alt="" width="80" height="80" />
+          </ImgLittle>
+          <ImgNormal>
+            <Image src="/images/pet2.jpg" alt="" width="350" height="188" />
+          </ImgNormal>
         </FullRequest.Col1>
         <FullRequest.Col2>
-          <h3>PetShop do Matheus</h3>
+          <FullRequest.Col2.Row1>
+            PetShop do Matheus
+          </FullRequest.Col2.Row1>
           <FullRequest.Col2.Row2>
             <p1>• 1 item por R$12,98</p1>
             <p1> • 23 de mar, Em preparação</p1>

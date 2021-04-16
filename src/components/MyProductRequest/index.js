@@ -16,6 +16,10 @@ border-color:${({ theme }) => theme.colors.borderBoxColor};
   width:100%;
   margin-top:0%;
 margin-bottom:0%;
+border-top:none;
+border-left:none;
+border-right:none;
+
 }
 
 `;

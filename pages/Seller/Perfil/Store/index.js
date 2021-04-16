@@ -3,6 +3,7 @@ import styled, { createGlobalStyle } from 'styled-components';
 import Link from 'next/link';
 import HeaderSeller from '../../../../src/components/HeaderSeller';
 import WordsDivider from '../../../../src/components/WordsDivider';
+import FooterMobile from '../../../../src/components/Mobile/FooterMobile';
 
 const Title = styled.h1`
 align-items:initial;
@@ -11,13 +12,25 @@ margin-left:5%;
 margin-top:2%;
 margin-bottom:1%;
 font-family: Roboto;
+@media(max-width:560px){
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-bottom:2%;
+    }
 `;
 
 const SubTitle = styled.div`
-align-items:initial;
 display:flex;
+align-items:initial;
 margin-left:8%;
 font-family: Roboto;
+@media(max-width:560px){
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:0;
+    }
 `;
 const Section = styled.button`
 display:flex;
@@ -34,7 +47,7 @@ outline:none;
 `;
 
 Section.Select = styled.button`
-flex-direction:row;
+display:flex;
 font-size:16px;
 align-items:center;
 margin-left:1%;
@@ -45,7 +58,6 @@ border-radius:5%;
 outline:none;
 font-family: Roboto;
 `;
-
 export default function Perfil() {
   return (
     <div>
@@ -67,7 +79,7 @@ export default function Perfil() {
             <Section>Minhas vendas</Section>
           </Link>
         </SubTitle>
-
+        <FooterMobile />
       </createGlobalStyle>
 
     </div>

@@ -16,6 +16,8 @@ flex-direction:row;
 border-top:solid;
 border-width:1px;
 border-color:${({ theme }) => theme.colors.borderBoxColor};
+position:fixed;
+bottom:0;
 }
 `;
 

@@ -10,11 +10,18 @@ width:100%;
 border:solid;
 border-width:1px;
 border-radius:5px;
+@media(max-width:960px){
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-top:5%;
+
+}
 @media(max-width:560px){
   display:flex;
   align-items:center;
   justify-content:center;
-  border:none;
+  margin-top:5%;
 
 }
 `;
@@ -35,8 +42,6 @@ flex-direction:row;
 width:100%;
 @media(max-width:560px){
  margin:0;
- 
-
 }
 `;
 SalesMonthContainer.Description.Col1 = styled.p`

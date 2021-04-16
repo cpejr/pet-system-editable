@@ -4,6 +4,7 @@ import Link from 'next/link';
 import HeaderSeller from '../../../../src/components/HeaderSeller';
 import WordsDivider from '../../../../src/components/WordsDivider';
 import MySellerRequest from '../../../../src/components/MySellerRequest';
+import FooterMobile from '../../../../src/components/Mobile/FooterMobile';
 
 const Title = styled.h1`
 align-items:initial;
@@ -12,6 +13,12 @@ margin-left:5%;
 margin-top:2%;
 margin-bottom:1%;
 font-family: Roboto;
+@media(max-width:560px){
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-bottom:2%;
+    }
 `;
 
 const SubTitle = styled.div`
@@ -19,6 +26,12 @@ display:flex;
 align-items:initial;
 margin-left:8%;
 font-family: Roboto;
+@media(max-width:560px){
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:0;
+    }
 `;
 const Section = styled.button`
 display:flex;
@@ -69,7 +82,7 @@ export default function Perfil() {
           </Link>
         </SubTitle>
         <MySellerRequest />
-
+        <FooterMobile />
       </createGlobalStyle>
 
     </div>

@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import MyProductRequest from '../MyProductRequest';
 import MyTotalRequestSeller from '../MyTotalRequestSeller';
-import MyTotalRequestSellerOpen from '../MyTotalRequestSellerOpen';
 
 const BodyContainer = styled.div`
 display:flex;
@@ -12,6 +11,7 @@ width:100%;
 height:100%;
 margin-top:2%;
 margin-bottom:2%;
+
 `;
 const RequestContainer = styled.div`
 display:flex;
@@ -25,7 +25,6 @@ border-width:1px;
 border-color:${({ theme }) => theme.colors.borderBoxColor};
 @media(max-width:560px){
   width:90%;
-
 }
 `;
 
@@ -40,7 +39,6 @@ border-bottom-width:1px;
 border-bottom-color:${({ theme }) => theme.colors.borderBoxColor};
 @media(max-width:560px){
   font-size:13px;
-
 }
 `;
 
@@ -74,18 +72,6 @@ export default function MySellerRequest() {
           </UserBox>
           <MyProductRequest />
           <MyTotalRequestSeller />
-        </RequestContainer>
-
-      </BodyContainer>
-      <BodyContainer>
-        <RequestContainer>
-          <UserBox>
-            <UserBox.Col1>Carla Almeida</UserBox.Col1>
-            <UserBox.Col2>carlinha@hotmail.com</UserBox.Col2>
-            <UserBox.Col3>30/01/2021</UserBox.Col3>
-          </UserBox>
-          <MyProductRequest />
-          <MyTotalRequestSellerOpen />
 
         </RequestContainer>
 
