@@ -5,9 +5,13 @@ import { MdEdit } from 'react-icons/md';
 const ContainerDatas = styled.div`
 display:flex;
 width:100%;
+align-items:center;
 flex-direction:row;
 justify-content:center;
 margin-top:2%;
+@media(max-width:560px){
+  flex-direction:column;
+}
 `;
 
 const BoxDatas = styled.div`
@@ -21,6 +25,13 @@ line-height:20%;
 border-style: solid;
 border-width:1px;
 border-radius:5px;
+@media(max-width:976px){
+width:45%;
+margin-bottom:2%;
+}
+@media(max-width:560px){
+  width:80%;
+}
 `;
 const RowEdit = styled.div`
 display:flex;

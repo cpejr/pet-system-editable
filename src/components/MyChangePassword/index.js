@@ -28,11 +28,17 @@ width:100%;
 `;
 const InputFields = styled.input`
     height: 40px;
-    width: 70%;
+    width: 30%;
     border-radius: 5px;
     border: 1px solid ${({ theme }) => theme.colors.baseGray};
     background: #F2F2F2;
-    margin-bottom:3%;
+    margin-bottom:1%;
+    @media(max-width:560px){
+      height: 40px;
+    width: 70%;
+    border-radius: 5px;
+    margin-bottom:2%;
+}
 `;
 
 const ConfirmButton = styled.div`

@@ -4,11 +4,15 @@ import Image from 'next/image';
 
 const FullRequest = styled.div`
 display:flex;
+align-items:center;
+justify-content:center;
 width:100%;
 flex-direction:row;
 `;
 
 FullRequest.Col1 = styled.div`
+display:flex;
+align-items:center;
 margin-left:5%;
 width:30%;
 @media(max-width:560px){
@@ -19,15 +23,23 @@ width:30%;
     }
 `;
 FullRequest.Col2 = styled.div`
+display:flex;
+flex-direction:column;
+justify-content:center;
 width:50%;
+
 @media(max-width:560px){
   font-size:14px;
 }
 `;
 FullRequest.Col2.Row2 = styled.div`
-margin-top:5%;
 margin-bottom:8%;
 color:#AAABB0;
+@media(max-width:1000px){
+  margin-bottom:2%;
+  font-size:14px;
+}
+
 @media(max-width:560px){
     display:flex;
     flex-direction:column;
@@ -47,6 +59,7 @@ width:30px;
 height:30px;
 margin-right:1%;
 background-color:none;
+
 `;
 const Paragraph = styled.p`
 display:flex;
@@ -57,6 +70,9 @@ FullRequest.Col3 = styled.div`
 display:flex;
 align-items:center;
 width:20%;
+@media(max-width:1000px){
+ width:30%;
+}
 @media(max-width:560px){
     display:flex;
     align-items:center;
@@ -77,6 +93,15 @@ const Submit = styled.button`
     border-radius: 5px;
     cursor:pointer;
     outline:none;
+    @media(max-width:1000px){
+      display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:14px;
+    width:80%;
+    height:30px;
+    border-radius:20px;
+}
     @media(max-width:560px){
     display:flex;
     align-items:center;

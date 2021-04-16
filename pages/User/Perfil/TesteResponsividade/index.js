@@ -70,23 +70,15 @@
 // // }
 
 import React from 'react';
-import styled from 'styled-components';
-import MySellerRequest from '../../../../src/components/MySellerRequest';
-
-const Container = styled.div`
-display:flex;
-align-items:center;
-justify-content:center;
-width:100%;
-flex-direction:column;
-`;
+// import styled from 'styled-components';
+import MySalesMonth from '../../../../src/components/MySalesMonth';
 
 export default function MyDatasMobile() {
   return (
     <div>
-      <Container>
-        <MySellerRequest />
-      </Container>
+
+      <MySalesMonth />
+
     </div>
   );
 }

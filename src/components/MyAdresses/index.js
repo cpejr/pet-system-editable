@@ -5,22 +5,35 @@ import { MdEdit } from 'react-icons/md';
 const ContainerAdresses = styled.div`
 display:flex;
 width:100%;
+align-items:center;
 flex-direction:row;
 justify-content:center;
 margin-top:2%;
+@media(max-width:1075px){
+flex-direction:column;
+}
 `;
 
 const BoxAdress = styled.div`
 display:flex;
+align-items:center;
+justify-content:center;
 flex-direction:column;
 width:25%;
 border-color:black;
 border-radius:5px;
-align-items:center;
 line-height:20%;
 border-style: solid;
 border-width:1px;
 margin-right:2%;
+@media(max-width:10750px){
+width:50%;
+margin-bottom:2%;
+}
+@media(max-width:560px){
+width:80%;
+margin-bottom:2%;
+}
 `;
 
 const RowEdit = styled.div`

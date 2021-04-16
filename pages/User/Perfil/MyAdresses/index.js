@@ -5,6 +5,7 @@ import Header from '../../../../src/components/Header';
 import MyAdresses from '../../../../src/components/MyAdresses';
 import MyLogOut from '../../../../src/components/MyLogOut';
 import WordsDivider from '../../../../src/components/WordsDivider';
+import FooterMobile from '../../../../src/components/Mobile/FooterMobile';
 
 const Title = styled.h1`
 align-items:initial;
@@ -13,6 +14,12 @@ margin-left:5%;
 margin-top:2%;
 margin-bottom:1%;
 font-family: Roboto;
+@media(max-width:560px){
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-bottom:2%;
+    }
 `;
 
 const SubTitle = styled.div`
@@ -20,6 +27,11 @@ align-items:initial;
 display:flex;
 margin-left:8%;
 font-family: Roboto;
+@media(max-width:560px){
+  align-items:center;
+  justify-content:center;
+  margin:0;
+}
 `;
 const Section = styled.button`
 display:flex;
@@ -78,6 +90,7 @@ export default function Perfil() {
 
         </SubTitle>
         <MyAdresses />
+        <FooterMobile />
       </createGlobalStyle>
 
     </div>
