@@ -212,7 +212,6 @@ export default function Signup() {
                         placeholder="(00)"
                         pattern="[0-9]$"
                         required="true"
-                        title="Digite um email válido"
                       />
                     </MyFormGroup>
                   </DDD>
@@ -223,7 +222,6 @@ export default function Signup() {
                       placeholder="00000-0000"
                       pattern="[0-9]$"
                       required="true"
-                      title="Digite um email válido"
                     />
                   </MyFormGroup>
                 </Phone>
