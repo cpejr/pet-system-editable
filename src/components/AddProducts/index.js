@@ -19,6 +19,8 @@ align-items: center;
 justify-content: center;
 width: 60%;
 flex-direction: row;
+
+
  
 `;
 FormContainer.Col1 = styled.div`
@@ -53,7 +55,12 @@ const Button = styled.button`
     justify-content: center;
     text-align: center;
 `;
-Button.cancell = styled.button`
+const FormControlDescription = styled(FormControl)`
+     height: 200px;
+     display: flex;
+`;
+
+const ButtonCancell = styled(Button)`
     display:flex;
     align-items: center;
     flex-direction:row;
@@ -101,19 +108,18 @@ export default function AddProducts() {
             <Row>
               <Col>
                 <FormLabel>Preço:</FormLabel>
-                <FormControl type="number" placeholder="R$ 000,00" />
+                <FormControl type="numbers" placeholder="R$ 000,00" />
               </Col>
               <Col>
                 <FormLabel>Desconto:</FormLabel>
-                <FormControl type="number" placeholder="00,00%" />
+                <FormControl type="numbers" placeholder="00,00%" />
               </Col>
             </Row>
 
             <FormLabel>
               Descrição do Produto:
             </FormLabel>
-            <FormControl type="text" />
-            <Col />
+            <FormControlDescription as="textarea" type="text" />
           </FormContainer.Col1>
           <FormContainer.Col2>
 
@@ -123,9 +129,9 @@ export default function AddProducts() {
                 <FormFile.Input />
               </FormFile>
             </File>
-            <Button.cancell variant="primary" type="submit">
+            <ButtonCancell variant="primary" type="submit">
               Cancelar Cadastro
-            </Button.cancell>
+            </ButtonCancell>
 
             <Button variant="primary" type="submit">
               Confirmar Cadastro
