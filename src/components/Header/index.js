@@ -180,15 +180,15 @@ export default function Header() {
         <FiLogIn size="30" color="#AA4545" />
       </Header.Top>
       <Header.Bottom>
-        <ItemBottomHeader>Ração</ItemBottomHeader>
+        <ItemBottomHeader>Rações</ItemBottomHeader>
+        <ItemBottomHeader>Petiscos</ItemBottomHeader>
         <ItemBottomHeader>Brinquedos</ItemBottomHeader>
+        <ItemBottomHeader>Banhos</ItemBottomHeader>
+        <ItemBottomHeader>Tosa</ItemBottomHeader>
+        <ItemBottomHeader>Shampoos</ItemBottomHeader>
+        <ItemBottomHeader>Perfumes</ItemBottomHeader>
         <ItemBottomHeader>Vasilhas</ItemBottomHeader>
         <ItemBottomHeader>Casinhas</ItemBottomHeader>
-        <ItemBottomHeader>Petiscos</ItemBottomHeader>
-        <ItemBottomHeader>Shampoo</ItemBottomHeader>
-        <ItemBottomHeader>Perfumes</ItemBottomHeader>
-        <ItemBottomHeader>Banho</ItemBottomHeader>
-        <ItemBottomHeader>Tosa</ItemBottomHeader>
         <ItemBottomHeader>Outros serviços</ItemBottomHeader>
       </Header.Bottom>
     </Header.Wrapper>
