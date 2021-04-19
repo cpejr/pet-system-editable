@@ -12,6 +12,16 @@ margin-bottom:2%;
 border-style:solid;
 border-width:1px;  
 border-color:${({ theme }) => theme.colors.borderBoxColor};
+@media(max-width:560px){
+  width:100%;
+  margin-top:0%;
+margin-bottom:0%;
+border-top:none;
+border-left:none;
+border-right:none;
+
+}
+
 `;
 
 ProductContainer.Col1 = styled.div`
@@ -27,6 +37,10 @@ align-items:center;
 justify-content:center;
 flex-direction:column;
 width:70%;
+@media(max-width:560px){
+  font-size:14px;
+}
+
 `;
 ProductContainer.Col3 = styled.div`
 display:flex;

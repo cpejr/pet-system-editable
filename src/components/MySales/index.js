@@ -7,14 +7,37 @@ const DividerContainer = styled.div`
 display:flex;
 align-items:center;
 justify-content:center;
-width:90%;
+width:100%;
+@media(max-width:960px){
+  flex-direction:column;
+}
+@media(max-width:560px){
+    width:100%;
+    flex-direction:column;
+    }
 `;
 
 DividerContainer.Col1 = styled.div`
-width:70%;
+width:10%;
+
 `;
 DividerContainer.Col2 = styled.div`
 width:30%;
+@media(max-width:960px){
+    width:70%;
+    }
+@media(max-width:560px){
+    width:90%;
+    }
+`;
+DividerContainer.Col3 = styled.div`
+width:60%;
+@media(max-width:960px){
+    width:100%;
+    }
+@media(max-width:560px){
+    width:100%;
+    }
 `;
 
 const BodyContainer = styled.div`
@@ -36,6 +59,9 @@ height:100%;
 border-style:solid;
 border-width:1px;   
 border-color:${({ theme }) => theme.colors.borderBoxColor};
+@media(max-width:560px){
+    width:90%;
+    }
 `;
 
 const UserBox = styled.div`
@@ -47,6 +73,14 @@ justify-content:center;
 border-bottom-style:solid;
 border-bottom-width:1px;
 border-bottom-color:${({ theme }) => theme.colors.borderBoxColor};
+@media(max-width:960px){
+  font-size:13px;
+
+}
+@media(max-width:560px){
+  font-size:13px;
+
+}
 `;
 
 UserBox.Col1 = styled.p`
@@ -71,7 +105,12 @@ export default function MySellerRequest() {
   return (
     <div>
       <DividerContainer>
-        <DividerContainer.Col1>
+        <DividerContainer.Col1 />
+        <DividerContainer.Col2>
+          <MySalesMonth />
+        </DividerContainer.Col2>
+
+        <DividerContainer.Col3>
           <BodyContainer>
             <RequestContainer>
               <UserBox>
@@ -82,11 +121,8 @@ export default function MySellerRequest() {
               <MyProductRequestSmall />
             </RequestContainer>
           </BodyContainer>
-        </DividerContainer.Col1>
 
-        <DividerContainer.Col2>
-          <MySalesMonth />
-        </DividerContainer.Col2>
+        </DividerContainer.Col3>
       </DividerContainer>
     </div>
   );

@@ -6,6 +6,7 @@ import WordsDivider from '../../../../src/components/WordsDivider';
 import MySales from '../../../../src/components/MySales';
 import MySearchDateMonth from '../../../../src/components/MySearchDateMonth';
 import MySearchDateYear from '../../../../src/components/MySearchDateYear';
+import FooterMobile from '../../../../src/components/Mobile/FooterMobile';
 
 const Title = styled.h1`
 align-items:initial;
@@ -14,6 +15,12 @@ margin-left:5%;
 margin-top:2%;
 margin-bottom:1%;
 font-family: Roboto;
+@media(max-width:560px){
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-bottom:2%;
+    }
 `;
 
 const SubTitle = styled.div`
@@ -21,6 +28,12 @@ align-items:initial;
 display:flex;
 margin-left:8%;
 font-family: Roboto;
+@media(max-width:560px){
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:0;
+    }
 `;
 const Section = styled.button`
 display:flex;
@@ -63,17 +76,29 @@ display:flex;
 align-items:center;
 justify-content:flex-end;
 width:30%;
+@media(max-width:560px){
+  justify-content:center;
+  width:45%;
+}
 `;
 ContainerDate.Col2 = styled.div`
 display:flex;
 align-items:center;
 justify-content:center;
 width:4%;
+@media(max-width:560px){
+  justify-content:center;
+  width:10%;
+}
 `;
 ContainerDate.Col3 = styled.div`
 display:flex;
 align-items:center;
 width:66%;
+@media(max-width:560px){
+  justify-content:center;
+  width:45%;
+}
 `;
 
 export default function Perfil() {
@@ -111,6 +136,7 @@ export default function Perfil() {
         </ContainerDate>
 
         <MySales />
+        <FooterMobile />
       </createGlobalStyle>
 
     </div>
