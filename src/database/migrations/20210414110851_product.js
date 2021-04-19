@@ -8,7 +8,7 @@ exports.up = function (knex) {
     table.float('discount').notNullable();
     table.string('description').notNullable();
     table.string('img').notNullable();
-    table.timeStramp('crated_at').notNullable().defaultTo(knex.fn.now());
+    table.timestamp('created_at').notNullable().defaultTo(knex.fn.now());
   });
 };
 

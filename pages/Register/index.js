@@ -58,9 +58,7 @@ const DDD = styled.div`
 flex-direction:row ;
 display: flex;
 margin-right: 10px;
-  
 `;
-
 const EmailFormControl = styled(FormControl)`
 display: flex;
 width: 430px;
@@ -142,23 +140,42 @@ export default function Signup() {
 
   async function handleSubmit(event) {
     event.preventDefault();
+    if (cpf?.length !== 11) {
+      alert('CPF inválido');
+      return;
+    }
+    if (telephone?.length !== 9) {
+      alert('Número inválido');
+      return;
+    }
+    if (ddd?.length !== 2) {
+      alert('Número inválido');
+      return;
+    }
+    if (confirmPassword !== password) {
+      alert('A senha inserida deve ser a mesma');
+      return;
+    }
     const body = {
-      name,
-      lastName,
-      date,
+      type: 'buyer',
+      first_name: name,
+      last_name: lastName,
+      birth_date: date,
       email,
       password,
-      confirmPassword,
       cpf,
-      ddd,
-      telephone,
+      telephone: ddd + telephone,
     };
-    const Validate = await axios.post('http:/localhost:3000/api/register', body);
-    console.log(Validate.data);
+    try {
+      const Validate = await axios.post('/api/user', body);
+      console.log(Validate.data);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return (
-    <div>
+    <>
       <Header />
       <Body>
         <Body.Left>
@@ -177,7 +194,7 @@ export default function Signup() {
                   <FormControl
                     type="text"
                     placeholder="Nome"
-                    required="true"
+                    required
                     value={name}
                     onChange={handleNameChange}
                   />
@@ -187,7 +204,7 @@ export default function Signup() {
                   <FormControl
                     type="text"
                     placeholder="Sobrenome"
-                    required="true"
+                    required
                     value={lastName}
                     onChange={handleLastNameChange}
                   />
@@ -212,7 +229,7 @@ export default function Signup() {
                   type="email"
                   placeholder="Email"
                   pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-                  required="true"
+                  required
                   title="Digite um email válido"
                   value={email}
                   onChange={handleEmailChange}
@@ -224,7 +241,7 @@ export default function Signup() {
                   <FormControl
                     type="password"
                     placeholder="Senha"
-                    required="true"
+                    required
                     pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                     title="Deve conter pelo menos um número e uma letra maiúscula e minúscula e pelo menos 8 ou mais caracteres"
                     value={password}
@@ -236,7 +253,7 @@ export default function Signup() {
                   <FormControl
                     type="password"
                     placeholder="Senha"
-                    required="true"
+                    required
                     pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                     value={confirmPassword}
                     onChange={handleConfirmPasswordChange}
@@ -250,7 +267,7 @@ export default function Signup() {
                     type="number"
                     placeholder="CPF"
                     pattern="[0-9]$"
-                    required="true"
+                    required
                     title="Digite um CPF válido"
                     value={cpf}
                     onChange={handleCpfChange}
@@ -264,7 +281,7 @@ export default function Signup() {
                         type="numbers"
                         placeholder="(00)"
                         pattern="[0-9]$"
-                        required="true"
+                        required
                         value={ddd}
                         onChange={handleDddChange}
                       />
@@ -276,7 +293,7 @@ export default function Signup() {
                       type="number"
                       placeholder="00000-0000"
                       pattern="[0-9]$"
-                      required="true"
+                      required
                       value={telephone}
                       onChange={handleTelephoneChange}
                     />
@@ -297,6 +314,6 @@ export default function Signup() {
         </Body.Right>
 
       </Body>
-    </div>
+    </>
   );
 }
