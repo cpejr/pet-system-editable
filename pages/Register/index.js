@@ -10,8 +10,10 @@ import 'date-fns';
 import DateFnsUtils from '@date-io/date-fns';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import axios from 'axios';
 import Header from '../../src/components/Header';
 import Body from '../../src/components/Body';
+import WindowDivider from '../../src/components/WindowDivider';
 
 const WordFormGroup = styled(FormGroup)`
 display : flex;
@@ -109,22 +111,61 @@ export default function Signup() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [cpf, setCpf] = useState('');
-  const [ddd, setddd] = useState('');
+  const [ddd, setDdd] = useState('');
   const [telephone, setTelephone] = useState('');
   const [date, setDate] = useState(new Date());
 
-  function handleEmailChange(event) {
-
+  function handleNameChange(event) {
+    setName(event.target.value);
   }
+  function handleLastNameChange(event) {
+    setLastName(event.target.value);
+  }
+  function handleEmailChange(event) {
+    setEmail(event.target.value);
+  }
+  function handlePasswordChange(event) {
+    setPassword(event.target.value);
+  }
+  function handleConfirmPasswordChange(event) {
+    setConfirmPassword(event.target.value);
+  }
+  function handleCpfChange(event) {
+    setCpf(event.target.value);
+  }
+  function handleDddChange(event) {
+    setDdd(event.target.value);
+  }
+  function handleTelephoneChange(event) {
+    setTelephone(event.target.value);
+  }
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+    const body = {
+      name,
+      lastName,
+      date,
+      email,
+      password,
+      confirmPassword,
+      cpf,
+      ddd,
+      telephone,
+    };
+    const Validate = await axios.post('http:/localhost:3000/api/register', body);
+    console.log(Validate.data);
+  }
+
   return (
-    <>
+    <div>
       <Header />
       <Body>
         <Body.Left>
 
           <Image src="/images/doguinho.jpg" alt="" width="420" height="363" />
         </Body.Left>
-        <hr width="0" display="block" size="600" />
+        <WindowDivider />
         <Body.Right>
           <Register>
             <FormRegister>
@@ -137,6 +178,8 @@ export default function Signup() {
                     type="text"
                     placeholder="Nome"
                     required="true"
+                    value={name}
+                    onChange={handleNameChange}
                   />
                 </MyFormGroup>
                 <SobreFormGroup>
@@ -145,12 +188,14 @@ export default function Signup() {
                     type="text"
                     placeholder="Sobrenome"
                     required="true"
+                    value={lastName}
+                    onChange={handleLastNameChange}
                   />
                 </SobreFormGroup>
               </Name>
 
               <MyFormGroup>
-                <label>Data de Nascimento</label>
+                <FormLabel>Data de Nascimento</FormLabel>
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
                   <KeyboardDatePicker
                     value={date}
@@ -169,6 +214,8 @@ export default function Signup() {
                   pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                   required="true"
                   title="Digite um email válido"
+                  value={email}
+                  onChange={handleEmailChange}
                 />
               </MyFormGroup>
               <Pass>
@@ -180,6 +227,8 @@ export default function Signup() {
                     required="true"
                     pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                     title="Deve conter pelo menos um número e uma letra maiúscula e minúscula e pelo menos 8 ou mais caracteres"
+                    value={password}
+                    onChange={handlePasswordChange}
                   />
                 </MyFormGroup>
                 <WordFormGroup>
@@ -189,6 +238,8 @@ export default function Signup() {
                     placeholder="Senha"
                     required="true"
                     pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                    value={confirmPassword}
+                    onChange={handleConfirmPasswordChange}
                   />
                 </WordFormGroup>
               </Pass>
@@ -201,6 +252,8 @@ export default function Signup() {
                     pattern="[0-9]$"
                     required="true"
                     title="Digite um CPF válido"
+                    value={cpf}
+                    onChange={handleCpfChange}
                   />
                 </MyFormGroup>
                 <Phone>
@@ -212,6 +265,8 @@ export default function Signup() {
                         placeholder="(00)"
                         pattern="[0-9]$"
                         required="true"
+                        value={ddd}
+                        onChange={handleDddChange}
                       />
                     </MyFormGroup>
                   </DDD>
@@ -222,17 +277,19 @@ export default function Signup() {
                       placeholder="00000-0000"
                       pattern="[0-9]$"
                       required="true"
+                      value={telephone}
+                      onChange={handleTelephoneChange}
                     />
                   </MyFormGroup>
                 </Phone>
               </NumbersForms>
-              <RegisterButton type="submit" variant="primary">Finalizar</RegisterButton>
+              <RegisterButton type="submit" variant="primary" onClick={handleSubmit}>Finalizar</RegisterButton>
 
               <br />
               <FormGroup>
                 <FormLabel align="center">
                   Você já tem Cadastro?
-                  <Link href="/"><a>Login</a></Link>
+                  <Link href="/login"><p>Login</p></Link>
                 </FormLabel>
               </FormGroup>
             </FormRegister>
@@ -240,6 +297,6 @@ export default function Signup() {
         </Body.Right>
 
       </Body>
-    </>
+    </div>
   );
 }
