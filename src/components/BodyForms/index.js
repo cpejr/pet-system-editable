@@ -15,7 +15,7 @@ Body.Left = styled.div`
     width: 50%;
     margin: 10px;
 
-    @media screen and (max-width: 800px) {
+    @media screen and (max-width: 560px) {
         display: none !important;
     }
 `;
@@ -32,10 +32,14 @@ Body.Right = styled.div`
 export const Formulary = styled.div`
   align-items: center;
   justify-content: center;
-  width: 550px;
+  width: 560px;
   border: 1px;
   margin: 10px;
   //background-color: yellow;
+    @media screen and (max-width: 560px) {
+        // completar
+    }
+
 `;
 
 export const TopFormulary = styled.div`
