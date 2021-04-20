@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
 import axios from 'axios';
-import Link from 'next/link';
+import Form from 'react-bootstrap/Form';
 import Header from '../../src/components/Header';
 import Body from '../../src/components/Body';
 
@@ -85,21 +85,16 @@ const Login = () => {
   function handleEmailChange(event) {
     setEmail(event.target.value);
   }
-
   function handlePasswordChange(event) {
     setPassword(event.target.value);
   }
-
   async function handleSubmit(event) {
     try {
       event.preventDefault();
-
       const resp = await axios.post('http://localhost:3000/api/login', { email, password });
-
       localStorage.setItem('accessToken', resp.data.accessToken);
-      console.log(localStorage.getItem('accessToken'));
     } catch (error) {
-      console.error(error);
+      console.error(error); //eslint-disable-line
     }
   }
 
@@ -118,27 +113,14 @@ const Login = () => {
           <Title>Bem vindo de volta!</Title>
           <Subtitle>Por favor, entre com seu email e sua senha:</Subtitle>
 
-          <Fields>
-            <form onSubmit={handleSubmit}>
-              <TextBox
-                type="email"
-                placeholder="Email"
-                value={email}
-                onChange={handleEmailChange}
-              />
-              <TextBox
-                type="password"
-                placeholder="Senha"
-                value={password}
-                onChange={handlePasswordChange}
-              />
-              <button type="submit">Enviar</button>
-            </form>
-            <ForgotPassword>Esqueceu a senha?</ForgotPassword>
-          </Fields>
-          <Link href="http://localhost:3000/api/login">
-            <Submit onClick="location.href='http://localhost:3000/api/login'">Próximo</Submit>
-          </Link>
+          <Form>
+            <Fields>
+              <TextBox type="email" placeholder="Email" value={email} onChange={handleEmailChange} />
+              <TextBox type="password" placeholder="Senha" value={password} onChange={handlePasswordChange} />
+              <ForgotPassword>Esqueceu a senha?</ForgotPassword>
+            </Fields>
+            <Submit onClick={handleSubmit}>Próximo</Submit>
+          </Form>
           <UnderFields>
             <CreateAccount>Não tem uma conta?</CreateAccount>
             <CreateAccount.Right>Cadastre-se</CreateAccount.Right>

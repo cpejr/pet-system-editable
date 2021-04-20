@@ -12,6 +12,7 @@ Header.Wrapper = styled.div`
     width: 100%;
     height: 20vh;
     flex-direction: column;
+    flex-direction: column;
     @media(max-width:560px){
     display:none;
     }
@@ -111,7 +112,7 @@ const YourSpaceContainer = styled.div`
 display:flex;
 align-items:center;
 justify-content:center;
-width:10%;
+width:11%;
 height:100%;
 `;
 
@@ -172,7 +173,7 @@ export default function Header() {
           <YourSpace>
             <BsFillPersonFill />
             <YourSpace.Word>
-              Perfil
+              Seu espaço
             </YourSpace.Word>
           </YourSpace>
         </YourSpaceContainer>
@@ -180,15 +181,15 @@ export default function Header() {
         <FiLogIn size="30" color="#AA4545" />
       </Header.Top>
       <Header.Bottom>
-        <ItemBottomHeader>Rações</ItemBottomHeader>
-        <ItemBottomHeader>Petiscos</ItemBottomHeader>
+        <ItemBottomHeader>Ração</ItemBottomHeader>
         <ItemBottomHeader>Brinquedos</ItemBottomHeader>
-        <ItemBottomHeader>Banhos</ItemBottomHeader>
-        <ItemBottomHeader>Tosa</ItemBottomHeader>
-        <ItemBottomHeader>Shampoos</ItemBottomHeader>
-        <ItemBottomHeader>Perfumes</ItemBottomHeader>
         <ItemBottomHeader>Vasilhas</ItemBottomHeader>
         <ItemBottomHeader>Casinhas</ItemBottomHeader>
+        <ItemBottomHeader>Petiscos</ItemBottomHeader>
+        <ItemBottomHeader>Shampoo</ItemBottomHeader>
+        <ItemBottomHeader>Perfumes</ItemBottomHeader>
+        <ItemBottomHeader>Banho</ItemBottomHeader>
+        <ItemBottomHeader>Tosa</ItemBottomHeader>
         <ItemBottomHeader>Outros serviços</ItemBottomHeader>
       </Header.Bottom>
     </Header.Wrapper>

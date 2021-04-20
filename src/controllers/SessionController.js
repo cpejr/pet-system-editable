@@ -19,7 +19,7 @@ module.exports = {
 
         return res.status(200).json({ accessToken, user });
       } catch (error) {
-        console.log(error);
+        console.log(error); //eslint-disable-line
         return res.status(400).json({ message: 'Email ou senha incorreto' });
       }
     } catch (error) {

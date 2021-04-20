@@ -11,4 +11,19 @@ module.exports = {
     NEXT_PUBLIC_FIREBASE_MEASUREMENTID: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENTID,
     NEXT_PUBLIC_JWT_SECRET: process.env.NEXT_PUBLIC_JWT_SECRET,
   },
+  async redirects() {
+    return [
+      {
+        source: '/User/Perfil',
+        destination: '/User/Perfil/MyRequests',
+        permanent: true,
+      },
+      {
+        source: '/Seller/Perfil',
+        destination: '/Seller/Perfil/Store',
+        permanent: true,
+      },
+    ];
+  },
+
 };

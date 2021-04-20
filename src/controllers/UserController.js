@@ -42,7 +42,7 @@ module.exports = {
 
       return response.status(200).json({ message: 'Sucesso!' });
     } catch (error) {
-      console.error(error);
+      console.error(error); //eslint-disable-line
       return response.status(500).json({ notification: 'Internal server error while trying to delete user' });
     }
   },
@@ -69,7 +69,7 @@ module.exports = {
       await UserModel.updateUser(newUser, id);
       return response.status(200).json({ message: 'Sucesso!' });
     } catch (error) {
-      console.error(error);
+      console.error(error); //eslint-disable-line
       return response.status(500).json({ notification: 'Internal server error while trying to delete user' });
     }
   },
