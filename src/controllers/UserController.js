@@ -1,13 +1,18 @@
-const FirebaseModel = require('../models/FirebaseModel');
-const UserModel = require('../models/UserModel');
+import FirebaseModel from '../models/FirebaseModel';
+import UserModel from '../models/UserModel';
+
+import { withAuthValidation } from './SessionController'; //eslint-disable-line
 
 module.exports = {
 
-  async getOne(request, response) {
-    const { id } = request.params;
-    const users = await UserModel.getUserById(id);
-    return response.json(users);
-  },
+  getOne: withAuthValidation(async (request, response) => {
+    const { id } = request.query;
+    if (id === request.session.get('user').user.firebase_id) {
+      const users = await UserModel.getUserById(id);
+      return response.status(200).json(users);
+    }
+    return response.status(400).json({ Message: 'Unauthorized' });
+  }),
 
   async create(request, response) {
     const user = request.body;

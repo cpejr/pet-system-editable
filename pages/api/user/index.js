@@ -1,9 +1,8 @@
-import { create } from '../../src/controllers/UserController';
+import { create } from '../../../src/controllers/UserController';
 
 export default function handler(req, res) {
   try {
     const { method } = req;
-    console.log(method);
     if (method === 'POST') {
       return create(req, res);
     }
