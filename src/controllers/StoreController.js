@@ -4,8 +4,8 @@ const FireBaseModel = require('../models/FirebaseModel');
 
 module.exports = {
   async getOne(request, response) {
-    const { id } = request.params;
-    const store = await StoreModel.getStoreById(id);
+    const { store_id } = request.body;
+    const store = await StoreModel.getStoreById(store_id);
     return response.json(store);
   },
 
@@ -71,5 +71,19 @@ module.exports = {
       return response.status(500).json({ notification: 'Internal server error while trying to register user' });
     }
     return response.status(200).json({ notification: 'Usuario e loja criada!' });
+  },
+
+  async update(request, response) {
+    const store = request.body;
+
+    try {
+      await StoreModel.updateStore(store, store.store_id);
+    } catch (err) {
+      if (err.message) {
+        return response.status(400).json({ notification: err.message });
+      }
+      return response.status(500).json({ notification: 'Internal server error while trying to update store' });
+    }
+    return response.status(200).json({ notification: 'Loja alterada com sucesso!' });
   },
 };

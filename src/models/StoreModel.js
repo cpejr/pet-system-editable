@@ -36,10 +36,10 @@ module.exports = {
     }
   },
 
-  async updateUser(store, store_id) {
+  async updateStore(store, id) {
     try {
       const response = await connection('Store')
-        .where({ id: store_id })
+        .where({ store_id: id })
         .update(store);
       return response;
     } catch (error) {
