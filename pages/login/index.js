@@ -4,7 +4,12 @@ import Image from 'next/image';
 import axios from 'axios';
 import Form from 'react-bootstrap/Form';
 import Header from '../../src/components/Header';
-import Body from '../../src/components/Body';
+import {
+  Body, Formulary, TopFormulary, ItemFormulary, BottomFormulary, UnderFields,
+} from '../../src/components/BodyForms';
+import {
+  TitleLogin, SubtitleLogin, TextBox, Submit, ForgotPassword, CreateAccount, Divider,
+} from '../../src/components/FormComponents';
 
 const Fields = styled.div`
     align-items: center;

@@ -1,6 +1,6 @@
 import {
   create, deleteBoth, getOne, update,
-} from '../../src/controllers/UserController';
+} from '../../src/controllers/StoreController';
 
 export default function handler(req, res) {
   try {
