@@ -24,10 +24,10 @@ module.exports = {
     }
   },
 
-  async deleteStore(store_id) {
+  async deleteStore(id) {
     try {
       const response = await connection('Store')
-        .where({ id: store_id })
+        .where({ store_id: id })
         .delete();
       return response;
     } catch (error) {

@@ -1,6 +1,7 @@
 const StoreModel = require('../models/StoreModel');
 const UserModel = require('../models/UserModel');
 const FireBaseModel = require('../models/FirebaseModel');
+const FirebaseModel = require('../models/FirebaseModel');
 
 module.exports = {
   async getOne(request, response) {
@@ -10,41 +11,44 @@ module.exports = {
   },
 
   async create(request, response) {
-    const {
-      email, password, cpf, birth_date, first_name, last_name, type, created_at,
-    } = request.body;
+    const info = request.body;
+    let firebase_id;
 
-    const {
-      store_id, company_name, telephone, cellphone, cep, cnpj, ie, ie_state, cover_img, logo_img, evaluation, status,
-    } = request.body;
-
-    const userInfo = { email, password };
     const user = {
-      email, password, cpf, birth_date, first_name, last_name, type, created_at,
+      email: info.email,
+      password: info.password,
+      cpf: info.cpf,
+      birth_date: info.birth_date,
+      first_name: info.first_name,
+      last_name: info.last_name,
+      type: info.type,
+      created_at: info.created_at,
     };
 
     const store = {
-      store_id,
-      company_name,
-      email,
-      telephone,
-      cellphone,
-      cnpj,
-      cep,
-      ie,
-      ie_state,
-      cover_img,
-      logo_img,
-      created_at,
-      evaluation,
-      status,
+      store_id: info.store_id,
+      company_name: info.company_name,
+      email: info.email,
+      telephone: info.telephone,
+      cellphone: info.cellphone,
+      cnpj: info.cnpj,
+      cep: info.cep,
+      ie: info.ie,
+      ie_state: info.ie_state,
+      cover_img: info.cover_img,
+      logo_img: info.logo_img,
+      created_at: info.created_at,
+      evaluation: info.evaluation,
+      status: info.status,
     };
 
-    let firebase_id;
+    console.log('Info: ', info);
+    console.log('User: ', user);
+    console.log('Store: ', store);
 
     // Criacao do Usuario
     try {
-      firebase_id = await FireBaseModel.createNewUser(userInfo.email, userInfo.password);
+      firebase_id = await FireBaseModel.createNewUser(user.email, user.password);
       user.firebase_id = firebase_id;
       delete user.password;
       await UserModel.createNewUser(user);
@@ -68,9 +72,9 @@ module.exports = {
       if (err.message) {
         return response.status(400).json({ notification: err.message });
       }
-      return response.status(500).json({ notification: 'Internal server error while trying to register user' });
+      return response.status(500).json({ notification: 'Internal server error while trying to register store' });
     }
-    return response.status(200).json({ notification: 'Usuario e loja criada!' });
+    return response.status(200).json({ notification: 'User and store created' });
   },
 
   async update(request, response) {
@@ -84,6 +88,47 @@ module.exports = {
       }
       return response.status(500).json({ notification: 'Internal server error while trying to update store' });
     }
-    return response.status(200).json({ notification: 'Loja alterada com sucesso!' });
+    return response.status(200).json({ notification: 'Store updated' });
+  },
+
+  async deleteBoth(request, response) {
+    const { user_id, store_id } = request.body;
+    // Checagem no banco de dados - Corrigir depois
+    /*
+    try {
+      const store = StoreModel.getStoreById(store_id);
+      console.log(store);
+      console.log('User id passado: ', user_id);
+      console.log('User id do banco de dados: ', store.user_id);
+      if (store.user_id !== user_id) {
+        console.log('User id is not correct');
+      }
+    } catch (err) {
+      if (err.message) {
+        return response.status(400).json({ notification: err.message });
+      }
+      return response.status(500).json({ notification: 'Internal server error while trying to search store' });
+    }
+    */
+    // Apagando Usuario do Firebase e do Banco de Dados
+    try {
+      await FirebaseModel.deleteUser(user_id);
+      await UserModel.deleteUser(user_id);
+    } catch (err) {
+      if (err.message) {
+        return response.status(400).json({ notification: err.message });
+      }
+      return response.status(500).json({ notification: 'Internal server error while trying to delete users store' });
+    }
+    // Apagando Loja do Bando de Dados
+    try {
+      await StoreModel.deleteStore(store_id);
+    } catch (err) {
+      if (err.message) {
+        return response.status(400).json({ notification: err.message });
+      }
+      return response.status(500).json({ notification: 'Internal server error while trying to delete store' });
+    }
+    return response.status(200).json({ notification: 'User and store were deleted' });
   },
 };

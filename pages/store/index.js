@@ -132,7 +132,7 @@ export default function Store() {
               </ItemFormulary>
               <ItemFormulary>
                 <Text>DDD + telephone: *</Text>
-                <TextBox type="text" placeholder="(31)99999-9999" onChange={handleTelephoneChange} value={telephone} />
+                <TextBox type="text" placeholder="(31)99999-9999" data-mask="(__)_____-____" maxLength="14" onChange={handleTelephoneChange} value={telephone} />
               </ItemFormulary>
             </DividedItemFormulary>
 
