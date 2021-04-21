@@ -28,10 +28,10 @@ module.exports = {
     }
   },
 
-  async deleteUser(user_id) {
+  async deleteUser(id) {
     try {
       const response = await connection('Users')
-        .where({ id: user_id })
+        .where({ firebase_id: id })
         .delete();
       return response;
     } catch (error) {

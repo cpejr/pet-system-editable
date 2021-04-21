@@ -31,38 +31,44 @@ module.exports = {
     return response.status(200).json({ notification: 'Usuario criado!' });
   },
 
-  async delete(request, response) {
+  async deleteUser(req, res) {
     try {
-      const { id } = request.params;
-      const user = await UserModel.getUserById(id);
+      const { id } = req.body;
+      console.log(req.body);
 
-      await FirebaseModel.deleteUser(user.firebase);
-      await UserModel.deleteUser(id);
-
-      return response.status(200).json({ message: 'Sucesso!' });
+      try {
+        // await FirebaseModel.deleteUser(id);
+        // await UserModel.getUserById(id);
+        await UserModel.deleteUser(id);
+        return res.status(200).json({ message: 'Sucesso!' });
+      } catch (error) {
+        console.error(error);
+        return res.status(400).json({ message: 'User id incorreto' });
+      }
     } catch (error) {
       console.error(error);
-      return response.status(500).json({ notification: 'Internal server error while trying to delete user' });
+      return res.status(500).json({ notification: 'Internal server error while trying to delete user' });
     }
   },
 
   async update(request, response) {
     try {
-      const { id } = request.params;
+      const { id } = request.body;
       const newUser = request.body;
       const { password, email } = request.body;
+      let firebase_id;
 
       if (password) {
-        const user = await UserModel.getUserById(id);
+        firebase_id = await FirebaseModel.changeUserPassword(firebaseId, password);
+        const user = await UserModel.getUserById(firebase_id);
         const firebaseId = user.firebase;
-        await FirebaseModel.changeUserPassword(firebaseId, password);
         delete newUser.password;
       }
 
       if (email) {
-        const user = await UserModel.getUserById(id);
+        firebase_id = await FirebaseModel.changeUserEmail(firebaseId, email);
+        const user = await UserModel.getUserById(firebase_id);
         const firebaseId = user.firebase;
-        await FirebaseModel.changeUserEmail(firebaseId, email);
       }
 
       await UserModel.updateUser(newUser, id);
