@@ -46,28 +46,22 @@ module.exports = {
     }
   },
 
-  async changeUserEmail(uid, newEmail) {
-    admin.auth().updateUser(uid, {
-      email: newEmail,
-    })
-      .then((result) => result)
-      .catch((error) => {
-        console.error(error);
-        const errorMessage = error.message;
-        throw new Error(errorMessage);
-      });
+  async changeUserEmail(id, newEmail) {
+    try {
+      const result = await admin.auth().updateUser(id, newEmail);
+      return result;
+    } catch (error) {
+      throw new Error(error);
+    }
   },
 
   async changeUserPassword(id, newPassword) {
-    admin.auth().updateUser(id, {
-      password: newPassword,
-    })
-      .then((result) => result)
-      .catch((error) => {
-        console.error(error);
-        const errorMessage = error.message;
-        throw new Error(errorMessage);
-      });
+    try {
+      const result = await admin.auth().updateUser(id, newPassword);
+      return result;
+    } catch (error) {
+      throw new Error(error);
+    }
   },
 
   async login(email, password) {

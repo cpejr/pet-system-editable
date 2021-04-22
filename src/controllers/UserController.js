@@ -35,7 +35,7 @@ module.exports = {
     const { firebase_id } = request.body;
 
     try {
-      await FirebaseModel.deleteUser(firebase_id);
+      // await FirebaseModel.deleteUser(firebase_id);
       await UserModel.deleteUser(firebase_id);
     } catch (err) {
       if (firebase_id) {
@@ -51,16 +51,31 @@ module.exports = {
 
   async update(request, response) {
     const user = request.body;
+    const newEmail = request.body;
 
     try {
       await UserModel.updateUser(user, user.firebase_id);
+      await FirebaseModel.changeUserEmail(user, newEmail);
     } catch (err) {
       if (err.message) {
         return response.status(400).json({ notification: err.message });
       }
       return response.status(500).json({ notification: 'Internal server error while trying to update user' });
     }
-    return response.status(200).json({ notification: 'User updated' });
+    return response.status(200).json({ notification: 'User email updated' });
+  },
+  async updatePassword(request, response) {
+    const user = request.body;
+    const newPassword = request.body;
+    try {
+      await FirebaseModel.changeUserPassword(user, newPassword);
+    } catch (err) {
+      if (err.message) {
+        return response.status(400).json({ notification: err.message });
+      }
+      return response.status(500).json({ notification: 'Internal server error while trying to update user' });
+    }
+    return response.status(200).json({ notification: 'User password updated' });
   },
 
   async signin(req, res) {
