@@ -1,5 +1,5 @@
 import {
-  create, getOne, update,
+  create, deleteBoth, getOne, update,
 } from '../../src/controllers/StoreController';
 
 export default function handler(req, res) {
@@ -14,6 +14,9 @@ export default function handler(req, res) {
     }
     if (method === 'PUT') {
       return update(req, res);
+    }
+    if (method === 'DELETE') {
+      return deleteBoth(req, res);
     }
     return res.status(500).json({ message: 'Método incorreto' });
   } catch (err) {
