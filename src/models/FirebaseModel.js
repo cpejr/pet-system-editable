@@ -30,7 +30,8 @@ admin.initializeApp({
 module.exports = {
   async createNewUser(email, password) {
     try {
-      const response = await firebase.auth().createUserWithEmailAndPassword(email, password);
+      const response = await firebase.auth()
+        .createUserWithEmailAndPassword(email, password);
       return response.user.uid;
     } catch (err) {
       throw new Error(err);
@@ -46,18 +47,19 @@ module.exports = {
     }
   },
 
-  async changeUserEmail(id, newEmail) {
+  async changeUserEmail(uid, newEmail) {
     try {
-      const result = await admin.auth().updateUser(id, newEmail);
+      const result = await admin.auth().updateUser(uid, { email: newEmail });
       return result;
     } catch (error) {
       throw new Error(error);
     }
   },
 
-  async changeUserPassword(id, newPassword) {
+  async changeUserPassword(uid, newPassword) {
     try {
-      const result = await admin.auth().updateUser(id, newPassword);
+      const result = await admin.auth()
+        .updateUser(uid, { password: newPassword });
       return result;
     } catch (error) {
       throw new Error(error);
