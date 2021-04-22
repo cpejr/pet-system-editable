@@ -24,11 +24,11 @@ module.exports = {
     }
   },
 
-  async deletProduct(product, id) {
+  async deletProduct(id) {
     try {
       const response = await connection('product')
         .where({ product_id: id })
-        .delete(product);
+        .delete();
       return response;
     } catch (error) {
       console.error(error);
