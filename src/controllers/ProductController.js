@@ -19,5 +19,17 @@ module.exports = {
     }
     return response.status(200).json({ notification: 'Produto criado!' });
   },
+  async update(request, response) {
+    const product = request.body;
 
+    try {
+      await ProductModel.updateProduct(product, product.product_id);
+    } catch (err) {
+      if (err.message) {
+        return response.status(400).json({ notification: err.message });
+      }
+      return response.status(500).json({ notification: 'Internal server error while trying to update product' });
+    }
+    return response.status(200).json({ notification: 'Produto alterado com sucesso!' });
+  },
 };

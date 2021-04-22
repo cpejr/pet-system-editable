@@ -1,4 +1,4 @@
-import { create, getOne } from '../../src/controllers/ProductController';
+import { create, getOne, update } from '../../src/controllers/ProductController';
 
 export default function handler(req, res) {
   try {
@@ -9,6 +9,9 @@ export default function handler(req, res) {
     }
     if (method === 'POST') {
       return create(req, res);
+    }
+    if (method === 'PUT') {
+      return update(req, res);
     }
     return res.status(500).json({ message: 'Método incorreto' });
   } catch (err) {

@@ -16,12 +16,21 @@ module.exports = {
     } = request.body;
 
     const {
-      store_id, company_name, telephone, cellphone, cep, cnpj, ie, ie_state, cover_img, logo_img, evaluation, status,
+      store_id, company_name, telephone, cellphone, cep, cnpj, ie,
+      ie_state, cover_img, logo_img, evaluation, status,
     } = request.body;
 
     const userInfo = { email, password };
     const user = {
-      email, password, cpf, birth_date, first_name, last_name, type, created_at, telephone,
+      email,
+      password,
+      cpf,
+      birth_date,
+      first_name,
+      last_name,
+      type,
+      created_at,
+      telephone,
     };
 
     const store = {

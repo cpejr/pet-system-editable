@@ -36,7 +36,7 @@ module.exports = {
     }
   },
 
-  async updateUser(product, id) {
+  async updateProduct(product, id) {
     try {
       const response = await connection('product')
         .where({ product_id: id })
