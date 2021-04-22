@@ -32,4 +32,17 @@ module.exports = {
     }
     return response.status(200).json({ notification: 'Produto alterado com sucesso!' });
   },
+  async delet(request, response) {
+    const product = request.body;
+
+    try {
+      await ProductModel.deletProduct(product, product.product_id);
+    } catch (err) {
+      if (err.message) {
+        return response.status(400).json({ notification: err.message });
+      }
+      return response.status(500).json({ notification: 'Internal server error while trying to delete product' });
+    }
+    return response.status(200).json({ notification: 'Product deleted' });
+  },
 };
