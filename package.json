@@ -25,7 +25,8 @@
     "react-icons": "^4.2.0",
     "react-is": "^16.8.0",
     "sqlite3": "^5.0.2",
-    "styled-components": "^5.0.0"
+    "styled-components": "^5.0.0",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "babel-plugin-styled-components": "^1.8.0",
