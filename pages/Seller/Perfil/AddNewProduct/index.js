@@ -4,6 +4,7 @@ import Link from 'next/link';
 import HeaderSeller from '../../../../src/components/HeaderSeller';
 import WordsDivider from '../../../../src/components/WordsDivider';
 import FooterMobile from '../../../../src/components/Mobile/FooterMobile';
+import AddProducts from '../../../../src/components/AddProducts';
 
 const Title = styled.h1`
 align-items:initial;
@@ -79,13 +80,13 @@ export default function Perfil() {
             <Section>Minhas vendas</Section>
           </Link>
           <WordsDivider />
-          <Link href="http://localhost:3000/Seller/Perfil/AddNewProduct">
+          <Link href="http://localhost:3000/Seller/Perfil/AddProduct">
             <Section>Adicionar Produto</Section>
           </Link>
         </SubTitle>
         <FooterMobile />
       </createGlobalStyle>
-
+      <AddProducts />
     </div>
   );
 }

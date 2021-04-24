@@ -12,7 +12,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import axios from 'axios';
 import Header from '../../src/components/Header';
-import Body from '../../src/components/Body';
+import { Body } from '../../src/components/BodyForms';
 import WindowDivider from '../../src/components/WindowDivider';
 
 const WordFormGroup = styled(FormGroup)`

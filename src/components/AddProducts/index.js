@@ -4,6 +4,7 @@ import {
 } from 'react-bootstrap';
 import styled from 'styled-components';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import FormFileInput from 'react-bootstrap/esm/FormFileInput';
 
 const Styles = styled.div`
 width: 100%;
@@ -92,6 +93,13 @@ margin-top: 40px;
 `;
 
 export default function AddProducts() {
+  const [photo, setPhoto] = useState({ file: null });
+  function handleChange(event) {
+    setPhoto({
+      file: URL.createObjectURL(event.target.files[0]),
+    });
+  }
+
   return (
 
     <div>
@@ -125,8 +133,8 @@ export default function AddProducts() {
 
             <File>
               <FormFile id="formcheck-api-regular">
-                <FormFile.Label>Selecionar Imagem</FormFile.Label>
-                <FormFile.Input />
+                <FormLabel htmlFor="upload">Selecionar Imagem</FormLabel>
+                <FormFileInput type="file" onChange={handleChange} />
               </FormFile>
             </File>
             <ButtonCancell variant="primary" type="submit">

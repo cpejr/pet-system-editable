@@ -80,6 +80,10 @@ export default function Perfil() {
           <Link href="http://localhost:3000/Seller/Perfil/Sales">
             <Section>Minhas vendas</Section>
           </Link>
+          <WordsDivider />
+          <Link href="http://localhost:3000/Seller/Perfil/AddNewProduct">
+            <Section>Adicionar Produto</Section>
+          </Link>
         </SubTitle>
         <MySellerRequest />
         <FooterMobile />
