@@ -26,6 +26,7 @@
     "react-is": "^16.8.0",
     "sqlite3": "^5.0.2",
     "styled-components": "^5.0.0",
+    "time-stamp": "^2.2.0",
     "uuid": "^8.3.2"
   },
   "devDependencies": {

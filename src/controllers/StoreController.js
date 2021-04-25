@@ -1,4 +1,5 @@
 const { v4: uuidv4 } = require('uuid');
+const timestamp = require('time-stamp');
 const StoreModel = require('../models/StoreModel');
 const UserModel = require('../models/UserModel');
 const FireBaseModel = require('../models/FirebaseModel');
@@ -23,7 +24,7 @@ module.exports = {
       first_name: info.first_name,
       last_name: info.last_name,
       type: info.type,
-      created_at: info.created_at,
+      created_at: timestamp(),
     };
 
     const store = {
@@ -38,7 +39,7 @@ module.exports = {
       ie_state: info.ie_state,
       cover_img: info.cover_img,
       logo_img: info.logo_img,
-      created_at: info.created_at,
+      created_at: timestamp(),
       evaluation: info.evaluation,
       status: info.status,
     };

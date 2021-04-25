@@ -3,14 +3,14 @@ import styled from 'styled-components';
 export const TitleLogin = styled.h1`
   margin-top: 0px;
   margin-bottom: 0px;
-  font-size: 50px;
+  font-size: 3remD;
   font-weight: 700;
   font-family: Roboto;
 `;
 
 export const TitleStore = styled.h1`
   margin-bottom: 0px;
-  font-size: 40px;
+  font-size: 2.3rem;
   font-weight: 700;
   font-family: Roboto;
 `;
@@ -23,7 +23,7 @@ export const SubtitleLogin = styled.p`
 
 export const SubtitleStore = styled.h1`
   margin-bottom: 10px;
-  font-size: 20px;
+  font-size: 1.3em;
   font-weight: 100;
   font-family: Roboto;
 `;
@@ -32,7 +32,7 @@ export const Text = styled.p`
   margin-top: 0px;
   margin-right: 10px; // Campo Isento de IE* form Store
   font-family: Roboto;
-  font-size: 15px;
+  font-size: 1rem;
   margin-bottom: 0px;
 `;
 
@@ -49,7 +49,7 @@ export const SubText = styled.p`
   font-family: Roboto;
   margin-top: 3px;
   margin-left: 5px;
-  font-size: 12px;
+  font-size: 0.7rem;
   margin-bottom: 0px;
 `;
 

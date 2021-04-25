@@ -1,91 +1,17 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
 import Image from 'next/image';
 import axios from 'axios';
-import Form from 'react-bootstrap/Form';
 import Header from '../../src/components/Header';
 import {
-  Body, Formulary, TopFormulary, ItemFormulary, BottomFormulary, UnderFields,
+  Body, Formulary, TopFormulary, ItemFormulary, BottomFormulary,
 } from '../../src/components/BodyForms';
 import {
   TitleLogin, SubtitleLogin, TextBox, Submit, ForgotPassword, CreateAccount, Divider,
 } from '../../src/components/FormComponents';
 
-const Fields = styled.div`
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-`;
-
-const UnderFields = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-`;
-
-const Title = styled.h1`
-  margin-top: 150px; 
-  font-size: 58px;
-  font-weight: 700;
-  font-family: Roboto;
-`;
-
-const Subtitle = styled.p`
-  font-family: Roboto;
-  font-size: 20px;
-  font-weight: 100;
-`;
-
-const TextBox = styled.input`
-    margin-top: 15px;
-    height: 30px;
-    width: 400px;
-    border-radius: 5px;
-    border: 1px solid ${({ theme }) => theme.colors.baseGray};
-    background: #F2F2F2;
-`;
-
-const Submit = styled.button`
-    margin-top: 30px;
-    height: 40px;
-    width: 150px;
-    font-family: Roboto;
-    font-size: 20px;
-    font-weight: 500;
-    background-color: ${({ theme }) => theme.colors.mediumGreen};
-    color: white;
-    border: 0;
-    border-radius: 5px;
-
-`;
-
-const ForgotPassword = styled.p`
-  font-family: Roboto;
-  justify-content: right;
-  margin-top: 5px;
-  margin-left: 250px;
-  font-weight: 700;
-  color: ${({ theme }) => theme.colors.mediumRed};
-`;
-
-const CreateAccount = styled.p`
-  font-family: Roboto;
-  margin-top: 5px;
-  font-weight: 700;
-  font-size: 15px;
-`;
-
-CreateAccount.Right = styled.p` 
-  font-family: Roboto;
-  margin-top: 5px;
-  margin-left: 5px;
-  font-weight: 700;
-  color: ${({ theme }) => theme.colors.mediumRed};
-`;
-
 const Login = () => {
-  const [email, setEmail] = useState(false);
-  const [password, setPassword] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   function handleEmailChange(event) {
     setEmail(event.target.value);
@@ -99,11 +25,15 @@ const Login = () => {
     const body = {
       email, password,
     };
-    const Validate = await axios.post('http://localhost:3000/api/login', body);
-    console.log(Validate.data);
+    try {
+      const Validate = await axios.post('http://localhost:3000/api/login', body);
+      console.log(Validate.data);
+    } catch (error) {
+      console.log(error);
+    }
   }
   return (
-    <div>
+    <>
       <Header />
 
       <Body>
@@ -111,28 +41,36 @@ const Login = () => {
           <Image src="/images/BannerLogin.jpg" alt="" width="600" height="400" />
         </Body.Left>
 
-        <hr width="1" display="block" size="600" />
+        <Divider width="1" display="block" size="300" />
 
         <Body.Right>
-          <Title>Bem vindo de volta!</Title>
-          <Subtitle>Por favor, entre com seu email e sua senha:</Subtitle>
+          <Formulary>
+            <TopFormulary>
+              <TitleLogin>Bem vindo de volta!</TitleLogin>
+              <SubtitleLogin>Por favor, entre com seu email e sua senha:</SubtitleLogin>
+            </TopFormulary>
+            <ItemFormulary>
+              <TextBox type="text" placeholder="Email" onChange={handleEmailChange} value={email} />
+            </ItemFormulary>
+            <ItemFormulary>
+              <TextBox type="password" placeholder="Senha" onChange={handlePasswordChange} value={password} />
+            </ItemFormulary>
 
-          <Fields>
-            <TextBox type="email" placeholder="Email" value={email} onChange={handleEmailChange} />
-            <TextBox type="password" placeholder="Senha" value={password} onChange={handlePasswordChange} />
-            <ForgotPassword>Esqueceu a senha?</ForgotPassword>
-          </Fields>
-          <Form>
-            <Submit onClick={handleSubmit}>Próximo</Submit>
-          </Form>
-          <UnderFields>
-            <CreateAccount>Não tem uma conta?</CreateAccount>
-            <CreateAccount.Right>Cadastre-se</CreateAccount.Right>
-          </UnderFields>
+            <ItemFormulary>
+              <ForgotPassword>Esqueceu a senha?</ForgotPassword>
+            </ItemFormulary>
+            <BottomFormulary>
+              <Submit value="submit" onClick={handleSubmit}>Finalizar</Submit>
+            </BottomFormulary>
+            <BottomFormulary>
+              <CreateAccount>Não tem uma conta?</CreateAccount>
+              <CreateAccount.Right>Cadastre-se</CreateAccount.Right>
+            </BottomFormulary>
+          </Formulary>
         </Body.Right>
       </Body>
 
-    </div>
+    </>
   );
 };
 
