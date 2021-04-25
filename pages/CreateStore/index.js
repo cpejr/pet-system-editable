@@ -1,28 +1,43 @@
 import React, { useState } from 'react';
-import Image from 'next/image';
 import axios from 'axios';
-// import Link from 'next/link';
 import Header from '../../src/components/Header';
 import {
-  Body, Formulary, TopFormulary, ItemFormulary, IEItemFormulary, DividedItemFormulary, BottomFormulary,
+  StoreBodyWrapper, StoreBody, StoreFormulary, TopFormulary, ItemFormulary, IEItemFormulary, DividedItemFormulary, BottomFormulary,
 } from '../../src/components/BodyForms';
 import {
-  TitleStore, SubtitleStore, Text, Text2, SubText, TextBox, Select, Submit, Divider,
+  TitleStore, SubtitleStore, Text, Text2, SubText, TextBox, Select, Submit,
 } from '../../src/components/FormComponents';
 
 export default function Store() {
+  // Usuario:
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [cpf, setCpf] = useState('');
+  const [birthDate, setBirthDate] = useState('');
+  // Loja:
   const [companyName, setCompanyName] = useState('');
   const [email, setEmail] = useState('');
   const [cellphone, setCellphone] = useState('');
   const [telephone, setTelephone] = useState('');
   const [cnpj, setCnpj] = useState('');
   const [cep, setCep] = useState('');
-  // const [endereco, setEndereco] = useState();
   const [password, setPassword] = useState('');
   const [confPassword, setConfPassword] = useState('');
   const [ie, setIe] = useState('');
   const [ieState, setIeState] = useState('');
 
+  function handleFirstNameChange(event) {
+    setFirstName(event.target.value);
+  }
+  function handleLastNameChange(event) {
+    setLastName(event.target.value);
+  }
+  function handleCpfChange(event) {
+    setCpf(event.target.value);
+  }
+  function handleBirthDateChange(event) {
+    setBirthDate(event.target.value);
+  }
   function handleCompanyNameChange(event) {
     setCompanyName(event.target.value);
   }
@@ -41,11 +56,6 @@ export default function Store() {
   function handleCepChange(event) {
     setCep(event.target.value);
   }
-  /*
-  function handleEnderecoChange(event) {
-    setEndereco(event.target.value);
-  }
-  */
   function handlePasswordChange(event) {
     setPassword(event.target.value);
   }
@@ -62,14 +72,12 @@ export default function Store() {
   async function handleSubmit(event) {
     event.preventDefault();
     const body = {
-      // Dados do usuario - Teste
-      cpf: '12345678',
-      birth_date: '2010-05-10',
-      first_name: 'Giovanni',
-      last_name: 'de Sa',
+      // Dados do usuario
+      first_name: firstName,
+      last_name: lastName,
+      cpf,
+      birth_date: birthDate,
       type: 'vendedor',
-      created_at: '20210405153007',
-
       // Dados do Formulario da Loja
       company_name: companyName,
       email,
@@ -82,13 +90,10 @@ export default function Store() {
       ie_state: ieState,
 
       // Resto dos dados da loja - Teste
-      store_id: '5',
-      cover_img: 'dasdkasdjalj',
-      logo_img: 'httapsdapo',
-      // created_at: '20210414111030',
-      evaluation: '444444',
+      cover_img: 'teste',
+      logo_img: 'teste',
+      evaluation: '10',
       status: 'Aprovado',
-
     };
     try {
       const Validate = await axios.post('/api/store', body);
@@ -101,19 +106,37 @@ export default function Store() {
   return (
     <>
       <Header />
-      <Body>
-        <Body.Left>
-          <Image src="/images/BannerLogin.jpg" alt="" width="600" height="400" />
-        </Body.Left>
-
-        <Divider width="1" display="block" size="700" />
-
-        <Body.Right>
-          <Formulary>
+      <StoreBodyWrapper>
+        <StoreBody>
+          <StoreFormulary>
             <TopFormulary>
-              <TitleStore>Bem vindo de volta!</TitleStore>
-              <SubtitleStore>Por favor, entre com seu email e sua password:</SubtitleStore>
+              <TitleStore>Bora começar a vender?</TitleStore>
+              <SubtitleStore>Por favor, preenchar as informações referentes ao usuário: </SubtitleStore>
             </TopFormulary>
+
+            <DividedItemFormulary>
+              <ItemFormulary>
+                <Text>Nome: *</Text>
+                <TextBox type="text" onChange={handleFirstNameChange} value={firstName} />
+              </ItemFormulary>
+              <ItemFormulary>
+                <Text>Sobrenomes: *</Text>
+                <TextBox type="text" onChange={handleLastNameChange} value={lastName} />
+              </ItemFormulary>
+            </DividedItemFormulary>
+
+            <DividedItemFormulary>
+              <ItemFormulary>
+                <Text>CPF: *</Text>
+                <TextBox type="text" onChange={handleCpfChange} value={cpf} />
+              </ItemFormulary>
+              <ItemFormulary>
+                <Text>Data de Nascimento:</Text>
+                <TextBox type="text" onChange={handleBirthDateChange} value={birthDate} />
+              </ItemFormulary>
+            </DividedItemFormulary>
+
+            <SubtitleStore>Agora, entre com as informações da sua loja:</SubtitleStore>
 
             <ItemFormulary>
               <Text>Razão Social: *</Text>
@@ -147,11 +170,6 @@ export default function Store() {
               </ItemFormulary>
             </DividedItemFormulary>
 
-            <ItemFormulary>
-              <Text>Endereço: *</Text>
-              <TextBox type="text" placeholder="" />
-            </ItemFormulary>
-
             <DividedItemFormulary>
               <ItemFormulary>
                 <Text>password: *</Text>
@@ -160,21 +178,6 @@ export default function Store() {
               <ItemFormulary>
                 <Text>Confirma password: *</Text>
                 <TextBox type="password" placeholder="" onChange={handleConfPasswordChange} value={confPassword} />
-              </ItemFormulary>
-            </DividedItemFormulary>
-
-            <DividedItemFormulary>
-              <ItemFormulary>
-                <DividedItemFormulary>
-                  <input type="checkbox" />
-                  <SubText>Visualizar password</SubText>
-                </DividedItemFormulary>
-              </ItemFormulary>
-              <ItemFormulary>
-                <DividedItemFormulary>
-                  <input type="checkbox" />
-                  <SubText>Visualizar Confirmar password</SubText>
-                </DividedItemFormulary>
               </ItemFormulary>
             </DividedItemFormulary>
 
@@ -193,7 +196,7 @@ export default function Store() {
               </ItemFormulary>
               <ItemFormulary>
                 <Text>Estado da IE: *</Text>
-                <Select name="estado" id="estado" onChange={handleIeStateChange}>
+                <Select name="estado" id="estado" value={ieState} onChange={handleIeStateChange}>
                   <option value={ieState}>MG</option>
                   <option value={ieState}>SP</option>
                   <option value={ieState}>RJ</option>
@@ -208,9 +211,9 @@ export default function Store() {
             <BottomFormulary>
               <Submit value="submit" onClick={handleSubmit}>Finalizar</Submit>
             </BottomFormulary>
-          </Formulary>
-        </Body.Right>
-      </Body>
+          </StoreFormulary>
+        </StoreBody>
+      </StoreBodyWrapper>
     </>
   );
 }

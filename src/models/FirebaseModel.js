@@ -18,14 +18,14 @@ const firebaseConfig = {
 if (!firebase.apps.length) {
   try {
     firebase.initializeApp(firebaseConfig);
+    admin.initializeApp({
+      credential: admin.credential.cert(serviceAccount),
+      databaseURL: process.env.NEXT_PUBLIC_FIREBASE_DATABASEURL,
+    });
   } catch (err) {
     console.error('Firebase initialization error raised', err.stack);
   }
 }
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: process.env.NEXT_PUBLIC_FIREBASE_DATABASEURL,
-});
 
 module.exports = {
   async createNewUser(email, password) {
