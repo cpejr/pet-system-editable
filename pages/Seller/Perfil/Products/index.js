@@ -4,6 +4,8 @@ import Link from 'next/link';
 import HeaderSeller from '../../../../src/components/HeaderSeller';
 import WordsDivider from '../../../../src/components/WordsDivider';
 import FooterMobile from '../../../../src/components/Mobile/FooterMobile';
+import Order from '../../../../src/components/Filter/Order';
+import Category from '../../../../src/components/Filter/Category';
 
 const Title = styled.h1`
 align-items:initial;
@@ -32,6 +34,7 @@ font-family: Roboto;
     margin:0;
     }
 `;
+
 const Section = styled.button`
 display:flex;
 font-size:16px;
@@ -58,6 +61,149 @@ border-radius:5%;
 outline:none;
 font-family: Roboto;
 `;
+
+const ProductContainer = styled.div`
+display:flex;
+align-items:center;
+justify-content:center;
+width:100%;
+`;
+
+ProductContainer.Col1 = styled.div`
+width:20%;
+display:flex;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+`;
+
+ProductContainer.Col2 = styled.div`
+width:80%;
+display:flex;
+align-items:center;
+justify-content:center;
+`;
+
+const MarketContainer = styled.div`
+display:flex;
+align-items:center;
+justify-content:center;
+flex-direction:row;
+width:100%;
+@media(max-width:560px){
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    }
+`;
+
+MarketContainer.Col1 = styled.div`
+display:flex;
+align-items:center;
+justify-content:center;
+width:50%;
+
+@media(max-width:700px){
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:14px;
+    }
+
+@media(max-width:560px){
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:14px;
+    width:100%;
+    }
+`;
+
+MarketContainer.Col2 = styled.div`
+display:flex;
+align-items:center;
+justify-content:center;
+width:50%;
+@media(max-width:560px){
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:90%;
+    }
+
+`;
+
+const TitleMarket = styled.h2`
+display:flex;
+align-items:center;
+justify-content:center;
+`;
+const EditCategory = styled.button`
+    height: 50px;
+    width: 30%;
+    font-family: Roboto;
+    font-size: 100%;
+    font-weight: 500;
+    background-color: ${({ theme }) => theme.colors.darkGreen};
+    color: white;
+    border: 0;
+    border-radius: 5px;
+    cursor:pointer;
+    outline:none;
+    margin-right:2%;
+    @media(max-width:1000px){
+      display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:14px;
+    width:80%;
+    height:30px;
+    border-radius:20px;
+    
+}
+    @media(max-width:560px){
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:14px;
+    width:80%;
+    height:30px;
+    border-radius:20px;
+    }
+`;
+
+const RemoveProducts = styled.button`
+    height: 50px;
+    width: 30%;
+    font-family: Roboto;
+    font-size: 100%;
+    font-weight: 500;
+    background-color: ${({ theme }) => theme.colors.strongRed};
+    color: white;
+    border: 0;
+    border-radius: 5px;
+    cursor:pointer;
+    outline:none;
+    @media(max-width:1000px){
+      display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:14px;
+    width:80%;
+    height:30px;
+    border-radius:20px;
+}
+    @media(max-width:560px){
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:14px;
+    width:80%;
+    height:30px;
+    border-radius:20px;
+    }
+`;
 export default function Perfil() {
   return (
     <div>
@@ -83,6 +229,28 @@ export default function Perfil() {
             <Section>Minhas vendas</Section>
           </Link>
         </SubTitle>
+        <MarketContainer>
+          <MarketContainer.Col1>
+            <TitleMarket>
+              Produtos do meu MarketPlace
+            </TitleMarket>
+          </MarketContainer.Col1>
+          <MarketContainer.Col2>
+            <EditCategory>Editar Categoria</EditCategory>
+            <RemoveProducts>Remover produtos</RemoveProducts>
+          </MarketContainer.Col2>
+        </MarketContainer>
+
+        <ProductContainer>
+          <ProductContainer.Col1>
+            <Order />
+            <Category />
+          </ProductContainer.Col1>
+          <ProductContainer.Col2>
+            Products cards
+          </ProductContainer.Col2>
+
+        </ProductContainer>
         <FooterMobile />
       </createGlobalStyle>
 
