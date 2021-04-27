@@ -102,7 +102,7 @@ MarketContainer.Col1 = styled.div`
 display:flex;
 align-items:center;
 justify-content:center;
-width:50%;
+width:62%;
 
 @media(max-width:700px){
     display:flex;
@@ -123,8 +123,8 @@ width:50%;
 MarketContainer.Col2 = styled.div`
 display:flex;
 align-items:center;
-justify-content:center;
-width:50%;
+justify-content:initial;
+width:38%;
 @media(max-width:560px){
     display:flex;
     align-items:center;

@@ -43,7 +43,7 @@ margin-right:2%;
 
 `;
 
-OrderContainer.Col2 = styled.p`
+OrderContainer.Col2 = styled.div`
 display:flex;
 justify-content:center;
 width:80%;

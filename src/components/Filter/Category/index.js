@@ -47,8 +47,7 @@ justify-content:center;
 width:80%;
 flex-direction:column;
 font-family:Roboto;
-margin-top:0;
-margin-bottom:0;
+
 `;
 
 export default function Category() {
@@ -61,18 +60,12 @@ export default function Category() {
             <p><GrRadial /></p>
             <p><GrRadial /></p>
             <p><GrRadial /></p>
-            <p><GrRadial /></p>
-            <p><GrRadial /></p>
-            <p><GrRadial /></p>
           </CategoryContainer.Col1>
 
           <CategoryContainer.Col2>
             <p>Ração</p>
             <p>Brinquedos</p>
             <p>Vasilhas</p>
-            <p>Casinhas</p>
-            <p>Petiscos</p>
-            <p>Shampoo</p>
           </CategoryContainer.Col2>
         </CategoryContainer>
       </Container>
