@@ -68,8 +68,12 @@ export default function Perfil() {
         <Title>Perfil da loja:</Title>
 
         <SubTitle>
+          <Link href="http://localhost:3000/Seller/Perfil/Products">
+            <Section>Meus produtos</Section>
+          </Link>
+          <WordsDivider />
           <Link href="http://localhost:3000/Seller/Perfil/Store">
-            <Section.Select>Minha loja</Section.Select>
+            <Section>Minha loja</Section>
           </Link>
           <WordsDivider />
           <Link href="http://localhost:3000/Seller/Perfil/SellerRequests">
@@ -81,7 +85,7 @@ export default function Perfil() {
           </Link>
           <WordsDivider />
           <Link href="http://localhost:3000/Seller/Perfil/AddNewProduct">
-            <Section>Adicionar Produto</Section>
+            <Section.Select>Adicionar Produto</Section.Select>
           </Link>
         </SubTitle>
         <FooterMobile />
