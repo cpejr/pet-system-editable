@@ -84,7 +84,7 @@ const Subtitle = styled.p`
 `;
 
 const Register = styled.div`
-margin-top: 150px;
+margin-top: 250px;
   
 `;
 const Buttons = styled.div`
@@ -159,7 +159,7 @@ export default function Signup() {
       alert('Número inválido');
       return;
     }
-    if (confirmPassword !== password) {
+    if (password !== confirmPassword) {
       alert('A senha inserida deve ser a mesma');
       return;
     }
