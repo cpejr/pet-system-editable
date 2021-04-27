@@ -84,6 +84,13 @@ const Subtitle = styled.p`
 `;
 
 const Register = styled.div`
+margin-top: 150px;
+  
+`;
+const Buttons = styled.div`
+display: flex;
+align-items: center;
+flex-direction: column;
   
 `;
 const FormRegister = styled(Form)`
@@ -300,16 +307,19 @@ export default function Signup() {
                   </MyFormGroup>
                 </Phone>
               </NumbersForms>
-              <RegisterButton type="submit" variant="primary" onClick={handleSubmit}>Finalizar</RegisterButton>
+              <Buttons>
+                <RegisterButton type="submit" variant="primary" onClick={handleSubmit}>Finalizar</RegisterButton>
 
-              <br />
-              <FormGroup>
-                <FormLabel align="center">
-                  Você já tem Cadastro?
-                  <Link href="/login"><p>Login</p></Link>
-                </FormLabel>
-              </FormGroup>
+                <br />
+                <FormGroup>
+                  <FormLabel align="center">
+                    Você já tem Cadastro?
+                    <Link href="/login"><p>Login</p></Link>
+                  </FormLabel>
+                </FormGroup>
+              </Buttons>
             </FormRegister>
+
           </Register>
         </Body.Right>
 
