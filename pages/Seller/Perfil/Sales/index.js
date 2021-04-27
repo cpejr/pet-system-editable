@@ -121,6 +121,10 @@ export default function Perfil() {
           <Link href="http://localhost:3000/Seller/Perfil/Sales">
             <Section.Select>Minhas vendas</Section.Select>
           </Link>
+          <WordsDivider />
+          <Link href="http://localhost:3000/Seller/Perfil/AddNewProduct">
+            <Section>Adicionar Produto</Section>
+          </Link>
         </SubTitle>
         <ContainerDate>
           <ContainerDate.Col1>

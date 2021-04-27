@@ -4,6 +4,7 @@ import Link from 'next/link';
 import HeaderSeller from '../../../../src/components/HeaderSeller';
 import WordsDivider from '../../../../src/components/WordsDivider';
 import FooterMobile from '../../../../src/components/Mobile/FooterMobile';
+import AddProducts from '../../../../src/components/AddProducts';
 
 const Title = styled.h1`
 align-items:initial;
@@ -85,7 +86,7 @@ export default function Perfil() {
         </SubTitle>
         <FooterMobile />
       </createGlobalStyle>
-
+      <AddProducts />
     </div>
   );
 }
