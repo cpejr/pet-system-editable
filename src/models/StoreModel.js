@@ -27,7 +27,7 @@ module.exports = {
   async deleteStore(id) {
     try {
       const response = await connection('Store')
-        .where({ store_id: id })
+        .where({ user_id: id })
         .delete();
       return response;
     } catch (error) {
