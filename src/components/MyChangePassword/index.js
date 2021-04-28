@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { GrRadial, GrRadialSelected } from 'react-icons/gr';
 
 const Container = styled.div`
 display:flex;
@@ -67,29 +66,83 @@ const PaymentContainer = styled.div`
 display:flex;
 align-items:center;
 justify-content:center;
-width:100%;
-flex-direction:row;
-`;
-PaymentContainer.Col1 = styled.div`
-display:flex;
-align-items:flex-end;
-justify-content:center;
-flex-direction:column;
 width:30%;
-margin-right:2%;
-color: ${({ theme }) => theme.colors.mediumGreen};
+flex-direction:column;
+`;
+PaymentContainer.Row1 = styled.div`
+display:flex;
+align-items:center;
+justify-content:center;
+flex-direction:row;
+width:100%;
+margin-top:5%;
 `;
 
-PaymentContainer.Col2 = styled.h4`
+PaymentContainer.Row1.Col1 = styled.div`
 display:flex;
+align-items:center;
 justify-content:center;
-width:70%;
-flex-direction:column;
-font-family:Roboto;
-margin:0;
+width:20%;
+`;
+PaymentContainer.Row1.Col2 = styled.div`
+display:flex;
+align-items:center;
+justify-content:initial;
+width:80%;
+`;
+PaymentContainer.Row2 = styled.div`
+display:flex;
+align-items:center;
+justify-content:center;
+flex-direction:row;
+width:100%;
+margin-top:5%;
+`;
+PaymentContainer.Row2.Col1 = styled.div`
+display:flex;
+align-items:center;
+justify-content:center;
+width:20%;
+`;
+PaymentContainer.Row2.Col2 = styled.div`
+display:flex;
+align-items:center;
+justify-content:initial;
+width:80%;
+`;
+
+PaymentContainer.Row3 = styled.div`
+display:flex;
+align-items:center;
+justify-content:center;
+flex-direction:row;
+width:100%;
+margin-top:5%;
+margin-bottom:5%;
+`;
+PaymentContainer.Row3.Col1 = styled.div`
+display:flex;
+align-items:center;
+justify-content:center;
+width:20%;
+`;
+PaymentContainer.Row3.Col2 = styled.div`
+display:flex;
+align-items:center;
+justify-content:initial;
+width:80%;
 `;
 
 export default function MyDatasMobile() {
+  const [checkedCredito, setCheckedCredito] = useState(false);
+  const handleClickCredito = () => setCheckedCredito(!checkedCredito);
+
+  const [checkedDebito, setCheckedDebito] = useState(false);
+  const handleClickDebito = () => setCheckedDebito(!checkedDebito);
+
+  const [checkedBoleto, setCheckedBoleto] = useState(false);
+  const handleClickBoleto = () => setCheckedBoleto(!checkedBoleto);
+
   return (
     <div>
       <Container>
@@ -104,18 +157,33 @@ export default function MyDatasMobile() {
         </ConfirmButton>
         <Title>Alterar Forma de Pagamento:</Title>
         <PaymentContainer>
-          <PaymentContainer.Col1>
-            <p><GrRadialSelected style={{ color: '#609694' }} /></p>
-            <p><GrRadial /></p>
-            <p><GrRadial /></p>
-          </PaymentContainer.Col1>
 
-          <PaymentContainer.Col2>
+          <PaymentContainer.Row1>
+            <PaymentContainer.Row1.Col1>
+              <input onClick={handleClickCredito} checked={checkedCredito} type="radio" />
+            </PaymentContainer.Row1.Col1>
+            <PaymentContainer.Row1.Col2>
+              Crédito
+            </PaymentContainer.Row1.Col2>
+          </PaymentContainer.Row1>
 
-            <p>Débito</p>
-            <p>Crédito</p>
-            <p>Dinheiro</p>
-          </PaymentContainer.Col2>
+          <PaymentContainer.Row2>
+            <PaymentContainer.Row2.Col1>
+              <input onClick={handleClickDebito} checked={checkedDebito} type="radio" />
+            </PaymentContainer.Row2.Col1>
+            <PaymentContainer.Row2.Col2>
+              Débito
+            </PaymentContainer.Row2.Col2>
+          </PaymentContainer.Row2>
+
+          <PaymentContainer.Row3>
+            <PaymentContainer.Row3.Col1>
+              <input onClick={handleClickBoleto} checked={checkedBoleto} type="radio" />
+            </PaymentContainer.Row3.Col1>
+            <PaymentContainer.Row3.Col2>
+              Boleto
+            </PaymentContainer.Row3.Col2>
+          </PaymentContainer.Row3>
         </PaymentContainer>
       </Container>
     </div>
