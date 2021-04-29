@@ -175,6 +175,7 @@ const ButtonCancel = styled.button`
     justify-content: center;
     text-align: center;
     margin-top:10%;
+    cursor: pointer;
 `;
 const ButtonConfirm = styled.button`
     display:flex;
@@ -194,6 +195,7 @@ const ButtonConfirm = styled.button`
     justify-content: center;
     text-align: center;
     margin-top:10%;
+    cursor: pointer;
 `;
 
 export default function AddProducts() {

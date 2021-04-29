@@ -29,6 +29,7 @@ flex-direction:column;
 display:flex;
 align-items:center;
 justify-content:center;
+cursor: pointer;
 `;
 
   return (
