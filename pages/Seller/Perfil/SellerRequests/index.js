@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { createGlobalStyle } from 'styled-components';
+import styled from 'styled-components';
 import Link from 'next/link';
 import HeaderSeller from '../../../../src/components/HeaderSeller';
 import WordsDivider from '../../../../src/components/WordsDivider';
@@ -64,34 +64,28 @@ export default function Perfil() {
   return (
     <div>
       <HeaderSeller />
-      <createGlobalStyle>
 
-        <Title>Perfil da loja:</Title>
+      <Title>Perfil da loja:</Title>
 
-        <SubTitle>
-          <Link href="http://localhost:3000/Seller/Perfil/Products">
-            <Section>Meus produtos</Section>
-          </Link>
-          <WordsDivider />
-          <Link href="http://localhost:3000/Seller/Perfil/Store">
-            <Section>Minha loja</Section>
-          </Link>
-          <WordsDivider />
-          <Link href="http://localhost:3000/Seller/Perfil/SellerRequests">
-            <Section.Select>Pedidos</Section.Select>
-          </Link>
-          <WordsDivider />
-          <Link href="http://localhost:3000/Seller/Perfil/Sales">
-            <Section>Minhas vendas</Section>
-          </Link>
-          <WordsDivider />
-          <Link href="http://localhost:3000/Seller/Perfil/AddNewProduct">
-            <Section>Adicionar Produto</Section>
-          </Link>
-        </SubTitle>
-        <MySellerRequest />
-        <FooterMobile />
-      </createGlobalStyle>
+      <SubTitle>
+        <Link href="http://localhost:3000/Seller/Perfil/Products">
+          <Section>Meus produtos</Section>
+        </Link>
+        <WordsDivider />
+        <Link href="http://localhost:3000/Seller/Perfil/Store">
+          <Section>Minha loja</Section>
+        </Link>
+        <WordsDivider />
+        <Link href="http://localhost:3000/Seller/Perfil/SellerRequests">
+          <Section.Select>Pedidos</Section.Select>
+        </Link>
+        <WordsDivider />
+        <Link href="http://localhost:3000/Seller/Perfil/Sales">
+          <Section>Minhas vendas</Section>
+        </Link>
+      </SubTitle>
+      <MySellerRequest />
+      <FooterMobile />
 
     </div>
   );

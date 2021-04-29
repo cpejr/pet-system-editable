@@ -12,7 +12,6 @@
     "@material-ui/pickers": "^3.3.10",
     "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
-    "bootstrap-styled": "^2.7.2",
     "date-fns": "^2.20.3",
     "firebase": "^8.3.2",
     "firebase-admin": "^9.6.0",

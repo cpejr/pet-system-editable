@@ -1,11 +1,14 @@
 import React from 'react';
-import styled, { createGlobalStyle } from 'styled-components';
+import styled from 'styled-components';
 import Link from 'next/link';
+// import { makeStyles } from '@material-ui/core/styles';
+// import Modal from '@material-ui/core/Modal';
 import HeaderSeller from '../../../../src/components/HeaderSeller';
 import WordsDivider from '../../../../src/components/WordsDivider';
 import FooterMobile from '../../../../src/components/Mobile/FooterMobile';
 import Order from '../../../../src/components/Filter/Order';
 import Category from '../../../../src/components/Filter/Category';
+import ModalAddProducts from '../../../../src/components/ModalAddProducts';
 
 const Title = styled.h1`
 align-items:initial;
@@ -67,6 +70,13 @@ display:flex;
 align-items:center;
 justify-content:center;
 width:100%;
+flex-direction:row;
+@media(max-width:1065px){
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    }
 `;
 
 ProductContainer.Col1 = styled.div`
@@ -75,13 +85,20 @@ display:flex;
 align-items:center;
 justify-content:center;
 flex-direction:column;
+@media(max-width:1065px){
+    display:flex;
+    align-items:center;
+    justify-content:space-evenly;
+    flex-direction:row;
+    width:100%;
+    }
 `;
 
 ProductContainer.Col2 = styled.div`
 width:80%;
 display:flex;
 align-items:center;
-justify-content:center;
+justify-content:initial;
 `;
 
 const MarketContainer = styled.div`
@@ -130,6 +147,7 @@ width:38%;
     align-items:center;
     justify-content:center;
     width:90%;
+    margin-bottom:2%;
     }
 
 `;
@@ -204,59 +222,54 @@ const RemoveProducts = styled.button`
     border-radius:20px;
     }
 `;
+
 export default function Perfil() {
   return (
     <div>
       <HeaderSeller />
-      <createGlobalStyle>
 
-        <Title>Perfil da loja:</Title>
+      <Title>Perfil da loja:</Title>
 
-        <SubTitle>
-          <Link href="http://localhost:3000/Seller/Perfil/Products">
-            <Section.Select>Meus produtos</Section.Select>
-          </Link>
-          <WordsDivider />
-          <Link href="http://localhost:3000/Seller/Perfil/Store">
-            <Section>Minha loja</Section>
-          </Link>
-          <WordsDivider />
-          <Link href="http://localhost:3000/Seller/Perfil/SellerRequests">
-            <Section>Pedidos</Section>
-          </Link>
-          <WordsDivider />
-          <Link href="http://localhost:3000/Seller/Perfil/Sales">
-            <Section>Minhas vendas</Section>
-          </Link>
-          <WordsDivider />
-          <Link href="http://localhost:3000/Seller/Perfil/AddNewProduct">
-            <Section>Adicionar Produto</Section>
-          </Link>
-        </SubTitle>
-        <MarketContainer>
-          <MarketContainer.Col1>
-            <TitleMarket>
-              Produtos do meu MarketPlace
-            </TitleMarket>
-          </MarketContainer.Col1>
-          <MarketContainer.Col2>
-            <EditCategory>Editar Categoria</EditCategory>
-            <RemoveProducts>Remover produtos</RemoveProducts>
-          </MarketContainer.Col2>
-        </MarketContainer>
+      <SubTitle>
+        <Link href="http://localhost:3000/Seller/Perfil/Products">
+          <Section.Select>Meus produtos</Section.Select>
+        </Link>
+        <WordsDivider />
+        <Link href="http://localhost:3000/Seller/Perfil/Store">
+          <Section>Minha loja</Section>
+        </Link>
+        <WordsDivider />
+        <Link href="http://localhost:3000/Seller/Perfil/SellerRequests">
+          <Section>Pedidos</Section>
+        </Link>
+        <WordsDivider />
+        <Link href="http://localhost:3000/Seller/Perfil/Sales">
+          <Section>Minhas vendas</Section>
+        </Link>
+      </SubTitle>
+      <MarketContainer>
+        <MarketContainer.Col1>
+          <TitleMarket>
+            Produtos do meu MarketPlace
+          </TitleMarket>
+        </MarketContainer.Col1>
+        <MarketContainer.Col2>
+          <EditCategory>Editar Categoria</EditCategory>
+          <RemoveProducts>Remover produtos</RemoveProducts>
+        </MarketContainer.Col2>
+      </MarketContainer>
 
-        <ProductContainer>
-          <ProductContainer.Col1>
-            <Order />
-            <Category />
-          </ProductContainer.Col1>
-          <ProductContainer.Col2>
-            Products cards
-          </ProductContainer.Col2>
+      <ProductContainer>
+        <ProductContainer.Col1>
+          <Order />
+          <Category />
+        </ProductContainer.Col1>
+        <ProductContainer.Col2>
+          <ModalAddProducts />
+        </ProductContainer.Col2>
 
-        </ProductContainer>
-        <FooterMobile />
-      </createGlobalStyle>
+      </ProductContainer>
+      <FooterMobile />
 
     </div>
   );
