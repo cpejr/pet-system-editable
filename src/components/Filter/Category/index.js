@@ -10,13 +10,6 @@ background-color:${({ theme }) => theme.colors.mediumGray};
 width:200px;
 border-radius:5px;
 margin-bottom:10%;
-@media(max-width:560px){
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    width:130px;
-    font-size:14px;
-    }
 `;
 Container.Title = styled.h3`
 display:flex;

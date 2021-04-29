@@ -22,13 +22,16 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     position: 'absolute',
-    width: 800,
-    height: 500,
+    width: '65vw',
+    height: '80vh',
     backgroundColor: theme.palette.background.paper,
     border: '2px solid #609694',
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
+    overflow: 'auto',
+
   },
+
 }));
 /*eslint-disable*/
 export default function ModalAddProducts() {

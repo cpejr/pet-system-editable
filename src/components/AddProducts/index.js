@@ -9,6 +9,10 @@ justify-content:center;
 width:100%;
 flex-direction:row;
 margin-bottom:2%;
+@media(max-width:1190px){
+  flex-direction:column;
+  overflow:auto;
+}
 `;
 
 AddProductsContainer.Col1 = styled.div`
@@ -17,12 +21,18 @@ align-items:center;
 justify-content:center;
 width:70%;
 flex-direction:column;
+@media(max-width:1190px){
+  width:100%;
+}
 `;
 
 const DivInput = styled.div`
 display:flex;
 justify-content:initial;
 width:100%;
+@media(max-width:1190px){
+  justify-content:center;
+}
 `;
 const AddTitle = styled.h2`
 display:flex;
@@ -30,6 +40,9 @@ align-items:center;
 justify-content:initial;
 width:100%;
 font-family: Roboto;
+@media(max-width:1190px){
+  justify-content:center;
+}
 `;
 
 const NameProduct = styled.p`
@@ -39,6 +52,9 @@ justify-content:initial;
 width:100%;
 margin:0;
 font-family: Roboto;
+@media(max-width:1190px){
+  justify-content:center;
+}
 `;
 const NameProductInput = styled.input`
 display:flex;
@@ -77,6 +93,9 @@ justify-content:initial;
 width:100%;
 margin:0;
 font-family: Roboto;
+@media(max-width:1190px){
+  justify-content:center;
+}
 `;
 PriceAndDiscont.Col1.Row2 = styled.input`
 display:flex;
@@ -106,6 +125,9 @@ justify-content:initial;
 width:100%;
 margin:0;
 font-family: Roboto;
+@media(max-width:1190px){
+  justify-content:center;
+}
 `;
 
 PriceAndDiscont.Col2.Row2 = styled.input`
@@ -128,6 +150,9 @@ justify-content:initial;
 width:100%;
 margin:0;
 font-family: Roboto;
+@media(max-width:1190px){
+  justify-content:center;
+}
 `;
 const DescriptionInput = styled.input`
 display:flex;
@@ -148,6 +173,10 @@ align-items:center;
 justify-content:center;
 width:30%;
 flex-direction:column;
+@media(max-width:1190px){
+  width:100%;
+  justify-content:center;
+}
 `;
 
 const SelectImage = styled.p`
@@ -156,6 +185,9 @@ align-items:center;
 justify-content:center;
 width:100%;
 font-family: Roboto;
+@media(max-width:1190px){
+  justify-content:center;
+}
 `;
 const ButtonCancel = styled.button`
     display:flex;
