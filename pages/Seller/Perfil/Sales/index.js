@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { createGlobalStyle } from 'styled-components';
+import styled from 'styled-components';
 import Link from 'next/link';
 import HeaderSeller from '../../../../src/components/HeaderSeller';
 import WordsDivider from '../../../../src/components/WordsDivider';
@@ -105,47 +105,41 @@ export default function Perfil() {
   return (
     <div>
       <HeaderSeller />
-      <createGlobalStyle>
 
-        <Title>Perfil da loja:</Title>
+      <Title>Perfil da loja:</Title>
 
-        <SubTitle>
-          <Link href="http://localhost:3000/Seller/Perfil/Products">
-            <Section>Meus produtos</Section>
-          </Link>
-          <WordsDivider />
-          <Link href="http://localhost:3000/Seller/Perfil/Store">
-            <Section>Minha loja</Section>
-          </Link>
-          <WordsDivider />
-          <Link href="http://localhost:3000/Seller/Perfil/SellerRequests">
-            <Section>Pedidos</Section>
-          </Link>
-          <WordsDivider />
-          <Link href="http://localhost:3000/Seller/Perfil/Sales">
-            <Section.Select>Minhas vendas</Section.Select>
-          </Link>
-          <WordsDivider />
-          <Link href="http://localhost:3000/Seller/Perfil/AddNewProduct">
-            <Section>Adicionar Produto</Section>
-          </Link>
-        </SubTitle>
-        <ContainerDate>
-          <ContainerDate.Col1>
-            <MySearchDateMonth />
-          </ContainerDate.Col1>
+      <SubTitle>
+        <Link href="http://localhost:3000/Seller/Perfil/Products">
+          <Section>Meus produtos</Section>
+        </Link>
+        <WordsDivider />
+        <Link href="http://localhost:3000/Seller/Perfil/Store">
+          <Section>Minha loja</Section>
+        </Link>
+        <WordsDivider />
+        <Link href="http://localhost:3000/Seller/Perfil/SellerRequests">
+          <Section>Pedidos</Section>
+        </Link>
+        <WordsDivider />
+        <Link href="http://localhost:3000/Seller/Perfil/Sales">
+          <Section.Select>Minhas vendas</Section.Select>
+        </Link>
+      </SubTitle>
+      <ContainerDate>
+        <ContainerDate.Col1>
+          <MySearchDateMonth />
+        </ContainerDate.Col1>
 
-          <ContainerDate.Col2 />
+        <ContainerDate.Col2 />
 
-          <ContainerDate.Col3>
-            <MySearchDateYear />
-          </ContainerDate.Col3>
+        <ContainerDate.Col3>
+          <MySearchDateYear />
+        </ContainerDate.Col3>
 
-        </ContainerDate>
+      </ContainerDate>
 
-        <MySales />
-        <FooterMobile />
-      </createGlobalStyle>
+      <MySales />
+      <FooterMobile />
 
     </div>
   );

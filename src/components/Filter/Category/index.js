@@ -1,6 +1,5 @@
-import React,{useState} from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { GrRadial } from 'react-icons/gr';
 
 const Container = styled.div`
 display:flex;
@@ -11,6 +10,13 @@ background-color:${({ theme }) => theme.colors.mediumGray};
 width:200px;
 border-radius:5px;
 margin-bottom:10%;
+@media(max-width:560px){
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:130px;
+    font-size:14px;
+    }
 `;
 Container.Title = styled.h3`
 display:flex;
@@ -187,28 +193,27 @@ justify-content:initial;
 width:80%;
 `;
 
-
 export default function Category() {
-    const [checkedRacao, setCheckedRacao] = useState(false);
-    const handleClickRacao = () => setCheckedRacao(!checkedRacao)
+  const [checkedRacao, setCheckedRacao] = useState(false);
+  const handleClickRacao = () => setCheckedRacao(!checkedRacao);
 
-    const [checkedBrinquedos, setCheckedBrinquedos] = useState(false);
-    const handleClickBrinquedos = () => setCheckedBrinquedos(!checkedBrinquedos)
+  const [checkedBrinquedos, setCheckedBrinquedos] = useState(false);
+  const handleClickBrinquedos = () => setCheckedBrinquedos(!checkedBrinquedos);
 
-    const [checkedVasilhas, setCheckedVasilhas] = useState(false);
-    const handleClickVasilhas = () => setCheckedVasilhas(!checkedVasilhas)
+  const [checkedVasilhas, setCheckedVasilhas] = useState(false);
+  const handleClickVasilhas = () => setCheckedVasilhas(!checkedVasilhas);
 
-    const [checkedCasinhas, setCheckedCasinhas] = useState(false);
-    const handleClickCasinhas = () => setCheckedCasinhas(!checkedCasinhas)
+  const [checkedCasinhas, setCheckedCasinhas] = useState(false);
+  const handleClickCasinhas = () => setCheckedCasinhas(!checkedCasinhas);
 
-    const [checkedPetiscos, setCheckedPetiscos] = useState(false);
-    const handleClickPetiscos = () => setCheckedPetiscos(!checkedPetiscos)
+  const [checkedPetiscos, setCheckedPetiscos] = useState(false);
+  const handleClickPetiscos = () => setCheckedPetiscos(!checkedPetiscos);
 
-    const [checkedShampoo, setCheckedShampoo] = useState(false);
-    const handleClickShampoo = () => setCheckedShampoo(!checkedShampoo)
+  const [checkedShampoo, setCheckedShampoo] = useState(false);
+  const handleClickShampoo = () => setCheckedShampoo(!checkedShampoo);
 
-    const [checkedPerfumes, setCheckedPerfumes] = useState(false);
-    const handleClickPerfumes = () => setCheckedPerfumes(!checkedPerfumes)
+  const [checkedPerfumes, setCheckedPerfumes] = useState(false);
+  const handleClickPerfumes = () => setCheckedPerfumes(!checkedPerfumes);
 
   return (
     <div>
@@ -216,71 +221,70 @@ export default function Category() {
         <Container.Title>Categorias</Container.Title>
         <CategoryContainer>
 
-            <CategoryContainer.Row1>
-                <CategoryContainer.Row1.Col1>
-            <input onClick={handleClickRacao} checked={checkedRacao} type="checkbox"/>
-                </CategoryContainer.Row1.Col1>
-                <CategoryContainer.Row1.Col2>
-            Ração
-                </CategoryContainer.Row1.Col2>
-            </CategoryContainer.Row1>
+          <CategoryContainer.Row1>
+            <CategoryContainer.Row1.Col1>
+              <input onClick={handleClickRacao} checked={checkedRacao} type="checkbox" />
+            </CategoryContainer.Row1.Col1>
+            <CategoryContainer.Row1.Col2>
+              Ração
+            </CategoryContainer.Row1.Col2>
+          </CategoryContainer.Row1>
 
-
-            <CategoryContainer.Row2>
+          <CategoryContainer.Row2>
             <CategoryContainer.Row2.Col1>
-            <input onClick={handleClickBrinquedos} checked={checkedBrinquedos}  type="checkbox"/>
-                </CategoryContainer.Row2.Col1>
-                <CategoryContainer.Row2.Col2>
-            Brinquedos
-                </CategoryContainer.Row2.Col2>
-            </CategoryContainer.Row2>
+              <input onClick={handleClickBrinquedos} checked={checkedBrinquedos} type="checkbox" />
+            </CategoryContainer.Row2.Col1>
+            <CategoryContainer.Row2.Col2>
+              Brinquedos
+            </CategoryContainer.Row2.Col2>
+          </CategoryContainer.Row2>
 
-            <CategoryContainer.Row3>
+          <CategoryContainer.Row3>
             <CategoryContainer.Row3.Col1>
-            <input onClick={handleClickVasilhas} checked={checkedVasilhas} type="checkbox"/>
-                </CategoryContainer.Row3.Col1>
-                <CategoryContainer.Row3.Col2>
-            Vasilhas
-                </CategoryContainer.Row3.Col2>
-            </CategoryContainer.Row3>
+              <input onClick={handleClickVasilhas} checked={checkedVasilhas} type="checkbox" />
+            </CategoryContainer.Row3.Col1>
+            <CategoryContainer.Row3.Col2>
+              Vasilhas
+            </CategoryContainer.Row3.Col2>
+          </CategoryContainer.Row3>
 
-            <CategoryContainer.Row4>
+          <CategoryContainer.Row4>
             <CategoryContainer.Row4.Col1>
-            <input onClick={handleClickCasinhas} checked={checkedCasinhas} type="checkbox"/>
-                </CategoryContainer.Row4.Col1>
-                <CategoryContainer.Row4.Col2>
-            Casinhas
-                </CategoryContainer.Row4.Col2>
-            </CategoryContainer.Row4>
+              <input onClick={handleClickCasinhas} checked={checkedCasinhas} type="checkbox" />
+            </CategoryContainer.Row4.Col1>
+            <CategoryContainer.Row4.Col2>
+              Casinhas
+            </CategoryContainer.Row4.Col2>
+          </CategoryContainer.Row4>
 
-            <CategoryContainer.Row5>
+          <CategoryContainer.Row5>
             <CategoryContainer.Row5.Col1>
-            <input onClick={handleClickPetiscos} checked={checkedPetiscos} type="checkbox"/>
-                </CategoryContainer.Row5.Col1>
-                <CategoryContainer.Row5.Col2>
-            Petiscos
-                </CategoryContainer.Row5.Col2>
-            </CategoryContainer.Row5>
+              <input onClick={handleClickPetiscos} checked={checkedPetiscos} type="checkbox" />
+            </CategoryContainer.Row5.Col1>
+            <CategoryContainer.Row5.Col2>
+              Petiscos
+            </CategoryContainer.Row5.Col2>
+          </CategoryContainer.Row5>
 
-            <CategoryContainer.Row6>
+          <CategoryContainer.Row6>
             <CategoryContainer.Row6.Col1>
-            <input onClick={handleClickShampoo} checked={checkedShampoo} type="checkbox"/>
-                </CategoryContainer.Row6.Col1>
-                <CategoryContainer.Row6.Col2>
-            Shampoo
-                </CategoryContainer.Row6.Col2>
-            </CategoryContainer.Row6>
+              <input onClick={handleClickShampoo} checked={checkedShampoo} type="checkbox" />
+            </CategoryContainer.Row6.Col1>
+            <CategoryContainer.Row6.Col2>
+              Shampoo
+            </CategoryContainer.Row6.Col2>
+          </CategoryContainer.Row6>
 
-            <CategoryContainer.Row7>
+          <CategoryContainer.Row7>
             <CategoryContainer.Row7.Col1>
-            <input onClick={handleClickPerfumes} checked={checkedPerfumes} type="checkbox"/>
-                </CategoryContainer.Row7.Col1>
-                <CategoryContainer.Row7.Col2>
-            Perfumes
-                </CategoryContainer.Row7.Col2>
-            </CategoryContainer.Row7>
+              <input onClick={handleClickPerfumes} checked={checkedPerfumes} type="checkbox" />
+            </CategoryContainer.Row7.Col1>
+            <CategoryContainer.Row7.Col2>
+              Perfumes
+            </CategoryContainer.Row7.Col2>
+          </CategoryContainer.Row7>
 
-            </CategoryContainer>
+        </CategoryContainer>
 
       </Container>
     </div>

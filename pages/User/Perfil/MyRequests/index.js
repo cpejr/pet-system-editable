@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { createGlobalStyle } from 'styled-components';
+import styled from 'styled-components';
 import Link from 'next/link';
 import Header from '../../../../src/components/Header';
 import MyRequest from '../../../../src/components/MyRequest';
@@ -86,38 +86,36 @@ export default function Perfil() {
   return (
     <div>
       <Header />
-      <createGlobalStyle>
 
-        <Title>Meu Perfil:</Title>
+      <Title>Meu Perfil:</Title>
 
-        <SubTitle>
-          <Link href="http://localhost:3000/User/Perfil/MyRequests">
-            <Section.Select>Meus pedidos</Section.Select>
-          </Link>
-          <WordsDivider />
-          <Link href="http://localhost:3000/User/Perfil/MyAdresses">
-            <Section>Meus endereços</Section>
-          </Link>
-          <WordsDivider />
-          <Link href="http://localhost:3000/User/Perfil/MyDatas">
-            <Section>Dados pessoais</Section>
-          </Link>
-          <WordsDivider />
-          <Link href="http://localhost:3000/User/Perfil/ChangePassword">
-            <Section>Alterar Senha</Section>
-          </Link>
-          <WordsDivider />
-          <Section>
-            <MyLogOut />
-          </Section>
-        </SubTitle>
-        <ActualType>Pedido Atual</ActualType>
-        <MyRequest />
-        <OldType>Pedidos Anteriores</OldType>
-        <MyRequest />
+      <SubTitle>
+        <Link href="http://localhost:3000/User/Perfil/MyRequests">
+          <Section.Select>Meus pedidos</Section.Select>
+        </Link>
+        <WordsDivider />
+        <Link href="http://localhost:3000/User/Perfil/MyAdresses">
+          <Section>Meus endereços</Section>
+        </Link>
+        <WordsDivider />
+        <Link href="http://localhost:3000/User/Perfil/MyDatas">
+          <Section>Dados pessoais</Section>
+        </Link>
+        <WordsDivider />
+        <Link href="http://localhost:3000/User/Perfil/ChangePassword">
+          <Section>Alterar Senha</Section>
+        </Link>
+        <WordsDivider />
+        <Section>
+          <MyLogOut />
+        </Section>
+      </SubTitle>
+      <ActualType>Pedido Atual</ActualType>
+      <MyRequest />
+      <OldType>Pedidos Anteriores</OldType>
+      <MyRequest />
 
-        <FooterMobile />
-      </createGlobalStyle>
+      <FooterMobile />
 
     </div>
   );
