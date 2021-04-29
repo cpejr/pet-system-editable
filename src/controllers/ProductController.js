@@ -32,11 +32,11 @@ module.exports = {
     }
     return response.status(200).json({ notification: 'Produto alterado com sucesso!' });
   },
-  async delet(request, response) {
+  async remove(request, response) {
     const { product_id } = request.body;
 
     try {
-      await ProductModel.deletProduct(product_id);
+      await ProductModel.removeProduct(product_id);
     } catch (err) {
       if (err.message) {
         return response.status(400).json({ notification: err.message });

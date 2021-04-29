@@ -6,6 +6,8 @@ import WordsDivider from '../../../../src/components/WordsDivider';
 import FooterMobile from '../../../../src/components/Mobile/FooterMobile';
 import Order from '../../../../src/components/Filter/Order';
 import Category from '../../../../src/components/Filter/Category';
+// import Cards from '../../../../src/components/Cards';
+import MyProducts from '../../../MyProducts';
 
 const Title = styled.h1`
 align-items:initial;
@@ -247,9 +249,8 @@ export default function Perfil() {
             <Category />
           </ProductContainer.Col1>
           <ProductContainer.Col2>
-            Products cards
+            <MyProducts />
           </ProductContainer.Col2>
-
         </ProductContainer>
         <FooterMobile />
       </createGlobalStyle>

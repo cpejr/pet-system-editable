@@ -1,5 +1,5 @@
 import {
-  create, getOne, update, delet,
+  create, getOne, update, remove,
 } from '../../src/controllers/ProductController';
 
 export default function handler(req, res) {
@@ -16,7 +16,7 @@ export default function handler(req, res) {
       return update(req, res);
     }
     if (method === 'DELETE') {
-      return delet(req, res);
+      return remove(req, res);
     }
     return res.status(500).json({ message: 'Método incorreto' });
   } catch (err) {

@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import {
-  FormControl, FormLabel, FormFile, FormGroup, Row, Col,
+  FormControl, FormLabel, FormGroup, Row, Col,
 } from 'react-bootstrap';
 import styled from 'styled-components';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import FormFileInput from 'react-bootstrap/esm/FormFileInput';
+import axios from 'axios';
+import Upload from './Upload';
 
 const Styles = styled.div`
 width: 100%;
@@ -78,13 +79,6 @@ const ButtonCancell = styled(Button)`
     justify-content: center;
 `;
 
-const File = styled.div`
-display:flex;
-flex-direction:row;
-justify-content: center;
-margin-top:80px;
-`;
-
 const Title = styled.h1`
 font-size:20px;
 display:flex;
@@ -93,11 +87,40 @@ margin-top: 40px;
 `;
 
 export default function AddProducts() {
-  const [photo, setPhoto] = useState({ file: null });
-  function handleChange(event) {
-    setPhoto({
-      file: URL.createObjectURL(event.target.files[0]),
-    });
+  const [productName, setProductName] = useState('');
+  const [price, setPrice] = useState('');
+  const [discount, setDiscount] = useState('');
+  const [description, setDescription] = useState('');
+
+  function handleProductNameChange(event) {
+    setProductName(event.target.value);
+  }
+  function handlePriceChange(event) {
+    setPrice(event.target.value);
+  }
+  function handleDiscountChange(event) {
+    setDiscount(event.target.value);
+  }
+  function handleDescriptionChange(event) {
+    setDescription(event.target.value);
+  }
+  async function handleSubmit(event) {
+    event.preventDefault();
+    const body = {
+      type: 'product',
+      productName,
+      price,
+      discount,
+      description,
+
+    };
+    try {
+      console.log(body);
+      const Validate = await axios.post('/api/product', body);
+      console.log(Validate.data);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return (
@@ -111,37 +134,56 @@ export default function AddProducts() {
 
             <FormGroup>
               <FormLabel>Nome do Produto</FormLabel>
-              <FormControl type="text" />
+              <FormControl
+                type="text"
+                required
+                value={productName}
+                onChange={handleProductNameChange}
+              />
             </FormGroup>
             <Row>
               <Col>
                 <FormLabel>Preço:</FormLabel>
-                <FormControl type="numbers" placeholder="R$ 000,00" />
+                <FormControl
+                  type="numbers"
+                  placeholder="R$ 000,00"
+                  required
+                  value={price}
+                  onChange={handlePriceChange}
+                />
               </Col>
               <Col>
                 <FormLabel>Desconto:</FormLabel>
-                <FormControl type="numbers" placeholder="00,00%" />
+                <FormControl
+                  type="numbers"
+                  placeholder="00,00%"
+                  required
+                  value={discount}
+                  onChange={handleDiscountChange}
+                />
               </Col>
             </Row>
 
             <FormLabel>
               Descrição do Produto:
             </FormLabel>
-            <FormControlDescription as="textarea" type="text" />
+            <FormControlDescription
+              as="textarea"
+              type="text"
+              required
+              value={description}
+              onChange={handleDescriptionChange}
+            />
           </FormContainer.Col1>
           <FormContainer.Col2>
 
-            <File>
-              <FormFile id="formcheck-api-regular">
-                <FormLabel htmlFor="upload">Selecionar Imagem</FormLabel>
-                <FormFileInput type="file" onChange={handleChange} />
-              </FormFile>
-            </File>
+            <Upload />
+
             <ButtonCancell variant="primary" type="submit">
               Cancelar Cadastro
             </ButtonCancell>
 
-            <Button variant="primary" type="submit">
+            <Button variant="primary" type="button" onClick={handleSubmit}>
               Confirmar Cadastro
             </Button>
           </FormContainer.Col2>

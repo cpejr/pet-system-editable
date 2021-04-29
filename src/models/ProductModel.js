@@ -24,7 +24,7 @@ module.exports = {
     }
   },
 
-  async deletProduct(id) {
+  async removeProduct(id) {
     try {
       const response = await connection('product')
         .where({ product_id: id })
