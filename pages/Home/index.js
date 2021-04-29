@@ -2,11 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
 import Header from '../../src/components/Header';
-
-const MainCarousel = styled.div`
-    height: 400px;
-    background-color: lightgray;
-`;
+import BannerCarousel from '../../src/components/BannerCarousel';
+import StoresCarousel from '../../src/components/StoresCarousel';
+import AnimalsCarousel from '../../src/components/AnimalsCarousel';
 
 const Footer = styled.div`
   height: 100px;
@@ -25,6 +23,8 @@ const Cards = styled.div`
   //background-color: pink;
   @media screen and (max-width: 600px) {
     flex-direction: column;
+    height: 40%;
+    width: 60%;
   }
 `;
 
@@ -69,7 +69,7 @@ export default function Home() {
   return (
     <>
       <Header />
-      <MainCarousel />
+      <BannerCarousel />
       <Container>
         <Cards>
           <Image src="/images/Card1.png" alt="" width="400" height="500" />
@@ -80,12 +80,7 @@ export default function Home() {
       <Divider />
       <Container>
         <Text>Principais Lojistas em Belo Horizonte, MG:</Text>
-        <Cards>
-          <Image src="/images/Loja1.png" alt="" width="300" height="400" />
-          <Image src="/images/Loja1.png" alt="" width="300" height="400" />
-          <Image src="/images/Loja1.png" alt="" width="300" height="400" />
-          <Image src="/images/Loja1.png" alt="" width="300" height="400" />
-        </Cards>
+        <StoresCarousel />
       </Container>
       <Divider />
       <Container>
@@ -109,12 +104,7 @@ export default function Home() {
       <Container>
         <Subcontainer>
           <Text>Bichinhos mais procurados</Text>
-          <Mosaic>
-            <Image src="/images/animalsCarousel/Cachorros.png" alt="" width="400" height="200" />
-            <Image src="/images/animalsCarousel/Gatos.png" alt="" width="400" height="200" />
-            <Image src="/images/animalsCarousel/Peixes.png" alt="" width="400" height="200" />
-            <Image src="/images/animalsCarousel/Passaros.png" alt="" width="400" height="200" />
-          </Mosaic>
+          <AnimalsCarousel />
         </Subcontainer>
       </Container>
       <Divider />
