@@ -1,21 +1,23 @@
 import React from 'react';
+import styled from 'styled-components';
 import Carousel from 'react-multi-carousel';
 import Image from 'next/image';
 import 'react-multi-carousel/lib/styles.css';
 
+const Item = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 export default function StoreCarousel() {
   const responsive = {
-    superLargeDesktop: {
-      // the naming can be any, depends on you.
-      breakpoint: { max: 4000, min: 3000 },
-      items: 4,
-    },
     desktop: {
-      breakpoint: { max: 3000, min: 1024 },
+      breakpoint: { max: 4000, min: 1024 },
       items: 4,
     },
     tablet: {
-      breakpoint: { max: 1024, min: 464 },
+      breakpoint: { max: 1024, min: 465 },
       items: 2,
     },
     mobile: {
@@ -25,25 +27,24 @@ export default function StoreCarousel() {
   };
   return (
     <Carousel responsive={responsive}>
-      <div>
+      <Item>
         <Image src="/images/animalsCarousel/Cachorros.png" alt="" width="400" height="200" />
-      </div>
-      <div>
+      </Item>
+      <Item>
         <Image src="/images/animalsCarousel/Gatos.png" alt="" width="400" height="200" />
-      </div>
-      <div>
+      </Item>
+      <Item>
         <Image src="/images/animalsCarousel/Peixes.png" alt="" width="400" height="200" />
-      </div>
-      <div>
+      </Item>
+      <Item>
         <Image src="/images/animalsCarousel/Passaros.png" alt="" width="400" height="200" />
-      </div>
-      <div>
+      </Item>
+      <Item>
         <Image src="/images/animalsCarousel/Cachorros.png" alt="" width="400" height="200" />
-      </div>
-      <div>
+      </Item>
+      <Item>
         <Image src="/images/animalsCarousel/Gatos.png" alt="" width="400" height="200" />
-      </div>
+      </Item>
     </Carousel>
-
   );
 }

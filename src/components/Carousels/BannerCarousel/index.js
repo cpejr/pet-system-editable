@@ -5,13 +5,8 @@ import 'react-multi-carousel/lib/styles.css';
 
 export default function MainCarousel() {
   const responsive = {
-    superLargeDesktop: {
-      // the naming can be any, depends on you.
-      breakpoint: { max: 4000, min: 3000 },
-      items: 1,
-    },
     desktop: {
-      breakpoint: { max: 3000, min: 1024 },
+      breakpoint: { max: 5000, min: 1024 },
       items: 1,
     },
     tablet: {

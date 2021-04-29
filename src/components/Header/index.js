@@ -12,7 +12,7 @@ Header.Wrapper = styled.div`
     width: 100%;
     height: 20vh;
     flex-direction: column;
-    @media(max-width:560px){
+    @media(max-width:800px){
     display:none;
     }
 `;
@@ -24,9 +24,6 @@ Header.Top = styled.div`
     justify-content: space-around;
     height: 75%;
     background-color: ${({ theme }) => theme.colors.rose};
-    @media(max-width:560px){
-    display:none;
-    }
 `;
 
 Header.Bottom = styled.div`
@@ -36,9 +33,6 @@ Header.Bottom = styled.div`
     justify-content: space-around;  // space evenly
     height: 35%;
     background-color: ${({ theme }) => theme.colors.mediumGreen};
-    @media(max-width:560px){
-    display:none;
-    }
 `;
 
 const ImageBox = styled.div`
