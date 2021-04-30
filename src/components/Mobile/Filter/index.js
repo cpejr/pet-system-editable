@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -80,7 +80,7 @@ const ButtonOrder = styled.button`
     cursor:pointer;
     outline:none;
     margin-bottom:5%;
-    color:${({ theme }) => theme.colors.mediumGreen};
+    color:'#111';
     font-size:14px;
 `;
 const SubTitleCategory = styled.h3`
@@ -125,7 +125,7 @@ const ButtonCategory = styled.button`
     cursor:pointer;
     outline:none;
     margin-bottom:5%;
-    color:${({ theme }) => theme.colors.mediumRed};
+    color:'#111';
     font-size:14px;
 `;
 
@@ -149,6 +149,95 @@ const ConfirmButton = styled.button`
 `;
 
 export default function Filter() {
+  const [checkedAvaliacao, setCheckedAvaliacao] = useState('#F8F8F8');
+  const handleClickAvaliacao = () => {
+    if (checkedAvaliacao === '#F8F8F8') {
+      setCheckedAvaliacao('#609694');
+    } else {
+      setCheckedAvaliacao('#F8F8F8');
+    }
+  };
+
+  const [checkedMaisVistos, setCheckedMaisVistos] = useState('#F8F8F8');
+  const handleClickMaisVistos = () => {
+    if (checkedMaisVistos === '#F8F8F8') {
+      setCheckedMaisVistos('#609694');
+    } else {
+      setCheckedMaisVistos('#F8F8F8');
+    }
+  };
+
+  const [checkedMaisPopulares, setCheckedMaisPopulares] = useState('#F8F8F8');
+  const handleClickMaisPopulares = () => {
+    if (checkedMaisPopulares === '#F8F8F8') {
+      setCheckedMaisPopulares('#609694');
+    } else {
+      setCheckedMaisPopulares('#F8F8F8');
+    }
+  };
+
+  const [checkedRacao, setCheckedRacao] = useState('#F8F8F8');
+  const handleClickRacao = () => {
+    if (checkedRacao === '#F8F8F8') {
+      setCheckedRacao('#BD2B2B');
+    } else {
+      setCheckedRacao('#F8F8F8');
+    }
+  };
+
+  const [checkedBrinquedos, setCheckedBrinquedos] = useState('#F8F8F8');
+  const handleClickBrinquedos = () => {
+    if (checkedBrinquedos === '#F8F8F8') {
+      setCheckedBrinquedos('#BD2B2B');
+    } else {
+      setCheckedBrinquedos('#F8F8F8');
+    }
+  };
+
+  const [checkedVasilhas, setCheckedVasilhas] = useState('#F8F8F8');
+  const handleClickVasilhas = () => {
+    if (checkedVasilhas === '#F8F8F8') {
+      setCheckedVasilhas('#BD2B2B');
+    } else {
+      setCheckedVasilhas('#F8F8F8');
+    }
+  };
+
+  const [checkedCasinhas, setCheckedCasinhas] = useState('#F8F8F8');
+  const handleClickCasinhas = () => {
+    if (checkedCasinhas === '#F8F8F8') {
+      setCheckedCasinhas('#BD2B2B');
+    } else {
+      setCheckedCasinhas('#F8F8F8');
+    }
+  };
+
+  const [checkedPetiscos, setCheckedPetiscos] = useState('#F8F8F8');
+  const handleClickPetiscos = () => {
+    if (checkedPetiscos === '#F8F8F8') {
+      setCheckedPetiscos('#BD2B2B');
+    } else {
+      setCheckedPetiscos('#F8F8F8');
+    }
+  };
+
+  const [checkedShampoo, setCheckedShampoo] = useState('#F8F8F8');
+  const handleClickShampoo = () => {
+    if (checkedShampoo === '#F8F8F8') {
+      setCheckedShampoo('#BD2B2B');
+    } else {
+      setCheckedShampoo('#F8F8F8');
+    }
+  };
+
+  const [checkedPerfumes, setCheckedPerfumes] = useState('#F8F8F8');
+  const handleClickPerfumes = () => {
+    if (checkedMaisPerfumes === '#F8F8F8') {
+      setCheckedPerfumes('#BD2B2B');
+    } else {
+      setCheckedPerfumes('#F8F8F8');
+    }
+  };
   return (
     <div>
       <Container>
@@ -165,11 +254,27 @@ export default function Filter() {
         </SubTitle>
         <OrderContainer>
           <OrderContainer.Col1>
-            <ButtonOrder>Avaliação</ButtonOrder>
-            <ButtonOrder>Mais vistos</ButtonOrder>
+            <ButtonOrder
+              onClick={handleClickAvaliacao}
+              style={{ backgroundColor: checkedAvaliacao }}
+            >
+              Avaliação
+
+            </ButtonOrder>
+            <ButtonOrder
+              onClick={handleClickMaisVistos}
+              style={{ backgroundColor: checkedMaisVistos }}
+            >
+              Mais vistos
+            </ButtonOrder>
           </OrderContainer.Col1>
           <OrderContainer.Col2>
-            <ButtonOrder>Mais populares</ButtonOrder>
+            <ButtonOrder
+              onClick={handleClickMaisPopulares}
+              style={{ backgroundColor: checkedMaisPopulares }}
+            >
+              Mais populares
+            </ButtonOrder>
           </OrderContainer.Col2>
 
         </OrderContainer>
@@ -178,14 +283,50 @@ export default function Filter() {
         </SubTitleCategory>
         <CategoryContainer>
           <CategoryContainer.Col1>
-            <ButtonCategory>Raçao</ButtonCategory>
-            <ButtonCategory>Casinhas</ButtonCategory>
-            <ButtonCategory>Shampoo</ButtonCategory>
+            <ButtonCategory
+              onClick={handleClickRacao}
+              style={{ backgroundColor: checkedRacao }}
+            >
+              Raçao
+            </ButtonCategory>
+            <ButtonCategory
+              onClick={handleClickCasinhas}
+              style={{ backgroundColor: checkedCasinhas }}
+            >
+              Casinhas
+            </ButtonCategory>
+            <ButtonCategory
+              onClick={handleClickShampoo}
+              style={{ backgroundColor: checkedShampoo }}
+            >
+              Shampoo
+            </ButtonCategory>
+            <ButtonCategory
+              onClick={handleClickPerfumes}
+              style={{ backgroundColor: checkedPerfumes }}
+            >
+              Perfumes
+            </ButtonCategory>
           </CategoryContainer.Col1>
           <OrderContainer.Col2>
-            <ButtonCategory>Brinquedos</ButtonCategory>
-            <ButtonCategory>Vasilhas</ButtonCategory>
-            <ButtonCategory>Petiscos</ButtonCategory>
+            <ButtonCategory
+              onClick={handleClickBrinquedos}
+              style={{ backgroundColor: checkedBrinquedos }}
+            >
+              Brinquedos
+            </ButtonCategory>
+            <ButtonCategory
+              onClick={handleClickVasilhas}
+              style={{ backgroundColor: checkedVasilhas }}
+            >
+              Vasilhas
+            </ButtonCategory>
+            <ButtonCategory
+              onClick={handleClickPetiscos}
+              style={{ backgroundColor: checkedPetiscos }}
+            >
+              Petiscos
+            </ButtonCategory>
           </OrderContainer.Col2>
 
         </CategoryContainer>
