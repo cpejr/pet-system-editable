@@ -25,6 +25,7 @@ const theme = {
     strongRed: '#BD2B2B',
     baseGray: '#AAABB0',
     mediumGray: '#C4C4C4',
+    titleGray: '#E8E8E8',
     background: '#F8F8F8',
     hoverBackground: 'rgba(96, 150, 148, 0.3)',
     borderBoxColor: 'rgba(0, 0, 0, 0.2)',
