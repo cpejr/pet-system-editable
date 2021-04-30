@@ -15,6 +15,8 @@ import Header from '../../src/components/Header';
 import { Body } from '../../src/components/BodyForms';
 import WindowDivider from '../../src/components/WindowDivider';
 
+const api = axios.create({ baseURL: 'http://localhost:3000/' });
+
 const WordFormGroup = styled(FormGroup)`
 display : flex;
 flex-direction: column;
@@ -174,7 +176,7 @@ export default function Signup() {
       telephone: ddd + telephone,
     };
     try {
-      const Validate = await axios.post('/api/user', body);
+      const Validate = await api.post('/api/user', body);
       console.log(Validate.data);
     } catch (error) {
       console.error(error);

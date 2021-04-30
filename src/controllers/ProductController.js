@@ -15,6 +15,7 @@ module.exports = {
       if (err.message) {
         return response.status(400).json({ notification: err.message });
       }
+      console.error(error);
       return response.status(500).json({ notification: 'Internal server error while trying to register user' });
     }
     return response.status(200).json({ notification: 'Produto criado!' });

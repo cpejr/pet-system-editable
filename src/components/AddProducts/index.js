@@ -7,6 +7,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import Upload from './Upload';
 
+const api = axios.create({ baseURL: 'http://localhost:3000/' });
+
 const Styles = styled.div`
 width: 100%;
 display: flex;
@@ -107,16 +109,19 @@ export default function AddProducts() {
   async function handleSubmit(event) {
     event.preventDefault();
     const body = {
-      type: 'product',
-      productName,
-      price,
-      discount,
-      description,
+      product_id: 'dog',
+      store_id: '6',
+      product_name: 'ração d',
+      price: 12,
+      discount: 5,
+      description: 'cachorro',
+      img: 'djdiss',
+      created_at: 'djudhuj',
 
     };
     try {
       console.log(body);
-      const Validate = await axios.post('/api/product', body);
+      const Validate = await api.post('/api/product', body);
       console.log(Validate.data);
     } catch (error) {
       console.error(error);
