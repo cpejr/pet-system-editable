@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { HiOutlineLocationMarker } from 'react-icons/hi';
 import { BiToggleLeft } from 'react-icons/bi';
+import ModalFilter from '../ModalFilter';
 
 const Container = styled.div`
 display:none;
@@ -84,7 +85,7 @@ export default function LocationAndFilter() {
             <BiToggleLeft style={{ color: '#E8E8E8' }} size="30" />
           </Container.Col2.Col1>
           <Container.Col2.Col2>
-            Filtros
+            <ModalFilter />
           </Container.Col2.Col2>
         </Container.Col2>
       </Container>

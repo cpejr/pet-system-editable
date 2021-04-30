@@ -30,6 +30,7 @@ const theme = {
     hoverBackground: 'rgba(96, 150, 148, 0.3)',
     borderBoxColor: 'rgba(0, 0, 0, 0.2)',
     grayIcons: '#AAABB0',
+    blueButton: '#1C97B2',
   },
 };
 
