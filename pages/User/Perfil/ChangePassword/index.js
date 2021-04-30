@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { createGlobalStyle } from 'styled-components';
+import styled from 'styled-components';
 import Link from 'next/link';
 import Header from '../../../../src/components/Header';
 import MyChangePassword from '../../../../src/components/MyChangePassword';
@@ -63,35 +63,33 @@ export default function Perfil() {
   return (
     <div>
       <Header />
-      <createGlobalStyle>
 
-        <Title>Meu Perfil:</Title>
+      <Title>Meu Perfil:</Title>
 
-        <SubTitle>
-          <Link href="http://localhost:3000/User/Perfil/MyRequests">
-            <Section>Meus pedidos</Section>
-          </Link>
-          <WordsDivider />
-          <Link href="http://localhost:3000/User/Perfil/MyAdresses">
-            <Section>Meus endereços</Section>
-          </Link>
-          <WordsDivider />
-          <Link href="http://localhost:3000/User/Perfil/MyDatas">
-            <Section>Dados pessoais</Section>
-          </Link>
-          <WordsDivider />
-          <Link href="http://localhost:3000/User/Perfil/ChangePassword">
-            <Section.Select>Alterar Senha</Section.Select>
-          </Link>
-          <WordsDivider />
-          <Section>
-            <MyLogOut />
-          </Section>
+      <SubTitle>
+        <Link href="http://localhost:3000/User/Perfil/MyRequests">
+          <Section>Meus pedidos</Section>
+        </Link>
+        <WordsDivider />
+        <Link href="http://localhost:3000/User/Perfil/MyAdresses">
+          <Section>Meus endereços</Section>
+        </Link>
+        <WordsDivider />
+        <Link href="http://localhost:3000/User/Perfil/MyDatas">
+          <Section>Dados pessoais</Section>
+        </Link>
+        <WordsDivider />
+        <Link href="http://localhost:3000/User/Perfil/ChangePassword">
+          <Section.Select>Alterar Senha</Section.Select>
+        </Link>
+        <WordsDivider />
+        <Section>
+          <MyLogOut />
+        </Section>
 
-        </SubTitle>
-        <MyChangePassword />
-        <FooterMobile />
-      </createGlobalStyle>
+      </SubTitle>
+      <MyChangePassword />
+      <FooterMobile />
 
     </div>
   );

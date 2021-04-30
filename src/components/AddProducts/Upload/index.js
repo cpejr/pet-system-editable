@@ -9,20 +9,39 @@ function Upload() {
       file: URL.createObjectURL(event.target.files[0]),
     });
   }
-  const Img = styled.img`
-  width: 250px;
-  height: 250px;
+  const Img = styled.img` 
+  display:flex;
+align-items:center;
+justify-content:center;
+  width: 200px;
+  height: 200px;
+  margin-bottom:5%;
+  margin-top:5%;
   `;
+  const UploadConatiner = styled.div`
+display:flex;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+`;
+
+  const ImageSelected = styled.input`
+display:flex;
+align-items:center;
+justify-content:center;
+cursor: pointer;
+@media(max-width:1190px){
+  width:100%;
+}
+`;
+
   return (
     <div>
-      <form>
-        <label id="form1" htmlFor="upload">
-          <input id="upload" type="file" onChange={handleChange} />
-          Selecionar Imagem
-        </label>
-        <br />
+      <UploadConatiner>
+        <ImageSelected id="rbga" type="file" onChange={handleChange} />
         <Img alt="" src={photo.file} />
-      </form>
+
+      </UploadConatiner>
     </div>
   );
 }
