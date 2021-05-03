@@ -87,7 +87,7 @@ align-items:center;
 justify-content:center;
 width:100%;
 @media(max-width:860px){
-    margin-right:5%;
+    
 }
 
 `;
