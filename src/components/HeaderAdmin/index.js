@@ -26,15 +26,6 @@ Header.Top = styled.div`
     background-color: ${({ theme }) => theme.colors.rose};
 `;
 
-Header.Bottom = styled.div`
-    display: flex;
-    width:100%;
-    flex-direction: row;
-    justify-content: space-around;  // space evenly
-    height: 35%;
-    background-color: ${({ theme }) => theme.colors.mediumGreen};
-`;
-
 const ImageBox = styled.div`
 display:flex;
 align-items:center;
@@ -133,17 +124,6 @@ justify-content:center;
 font-size: 100%;
 `;
 
-const ItemBottomHeader = styled.p`
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-family: Poiret One;
-  font-size: 100%;
-  color: white;
-  
-
-`;
-
 export default function Header() {
   return (
     <Header.Wrapper>
@@ -166,25 +146,14 @@ export default function Header() {
           <YourSpace>
             <BsFillPersonFill />
             <YourSpace.Word>
-              Perfil
+              Olá Igor
             </YourSpace.Word>
           </YourSpace>
         </YourSpaceContainer>
         <MdShoppingCart size="30" color="#AA4545" />
         <FiLogIn size="30" color="#AA4545" />
       </Header.Top>
-      <Header.Bottom>
-        <ItemBottomHeader>Rações</ItemBottomHeader>
-        <ItemBottomHeader>Petiscos</ItemBottomHeader>
-        <ItemBottomHeader>Brinquedos</ItemBottomHeader>
-        <ItemBottomHeader>Banhos</ItemBottomHeader>
-        <ItemBottomHeader>Tosa</ItemBottomHeader>
-        <ItemBottomHeader>Shampoos</ItemBottomHeader>
-        <ItemBottomHeader>Perfumes</ItemBottomHeader>
-        <ItemBottomHeader>Vasilhas</ItemBottomHeader>
-        <ItemBottomHeader>Casinhas</ItemBottomHeader>
-        <ItemBottomHeader>Outros serviços</ItemBottomHeader>
-      </Header.Bottom>
+
     </Header.Wrapper>
   );
 }
