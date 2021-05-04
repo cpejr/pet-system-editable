@@ -10,6 +10,9 @@ background-color:${({ theme }) => theme.colors.mediumGray};
 width:200px;
 border-radius:5px;
 margin-bottom:10%;
+@media(max-width:560px){
+      display:none;
+    }
 `;
 Container.Title = styled.h3`
 display:flex;
@@ -21,6 +24,7 @@ height:40px;
 background-color:${({ theme }) => theme.colors.mediumGreen};
 border-top-left-radius:5px;
 border-top-right-radius:5px;
+color:${({ theme }) => theme.colors.titleGray};
 `;
 
 const CategoryContainer = styled.div`

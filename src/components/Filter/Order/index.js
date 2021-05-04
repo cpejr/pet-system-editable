@@ -14,12 +14,7 @@ width:200px;
 border-radius:5px;
 margin-bottom:10%;
 @media(max-width:560px){
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    width:130px;
-    font-size:14px;
-   
+      display:none;
     }
 `;
 Container.Title = styled.h3`
@@ -32,6 +27,7 @@ height:40px;
 background-color:${({ theme }) => theme.colors.mediumGreen};
 border-top-left-radius:5px;
 border-top-right-radius:5px;
+color:${({ theme }) => theme.colors.titleGray};
 `;
 
 const OrderContainer = styled.div`

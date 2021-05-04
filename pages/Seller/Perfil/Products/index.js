@@ -11,6 +11,8 @@ import Category from '../../../../src/components/Filter/Category';
 // import Cards from '../../../../src/components/Cards';
 import MyProducts from '../../../MyProducts';
 import ModalAddProducts from '../../../../src/components/ModalAddProducts';
+import LocationAndFilter from '../../../../src/components/Mobile/LocationAndFilter';
+import EditAddRemoveSection from '../../../../src/components/Mobile/EditAddRemoveSection';
 
 const Title = styled.h1`
 align-items:initial;
@@ -183,13 +185,7 @@ const EditCategory = styled.button`
     
 }
     @media(max-width:560px){
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:14px;
-    width:80%;
-    height:30px;
-    border-radius:20px;
+    display:none;
     }
 `;
 
@@ -215,13 +211,7 @@ const RemoveProducts = styled.button`
     border-radius:20px;
 }
     @media(max-width:560px){
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:14px;
-    width:80%;
-    height:30px;
-    border-radius:20px;
+      display:none;
     }
 `;
 
@@ -249,6 +239,8 @@ export default function Perfil() {
           <Section>Minhas vendas</Section>
         </Link>
       </SubTitle>
+      <LocationAndFilter />
+      <EditAddRemoveSection />
       <MarketContainer>
         <MarketContainer.Col1>
           <TitleMarket>
