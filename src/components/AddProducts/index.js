@@ -1,17 +1,12 @@
 import React, { useState } from 'react';
-import {
-  FormControl, FormLabel, FormGroup, Row, Col,
-} from 'react-bootstrap';
 import styled from 'styled-components';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import Upload from './Upload';
 
 const api = axios.create({ baseURL: 'http://localhost:3000/' });
 
-const Styles = styled.div`
-width: 100%;
-display: flex;
+const AddProductsContainer = styled.div`
+display:flex;
 align-items:center;
 justify-content:center;
 width:100%;
@@ -238,13 +233,6 @@ const ButtonConfirm = styled.button`
     cursor: pointer;
 `;
 
-const Title = styled.h1`
-font-size:20px;
-display:flex;
-align-items: center;
-margin-top: 40px;
-`;
-
 export default function AddProducts() {
   const [productName, setProductName] = useState('');
   const [price, setPrice] = useState('');
@@ -266,12 +254,12 @@ export default function AddProducts() {
   async function handleSubmit(event) {
     event.preventDefault();
     const body = {
-      product_id: 'dog',
+      product_id: 'cão',
       store_id: '6',
-      product_name: 'ração d',
-      price: 12,
-      discount: 5,
-      description: 'cachorro',
+      product_name: productName,
+      price,
+      discount,
+      description,
       img: 'djdiss',
       created_at: 'djudhuj',
 
@@ -284,7 +272,6 @@ export default function AddProducts() {
       console.error(error);
     }
   }
-
   return (
     <div>
       <AddProductsContainer>
@@ -292,7 +279,12 @@ export default function AddProducts() {
           <AddTitle>Cadastro de Produto</AddTitle>
           <NameProduct>Nome do Produto:</NameProduct>
           <DivInput>
-            <NameProductInput type="text" />
+            <NameProductInput
+              type="text"
+              required
+              value={productName}
+              onChange={handleProductNameChange}
+            />
           </DivInput>
           <PriceAndDiscont>
             <PriceAndDiscont.Col1>
@@ -300,7 +292,13 @@ export default function AddProducts() {
                 Preço:
               </PriceAndDiscont.Col1.Row1>
               <DivInput>
-                <PriceAndDiscont.Col1.Row2 type="text" placeholder="R$ 00,00" />
+                <PriceAndDiscont.Col1.Row2
+                  type="text"
+                  placeholder="R$ 00,00"
+                  required
+                  value={price}
+                  onChange={handlePriceChange}
+                />
               </DivInput>
             </PriceAndDiscont.Col1>
 
@@ -309,68 +307,40 @@ export default function AddProducts() {
                 Desconto:
               </PriceAndDiscont.Col2.Row1>
               <DivInput>
-                <PriceAndDiscont.Col2.Row2 type="text" placeholder="% 00,0" />
-              </DivInput>
-            </PriceAndDiscont.Col2>
-
-            <FormGroup>
-              <FormLabel>Nome do Produto</FormLabel>
-              <FormControl
-                type="text"
-                required
-                value={productName}
-                onChange={handleProductNameChange}
-              />
-            </FormGroup>
-            <Row>
-              <Col>
-                <FormLabel>Preço:</FormLabel>
-                <FormControl
-                  type="numbers"
-                  placeholder="R$ 000,00"
-                  required
-                  value={price}
-                  onChange={handlePriceChange}
-                />
-              </Col>
-              <Col>
-                <FormLabel>Desconto:</FormLabel>
-                <FormControl
-                  type="numbers"
-                  placeholder="00,00%"
+                <PriceAndDiscont.Col2.Row2
+                  type="text"
+                  placeholder="% 00,0"
                   required
                   value={discount}
                   onChange={handleDiscountChange}
                 />
-              </Col>
-            </Row>
+              </DivInput>
+            </PriceAndDiscont.Col2>
 
-            <FormLabel>
-              Descrição do Produto:
-            </FormLabel>
-            <FormControlDescription
-              as="textarea"
+          </PriceAndDiscont>
+
+          <DescriptionProduct>Descrição do Produto:</DescriptionProduct>
+          <DivInput>
+            <DescriptionInput
               type="text"
+              as="textarea"
               required
               value={description}
               onChange={handleDescriptionChange}
             />
-          </FormContainer.Col1>
-          <FormContainer.Col2>
+          </DivInput>
+        </AddProductsContainer.Col1>
 
-            <Upload />
+        <AddProductsContainer.Col2>
+          <SelectImage>Selecionar imagem</SelectImage>
+          <Upload />
+          <ButtonCancel>Cancelar Cadastro</ButtonCancel>
+          <ButtonConfirm onClick={handleSubmit}>
+            Confirmar Cadastro
+          </ButtonConfirm>
+        </AddProductsContainer.Col2>
+      </AddProductsContainer>
 
-            <ButtonCancell variant="primary" type="submit">
-              Cancelar Cadastro
-            </ButtonCancell>
-
-            <Button variant="primary" type="button" onClick={handleSubmit}>
-              Confirmar Cadastro
-            </Button>
-          </FormContainer.Col2>
-        </FormContainer>
-
-      </Styles>
     </div>
   );
 }
