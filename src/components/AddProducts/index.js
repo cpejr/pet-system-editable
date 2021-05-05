@@ -1,6 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
+import timestamp from 'time-stamp';
 import Upload from './Upload';
+
+const { v4: uuidv4 } = require('uuid');
+
+const api = axios.create({ baseURL: 'http://localhost:3000/' });
 
 const AddProductsContainer = styled.div`
 display:flex;
@@ -231,6 +237,44 @@ const ButtonConfirm = styled.button`
 `;
 
 export default function AddProducts() {
+  const [productName, setProductName] = useState('');
+  const [price, setPrice] = useState('');
+  const [discount, setDiscount] = useState('');
+  const [description, setDescription] = useState('');
+
+  function handleProductNameChange(event) {
+    setProductName(event.target.value);
+  }
+  function handlePriceChange(event) {
+    setPrice(event.target.value);
+  }
+  function handleDiscountChange(event) {
+    setDiscount(event.target.value);
+  }
+  function handleDescriptionChange(event) {
+    setDescription(event.target.value);
+  }
+  async function handleSubmit(event) {
+    event.preventDefault();
+    const body = {
+      product_id: uuidv4(),
+      store_id: '6',
+      product_name: productName,
+      price,
+      discount,
+      description,
+      img: 'djdiss',
+      created_at: timestamp(),
+
+    };
+    try {
+      console.log(body);
+      const Validate = await api.post('/api/product', body);
+      console.log(Validate.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
   return (
     <div>
       <AddProductsContainer>
@@ -238,7 +282,12 @@ export default function AddProducts() {
           <AddTitle>Cadastro de Produto</AddTitle>
           <NameProduct>Nome do Produto:</NameProduct>
           <DivInput>
-            <NameProductInput type="text" />
+            <NameProductInput
+              type="text"
+              required
+              value={productName}
+              onChange={handleProductNameChange}
+            />
           </DivInput>
           <PriceAndDiscont>
             <PriceAndDiscont.Col1>
@@ -246,7 +295,13 @@ export default function AddProducts() {
                 Preço:
               </PriceAndDiscont.Col1.Row1>
               <DivInput>
-                <PriceAndDiscont.Col1.Row2 type="text" placeholder="R$ 00,00" />
+                <PriceAndDiscont.Col1.Row2
+                  type="text"
+                  placeholder="R$ 00,00"
+                  required
+                  value={price}
+                  onChange={handlePriceChange}
+                />
               </DivInput>
             </PriceAndDiscont.Col1>
 
@@ -255,7 +310,13 @@ export default function AddProducts() {
                 Desconto:
               </PriceAndDiscont.Col2.Row1>
               <DivInput>
-                <PriceAndDiscont.Col2.Row2 type="text" placeholder="% 00,0" />
+                <PriceAndDiscont.Col2.Row2
+                  type="text"
+                  placeholder="% 00,0"
+                  required
+                  value={discount}
+                  onChange={handleDiscountChange}
+                />
               </DivInput>
             </PriceAndDiscont.Col2>
 
@@ -263,7 +324,13 @@ export default function AddProducts() {
 
           <DescriptionProduct>Descrição do Produto:</DescriptionProduct>
           <DivInput>
-            <DescriptionInput type="text" />
+            <DescriptionInput
+              type="text"
+              as="textarea"
+              required
+              value={description}
+              onChange={handleDescriptionChange}
+            />
           </DivInput>
         </AddProductsContainer.Col1>
 
@@ -271,7 +338,9 @@ export default function AddProducts() {
           <SelectImage>Selecionar imagem</SelectImage>
           <Upload />
           <ButtonCancel>Cancelar Cadastro</ButtonCancel>
-          <ButtonConfirm>Confirmar Cadastro</ButtonConfirm>
+          <ButtonConfirm onClick={handleSubmit}>
+            Confirmar Cadastro
+          </ButtonConfirm>
         </AddProductsContainer.Col2>
       </AddProductsContainer>
 
