@@ -46,4 +46,9 @@ module.exports = {
     }
     return response.status(200).json({ notification: 'Product deleted' });
   },
+  async getAll(request, response) {
+    // const { product_id } = request.body;
+    const product = await ProductModel.getAllProducts();
+    return response.json(product);
+  },
 };

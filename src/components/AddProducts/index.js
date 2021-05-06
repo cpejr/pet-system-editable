@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+import timestamp from 'time-stamp';
 import Upload from './Upload';
 
 const api = axios.create({ baseURL: 'http://localhost:3000/' });
+const { v4: uuidv4 } = require('uuid');
 
 const AddProductsContainer = styled.div`
 display:flex;
@@ -254,14 +256,14 @@ export default function AddProducts() {
   async function handleSubmit(event) {
     event.preventDefault();
     const body = {
-      product_id: 'cão',
+      product_id: uuidv4(),
       store_id: '6',
       product_name: productName,
       price,
       discount,
       description,
       img: 'djdiss',
-      created_at: 'djudhuj',
+      created_at: timestamp(),
 
     };
     try {

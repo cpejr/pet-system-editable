@@ -9,7 +9,7 @@ import FooterMobile from '../../../../src/components/Mobile/FooterMobile';
 import Order from '../../../../src/components/Filter/Order';
 import Category from '../../../../src/components/Filter/Category';
 // import Cards from '../../../../src/components/Cards';
-import MyProducts from '../../../MyProducts';
+// import MyProducts from '../../../MyProducts';
 import ModalAddProducts from '../../../../src/components/ModalAddProducts';
 import LocationAndFilter from '../../../../src/components/Mobile/LocationAndFilter';
 import EditAddRemoveSection from '../../../../src/components/Mobile/EditAddRemoveSection';
