@@ -15,6 +15,7 @@ module.exports = {
       if (err.message) {
         return response.status(400).json({ notification: err.message });
       }
+      console.error(error);
       return response.status(500).json({ notification: 'Internal server error while trying to register user' });
     }
     return response.status(200).json({ notification: 'Produto criado!' });
@@ -32,11 +33,11 @@ module.exports = {
     }
     return response.status(200).json({ notification: 'Produto alterado com sucesso!' });
   },
-  async delet(request, response) {
+  async remove(request, response) {
     const { product_id } = request.body;
 
     try {
-      await ProductModel.deletProduct(product_id);
+      await ProductModel.removeProduct(product_id);
     } catch (err) {
       if (err.message) {
         return response.status(400).json({ notification: err.message });
@@ -44,5 +45,10 @@ module.exports = {
       return response.status(500).json({ notification: 'Internal server error while trying to delete product' });
     }
     return response.status(200).json({ notification: 'Product deleted' });
+  },
+  async getAll(request, response) {
+    // const { product_id } = request.body;
+    const product = await ProductModel.getAllProducts();
+    return response.json(product);
   },
 };

@@ -24,7 +24,7 @@ module.exports = {
     }
   },
 
-  async deletProduct(id) {
+  async removeProduct(id) {
     try {
       const response = await connection('product')
         .where({ product_id: id })
@@ -42,6 +42,16 @@ module.exports = {
         .where({ product_id: id })
         .update(product);
       return response;
+    } catch (error) {
+      console.error(error);
+      throw new Error(error);
+    }
+  },
+  async getAllProducts() {
+    try {
+      const products = await connection('product')
+        .select('*');
+      return products;
     } catch (error) {
       console.error(error);
       throw new Error(error);

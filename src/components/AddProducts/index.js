@@ -4,9 +4,8 @@ import axios from 'axios';
 import timestamp from 'time-stamp';
 import Upload from './Upload';
 
-const { v4: uuidv4 } = require('uuid');
-
 const api = axios.create({ baseURL: 'http://localhost:3000/' });
+const { v4: uuidv4 } = require('uuid');
 
 const AddProductsContainer = styled.div`
 display:flex;
