@@ -44,6 +44,8 @@ export default function Cards(props) {
         {product.product_name}
       </Title>
       <Price>
+        R$
+        {' '}
         {product.price}
       </Price>
     </Card>

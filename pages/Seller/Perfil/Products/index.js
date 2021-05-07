@@ -8,7 +8,7 @@ import WordsDivider from '../../../../src/components/WordsDivider';
 import FooterMobile from '../../../../src/components/Mobile/FooterMobile';
 import Order from '../../../../src/components/Filter/Order';
 import Category from '../../../../src/components/Filter/Category';
-// import Cards from '../../../../src/components/Cards';
+import Products from '../../../../src/components/Products';
 // import MyProducts from '../../../MyProducts';
 import ModalAddProducts from '../../../../src/components/ModalAddProducts';
 import LocationAndFilter from '../../../../src/components/Mobile/LocationAndFilter';
@@ -250,6 +250,7 @@ export default function Perfil() {
         <MarketContainer.Col2>
           <EditCategory>Editar Categoria</EditCategory>
           <RemoveProducts>Remover produtos</RemoveProducts>
+          <ModalAddProducts />
         </MarketContainer.Col2>
       </MarketContainer>
 
@@ -259,7 +260,7 @@ export default function Perfil() {
           <Category />
         </ProductContainer.Col1>
         <ProductContainer.Col2>
-          <ModalAddProducts />
+          <Products />
         </ProductContainer.Col2>
 
       </ProductContainer>
