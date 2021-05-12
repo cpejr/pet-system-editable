@@ -1,74 +1,93 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import { makeStyles } from '@material-ui/core/styles';
+import React from 'react';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
-const Container = styled.div`
-display:flex;
-align-items:center;
-justify-content:center;
-width:100%;
-`;
-
 const useStyles = makeStyles((theme) => ({
   formControl: {
-    marginRight: theme.spacing(0),
+    margin: theme.spacing(1),
     minWidth: 120,
+    maxWidth: 300,
   },
-  selectEmpty: {
-    marginTop: theme.spacing(0),
+  chips: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  chip: {
+    margin: 2,
+  },
+  noLabel: {
+    marginTop: theme.spacing(3),
   },
 }));
 
-export default function MySearchDateMonth() {
-  const classes = useStyles();
-  const [month, setmonth] = useState({
-    months: '',
-    name: 'hai',
-  });
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
 
-  const handleMonthChange = (event) => {
-    const { name } = event.target;
-    setmonth({
-      ...month,
-      [name]: event.target.value,
-    });
+const months = [
+  'Janeiro',
+  'Fevereiro',
+  'Março',
+  'Abril',
+  'Maio',
+  'Junho',
+  'Julho',
+  'Agosto',
+  'Setembro',
+  'Outubro',
+  'Novembro',
+  'Dezembro',
+];
+
+function getStyles(month, personMonth, theme) {
+  return {
+    fontWeight:
+      personMonth.indexOf(month) === -1
+        ? theme.typography.fontWeightRegular
+        : theme.typography.fontWeightMedium,
+  };
+}
+
+export default function MultipleSelect() {
+  const classes = useStyles();
+  const theme = useTheme();
+  const [personMonth, setPersonName] = React.useState([]);
+
+  const handleChange = (event) => {
+    setPersonName(event.target.value);
   };
 
   return (
     <div>
-      <Container>
-        <FormControl variant="outlined" className={classes.formControl}>
-          <InputLabel style={{ color: '#609694' }} htmlFor="outlined-age-native-simple">Mês</InputLabel>
-          <Select
-            native
-            value={month.months}
-            onChange={handleMonthChange}
-            label="Mês"
-            inputProps={{
-              name: 'months',
-              id: 'outlined-age-native-simple',
-            }}
-          >
-            <option aria-label="None" value="" />
-            <option>Janeiro</option>
-            <option>Fevereiro</option>
-            <option>Março</option>
-            <option>Abril</option>
-            <option>Maio</option>
-            <option>Junho</option>
-            <option>Julho</option>
-            <option>Agosto</option>
-            <option>Setembro</option>
-            <option>Outubro</option>
-            <option>Novembro</option>
-            <option>Dezembro</option>
-          </Select>
-        </FormControl>
-
-      </Container>
+      <FormControl className={classes.formControl}>
+        <InputLabel id="demo-mutiple-month-label">Mês</InputLabel>
+        <Select
+          labelId="demo-mutiple-month-label"
+          id="demo-mutiple-month"
+          multiple
+          value={personMonth}
+          onChange={handleChange}
+          input={<Input />}
+          MenuProps={MenuProps}
+        >
+          {months.map((month) => (
+            <MenuItem key={month} value={month} style={getStyles(month, personMonth, theme)}>
+              {month}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
     </div>
   );
 }
