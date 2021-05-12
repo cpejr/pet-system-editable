@@ -7,7 +7,7 @@ export async function getTemplateById(req, res) {
     const template = await getTemplate(id);
     return res.status(200).json(template);
   } catch (error) {
-    console.error(error);
+    console.error(error); // eslint-disable-line
     return res.status(500).json({ Message: 'Error while trying to fetch template' });
   }
 }
@@ -19,7 +19,7 @@ export async function createTemplate(req, res) {
     const newId = await createNewTemplate(newTemplate);
     return res.status(200).json({ Message: `Created template with id ${newId}` });
   } catch (error) {
-    console.error(error);
+    console.error(error); // eslint-disable-line
     return res.status(500).json({ Message: 'Error while trying to create template' });
   }
 }

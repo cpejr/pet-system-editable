@@ -17,7 +17,7 @@ if (!firebase.apps.length) {
   try {
     firebase.initializeApp(firebaseConfig);
   } catch (err) {
-    console.error('Firebase initialization error raised', err.stack); //eslint-disable-line
+    console.error(error); //eslint-disable-line
   }
 }
 
@@ -37,7 +37,6 @@ module.exports = {
     admin.auth().deleteUser(id)
       .then((result) => result)
       .catch((error) => {
-        console.error(error); //eslint-disable-line
         const errorMessage = error.message;
         throw new Error(errorMessage);
       });
@@ -49,7 +48,6 @@ module.exports = {
     })
       .then((result) => result)
       .catch((error) => {
-        console.error(error); //eslint-disable-line
         const errorMessage = error.message;
         throw new Error(errorMessage);
       });
@@ -61,7 +59,6 @@ module.exports = {
     })
       .then((result) => result)
       .catch((error) => {
-        console.error(error); //eslint-disable-line
         const errorMessage = error.message;
         throw new Error(errorMessage);
       });
@@ -69,6 +66,7 @@ module.exports = {
 
   async login(email, password) {
     try {
+      if (!email.includes('@') || !email.includes('.') || email.indexOf('@') > email.lastIndexOf('.')) throw new Error('Badly formatted email');
       const result = await firebase.auth()
         .signInWithEmailAndPassword(email, password);
       return result.user.uid;

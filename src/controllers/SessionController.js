@@ -1,10 +1,9 @@
 import jwt from 'jsonwebtoken';
-import { withIronSession } from 'next-iron-session';
-import SessionModel from '../models/SessionModel';
+import { createSession, getSessionByAccessToken } from '../models/SessionModel';
 import UserModel from '../models/UserModel';
 import FirebaseModel from '../models/FirebaseModel';
 
-async function signIn(req, res) {
+export async function signIn(req, res) {
   try {
     const { email, password } = req.body;
     let firebase_id;
@@ -15,7 +14,7 @@ async function signIn(req, res) {
       const accessToken = jwt
         .sign({ user }, process.env.NEXT_PUBLIC_JWT_SECRET);
 
-      await SessionModel.createSession(user.firebase_id, accessToken);
+      await createSession(user.firebase_id, accessToken);
 
       req.session.set('user', {
         user,
@@ -26,7 +25,7 @@ async function signIn(req, res) {
 
       return res.status(200).json({ accessToken, user });
     } catch (error) {
-      console.log(error); //eslint-disable-line
+      console.error(error); //eslint-disable-line
       return res.status(400).json({ message: 'Email ou senha incorreto' });
     }
   } catch (error) {
@@ -34,10 +33,10 @@ async function signIn(req, res) {
   }
 }
 
-async function validateSession(req, res) {
+export async function validateSession(req, res) {
   try {
     const { accessToken } = req.body;
-    const session = await SessionModel.getSessionByAccessToken(accessToken);
+    const session = await getSessionByAccessToken(accessToken);
 
     if (session) {
       const firebase_id = session.user_id;
@@ -51,32 +50,12 @@ async function validateSession(req, res) {
   }
 }
 
-function withSession(handlerFunction) {
-  return withIronSession(handlerFunction, {
-    cookieName: 'userSession',
-    password: 'complex_password_at_least_32_characters_long',
-    cookieOptions: {
-      secure: process.env.NODE_ENV === 'production',
-    },
-  });
+export async function logout(req, res) {
+  try {
+    req.session.destroy();
+    return res.status(200).json({ message: 'Logged out' });
+  } catch (error) {
+    console.error(error); //eslint-disable-line
+    return res.status(500).json({ message: 'Could not log out' });
+  }
 }
-
-function withAuth(handler) {
-  return async (req, res) => {
-    const { accessToken } = req.session.get('user');
-    if (!accessToken) return res.status(400).json({ message: 'No session provided' });
-
-    return handler(req, res);
-  };
-}
-
-function withAuthValidation(handler) {
-  return withSession(withAuth(handler));
-}
-
-module.exports = {
-  withSession,
-  signIn: withSession(signIn),
-  validateSession: withSession(validateSession),
-  withAuthValidation,
-};

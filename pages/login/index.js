@@ -5,6 +5,7 @@ import axios from 'axios';
 import Form from 'react-bootstrap/Form';
 import Header from '../../src/components/Header';
 import Body from '../../src/components/Body';
+import LogoutButton from '../../src/components/LogoutButton';
 
 const Fields = styled.div`
     align-items: center;
@@ -113,18 +114,19 @@ const Login = () => {
           <Title>Bem vindo de volta!</Title>
           <Subtitle>Por favor, entre com seu email e sua senha:</Subtitle>
 
-          <Form>
+          <Form onSubmit={handleSubmit}>
             <Fields>
               <TextBox type="email" placeholder="Email" value={email} onChange={handleEmailChange} />
               <TextBox type="password" placeholder="Senha" value={password} onChange={handlePasswordChange} />
               <ForgotPassword>Esqueceu a senha?</ForgotPassword>
             </Fields>
-            <Submit onClick={handleSubmit}>Próximo</Submit>
+            <Submit type="submit">Próximo</Submit>
           </Form>
           <UnderFields>
             <CreateAccount>Não tem uma conta?</CreateAccount>
             <CreateAccount.Right>Cadastre-se</CreateAccount.Right>
           </UnderFields>
+          <LogoutButton />
         </Body.Right>
       </Body>
 
