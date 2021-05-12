@@ -43,7 +43,7 @@ SearchContainer.Col1 = styled.div`
 display:flex;
 align-items:center;
 justify-content:center;
-width:30%;
+width:25%;
 flex-direction:column;
 @media(max-width:880px){
 width:40%;
@@ -56,7 +56,7 @@ SearchContainer.Col2 = styled.div`
 display:flex;
 align-items:center;
 justify-content:center;
-width:70%;
+width:75%;
 flex-direction:column;
 @media(max-width:560px){
 width:100%;

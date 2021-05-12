@@ -56,7 +56,7 @@ align-items:center;
 justify-content:center;
 width:85%;
 flex-direction:column;
-@media(max-width:560px){
+@media(max-width:880px){
 width:70%;
 }
 `;
@@ -77,8 +77,9 @@ justify-content:flex-start;
 width:100%;
 margin:0;
 flex-direction:row;
-@media(max-width:560px){
+@media(max-width:880px){
     flex-direction:column;
+    align-items:initial;
 }
 `;
 CardDescription.Col1.Row2.Delivery = styled.div`
