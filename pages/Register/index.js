@@ -9,8 +9,10 @@ import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/picker
 import 'date-fns';
 import DateFnsUtils from '@date-io/date-fns';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import { notification } from 'antd';
+import 'antd/dist/antd.css';
 import axios from 'axios';
+import { useRouter } from 'next/router';
 import Header from '../../src/components/Header';
 import { Body } from '../../src/components/BodyForms';
 import WindowDivider from '../../src/components/WindowDivider';
@@ -121,7 +123,7 @@ export default function Signup() {
   const [ddd, setDdd] = useState('');
   const [telephone, setTelephone] = useState('');
   const [date, setDate] = useState(new Date());
-
+  const router = useRouter();
   function handleNameChange(event) {
     setName(event.target.value);
   }
@@ -178,8 +180,29 @@ export default function Signup() {
     try {
       const Validate = await api.post('/api/user', body);
       console.log(Validate.data);
+      notification.open({
+        message: 'Sucesso!',
+        description:
+            'Cadastro realizado com sucesso.',
+        className: 'ant-notification',
+        top: '100px',
+        style: {
+          width: 600,
+        },
+      });
+      router.push('/login');
     } catch (error) {
       console.error(error);
+      notification.open({
+        message: 'Erro!',
+        description:
+            'Erro ao cadastrar usuário.',
+        className: 'ant-notification',
+        top: '100px',
+        style: {
+          width: 600,
+        },
+      });
     }
   }
 

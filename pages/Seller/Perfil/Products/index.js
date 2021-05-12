@@ -79,7 +79,7 @@ flex-direction:row;
     display:flex;
     align-items:center;
     justify-content:center;
-    flex-direction:column;
+    flex-direction:row;
     }
 `;
 
@@ -160,6 +160,9 @@ const TitleMarket = styled.h2`
 display:flex;
 align-items:center;
 justify-content:center;
+margin-top: 30px;
+font-family: Roboto;
+font-size: 25px;
 `;
 const EditCategory = styled.button`
     height: 50px;
@@ -174,6 +177,7 @@ const EditCategory = styled.button`
     cursor:pointer;
     outline:none;
     margin-right:2%;
+    margin-top: --5px;
     @media(max-width:1000px){
       display:flex;
     align-items:center;

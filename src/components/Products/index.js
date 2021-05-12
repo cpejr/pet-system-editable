@@ -7,10 +7,19 @@ const api = axios.create({ baseURL: 'http://localhost:3000/' });
 const CardLine = styled.div`
 display: flex;
 justify-content: space-around;
-
-align-items:center;
 height: 40rem;
 width: 90%;
+flex-direction: row;
+flex-wrap: wrap;
+@media(max-width:600px){
+  display:flex;
+    
+    width:50%;
+    flex-direction:row;
+    flex-direction:row;
+    flex-wrap: wrap;
+
+}
 `;
 export default function MyProducts() {
   const [myProducts, setMyProducts] = useState([]);
