@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
-import { AiFillHeart } from 'react-icons/ai';
+import { AiFillHeart, AiFillStar } from 'react-icons/ai';
 
 const Container = styled.div`
 display:flex;
@@ -155,6 +155,15 @@ display:none;
 }
 `;
 
+const Star = styled.div`
+display:none;
+@media(max-width:560px){
+    display:flex;
+    color:${({ theme }) => theme.colors.starYellow};
+    margin-left:5%;
+}
+`;
+
 export default function SearchCards() {
   const [checkedFav1, setCheckedFav1] = useState('#C4C4C4');
   const handleClickFav1 = () => {
@@ -202,6 +211,10 @@ export default function SearchCards() {
                   </CardDescription.Col1.Row2.Delivery>
                   <CardDescription.Col1.Row2.Time>
                     • 25-20 min
+                    <Star>
+                      <AiFillStar />
+                      5.0
+                    </Star>
                   </CardDescription.Col1.Row2.Time>
                 </CardDescription.Col1.Row2>
               </CardDescription.Col1>
@@ -235,6 +248,10 @@ export default function SearchCards() {
                   </CardDescription.Col1.Row2.Delivery>
                   <CardDescription.Col1.Row2.Time>
                     • 45-40 min
+                    <Star>
+                      <AiFillStar />
+                      5.0
+                    </Star>
                   </CardDescription.Col1.Row2.Time>
                 </CardDescription.Col1.Row2>
               </CardDescription.Col1>
@@ -268,6 +285,10 @@ export default function SearchCards() {
                   </CardDescription.Col1.Row2.Delivery>
                   <CardDescription.Col1.Row2.Time>
                     • 15-10 min
+                    <Star>
+                      <AiFillStar />
+                      5.0
+                    </Star>
                   </CardDescription.Col1.Row2.Time>
                 </CardDescription.Col1.Row2>
               </CardDescription.Col1>
