@@ -6,6 +6,7 @@ import { BsSearch, BsFillPersonFill } from 'react-icons/bs';
 import { MdShoppingCart } from 'react-icons/md';
 import { FiLogIn } from 'react-icons/fi';
 import { CgCloseO } from 'react-icons/cg';
+import Link from 'next/link';
 
 Header.Wrapper = styled.div`
     display:flex;
@@ -155,9 +156,11 @@ export default function Header() {
   return (
     <Header.Wrapper>
       <Header.Top>
-        <ImageBox>
-          <Image src="/images/LogoWeb.png" alt="" width="250" height="100" />
-        </ImageBox>
+        <Link href="/">
+          <ImageBox>
+            <Image src="/images/LogoWeb.png" alt="" width="250" height="100" />
+          </ImageBox>
+        </Link>
         <TextBox>
           <TextBox.LocationContainer>
             <GrLocation size="20" />
