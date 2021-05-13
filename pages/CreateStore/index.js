@@ -71,6 +71,51 @@ export default function Store() {
 
   async function handleSubmit(event) {
     event.preventDefault();
+    if (firstName?.length < 1) {
+      alert('Nome vazio!');
+      return;
+    }
+    if (lastName?.length < 1) {
+      alert('Sobrenome vazio!');
+      return;
+    }
+    if (cpf?.length !== 11) {
+      alert('CPF inválido!');
+      return;
+    }
+    if (birthDate?.length !== 8) {
+      alert('Data de nascimento inválida!');
+      return;
+    }
+    if (companyName?.length < 1) {
+      alert('Nome da Empresa vazio!');
+      return;
+    }
+    if (email?.length < 1) {
+      alert('Email vazio!');
+      return;
+    }
+    if (cellphone?.length !== 11) {
+      alert('Celular inválido!');
+      return;
+    }
+    if (telephone?.length !== 11) {
+      alert('Telefone inválido!');
+      return;
+    }
+    if (cnpj?.length !== 14) {
+      alert('CNPJ inválido!');
+      return;
+    }
+    if (cep?.length !== 8) {
+      alert('CEP inválido!');
+      return;
+    }
+    if (password !== confPassword) {
+      alert('As senhas precisam ser iguais!');
+      return;
+    }
+
     const body = {
       // Dados do usuario
       first_name: firstName,
@@ -81,7 +126,7 @@ export default function Store() {
       // Dados do Formulario da Loja
       company_name: companyName,
       email,
-      telephone,
+      telephone, // Tambem e guardado no usuario
       cellphone,
       cnpj,
       cep,
@@ -140,12 +185,12 @@ export default function Store() {
 
             <ItemFormulary>
               <Text>Razão Social: *</Text>
-              <TextBox type="text" placeholder="" onChange={handleCompanyNameChange} value={companyName} />
+              <TextBox type="text" onChange={handleCompanyNameChange} value={companyName} />
             </ItemFormulary>
 
             <ItemFormulary>
               <Text>Email: *</Text>
-              <TextBox type="text" placeholder="" onChange={handleEmailChange} value={email} />
+              <TextBox type="text" onChange={handleEmailChange} value={email} />
             </ItemFormulary>
 
             <DividedItemFormulary>
@@ -155,7 +200,7 @@ export default function Store() {
               </ItemFormulary>
               <ItemFormulary>
                 <Text>DDD + telephone: *</Text>
-                <TextBox type="text" placeholder="(31)99999-9999" data-mask="(__)_____-____" maxLength="14" onChange={handleTelephoneChange} value={telephone} />
+                <TextBox type="text" placeholder="(31)99999-9999" onChange={handleTelephoneChange} value={telephone} />
               </ItemFormulary>
             </DividedItemFormulary>
 
@@ -183,9 +228,9 @@ export default function Store() {
 
             <IEItemFormulary>
               <Text>Isento de IE: *</Text>
-              <input type="radio" />
+              <input type="radio" id="yes" name="yes_no" value="yes" />
               <Text2>Sim</Text2>
-              <input type="radio" />
+              <input type="radio" id="no" name="yes_no" value="no" />
               <Text2>Não</Text2>
             </IEItemFormulary>
 
