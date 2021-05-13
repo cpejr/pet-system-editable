@@ -2,7 +2,6 @@ const { v4: uuidv4 } = require('uuid');
 const timestamp = require('time-stamp');
 const StoreModel = require('../models/StoreModel');
 const UserModel = require('../models/UserModel');
-const FireBaseModel = require('../models/FirebaseModel');
 const FirebaseModel = require('../models/FirebaseModel');
 
 module.exports = {
@@ -46,7 +45,8 @@ module.exports = {
 
     // Criacao do Usuario
     try {
-      firebase_id = await FireBaseModel.createNewUser(user.email, user.password);
+      // Criacao de usuario:
+      firebase_id = await FirebaseModel.createNewUser(user.email, user.password);
       user.firebase_id = firebase_id;
       delete user.password;
       await UserModel.createNewUser(user);
