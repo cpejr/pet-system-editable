@@ -30,7 +30,7 @@ export async function create(request, response) {
   return response.status(200).json({ notification: 'Usuario criado!' });
 }
 
-export async function deleteUser(request, response) {
+export async function deleteBoth(request, response) {
   try {
     const { id } = request.params;
     const user = await UserModel.getUserById(id);
@@ -70,4 +70,18 @@ export async function update(request, response) {
       console.error(error); //eslint-disable-line
     return response.status(500).json({ notification: 'Internal server error while trying to delete user' });
   }
+}
+
+export async function updatePassword(request, response) {
+    const { firebase_id, password } = request.body;
+
+    try {
+      await FirebaseModel.changeUserPassword(firebase_id, password);
+    } catch (err) {
+      if (err.message) {
+        return response.status(400).json({ notification: err.message });
+      }
+      return response.status(500).json({ notification: 'Internal server error while trying to update use password' });
+    }
+    return response.status(200).json({ notification: 'User password updated' });
 }

@@ -3,10 +3,11 @@ exports.up = function (knex) {
     table.string('firebase_id').primary().notNullable();
     table.string('email').notNullable();
     table.string('cpf').notNullable();
-    table.date('birth_date').notNullable().defaultTo(knex.fn.now());
+    table.date('birth_date').notNullable();
     table.string('first_name').notNullable();
     table.string('last_name').notNullable();
     table.string('type').notNullable();
+    table.string('telephone').notNullable();
     table.timestamp('created_at').notNullable().defaultTo(knex.fn.now());
   });
 };

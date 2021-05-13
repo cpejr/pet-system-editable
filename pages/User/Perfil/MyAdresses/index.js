@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { createGlobalStyle } from 'styled-components';
+import styled from 'styled-components';
 import Link from 'next/link';
 import Header from '../../../../src/components/Header';
 import MyAdresses from '../../../../src/components/MyAdresses';
@@ -63,35 +63,33 @@ export default function Perfil() {
   return (
     <div>
       <Header />
-      <createGlobalStyle>
 
-        <Title>Meu Perfil:</Title>
+      <Title>Meu Perfil:</Title>
 
-        <SubTitle>
-          <Link href="http://localhost:3000/User/Perfil/MyRequests">
-            <Section>Meus pedidos</Section>
-          </Link>
-          <WordsDivider />
-          <Link href="http://localhost:3000/User/Perfil/MyAdresses">
-            <Section.Select>Meus endereços</Section.Select>
-          </Link>
-          <WordsDivider />
-          <Link href="http://localhost:3000/User/Perfil/MyDatas">
-            <Section>Dados pessoais</Section>
-          </Link>
-          <WordsDivider />
-          <Link href="http://localhost:3000/User/Perfil/ChangePassword">
-            <Section>Alterar Senha</Section>
-          </Link>
-          <WordsDivider />
-          <Section>
-            <MyLogOut />
-          </Section>
+      <SubTitle>
+        <Link href="http://localhost:3000/User/Perfil/MyRequests">
+          <Section>Meus pedidos</Section>
+        </Link>
+        <WordsDivider />
+        <Link href="http://localhost:3000/User/Perfil/MyAdresses">
+          <Section.Select>Meus endereços</Section.Select>
+        </Link>
+        <WordsDivider />
+        <Link href="http://localhost:3000/User/Perfil/MyDatas">
+          <Section>Dados pessoais</Section>
+        </Link>
+        <WordsDivider />
+        <Link href="http://localhost:3000/User/Perfil/ChangePassword">
+          <Section>Alterar Senha</Section>
+        </Link>
+        <WordsDivider />
+        <Section>
+          <MyLogOut />
+        </Section>
 
-        </SubTitle>
-        <MyAdresses />
-        <FooterMobile />
-      </createGlobalStyle>
+      </SubTitle>
+      <MyAdresses />
+      <FooterMobile />
 
     </div>
   );
