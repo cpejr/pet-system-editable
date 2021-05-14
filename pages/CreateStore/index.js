@@ -5,8 +5,9 @@ import {
   StoreBodyWrapper, StoreBody, StoreFormulary, TopFormulary, ItemFormulary, IEItemFormulary, DividedItemFormulary, BottomFormulary,
 } from '../../src/components/BodyForms';
 import {
-  TitleStore, SubtitleStore, Text, Text2, SubText, TextBox, Select, Submit,
+  TitleStore, SubtitleStore, Text, Text2, SubText, TextBox, Submit,
 } from '../../src/components/FormComponents';
+import MaskedInput from '../../src/components/MasketInput';
 
 export default function Store() {
   // Usuario:
@@ -173,11 +174,11 @@ export default function Store() {
             <DividedItemFormulary>
               <ItemFormulary>
                 <Text>CPF: *</Text>
-                <TextBox type="text" onChange={handleCpfChange} value={cpf} />
+                <MaskedInput name="cpf" mask="999.999.999-99" value={cpf} onChange={handleCpfChange} />
               </ItemFormulary>
               <ItemFormulary>
                 <Text>Data de Nascimento:</Text>
-                <TextBox type="text" onChange={handleBirthDateChange} value={birthDate} />
+                <MaskedInput name="birthDate" mask="99/99/9999" value={birthDate} onChange={handleBirthDateChange} />
               </ItemFormulary>
             </DividedItemFormulary>
 
@@ -196,22 +197,22 @@ export default function Store() {
             <DividedItemFormulary>
               <ItemFormulary>
                 <Text>DDD + cellphone: *</Text>
-                <TextBox type="text" placeholder="(31)99999-9999" onChange={handleCellphoneChange} value={cellphone} />
+                <MaskedInput name="cellphone" mask="(99)99999-9999" value={cellphone} onChange={handleCellphoneChange} />
               </ItemFormulary>
               <ItemFormulary>
                 <Text>DDD + telephone: *</Text>
-                <TextBox type="text" placeholder="(31)99999-9999" onChange={handleTelephoneChange} value={telephone} />
+                <MaskedInput name="telephone" mask="(99)99999-9999" value={telephone} onChange={handleTelephoneChange} />
               </ItemFormulary>
             </DividedItemFormulary>
 
             <DividedItemFormulary>
               <ItemFormulary>
                 <Text>CNPJ: *</Text>
-                <TextBox type="text" placeholder="" onChange={handleCnpjChange} value={cnpj} />
+                <MaskedInput name="cnpj" mask="99.999.999/9999-99" value={cnpj} onChange={handleCnpjChange} />
               </ItemFormulary>
               <ItemFormulary>
                 <Text>CEP: *</Text>
-                <TextBox type="text" placeholder="" onChange={handleCepChange} value={cep} />
+                <MaskedInput name="cep" mask="99.999.999" value={cep} onChange={handleCepChange} />
               </ItemFormulary>
             </DividedItemFormulary>
 
@@ -241,11 +242,7 @@ export default function Store() {
               </ItemFormulary>
               <ItemFormulary>
                 <Text>Estado da IE: *</Text>
-                <Select name="estado" id="estado" value={ieState} onChange={handleIeStateChange}>
-                  <option value={ieState}>MG</option>
-                  <option value={ieState}>SP</option>
-                  <option value={ieState}>RJ</option>
-                </Select>
+                <TextBox type="text" placeholder="" onChange={handleIeStateChange} value={ieState} />
               </ItemFormulary>
             </DividedItemFormulary>
 
