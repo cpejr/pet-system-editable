@@ -149,6 +149,16 @@ export default function Store() {
     }
   }
 
+  function enableInput() {
+    document.getElementById('ie').disabled = false;
+    document.getElementById('ieState').disabled = false;
+  }
+
+  function disableInput() {
+    document.getElementById('ie').disabled = true;
+    document.getElementById('ieState').disabled = true;
+  }
+
   return (
     <>
       <Header />
@@ -163,22 +173,22 @@ export default function Store() {
             <DividedItemFormulary>
               <ItemFormulary>
                 <Text>Nome: *</Text>
-                <TextBox type="text" onChange={handleFirstNameChange} value={firstName} />
+                <TextBox type="text" id="firstName" onChange={handleFirstNameChange} value={firstName} />
               </ItemFormulary>
               <ItemFormulary>
                 <Text>Sobrenomes: *</Text>
-                <TextBox type="text" onChange={handleLastNameChange} value={lastName} />
+                <TextBox type="text" id="lastName" onChange={handleLastNameChange} value={lastName} />
               </ItemFormulary>
             </DividedItemFormulary>
 
             <DividedItemFormulary>
               <ItemFormulary>
                 <Text>CPF: *</Text>
-                <MaskedInput name="cpf" mask="999.999.999-99" value={cpf} onChange={handleCpfChange} />
+                <MaskedInput name="cpf" id="cpf" mask="999.999.999-99" value={cpf} onChange={handleCpfChange} />
               </ItemFormulary>
               <ItemFormulary>
                 <Text>Data de Nascimento:</Text>
-                <MaskedInput name="birthDate" mask="99/99/9999" value={birthDate} onChange={handleBirthDateChange} />
+                <MaskedInput name="birthDate" id="birthDate" mask="99/99/9999" value={birthDate} onChange={handleBirthDateChange} />
               </ItemFormulary>
             </DividedItemFormulary>
 
@@ -186,63 +196,63 @@ export default function Store() {
 
             <ItemFormulary>
               <Text>Razão Social: *</Text>
-              <TextBox type="text" onChange={handleCompanyNameChange} value={companyName} />
+              <TextBox type="text" id="birthDate" onChange={handleCompanyNameChange} value={companyName} />
             </ItemFormulary>
 
             <ItemFormulary>
               <Text>Email: *</Text>
-              <TextBox type="text" onChange={handleEmailChange} value={email} />
+              <TextBox type="text" id="email" onChange={handleEmailChange} value={email} />
             </ItemFormulary>
 
             <DividedItemFormulary>
               <ItemFormulary>
                 <Text>DDD + cellphone: *</Text>
-                <MaskedInput name="cellphone" mask="(99)99999-9999" value={cellphone} onChange={handleCellphoneChange} />
+                <MaskedInput name="cellphone" id="cellphone" mask="(99)99999-9999" value={cellphone} onChange={handleCellphoneChange} />
               </ItemFormulary>
               <ItemFormulary>
                 <Text>DDD + telephone: *</Text>
-                <MaskedInput name="telephone" mask="(99)99999-9999" value={telephone} onChange={handleTelephoneChange} />
+                <MaskedInput name="telephone" id="telephone" mask="(99)99999-9999" value={telephone} onChange={handleTelephoneChange} />
               </ItemFormulary>
             </DividedItemFormulary>
 
             <DividedItemFormulary>
               <ItemFormulary>
                 <Text>CNPJ: *</Text>
-                <MaskedInput name="cnpj" mask="99.999.999/9999-99" value={cnpj} onChange={handleCnpjChange} />
+                <MaskedInput name="cnpj" id="cnpj" mask="99.999.999/9999-99" value={cnpj} onChange={handleCnpjChange} />
               </ItemFormulary>
               <ItemFormulary>
                 <Text>CEP: *</Text>
-                <MaskedInput name="cep" mask="99.999.999" value={cep} onChange={handleCepChange} />
+                <MaskedInput name="cep" id="cep" mask="99.999.999" value={cep} onChange={handleCepChange} />
               </ItemFormulary>
             </DividedItemFormulary>
 
             <DividedItemFormulary>
               <ItemFormulary>
                 <Text>password: *</Text>
-                <TextBox type="password" placeholder="" onChange={handlePasswordChange} value={password} />
+                <TextBox type="password" id="password" placeholder="" onChange={handlePasswordChange} value={password} />
               </ItemFormulary>
               <ItemFormulary>
                 <Text>Confirma password: *</Text>
-                <TextBox type="password" placeholder="" onChange={handleConfPasswordChange} value={confPassword} />
+                <TextBox type="password" id="confPassword" placeholder="" onChange={handleConfPasswordChange} value={confPassword} />
               </ItemFormulary>
             </DividedItemFormulary>
 
             <IEItemFormulary>
               <Text>Isento de IE: *</Text>
-              <input type="radio" id="yes" name="yes_no" value="yes" />
+              <input type="radio" id="yes" name="yes_no" value="yes" onClick={enableInput} />
               <Text2>Sim</Text2>
-              <input type="radio" id="no" name="yes_no" value="no" />
+              <input type="radio" id="no" name="yes_no" value="no" onClick={disableInput} />
               <Text2>Não</Text2>
             </IEItemFormulary>
 
             <DividedItemFormulary>
               <ItemFormulary>
                 <Text>IE: *   </Text>
-                <TextBox type="text" placeholder="" onChange={handleIeChange} value={ie} />
+                <TextBox type="text" id="ie" placeholder="" onChange={handleIeChange} value={ie} />
               </ItemFormulary>
               <ItemFormulary>
                 <Text>Estado da IE: *</Text>
-                <TextBox type="text" placeholder="" onChange={handleIeStateChange} value={ieState} />
+                <TextBox type="text" id="ieState" placeholder="" onChange={handleIeStateChange} value={ieState} />
               </ItemFormulary>
             </DividedItemFormulary>
 
