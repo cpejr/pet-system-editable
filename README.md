@@ -70,3 +70,7 @@ No topo de cada arquivo de página (na pasta *pages*, deve-se ter um comentário
 * [Next-iron-session](https://www.npmjs.com/package/next-iron-session "Next-iron-session") -> Ferramenta de autenticação de sessão utilizada. Faz a autenticação por cookies e permite que as ferramentas do Next de SSR funcionem. Com ele foram criados os diversos middlewares de autenticação
 * [Swagger](https://www.npmjs.com/package/swagger-jsdoc "Swagger") -> Ferramenta de documentação de api utilizada para registrar os parâmetros das rotas.
 * [ESLint](https://eslint.org/docs/user-guide/getting-started "ESLint") -> Utilizado para padronização do código e do estilo aplicados.
+
+[Diagrama UML](https://lucid.app/lucidchart/990acfba-097d-4519-baf3-5682bc149a4d/edit?shared=true&page=0_0# "###Diagrama UML###")
+![](https://drive.google.com/uc?export=view&id=1auPlzu8RoTaYvv4WYpLjqUDSX-h6nqmZ)
+
