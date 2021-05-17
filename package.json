@@ -4,7 +4,8 @@
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "docs": "nodemon ./src/docs/index.js"
   },
   "dependencies": {
     "@date-io/date-fns": "1.x",
@@ -28,6 +29,8 @@
     "react-multi-carousel": "^2.6.2",
     "sqlite3": "^5.0.2",
     "styled-components": "^5.0.0",
+    "swagger-jsdoc": "^4.0.0",
+    "swagger-ui-express": "^4.1.6",
     "time-stamp": "^2.2.0",
     "uuid": "^8.3.2"
   },
@@ -38,7 +41,9 @@
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-react": "^7.23.1",
-    "eslint-plugin-react-hooks": "^4.2.0"
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.7"
   },
   "license": "MIT"
 }
