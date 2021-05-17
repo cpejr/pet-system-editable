@@ -14,7 +14,7 @@ const swaggerOptions = {
     },
     servers: [
       {
-        url: 'http://localhost:3333',
+        url: 'http://localhost:3000',
       },
       {
         url: 'https://petsystem.vercelapp.com',
