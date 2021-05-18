@@ -2,7 +2,7 @@ import React from 'react';
 import InputMask from 'react-input-mask';
 import styled from 'styled-components';
 
-export const TextBox = styled.input`
+export const TextBox = styled.div`
   width: 90%;
   margin-top: 10px;
   margin-bottom: 10px;
@@ -29,11 +29,14 @@ export default function MaskedInput({
   }
 
   return (
-    <InputMask
-      name={name}
-      mask={mask}
-      value={value}
-      onChange={handleChange}
-    />
+    <TextBox>
+      <InputMask
+        name={name}
+        mask={mask}
+        value={value}
+        onChange={handleChange}
+        style={{ border: 'none', outline: 'none', backgroundColor: '#F2F2F2' }}
+      />
+    </TextBox>
   );
 }
