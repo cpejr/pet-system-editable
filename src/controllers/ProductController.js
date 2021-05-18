@@ -16,9 +16,9 @@ module.exports = {
         return response.status(400).json({ notification: err.message });
       }
       console.error(error);
-      return response.status(500).json({ notification: 'Internal server error while trying to register user' });
+      return response.status(500).json({ notification: 'Internal server error while trying to create product' });
     }
-    return response.status(200).json({ notification: 'Produto criado!' });
+    return response.status(200).json({ notification: 'Product created' });
   },
   async update(request, response) {
     const product = request.body;
@@ -31,7 +31,7 @@ module.exports = {
       }
       return response.status(500).json({ notification: 'Internal server error while trying to update product' });
     }
-    return response.status(200).json({ notification: 'Produto alterado com sucesso!' });
+    return response.status(200).json({ notification: 'Product updated' });
   },
   async remove(request, response) {
     const { product_id } = request.body;
