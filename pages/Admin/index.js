@@ -86,10 +86,6 @@ display:flex;
 align-items:center;
 justify-content:center;
 width:100%;
-@media(max-width:860px){
-    
-}
-
 `;
 
 MonthAndYear.Col2 = styled.div`

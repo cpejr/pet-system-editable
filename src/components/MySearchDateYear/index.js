@@ -1,76 +1,91 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import { makeStyles } from '@material-ui/core/styles';
+import React from 'react';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
-const Container = styled.div`
-display:flex;
-align-items:center;
-justify-content:center;
-width:100%;
-`;
-
 const useStyles = makeStyles((theme) => ({
   formControl: {
-    marginRight: theme.spacing(0),
+    margin: theme.spacing(1),
     minWidth: 120,
+    maxWidth: 300,
   },
-  selectEmpty: {
-    marginTop: theme.spacing(0),
+  chips: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  chip: {
+    margin: 2,
+  },
+  noLabel: {
+    marginTop: theme.spacing(3),
   },
 }));
 
-export default function MySearchDateYear() {
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
+
+const years = [
+  '2021',
+  '2020',
+  '2019',
+  '2018',
+  '2017',
+  '2016',
+  '2015',
+  '2014',
+  '2013',
+  '2012',
+];
+
+function getStyles(year, personYear, theme) {
+  return {
+    fontWeight:
+      personYear.indexOf(year) === -1
+        ? theme.typography.fontWeightRegular
+        : theme.typography.fontWeightMedium,
+  };
+}
+
+export default function MultipleSelect() {
   const classes = useStyles();
+  const theme = useTheme();
+  const [personYear, setPersonName] = React.useState([]);
 
-  const [year, setYear] = useState({
-    years: '',
-    name: 'hai',
-  });
-
-  const handleYearChange = (event) => {
-    const { name } = event.target;
-    setYear({
-      ...year,
-      [name]: event.target.value,
-    });
+  const handleChange = (event) => {
+    setPersonName(event.target.value);
   };
 
   return (
     <div>
-      <Container>
-        <FormControl
-          variant="outlined"
-          className={classes.formControl}
-
+      <FormControl className={classes.formControl}>
+        <InputLabel id="demo-mutiple-year-label">Ano</InputLabel>
+        <Select
+          labelId="demo-mutiple-year-label"
+          id="demo-mutiple-year"
+          multiple
+          value={personYear}
+          onChange={handleChange}
+          input={<Input />}
+          MenuProps={MenuProps}
         >
-          <InputLabel style={{ color: '#609694' }} htmlFor="outlined-age-native-simple">Ano</InputLabel>
-          <Select
-            native
-            value={year.years}
-            onChange={handleYearChange}
-            label="Ano"
-            inputProps={{
-              name: 'years',
-              id: 'outlined-age-native-simple',
-            }}
-          >
-            <option aria-label="None" value="" />
-            <option>2021</option>
-            <option>2020</option>
-            <option>2019</option>
-            <option>2018</option>
-            <option>2017</option>
-            <option>2016</option>
-            <option>2015</option>
-            <option>2014</option>
-            <option>2013</option>
-            <option>2012</option>
-          </Select>
-        </FormControl>
-      </Container>
+          {years.map((year) => (
+            <MenuItem key={year} value={year} style={getStyles(year, personYear, theme)}>
+              {year}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
     </div>
   );
 }

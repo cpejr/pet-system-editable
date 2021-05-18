@@ -232,7 +232,7 @@ export default function Filter() {
 
   const [checkedPerfumes, setCheckedPerfumes] = useState('#F8F8F8');
   const handleClickPerfumes = () => {
-    if (checkedMaisPerfumes === '#F8F8F8') {
+    if (checkedPerfumes === '#F8F8F8') {
       setCheckedPerfumes('#BD2B2B');
     } else {
       setCheckedPerfumes('#F8F8F8');

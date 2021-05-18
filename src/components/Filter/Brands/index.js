@@ -6,26 +6,20 @@ display:flex;
 align-items:center;
 justify-content:center;
 flex-direction:column;
-background-color:${({ theme }) => theme.colors.mediumGray};
-width:200px;
-border-radius:5px;
+width:250px;
 margin-bottom:10%;
 font-family:Roboto;
 @media(max-width:560px){
       display:none;
     }
 `;
-Container.Title = styled.h3`
+Container.Title = styled.p`
 display:flex;
 align-items:center;
 justify-content:center;
 margin:0;
 width:100%;
-height:40px;
-background-color:${({ theme }) => theme.colors.mediumGreen};
-border-top-left-radius:5px;
-border-top-right-radius:5px;
-color:${({ theme }) => theme.colors.titleGray};
+font-size:28px;
 `;
 
 const CategoryContainer = styled.div`
@@ -192,93 +186,93 @@ width:80%;
 `;
 
 export default function Category() {
-  const [checkedRacao, setCheckedRacao] = useState(false);
-  const handleClickRacao = () => setCheckedRacao(!checkedRacao);
+  const [checkedPedigree, setCheckedPedigree] = useState(false);
+  const handleClickPedigree = () => setCheckedPedigree(!checkedPedigree);
 
-  const [checkedBrinquedos, setCheckedBrinquedos] = useState(false);
-  const handleClickBrinquedos = () => setCheckedBrinquedos(!checkedBrinquedos);
+  const [checkedQuatree, setCheckedQuatree] = useState(false);
+  const handleClickQuatree = () => setCheckedQuatree(!checkedQuatree);
 
-  const [checkedVasilhas, setCheckedVasilhas] = useState(false);
-  const handleClickVasilhas = () => setCheckedVasilhas(!checkedVasilhas);
+  const [checkedPremier, setCheckedPremier] = useState(false);
+  const handleClickPremier = () => setCheckedPremier(!checkedPremier);
 
-  const [checkedCasinhas, setCheckedCasinhas] = useState(false);
-  const handleClickCasinhas = () => setCheckedCasinhas(!checkedCasinhas);
+  const [checkedMarca4, setCheckedMarca4] = useState(false);
+  const handleClickMarca4 = () => setCheckedMarca4(!checkedMarca4);
 
-  const [checkedPetiscos, setCheckedPetiscos] = useState(false);
-  const handleClickPetiscos = () => setCheckedPetiscos(!checkedPetiscos);
+  const [checkedMarca5, setCheckedMarca5] = useState(false);
+  const handleClickMarca5 = () => setCheckedMarca5(!checkedMarca5);
 
-  const [checkedShampoo, setCheckedShampoo] = useState(false);
-  const handleClickShampoo = () => setCheckedShampoo(!checkedShampoo);
+  const [checkedMarca6, setCheckedMarca6] = useState(false);
+  const handleClickMarca6 = () => setCheckedMarca6(!checkedMarca6);
 
-  const [checkedPerfumes, setCheckedPerfumes] = useState(false);
-  const handleClickPerfumes = () => setCheckedPerfumes(!checkedPerfumes);
+  const [checkedMarca7, setCheckedMarca7] = useState(false);
+  const handleClickMarca7 = () => setCheckedMarca7(!checkedMarca7);
 
   return (
     <div>
       <Container>
-        <Container.Title>Categorias</Container.Title>
+        <Container.Title>Marcas</Container.Title>
         <CategoryContainer>
 
           <CategoryContainer.Row1>
             <CategoryContainer.Row1.Col1>
-              <input onClick={handleClickRacao} checked={checkedRacao} type="checkbox" />
+              <input onClick={handleClickPedigree} checked={checkedPedigree} type="radio" />
             </CategoryContainer.Row1.Col1>
             <CategoryContainer.Row1.Col2>
-              Ração
+              Pedrigree
             </CategoryContainer.Row1.Col2>
           </CategoryContainer.Row1>
 
           <CategoryContainer.Row2>
             <CategoryContainer.Row2.Col1>
-              <input onClick={handleClickBrinquedos} checked={checkedBrinquedos} type="checkbox" />
+              <input onClick={handleClickQuatree} checked={checkedQuatree} type="radio" />
             </CategoryContainer.Row2.Col1>
             <CategoryContainer.Row2.Col2>
-              Brinquedos
+              Quatree
             </CategoryContainer.Row2.Col2>
           </CategoryContainer.Row2>
 
           <CategoryContainer.Row3>
             <CategoryContainer.Row3.Col1>
-              <input onClick={handleClickVasilhas} checked={checkedVasilhas} type="checkbox" />
+              <input onClick={handleClickPremier} checked={checkedPremier} type="radio" />
             </CategoryContainer.Row3.Col1>
             <CategoryContainer.Row3.Col2>
-              Vasilhas
+              Premier
             </CategoryContainer.Row3.Col2>
           </CategoryContainer.Row3>
 
           <CategoryContainer.Row4>
             <CategoryContainer.Row4.Col1>
-              <input onClick={handleClickCasinhas} checked={checkedCasinhas} type="checkbox" />
+              <input onClick={handleClickMarca4} checked={checkedMarca4} type="radio" />
             </CategoryContainer.Row4.Col1>
             <CategoryContainer.Row4.Col2>
-              Casinhas
+              Marca4
             </CategoryContainer.Row4.Col2>
           </CategoryContainer.Row4>
 
           <CategoryContainer.Row5>
             <CategoryContainer.Row5.Col1>
-              <input onClick={handleClickPetiscos} checked={checkedPetiscos} type="checkbox" />
+              <input onClick={handleClickMarca5} checked={checkedMarca5} type="radio" />
             </CategoryContainer.Row5.Col1>
             <CategoryContainer.Row5.Col2>
-              Petiscos
+              Marca5
             </CategoryContainer.Row5.Col2>
           </CategoryContainer.Row5>
 
           <CategoryContainer.Row6>
             <CategoryContainer.Row6.Col1>
-              <input onClick={handleClickShampoo} checked={checkedShampoo} type="checkbox" />
+              <input onClick={handleClickMarca6} checked={checkedMarca6} type="radio" />
             </CategoryContainer.Row6.Col1>
             <CategoryContainer.Row6.Col2>
-              Shampoo
+              Marca6
             </CategoryContainer.Row6.Col2>
           </CategoryContainer.Row6>
 
           <CategoryContainer.Row7>
             <CategoryContainer.Row7.Col1>
-              <input onClick={handleClickPerfumes} checked={checkedPerfumes} type="checkbox" />
+              <input onClick={handleClickMarca7} checked={checkedMarca7} type="radio" />
             </CategoryContainer.Row7.Col1>
             <CategoryContainer.Row7.Col2>
-              Perfumes
+              Marca7
             </CategoryContainer.Row7.Col2>
           </CategoryContainer.Row7>
 

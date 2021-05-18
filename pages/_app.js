@@ -31,6 +31,7 @@ const theme = {
     borderBoxColor: 'rgba(0, 0, 0, 0.2)',
     grayIcons: '#AAABB0',
     blueButton: '#1C97B2',
+    starYellow: '#FFC700',
   },
 };
 
