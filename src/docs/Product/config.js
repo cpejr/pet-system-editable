@@ -9,7 +9,7 @@
 * @swagger
 * components:
 *  schemas:
-*    Store:
+*    Product:
 *      type: object
 *      required:
 *        - product_name
