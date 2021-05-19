@@ -9,9 +9,9 @@ module.exports = {
       if (err.message) {
         return response.status(400).json({ notification: err.message });
       }
-      return response.status(500).json({ notification: 'Internal server error while trying to create admin' });
+      return response.status(500).json({ notification: 'Internal server error while trying to create admin share' });
     }
-    return response.status(200).json({ notification: 'Share criado!' });
+    return response.status(200).json({ notification: 'Share created' });
   },
 
   async updateShare(req, res) {
