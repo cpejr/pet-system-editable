@@ -23,6 +23,7 @@ module.exports = {
       first_name: info.first_name,
       last_name: info.last_name,
       type: info.type,
+      telephone: info.telephone,
       created_at: timestamp(),
     };
 

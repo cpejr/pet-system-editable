@@ -5,8 +5,10 @@ import {
   StoreBodyWrapper, StoreBody, StoreFormulary, TopFormulary, ItemFormulary, IEItemFormulary, DividedItemFormulary, BottomFormulary,
 } from '../../src/components/BodyForms';
 import {
-  TitleStore, SubtitleStore, Text, Text2, SubText, TextBox, Select, Submit,
+  TitleStore, SubtitleStore, Text, Text2, SubText, TextBox, Submit,
 } from '../../src/components/FormComponents';
+import MaskedInput from '../../src/components/MasketInput';
+import SelectState from '../../src/components/SelectState';
 
 export default function Store() {
   // Usuario:
@@ -71,6 +73,51 @@ export default function Store() {
 
   async function handleSubmit(event) {
     event.preventDefault();
+    if (firstName?.length < 1) {
+      alert('Nome vazio!');
+      return;
+    }
+    if (lastName?.length < 1) {
+      alert('Sobrenome vazio!');
+      return;
+    }
+    if (cpf?.length !== 11) {
+      alert('CPF inválido!');
+      return;
+    }
+    if (birthDate?.length !== 8) {
+      alert('Data de nascimento inválida!');
+      return;
+    }
+    if (companyName?.length < 1) {
+      alert('Nome da Empresa vazio!');
+      return;
+    }
+    if (email?.length < 1) {
+      alert('Email vazio!');
+      return;
+    }
+    if (cellphone?.length !== 11) {
+      alert('Celular inválido!');
+      return;
+    }
+    if (telephone?.length !== 11) {
+      alert('Telefone inválido!');
+      return;
+    }
+    if (cnpj?.length !== 14) {
+      alert('CNPJ inválido!');
+      return;
+    }
+    if (cep?.length !== 8) {
+      alert('CEP inválido!');
+      return;
+    }
+    if (password !== confPassword) {
+      alert('As senhas precisam ser iguais!');
+      return;
+    }
+
     const body = {
       // Dados do usuario
       first_name: firstName,
@@ -81,14 +128,13 @@ export default function Store() {
       // Dados do Formulario da Loja
       company_name: companyName,
       email,
-      telephone,
+      telephone, // Tambem e guardado no usuario
       cellphone,
       cnpj,
       cep,
       password,
       ie,
       ie_state: ieState,
-
       // Resto dos dados da loja - Teste
       cover_img: 'teste',
       logo_img: 'teste',
@@ -101,6 +147,16 @@ export default function Store() {
     } catch (error) {
       console.log(error);
     }
+  }
+
+  function enableInput() {
+    document.getElementById('ie').disabled = false;
+    document.getElementById('ieState').disabled = false;
+  }
+
+  function disableInput() {
+    document.getElementById('ie').disabled = true;
+    document.getElementById('ieState').disabled = true;
   }
 
   return (
@@ -117,22 +173,22 @@ export default function Store() {
             <DividedItemFormulary>
               <ItemFormulary>
                 <Text>Nome: *</Text>
-                <TextBox type="text" onChange={handleFirstNameChange} value={firstName} />
+                <TextBox type="text" id="firstName" onChange={handleFirstNameChange} value={firstName} />
               </ItemFormulary>
               <ItemFormulary>
                 <Text>Sobrenomes: *</Text>
-                <TextBox type="text" onChange={handleLastNameChange} value={lastName} />
+                <TextBox type="text" id="lastName" onChange={handleLastNameChange} value={lastName} />
               </ItemFormulary>
             </DividedItemFormulary>
 
             <DividedItemFormulary>
               <ItemFormulary>
                 <Text>CPF: *</Text>
-                <TextBox type="text" onChange={handleCpfChange} value={cpf} />
+                <MaskedInput name="cpf" id="cpf" mask="999.999.999-99" value={cpf} onChange={handleCpfChange} />
               </ItemFormulary>
               <ItemFormulary>
                 <Text>Data de Nascimento:</Text>
-                <TextBox type="text" onChange={handleBirthDateChange} value={birthDate} />
+                <MaskedInput name="birthDate" id="birthDate" mask="99/99/9999" value={birthDate} onChange={handleBirthDateChange} />
               </ItemFormulary>
             </DividedItemFormulary>
 
@@ -140,67 +196,63 @@ export default function Store() {
 
             <ItemFormulary>
               <Text>Razão Social: *</Text>
-              <TextBox type="text" placeholder="" onChange={handleCompanyNameChange} value={companyName} />
+              <TextBox type="text" id="birthDate" onChange={handleCompanyNameChange} value={companyName} />
             </ItemFormulary>
 
             <ItemFormulary>
               <Text>Email: *</Text>
-              <TextBox type="text" placeholder="" onChange={handleEmailChange} value={email} />
+              <TextBox type="text" id="email" onChange={handleEmailChange} value={email} />
             </ItemFormulary>
 
             <DividedItemFormulary>
               <ItemFormulary>
                 <Text>DDD + cellphone: *</Text>
-                <TextBox type="text" placeholder="(31)99999-9999" onChange={handleCellphoneChange} value={cellphone} />
+                <MaskedInput name="cellphone" id="cellphone" mask="(99)99999-9999" value={cellphone} onChange={handleCellphoneChange} />
               </ItemFormulary>
               <ItemFormulary>
                 <Text>DDD + telephone: *</Text>
-                <TextBox type="text" placeholder="(31)99999-9999" data-mask="(__)_____-____" maxLength="14" onChange={handleTelephoneChange} value={telephone} />
+                <MaskedInput name="telephone" id="telephone" mask="(99)99999-9999" value={telephone} onChange={handleTelephoneChange} />
               </ItemFormulary>
             </DividedItemFormulary>
 
             <DividedItemFormulary>
               <ItemFormulary>
                 <Text>CNPJ: *</Text>
-                <TextBox type="text" placeholder="" onChange={handleCnpjChange} value={cnpj} />
+                <MaskedInput name="cnpj" id="cnpj" mask="99.999.999/9999-99" value={cnpj} onChange={handleCnpjChange} />
               </ItemFormulary>
               <ItemFormulary>
                 <Text>CEP: *</Text>
-                <TextBox type="text" placeholder="" onChange={handleCepChange} value={cep} />
+                <MaskedInput name="cep" id="cep" mask="99.999.999" value={cep} onChange={handleCepChange} />
               </ItemFormulary>
             </DividedItemFormulary>
 
             <DividedItemFormulary>
               <ItemFormulary>
                 <Text>password: *</Text>
-                <TextBox type="password" placeholder="" onChange={handlePasswordChange} value={password} />
+                <TextBox type="password" id="password" placeholder="" onChange={handlePasswordChange} value={password} />
               </ItemFormulary>
               <ItemFormulary>
                 <Text>Confirma password: *</Text>
-                <TextBox type="password" placeholder="" onChange={handleConfPasswordChange} value={confPassword} />
+                <TextBox type="password" id="confPassword" placeholder="" onChange={handleConfPasswordChange} value={confPassword} />
               </ItemFormulary>
             </DividedItemFormulary>
 
             <IEItemFormulary>
               <Text>Isento de IE: *</Text>
-              <input type="radio" />
+              <input type="radio" id="yes" name="yes_no" value="yes" onClick={disableInput} />
               <Text2>Sim</Text2>
-              <input type="radio" />
+              <input type="radio" id="no" name="yes_no" value="no" onClick={enableInput} />
               <Text2>Não</Text2>
             </IEItemFormulary>
 
             <DividedItemFormulary>
               <ItemFormulary>
                 <Text>IE: *   </Text>
-                <TextBox type="text" placeholder="" onChange={handleIeChange} value={ie} />
+                <TextBox type="text" id="ie" placeholder="" onChange={handleIeChange} value={ie} />
               </ItemFormulary>
               <ItemFormulary>
                 <Text>Estado da IE: *</Text>
-                <Select name="estado" id="estado" value={ieState} onChange={handleIeStateChange}>
-                  <option value={ieState}>MG</option>
-                  <option value={ieState}>SP</option>
-                  <option value={ieState}>RJ</option>
-                </Select>
+                <SelectState name="ieState" id="ieState" onChange={handleIeStateChange} value={ieState} />
               </ItemFormulary>
             </DividedItemFormulary>
 

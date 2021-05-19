@@ -63,17 +63,6 @@ export const TextBox = styled.input`
   background: #F2F2F2;
 `;
 
-export const Select = styled.select`
-  width: 90%;
-  font-family: Roboto;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  height: 30px;
-  border-radius: 5px;
-  border: 1px solid ${({ theme }) => theme.colors.baseGray};
-  background: #F2F2F2;
-`;
-
 export const Submit = styled.button`
     margin-top: 30px;
     height: 40px;
