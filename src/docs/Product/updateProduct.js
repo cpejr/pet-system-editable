@@ -41,7 +41,7 @@
 *         required: true
 *         description: Id do produto a ser atualizado.
 *      tags: [Product]
-*      description: Atualizando loja
+*      description: Atualizando produto
 *      responses:
 *       '200':
 *        description: Product updated
