@@ -17,9 +17,25 @@
 *         required: true
 *         description: Autorização básica.
 *       - in: body
-*         name: product
-*         required: true
-*         description: Produto com o campo a ser alterado.
+*         name: product_name
+*         required: false
+*         description: Nome do produto a ser alterado.
+*       - in: body
+*         name: price
+*         required: false
+*         description: Preço do produto a ser alterado.
+*       - in: body
+*         name: discount
+*         required: false
+*         description: Desconto do produto a ser alterado.
+*       - in: body
+*         name: description
+*         required: false
+*         description: Descrição do produto a ser alterado.
+*       - in: body
+*         name: img
+*         required: false
+*         description: Imagem do produto a ser alterado.
 *       - in: body
 *         name: product_id
 *         required: true
