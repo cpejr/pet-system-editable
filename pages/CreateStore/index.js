@@ -8,6 +8,7 @@ import {
   TitleStore, SubtitleStore, Text, Text2, SubText, TextBox, Submit,
 } from '../../src/components/FormComponents';
 import MaskedInput from '../../src/components/MasketInput';
+import SelectState from '../../src/components/SelectState';
 
 export default function Store() {
   // Usuario:
@@ -134,7 +135,6 @@ export default function Store() {
       password,
       ie,
       ie_state: ieState,
-
       // Resto dos dados da loja - Teste
       cover_img: 'teste',
       logo_img: 'teste',
@@ -239,9 +239,9 @@ export default function Store() {
 
             <IEItemFormulary>
               <Text>Isento de IE: *</Text>
-              <input type="radio" id="yes" name="yes_no" value="yes" onClick={enableInput} />
+              <input type="radio" id="yes" name="yes_no" value="yes" onClick={disableInput} />
               <Text2>Sim</Text2>
-              <input type="radio" id="no" name="yes_no" value="no" onClick={disableInput} />
+              <input type="radio" id="no" name="yes_no" value="no" onClick={enableInput} />
               <Text2>Não</Text2>
             </IEItemFormulary>
 
@@ -252,7 +252,7 @@ export default function Store() {
               </ItemFormulary>
               <ItemFormulary>
                 <Text>Estado da IE: *</Text>
-                <TextBox type="text" id="ieState" placeholder="" onChange={handleIeStateChange} value={ieState} />
+                <SelectState name="ieState" id="ieState" onChange={handleIeStateChange} value={ieState} />
               </ItemFormulary>
             </DividedItemFormulary>
 
