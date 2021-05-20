@@ -1,6 +1,12 @@
 const AdminModel = require('../models/AdminModel');
 
 module.exports = {
+  async getShare(request, response) {
+    const { share } = request.body;
+    const shareValue = await AdminModel.getAll(share);
+    return response.json(shareValue);
+  },
+
   async createShare(request, response) {
     const share = request.body;
     try {
