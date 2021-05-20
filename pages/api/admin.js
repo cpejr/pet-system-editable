@@ -1,11 +1,14 @@
 import {
-  createShare, updateShare, deleteShare,
+  getShare, createShare, updateShare, deleteShare,
 } from '../../src/controllers/AdminController';
 
 export default function handler(req, res) {
   try {
     const { method } = req;
     console.log(method);
+    if (method === 'GET') {
+      return getShare(req, res);
+    }
     if (method === 'POST') {
       return createShare(req, res);
     }
