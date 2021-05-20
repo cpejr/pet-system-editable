@@ -73,15 +73,15 @@ export async function update(request, response) {
 }
 
 export async function updatePassword(request, response) {
-    const { firebase_id, password } = request.body;
+  const { firebase_id, password } = request.body;
 
-    try {
-      await FirebaseModel.changeUserPassword(firebase_id, password);
-    } catch (err) {
-      if (err.message) {
-        return response.status(400).json({ notification: err.message });
-      }
-      return response.status(500).json({ notification: 'Internal server error while trying to update use password' });
+  try {
+    await FirebaseModel.changeUserPassword(firebase_id, password);
+  } catch (err) {
+    if (err.message) {
+      return response.status(400).json({ notification: err.message });
     }
-    return response.status(200).json({ notification: 'User password updated' });
+    return response.status(500).json({ notification: 'Internal server error while trying to update use password' });
+  }
+  return response.status(200).json({ notification: 'User password updated' });
 }
