@@ -2,13 +2,7 @@
 * @swagger
 *  /admin:
 *    get:
-*      summary: Localizar a comissão
-*      requestBody:
-*         required: true
-*         content:
-*          application/json:
-*            schema:
-*              $ref: '#/components/schemas/Admin'
+*      summary: Localizar a comissão do administrador
 *      parameters:
 *       - in: header
 *         name: Authorization
@@ -20,8 +14,12 @@
 *         name: share
 *         required: true
 *         description: Comissão do administrador a ser localizado.
+*         schema:
+*           type: float
+*           example:
+*              share: 25,00
 *      tags: [Admin]
-*      description: Localizar a comissão
+*      description: Localizar a comissão do administrador.
 *      responses:
 *       '200':
 *        description: Share

@@ -3,12 +3,6 @@
 *  /admin:
 *    delete:
 *      summary: Deletar comissão do administrador
-*      requestBody:
-*         required: true
-*         content:
-*          application/json:
-*            schema:
-*              $ref: '#/components/schemas/Admin'
 *      parameters:
 *       - in: header
 *         name: Authorization
@@ -20,6 +14,10 @@
 *         name: share
 *         required: true
 *         description: Comissão do administrador a ser deletada.
+*         schema:
+*           type: float
+*           example:
+*              share: 25,00
 *      tags: [Admin]
 *      description: Deletando comissão do administrador
 *      responses:

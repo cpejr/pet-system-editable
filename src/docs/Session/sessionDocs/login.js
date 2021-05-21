@@ -1,8 +1,8 @@
 /**
 * @swagger
-*  /session:
+*  /session/login:
 *    post:
-*     summary: Login do usuário
+*     summary: Login do usuário com email e senha
 *     requestBody:
 *       required: true
 *       content:
@@ -20,20 +20,20 @@
 *         name: email
 *         required: true
 *         description: Email do usuário para fazer login.
+*         schema:
+*           type: string
+*           example:
+*             email: lucas@gmail.com
 *       - in: body
 *         name: password
 *         required: true
 *         description: Senha do usuário para fazer login.
-*       - in: body
-*         name: firebase_id
-*         required: true
-*         description: Id do firebase do usuário.
-*       - in: body
-*         name: accessToken
-*         required: true
-*         description: Token de acesso do usuário para fazer login.
+*         schema:
+*           type: string
+*           example:
+*             password: 123456
 *     tags: [Session]
-*     description: Login
+*     description: Login do usuário com email e senha que retorna um Token para a sessão ser validada.
 *     responses:
 *       '200':
 *         description: accessToken, user

@@ -46,5 +46,4 @@
  *         created_at:
  *           type: timestamp
  *           description: Data de criação do usuário.
- *
  */

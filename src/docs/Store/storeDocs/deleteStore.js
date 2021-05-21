@@ -1,14 +1,8 @@
 /**
 * @swagger
-*  /store:
+*  /store/{user_id}:
 *    delete:
-*      summary: Deletar loja e usuário
-*      requestBody:
-*         required: true
-*         content:
-*          application/json:
-*            schema:
-*              $ref: '#/components/schemas/Store'
+*      summary: Deleta uma determinada loja e seu respectivo usuário administrador
 *      parameters:
 *       - in: header
 *         name: Authorization
@@ -19,9 +13,13 @@
 *       - in: body
 *         name: user_id
 *         required: true
-*         description: Id do usuário a ser deletado a loja.
+*         description: Id do usuário administrador referente à loja.
+*         schema:
+*           type: string
+*           example:
+*              user_id: d5x3pjYJPeT8Z6GBMtSHqRKqT1C2
 *      tags: [Store]
-*      description: Deletando loja
+*      description: Apaga uma determinada loja e seu respectivo administrador atráves do firebase id do administrador.
 *      responses:
 *       '200':
 *        description: User and store were deleted

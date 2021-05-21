@@ -81,7 +81,7 @@ export async function updatePassword(request, response) {
     if (err.message) {
       return response.status(400).json({ notification: err.message });
     }
-    return response.status(500).json({ notification: 'Internal server error while trying to update use password' });
+    return response.status(500).json({ notification: 'Internal server error while trying to update user password' });
   }
   return response.status(200).json({ notification: 'User password updated' });
 }

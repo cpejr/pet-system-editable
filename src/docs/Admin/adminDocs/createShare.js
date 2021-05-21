@@ -20,8 +20,12 @@
 *         name: share
 *         required: true
 *         description: Comissão do administrador a ser criada.
+*         schema:
+*           type: float
+*           example:
+*              share: 25,00
 *      tags: [Admin]
-*      description: Criar comissão
+*      description: Criar comissão para o administrador
 *      responses:
 *       '200':
 *        description: Share created

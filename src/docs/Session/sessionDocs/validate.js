@@ -1,6 +1,6 @@
 /**
 * @swagger
-*  /session:
+*  /session/validate/{accessToken}:
 *    post:
 *     summary: Validação de sessão do usuário
 *     requestBody:
@@ -20,20 +20,12 @@
 *         name: accessToken
 *         required: true
 *         description: Token de acesso da sessão.
-*       - in: body
-*         name: session
-*         required: true
-*         description: Sessão gerada pelo Token.
-*       - in: body
-*         name: firebase_id
-*         required: true
-*         description: Id do firebase do usuário.
-*       - in: body
-*         name: user
-*         required: true
-*         description: Informações do usuário logado.
+*         schema:
+*           type: string
+*           example:
+*             accessToken: OISHdaDKALDkjlAPRWEsdakjl
 *     tags: [Session]
-*     description: Validação
+*     description: Validação da sessão do usuário por meio do Token de acesso gerado no login.
 *     responses:
 *       '200':
 *         description: accessToken, user

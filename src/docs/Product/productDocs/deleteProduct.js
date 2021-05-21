@@ -1,14 +1,8 @@
 /**
 * @swagger
-*  /product:
+*  /product/{product_id}:
 *    delete:
-*      summary: Deletar produto
-*      requestBody:
-*         required: true
-*         content:
-*          application/json:
-*            schema:
-*              $ref: '#/components/schemas/Product'
+*      summary: Apaga um determinado produto
 *      parameters:
 *       - in: header
 *         name: Authorization
@@ -20,8 +14,12 @@
 *         name: product_id
 *         required: true
 *         description: Id do produto a ser deletado.
+*         schema:
+*           type: string
+*           example:
+*              product_id: 9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d
 *      tags: [Product]
-*      description: Deletando produto
+*      description: Apaga um determinado produto de acordo com seu código de identificação(product_id). Produtos só podem ser apagados pelo administrador.
 *      responses:
 *       '200':
 *        description: Product deleted

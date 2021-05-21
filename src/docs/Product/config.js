@@ -38,7 +38,7 @@
 *            description: Descrição do produto.
 *        img:
 *            type: string
-*            description: Imagem do produto.
+*            description: Diretório onda a Imagem do produto ficará salva.
 *        created_at:
 *            type: timestamp
 *            description: Data de criação do produto.
