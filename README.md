@@ -7,11 +7,12 @@
 	    -> components
 	    -> controllers
 	    -> database
-		    -> migrations
-		    -> seeds
+		-> migrations
+		-> seeds
 	    -> models
 	    -> screens
-		-> utils
+	    -> utils
+	    -> docs
 
 **-> pages**
 * Pasta em que serão colocados os arquivos correspondentes a uma rota do frontend. Cada arquivo representará uma rota e, portanto, uma página. Caso existam subrotas ou rotas que recebem parâmetros, será necessário criar uma pasta para a rota principal, com arquivos para as subrotas.
@@ -50,6 +51,9 @@
 	**-> utils**
 	* Pasta em que colocaremos os arquivos auxiliares e que podem precisar ser acessados por diversos outros. Por exemplo, é onde armazenamos os middlewares de autenticação e a instância do Axios que dá acesso direto à API.
 	
+	**-> docs**
+	* Pasta que armazena toda a documentação do projeto, utilizando o Swagger.
+	
 ### Convenções gerais
 #### Forma de renderização
 No topo de cada arquivo de página (na pasta *pages*, deve-se ter um comentário estabelecendo a forma de renderização adotada para aquela página. Assim, adotaremos a seguinte convenção. A primeira linha do arquivo será um comentário com uma das siglas abaixo:
@@ -74,3 +78,31 @@ No topo de cada arquivo de página (na pasta *pages*, deve-se ter um comentário
 [Diagrama UML](https://lucid.app/lucidchart/990acfba-097d-4519-baf3-5682bc149a4d/edit?shared=true&page=0_0# "###Diagrama UML###")
 ![](https://drive.google.com/uc?export=view&id=1auPlzu8RoTaYvv4WYpLjqUDSX-h6nqmZ)
 
+### Documentação
+* Para a documentação deste projeto, foi utilizado o Swagger, uma linguagem de descrição que facilita a documentação de rotas em uma API RESTful. Para, foi criado um servidor express em Node, que roda na porta *3333*, diferentemente do projeto principal, que roda na porta 3000. 
+
+* Dessa maneira, para a documentação das rotas das diferentes entidas, foi criada, uma pasta chamada **docs** dentro da parte de **src**, que segue o padrão definido logo abaixo:
+```
+-> src
+	-> docs
+		-> entidade1
+			-> entidade1Docs
+				-> rotaPost.js
+				-> rotaGet.js
+				-> ...
+			-> config.js
+		-> entidade2
+			-> entidade2Docs
+				-> ...
+			-> config.js
+		-> ...
+```
+* Analisando o trecho acima, é possível notar que dentro de cada entidade haverá a presença de uma pasta que guardará toda a documentação de suas respectivas rotas, e também o arquivo **config.js**, que armazerá todas as informações que a entidade armazena.
+* Para ter acesso a essa documentação no Swagger, digite o seguinte comando em seu terminal: `yarn docs`. Em seguida, abra o seu navegador e digite o seguinte comando na barra de endereço: `http://localhost:3333/api-docs/#/`
+
+![Captura de tela 2021-05-21 103903](https://user-images.githubusercontent.com/42473384/119148303-bb5caf00-ba22-11eb-9b29-1f023a25d287.png)
+_Prévia de como está ficando a documentação do projeto no Swagger_
+
+* Por fim, caso queira ver de maneira detalhada uma rota, basta clicar sobre ela:
+![Captura de tela 2021-05-21 120344](https://user-images.githubusercontent.com/42473384/119160298-7d658800-ba2e-11eb-9f07-886e355c2a48.png)
+ _Prévia da documentação da rota Get que busca uma determinada loja de acordo com seu Id_
