@@ -4,22 +4,14 @@
 *    get:
 *      summary: Retorna um determinado um produto
 *      parameters:
-*       - in: header
-*         name: Authorization
-*         schema:
-*          type: string
-*         required: true
-*         description: Autorização básica.
-*       - in: body
+*       - in: query_params
 *         name: product_id
 *         required: true
 *         description: Id do produto a ser localizado..
 *         schema:
 *           type: string
-*           example:
-*              product_id: 9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d
 *      tags: [Product]
-*      description: Localiza um determinado produto, passando o seu ID e retornando suas informações.
+*      description: Validação para localizar um determinado produto, passando o seu ID e retornando suas informações.
 *      responses:
 *       '200':
 *        description: Product
@@ -34,6 +26,8 @@
 *               description: Ração de Cachorro de 5kg para cachorros de pequeno porte.
 *               img: 'produtos/rações/'
 *               created_at: 2020-12-06
+*       '404':
+*        description: Not Found
 *       '500':
 *        description: Internal server error while trying to find product
 *

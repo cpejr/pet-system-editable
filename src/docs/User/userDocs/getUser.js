@@ -4,22 +4,14 @@
 *    get:
 *      summary: Localizar usuário
 *      parameters:
-*       - in: header
-*         name: Authorization
-*         schema:
-*           type: string
-*         required: true
-*         description: Autorização básica.
-*       - in: body
+*       - in: query_params
 *         name: firebase_id
 *         required: true
 *         description: Id do usuário a ser buscado.
 *         schema:
 *           type: string
-*           example:
-*              firebase_id: d5x3pjYJPeT8Z6GBMtSHqRKqT1C2
 *      tags: [User]
-*      description: Encontrar um usuário de acordo com seu Id, e retornar as suas informações.
+*      description: Validação para localizar um usuário de acordo com seu Id, e retornar as suas informações.
 *      responses:
 *       '200':
 *        description: User
@@ -34,6 +26,8 @@
 *              last_name: Martins de Sá Júnior
 *              type: user
 *              created_at: 20210414111030
+*       '404':
+*        description: Not Found
 *       '500':
 *        description: Internal server error while trying to find user
 */

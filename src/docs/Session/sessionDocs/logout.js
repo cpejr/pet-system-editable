@@ -2,16 +2,10 @@
 * @swagger
 *  /session/logout:
 *    get:
-*      summary: Logout do usuário
+*      summary: Realizar o logout do usuário
 *      parameters:
-*       - in: header
-*         name: Authorization
-*         schema:
-*           type: string
-*         required: true
-*         description: Autorização básica.
 *      tags: [Session]
-*      description: Encerramento da sessão do usuário
+*      description: Validação para encerramento da sessão do usuário
 *      responses:
 *        '200':
 *          description: Logged out

@@ -18,12 +18,6 @@
 *        - description
 *        - img
 *      properties:
-*        product_id:
-*           type: string
-*           description: Campo autogerado.
-*        store_id:
-*           type: string
-*           description: Campo autogerado.
 *        product_name:
 *            type: string
 *            description: Nome do produto.
@@ -39,7 +33,4 @@
 *        img:
 *            type: string
 *            description: Diretório onda a Imagem do produto ficará salva.
-*        created_at:
-*            type: timestamp
-*            description: Data de criação do produto.
 */

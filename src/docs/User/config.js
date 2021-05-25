@@ -19,9 +19,6 @@
  *         - last_name
  *         - telephone
  *       properties:
- *         firebase_id:
- *           type: string
- *           description: Campo autogerado.
  *         email:
  *           type: string
  *           description: Email do usuário.
@@ -43,7 +40,4 @@
  *         telephone:
  *           type: integer
  *           description: Telefone do usuário.
- *         created_at:
- *           type: timestamp
- *           description: Data de criação do usuário.
  */

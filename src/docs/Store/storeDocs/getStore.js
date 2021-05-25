@@ -4,13 +4,7 @@
 *    get:
 *      summary: Localizar uma loja
 *      parameters:
-*       - in: header
-*         name: Authorization
-*         schema:
-*          type: string
-*         required: true
-*         description: Autorização básica.
-*       - in: body
+*       - in: query_params
 *         name: store_id
 *         required: true
 *         description: Id da loja a ser procurada.
@@ -19,7 +13,7 @@
 *           example:
 *              store_id: 9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d
 *      tags: [Store]
-*      description: Encontrar uma loja de acordo com seu Id, e retornar as suas informações
+*      description: Validação para localizar uma loja de acordo com seu Id, e retornar as suas informações
 *      responses:
 *       '200':
 *        description: Store
@@ -41,6 +35,8 @@
 *               created_at: 20210414111030,
 *               evaluation: 10,
 *               status: Aprovado
+*       '404':
+*        description: Not Found
 *       '500':
 *        description: Internal server error while trying to find store
 *

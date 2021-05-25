@@ -4,14 +4,8 @@
 *    get:
 *      summary: Retorna todos os produtos cadastrados
 *      parameters:
-*       - in: header
-*         name: Authorization
-*         schema:
-*          type: string
-*         required: true
-*         description: Autorização básica.
 *      tags: [Product]
-*      description: Localiza todos os produtos do banco de dados, retornando também suas respectivas informações.
+*      description: Validação para localizar todos os produtos do banco de dados, retornando também suas respectivas informações.
 *      responses:
 *       '200':
 *        description: Products
@@ -25,6 +19,8 @@
 *               discount: 0,00
 *               description: Ração de Cachorro de 5kg para cachorros de pequeno porte.
 *               img: 'produtos/rações/'
+*       '404':
+*        description: Not Found
 *       '500':
 *        description: Internal server error while trying to find product
 *

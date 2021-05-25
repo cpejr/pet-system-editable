@@ -33,10 +33,11 @@ module.exports = {
       throw new Error(error);
     }
   },
-  async deleteShare(share) {
+  async deleteShare() {
     try {
       const response = await connection('Admin_share')
-        .where(share)
+        .select('*')
+        .first()
         .delete();
       return response;
     } catch (error) {

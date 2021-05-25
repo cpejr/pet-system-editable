@@ -23,12 +23,6 @@
 *        - cover_img
 *        - logo_img
 *      properties:
-*        store_id:
-*           type: string
-*           description: Campo autogerado.
-*        user_id:
-*           type: string
-*           description: Campo autogerado.
 *        company_name:
 *            type: string
 *            description: Nome da loja.
@@ -59,9 +53,6 @@
 *        logo_img:
 *            type: string
 *            description: Logo da loja.
-*        created_at:
-*            type: timestamp
-*            description: Data de criação da loja.
 *        evaluation:
 *            type: float
 *            description: Telefone da loja.

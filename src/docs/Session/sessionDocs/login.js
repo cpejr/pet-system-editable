@@ -2,7 +2,7 @@
 * @swagger
 *  /session/login:
 *    post:
-*     summary: Login do usuário com email e senha
+*     summary: Realizar o login do usuário com email e senha
 *     requestBody:
 *       required: true
 *       content:
@@ -10,35 +10,30 @@
 *           schema:
 *           $ref: '#/components/schemas/Session'
 *     parameters:
-*       - in: header
-*         name: Authorization
-*         schema:
-*           type: string
-*         required: true
-*         description: Autorização básica.
 *       - in: body
 *         name: email
 *         required: true
 *         description: Email do usuário para fazer login.
 *         schema:
 *           type: string
-*           example:
-*             email: lucas@gmail.com
 *       - in: body
 *         name: password
 *         required: true
 *         description: Senha do usuário para fazer login.
 *         schema:
 *           type: string
-*           example:
-*             password: 123456
 *     tags: [Session]
-*     description: Login do usuário com email e senha que retorna um Token para a sessão ser validada.
+*     description: Validação para efetuar login do usuário com email e senha que retorna um Token para a sessão ser validada.
 *     responses:
 *       '200':
-*         description: accessToken, user
+*        description: accessToken, user
+*        content:
+*          application/json:
+*            example:
+*              email: lucas@gmail.com
+*              password: 123456
 *       '400':
-*         description: Email ou senha incorreto
+*        description: Email ou senha incorreto
 *       '500':
-*         description: err.message
+*        description: err.message
 */

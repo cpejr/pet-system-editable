@@ -10,27 +10,25 @@
 *            schema:
 *              $ref: '#/components/schemas/Admin'
 *      parameters:
-*       - in: header
-*         name: Authorization
-*         schema:
-*          type: string
-*         required: true
-*         description: Autorização básica.
 *       - in: body
 *         name: share
 *         required: true
 *         description: Comissão do administrador a ser criada.
 *         schema:
 *           type: float
-*           example:
-*              share: 25,00
 *      tags: [Admin]
-*      description: Criar comissão para o administrador
+*      description: Validação para criar comissão para o administrador
 *      responses:
 *       '200':
 *        description: Share created
+*        content:
+*          application/json:
+*            example:
+*              share: 25,00
 *       '400':
-*        description: err.message
+*        description: No valid session provided
+*       '403':
+*        description: Unauthorized
 *       '500':
 *        description: Internal server error while trying to create admin share
 *

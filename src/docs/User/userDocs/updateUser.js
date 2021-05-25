@@ -4,35 +4,32 @@
 *    put:
 *      summary: Atualizar usuário
 *      parameters:
-*       - in: header
-*         name: Authorization
-*         schema:
-*          type: string
-*         required: true
-*         description: Autorização básica.
 *       - in: body
-*         name: firebase_id
+*         name: query_params
 *         schema:
 *           type: string
-*           example:
-*             firebase_id: XfK97RMVODWL4ltv9SHobxyDxCT2
 *         required: true
 *         description: Firebase id do usuário.
 *       - in: body
 *         name: Body
 *         schema:
 *          type: object
-*          example:
-*           email: giovanni@gmail.com
-*           password: 123456
-*           cpf: 87654321399
 *         required: true
 *         description: Campos a serem alterados referentes a um determinado usuário.
 *      tags: [User]
-*      description: Atualizando usuário
+*      description: Validação para atualização do usuário
 *      responses:
 *       '200':
 *        description: Sucesso
+*        content:
+*          application/json:
+*            example:
+*             firebase_id: XfK97RMVODWL4ltv9SHobxyDxCT2
+*             email: giovanni@gmail.com
+*             password: 123456
+*             cpf: 87654321399
+*       '403':
+*        description: Unauthorized
 *       '500':
 *        description: Internal server error while trying to delete user
 */

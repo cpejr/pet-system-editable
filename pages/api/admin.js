@@ -1,13 +1,14 @@
 import {
   getShare, createShare, updateShare, deleteShare,
 } from '../../src/controllers/AdminController';
+import { isAdmin } from '../../src/utils/Auth';
 
 export default function handler(req, res) {
   try {
     const { method } = req;
     console.log(method);
     if (method === 'GET') {
-      return getShare(req, res);
+      return isAdmin(getShare)(req, res);
     }
     if (method === 'POST') {
       return createShare(req, res);
@@ -16,7 +17,7 @@ export default function handler(req, res) {
       return updateShare(req, res);
     }
     if (method === 'DELETE') {
-      return deleteShare(req, res);
+      return isAdmin(deleteShare)(req, res);
     }
     return res.status(500).json({ message: 'Método incorreto' });
   } catch (err) {

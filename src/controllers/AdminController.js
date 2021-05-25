@@ -2,8 +2,9 @@ const AdminModel = require('../models/AdminModel');
 
 module.exports = {
   async getShare(request, response) {
-    const { share } = request.body;
-    const shareValue = await AdminModel.getAll(share);
+    request.session.get('user');
+
+    const shareValue = await AdminModel.getAll();
     return response.json(shareValue);
   },
 
@@ -35,10 +36,10 @@ module.exports = {
     return res.status(200).json({ notification: 'Admin share updated' });
   },
   async deleteShare(request, response) {
-    const share = request.body;
+    request.session.get('user');
 
     try {
-      await AdminModel.deleteShare(share);
+      await AdminModel.deleteShare();
     } catch (err) {
       if (err.message) {
         return response.status(400).json({ notification: err.message });
