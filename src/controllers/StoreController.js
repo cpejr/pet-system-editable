@@ -22,9 +22,9 @@ module.exports = {
       birth_date: info.birth_date,
       first_name: info.first_name,
       last_name: info.last_name,
-      type: info.type,
-      telephone: info.telephone,
+      type: 'seller',
       created_at: timestamp(),
+      telephone: info.telephone,
     };
 
     const store = {
@@ -89,7 +89,7 @@ module.exports = {
   },
 
   async deleteBoth(request, response) {
-    const { user_id } = request.body;
+    const user_id = request.session.get('user').user.firebase_id;
 
     // Apagando Usuario do Firebase e do Banco de Dados
     try {

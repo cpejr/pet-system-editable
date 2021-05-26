@@ -1,6 +1,7 @@
 import {
   create, deleteBoth, getOne, update,
 } from '../../src/controllers/StoreController';
+import { isSeller } from '../../src/utils/Auth';
 
 export default function handler(req, res) {
   try {
@@ -16,7 +17,7 @@ export default function handler(req, res) {
       return update(req, res);
     }
     if (method === 'DELETE') {
-      return deleteBoth(req, res);
+      return isSeller(deleteBoth)(req, res);
     }
     return res.status(500).json({ message: 'Método incorreto' });
   } catch (err) {
