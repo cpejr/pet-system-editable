@@ -8,7 +8,7 @@ const Body = styled.div`
   }
   @media screen and (max-width: 800px) {
     width: 100%;
-    height: 10vh;
+    height: 15vh;
     background-color: ${({ theme }) => theme.colors.rose};
   }
 `;

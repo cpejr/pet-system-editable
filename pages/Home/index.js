@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import api from '../../src/utils/api';
 import Header from '../../src/components/Header';
 import MobileHeader from '../../src/components/MobileHeader';
 import BannerCarousel from '../../src/components/Carousels/BannerCarousel';
@@ -8,10 +9,10 @@ import StoresCarousel from '../../src/components/Carousels/StoresCarousel';
 import AnimalsCarousel from '../../src/components/Carousels/AnimalsCarousel';
 import MosaicCarousel from '../../src/components/Carousels/MosaicCarousel';
 import {
-  Footer, Cards, CardItem, Container, Mosaic, Text, Divider,
+  Cards, CardItem, CardImage1, CardImage2, CardImage3, Container, Mosaic, Text, Divider, Button,
 } from '../../src/components/HomeComponents';
 
-export default function Home() {
+export default function Home({ stores }) {
   return (
     <>
       <Header />
@@ -20,13 +21,19 @@ export default function Home() {
       <Container>
         <Cards>
           <CardItem>
-            <Image src="/images/Card1.png" alt="" width="400" height="500" />
+            <CardImage1>
+              <Button>Acessórios</Button>
+            </CardImage1>
           </CardItem>
           <CardItem>
-            <Image src="/images/Card2.png" alt="" width="400" height="500" />
+            <CardImage2>
+              <Button>Banho e tosa</Button>
+            </CardImage2>
           </CardItem>
           <CardItem>
-            <Image src="/images/Card3.png" alt="" width="400" height="500" />
+            <CardImage3>
+              <Button>Serviços</Button>
+            </CardImage3>
           </CardItem>
         </Cards>
         <CardsCarousel />
@@ -34,7 +41,8 @@ export default function Home() {
       <Divider />
       <Container>
         <Text>Principais Lojistas em Belo Horizonte, MG:</Text>
-        <StoresCarousel />
+        <StoresCarousel stores={stores} />
+
       </Container>
       <Divider />
       <Container>
@@ -43,13 +51,13 @@ export default function Home() {
           <Image src="/images/brands/Pedigree.png" alt="" width="400" height="200" />
           <Image src="/images/brands/JamboPet.png" alt="" width="400" height="200" />
           <Image src="/images/brands/RoyalCanin.png" alt="" width="400" height="200" />
-          <Image src="/images/brands/Frontline.jpg" alt="" width="400" height="200" />
+          <Image src="/images/brands/ferplast.png" alt="" width="400" height="200" />
         </Mosaic>
         <Mosaic>
-          <Image src="/images/brands/Bayer.jpg" alt="" width="400" height="200" />
+          <Image src="/images/brands/frontline.png" alt="" width="400" height="200" />
           <Image src="/images/brands/Whiskas.png" alt="" width="400" height="200" />
-          <Image src="/images/brands/Ferplast.png" alt="" width="400" height="200" />
-          <Image src="/images/brands/Premier.png" alt="" width="400" height="200" />
+          <Image src="/images/brands/Bayer.jpg" alt="" width="400" height="200" />
+          <Image src="/images/brands/premier.png" alt="" width="400" height="200" />
         </Mosaic>
         <MosaicCarousel />
       </Container>
@@ -58,7 +66,14 @@ export default function Home() {
         <Text>Bichinhos mais procurados</Text>
         <AnimalsCarousel />
       </Container>
-      <Footer />
+
     </>
   );
+}
+
+export async function getServerSideProps() {
+  const response = await api.get('store');
+  const stores = response.data;
+  console.log(stores);
+  return { props: { stores } };
 }
