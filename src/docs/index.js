@@ -33,5 +33,5 @@ app.use(
 );
 
 app.listen(3333, () => {
-  console.log('Docs listening on port 3333'); //eslint-disable-line
+  console.log('Docs listening on port http://localhost:3333/api-docs'); //eslint-disable-line
 });
