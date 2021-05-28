@@ -1,5 +1,4 @@
 import React from 'react';
-import Image from 'next/image';
 import api from '../../src/utils/api';
 import Header from '../../src/components/Header';
 import MobileHeader from '../../src/components/MobileHeader';
@@ -48,16 +47,16 @@ export default function Home({ stores }) {
       <Container>
         <Text>Principais marcas:</Text>
         <Mosaic>
-          <Image src="/images/brands/Pedigree.png" alt="" width="400" height="200" />
-          <Image src="/images/brands/JamboPet.png" alt="" width="400" height="200" />
-          <Image src="/images/brands/RoyalCanin.png" alt="" width="400" height="200" />
-          <Image src="/images/brands/ferplast.png" alt="" width="400" height="200" />
+          <img className="pedigree" src="/images/brands/pedigree.png" alt="" width="250" height="" />
+          <img className="adimax" src="/images/brands/adimax.png" alt="" width="250" height="150" />
+          <img className="royal" src="/images/brands/royal.png" alt="" width="250" height="150" />
+          <img className="ferplast" src="/images/brands/ferplast.png" alt="" width="250" height="150" />
         </Mosaic>
         <Mosaic>
-          <Image src="/images/brands/frontline.png" alt="" width="400" height="200" />
-          <Image src="/images/brands/Whiskas.png" alt="" width="400" height="200" />
-          <Image src="/images/brands/Bayer.jpg" alt="" width="400" height="200" />
-          <Image src="/images/brands/premier.png" alt="" width="400" height="200" />
+          <img className="frontline" src="/images/brands/frontline.png" alt="" width="250" height="150" />
+          <img className="whiskas" src="/images/brands/whiskas.png" alt="" width="250" height="150" />
+          <img className="bayer" src="/images/brands/bayer.png" alt="" width="250" height="150" />
+          <img className="premier" src="/images/brands/premier.png" alt="" width="250" height="150" />
         </Mosaic>
         <MosaicCarousel />
       </Container>

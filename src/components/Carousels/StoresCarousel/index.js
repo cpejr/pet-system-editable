@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Carousel from 'react-multi-carousel';
-import Image from 'next/image';
+// import Image from 'next/image';
 import 'react-multi-carousel/lib/styles.css';
 
 const Item = styled.div`
@@ -153,7 +153,7 @@ export default function StoresCarousel(props) {
               <ContainerRow>
                 <ContainerRow.Cols>
                   <ImgNormal>
-                    <Image src="/images/pet.jpg" alt="" width="300" height="320" />
+                    <img src="/images/pet.jpg" alt="" width="300" height="320" />
                   </ImgNormal>
                   <CardDescription>
                     <CardDescription.Col1>
