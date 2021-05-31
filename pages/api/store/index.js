@@ -1,14 +1,14 @@
 import {
-  create, deleteBoth, getOne, update,
-} from '../../src/controllers/StoreController';
-import { isSeller } from '../../src/utils/Auth';
+  create, deleteBoth, getAll, update,
+} from '../../../src/controllers/StoreController';
+import { isSeller } from '../../../src/utils/Auth';
 
 export default function handler(req, res) {
   try {
     const { method } = req;
     console.log(method);
     if (method === 'GET') {
-      return getOne(req, res);
+      return getAll(req, res);
     }
     if (method === 'POST') {
       return create(req, res);

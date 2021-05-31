@@ -47,4 +47,14 @@ module.exports = {
       throw new Error(error);
     }
   },
+  async getAllStore() {
+    try {
+      const stores = await connection('Store')
+        .select('*');
+      return stores;
+    } catch (error) {
+      console.error(error);
+      throw new Error(error);
+    }
+  },
 };

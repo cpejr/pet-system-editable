@@ -6,8 +6,13 @@ const FirebaseModel = require('../models/FirebaseModel');
 
 module.exports = {
   async getOne(request, response) {
-    const { store_id } = request.body;
+    const { store_id } = request.query;
     const store = await StoreModel.getStoreById(store_id);
+    return response.json(store);
+  },
+
+  async getAll(request, response) {
+    const store = await StoreModel.getAllStore();
     return response.json(store);
   },
 
