@@ -6,16 +6,14 @@
 *      parameters:
 *       - in: query_params
 *         name: store_id
-*         schema:
-*           type: string
 *         required: true
-*         description: Id da loja a ser alterada.
+*         description: Id da loja a ser alterada.(STRING)
+*         schema:
 *       - in: body
 *         name: Body
-*         schema:
-*          type: object
 *         required: true
-*         description: Campos a serem alterados
+*         description: Campos a serem alterados.(OBJECT)
+*         schema:
 *      tags: [Store]
 *      description: Validação para atualização de uma determinada loja
 *      responses:

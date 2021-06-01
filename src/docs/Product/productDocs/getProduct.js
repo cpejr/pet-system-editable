@@ -7,9 +7,8 @@
 *       - in: query_params
 *         name: product_id
 *         required: true
-*         description: Id do produto a ser localizado..
+*         description: Id do produto a ser localizado.(STRING)
 *         schema:
-*           type: string
 *      tags: [Product]
 *      description: Validação para localizar um determinado produto, passando o seu ID e retornando suas informações.
 *      responses:

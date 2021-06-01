@@ -13,81 +13,68 @@
 *       - in: body
 *         name: email
 *         required: true
-*         description: Email do administrador da loja.
+*         description: Email do administrador da loja.(STRING)
 *         schema:
-*           type: string
 *       - in: body
 *         name: password
 *         required: true
-*         description: Senha do usuário a ser criado.
+*         description: Senha do usuário a ser criado.(STRING)
 *         schema:
-*           type: string
 *       - in: body
 *         name: cpf
 *         required: true
-*         description: Cpf do administrador da loja. Somente números serão guardados.
+*         description: Cpf do administrador da loja. Somente números serão guardados.(STRING)
 *         schema:
-*           type: string
 *       - in: body
 *         name: birth_date
 *         required: true
-*         description: Data de nascimento do administrador da loja. Somente números serão guardados.
+*         description: Data de nascimento do administrador da loja. Somente números serão guardados.(DATE)
 *         schema:
-*           type: date
 *       - in: body
 *         name: first_name
 *         required: true
-*         description: Nome do administrador da loja.
+*         description: Nome do administrador da loja.(STRING)
 *         schema:
-*           type: string
 *       - in: body
 *         name: last_name
 *         required: true
-*         description: Sobrenomes do administrador da loja.
+*         description: Sobrenomes do administrador da loja.(STRING)
 *         schema:
-*           type: string
 *       - in: body
 *         name: company_name
 *         required: true
-*         description: Nome da loja a ser criada.
+*         description: Nome da loja a ser criada.(STRING)
 *         schema:
-*           type: string
 *       - in: body
 *         name: telephone
 *         required: true
-*         description: Telefone da loja a ser criada. Somente números serão guardados.
+*         description: Telefone da loja a ser criada. Somente números serão guardados.(INTEGER)
 *         schema:
-*           type: integer
 *       - in: body
 *         name: cellphone
 *         required: true
-*         description: Celular da loja a ser criada. Somente números serão guardados.
+*         description: Celular da loja a ser criada. Somente números serão guardados.(INTEGER)
 *         schema:
-*           type: integer
 *       - in: body
 *         name: cnpj
 *         required: true
-*         description: Cnpj da loja a ser criada. Somente números serão guardados.
+*         description: Cnpj da loja a ser criada. Somente números serão guardados.(INTEGER)
 *         schema:
-*           type: integer
 *       - in: body
 *         name: cep
 *         required: true
-*         description: Cep da loja a ser criada. Somente números serão guardados
+*         description: Cep da loja a ser criada. Somente números serão guardados.(INTEGER)
 *         schema:
-*           type: integer
 *       - in: body
 *         name: ie
 *         required: true
-*         description: Inscrição Estadual da loja. Somente números serão guardados.
+*         description: Inscrição Estadual da loja. Somente números serão guardados.(INTEGER)
 *         schema:
-*           type: integer
 *       - in: body
 *         name: ie_state
 *         required: true
-*         description: Estado referente à Inscrição Estadual.
+*         description: Estado referente à Inscrição Estadual.(STRING)
 *         schema:
-*           type: string
 *      tags: [Store]
 *      description: Validação para criar uma loja através das informações passadas pelo formulário.
 *      responses:

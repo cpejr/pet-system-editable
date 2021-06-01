@@ -7,9 +7,8 @@
 *       - in: body
 *         name: share
 *         required: true
-*         description: Valor da comissão
+*         description: Valor da comissão.(FLOAT)
 *         schema:
-*           type: float
 *      tags: [Admin]
 *      description: Validação para atualização da comissão do administrador
 *      responses:

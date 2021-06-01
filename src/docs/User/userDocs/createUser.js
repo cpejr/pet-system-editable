@@ -13,45 +13,38 @@
 *        - in: body
 *          name: email
 *          required: true
-*          description: Email do usuário a ser criado.
+*          description: Email do usuário a ser criado.(STRING)
 *          schema:
-*            type: string
 *        - in: body
 *          name: password
 *          required: true
-*          description: Senha do usuário a ser criado.
+*          description: Senha do usuário a ser criado.(STRING)
 *          schema:
-*            type: string
 *        - in: body
 *          name: cpf
 *          required: true
-*          description: Cpf do usuário a ser criado. Somente números serão guardados.
+*          description: Cpf do usuário a ser criado. Somente números serão guardados.(STRING)
 *          schema:
-*            type: string
 *        - in: body
 *          name: birth_date
 *          required: true
-*          description: Data de nascimento do usuário a ser criado. Somente números serão guardados.
+*          description: Data de nascimento do usuário a ser criado. Somente números serão guardados.(DATE)
 *          schema:
-*            type: date
 *        - in: body
 *          name: first_name
 *          required: true
-*          description: Nome do usuário a ser criado.
+*          description: Nome do usuário a ser criado.(STRING)
 *          schema:
-*            type: string
 *        - in: body
 *          name: last_name
 *          required: true
-*          description: Sobrenomes do usuário a ser criado.
+*          description: Sobrenomes do usuário a ser criado.(STRING)
 *          schema:
-*            type: string
 *        - in: body
 *          name: telephone
 *          required: true
-*          description: telefone do usuário a ser criado.
+*          description: telefone do usuário a ser criado.(INTEGER)
 *          schema:
-*            type: integer
 *      tags: [User]
 *      description: Validação para criar usuário através das informações passadas pelo formulário.
 *      responses:
