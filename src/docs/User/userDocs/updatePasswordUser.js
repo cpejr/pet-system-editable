@@ -7,15 +7,13 @@
 *       - in: body
 *         name: query_params
 *         schema:
-*           type: string
 *         required: true
-*         description: Firebase id do usuário.
+*         description: Firebase id do usuário.(STRING)
 *       - in: body
 *         name: password
 *         schema:
-*           type: string
 *         required: true
-*         description: Nova senha definida pelo usuário.
+*         description: Nova senha definida pelo usuário.(STRING)
 *      tags: [User]
 *      description: Validação para atualização da senha do usuário no Firebase.
 *      responses:

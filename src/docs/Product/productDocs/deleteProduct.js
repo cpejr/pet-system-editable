@@ -7,9 +7,8 @@
 *       - in: query_params
 *         name: product_id
 *         required: true
-*         description: Id do produto a ser deletado.
+*         description: Id do produto a ser deletado.(STRING)
 *         schema:
-*           type: string
 *      tags: [Product]
 *      description: Validação para apagar um determinado produto de acordo com seu código de identificação(product_id). Produtos só podem ser apagados pelo administrador.
 *      responses:

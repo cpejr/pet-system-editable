@@ -7,9 +7,8 @@
  *       - in: query_params
  *         name: firebase_id
  *         required: true
- *         description: Id do usuário a ser apagado.
+ *         description: Id do usuário a ser apagado.(STRING)
  *         schema:
- *           type: string
  *      tags: [User]
  *      description: Validação para deletar um determinado usuário através de seu firebase id, tanto no banco de dados, quanto no próprio Firebase.
  *      responses:

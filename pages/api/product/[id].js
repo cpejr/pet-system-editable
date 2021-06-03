@@ -1,6 +1,6 @@
 import {
-  create, getOne, update, remove,
-} from '../../src/controllers/ProductController';
+  getOne, update, remove,
+} from '../../../src/controllers/ProductController';
 
 export default function handler(req, res) {
   try {
@@ -8,9 +8,6 @@ export default function handler(req, res) {
     console.log(method);
     if (method === 'GET') {
       return getOne(req, res);
-    }
-    if (method === 'POST') {
-      return create(req, res);
     }
     if (method === 'PUT') {
       return update(req, res);

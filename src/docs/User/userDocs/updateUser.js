@@ -7,15 +7,13 @@
 *       - in: body
 *         name: query_params
 *         schema:
-*           type: string
 *         required: true
-*         description: Firebase id do usuário.
+*         description: Firebase id do usuário.(STRING)
 *       - in: body
 *         name: Body
 *         schema:
-*          type: object
 *         required: true
-*         description: Campos a serem alterados referentes a um determinado usuário.
+*         description: Campos a serem alterados referentes a um determinado usuário.(OBJECT)
 *      tags: [User]
 *      description: Validação para atualização do usuário
 *      responses:

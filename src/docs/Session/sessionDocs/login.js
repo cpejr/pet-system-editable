@@ -13,15 +13,13 @@
 *       - in: body
 *         name: email
 *         required: true
-*         description: Email do usuário para fazer login.
+*         description: Email do usuário para fazer login.(STRING)
 *         schema:
-*           type: string
 *       - in: body
 *         name: password
 *         required: true
-*         description: Senha do usuário para fazer login.
+*         description: Senha do usuário para fazer login.(STRING)
 *         schema:
-*           type: string
 *     tags: [Session]
 *     description: Validação para efetuar login do usuário com email e senha que retorna um Token para a sessão ser validada.
 *     responses:

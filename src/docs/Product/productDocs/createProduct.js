@@ -13,33 +13,28 @@
 *       - in: body
 *         name: product_name
 *         required: true
-*         description: Nome do produto.
+*         description: Nome do produto.(STRING)
 *         schema:
-*           type: string
 *       - in: body
 *         name: price
 *         required: true
-*         description: Preço do produto.
+*         description: Preço do produto.(FLOAT)
 *         schema:
-*           type: float
 *       - in: body
 *         name: discount
 *         required: true
-*         description: Desconto do produto.
+*         description: Desconto do produto.(FLOAT)
 *         schema:
-*           type: float
 *       - in: body
 *         name: description
 *         required: true
-*         description: Descrição do produto.
+*         description: Descrição do produto.(STRING)
 *         schema:
-*           type: string
 *       - in: body
 *         name: img
 *         required: true
-*         description: Diretório de onde a imagem será salva.
+*         description: Diretório de onde a imagem será salva.(FILE)
 *         schema:
-*           type: file
 *      tags: [Product]
 *      description: Validação para criar um produto através das informações passadas pelo formulário.
 *      responses:

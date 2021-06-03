@@ -7,9 +7,8 @@
 *       - in: query_params
 *         name: firebase_id
 *         required: true
-*         description: Id do usuário a ser buscado.
+*         description: Id do usuário a ser buscado.(STRING)
 *         schema:
-*           type: string
 *      tags: [User]
 *      description: Validação para localizar um usuário de acordo com seu Id, e retornar as suas informações.
 *      responses:

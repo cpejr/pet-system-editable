@@ -13,9 +13,8 @@
 *       - in: body
 *         name: Body
 *         schema:
-*           type: object
 *         required: true
-*         description: Campos a serem alterados
+*         description: Campos a serem alterados.(OBJECT)
 *      tags: [Product]
 *      description: Validação para atualização de um determinado produto
 *      responses:

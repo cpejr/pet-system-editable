@@ -4,8 +4,8 @@ module.exports = {
   async getStoreById(id) {
     try {
       const store = await connection('Store')
-        .where('store_id', id)
         .select('*')
+        .where('store_id', id)
         .first();
       return store;
     } catch (error) {
@@ -52,6 +52,16 @@ module.exports = {
       const stores = await connection('Store')
         .select('*');
       return stores;
+    } catch (error) {
+      console.error(error);
+      throw new Error(error);
+    }
+  },
+
+  async getByUserId(user_id) {
+    try {
+      const store = await connection('Store').select('*').where({ user_id }).first();
+      return store;
     } catch (error) {
       console.error(error);
       throw new Error(error);

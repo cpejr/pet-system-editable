@@ -13,9 +13,8 @@
 *       - in: body
 *         name: share
 *         required: true
-*         description: Comissão do administrador a ser criada.
+*         description: Comissão do administrador a ser criada.(FLOAT)
 *         schema:
-*           type: float
 *      tags: [Admin]
 *      description: Validação para criar comissão para o administrador
 *      responses:
