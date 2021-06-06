@@ -20,7 +20,6 @@ const Login = () => {
   function handlePasswordChange(event) {
     setPassword(event.target.value);
   }
-
   async function handleSubmit(event) {
     event.preventDefault();
     const body = {
@@ -34,6 +33,7 @@ const Login = () => {
       console.log(error);
     }
   }
+
   return (
     <>
       <Header />
@@ -46,7 +46,7 @@ const Login = () => {
         <Divider width="1" display="block" size="300" />
 
         <Body.Right>
-          <Formulary>
+          <Formulary onSubmit={handleSubmit}>
             <TopFormulary>
               <TitleLogin>Bem vindo de volta!</TitleLogin>
               <SubtitleLogin>Por favor, entre com seu email e sua senha:</SubtitleLogin>
@@ -62,7 +62,7 @@ const Login = () => {
               <ForgotPassword>Esqueceu a senha?</ForgotPassword>
             </ItemFormulary>
             <BottomFormulary>
-              <Submit value="submit" onClick={handleSubmit}>Finalizar</Submit>
+              <Submit type="submit">Finalizar</Submit>
             </BottomFormulary>
             <BottomFormulary>
 

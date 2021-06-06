@@ -23,7 +23,7 @@ if (!firebase.apps.length) {
       databaseURL: process.env.NEXT_PUBLIC_FIREBASE_DATABASEURL,
     });
   } catch (err) {
-    console.error('Firebase initialization error raised', err.stack);
+    console.error(error); //eslint-disable-line
   }
 }
 
@@ -68,6 +68,7 @@ module.exports = {
 
   async login(email, password) {
     try {
+      if (!email.includes('@') || !email.includes('.') || email.indexOf('@') > email.lastIndexOf('.')) throw new Error('Badly formatted email');
       const result = await firebase.auth()
         .signInWithEmailAndPassword(email, password);
       return result.user.uid;

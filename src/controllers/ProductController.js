@@ -1,24 +1,32 @@
+const { v4: uuidv4 } = require('uuid');
 const ProductModel = require('../models/ProductModel');
+const StoreModel = require('../models/StoreModel');
 
 module.exports = {
   async getOne(request, response) {
-    const { product_id } = request.body;
-    const product = await ProductModel.getProductById(product_id);
+    const { id } = request.query;
+    const product = await ProductModel.getProductById(id);
+    const store = await StoreModel.getStoreById(product.store_id);
+    product.store = store;
     return response.json(product);
   },
 
   async create(request, response) {
     const product = request.body;
+    product.product_id = uuidv4();
     try {
+      const user_id = request.session.get('user').user.firebase_id;
+      const { store_id } = await StoreModel.getByUserId(user_id);
+      product.store_id = store_id;
       await ProductModel.createNewProduct(product);
     } catch (error) {
       if (err.message) {
         return response.status(400).json({ notification: err.message });
       }
       console.error(error);
-      return response.status(500).json({ notification: 'Internal server error while trying to register user' });
+      return response.status(500).json({ notification: 'Internal server error while trying to create product' });
     }
-    return response.status(200).json({ notification: 'Produto criado!' });
+    return response.status(200).json({ notification: 'Product created' });
   },
   async update(request, response) {
     const product = request.body;
@@ -31,7 +39,7 @@ module.exports = {
       }
       return response.status(500).json({ notification: 'Internal server error while trying to update product' });
     }
-    return response.status(200).json({ notification: 'Produto alterado com sucesso!' });
+    return response.status(200).json({ notification: 'Product updated' });
   },
   async remove(request, response) {
     const { product_id } = request.body;

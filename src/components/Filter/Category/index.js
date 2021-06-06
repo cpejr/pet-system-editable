@@ -10,6 +10,7 @@ background-color:${({ theme }) => theme.colors.mediumGray};
 width:200px;
 border-radius:5px;
 margin-bottom:10%;
+font-family:Roboto;
 @media(max-width:560px){
       display:none;
     }

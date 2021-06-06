@@ -6,7 +6,7 @@ import { AiOutlineSearch } from 'react-icons/ai';
 
 const FooterContainer = styled.div`
 display:none;
-@media(max-width:560px){
+@media(max-width:800px){
 display:flex;
 align-items:center;
 justify-content:center;

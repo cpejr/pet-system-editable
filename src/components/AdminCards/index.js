@@ -6,6 +6,9 @@ import { IoMdNotificationsOutline } from 'react-icons/io';
 import { FiUserPlus } from 'react-icons/fi';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
+import axios from 'axios';
+
+const api = axios.create({ baseURL: 'http://localhost:3000/' });
 
 const Container = styled.div`
 display:flex;
@@ -195,6 +198,29 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function AdminCards() {
+  const [commission, setCommission] = useState('');
+
+  async function handleCommissionChange(event) {
+    setCommission(event.target.value);
+  }
+  async function handleSubmit(event) {
+    event.preventDefault();
+    const body = {
+      share: commission,
+    };
+    try {
+      if (commission != null) {
+        const Validate = await api.put('/api/admin', body);
+        console.log(Validate.data);
+      } else {
+        const Validate = await api.post('/api/admin', body);
+        console.log(Validate.data);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = useState(getModalStyle);
@@ -216,9 +242,9 @@ export default function AdminCards() {
           <Ajust.Col1>
             Porcentagem:
           </Ajust.Col1>
-          <Ajust.Col2 placeholder="% 00,0" />
+          <Ajust.Col2 placeholder="% 00,0" require value={commission} onChange={handleCommissionChange} />
         </Ajust>
-        <ButtonConfirm>Confirmar ajuste</ButtonConfirm>
+        <ButtonConfirm onClick={handleSubmit}>Confirmar ajuste</ButtonConfirm>
       </ContainerModal>
     </div>
   );

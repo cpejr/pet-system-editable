@@ -7,10 +7,12 @@
 	    -> components
 	    -> controllers
 	    -> database
-		    -> migrations
-		    -> seeds
+		-> migrations
+		-> seeds
 	    -> models
 	    -> screens
+	    -> utils
+	    -> docs
 
 **-> pages**
 * Pasta em que serão colocados os arquivos correspondentes a uma rota do frontend. Cada arquivo representará uma rota e, portanto, uma página. Caso existam subrotas ou rotas que recebem parâmetros, será necessário criar uma pasta para a rota principal, com arquivos para as subrotas.
@@ -46,6 +48,12 @@
 	**-> screens**
 	* Pasta em que definiremos as telas que podem aparecer em diferentes rotas ou ter diferentes formas de renderização. Os componentes definidos aqui devem corresponder a telas completas e devem receber as informações necessárias à sua renderização por *props*. Assim, a forma de buscar essas props e renderizar será externalizada para a rota que utilizar o componente. Para cada tela, criaremos uma pasta com o nome do componente e um arquivo index.js dentro dessa pasta. Caso sejam necessários mais arquivos, não tem problema, mas esse é o mínimo necessário.
 
+	**-> utils**
+	* Pasta em que colocaremos os arquivos auxiliares e que podem precisar ser acessados por diversos outros. Por exemplo, é onde armazenamos os middlewares de autenticação e a instância do Axios que dá acesso direto à API.
+	
+	**-> docs**
+	* Pasta que armazena toda a documentação do projeto, utilizando o Swagger.
+	
 ### Convenções gerais
 #### Forma de renderização
 No topo de cada arquivo de página (na pasta *pages*, deve-se ter um comentário estabelecendo a forma de renderização adotada para aquela página. Assim, adotaremos a seguinte convenção. A primeira linha do arquivo será um comentário com uma das siglas abaixo:
@@ -57,3 +65,44 @@ No topo de cada arquivo de página (na pasta *pages*, deve-se ter um comentário
 	* Ex.: uma página de busca pode vir com qualquer termo de busca associado, portanto faz sentido usar SSR.
 *  **CSR** (*Client Side Rendering*) - usada em páginas extremamente dinâmicas e para as quais o SEO não importa, uma vez que os dados só chegam depois da renderização. Frequentemente utilizada em dashboards de administradores e afins. Nessa forma de renderização, tradicional do React, os dados são buscados após a renderização, com uso de um useEffect ou de funções desencadeadas por ações do usuário.
 	* Ex.: Dashboard com gráficos que precisam estar atualizados, mas que não tem que ser encontradas pelo Google.
+	
+### Ferramentas utilizadas
+* [NextJs](https://nextjs.org/docs/getting-started "NextJs") -> Escolha de framework usado tanto para o frontend quanto para o backend, integrando as duas partes
+* [Firebase](https://firebase.google.com/docs/ "Firebase") -> Usado para a autenticação, apenas
+* [Styled Components](https://styled-components.com/docs "Styled Components") -> Escolha de forma de estilização, que utiliza CSS in JS como abordagem
+* [Knex](http://knexjs.org/ "Knex") -> SQL Query builder utilizado no projeto, tanto para criar o banco de dados com migrations quanto para rodar queries de adição, busca, etc.
+* [Next-iron-session](https://www.npmjs.com/package/next-iron-session "Next-iron-session") -> Ferramenta de autenticação de sessão utilizada. Faz a autenticação por cookies e permite que as ferramentas do Next de SSR funcionem. Com ele foram criados os diversos middlewares de autenticação
+* [Swagger](https://www.npmjs.com/package/swagger-jsdoc "Swagger") -> Ferramenta de documentação de api utilizada para registrar os parâmetros das rotas.
+* [ESLint](https://eslint.org/docs/user-guide/getting-started "ESLint") -> Utilizado para padronização do código e do estilo aplicados.
+
+[Diagrama UML](https://lucid.app/lucidchart/990acfba-097d-4519-baf3-5682bc149a4d/edit?shared=true&page=0_0# "###Diagrama UML###")
+![](https://drive.google.com/uc?export=view&id=1auPlzu8RoTaYvv4WYpLjqUDSX-h6nqmZ)
+
+### Documentação
+* Para a documentação deste projeto, foi utilizado o Swagger, uma linguagem de descrição que facilita a documentação de rotas em uma API RESTful. Para, foi criado um servidor express em Node, que roda na porta *3333*, diferentemente do projeto principal, que roda na porta 3000. 
+
+* Dessa maneira, para a documentação das rotas das diferentes entidas, foi criada, uma pasta chamada **docs** dentro da parte de **src**, que segue o padrão definido logo abaixo:
+```
+-> src
+	-> docs
+		-> entidade1
+			-> entidade1Docs
+				-> rotaPost.js
+				-> rotaGet.js
+				-> ...
+			-> config.js
+		-> entidade2
+			-> entidade2Docs
+				-> ...
+			-> config.js
+		-> ...
+```
+* Analisando o trecho acima, é possível notar que dentro de cada entidade haverá a presença de uma pasta que guardará toda a documentação de suas respectivas rotas, e também o arquivo **config.js**, que armazerá todas as informações que a entidade armazena.
+* Para ter acesso a essa documentação no Swagger, digite o seguinte comando em seu terminal: `yarn docs`. Em seguida, abra o seu navegador e digite o seguinte comando na barra de endereço: `http://localhost:3333/api-docs/#/`
+
+![Captura de tela 2021-05-21 103903](https://user-images.githubusercontent.com/42473384/119148303-bb5caf00-ba22-11eb-9b29-1f023a25d287.png)
+_Prévia de como está ficando a documentação do projeto no Swagger_
+
+* Por fim, caso queira ver de maneira detalhada uma rota, basta clicar sobre ela:
+![Captura de tela 2021-05-21 120344](https://user-images.githubusercontent.com/42473384/119160298-7d658800-ba2e-11eb-9f07-886e355c2a48.png)
+ _Prévia da documentação da rota Get que busca uma determinada loja de acordo com seu Id_

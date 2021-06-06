@@ -24,7 +24,6 @@ module.exports = {
   },
   async changeAdminShare(share_, commission) {
     try {
-      console.log('aaaaaaa', commission);
       const response = await connection('Admin_share')
         .where({ share: share_ })
         .update({ share: commission });
@@ -34,10 +33,11 @@ module.exports = {
       throw new Error(error);
     }
   },
-  async deleteShare(share) {
+  async deleteShare() {
     try {
       const response = await connection('Admin_share')
-        .where(share)
+        .select('*')
+        .first()
         .delete();
       return response;
     } catch (error) {

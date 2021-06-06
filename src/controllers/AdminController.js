@@ -1,6 +1,13 @@
 const AdminModel = require('../models/AdminModel');
 
 module.exports = {
+  async getShare(request, response) {
+    request.session.get('user');
+
+    const shareValue = await AdminModel.getAll();
+    return response.json(shareValue);
+  },
+
   async createShare(request, response) {
     const share = request.body;
     try {
@@ -9,9 +16,9 @@ module.exports = {
       if (err.message) {
         return response.status(400).json({ notification: err.message });
       }
-      return response.status(500).json({ notification: 'Internal server error while trying to create admin' });
+      return response.status(500).json({ notification: 'Internal server error while trying to create admin share' });
     }
-    return response.status(200).json({ notification: 'Share criado!' });
+    return response.status(200).json({ notification: 'Share created' });
   },
 
   async updateShare(req, res) {
@@ -29,10 +36,10 @@ module.exports = {
     return res.status(200).json({ notification: 'Admin share updated' });
   },
   async deleteShare(request, response) {
-    const share = request.body;
+    request.session.get('user');
 
     try {
-      await AdminModel.deleteShare(share);
+      await AdminModel.deleteShare();
     } catch (err) {
       if (err.message) {
         return response.status(400).json({ notification: err.message });

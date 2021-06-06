@@ -66,7 +66,7 @@ export const StoreBody = styled.div`
     }
 `;
 
-export const Formulary = styled.div`
+export const Formulary = styled.form`
   align-items: center;
   justify-content: center;
   width: 50%;

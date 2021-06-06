@@ -1,10 +1,11 @@
-import { signin } from '../../src/controllers/UserController';
+import { signIn } from '../../src/controllers/SessionController';
+import { withSession } from '../../src/utils/Auth';
 
 export default function handler(req, res) {
   try {
     const { method } = req;
     if (method === 'POST') {
-      return signin(req, res);
+      return withSession(signIn)(req, res);
     }
     return res.status(500).json({ message: 'Método incorreto' });
   } catch (err) {

@@ -2,13 +2,17 @@ const { v4: uuidv4 } = require('uuid');
 const timestamp = require('time-stamp');
 const StoreModel = require('../models/StoreModel');
 const UserModel = require('../models/UserModel');
-const FireBaseModel = require('../models/FirebaseModel');
 const FirebaseModel = require('../models/FirebaseModel');
 
 module.exports = {
   async getOne(request, response) {
-    const { store_id } = request.body;
+    const { store_id } = request.query;
     const store = await StoreModel.getStoreById(store_id);
+    return response.json(store);
+  },
+
+  async getAll(request, response) {
+    const store = await StoreModel.getAllStore();
     return response.json(store);
   },
 
@@ -23,8 +27,9 @@ module.exports = {
       birth_date: info.birth_date,
       first_name: info.first_name,
       last_name: info.last_name,
-      type: info.type,
+      type: 'seller',
       created_at: timestamp(),
+      telephone: info.telephone,
     };
 
     const store = {
@@ -46,7 +51,8 @@ module.exports = {
 
     // Criacao do Usuario
     try {
-      firebase_id = await FireBaseModel.createNewUser(user.email, user.password);
+      // Criacao de usuario:
+      firebase_id = await FirebaseModel.createNewUser(user.email, user.password);
       user.firebase_id = firebase_id;
       delete user.password;
       await UserModel.createNewUser(user);
@@ -88,7 +94,7 @@ module.exports = {
   },
 
   async deleteBoth(request, response) {
-    const { user_id } = request.body;
+    const user_id = request.session.get('user').user.firebase_id;
 
     // Apagando Usuario do Firebase e do Banco de Dados
     try {
