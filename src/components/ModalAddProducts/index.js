@@ -1,8 +1,40 @@
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
+import {
+  Button,
+} from 'react-bootstrap';
 import React, { useState } from 'react';
+import styled from 'styled-components';
 import AddProducts from '../AddProducts';
 
+const ButtonAdd = styled(Button)`
+    margin-left: 10px;
+    height: 50px;
+    width: 125%;
+    font-family: Roboto;
+    font-size: 100%;
+    font-weight: 500;
+    background-color: ${({ theme }) => theme.colors.darkGreen};
+    color: white;
+    border: 0;
+    border-radius: 5px;
+    cursor:pointer;
+    outline:none;
+    margin-right:2%;
+    @media(max-width:1000px){
+      display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:14px;
+    width:80%;
+    height:30px;
+    border-radius:20px;
+    
+}
+    @media(max-width:560px){
+    display:none;
+    }
+`;
 function getModalStyle() {
   const top = 50;
   const left = 50;
@@ -56,9 +88,10 @@ export default function ModalAddProducts() {
 
   return (
     <div>
-      <button type="button" onClick={handleOpen}>
+
+      <ButtonAdd onClick={handleOpen}>
         Adicionar produto
-      </button>
+      </ButtonAdd>
       <Modal
         open={open}
         onClose={handleClose}

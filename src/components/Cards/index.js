@@ -4,10 +4,13 @@ import styled from 'styled-components';
 
 const Container = styled.div`
 margin-top:20px;
+display: flex;
+align-items: center;
 `;
 const Title = styled.div`
 margin-top: 20px;
 font-family: Roboto;
+display: flex;
 `;
 const Card = styled.div`
 display:flex;
@@ -18,6 +21,7 @@ background-color:white;
 border-radius:20px;
 border: 2px;
 width:150px;
+height: 260px;
 // height:200px;
 margin-top: 20px;
 `;

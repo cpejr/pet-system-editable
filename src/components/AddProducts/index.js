@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import timestamp from 'time-stamp';
+import { notification } from 'antd';
 import Upload from './Upload';
+import 'antd/dist/antd.css';
 
 const api = axios.create({ baseURL: 'http://localhost:3000/' });
 const { v4: uuidv4 } = require('uuid');
@@ -270,6 +272,16 @@ export default function AddProducts() {
       console.log(body);
       const Validate = await api.post('/api/product', body);
       console.log(Validate.data);
+      notification.open({
+        message: 'Sucesso!',
+        description:
+          'O registro do produto foi concluído com sucesso.',
+        className: 'ant-notification',
+        top: '100px',
+        style: {
+          width: 600,
+        },
+      });
     } catch (error) {
       console.error(error);
     }

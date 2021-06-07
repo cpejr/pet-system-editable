@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import axios from 'axios';
+import Link from 'next/link';
 import Header from '../../src/components/Header';
 import {
   Body, Formulary, TopFormulary, ItemFormulary, BottomFormulary,
@@ -27,6 +28,7 @@ const Login = () => {
     try {
       const Validate = await axios.post('http://localhost:3000/api/login', body);
       console.log(Validate.data);
+      router.push('/');
     } catch (error) {
       console.log(error);
     }
@@ -63,8 +65,11 @@ const Login = () => {
               <Submit type="submit">Finalizar</Submit>
             </BottomFormulary>
             <BottomFormulary>
+
               <CreateAccount>Não tem uma conta?</CreateAccount>
-              <CreateAccount.Right>Cadastre-se</CreateAccount.Right>
+              <Link href="/Register">
+                <CreateAccount.Right>Cadastre-se</CreateAccount.Right>
+              </Link>
             </BottomFormulary>
           </Formulary>
         </Body.Right>

@@ -11,6 +11,7 @@
     "@date-io/date-fns": "1.x",
     "@material-ui/core": "^4.11.3",
     "@material-ui/pickers": "^3.3.10",
+    "antd": "^4.15.5",
     "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
     "date-fns": "^2.20.3",
