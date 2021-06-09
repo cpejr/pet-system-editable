@@ -75,14 +75,16 @@ export default function ModalAddProducts() {
   const handleOpen = () => {
     setOpen(true);
   };
-
+  const handleState = () => {
+    handleClose()
+  }
   const handleClose = () => {
     setOpen(false);
   };
 
   const body = (
     <div style={modalStyle} className={classes.paper}>
-      <AddProducts/>
+      <AddProducts closeModal = {handleState}/>
     </div>
   );
 
