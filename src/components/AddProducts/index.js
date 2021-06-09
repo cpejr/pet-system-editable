@@ -237,7 +237,7 @@ const ButtonConfirm = styled.button`
     cursor: pointer;
 `;
 
-export default function AddProducts() {
+export default function AddProducts({ closeModal }) {
   const [productName, setProductName] = useState('');
   const [price, setPrice] = useState('');
   const [discount, setDiscount] = useState('');
@@ -255,8 +255,7 @@ export default function AddProducts() {
   function handleDescriptionChange(event) {
     setDescription(event.target.value);
   }
-  async function handleSubmit(event) {
-    event.preventDefault();
+  async function handleSubmit() {
     const body = {
       product_id: uuidv4(),
       store_id: '6',
@@ -348,8 +347,15 @@ export default function AddProducts() {
         <AddProductsContainer.Col2>
           <SelectImage>Selecionar imagem</SelectImage>
           <Upload />
-          <ButtonCancel>Cancelar Cadastro</ButtonCancel>
-          <ButtonConfirm onClick={handleSubmit}>
+          <ButtonCancel onClick={(e) => { e.preventDefault(); closeModal(); }}>
+            Cancelar Cadastro
+          </ButtonCancel>
+          <ButtonConfirm onClick={(e) => {
+            e.preventDefault();
+            handleSubmit();
+            closeModal();
+          }}
+          >
             Confirmar Cadastro
           </ButtonConfirm>
         </AddProductsContainer.Col2>
