@@ -37,7 +37,6 @@ align-items:center;
 justify-content:center;
 width:30%;
 flex-direction:column;
-
 `;
 
 const CardDescription = styled.div`

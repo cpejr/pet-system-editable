@@ -3,11 +3,14 @@ const timestamp = require('time-stamp');
 const StoreModel = require('../models/StoreModel');
 const UserModel = require('../models/UserModel');
 const FirebaseModel = require('../models/FirebaseModel');
+// const ProductModel = require('../models/ProductModel');
 
 module.exports = {
   async getOne(request, response) {
-    const { store_id } = request.query;
-    const store = await StoreModel.getStoreById(store_id);
+    const { id } = request.query;
+    const store = await StoreModel.getStoreById(id);
+    // const product = await ProductModel.getAllProducts();
+    // store.product = product;
     return response.json(store);
   },
 
