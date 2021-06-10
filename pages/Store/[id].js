@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import api from '../../src/utils/api';
 import HeaderSearch from '../../src/components/HeaderSearch';
 import FooterMobile from '../../src/components/Mobile/FooterMobile';
-import ProductsCarousel from '../../src/components/Carousels/ProductsCarousel';
+import StoreTabs from '../../src/components/StoreTabs';
 
 const Container = styled.div`
 display: flex;
@@ -12,7 +12,6 @@ justify-content: center;
 width: 100%;
 flex-direction: column;
 font-family: Roboto;
-margin-bottom: 2%;
 `;
 
 const StoreContainer = styled.div`
@@ -59,7 +58,7 @@ justify-content: center;
 }
 `;
 
-const StoreName = styled.h2`
+const StoreName = styled.h1`
 display: flex;
 align-items: center;
 justify-content: flex-start;
@@ -70,7 +69,7 @@ justify-content: center;
 }
 `;
 
-const StoreDatas = styled.p`
+const StoreDatas = styled.h3`
 display: flex;
 align-items: center;
 justify-content: flex-start;
@@ -99,79 +98,11 @@ width: 80%;
 }
 `;
 
-const ProductAndServices = styled.div`
-display: flex;
-align-items: center;
-justify-content: center;
-width: 90%;
-height: 40px;
-flex-direction: row;
-border:solid;
-border-width: 1px;
-border-color:${({ theme }) => theme.colors.mediumGray} ;
-`;
-
-ProductAndServices.Col = styled.div`
-display: flex;
-align-items: center;
-justify-content: center;
-width: 50%;
-`;
-
-const ProductButton = styled.button`
-display:flex;
-align-items:center;
-justify-content:center;
-flex-direction:row;
-width:20%;
-height: 40px;
-cursor: pointer;
-border:none;
-background-color:${({ theme }) => theme.colors.background};
-font-size:16px;
-border-bottom:solid;
-border-width: 3px;
-`;
-
-const ServiceButton = styled.button`
-display:flex;
-align-items:center;
-justify-content:center;
-flex-direction:row;
-width:20%;
-height: 40px;
-cursor: pointer;
-border:none;
-background-color:${({ theme }) => theme.colors.background};
-font-size:16px;
-border-bottom:solid;
-border-width: 3px;
-`;
-
-export default function Store({ store }, { products }) {
-  // const { store } = props;
-  // const { products } = props;
-  const [product, setProduct] = useState('#111111');
-  const [service, setService] = useState('#111111');
+export default function Store({ store }) {
   const [followBackground, setFollowBackground] = useState('#F8F8F8');
   const [followFont, setFollowFont] = useState('#609694');
   const [follow, setFollow] = useState('Seguir');
 
-  function changeProduct() {
-    if (product === '#111111') {
-      setProduct('#609694');
-    } else {
-      setProduct('#111111');
-    }
-  }
-
-  function changeService() {
-    if (service === '#111111') {
-      setService('#609694');
-    } else {
-      setService('#111111');
-    }
-  }
   function changeFollowBackground() {
     if (followBackground === '#F8F8F8') {
       setFollowBackground('#609694');
@@ -200,6 +131,9 @@ export default function Store({ store }, { products }) {
             </StoreDatas>
             <StoreDatas>
               {store.cep}
+              ,
+              {' '}
+              {store.ie_state}
             </StoreDatas>
           </StoreContainer.Col2>
           <StoreContainer.Col3>
@@ -212,26 +146,8 @@ export default function Store({ store }, { products }) {
           </StoreContainer.Col3>
         </StoreContainer>
         )}
-        <ProductAndServices>
-          <ProductAndServices.Col>
-            <ProductButton
-              onClick={changeProduct}
-              style={{ color: product, borderColor: product }}
-            >
-              Produtos
-            </ProductButton>
-          </ProductAndServices.Col>
-          <ProductAndServices.Col>
-            <ServiceButton
-              onClick={changeService}
-              style={{ color: service, borderColor: service }}
-            >
-              Serviços
-            </ServiceButton>
-          </ProductAndServices.Col>
-        </ProductAndServices>
       </Container>
-      <ProductsCarousel products={products} />
+      <StoreTabs store={store} />
       <FooterMobile />
     </div>
   );

@@ -122,6 +122,7 @@ display:flex;
 align-items:center;
 justify-content:center;
 font-size: 100%;
+margin: 0;
 `;
 
 export default function Header() {

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import { AiFillHeart } from 'react-icons/ai';
+import Link from 'next/link';
 
 const Container = styled.div`
 display: flex;
@@ -24,14 +25,28 @@ padding-top: 5%;
 padding-bottom: 2%;
 margin-bottom: 2%;
 margin:1%;
+border-radius: 10px;
+box-shadow: 0 4px 2px -2px gray;
 `;
 
-const ProductName = styled.p`
+const ProductName = styled.button`
 display: flex;
 align-items: center;
 justify-content: center;
 width: 90%;
 color:${({ theme }) => theme.colors.mediumGreen};
+background-color: ${({ theme }) => theme.colors.background};
+border: none;
+margin: 0;
+cursor: pointer;
+`;
+
+const LinkA = styled.a`
+color:${({ theme }) => theme.colors.mediumGreen};
+:hover{
+  color: ${({ theme }) => theme.colors.mediumGreen};
+  font-weight: bold;
+}
 `;
 
 const PriceAndFav = styled.div`
@@ -94,7 +109,11 @@ export default function ProductsCarousel() {
           <img alt="" className="productImage" src="/images/shampoo.jpg" widht="80" height="150" />
           <ProductName>
             {/* {product.product_name} */}
-            Shampoo para Cachorro Filhote Sanol 500ml
+            <Link href="/Product/2aad6e72-740a-4575-96ad-b2d994cb3df5">
+              <LinkA>
+                Shampoo para Cachorro Filhote Sanol 500ml
+              </LinkA>
+            </Link>
           </ProductName>
           <PriceAndFav>
             R$ :
@@ -116,7 +135,11 @@ export default function ProductsCarousel() {
           <img alt="" className="productImage" src="/images/shampoo.jpg" widht="80" height="150" />
           <ProductName>
             {/* {product.product_name} */}
-            Shampoo para Cachorro Filhote Sanol 500ml
+            <Link href="/Product/2aad6e72-740a-4575-96ad-b2d994cb3df5">
+              <LinkA>
+                Shampoo para Cachorro Filhote Sanol 500ml
+              </LinkA>
+            </Link>
           </ProductName>
           <PriceAndFav>
             R$ :
@@ -138,7 +161,11 @@ export default function ProductsCarousel() {
           <img alt="" className="productImage" src="/images/shampoo.jpg" widht="80" height="150" />
           <ProductName>
             {/* {product.product_name} */}
-            Shampoo para Cachorro Filhote Sanol 500ml
+            <Link href="/Product/2aad6e72-740a-4575-96ad-b2d994cb3df5">
+              <LinkA>
+                Shampoo para Cachorro Filhote Sanol 500ml
+              </LinkA>
+            </Link>
           </ProductName>
           <PriceAndFav>
             R$ :
@@ -160,7 +187,11 @@ export default function ProductsCarousel() {
           <img alt="" className="productImage" src="/images/shampoo.jpg" widht="80" height="150" />
           <ProductName>
             {/* {product.product_name} */}
-            Shampoo para Cachorro Filhote Sanol 500ml
+            <Link href="/Product/2aad6e72-740a-4575-96ad-b2d994cb3df5">
+              <LinkA>
+                Shampoo para Cachorro Filhote Sanol 500ml
+              </LinkA>
+            </Link>
           </ProductName>
           <PriceAndFav>
             R$ :
@@ -182,7 +213,11 @@ export default function ProductsCarousel() {
           <img alt="" className="productImage" src="/images/shampoo.jpg" widht="80" height="150" />
           <ProductName>
             {/* {product.product_name} */}
-            Shampoo para Cachorro Filhote Sanol 500ml
+            <Link href="/Product/2aad6e72-740a-4575-96ad-b2d994cb3df5">
+              <LinkA>
+                Shampoo para Cachorro Filhote Sanol 500ml
+              </LinkA>
+            </Link>
           </ProductName>
           <PriceAndFav>
             R$ :
