@@ -8,14 +8,46 @@ justify-content: center;
 width: 100%;
 flex-direction: row;
 font-family: Roboto;
+@media(max-width:700px){
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  }
+  @media(max-width:800px){
+  margin-bottom: 20%;
+  }
 `;
 
-ServiceContainer.Col = styled.h3`
+ServiceContainer.Col = styled.div`
 display: flex;
 align-items: center;
 justify-content: center;
 width: 50%;
 flex-direction: column;
+@media(max-width:1074px){
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  }
+`;
+
+ServiceContainer.Col2 = styled.div`
+display: flex;
+align-items: center;
+justify-content: center;
+width: 50%;
+flex-direction: column;
+@media(max-width:1074px){
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  }
+ 
 `;
 
 const Services = styled.h3`
@@ -24,6 +56,12 @@ align-items: flex-start;
 justify-content: flex-start;
 width: 70%;
 font-weight: 400;
+@media(max-width:1074px){
+  display:flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  }
 `;
 
 Services.Contact = styled.h4`
@@ -31,6 +69,7 @@ display: flex;
 align-items: flex-start;
 justify-content: flex-start;
 font-weight: bold;
+
 `;
 
 export default function StoreServices(props) {
@@ -53,7 +92,7 @@ export default function StoreServices(props) {
           </Services>
         </ServiceContainer.Col>
         {store && (
-          <ServiceContainer.Col>
+          <ServiceContainer.Col2>
             <Services>
               <Services.Contact>
                 • Telefone:
@@ -82,7 +121,7 @@ export default function StoreServices(props) {
               </Services.Contact>
               10:00h - 18:30h
             </Services>
-          </ServiceContainer.Col>
+          </ServiceContainer.Col2>
         )}
       </ServiceContainer>
     </div>

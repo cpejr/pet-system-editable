@@ -12,6 +12,7 @@ justify-content: center;
 width: 100%;
 flex-direction: column;
 font-family: Roboto;
+margin:0;
 `;
 
 const StoreContainer = styled.div`
@@ -24,9 +25,7 @@ margin-bottom: 2%;
 @media(max-width:880px){
 flex-direction: column;
 }
-@media(max-width:800px){
-margin-top: 5%;
-}
+
 `;
 
 StoreContainer.Col1 = styled.div`
@@ -98,6 +97,37 @@ width: 80%;
 }
 `;
 
+const BigBanner = styled.div`
+  display:flex;
+  align-items: center;
+  justify-content: center;
+@media(max-width:1074px){
+  display:none;
+  }
+`;
+
+const MediumBanner = styled.div`
+display:none;
+@media(max-width:1074px){
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  width: 40%;
+  }
+  @media(max-width:560px){
+    display:none;
+    }
+`;
+const LittleBanner = styled.div`
+display:none;
+@media(max-width:560px){
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  }
+`;
+
 export default function Store({ store }) {
   const [followBackground, setFollowBackground] = useState('#F8F8F8');
   const [followFont, setFollowFont] = useState('#609694');
@@ -122,7 +152,15 @@ export default function Store({ store }) {
         {store && (
         <StoreContainer>
           <StoreContainer.Col1>
-            <img alt="" className="StoreBanner" src="/images/storeBanner.png" width="450" height="200" />
+            <BigBanner>
+              <img alt="" className="StoreBanner" src="/images/storeBanner.png" width="550" height="250" />
+            </BigBanner>
+            <MediumBanner>
+              <img alt="" className="StoreBanner" src="/images/storeBanner.png" width="400" height="200" />
+            </MediumBanner>
+            <LittleBanner>
+              <img alt="" className="StoreBanner" src="/images/storeBanner.png" width="375" height="200" />
+            </LittleBanner>
           </StoreContainer.Col1>
           <StoreContainer.Col2>
             <StoreName>{store.company_name}</StoreName>
