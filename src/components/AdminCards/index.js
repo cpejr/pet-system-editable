@@ -149,10 +149,12 @@ const ButtonConfirm = styled.button`
     width: 200px;
     font-family: Roboto;
     font-size: 18px;
-    font-weight: 300;
-    background-color: ${({ theme }) => theme.colors.darkGreen};
-    color: white;
-    border: 0;
+    font-weight: 500;
+    background-color: ${({ theme }) => theme.colors.background};
+    color: ${({ theme }) => theme.colors.darkGreen};
+    border: solid;
+    border-width: 1px;
+    border-color: ${({ theme }) => theme.colors.darkGreen};
     border-radius: 5px;
     align-items: center;
     text-align: center;
@@ -161,6 +163,12 @@ const ButtonConfirm = styled.button`
     text-align: center;
     cursor: pointer;
     margin-top:5%;
+    :hover{
+    background-color: ${({ theme }) => theme.colors.darkGreen};
+    color: ${({ theme }) => theme.colors.background};
+    border: solid;
+    border-color: ${({ theme }) => theme.colors.darkGreen};
+    }
     @media(max-width:860px){
         width:150px;
         margin-top:30%;

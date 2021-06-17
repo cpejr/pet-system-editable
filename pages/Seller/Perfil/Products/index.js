@@ -13,6 +13,7 @@ import Products from '../../../../src/components/Products';
 import ModalAddProducts from '../../../../src/components/ModalAddProducts';
 import LocationAndFilter from '../../../../src/components/Mobile/LocationAndFilter';
 import EditAddRemoveSection from '../../../../src/components/Mobile/EditAddRemoveSection';
+import ModalGroup from '../../../../src/components/ModalGroup';
 
 const Title = styled.h1`
 align-items:initial;
@@ -103,6 +104,15 @@ width:80%;
 display:flex;
 align-items:center;
 justify-content:initial;
+flex-direction: column;
+`;
+
+const Group = styled.div`
+width:100%;
+display:flex;
+align-items:initial;
+justify-content:initial;
+flex-direction: row;
 `;
 
 const MarketContainer = styled.div`
@@ -219,6 +229,42 @@ const RemoveProducts = styled.button`
     }
 `;
 
+// const AddGroup = styled.button`
+//     font-family: Roboto;
+//     font-size: 100%;
+//     font-weight: 500;
+//     background-color: ${({ theme }) => theme.colors.background};
+//     color: ${({ theme }) => theme.colors.mediumGreen};
+//     border: 0;
+//     cursor:pointer;
+//     outline:none;
+//     margin-right:2%;
+//     margin-top: --5px;
+//     @media(max-width:1000px){
+//       display:flex;
+//     align-items:center;
+//     justify-content:center;
+//     font-size:14px;
+// }
+// `;
+
+const RemoveGroup = styled.button`
+    font-family: Roboto;
+    font-size: 100%;
+    font-weight: 500;
+    background-color: ${({ theme }) => theme.colors.background};
+    color: ${({ theme }) => theme.colors.mediumRed};
+    border: 0;
+    cursor:pointer;
+    outline:none;
+    @media(max-width:1000px){
+      display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:14px;
+}
+`;
+
 export default function Perfil() {
   return (
     <div>
@@ -264,6 +310,11 @@ export default function Perfil() {
           <Category />
         </ProductContainer.Col1>
         <ProductContainer.Col2>
+          <Group>
+            <ModalGroup />
+            <WordsDivider />
+            <RemoveGroup>Remover Grupo</RemoveGroup>
+          </Group>
           <Products />
         </ProductContainer.Col2>
 
