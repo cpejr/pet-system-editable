@@ -139,6 +139,7 @@ display:flex;
 align-items:center;
 justify-content:center;
 font-size: 100%;
+margin: 0;
 `;
 
 const ItemBottomHeader = styled.p`
@@ -148,7 +149,7 @@ const ItemBottomHeader = styled.p`
   font-family: Poiret One;
   font-size: 100%;
   color: white;
-  
+  margin: 0;
 
 `;
 

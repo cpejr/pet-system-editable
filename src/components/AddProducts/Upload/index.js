@@ -18,30 +18,34 @@ justify-content:center;
   margin-bottom:5%;
   margin-top:5%;
   `;
-  const UploadConatiner = styled.div`
+  const UploadContainer = styled.div`
 display:flex;
 align-items:center;
 justify-content:center;
 flex-direction:column;
 `;
 
-  const ImageSelected = styled.input`
-display:flex;
-align-items:center;
-justify-content:center;
+  const Label = styled.label`
+background-color:  ${({ theme }) => theme.colors.mediumGreen};;
+color: white;
+padding: 0.5rem;
+font-family: sans-serif;
+border-radius: 0.3rem;
 cursor: pointer;
-@media(max-width:1190px){
-  width:100%;
-}
+margin-top: 1rem;
+`;
+
+  const ImageSelected = styled.input`
 `;
 
   return (
     <div>
-      <UploadConatiner>
-        <ImageSelected id="rbga" type="file" onChange={handleChange} />
+      <UploadContainer>
+        <ImageSelected type="file" id="upload" hidden onChange={handleChange} />
+        <Label for="upload">Escolha a imagem</Label>
         <Img alt="" src={photo.file} />
 
-      </UploadConatiner>
+      </UploadContainer>
     </div>
   );
 }
