@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
+import axios from 'axios';
+
+const api = axios.create({ baseURL: 'http://localhost:3000/' });
 
 const ContainerModal = styled.div`
 display:flex;
@@ -145,6 +148,32 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ModalGroup() {
+  const [group, setGroup] = useState('');
+
+  async function handleGroupChange(event) {
+    setGroup(event.target.value);
+  }
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+    const body = {
+      name: group,
+      store_id: 'eb60feca-220d-4852-aa8e-80067cc5bbce',
+    };
+
+    try {
+      if (group != null) {
+        const Validate = await api.put('/api/group', body);
+        console.log(Validate.data);
+      } else {
+        const Validate = await api.post('/api/group', body);
+        console.log(Validate.data);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = useState(getModalStyle);
@@ -165,9 +194,9 @@ export default function ModalGroup() {
           <Ajust.Col1>
             Nome do grupo:
           </Ajust.Col1>
-          <Ajust.Col2 placeholder="" require />
+          <Ajust.Col2 placeholder="" require value={group} onChange={handleGroupChange} />
         </Ajust>
-        <ButtonConfirm>Confirmar grupo</ButtonConfirm>
+        <ButtonConfirm onClick={handleSubmit}>Confirmar grupo</ButtonConfirm>
       </ContainerModal>
     </div>
   );

@@ -2,8 +2,13 @@ const connection = require('../database/connection');
 
 module.exports = {
   async createGroup(group) {
-    const newGroup = await connection('group').insert(group);
-    return newGroup;
+    try {
+      const newGroup = await connection('group').insert(group);
+      return newGroup;
+    } catch (error) {
+      console.error(error);
+      throw new Error(error);
+    }
   },
 
   async deleteGroup(group_id, store_id) {
