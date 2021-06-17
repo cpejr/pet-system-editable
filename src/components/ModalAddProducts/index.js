@@ -26,9 +26,8 @@ const ButtonAdd = styled(Button)`
     align-items:center;
     justify-content:center;
     font-size:14px;
-    width:80%;
-    height:30px;
-    border-radius:20px;
+    width:100%;
+    height:50px;
     
 }
     @media(max-width:560px){

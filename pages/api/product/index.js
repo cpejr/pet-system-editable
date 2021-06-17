@@ -1,9 +1,15 @@
+import nextConnect from 'next-connect';
 import {
   create,
 } from '../../../src/controllers/ProductController';
 import { isSeller } from '../../../src/utils/Auth';
+import middleware from '../../../src/middleware/middleware';
 
-export default function handler(req, res) {
+const handler = nextConnect();
+
+handler.use(middleware);
+
+handler.post(async (req, res) => {
   try {
     const { method } = req;
     console.log(method);
@@ -14,4 +20,12 @@ export default function handler(req, res) {
   } catch (err) {
     return res.status(500).json({ statusCode: 500, message: err.message });
   }
-}
+});
+
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
+
+export default handler;

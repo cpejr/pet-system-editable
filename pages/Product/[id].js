@@ -228,7 +228,7 @@ export default function Product(props) {
         <Container>
           <ProductContainer>
             <ProductContainer.Col1>
-              <img src="/images/RaçãoCachorro.jpg" width="300" height="350" alt="" />
+              <img src={product.img} width="300" height="350" alt="" />
             </ProductContainer.Col1>
 
             <ProductContainer.Col2>

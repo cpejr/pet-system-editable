@@ -21,8 +21,7 @@ background-color:white;
 border-radius:20px;
 border: 2px;
 width:150px;
-height: 260px;
-// height:200px;
+height: 220px;
 margin-top: 20px;
 `;
 const Price = styled.div`

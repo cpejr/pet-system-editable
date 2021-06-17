@@ -23,7 +23,7 @@
 *               price: 25,00
 *               discount: 0,00
 *               description: Ração de Cachorro de 5kg para cachorros de pequeno porte.
-*               img: 'produtos/rações/'
+*               img: '1586181877017.jpg'
 *               created_at: 2020-12-06
 *       '404':
 *        description: Not Found

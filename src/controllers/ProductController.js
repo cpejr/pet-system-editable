@@ -1,23 +1,33 @@
 const { v4: uuidv4 } = require('uuid');
 const ProductModel = require('../models/ProductModel');
 const StoreModel = require('../models/StoreModel');
+const AwsModel = require('../models/AwsModel');
 
 module.exports = {
   async getOne(request, response) {
     const { id } = request.query;
     const product = await ProductModel.getProductById(id);
+    // const readImage = await AwsModel.getAWS(id.img);
     const store = await StoreModel.getStoreById(product.store_id);
     product.store = store;
+
+    // readImage.pipe(response);
     return response.json(product);
   },
 
   async create(request, response) {
     const product = request.body;
+    const file = request.files;
     product.product_id = uuidv4();
     try {
+      const image_id = await AwsModel.uploadAWS(file);
+      // await unlinkFile(file.img.path);
+      product.img = image_id.key;
+
       const user_id = request.session.get('user').user.firebase_id;
       const { store_id } = await StoreModel.getByUserId(user_id);
       product.store_id = store_id;
+
       await ProductModel.createNewProduct(product);
     } catch (error) {
       if (err.message) {

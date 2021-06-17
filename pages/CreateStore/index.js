@@ -9,6 +9,8 @@ import {
 } from '../../src/components/FormComponents';
 import MaskedInput from '../../src/components/MasketInput';
 import SelectState from '../../src/components/SelectState';
+import Upload from '../../src/components/AddStore/Upload';
+import UploadLogo from '../../src/components/AddStore/UploadLogo';
 
 export default function Store() {
   // Usuario:
@@ -27,6 +29,8 @@ export default function Store() {
   const [confPassword, setConfPassword] = useState('');
   const [ie, setIe] = useState('');
   const [ieState, setIeState] = useState('');
+  const [cover_img, setCover_img] = useState('');
+  const [logo_img, setLogo_img] = useState('');
 
   function handleFirstNameChange(event) {
     setFirstName(event.target.value);
@@ -69,6 +73,12 @@ export default function Store() {
   }
   function handleIeStateChange(event) {
     setIeState(event.target.value);
+  }
+  function handleCover_img(event) {
+    setCover_img(event.target.value);
+  }
+  function handleLogo_img(event) {
+    setLogo_img(event.target.value);
   }
 
   async function handleSubmit(event) {
@@ -136,8 +146,8 @@ export default function Store() {
       ie,
       ie_state: ieState,
       // Resto dos dados da loja - Teste
-      cover_img: 'teste',
-      logo_img: 'teste',
+      cover_img,
+      logo_img,
       evaluation: '10',
       status: 'Aprovado',
     };
@@ -228,7 +238,7 @@ export default function Store() {
 
             <DividedItemFormulary>
               <ItemFormulary>
-                <Text>password: *</Text>
+                <Text>Password: *</Text>
                 <TextBox type="password" id="password" placeholder="" onChange={handlePasswordChange} value={password} />
               </ItemFormulary>
               <ItemFormulary>
@@ -253,6 +263,17 @@ export default function Store() {
               <ItemFormulary>
                 <Text>Estado da IE: *</Text>
                 <SelectState name="ieState" id="ieState" onChange={handleIeStateChange} value={ieState} />
+              </ItemFormulary>
+            </DividedItemFormulary>
+
+            <DividedItemFormulary>
+              <ItemFormulary>
+                <Text>Imagem da Loja: *   </Text>
+                <Upload value={cover_img} onChange={handleCover_img} />
+              </ItemFormulary>
+              <ItemFormulary>
+                <Text>Logo da Loja: *</Text>
+                <UploadLogo value={logo_img} onChange={handleLogo_img} />
               </ItemFormulary>
             </DividedItemFormulary>
 

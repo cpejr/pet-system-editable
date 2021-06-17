@@ -192,6 +192,7 @@ align-items:center;
 justify-content:center;
 width:100%;
 font-family: Roboto;
+margin: 0;
 @media(max-width:1190px){
   justify-content:center;
 }

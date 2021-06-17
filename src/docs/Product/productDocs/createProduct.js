@@ -10,27 +10,27 @@
 *            schema:
 *              $ref: '#/components/schemas/Product'
 *      parameters:
-*       - in: body
+*       - in: Multipart form
 *         name: product_name
 *         required: true
 *         description: Nome do produto.(STRING)
 *         schema:
-*       - in: body
+*       - in: Multipart form
 *         name: price
 *         required: true
 *         description: Preço do produto.(FLOAT)
 *         schema:
-*       - in: body
+*       - in: Multipart form
 *         name: discount
 *         required: true
 *         description: Desconto do produto.(FLOAT)
 *         schema:
-*       - in: body
+*       - in: Multipart form
 *         name: description
 *         required: true
 *         description: Descrição do produto.(STRING)
 *         schema:
-*       - in: body
+*       - in: Multipart form
 *         name: img
 *         required: true
 *         description: Diretório de onde a imagem será salva.(FILE)
@@ -49,7 +49,7 @@
 *               price: 25,00
 *               discount: 10,00
 *               description: Saco de Ração laranja de 2.5 Kg.
-*               img: 'produtos/rações/'
+*               img: '1586181877017.jpg'
 *               created_at: 24052021
 *       '400':
 *        description: No valid session provided

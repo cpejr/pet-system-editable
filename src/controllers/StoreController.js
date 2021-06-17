@@ -3,6 +3,7 @@ const timestamp = require('time-stamp');
 const StoreModel = require('../models/StoreModel');
 const UserModel = require('../models/UserModel');
 const FirebaseModel = require('../models/FirebaseModel');
+const AwsModel = require('../models/AwsModel');
 // const ProductModel = require('../models/ProductModel');
 
 module.exports = {
@@ -21,6 +22,7 @@ module.exports = {
 
   async create(request, response) {
     const info = request.body;
+    const file = request.files;
     let firebase_id;
 
     const user = {
@@ -71,7 +73,15 @@ module.exports = {
 
     // Criacao da Loja
     try {
+      const cover_img = await AwsModel.uploadAWS(file);
+      const logo_img = await AwsModel.uploadAWS(file);
+      // await unlinkFile(file.img.path);
+      console.log(file);
+      store.cover_img = cover_img.key;
+      store.logo_img = logo_img.key;
+
       store.user_id = user.firebase_id;
+
       await StoreModel.createNewStore(store);
     } catch (err) {
       if (err.message) {
