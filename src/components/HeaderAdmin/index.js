@@ -11,7 +11,7 @@ import Link from 'next/link';
 Header.Wrapper = styled.div`
     display:flex;
     width: 100%;
-    height: 20vh;
+    height: 25vh;
     flex-direction: column;
     @media(max-width:800px){
     display:none;

@@ -22,7 +22,8 @@ module.exports = {
 
   async create(request, response) {
     const info = request.body;
-    const file = request.files;
+    const { cover_img, logo_img } = request.files;
+
     let firebase_id;
 
     const user = {
@@ -47,8 +48,8 @@ module.exports = {
       cep: info.cep,
       ie: info.ie,
       ie_state: info.ie_state,
-      cover_img: info.cover_img,
-      logo_img: info.logo_img,
+      cover_img: uuidv4(),
+      logo_img: uuidv4(),
       created_at: timestamp(),
       evaluation: info.evaluation,
       status: info.status,
@@ -73,12 +74,11 @@ module.exports = {
 
     // Criacao da Loja
     try {
-      const cover_img = await AwsModel.uploadAWS(file);
-      const logo_img = await AwsModel.uploadAWS(file);
+      const cover = await AwsModel.uploadAWS(cover_img);
+      const logo = await AwsModel.uploadAWS(logo_img);
       // await unlinkFile(file.img.path);
-      console.log(file);
-      store.cover_img = cover_img.key;
-      store.logo_img = logo_img.key;
+      store.cover_img = cover.key;
+      store.logo_img = logo.key;
 
       store.user_id = user.firebase_id;
 

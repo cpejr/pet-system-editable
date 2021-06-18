@@ -5,9 +5,9 @@ const fs = require('fs');
 const multer = require('multer');
 
 const region = 'sa-east-1';
-const accessKeyId = 'AKIA4HCEQN2NA7Q2C3FZ';
-const secretAccessKey = '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';
-const bucketName = 'petsystem';
+const accessKeyId = 'AKIASMQJMISSGYXYR35Q';
+const secretAccessKey = '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';
+const bucketName = 'petsystembucket';
 
 const s3 = new S3({
   region,
@@ -54,15 +54,15 @@ const multipleImageUpload = (singleName, arrayName, mode = 'create') => (req, re
 
 module.exports = {
 
-  async uploadAWS(file) {
+  async uploadAWS(image) {
     return new Promise(async (resolve, reject) => {
       try {
-        const fileStream = fs.createReadStream(file.img.path);
+        const fileStream = fs.createReadStream(image.path);
 
         const uploadParams = {
           Bucket: bucketName,
           Body: fileStream,
-          Key: file.img.name,
+          Key: image.name,
          
         };
 

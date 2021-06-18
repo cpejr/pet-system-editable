@@ -6,24 +6,26 @@ const AwsModel = require('../models/AwsModel');
 module.exports = {
   async getOne(request, response) {
     const { id } = request.query;
-    const { key } = request.params.key;
 
     const product = await ProductModel.getProductById(id);
     const store = await StoreModel.getStoreById(product.store_id);
     product.store = store;
 
-    const readImage = await AwsModel.getAWS(key);
+    // const readImage = await AwsModel.getAWS();
 
-    readImage.pipe(response);
+    // readImage.pipe(response);
     return response.json(product);
   },
 
   async create(request, response) {
     const product = request.body;
     const file = request.files;
+    console.log(file);
     product.product_id = uuidv4();
+    file.img.name = uuidv4();
+
     try {
-      const image_id = await AwsModel.uploadAWS(file);
+      const image_id = await AwsModel.uploadAWS(file.img);
       // await unlinkFile(file.img.path);
       product.img = image_id.key;
 

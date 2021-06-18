@@ -228,7 +228,7 @@ export default function Product(props) {
         <Container>
           <ProductContainer>
             <ProductContainer.Col1>
-              <img src={product.img} width="300" height="350" alt="" />
+              <img src={`https://s3-sa-east-1.amazonaws.com/petsystembucket/${product.img}`} width="300" height="350" alt="" />
             </ProductContainer.Col1>
 
             <ProductContainer.Col2>
