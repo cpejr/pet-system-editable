@@ -1,18 +1,22 @@
 import {
   getOne, update, remove,
-} from '../../../src/controllers/CategoryController';
+} from '../../../src/controllers/SubCategoryController';
+import { isAdmin } from '../../../src/utils/Auth';
 
 export default function handler(req, res) {
   try {
     const { method } = req;
     console.log(method);
     if (method === 'GET') {
+      // return isAdmin(getOne)(req, res);
       return getOne(req, res);
     }
     if (method === 'PUT') {
+      // return isAdmin(update)(req, res);
       return update(req, res);
     }
     if (method === 'DELETE') {
+      // return isAdmin(remove)(req, res);
       return remove(req, res);
     }
 

@@ -3,6 +3,7 @@ const connection = require('../database/connection');
 module.exports = {
   async getCategoryById(id) {
     try {
+      // Inner join
       const response = await connection('Categories')
         .select('*')
         .where({ category_id: id })

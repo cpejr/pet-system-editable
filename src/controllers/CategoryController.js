@@ -2,14 +2,13 @@ const CategoryModel = require('../models/CategoryModel');
 
 module.exports = {
   async getOne(request, response) {
-    const { category_id } = request.query;
-    const category = await CategoryModel.getCategoryById(category_id);
+    const { id } = request.query;
+    const category = await CategoryModel.getCategoryById(id);
     return response.json(category);
   },
 
   async create(request, response) {
     const category = request.body;
-
     try {
       await CategoryModel.createNewCategory(category);
     } catch (error) {
@@ -22,9 +21,9 @@ module.exports = {
   },
 
   async remove(request, response) {
-    const { category_id } = request.body;
+    const { id } = request.query;
     try {
-      await CategoryModel.deleteCategory(category_id);
+      await CategoryModel.deleteCategory(id);
     } catch (error) {
       if (error.message) {
         return response.status(400).json({ notification: error.message });
@@ -36,9 +35,9 @@ module.exports = {
 
   async update(request, response) {
     const category = request.body;
-
+    const { id } = request.query;
     try {
-      await CategoryModel.updateCategory(category, category.category_id);
+      await CategoryModel.updateCategory(category, id);
     } catch (error) {
       if (error.message) {
         return response.status(400).json({ notification: error.message });

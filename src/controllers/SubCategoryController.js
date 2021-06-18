@@ -2,14 +2,13 @@ const SubCategoryModel = require('../models/SubCategoryModel');
 
 module.exports = {
   async getOne(request, response) {
-    const { subcategory_id } = request.query;
-    const subcategory = await SubCategoryModel.getSubCategoryById(subcategory_id);
+    const { id } = request.query;
+    const subcategory = await SubCategoryModel.getSubCategoryById(id);
     return response.json(subcategory);
   },
 
   async create(request, response) {
     const subcategory = request.body;
-
     try {
       await SubCategoryModel.createNewSubCategory(subcategory);
     } catch (error) {
@@ -22,9 +21,9 @@ module.exports = {
   },
 
   async remove(request, response) {
-    const { subcategory_id } = request.body;
+    const { id } = request.query;
     try {
-      await SubCategoryModel.deleteSubCategory(subcategory_id);
+      await SubCategoryModel.deleteSubCategory(id);
     } catch (error) {
       if (error.message) {
         return response.status(400).json({ notification: error.message });
@@ -36,9 +35,9 @@ module.exports = {
 
   async update(request, response) {
     const subcategory = request.body;
-
+    const { id } = request.query;
     try {
-      await SubCategoryModel.updateSubCategory(subcategory, subcategory.subcategory_id);
+      await SubCategoryModel.updateSubCategory(subcategory, id);
     } catch (error) {
       if (error.message) {
         return response.status(400).json({ notification: error.message });
