@@ -20,13 +20,11 @@ module.exports = {
   async create(request, response) {
     const product = request.body;
     const file = request.files;
-    console.log(file);
     product.product_id = uuidv4();
     file.img.name = uuidv4();
 
     try {
       const image_id = await AwsModel.uploadAWS(file.img);
-      // await unlinkFile(file.img.path);
       product.img = image_id.key;
 
       const user_id = request.session.get('user').user.firebase_id;

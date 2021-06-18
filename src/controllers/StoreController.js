@@ -24,6 +24,9 @@ module.exports = {
     const info = request.body;
     const { cover_img, logo_img } = request.files;
 
+    cover_img.name = uuidv4();
+    logo_img.name = uuidv4();
+
     let firebase_id;
 
     const user = {
@@ -48,8 +51,8 @@ module.exports = {
       cep: info.cep,
       ie: info.ie,
       ie_state: info.ie_state,
-      cover_img: uuidv4(),
-      logo_img: uuidv4(),
+      cover_img: info.cover_img,
+      logo_img: info.logo_img,
       created_at: timestamp(),
       evaluation: info.evaluation,
       status: info.status,
