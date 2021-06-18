@@ -3,10 +3,9 @@ const connection = require('../database/connection');
 module.exports = {
   async getCategoryById(id) {
     try {
-      // Inner join
       const response = await connection('Categories')
+        .where('category_id', id)
         .select('*')
-        .where({ category_id: id })
         .first();
       return response;
     } catch (error) {
