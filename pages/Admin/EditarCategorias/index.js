@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import { FaRegUserCircle } from 'react-icons/fa';
-import HeaderAdmin from '../../src/components/HeaderAdmin';
+import HeaderAdmin from '../../../src/components/HeaderAdmin';
 // import AdminCards from '../../src/components/AdminCards';
-import AdminCardsFix from '../../src/components/AdminCardsFix';
-import WindowDividerAdmin from '../../src/components/WindowDividerAdmin';
+import AdminCardsFix from '../../../src/components/AdminCardsFix';
+import WindowDividerAdmin from '../../../src/components/WindowDividerAdmin';
 
 const Container = styled.div`
 display:flex;
@@ -62,7 +62,7 @@ export default function Admin() {
         </Container.Col1>
         <WindowDividerAdmin />
         <Container.Col2>
-          <p>Selecione uma das categorias ao lado!</p>
+          <p>Aqui serão mostradas as categorias cadastradas no banco!</p>
         </Container.Col2>
       </Container>
     </div>
