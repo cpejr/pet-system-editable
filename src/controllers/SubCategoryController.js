@@ -1,14 +1,30 @@
+const { v4: uuidv4 } = require('uuid');
 const SubCategoryModel = require('../models/SubCategoryModel');
 
 module.exports = {
   async getOne(request, response) {
     const { id } = request.query;
-    const subcategory = await SubCategoryModel.getSubCategoryById(id);
-    return response.json(subcategory);
+
+    try {
+      const subcategory = await SubCategoryModel.getSubCategoryById(id);
+      return response.status(200).json(subcategory);
+    } catch (error) {
+      if (err.message) {
+        return response.status(400).json({ notification: err.message });
+      }
+      return response.status(500).json({ notification: 'Internal server error while trying to find subcategory' });
+    }
   },
 
   async create(request, response) {
-    const subcategory = request.body;
+    const info = request.body;
+
+    const subcategory = {
+      subcategory_id: uuidv4(),
+      name: info.name,
+      category_id: info.category_id,
+    };
+
     try {
       await SubCategoryModel.createNewSubCategory(subcategory);
     } catch (error) {

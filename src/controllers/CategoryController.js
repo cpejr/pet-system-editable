@@ -1,19 +1,40 @@
+const { v4: uuidv4 } = require('uuid');
 const CategoryModel = require('../models/CategoryModel');
 
 module.exports = {
   async getOne(request, response) {
     const { id } = request.query;
-    const category = await CategoryModel.getCategoryById(id);
-    return response.json(category);
+    try {
+      const category = await CategoryModel.getCategoryById(id);
+      return response.status(200).json(category);
+    } catch (error) {
+      if (err.message) {
+        return response.status(400).json({ notification: err.message });
+      }
+      return response.status(500).json({ notification: 'Internal server error while trying to find category' });
+    }
   },
 
   async getAll(request, response) {
-    const categories = await CategoryModel.getAllCategories();
-    return response.json(categories);
+    try {
+      const categories = await CategoryModel.getAllCategories();
+      return response.status(200).json(categories);
+    } catch (error) {
+      if (err.message) {
+        return response.status(400).json({ notification: err.message });
+      }
+      return response.status(500).json({ notification: 'Internal server error while trying to find categories' });
+    }
   },
 
   async create(request, response) {
-    const category = request.body;
+    const info = request.body;
+
+    const category = {
+      category_id: uuidv4(),
+      name: info.name,
+    };
+
     try {
       await CategoryModel.createNewCategory(category);
     } catch (error) {
