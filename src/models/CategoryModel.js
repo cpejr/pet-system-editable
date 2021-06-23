@@ -11,14 +11,14 @@ module.exports = {
       ];
 
       const response = await connection('Categories')
-        .join('Subcategories', 'Categories.category_id', '=', 'Subcategories.category_id')
+        .leftJoin('Subcategories', 'Categories.category_id', '=', 'Subcategories.category_id')
         .where('Categories.category_id', id)
         .select(columns);
 
-      const subcategories = response.map((entry) => ({
+      const subcategories = response[0].subcategory_id ? response.map((entry) => ({
         name: entry.subcategoryName,
         id: entry.subcategory_id,
-      }));
+      })) : [];
 
       const category = {
         name: response[0].categoryName,
@@ -41,7 +41,7 @@ module.exports = {
       ];
 
       const response = await connection('Categories')
-        .join('Subcategories', 'Categories.category_id', '=', 'Subcategories.category_id')
+        .leftJoin('Subcategories', 'Categories.category_id', '=', 'Subcategories.category_id')
         .orderBy('Categories.category_id')
         .select(columns);
 
@@ -54,12 +54,12 @@ module.exports = {
             {
               name: entry.categoryName,
               id: entry.category_id,
-              subcategories: [
+              subcategories: entry.subcategory_id ? [
                 {
                   id: entry.subcategory_id,
                   name: entry.subcategoryName,
                 },
-              ],
+              ] : [],
             },
           );
           nbOfCategories++;
