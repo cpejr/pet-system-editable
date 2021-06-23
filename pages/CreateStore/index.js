@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
+import styled from 'styled-components';
+import { notification } from 'antd';
 import axios from 'axios';
+import Link from 'next/link';
 import Header from '../../src/components/Header';
 import {
   StoreBodyWrapper, StoreBody, StoreFormulary, TopFormulary, ItemFormulary, IEItemFormulary, DividedItemFormulary, BottomFormulary,
@@ -9,8 +12,35 @@ import {
 } from '../../src/components/FormComponents';
 import MaskedInput from '../../src/components/MasketInput';
 import SelectState from '../../src/components/SelectState';
-import Upload from '../../src/components/AddStore/Upload';
-import UploadLogo from '../../src/components/AddStore/UploadLogo';
+
+const Img = styled.img` 
+  display:flex;
+align-items:center;
+justify-content:center;
+  width: 200px;
+  height: 200px;
+  margin-bottom:5%;
+  margin-top:5%;
+  `;
+const UploadContainer = styled.div`
+display:flex;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+`;
+
+const ImageSelected = styled.input`
+`;
+
+const Label = styled.label`
+background-color:  ${({ theme }) => theme.colors.mediumGreen};;
+color: white;
+padding: 0.5rem;
+font-family: sans-serif;
+border-radius: 0.3rem;
+cursor: pointer;
+margin-top: 1rem;
+`;
 
 export default function Store() {
   // Usuario:
@@ -29,8 +59,8 @@ export default function Store() {
   const [confPassword, setConfPassword] = useState('');
   const [ie, setIe] = useState('');
   const [ieState, setIeState] = useState('');
-  const [cover_img, setCover_img] = useState('');
-  const [logo_img, setLogo_img] = useState('');
+  const [cover_img, setCover_img] = useState({ file: null, url: null });
+  const [logo_img, setLogo_img] = useState({ file: null, url: null });
 
   function handleFirstNameChange(event) {
     setFirstName(event.target.value);
@@ -75,10 +105,16 @@ export default function Store() {
     setIeState(event.target.value);
   }
   function handleCover_img(event) {
-    setCover_img(event.target.value);
+    setCover_img({
+      file: event.target.files[0],
+      url: URL.createObjectURL(event.target.files[0]),
+    });
   }
   function handleLogo_img(event) {
-    setLogo_img(event.target.value);
+    setLogo_img({
+      file: event.target.files[0],
+      url: URL.createObjectURL(event.target.files[0]),
+    });
   }
 
   async function handleSubmit(event) {
@@ -146,14 +182,28 @@ export default function Store() {
       ie,
       ie_state: ieState,
       // Resto dos dados da loja - Teste
-      cover_img,
-      logo_img,
+      cover_img: cover_img.file,
+      logo_img: logo_img.file,
       evaluation: '10',
       status: 'Aprovado',
     };
+
+    const data = new FormData();
+    Object.keys(body).forEach((key) => data.append(key, body[key]));
+
     try {
-      const Validate = await axios.post('/api/store', body);
+      const Validate = await axios.post('/api/store', data);
       console.log(Validate.data);
+      notification.open({
+        message: 'Sucesso!',
+        description:
+          'O registro da loja e do usuário foi concluído com sucesso.',
+        className: 'ant-notification',
+        top: '100px',
+        style: {
+          width: 600,
+        },
+      });
     } catch (error) {
       console.log(error);
     }
@@ -269,11 +319,19 @@ export default function Store() {
             <DividedItemFormulary>
               <ItemFormulary>
                 <Text>Imagem da Loja: *   </Text>
-                <Upload value={cover_img} onChange={handleCover_img} />
+                <UploadContainer>
+                  <ImageSelected type="file" id="cover" hidden onChange={handleCover_img} />
+                  <Label for="cover">Escolha a imagem</Label>
+                  <Img alt="" src={cover_img.url} />
+                </UploadContainer>
               </ItemFormulary>
               <ItemFormulary>
                 <Text>Logo da Loja: *</Text>
-                <UploadLogo value={logo_img} onChange={handleLogo_img} />
+                <UploadContainer>
+                  <ImageSelected type="file" id="logo" hidden onChange={handleLogo_img} />
+                  <Label for="logo">Escolha a imagem</Label>
+                  <Img alt="" src={logo_img.url} />
+                </UploadContainer>
               </ItemFormulary>
             </DividedItemFormulary>
 
@@ -282,7 +340,9 @@ export default function Store() {
             </ItemFormulary>
 
             <BottomFormulary>
-              <Submit value="submit" onClick={handleSubmit}>Finalizar</Submit>
+              <Link href="/Seller/Perfil/Products">
+                <Submit value="submit" onClick={handleSubmit}>Finalizar</Submit>
+              </Link>
             </BottomFormulary>
           </StoreFormulary>
         </StoreBody>

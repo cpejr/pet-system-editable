@@ -64,7 +64,6 @@ export const TextBox = styled.input`
 `;
 
 export const Submit = styled.button`
-    margin-top: 30px;
     height: 40px;
     width: 150px;
     font-family: Roboto;
@@ -74,7 +73,7 @@ export const Submit = styled.button`
     color: white;
     border: 0;
     border-radius: 5px;
-
+    cursor: pointer;
 `;
 
 export const ForgotPassword = styled.p`
@@ -86,6 +85,7 @@ export const ForgotPassword = styled.p`
   text-align: end;
   font-weight: 700;
   color: ${({ theme }) => theme.colors.mediumRed};
+  cursor: pointer;
 `;
 
 export const CreateAccount = styled.p`
@@ -102,6 +102,7 @@ CreateAccount.Right = styled.p`
   margin-left: 5px;
   font-weight: 700;
   color: ${({ theme }) => theme.colors.mediumRed};
+  cursor: pointer;
 `;
 
 export const Divider = styled.hr`

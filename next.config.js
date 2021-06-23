@@ -20,7 +20,7 @@ module.exports = {
       },
       {
         source: '/Seller/Perfil',
-        destination: '/Seller/Perfil/Store',
+        destination: '/Seller/Perfil/Products',
         permanent: true,
       },
     ];

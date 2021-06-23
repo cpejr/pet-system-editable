@@ -6,6 +6,7 @@ import { BsSearch, BsFillPersonFill } from 'react-icons/bs';
 import { MdShoppingCart } from 'react-icons/md';
 import { FiLogIn } from 'react-icons/fi';
 import { CgCloseO } from 'react-icons/cg';
+import Link from 'next/link';
 
 Header.Wrapper = styled.div`
     display:flex;
@@ -31,6 +32,7 @@ display:flex;
 align-items:center;
 justify-content:center;
 width:20%;
+cursor:pointer;
 `;
 
 const TextBox = styled.div`
@@ -125,12 +127,23 @@ font-size: 100%;
 margin: 0;
 `;
 
+const LogOut = styled.button`
+display: flex;
+align-items: center;
+justify-content: center;
+border: 0;
+outline: none;
+background-color:${({ theme }) => theme.colors.rose} ;
+`;
+
 export default function Header() {
   return (
     <Header.Wrapper>
       <Header.Top>
         <ImageBox>
-          <Image src="/images/LogoWeb.png" alt="" width="250" height="90" />
+          <Link href="/Home">
+            <Image src="/images/LogoWeb.png" alt="" width="250" height="90" />
+          </Link>
         </ImageBox>
         <TextBox>
           <TextBox.LocationContainer>
@@ -146,13 +159,19 @@ export default function Header() {
         <YourSpaceContainer>
           <YourSpace>
             <BsFillPersonFill />
-            <YourSpace.Word>
-              Perfil
-            </YourSpace.Word>
+            <Link href="/User/Perfil/MyRequests">
+              <YourSpace.Word>
+                Perfil
+              </YourSpace.Word>
+            </Link>
           </YourSpace>
         </YourSpaceContainer>
-        <MdShoppingCart size="30" color="#AA4545" />
-        <FiLogIn size="30" color="#AA4545" />
+        <MdShoppingCart size="30" color="#AA4545" style={{ cursor: 'pointer' }} />
+        <LogOut>
+          <Link href="/login">
+            <FiLogIn size="30" color="#AA4545" style={{ cursor: 'pointer' }} />
+          </Link>
+        </LogOut>
       </Header.Top>
     </Header.Wrapper>
   );

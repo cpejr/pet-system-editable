@@ -4940,7 +4940,7 @@ prop-types-extra@^1.1.0:
     react-is "^16.3.2"
     warning "^4.0.0"
 
-prop-types@15.7.2, prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@15.7.2, prop-types@^15.6.0, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.npmjs.org/prop-types/-/prop-types-15.7.2.tgz"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -5488,6 +5488,13 @@ react-confirm-alert@^2.7.0:
   resolved "https://registry.yarnpkg.com/react-confirm-alert/-/react-confirm-alert-2.7.0.tgz#7cdbf2e052e03554ac6a7d8956c9c227010c8a53"
   integrity sha512-21NWtGK/e85+ZX3TLRpMc3IsU5Kj6Z9ElCOrkTIlwMzV9EancyXNlkqHGbtKP63a2iS6g5hOxROokmJOqKQiXA==
 
+react-currency-format@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-currency-format/-/react-currency-format-1.0.0.tgz#9be9c984c357bf8e847368c5422b5f4d4aa819b3"
+  integrity sha1-m+nJhMNXv46Ec2jFQitfTUqoGbM=
+  dependencies:
+    prop-types "^15.6.0"
+
 react-dom@^16.8.0:
   version "16.14.0"
   resolved "https://registry.npmjs.org/react-dom/-/react-dom-16.14.0.tgz"
@@ -5510,6 +5517,11 @@ react-input-mask@^2.0.4:
   dependencies:
     invariant "^2.2.4"
     warning "^4.0.2"
+
+react-intl-currency-input@^0.2.6:
+  version "0.2.6"
+  resolved "https://registry.yarnpkg.com/react-intl-currency-input/-/react-intl-currency-input-0.2.6.tgz#d71396a9db478fa5341ac562af2fd9c20afb7683"
+  integrity sha512-As8Kg3m9BKwD4liefx/gxG6Dge/8GjdZQBDVlwUUxrgtqWUkRNvRj9Iy4pNx4+o1xpXaEt+gfjtzO6r8uTNBlg==
 
 react-is@16.13.1, react-is@^16.12.0, react-is@^16.3.2, react-is@^16.7.0, react-is@^16.8.0, react-is@^16.8.1:
   version "16.13.1"
