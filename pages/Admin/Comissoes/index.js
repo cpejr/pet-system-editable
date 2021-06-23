@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { FaRegUserCircle } from 'react-icons/fa';
+import axios from 'axios';
 import HeaderAdmin from '../../../src/components/HeaderAdmin';
 // import AdminCards from '../../../src/components/AdminCards';
 import AdminCardsFix from '../../../src/components/AdminCardsFix';
 import WindowDividerAdmin from '../../../src/components/WindowDividerAdmin';
+
+const api = axios.create({ baseURL: 'http://localhost:3000/' });
 
 const Container = styled.div`
 display:flex;
@@ -46,35 +49,63 @@ width:60%;
 }
 `;
 
-const ContainerModal = styled.div`
-display:flex;
-align-items:center;
-justify-content:center;
-width:100%;
-flex-direction:column;
+const ContainerComission = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width:80%;
+  margin-bottom: 5%;
 `;
 
-const TitleModal = styled.div`
-display:flex;
-align-items:center;
-justify-content:center;
-width:100%;
-font-family:Roboto;
-font-size:24px;
-margin-bottom:5%;
-@media(max-width:860px){
-        width:100%;
-        font-size:16px;
-        margin-bottom:20%;
-    } 
+ContainerComission.Field = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-top: 5%;
+  margin-bottom: 5%;
+`;
+
+const Title = styled.h1`
+  font-family: Roboto;
+  font-size: 45px;
+  font-weight: 400;
+`;
+
+const Text = styled.p`
+  font-family: Roboto;
+  font-size: 35px;
+  font-weight: 400;
+  margin: 0;
+
+`;
+
+const Input = styled.input`
+  width: 60%;
+  height: 35px;
+  font-size: 30px;
+  margin-left: 5%;
+  border-radius: 10px;
+  border-color:${({ theme }) => theme.colors.borderBoxColor};
+`;
+
+const Button = styled.button`
+  cursor: pointer;
+  height: 60px;
+  width: 200px;
+  border-radius: 10px;
+  font-family: Roboto;
+  font-size: 25px;
+  font-weight: 600;
+  background-color: ${({ theme }) => theme.colors.darkGreen};
+  color: white;
+
 `;
 
 export default function Admin() {
-  { /**
-    const [comission, setComission] = useState('');
+  const [comission, setComission] = useState('');
 
-    async function handleCommissionChange(event) {
-      setComission(event.target.value);
+  async function handleCommissionChange(event) {
+    setComission(event.target.value);
   }
 
   async function handleSubmit(event) {
@@ -82,20 +113,15 @@ export default function Admin() {
     const body = {
       share: comission,
     };
-
     try {
       if (comission != null) {
         const Validate = await api.put('/api/admin', body);
-        console.log(Validate.date);
-      } else {
-        const Validate = await api.post('/api/admin', body);
-        console.log(Validate.date);
+        console.log(Validate.data);
       }
     } catch (error) {
       console.log(error);
     }
   }
-*/ }
 
   return (
     <div>
@@ -105,21 +131,18 @@ export default function Admin() {
           <Container.Col1.Row1>
             <FaRegUserCircle size={80} style={{ color: '#609694' }} />
           </Container.Col1.Row1>
-          {/**
-              <AdminCards />
-           */}
           <AdminCardsFix />
         </Container.Col1>
         <WindowDividerAdmin />
         <Container.Col2>
-          <ContainerModal>
-            <TitleModal>
-              Ajustar Comissão
-            </TitleModal>
-          </ContainerModal>
-          <p>
-            Trazer as informações do modal do componente anterior!
-          </p>
+          <ContainerComission>
+            <Title>Ajustar comissão:</Title>
+            <ContainerComission.Field>
+              <Text>Porcentagem: </Text>
+              <Input type="text" placeholder="00,00 %" value={comission} onChange={handleCommissionChange} />
+            </ContainerComission.Field>
+            <Button onClick={handleSubmit}>Confirmar</Button>
+          </ContainerComission>
         </Container.Col2>
       </Container>
     </div>
