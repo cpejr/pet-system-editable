@@ -46,7 +46,57 @@ width:60%;
 }
 `;
 
+const ContainerModal = styled.div`
+display:flex;
+align-items:center;
+justify-content:center;
+width:100%;
+flex-direction:column;
+`;
+
+const TitleModal = styled.div`
+display:flex;
+align-items:center;
+justify-content:center;
+width:100%;
+font-family:Roboto;
+font-size:24px;
+margin-bottom:5%;
+@media(max-width:860px){
+        width:100%;
+        font-size:16px;
+        margin-bottom:20%;
+    } 
+`;
+
 export default function Admin() {
+  { /**
+    const [comission, setComission] = useState('');
+
+    async function handleCommissionChange(event) {
+      setComission(event.target.value);
+  }
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+    const body = {
+      share: comission,
+    };
+
+    try {
+      if (comission != null) {
+        const Validate = await api.put('/api/admin', body);
+        console.log(Validate.date);
+      } else {
+        const Validate = await api.post('/api/admin', body);
+        console.log(Validate.date);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+*/ }
+
   return (
     <div>
       <HeaderAdmin />
@@ -62,6 +112,11 @@ export default function Admin() {
         </Container.Col1>
         <WindowDividerAdmin />
         <Container.Col2>
+          <ContainerModal>
+            <TitleModal>
+              Ajustar Comissão
+            </TitleModal>
+          </ContainerModal>
           <p>
             Trazer as informações do modal do componente anterior!
           </p>

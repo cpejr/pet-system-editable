@@ -7,6 +7,11 @@ module.exports = {
     return response.json(category);
   },
 
+  async getAll(request, response) {
+    const categories = await CategoryModel.getAllCategories();
+    return response.json(categories);
+  },
+
   async create(request, response) {
     const category = request.body;
     try {
