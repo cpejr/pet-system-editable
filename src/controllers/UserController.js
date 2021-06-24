@@ -3,8 +3,16 @@ import UserModel from '../models/UserModel';
 
 export async function getOne(request, response) {
   const { id } = request.query;
-  const users = await UserModel.getUserById(id);
-  return response.status(200).json(users);
+
+  try {
+    const users = await UserModel.getUserById(id);
+    return response.status(200).json(users);
+  } catch (error) {
+    if (err.message) {
+      return response.status(400).json({ notification: err.message });
+    }
+    return response.status(500).json({ notification: 'Internal server error while trying to find user' });
+  }
 }
 
 export async function create(request, response) {

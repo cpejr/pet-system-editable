@@ -67,6 +67,12 @@ align-items:center;
 justify-content:center;
 width:100%;
 `;
+Card.Row3 = styled.p`
+display:flex;
+align-items:center;
+justify-content:center;
+width:100%;
+`;
 
 const Row1 = styled.div`
 display:flex;
@@ -81,6 +87,13 @@ align-items:center;
 justify-content:center;
 width:100%;
 `;
+const Row3 = styled.div`
+display:flex;
+align-items:center;
+justify-content:center;
+width:100%;
+`;
+
 const ContainerModal = styled.div`
 display:flex;
 align-items:center;
@@ -272,6 +285,16 @@ export default function AdminCards() {
               </Card.Row2>
             </Card>
           </Row2>
+          <Row3>
+            <Card>
+              <Card.Row1>
+                <IoMdNotificationsOutline size={50} style={{ color: '#609694' }} />
+              </Card.Row1>
+              <Card.Row2>
+                Edição de Categorias
+              </Card.Row2>
+            </Card>
+          </Row3>
         </Container.Col1>
         <Container.Col2>
           <Row1>
@@ -294,6 +317,12 @@ export default function AdminCards() {
               </Card.Row2>
             </Card>
           </Row2>
+          <Row3>
+            <Card>
+              <Card.Row1 />
+              <Card.Row2 />
+            </Card>
+          </Row3>
         </Container.Col2>
 
         <Container.Col3>
@@ -325,6 +354,12 @@ export default function AdminCards() {
               </Card.Row2>
             </Card>
           </Row2>
+          <Row3>
+            <Card>
+              <Card.Row1 />
+              <Card.Row2 />
+            </Card>
+          </Row3>
         </Container.Col3>
       </Container>
 

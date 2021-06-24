@@ -7,16 +7,29 @@ const FirebaseModel = require('../models/FirebaseModel');
 
 module.exports = {
   async getOne(request, response) {
-    const { id } = request.query;
-    const store = await StoreModel.getStoreById(id);
-    // const product = await ProductModel.getAllProducts();
-    // store.product = product;
-    return response.json(store);
+    const { store_id } = request.query;
+
+    try {
+      const store = await StoreModel.getStoreById(store_id);
+      return response.status(200).json(store);
+    } catch (error) {
+      if (err.message) {
+        return response.status(400).json({ notification: err.message });
+      }
+      return response.status(500).json({ notification: 'Internal server error while trying to find store' });
+    }
   },
 
   async getAll(request, response) {
-    const store = await StoreModel.getAllStore();
-    return response.json(store);
+    try {
+      const store = await StoreModel.getAllStore();
+      return response.status(200).json(store);
+    } catch (error) {
+      if (err.message) {
+        return response.status(400).json({ notification: err.message });
+      }
+      return response.status(500).json({ notification: 'Internal server error while trying to find category' });
+    }
   },
 
   async create(request, response) {

@@ -5,10 +5,18 @@ const StoreModel = require('../models/StoreModel');
 module.exports = {
   async getOne(request, response) {
     const { id } = request.query;
-    const product = await ProductModel.getProductById(id);
-    const store = await StoreModel.getStoreById(product.store_id);
-    product.store = store;
-    return response.json(product);
+
+    try {
+      const product = await ProductModel.getProductById(id);
+      const store = await StoreModel.getStoreById(product.store_id);
+      product.store = store;
+      return response.status(200).json(product);
+    } catch (error) {
+      if (err.message) {
+        return response.status(400).json({ notification: err.message });
+      }
+      return response.status(500).json({ notification: 'Internal server error while trying to find product' });
+    }
   },
 
   async create(request, response) {
@@ -55,8 +63,14 @@ module.exports = {
     return response.status(200).json({ notification: 'Product deleted' });
   },
   async getAll(request, response) {
-    // const { product_id } = request.body;
-    const product = await ProductModel.getAllProducts();
-    return response.json(product);
+    try {
+      const products = await ProductModel.getAllProducts();
+      return response.status(200).json(products);
+    } catch (error) {
+      if (error.message) {
+        return response.status(400).json({ notification: err.message });
+      }
+      return response.status(500).json({ notification: 'Internal server error while trying to find products' });
+    }
   },
 };
