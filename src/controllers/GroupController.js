@@ -3,6 +3,13 @@ const GroupModel = require('../models/GroupModel');
 const StoreModel = require('../models/StoreModel');
 
 module.exports = {
+
+  async getOne(req, res) {
+    const { id } = req.query;
+    const group = await GroupModel.getGroupById(id);
+    return res.json(group);
+  },
+
   async create(req, res) {
     const group = req.body;
     group.group_id = uuidv4();
@@ -20,6 +27,21 @@ module.exports = {
     }
     return res.status(200).json({ notification: 'Grupo criado!' });
   },
+
+  async update(request, response) {
+    const group = request.body;
+
+    try {
+      await GroupModel.updateGroup(group, group.group_id);
+    } catch (err) {
+      if (err.message) {
+        return response.status(400).json({ notification: err.message });
+      }
+      return response.status(500).json({ notification: 'Internal server error while trying to update group' });
+    }
+    return response.status(200).json({ notification: 'Group updated' });
+  },
+
   async del(req, res) {
     const { group_id } = req.body;
 
@@ -35,6 +57,12 @@ module.exports = {
       return res.status(500).json({ notification: 'There han been an error on the deletion of the group' });
     }
     return res.status(200).json({ notification: 'Group delected' });
+  },
+
+  async getAll(req, res) {
+    const { id } = req.query;
+    const group = await GroupModel.getAllGroups(id);
+    return res.json(group);
   },
 
 };

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import axios from 'axios';
+import { notification } from 'antd';
 
 const api = axios.create({ baseURL: 'http://localhost:3000/' });
 
@@ -52,7 +53,7 @@ font-family:Roboto;
     } 
 `;
 
-Ajust.Col2 = styled.input`
+const InputNameGroup = styled.input`
 display:flex;
 align-items:center;
 justify-content:center;
@@ -154,28 +155,30 @@ export default function ModalGroup() {
     setGroup(event.target.value);
   }
 
-  async function handleSubmit(event) {
-    event.preventDefault();
+  async function handleSubmit() {
     const body = {
       name: group,
-      store_id: 'eb60feca-220d-4852-aa8e-80067cc5bbce',
     };
 
     try {
-      if (group != null) {
-        const Validate = await api.put('/api/group', body);
-        console.log(Validate.data);
-      } else {
-        const Validate = await api.post('/api/group', body);
-        console.log(Validate.data);
-      }
+      const Validate = await api.post('/api/group', body);
+      console.log(Validate.data);
+      notification.open({
+        message: 'Sucesso!',
+        description:
+          'O grupo foi criado com sucesso.',
+        className: 'ant-notification',
+        top: '100px',
+        style: {
+          width: 600,
+        },
+      });
     } catch (error) {
       console.error(error);
     }
   }
 
   const classes = useStyles();
-  // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = useState(getModalStyle);
   const [open, setOpen] = useState(false);
 
@@ -194,9 +197,17 @@ export default function ModalGroup() {
           <Ajust.Col1>
             Nome do grupo:
           </Ajust.Col1>
-          <Ajust.Col2 placeholder="" require value={group} onChange={handleGroupChange} />
+          <InputNameGroup placeholder="" require value={group} onChange={handleGroupChange} />
         </Ajust>
-        <ButtonConfirm onClick={handleSubmit}>Confirmar grupo</ButtonConfirm>
+        <ButtonConfirm onClick={(e) => {
+          e.preventDefault();
+          handleSubmit();
+          handleClose();
+        }}
+        >
+          Confirmar grupo
+
+        </ButtonConfirm>
       </ContainerModal>
     </div>
   );

@@ -229,25 +229,6 @@ const RemoveProducts = styled.button`
     }
 `;
 
-// const AddGroup = styled.button`
-//     font-family: Roboto;
-//     font-size: 100%;
-//     font-weight: 500;
-//     background-color: ${({ theme }) => theme.colors.background};
-//     color: ${({ theme }) => theme.colors.mediumGreen};
-//     border: 0;
-//     cursor:pointer;
-//     outline:none;
-//     margin-right:2%;
-//     margin-top: --5px;
-//     @media(max-width:1000px){
-//       display:flex;
-//     align-items:center;
-//     justify-content:center;
-//     font-size:14px;
-// }
-// `;
-
 const RemoveGroup = styled.button`
     font-family: Roboto;
     font-size: 100%;
@@ -264,6 +245,13 @@ const RemoveGroup = styled.button`
     font-size:14px;
 }
 `;
+const Groups = styled.h2`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 0;
+  `;
 
 export default function Perfil() {
   return (
@@ -315,6 +303,7 @@ export default function Perfil() {
             <WordsDivider />
             <RemoveGroup>Remover Grupo</RemoveGroup>
           </Group>
+          <Groups>Name Group</Groups>
           <Products />
         </ProductContainer.Col2>
 

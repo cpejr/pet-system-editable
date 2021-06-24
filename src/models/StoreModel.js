@@ -4,8 +4,8 @@ module.exports = {
   async getStoreById(id) {
     try {
       const store = await connection('Store')
-        .select('*')
         .where('store_id', id)
+        .select('*')
         .first();
       return store;
     } catch (error) {
