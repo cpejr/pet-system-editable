@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import styled from 'styled-components';
+import { Collapse } from 'antd';
+import api from '../../utils/api';
+
+const { Panel } = Collapse;
 
 const Line = styled.div`
   display: flex;
@@ -30,29 +33,28 @@ const Editar = styled.button`
   color: white;
 `;
 
-const api = axios.create({ baseURL: 'http://localhost:3000/' });
-
 export default function Categories() {
   const [CategoriesData, setCategoriesData] = useState([]);
   useEffect(() => {
     async function fetchData() {
-      const response = await api.get('api/category/all');
+      const response = await api.get('/category/all');
       console.log(response.data);
       const { data } = response;
       setCategoriesData(data);
     }
     fetchData();
-    console.log(fetchData());
   }, []);
 
   return (
-    <Line>
-      <div>
-        {CategoriesData.map((category) => (
-          <p key={category.id}>{category.name}</p>
-        ))}
-      </div>
+    <Collapse>
+      {CategoriesData.map((category, index) => (
+        <Panel header={category.name} key={index + 1}>
 
-    </Line>
+          {category.subcategories.map((subcategory) => (
+            <p key={subcategory.id}>{subcategory.name}</p>
+          ))}
+        </Panel>
+      ))}
+    </Collapse>
   );
 }

@@ -7,8 +7,7 @@ import HeaderAdmin from '../../../src/components/HeaderAdmin';
 import AdminCardsFix from '../../../src/components/AdminCardsFix';
 import WindowDividerAdmin from '../../../src/components/WindowDividerAdmin';
 import Categories from '../../../src/components/Categories';
-
-// const api = axios.create({ baseURL: 'http://localhost:3000/' });
+import ModalAddCategory from '../../../src/components/CategoryModals/ModalAddCategory';
 
 const Container = styled.div`
 display:flex;
@@ -66,6 +65,7 @@ ContainerCategories.Top = styled.div`
   justify-content: space-between;
   //background-color: green;
   width: 100%;
+  margin-bottom: 5%;
 `;
 
 const Title = styled.h1`
@@ -77,7 +77,7 @@ const Title = styled.h1`
 `;
 
 const TopButton = styled.button`
-  cursor:pointer
+  cursor: pointer;
   margin-top: 1%;
   margin-bottom: 1%;
   align-items: flex-end;
@@ -111,7 +111,8 @@ export default function Admin() {
           <ContainerCategories>
             <ContainerCategories.Top>
               <Title>Edição de Categorias</Title>
-              <TopButton>Criar categoria</TopButton>
+              {/** <TopButton>Criar categoria</TopButton> * */}
+              <ModalAddCategory />
             </ContainerCategories.Top>
             <Categories />
           </ContainerCategories>
