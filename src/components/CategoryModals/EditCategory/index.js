@@ -40,7 +40,7 @@ const Button = styled.button`
 
 `;
 
-export default function AddCategory() {
+export default function EditCategory() {
   const [category, setCategory] = useState('');
 
   async function handleCategoryChange(event) {
@@ -54,7 +54,7 @@ export default function AddCategory() {
     };
     try {
       if (category != null) {
-        const Validate = await api.post('/category/', body);
+        const Validate = await api.put('/category/', body);
         console.log(Validate.data);
       }
     } catch (error) {
@@ -64,7 +64,7 @@ export default function AddCategory() {
 
   return (
     <div>
-      <Text>AddDigite o nome da Categoria a ser criada: </Text>
+      <Text>Digite o novo nome da Categoria a ser alterada: </Text>
       <Line>
         <Input type="text" value={category} onChange={handleCategoryChange} />
         <Button onClick={handleSubmit}>Confirmar</Button>

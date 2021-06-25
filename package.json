@@ -8,6 +8,7 @@
     "docs": "nodemon ./src/docs/index.js"
   },
   "dependencies": {
+    "@ant-design/icons": "^4.6.2",
     "@date-io/date-fns": "1.x",
     "@material-ui/core": "^4.11.3",
     "@material-ui/pickers": "^3.3.10",
