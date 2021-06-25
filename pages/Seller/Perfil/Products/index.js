@@ -93,9 +93,13 @@ flex-direction:column;
     display:flex;
     align-items:center;
     justify-content:space-evenly;
-    flex-direction:row;
+    flex-direction:column;
     width:100%;
     }
+    @media(max-width:560px){
+    display:none;
+    }
+
 `;
 
 ProductContainer.Col2 = styled.div`
@@ -103,6 +107,11 @@ width:80%;
 display:flex;
 align-items:center;
 justify-content:initial;
+@media(max-width:560px){
+    width:100%;
+    justify-content: center;
+    }
+
 `;
 
 const MarketContainer = styled.div`
@@ -111,7 +120,7 @@ align-items:center;
 justify-content:center;
 flex-direction:row;
 width:100%;
-@media(max-width:560px){
+@media(max-width:1010px){
     display:flex;
     align-items:center;
     justify-content:center;
@@ -124,6 +133,9 @@ display:flex;
 align-items:center;
 justify-content:center;
 width:62%;
+@media(max-width:1010px){
+    width:100%;
+    }
 
 @media(max-width:700px){
     display:flex;
@@ -146,6 +158,11 @@ display:flex;
 align-items:center;
 justify-content:initial;
 width:38%;
+@media(max-width:1010px){
+    width:100%;
+    justify-content: center;
+    }
+
 @media(max-width:560px){
     display:flex;
     align-items:center;
@@ -178,14 +195,13 @@ const EditCategory = styled.button`
     outline:none;
     margin-right:2%;
     margin-top: --5px;
-    @media(max-width:1000px){
+    @media(max-width:1010px){
       display:flex;
     align-items:center;
     justify-content:center;
     font-size:14px;
-    width:80%;
-    height:30px;
-    border-radius:20px;
+    width:20%;
+    height:50px;
     
 }
     @media(max-width:560px){
@@ -205,14 +221,13 @@ const RemoveProducts = styled.button`
     border-radius: 5px;
     cursor:pointer;
     outline:none;
-    @media(max-width:1000px){
+    @media(max-width:1010px){
       display:flex;
     align-items:center;
     justify-content:center;
     font-size:14px;
-    width:80%;
-    height:30px;
-    border-radius:20px;
+    width:20%;
+    height:50px;
 }
     @media(max-width:560px){
       display:none;

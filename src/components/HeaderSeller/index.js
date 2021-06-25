@@ -11,7 +11,7 @@ import Link from 'next/link';
 Header.Wrapper = styled.div`
     display:flex;
     width: 100%;
-    height: 20vh;
+    height: 25vh;
     flex-direction: column;
     flex-direction: column;
     @media(max-width:560px){
@@ -48,6 +48,7 @@ display:flex;
 align-items:center;
 justify-content:center;
 width:20%;
+cursor:pointer;
 `;
 
 const TextBox = styled.div`
@@ -139,6 +140,7 @@ display:flex;
 align-items:center;
 justify-content:center;
 font-size: 100%;
+margin: 0;
 `;
 
 const ItemBottomHeader = styled.p`
@@ -148,15 +150,24 @@ const ItemBottomHeader = styled.p`
   font-family: Poiret One;
   font-size: 100%;
   color: white;
-  
+  margin: 0;
+  cursor: pointer;
+`;
 
+const LogOut = styled.button`
+display: flex;
+align-items: center;
+justify-content: center;
+border: 0;
+outline: none;
+background-color:${({ theme }) => theme.colors.rose} ;
 `;
 
 export default function Header() {
   return (
     <Header.Wrapper>
       <Header.Top>
-        <Link href="/">
+        <Link href="/Home">
           <ImageBox>
             <Image src="/images/LogoWeb.png" alt="" width="250" height="100" />
           </ImageBox>
@@ -175,13 +186,19 @@ export default function Header() {
         <YourSpaceContainer>
           <YourSpace>
             <BsFillPersonFill />
-            <YourSpace.Word>
-              Seu espaço
-            </YourSpace.Word>
+            <Link href="/Seller/Perfil/Products">
+              <YourSpace.Word>
+                Seu espaço
+              </YourSpace.Word>
+            </Link>
           </YourSpace>
         </YourSpaceContainer>
-        <MdShoppingCart size="30" color="#AA4545" />
-        <FiLogIn size="30" color="#AA4545" />
+        <MdShoppingCart size="30" color="#AA4545" style={{ cursor: 'pointer' }} />
+        <LogOut>
+          <Link href="/login">
+            <FiLogIn size="30" color="#AA4545" style={{ cursor: 'pointer' }} />
+          </Link>
+        </LogOut>
       </Header.Top>
       <Header.Bottom>
         <ItemBottomHeader>Ração</ItemBottomHeader>

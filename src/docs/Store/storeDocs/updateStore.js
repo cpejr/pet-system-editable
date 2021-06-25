@@ -9,7 +9,7 @@
 *         required: true
 *         description: Id da loja a ser alterada.(STRING)
 *         schema:
-*       - in: body
+*       - in: Multipart form
 *         name: Body
 *         required: true
 *         description: Campos a serem alterados.(OBJECT)

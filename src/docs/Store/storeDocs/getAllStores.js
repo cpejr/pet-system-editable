@@ -22,8 +22,8 @@
 *               "cep": 456789
 *               "ie": 555
 *               "ie_state": "Minas Gerais"
-*               "cover_img": "dasdkasdjalj"
-*               "logo_img": "httapsdapo"
+*               "cover_img": "'1586181877017.jpg'"
+*               "logo_img": "'1586181877017.jpg'"
 *               "created_at": 20210414111030
 *               "evaluation": 5
 *               "status": "Aprovado"

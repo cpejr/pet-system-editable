@@ -8,7 +8,7 @@ display: flex;
 align-items: center;
 `;
 const Title = styled.div`
-margin-top: 20px;
+margin-top: 5px;
 font-family: Roboto;
 display: flex;
 `;
@@ -21,8 +21,7 @@ background-color:white;
 border-radius:20px;
 border: 2px;
 width:150px;
-height: 260px;
-// height:200px;
+height: 220px;
 margin-top: 20px;
 `;
 const Price = styled.div`
@@ -35,7 +34,7 @@ height:40px;
 color: white;
 font-family: Roboto;
 border-radius: 0 0 20px 20px;
-margin-top: 20px;
+margin-top: 10px;
 `;
 export default function Cards(props) {
   const { product } = props;

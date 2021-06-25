@@ -10,7 +10,7 @@
 *           type: string
 *         required: true
 *         description: Id do produto a ser alterado.
-*       - in: body
+*       - in: Multipart form
 *         name: Body
 *         schema:
 *         required: true

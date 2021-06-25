@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import timestamp from 'time-stamp';
 import { notification } from 'antd';
-import Upload from './Upload';
 import 'antd/dist/antd.css';
+import InputMask from 'react-input-mask';
+import CurrencyFormat from 'react-currency-format';
 
 const api = axios.create({ baseURL: 'http://localhost:3000/' });
-const { v4: uuidv4 } = require('uuid');
 
 const AddProductsContainer = styled.div`
 display:flex;
@@ -104,7 +103,7 @@ font-family: Roboto;
   justify-content:center;
 }
 `;
-PriceAndDiscont.Col1.Row2 = styled.input`
+PriceAndDiscont.Col1.Row2 = styled(CurrencyFormat)`
 display:flex;
 align-items:center;
 justify-content:initial;
@@ -192,6 +191,7 @@ align-items:center;
 justify-content:center;
 width:100%;
 font-family: Roboto;
+margin: 0;
 @media(max-width:1190px){
   justify-content:center;
 }
@@ -237,11 +237,48 @@ const ButtonConfirm = styled.button`
     cursor: pointer;
 `;
 
+const Img = styled.img` 
+  display:flex;
+align-items:center;
+justify-content:center;
+  width: 200px;
+  height: 200px;
+  margin-bottom:5%;
+  margin-top:5%;
+  `;
+const UploadContainer = styled.div`
+display:flex;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+`;
+
+const ImageSelected = styled.input`
+`;
+
+const Label = styled.label`
+background-color:  ${({ theme }) => theme.colors.mediumGreen};;
+color: white;
+padding: 0.5rem;
+font-family: sans-serif;
+border-radius: 0.3rem;
+cursor: pointer;
+margin-top: 1rem;
+`;
+
 export default function AddProducts({ closeModal }) {
   const [productName, setProductName] = useState('');
   const [price, setPrice] = useState('');
   const [discount, setDiscount] = useState('');
   const [description, setDescription] = useState('');
+  const [photo, setPhoto] = useState({ file: null, url: null }); /* Caminho da imagem no lugar de null */
+
+  function handleChange(event) {
+    setPhoto({
+      file: event.target.files[0],
+      url: URL.createObjectURL(event.target.files[0]),
+    });
+  }
 
   function handleProductNameChange(event) {
     setProductName(event.target.value);
@@ -257,19 +294,19 @@ export default function AddProducts({ closeModal }) {
   }
   async function handleSubmit() {
     const body = {
-      product_id: uuidv4(),
-      store_id: '6',
+      store_id: 'eb60feca-220d-4852-aa8e-80067cc5bbce',
       product_name: productName,
       price,
       discount,
       description,
-      img: 'djdiss',
-      created_at: timestamp(),
-
+      img: photo.file,
     };
+    const data = new FormData();
+    Object.keys(body).forEach((key) => data.append(key, body[key]));
+
     try {
       console.log(body);
-      const Validate = await api.post('/api/product', body);
+      const Validate = await api.post('/api/product', data);
       console.log(Validate.data);
       notification.open({
         message: 'Sucesso!',
@@ -306,11 +343,11 @@ export default function AddProducts({ closeModal }) {
               </PriceAndDiscont.Col1.Row1>
               <DivInput>
                 <PriceAndDiscont.Col1.Row2
-                  type="text"
-                  placeholder="R$ 00,00"
+                  placeholder="R$ 00,000"
                   required
                   value={price}
                   onChange={handlePriceChange}
+                  thousandSeparator
                 />
               </DivInput>
             </PriceAndDiscont.Col1>
@@ -321,8 +358,9 @@ export default function AddProducts({ closeModal }) {
               </PriceAndDiscont.Col2.Row1>
               <DivInput>
                 <PriceAndDiscont.Col2.Row2
-                  type="text"
-                  placeholder="% 00,0"
+                  as={InputMask}
+                  placeholder="% 00,00"
+                  mask="99,99"
                   required
                   value={discount}
                   onChange={handleDiscountChange}
@@ -346,7 +384,11 @@ export default function AddProducts({ closeModal }) {
 
         <AddProductsContainer.Col2>
           <SelectImage>Selecionar imagem</SelectImage>
-          <Upload />
+          <UploadContainer>
+            <ImageSelected type="file" id="upload" hidden onChange={handleChange} />
+            <Label for="upload">Escolha a imagem</Label>
+            <Img alt="" src={photo.url} />
+          </UploadContainer>
           <ButtonCancel onClick={(e) => { e.preventDefault(); closeModal(); }}>
             Cancelar Cadastro
           </ButtonCancel>

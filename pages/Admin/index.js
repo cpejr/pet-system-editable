@@ -53,7 +53,7 @@ export default function Admin() {
       <Container>
         <Container.Col1>
           <Container.Col1.Row1>
-            <FaRegUserCircle size={80} style={{ color: '#609694' }} />
+            <FaRegUserCircle size={80} style={{ color: '#609694', cursor: 'pointer' }} />
           </Container.Col1.Row1>
           {/**
               <AdminCards />

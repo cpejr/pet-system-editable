@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import {
-  Form, FormControl, Button, FormLabel, FormGroup,
+  Form, FormControl, FormLabel, FormGroup,
 } from 'react-bootstrap';
 import styled from 'styled-components';
 import Image from 'next/image';
@@ -100,7 +100,8 @@ flex-direction: column;
 const FormRegister = styled(Form)`
 
 `;
-const RegisterButton = styled(Button)`
+
+const Submit = styled.button`
     margin-top: 30px;
     height: 40px;
     width: 150px;
@@ -111,8 +112,20 @@ const RegisterButton = styled(Button)`
     color: white;
     border: 0;
     border-radius: 5px;
-
+    cursor: pointer;
 `;
+
+const ButtonLogin = styled.button`
+display: flex;
+align-items: center;
+justify-content: center;
+width: 100%;
+outline: none;
+border:0;
+background-color: ${({ theme }) => theme.colors.background};
+cursor: pointer;
+`;
+
 export default function Signup() {
   const [name, setName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -333,13 +346,15 @@ export default function Signup() {
                 </Phone>
               </NumbersForms>
               <Buttons>
-                <RegisterButton type="submit" variant="primary" onClick={handleSubmit}>Finalizar</RegisterButton>
+                <Submit onClick={handleSubmit}>Finalizar</Submit>
 
                 <br />
                 <FormGroup>
                   <FormLabel align="center">
                     Você já tem Cadastro?
-                    <Link href="/login"><p>Login</p></Link>
+                    <Link href="/login">
+                      <ButtonLogin>Login</ButtonLogin>
+                    </Link>
                   </FormLabel>
                 </FormGroup>
               </Buttons>

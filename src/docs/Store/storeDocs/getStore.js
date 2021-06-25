@@ -29,8 +29,8 @@
 *               cep: 12345678
 *               ie: 12345678
 *               ie_state: MG
-*               cover_img: 'banners/BannersImagem'
-*               logo_img: 'logos/LogoLoja'
+*               cover_img: '1586181877017.jpg'
+*               logo_img: '1586181877017.jpg'
 *               created_at: 20210414111030,
 *               evaluation: 10,
 *               status: Aprovado

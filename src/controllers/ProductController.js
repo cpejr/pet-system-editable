@@ -1,31 +1,36 @@
 const { v4: uuidv4 } = require('uuid');
 const ProductModel = require('../models/ProductModel');
 const StoreModel = require('../models/StoreModel');
+const AwsModel = require('../models/AwsModel');
 
 module.exports = {
   async getOne(request, response) {
     const { id } = request.query;
 
-    try {
-      const product = await ProductModel.getProductById(id);
-      const store = await StoreModel.getStoreById(product.store_id);
-      product.store = store;
-      return response.status(200).json(product);
-    } catch (error) {
-      if (err.message) {
-        return response.status(400).json({ notification: err.message });
-      }
-      return response.status(500).json({ notification: 'Internal server error while trying to find product' });
-    }
+    const product = await ProductModel.getProductById(id);
+    const store = await StoreModel.getStoreById(product.store_id);
+    product.store = store;
+
+    // const readImage = await AwsModel.getAWS();
+
+    // readImage.pipe(response);
+    return response.json(product);
   },
 
   async create(request, response) {
     const product = request.body;
+    const file = request.files;
     product.product_id = uuidv4();
+    file.img.name = uuidv4();
+
     try {
+      const image_id = await AwsModel.uploadAWS(file.img);
+      product.img = image_id.key;
+
       const user_id = request.session.get('user').user.firebase_id;
       const { store_id } = await StoreModel.getByUserId(user_id);
       product.store_id = store_id;
+
       await ProductModel.createNewProduct(product);
     } catch (error) {
       if (err.message) {

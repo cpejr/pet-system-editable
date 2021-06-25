@@ -41,6 +41,7 @@ display:flex;
 align-items:center;
 justify-content:center;
 width:20%;
+cursor:pointer;
 `;
 
 const TextBox = styled.div`
@@ -132,6 +133,7 @@ display:flex;
 align-items:center;
 justify-content:center;
 font-size: 100%;
+margin: 0;
 `;
 
 const ItemBottomHeader = styled.p`
@@ -141,8 +143,17 @@ const ItemBottomHeader = styled.p`
   font-family: Poiret One;
   font-size: 100%;
   color: white;
-  
+  cursor: pointer;
+  margin: 0;
 
+`;
+const LogOut = styled.button`
+display: flex;
+align-items: center;
+justify-content: center;
+border: 0;
+outline: none;
+background-color:${({ theme }) => theme.colors.rose} ;
 `;
 
 export default function Header() {
@@ -150,7 +161,7 @@ export default function Header() {
     <Header.Wrapper>
       <Header.Top>
         <ImageBox>
-          <Link href="/">
+          <Link href="/Home">
             <Image src="/images/LogoWeb.png" alt="" width="250" height="100" />
           </Link>
         </ImageBox>
@@ -168,15 +179,19 @@ export default function Header() {
         <YourSpaceContainer>
           <YourSpace>
             <BsFillPersonFill />
-            <Link href="/login">
+            <Link href="/User/Perfil/MyRequests">
               <YourSpace.Word>
                 Perfil
               </YourSpace.Word>
             </Link>
           </YourSpace>
         </YourSpaceContainer>
-        <MdShoppingCart size="30" color="#AA4545" />
-        <FiLogIn size="30" color="#AA4545" />
+        <MdShoppingCart size="30" color="#AA4545" style={{ cursor: 'pointer' }} />
+        <LogOut>
+          <Link href="/login">
+            <FiLogIn size="30" color="#AA4545" style={{ cursor: 'pointer' }} />
+          </Link>
+        </LogOut>
       </Header.Top>
       <Header.Bottom>
         <ItemBottomHeader>Rações</ItemBottomHeader>

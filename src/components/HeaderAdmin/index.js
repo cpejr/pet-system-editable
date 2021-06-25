@@ -11,7 +11,7 @@ import Link from 'next/link';
 Header.Wrapper = styled.div`
     display:flex;
     width: 100%;
-    height: 20vh;
+    height: 25vh;
     flex-direction: column;
     @media(max-width:800px){
     display:none;
@@ -32,6 +32,7 @@ display:flex;
 align-items:center;
 justify-content:center;
 width:20%;
+cursor:pointer;
 `;
 
 const TextBox = styled.div`
@@ -124,13 +125,21 @@ align-items:center;
 justify-content:center;
 font-size: 100%;
 `;
+const LogOut = styled.button`
+display: flex;
+align-items: center;
+justify-content: center;
+border: 0;
+outline: none;
+background-color:${({ theme }) => theme.colors.rose} ;
+`;
 
 export default function Header() {
   return (
     <Header.Wrapper>
       <Header.Top>
         <ImageBox>
-          <Link href="/">
+          <Link href="/Home">
 
             <Image src="/images/LogoWeb.png" alt="" width="250" height="100" o />
           </Link>
@@ -149,13 +158,19 @@ export default function Header() {
         <YourSpaceContainer>
           <YourSpace>
             <BsFillPersonFill />
-            <YourSpace.Word>
-              Olá Igor
-            </YourSpace.Word>
+            <Link href="/Admin">
+              <YourSpace.Word>
+                Olá Igor
+              </YourSpace.Word>
+            </Link>
           </YourSpace>
         </YourSpaceContainer>
-        <MdShoppingCart size="30" color="#AA4545" />
-        <FiLogIn size="30" color="#AA4545" />
+        <MdShoppingCart size="30" color="#AA4545" style={{ cursor: 'pointer' }} />
+        <LogOut>
+          <Link href="/login">
+            <FiLogIn size="30" color="#AA4545" style={{ cursor: 'pointer' }} />
+          </Link>
+        </LogOut>
       </Header.Top>
 
     </Header.Wrapper>
