@@ -32,7 +32,7 @@ module.exports = {
       product.store_id = store_id;
 
       await ProductModel.createNewProduct(product);
-    } catch (error) {
+    } catch (err) {
       if (err.message) {
         return response.status(400).json({ notification: err.message });
       }

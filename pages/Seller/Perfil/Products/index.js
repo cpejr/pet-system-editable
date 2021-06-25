@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import Link from 'next/link';
 // import { makeStyles } from '@material-ui/core/styles';
 // import Modal from '@material-ui/core/Modal';
+import { BsTrash } from 'react-icons/bs';
+import { BiEditAlt } from 'react-icons/bi';
 import HeaderSeller from '../../../../src/components/HeaderSeller';
 import WordsDivider from '../../../../src/components/WordsDivider';
 import FooterMobile from '../../../../src/components/Mobile/FooterMobile';
@@ -13,6 +15,7 @@ import Products from '../../../../src/components/Products';
 import ModalAddProducts from '../../../../src/components/ModalAddProducts';
 import LocationAndFilter from '../../../../src/components/Mobile/LocationAndFilter';
 import EditAddRemoveSection from '../../../../src/components/Mobile/EditAddRemoveSection';
+import ModalGroup from '../../../../src/components/ModalGroup';
 
 const Title = styled.h1`
 align-items:initial;
@@ -234,6 +237,61 @@ const RemoveProducts = styled.button`
     }
 `;
 
+const EditGroup = styled.button`
+  display:flex;
+    align-items:center;
+    justify-content:center;
+    background-color: ${({ theme }) => theme.colors.background};
+    border: 0;
+    outline:none;
+    margin-left: 2%;
+    margin-right: 1%;
+    @media(max-width:1000px){
+      display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:14px;
+}
+`;
+
+const RemoveGroup = styled.button`
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background-color: ${({ theme }) => theme.colors.background};
+    border: 0;
+    outline:none;
+    @media(max-width:1000px){
+      display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:14px;
+}
+`;
+
+const Group = styled.div`
+width:100%;
+display:flex;
+align-items:initial;
+justify-content:initial;
+flex-direction: column;
+`;
+
+Group.Title = styled.div`
+width:100%;
+display:flex;
+align-items:center;
+justify-content:center;
+flex-direction: row;
+`;
+
+const Groups = styled.h2`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  `;
+
 export default function Perfil() {
   return (
     <div>
@@ -279,7 +337,21 @@ export default function Perfil() {
           <Category />
         </ProductContainer.Col1>
         <ProductContainer.Col2>
-          <Products />
+          <Group>
+            <ModalGroup />
+
+            <Group.Title>
+              <Groups>nome do grupo</Groups>
+              <EditGroup>
+                <BiEditAlt size={22} style={{ color: '#AAABB0', cursor: 'pointer' }} />
+              </EditGroup>
+              <RemoveGroup>
+                <BsTrash size={22} style={{ color: '#AA4545', cursor: 'pointer' }} />
+              </RemoveGroup>
+            </Group.Title>
+            <Products />
+
+          </Group>
         </ProductContainer.Col2>
 
       </ProductContainer>
