@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { Collapse } from 'antd';
 import { SettingOutlined, EditOutlined } from '@ant-design/icons';
 import api from '../../utils/api';
-import CategoryButtons from '../CategoryModals/CategoryButtons';
-import SubcategoryButtons from '../CategoryModals/SubcategoryButtons';
+import CategoryButtons from '../CategoryComponents/CategoryButtons';
+import SubcategoryButtons from '../CategoryComponents/SubcategoryButtons';
 
 const { Panel } = Collapse;
 

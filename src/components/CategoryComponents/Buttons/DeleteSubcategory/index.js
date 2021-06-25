@@ -5,34 +5,18 @@ import Modal from '@material-ui/core/Modal';
 import {
   Button,
 } from 'react-bootstrap';
-import AddCategory from '../AddCategory';
+import { CloseOutlined } from '@ant-design/icons';
+import ModalDeleteSubcategory from '../../Modals/ModalDeleteSubcategory';
 
-const ButtonAdd = styled(Button)`
+const ButtonDelete = styled(Button)`
     margin-left: 10px;
-    height: 50px;
-    width: 125%;
-    font-family: Roboto;
-    font-size: 100%;
-    font-weight: 500;
+    height: 35px;
+    width: 35px;
     background-color: ${({ theme }) => theme.colors.darkGreen};
     color: white;
-    border: 0;
-    border-radius: 5px;
     cursor:pointer;
     outline:none;
     margin-right:2%;
-    @media(max-width:1000px){
-      display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:14px;
-    width:80%;
-    height:30px;
-    border-radius:20px;
-    }
-    @media(max-width:560px){
-    display:none;
-    }
 `;
 function getModalStyle() {
   const top = 50;
@@ -66,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 /*eslint-disable*/
-export default function ModalAddCategory() {
+export default function DeleteSubcategory() {
   const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = useState(getModalStyle);
@@ -84,15 +68,15 @@ export default function ModalAddCategory() {
 
   const body = (
     <div style={modalStyle} className={classes.paper}>
-    <AddCategory closeModal = {handleState}/>
+    <ModalDeleteSubcategory closeModal = {handleState}/>
   </div>
   );
 
   return (
     <div>
-      <ButtonAdd onClick={handleOpen}>
-        Adicionar Categoria
-      </ButtonAdd>
+      <ButtonDelete onClick={handleOpen}>
+        <CloseOutlined />
+      </ButtonDelete>
       <Modal
         open={open}
         onClose={handleClose}

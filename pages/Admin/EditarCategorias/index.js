@@ -7,7 +7,7 @@ import HeaderAdmin from '../../../src/components/HeaderAdmin';
 import AdminCardsFix from '../../../src/components/AdminCardsFix';
 import WindowDividerAdmin from '../../../src/components/WindowDividerAdmin';
 import Categories from '../../../src/components/Categories';
-import ModalAddCategory from '../../../src/components/CategoryModals/ModalAddCategory';
+import AddCategory from '../../../src/components/CategoryComponents/Buttons/AddCategory';
 
 const Container = styled.div`
 display:flex;
@@ -112,7 +112,7 @@ export default function Admin() {
             <ContainerCategories.Top>
               <Title>Edição de Categorias</Title>
               {/** <TopButton>Criar categoria</TopButton> * */}
-              <ModalAddCategory />
+              <AddCategory />
             </ContainerCategories.Top>
             <Categories />
           </ContainerCategories>

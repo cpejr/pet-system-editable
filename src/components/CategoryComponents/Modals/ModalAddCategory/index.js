@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import api from '../../../utils/api';
+import api from '../../../../utils/api';
 
 const Line = styled.div`
   margin-top: 5%;
@@ -12,7 +12,7 @@ const Line = styled.div`
 
 const Text = styled.p`
   font-family: Roboto;
-  font-size: 30px;
+  font-size: 27px;
   font-weight: 400;
   margin: 0;
 
@@ -21,7 +21,7 @@ const Text = styled.p`
 const Input = styled.input`
   width: 60%;
   height: 35px;
-  font-size: 30px;
+  font-size: 27px;
   border-radius: 10px;
   border-color:${({ theme }) => theme.colors.borderBoxColor};
 `;
@@ -40,7 +40,7 @@ const Button = styled.button`
 
 `;
 
-export default function EditCategory() {
+export default function ModalAddCategory() {
   const [category, setCategory] = useState('');
 
   async function handleCategoryChange(event) {
@@ -54,7 +54,7 @@ export default function EditCategory() {
     };
     try {
       if (category != null) {
-        const Validate = await api.put('/category/', body);
+        const Validate = await api.post('/category/', body);
         console.log(Validate.data);
       }
     } catch (error) {
@@ -64,7 +64,7 @@ export default function EditCategory() {
 
   return (
     <div>
-      <Text>Digite o novo nome da Categoria a ser alterada: </Text>
+      <Text>Digite o nome da Categoria a ser criada: </Text>
       <Line>
         <Input type="text" value={category} onChange={handleCategoryChange} />
         <Button onClick={handleSubmit}>Confirmar</Button>
