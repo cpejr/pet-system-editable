@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import Link from 'next/link';
 // import { makeStyles } from '@material-ui/core/styles';
 // import Modal from '@material-ui/core/Modal';
+import { BsTrash } from 'react-icons/bs';
+import { BiEditAlt } from 'react-icons/bi';
 import HeaderSeller from '../../../../src/components/HeaderSeller';
 import WordsDivider from '../../../../src/components/WordsDivider';
 import FooterMobile from '../../../../src/components/Mobile/FooterMobile';
@@ -105,14 +107,6 @@ display:flex;
 align-items:center;
 justify-content:initial;
 flex-direction: column;
-`;
-
-const Group = styled.div`
-width:100%;
-display:flex;
-align-items:initial;
-justify-content:initial;
-flex-direction: row;
 `;
 
 const MarketContainer = styled.div`
@@ -229,14 +223,29 @@ const RemoveProducts = styled.button`
     }
 `;
 
-const RemoveGroup = styled.button`
-    font-family: Roboto;
-    font-size: 100%;
-    font-weight: 500;
+const EditGroup = styled.button`
+  display:flex;
+    align-items:center;
+    justify-content:center;
     background-color: ${({ theme }) => theme.colors.background};
-    color: ${({ theme }) => theme.colors.mediumRed};
     border: 0;
-    cursor:pointer;
+    outline:none;
+    margin-left: 2%;
+    margin-right: 1%;
+    @media(max-width:1000px){
+      display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:14px;
+}
+`;
+
+const RemoveGroup = styled.button`
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background-color: ${({ theme }) => theme.colors.background};
+    border: 0;
     outline:none;
     @media(max-width:1000px){
       display:flex;
@@ -245,11 +254,27 @@ const RemoveGroup = styled.button`
     font-size:14px;
 }
 `;
+
+const Group = styled.div`
+width:100%;
+display:flex;
+align-items:initial;
+justify-content:initial;
+flex-direction: column;
+`;
+
+Group.Title = styled.div`
+width:100%;
+display:flex;
+align-items:center;
+justify-content:center;
+flex-direction: row;
+`;
+
 const Groups = styled.h2`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
   margin: 0;
   `;
 
@@ -300,11 +325,19 @@ export default function Perfil() {
         <ProductContainer.Col2>
           <Group>
             <ModalGroup />
-            <WordsDivider />
-            <RemoveGroup>Remover Grupo</RemoveGroup>
+
+            <Group.Title>
+              <Groups>nome do grupo</Groups>
+              <EditGroup>
+                <BiEditAlt size={22} style={{ color: '#AAABB0', cursor: 'pointer' }} />
+              </EditGroup>
+              <RemoveGroup>
+                <BsTrash size={22} style={{ color: '#AA4545', cursor: 'pointer' }} />
+              </RemoveGroup>
+            </Group.Title>
+            <Products />
+
           </Group>
-          <Groups>Name Group</Groups>
-          <Products />
         </ProductContainer.Col2>
 
       </ProductContainer>

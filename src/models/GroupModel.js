@@ -51,4 +51,16 @@ module.exports = {
       throw new Error(error);
     }
   },
+
+  async getAllGroupsFromSession(store_id) {
+    try {
+      const groups = await connection('group')
+        .where({ store_id })
+        .select('*');
+      return groups;
+    } catch (error) {
+      console.error(error);
+      throw new Error(error);
+    }
+  },
 };

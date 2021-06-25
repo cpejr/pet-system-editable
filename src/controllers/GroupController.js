@@ -58,10 +58,18 @@ module.exports = {
     }
     return res.status(200).json({ notification: 'Group delected' });
   },
-
-  async getAll(req, res) {
+  // função para o usuário puxar todos os grupos pelo id da loja na URl
+  async getAllFromStore(req, res) {
     const { id } = req.query;
     const group = await GroupModel.getAllGroups(id);
+    return res.json(group);
+  },
+  // função para o seller pegar todos os grupos de sua loja pela sessão
+  async getAllFromSession(req, res) {
+    const id = req.session.get('user').user.firebase_id;
+    const { store_id } = await StoreModel.getByUserId(id);
+    const group = await GroupModel.getAllGroupsFromSession(store_id);
+    console.log(id);
     return res.json(group);
   },
 
