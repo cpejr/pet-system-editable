@@ -93,6 +93,10 @@ module.exports = {
 
   async deleteCategory(id) {
     try {
+      await connection('Subcategories')
+        .where({ category_id: id })
+        .delete();
+
       const response = await connection('Categories')
         .where({ category_id: id })
         .delete();

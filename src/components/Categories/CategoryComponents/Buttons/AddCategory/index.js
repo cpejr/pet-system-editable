@@ -5,19 +5,23 @@ import Modal from '@material-ui/core/Modal';
 import {
   Button,
 } from 'react-bootstrap';
-import { CloseOutlined } from '@ant-design/icons';
-import ModalDeleteCategory from '../../Modals/ModalDeleteCategory';
+import { PlusOutlined } from '@ant-design/icons';
+import ModalAddCategory from '../../Modals/ModalAddCategory';
 
-const ButtonDelete = styled(Button)`
-    margin-left: 10px;
-    height: 35px;
-    width: 35px;
-    background-color: ${({ theme }) => theme.colors.darkGreen};
-    color: white;
-    cursor:pointer;
-    outline:none;
-    margin-right:2%;
+const ButtonAdd = styled(Button)`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 150px;
+  cursor:pointer;
+  border: none;
 `;
+
+const nameButton = styled.p`
+  align-items: center;
+`;
+
 function getModalStyle() {
   const top = 50;
   const left = 50;
@@ -37,8 +41,8 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     position: 'absolute',
-    width: '30vw',
-    height: '15vh',
+    width: '35vw',
+    height: '22vh',
     backgroundColor: theme.palette.background.paper,
     border: '2px solid #609694',
     boxShadow: theme.shadows[5],
@@ -50,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 /*eslint-disable*/
-export default function DeleteCategory() {
+export default function AddCategory() {
   const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = useState(getModalStyle);
@@ -67,16 +71,17 @@ export default function DeleteCategory() {
   };
 
   const body = (
-    <div style={modalStyle} className={classes.paper}>
-    <ModalDeleteCategory closeModal = {handleState}/>
+  <div style={modalStyle} className={classes.paper}>
+    <ModalAddCategory closeModal = {handleState}/>
   </div>
   );
 
   return (
     <div>
-      <ButtonDelete onClick={handleOpen}>
-        <CloseOutlined />
-      </ButtonDelete>
+      <ButtonAdd onClick={handleOpen}>
+        <PlusOutlined />
+        <nameButton>Adicionar Categoria</nameButton>
+      </ButtonAdd>
       <Modal
         open={open}
         onClose={handleClose}

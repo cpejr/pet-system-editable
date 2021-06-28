@@ -9,15 +9,19 @@ import { PlusOutlined } from '@ant-design/icons';
 import ModalAddSubcategory from '../../Modals/ModalAddSubcategory';
 
 const ButtonAdd = styled(Button)`
-    margin-left: 10px;
-    height: 35px;
-    width: 35px;
-    background-color: ${({ theme }) => theme.colors.darkGreen};
-    color: white;
-    cursor:pointer;
-    outline:none;
-    margin-right:2%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  cursor:pointer;
+  border: none;
+  background:none;
 `;
+
+const nameButton = styled.p`
+  align-items: center;
+`;
+
 function getModalStyle() {
   const top = 50;
   const left = 50;
@@ -38,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     position: 'absolute',
     width: '30vw',
-    height: '15vh',
+    height: '20vh',
     backgroundColor: theme.palette.background.paper,
     border: '2px solid #609694',
     boxShadow: theme.shadows[5],
@@ -50,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 /*eslint-disable*/
-export default function AddCategory() {
+export default function AddCategory({ category }) {
   const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = useState(getModalStyle);
@@ -68,14 +72,15 @@ export default function AddCategory() {
 
   const body = (
     <div style={modalStyle} className={classes.paper}>
-    <ModalAddSubcategory closeModal = {handleState}/>
+    <ModalAddSubcategory closeModal = {handleState} category={category}/>
   </div>
   );
 
   return (
     <div>
-      <ButtonAdd onClick={handleOpen}>
+      <ButtonAdd onClick={handleOpen}>  
         <PlusOutlined />
+        <nameButton>Adicionar Subcategoria</nameButton>
       </ButtonAdd>
       <Modal
         open={open}

@@ -5,19 +5,23 @@ import Modal from '@material-ui/core/Modal';
 import {
   Button,
 } from 'react-bootstrap';
-import { EditOutlined } from '@ant-design/icons';
-import ModalEditSubcategory from '../../Modals/ModalEditSubcategory';
+import { CloseOutlined } from '@ant-design/icons';
+import ModalDeleteCategory from '../../Modals/ModalDeleteCategory';
 
-const ButtonEdit = styled(Button)`
-    margin-left: 10px;
-    height: 35px;
-    width: 35px;
-    background-color: ${({ theme }) => theme.colors.darkGreen};
-    color: white;
-    cursor:pointer;
-    outline:none;
-    margin-right:2%;
+const ButtonDelete = styled(Button)`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  cursor:pointer;
+  border: none;
+  background:none;
 `;
+
+const nameButton = styled.p`
+  align-items: center;
+`;
+
 function getModalStyle() {
   const top = 50;
   const left = 50;
@@ -37,8 +41,8 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     position: 'absolute',
-    width: '30vw',
-    height: '15vh',
+    width: '35vw',
+    height: '18vh',
     backgroundColor: theme.palette.background.paper,
     border: '2px solid #609694',
     boxShadow: theme.shadows[5],
@@ -50,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 /*eslint-disable*/
-export default function EditSubcategory() {
+export default function DeleteCategory({ category }) {
   const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = useState(getModalStyle);
@@ -68,15 +72,16 @@ export default function EditSubcategory() {
 
   const body = (
     <div style={modalStyle} className={classes.paper}>
-    <ModalEditSubcategory closeModal = {handleState}/>
+    <ModalDeleteCategory closeModal = {handleState} category={category} />
   </div>
   );
 
   return (
     <div>
-      <ButtonEdit onClick={handleOpen}>
-        <EditOutlined />
-      </ButtonEdit>
+      <ButtonDelete onClick={handleOpen}>
+        <CloseOutlined />
+        <nameButton>Apagar Categoria</nameButton>
+      </ButtonDelete>
       <Modal
         open={open}
         onClose={handleClose}

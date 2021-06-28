@@ -9,17 +9,16 @@ const Line = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  width: 100%;
-  //margin-top: 1%;
+  width: 400px;
 `;
 
-export default function CategoryButtons() {
+export default function CategoryButtons({ category }) {
   return (
     <div>
       <Line>
-        <AddSubcategory />
-        <EditCategory />
-        <DeleteCategory />
+        <AddSubcategory category={category} />
+        <EditCategory category={category} />
+        <DeleteCategory category={category} />
       </Line>
     </div>
   );
