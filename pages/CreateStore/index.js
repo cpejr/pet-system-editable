@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { notification } from 'antd';
+import 'antd/dist/antd.css';
 import axios from 'axios';
 import Link from 'next/link';
 import Header from '../../src/components/Header';
