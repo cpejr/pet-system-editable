@@ -73,6 +73,5 @@ export default function Home({ stores }) {
 export async function getServerSideProps() {
   const response = await api.get('store');
   const stores = response.data;
-  console.log(stores);
   return { props: { stores } };
 }

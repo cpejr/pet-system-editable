@@ -35,16 +35,8 @@ export async function signIn(req, res) {
 
 export async function validateSession(req, res) {
   try {
-    const { accessToken } = req.body;
-    const session = await getSessionByAccessToken(accessToken);
-
-    if (session) {
-      const firebase_id = session.user_id;
-      const user = await UserModel.getUserById(firebase_id);
-
-      return res.status(200).json({ accessToken, user });
-    }
-    return res.status(400).json({ message: 'A sessao nao foi validada' });
+    const session = await req.session.get('user');
+    return res.status(200).json(session);
   } catch (error) {
     return res.status(500).json({ message: err.message });
   }

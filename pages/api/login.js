@@ -4,6 +4,7 @@ import { withSession } from '../../src/utils/Auth';
 export default function handler(req, res) {
   try {
     const { method } = req;
+    console.log(method);
     if (method === 'POST') {
       return withSession(signIn)(req, res);
     }

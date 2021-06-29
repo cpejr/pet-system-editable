@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
-import axios from 'axios';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import Header from '../../src/components/Header';
 import {
   Body, Formulary, TopFormulary, ItemFormulary, BottomFormulary,
@@ -9,10 +9,16 @@ import {
 import {
   TitleLogin, SubtitleLogin, TextBox, Submit, ForgotPassword, CreateAccount, Divider,
 } from '../../src/components/FormComponents';
+import api from '../../src/utils/api';
+import { useAuth } from '../../src/contexts/AuthContext';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const { login } = useAuth();
+
+  const router = useRouter();
 
   function handleEmailChange(event) {
     setEmail(event.target.value);
@@ -22,12 +28,8 @@ const Login = () => {
   }
   async function handleSubmit(event) {
     event.preventDefault();
-    const body = {
-      email, password,
-    };
     try {
-      const Validate = await axios.post('http://localhost:3000/api/login', body);
-      console.log(Validate.data);
+      await login();
       router.push('/');
     } catch (error) {
       console.log(error);
@@ -62,9 +64,8 @@ const Login = () => {
               <ForgotPassword>Esqueceu a senha?</ForgotPassword>
             </ItemFormulary>
             <BottomFormulary>
-              <Link href="/Home">
-                <Submit type="submit">Finalizar</Submit>
-              </Link>
+              <Submit type="submit">Finalizar</Submit>
+
             </BottomFormulary>
             <BottomFormulary>
 
