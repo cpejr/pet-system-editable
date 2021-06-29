@@ -9,7 +9,6 @@ import {
 import {
   TitleLogin, SubtitleLogin, TextBox, Submit, ForgotPassword, CreateAccount, Divider,
 } from '../../src/components/FormComponents';
-import api from '../../src/utils/api';
 import { useAuth } from '../../src/contexts/AuthContext';
 
 const Login = () => {
@@ -29,10 +28,9 @@ const Login = () => {
   async function handleSubmit(event) {
     event.preventDefault();
     try {
-      await login();
-      router.push('/');
+      await login(email, password);
     } catch (error) {
-      console.log(error);
+      console.log(error); //eslint-disable-line
     }
   }
 

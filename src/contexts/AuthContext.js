@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import api from '../utils/api';
 
 const emptyContextInfo = {
@@ -13,10 +14,13 @@ const AuthContext = React.createContext(emptyContextInfo);
 function AuthProvider({ children }) {
   const [user, setUser] = useState(undefined);
 
+  const router = useRouter();
+
   async function login(email, password) {
     try {
       const response = await api.post('login', { email, password });
       setUser(response.data.user);
+      router.push('/');
     } catch (error) {
       console.error(error); //eslint-disable-line
     }
@@ -26,6 +30,7 @@ function AuthProvider({ children }) {
     try {
       await api.get('logout');
       setUser(undefined);
+      router.push('/');
     } catch (error) {
       console.error(error); //eslint-disable-line
     }

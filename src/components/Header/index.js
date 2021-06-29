@@ -158,7 +158,7 @@ background-color:${({ theme }) => theme.colors.rose} ;
 `;
 
 export default function Header() {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
 
   const PersonalButton = () => {
     if (!user) {
@@ -224,7 +224,7 @@ export default function Header() {
           </YourSpace>
         </YourSpaceContainer>
         <MdShoppingCart size="30" color="#AA4545" style={{ cursor: 'pointer' }} />
-        <LogOut>
+        <LogOut onClick={logout}>
           <Link href="/login">
             <FiLogIn size="30" color="#AA4545" style={{ cursor: 'pointer' }} />
           </Link>

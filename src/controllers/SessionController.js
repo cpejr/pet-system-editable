@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import { createSession, getSessionByAccessToken } from '../models/SessionModel';
+import { createSession } from '../models/SessionModel';
 import UserModel from '../models/UserModel';
 import FirebaseModel from '../models/FirebaseModel';
 
