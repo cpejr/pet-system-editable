@@ -23,6 +23,11 @@ module.exports = {
         destination: '/Seller/Perfil/Products',
         permanent: true,
       },
+      {
+        source:'/',
+        destination:'/Home',
+        permanent: true,
+      }
     ];
   },
 
