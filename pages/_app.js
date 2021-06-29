@@ -2,6 +2,7 @@ import React from 'react';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import Head from 'next/head';
 // import 'bootstrap/dist/css/bootstrap.min.css';
+// import useSWR from 'swr';
 
 const GlobalStyle = createGlobalStyle`
   body {

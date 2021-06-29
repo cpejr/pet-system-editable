@@ -23,9 +23,9 @@ module.exports = {
         return res.status(400).json({ notification: err.message });
       }
       console.error(err);
-      return res.status(500).json({ notification: 'There has been an error on the creation of the group' });
+      return res.status(500).json({ notification: 'Internal server error while trying to create group' });
     }
-    return res.status(200).json({ notification: 'Grupo criado!' });
+    return res.status(200).json({ notification: 'Group created!' });
   },
 
   async update(request, response) {
@@ -54,9 +54,9 @@ module.exports = {
         return res.status(400).json({ notification: err.message });
       }
       console.error(err);
-      return res.status(500).json({ notification: 'There han been an error on the deletion of the group' });
+      return res.status(500).json({ notification: 'Internal server error while trying to delete group' });
     }
-    return res.status(200).json({ notification: 'Group delected' });
+    return res.status(200).json({ notification: 'Group deleted' });
   },
   // função para o usuário puxar todos os grupos pelo id da loja na URl
   async getAllFromStore(req, res) {

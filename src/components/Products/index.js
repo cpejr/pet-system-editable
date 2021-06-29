@@ -11,14 +11,12 @@ height: 40rem;
 width: 90%;
 flex-direction: row;
 flex-wrap: wrap;
-@media(max-width:600px){
+@media(max-width:560px){
   display:flex;
-    
-    width:50%;
+    width:80%;
     flex-direction:row;
     flex-direction:row;
     flex-wrap: wrap;
-
 }
 `;
 export default function MyProducts() {
