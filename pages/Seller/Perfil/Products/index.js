@@ -97,7 +97,7 @@ flex-direction:column;
     align-items:center;
     justify-content:space-evenly;
     flex-direction:column;
-    width:100%;
+    width:40%;
     }
     @media(max-width:560px){
     display:none;
@@ -272,8 +272,8 @@ const RemoveGroup = styled.button`
 const Group = styled.div`
 width:100%;
 display:flex;
-align-items:initial;
-justify-content:initial;
+align-items:center;
+justify-content:center;
 flex-direction: column;
 `;
 
@@ -292,7 +292,8 @@ const Groups = styled.h2`
   margin: 0;
   `;
 
-export default function Perfil() {
+export default function Perfil(props) {
+  const { groups } = props;
   return (
     <div>
       <HeaderSeller />
@@ -339,18 +340,20 @@ export default function Perfil() {
         <ProductContainer.Col2>
           <Group>
             <ModalGroup />
-
-            <Group.Title>
-              <Groups>nome do grupo</Groups>
-              <EditGroup>
-                <BiEditAlt size={22} style={{ color: '#AAABB0', cursor: 'pointer' }} />
-              </EditGroup>
-              <RemoveGroup>
-                <BsTrash size={22} style={{ color: '#AA4545', cursor: 'pointer' }} />
-              </RemoveGroup>
-            </Group.Title>
-            <Products />
-
+            {groups && (
+            <div>
+              <Group.Title>
+                <Groups>{groups.name}</Groups>
+                <EditGroup>
+                  <BiEditAlt size={22} style={{ color: '#AAABB0', cursor: 'pointer' }} />
+                </EditGroup>
+                <RemoveGroup>
+                  <BsTrash size={22} style={{ color: '#AA4545', cursor: 'pointer' }} />
+                </RemoveGroup>
+              </Group.Title>
+              <Products />
+            </div>
+            )}
           </Group>
         </ProductContainer.Col2>
 
@@ -360,3 +363,10 @@ export default function Perfil() {
     </div>
   );
 }
+// export async function getServerSideProps(context) {
+//   const { id } = context.session;
+//   const response = await api.get('');
+//   const session = response.data;
+//   console.log(session);
+//   return { props: { session } };
+// }

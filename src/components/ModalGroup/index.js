@@ -102,6 +102,9 @@ const ButtonConfirm = styled.button`
 `;
 
 const AddGroup = styled.button`
+  display:flex;
+    align-items:center;
+    justify-content:center;
     font-family: Roboto;
     font-size: 100%;
     font-weight: 500;
@@ -110,6 +113,8 @@ const AddGroup = styled.button`
     border: 0;
     cursor:pointer;
     outline:none;    
+    margin-top: 5%;
+    margin-bottom: 2%;
     @media(max-width:1000px){
       display:flex;
     align-items:center;

@@ -2,7 +2,7 @@
 * @swagger
 *  /product/{product_id}:
 *    get:
-*      summary: Retorna um determinado um produto
+*      summary: Retorna um determinado produto
 *      parameters:
 *       - in: query_params
 *         name: product_id

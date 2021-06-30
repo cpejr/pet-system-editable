@@ -294,7 +294,7 @@ export default function AddProducts({ closeModal }) {
   }
   async function handleSubmit() {
     const body = {
-      store_id: 'eb60feca-220d-4852-aa8e-80067cc5bbce',
+      store_id: '65bd2c00-b1fc-4117-94da-5c78d60c2adc',
       product_name: productName,
       price,
       discount,

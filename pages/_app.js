@@ -3,6 +3,7 @@ import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import Head from 'next/head';
 import { AuthProvider } from '../src/contexts/AuthContext';
 // import 'bootstrap/dist/css/bootstrap.min.css';
+// import useSWR from 'swr';
 
 const GlobalStyle = createGlobalStyle`
   body {
