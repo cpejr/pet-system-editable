@@ -374,14 +374,25 @@ export default function Perfil(props) {
 
 export async function getServerSideProps(context) {
   try {
-    const response = await api.get('myGroups');
+    const { req } = context;
+
+    const cookies = req?.headers?.cookie;
+
+    if (!cookies) {
+      throw new Error('No session provided');
+    }
+
+    const response = await api.get('myGroups', { headers: { cookie: cookies } });
     const groups = response.data;
+    console.log(groups);
     return { props: { groups } };
   } catch (error) {
-    console.error(error);
-    const { res } = context;
-    res.setHeader('location', '/');
-    res.end();
+    console.error(error) // eslint-disable-line
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/',
+      },
+    };
   }
-  return { props: {} };
 }

@@ -68,7 +68,6 @@ module.exports = {
     const id = req.session.get('user').user.firebase_id;
     const { store_id } = await StoreModel.getByUserId(id);
     const groups = await GroupModel.getAllGroupsFromSession(store_id);
-    console.log(id);
     return res.json(groups);
   },
 
