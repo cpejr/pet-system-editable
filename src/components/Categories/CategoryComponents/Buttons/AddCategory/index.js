@@ -53,10 +53,8 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-/*eslint-disable*/
 export default function AddCategory({ addCategory }) {
   const classes = useStyles();
-  // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = useState(getModalStyle);
   const [open, setOpen] = useState(false);
 
@@ -71,9 +69,9 @@ export default function AddCategory({ addCategory }) {
   };
 
   const body = (
-  <div style={modalStyle} className={classes.paper}>
-    <ModalAddCategory addCategory={addCategory} closeModal = {handleState}/>
-  </div>
+    <div style={modalStyle} className={classes.paper}>
+      <ModalAddCategory addCategory={addCategory} closeModal={handleState} />
+    </div>
   );
 
   return (

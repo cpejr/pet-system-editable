@@ -53,10 +53,8 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-/*eslint-disable*/
 export default function EditCategory({ category, catIndex, editCategory }) {
   const classes = useStyles();
-  // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = useState(getModalStyle);
   const [open, setOpen] = useState(false);
 
@@ -72,20 +70,20 @@ export default function EditCategory({ category, catIndex, editCategory }) {
 
   const body = (
     <div style={modalStyle} className={classes.paper}>
-      <ModalEditCategory 
-        closeModal = {handleState} 
+      <ModalEditCategory
+        closeModal={handleState}
         category={category}
         catIndex={catIndex}
         editCategory={editCategory}
       />
     </div>
   );
-  
+
   return (
 
     <div>
       <ButtonEdit onClick={handleOpen}>
-        <EditOutlined/>
+        <EditOutlined />
         <nameButton>Editar Categoria</nameButton>
       </ButtonEdit>
       <Modal

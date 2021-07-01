@@ -6,7 +6,6 @@ const Box = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  // background-color: yellow;
   width: 100%;
   margin-top: 2%;
   margin-bottom: 0;
@@ -14,8 +13,6 @@ const Box = styled.div`
 
 const Fields = styled.div`
   align-items: left;
-  // width: 80%;
-  //background-color: green;
 `;
 
 const Buttons = styled.div`
@@ -56,13 +53,17 @@ Button.Cancel = styled.button`
   color: white;
 `;
 
-export default function ModalDeleteSubcategory({ subcategory, closeModal }) {
-  async function handleSubmit() {
+export default function ModalDeleteSubcategory({
+  subcategory, catIndex, subcatIndex, deleteSubcategory, closeModal,
+}) {
+  async function handleSubmit(event) {
+    event.preventDefault();
     try {
-      const Validate = await api.delete(`/subcategory/${subcategory.id}`);
-      console.log(Validate.data);
+      await api.delete(`/subcategory/${subcategory.id}`);
+      deleteSubcategory(catIndex, subcatIndex);
+      closeModal();
     } catch (error) {
-      console.log(error);
+      console.log(error); // eslint-disable-line
     }
   }
 
@@ -72,12 +73,7 @@ export default function ModalDeleteSubcategory({ subcategory, closeModal }) {
         <Text>Você realmente deseja apagar esta Subcategoria?</Text>
       </Fields>
       <Buttons>
-        <Button onClick={(e) => {
-          e.preventDefault();
-          handleSubmit();
-          closeModal();
-        }}
-        >
+        <Button onClick={handleSubmit}>
           Confirmar
         </Button>
         <Button.Cancel onClick={(e) => {

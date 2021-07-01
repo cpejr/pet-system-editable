@@ -6,7 +6,6 @@ const Box = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  // background-color: yellow;
   width: 100%;
   margin-top: 2%;
   margin-bottom: 0;
@@ -14,8 +13,6 @@ const Box = styled.div`
 
 const Fields = styled.div`
   align-items: left;
-  // width: 80%;
-  //background-color: green;
 `;
 
 const Buttons = styled.div`
@@ -64,10 +61,10 @@ export default function ModalDeleteCategory({
 
     try {
       await api.delete(`/category/${category.id}`);
-      deleteCategory(category, catIndex);
+      deleteCategory(catIndex);
       closeModal();
     } catch (error) {
-      console.log(error);
+      console.log(error); // eslint-disable-line
     }
   }
 

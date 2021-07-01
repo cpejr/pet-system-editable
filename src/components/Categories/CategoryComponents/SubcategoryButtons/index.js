@@ -12,7 +12,7 @@ const Line = styled.div`
 `;
 
 export default function SubcategoryButtons({
-  subcategory, catIndex, subcatIndex, editSubcategory,
+  subcategory, catIndex, subcatIndex, editSubcategory, deleteSubcategory,
 }) {
   return (
     <div>
@@ -27,6 +27,7 @@ export default function SubcategoryButtons({
           subcategory={subcategory}
           catIndex={catIndex}
           subcatIndex={subcatIndex}
+          deleteSubcategory={deleteSubcategory}
         />
       </Line>
     </div>

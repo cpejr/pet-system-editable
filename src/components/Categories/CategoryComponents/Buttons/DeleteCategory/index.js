@@ -53,10 +53,8 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-/*eslint-disable*/
 export default function DeleteCategory({ category, catIndex, deleteCategory }) {
   const classes = useStyles();
-  // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = useState(getModalStyle);
   const [open, setOpen] = useState(false);
 
@@ -72,13 +70,13 @@ export default function DeleteCategory({ category, catIndex, deleteCategory }) {
 
   const body = (
     <div style={modalStyle} className={classes.paper}>
-    <ModalDeleteCategory 
-      closeModal = {handleState} 
-      category={category}
-      catIndex={catIndex}
-      deleteCategory={deleteCategory} 
-    />
-  </div>
+      <ModalDeleteCategory
+        closeModal={handleState}
+        category={category}
+        catIndex={catIndex}
+        deleteCategory={deleteCategory}
+      />
+    </div>
   );
 
   return (

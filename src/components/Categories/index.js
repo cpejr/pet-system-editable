@@ -1,4 +1,4 @@
-/* eslint-disable no-lone-blocks */
+/* eslint-disable max-len */
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Collapse } from 'antd';
@@ -59,7 +59,6 @@ export default function Categories() {
   useEffect(() => {
     async function fetchData() {
       const response = await api.get('/category/all');
-      console.log(response.data);
       const { data } = response;
       setCategoriesData(data);
     }
@@ -73,34 +72,33 @@ export default function Categories() {
   }
 
   function editCategory(category, categoryIndex) {
-    category.subcategories = [];
     const editedCategories = [...categoriesData];
     editedCategories[categoryIndex] = category;
     setCategoriesData(editedCategories);
   }
 
-  function deleteCategory(category, categoryIndex) {
-    category.subcategories = [];
-    const editedCategories = category[categoryIndex].pop();
-    // editedCategories[categoryIndex] = category;
-    setCategoriesData([...editedCategories]);
+  function deleteCategory(categoryIndex) {
+    const editedCategories = [...categoriesData];
+    editedCategories.splice(categoryIndex, 1);
+    setCategoriesData(editedCategories);
   }
 
   // SUBCATEGORIES:
   function addSubcategory(subcategory, categoryIndex) {
-    /*
-    category.subcategories = [];
-    category[catIndex].subcategories = subcategory;
-    setCategoriesData([...categoriesData, subcategory]);
-    */
     const editedCategories = [...categoriesData];
-    editedCategories[categoryIndex].subcategories = subcategory;
+    editedCategories[categoryIndex].subcategories.push(subcategory);
     setCategoriesData([...editedCategories]);
   }
 
   function editSubcategory(subcategory, categoryIndex, subcategoryIndex) {
     const editedCategories = [...categoriesData];
     editedCategories[categoryIndex].subcategories[subcategoryIndex] = subcategory;
+    setCategoriesData(editedCategories);
+  }
+
+  function deleteSubcategory(categoryIndex, subcategoryIndex) {
+    const editedCategories = [...categoriesData];
+    editedCategories[categoryIndex].subcategories.splice(subcategoryIndex, 1);
     setCategoriesData(editedCategories);
   }
 
@@ -132,6 +130,7 @@ export default function Categories() {
                       catIndex={catIndex}
                       subcatIndex={subcatIndex}
                       editSubcategory={editSubcategory}
+                      deleteSubcategory={deleteSubcategory}
                     />
                   </ListItem>
                 ))}

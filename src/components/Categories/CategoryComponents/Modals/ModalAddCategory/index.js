@@ -6,7 +6,6 @@ const Box = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  // background-color: yellow;
   width: 100%;
   margin-top: 2%;
   margin-bottom: 0;
@@ -14,8 +13,6 @@ const Box = styled.div`
 
 const Fields = styled.div`
   align-items: left;
-  // width: 80%;
-  //background-color: green;
 `;
 
 const Buttons = styled.div`
@@ -35,7 +32,6 @@ const Text = styled.p`
 `;
 
 const Input = styled.input`
-  // width: 60%;
   margin-top: 2%;
   width: 100%;
   height: 30px;
@@ -82,11 +78,13 @@ export default function ModalAddCategory({ addCategory, closeModal }) {
     try {
       if (categoryName) {
         const { data } = await api.post('/category/', body);
+        data.id = data.category_id;
+        delete data.category_id;
         closeModal();
         addCategory(data);
       }
     } catch (error) {
-      console.log(error);
+      console.log(error); // eslint-disable-line
     }
   }
 

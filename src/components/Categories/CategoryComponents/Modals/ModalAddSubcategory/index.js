@@ -2,13 +2,10 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import api from '../../../../../utils/api';
 
-const { v4: uuidv4 } = require('uuid');
-
 const Box = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  // background-color: yellow;
   width: 100%;
   margin-top: 2%;
   margin-bottom: 0;
@@ -16,8 +13,6 @@ const Box = styled.div`
 
 const Fields = styled.div`
   align-items: left;
-  // width: 80%;
-  //background-color: green;
 `;
 
 const Buttons = styled.div`
@@ -37,7 +32,6 @@ const Text = styled.p`
 `;
 
 const Input = styled.input`
-  // width: 60%;
   margin-top: 2%;
   width: 100%;
   height: 30px;
@@ -69,7 +63,7 @@ Button.Cancel = styled.button`
 `;
 
 export default function ModalAddSubcategory({
-  category, subcategory, catIndex, addSubcategory, closeModal,
+  category, catIndex, addSubcategory, closeModal,
 }) {
   const [subcategoryName, setSubcategoryName] = useState('');
 
@@ -84,21 +78,15 @@ export default function ModalAddSubcategory({
       name: subcategoryName,
       category_id: category.id,
     };
-    console.log(body);
+
     try {
       if (subcategoryName) {
         const { data } = await api.post('/subcategory/', body);
-        /*
-        const newSubcategory = {
-          id: uuidv4(),
-          name: subcategoryName,
-        };
-        */
         addSubcategory(data, catIndex);
         closeModal();
       }
     } catch (error) {
-      console.log(error);
+      console.log(error); // eslint-disable-line
     }
   }
 

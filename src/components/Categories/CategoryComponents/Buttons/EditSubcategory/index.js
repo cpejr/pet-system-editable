@@ -48,10 +48,10 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-/*eslint-disable*/
-export default function EditSubcategory( { subcategory, catIndex, subcatIndex, editSubcategory }) {
+export default function EditSubcategory({
+  subcategory, catIndex, subcatIndex, editSubcategory,
+}) {
   const classes = useStyles();
-  // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = useState(getModalStyle);
   const [open, setOpen] = useState(false);
 
@@ -67,14 +67,14 @@ export default function EditSubcategory( { subcategory, catIndex, subcatIndex, e
 
   const body = (
     <div style={modalStyle} className={classes.paper}>
-    <ModalEditSubcategory 
-      closeModal={handleState} 
-      subcategory={subcategory}
-      catIndex={catIndex}
-      subcatIndex={subcatIndex}
-      editSubcategory={editSubcategory} 
-    />
-  </div>
+      <ModalEditSubcategory
+        closeModal={handleState}
+        subcategory={subcategory}
+        catIndex={catIndex}
+        subcatIndex={subcatIndex}
+        editSubcategory={editSubcategory}
+      />
+    </div>
   );
 
   return (
