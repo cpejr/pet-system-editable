@@ -56,11 +56,16 @@ Button.Cancel = styled.button`
   color: white;
 `;
 
-export default function ModalAddCategory({ category, closeModal }) {
-  async function handleSubmit() {
+export default function ModalDeleteCategory({
+  category, catIndex, deleteCategory, closeModal,
+}) {
+  async function handleSubmit(event) {
+    event.preventDefault();
+
     try {
-      const Validate = await api.delete(`/category/${category.id}`);
-      console.log(Validate.data);
+      await api.delete(`/category/${category.id}`);
+      deleteCategory(category, catIndex);
+      closeModal();
     } catch (error) {
       console.log(error);
     }
@@ -72,12 +77,7 @@ export default function ModalAddCategory({ category, closeModal }) {
         <Text>Você realmente deseja apagar esta Categoria?</Text>
       </Fields>
       <Buttons>
-        <Button onClick={(e) => {
-          e.preventDefault();
-          handleSubmit();
-          closeModal();
-        }}
-        >
+        <Button onClick={handleSubmit}>
           Confirmar
         </Button>
         <Button.Cancel onClick={(e) => {

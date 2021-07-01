@@ -12,13 +12,28 @@ const Line = styled.div`
   width: 400px;
 `;
 
-export default function CategoryButtons({ category }) {
+export default function CategoryButtons({
+  category, subcategory, catIndex, addSubcategory, editCategory, deleteCategory,
+}) {
   return (
     <div>
       <Line>
-        <AddSubcategory category={category} />
-        <EditCategory category={category} />
-        <DeleteCategory category={category} />
+        <AddSubcategory
+          category={category}
+          // subcategory={subcategory}
+          catIndex={catIndex}
+          addSubcategory={addSubcategory}
+        />
+        <EditCategory
+          category={category}
+          catIndex={catIndex}
+          editCategory={editCategory}
+        />
+        <DeleteCategory
+          category={category}
+          catIndex={catIndex}
+          deleteCategory={deleteCategory}
+        />
       </Line>
     </div>
   );

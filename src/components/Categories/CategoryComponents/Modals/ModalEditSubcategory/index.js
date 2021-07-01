@@ -66,21 +66,32 @@ Button.Cancel = styled.button`
   color: white;
 `;
 
-export default function ModalEditSubcategory({ subcategory, closeModal }) {
+export default function ModalEditSubcategory({
+  subcategory, catIndex, subcatIndex, editSubcategory, closeModal,
+}) {
   const [subcategoryName, setSubcategoryName] = useState('');
 
   function handleSubcategoryChange(event) {
     setSubcategoryName(event.target.value);
   }
 
-  async function handleSubmit() {
+  async function handleSubmit(event) {
+    event.preventDefault();
+
     const body = {
       name: subcategoryName,
     };
+
     try {
       if (subcategoryName) {
-        const Validate = await api.put(`/subcategory/${subcategory.id}`, body);
-        console.log(Validate.data);
+        await api.put(`/subcategory/${subcategory.id}`, body);
+        const editedSubcategory = {
+          id: subcategory.id,
+          name: subcategoryName,
+        };
+
+        editSubcategory(editedSubcategory, catIndex, subcatIndex);
+        closeModal();
       }
     } catch (error) {
       console.log(error);
@@ -94,12 +105,7 @@ export default function ModalEditSubcategory({ subcategory, closeModal }) {
         <Input type="text" value={subcategoryName} onChange={handleSubcategoryChange} />
       </Fields>
       <Buttons>
-        <Button onClick={(e) => {
-          e.preventDefault();
-          handleSubmit();
-          closeModal();
-        }}
-        >
+        <Button onClick={handleSubmit}>
           Confirmar
         </Button>
         <Button.Cancel onClick={(e) => {

@@ -5,7 +5,6 @@ import HeaderAdmin from '../../../src/components/HeaderAdmin';
 import AdminCardsFix from '../../../src/components/AdminCardsFix';
 import WindowDividerAdmin from '../../../src/components/WindowDividerAdmin';
 import Categories from '../../../src/components/Categories';
-import AddCategory from '../../../src/components/Categories/CategoryComponents/Buttons/AddCategory';
 
 const Container = styled.div`
 display:flex;
@@ -47,32 +46,6 @@ width:60%;
 }
 `;
 
-const ContainerCategories = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  width:80%;
-  margin-bottom: 5%;
-`;
-
-ContainerCategories.Top = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  margin-bottom: 5%;
-`;
-
-const Title = styled.h1`
-  font-family: Roboto;
-  font-size: 45px;
-  font-weight: 400; 
-  margin-top: 0;
-  margin-bottom: 0;
-`;
-
 export default function Admin() {
   return (
     <div>
@@ -86,13 +59,7 @@ export default function Admin() {
         </Container.Col1>
         <WindowDividerAdmin />
         <Container.Col2>
-          <ContainerCategories>
-            <ContainerCategories.Top>
-              <Title>Edição de Categorias</Title>
-              <AddCategory />
-            </ContainerCategories.Top>
-            <Categories />
-          </ContainerCategories>
+          <Categories />
         </Container.Col2>
       </Container>
     </div>

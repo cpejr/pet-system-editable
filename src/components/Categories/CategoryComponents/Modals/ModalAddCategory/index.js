@@ -66,21 +66,24 @@ Button.Cancel = styled.button`
   color: white;
 `;
 
-export default function ModalAddCategory({ closeModal }) {
+export default function ModalAddCategory({ addCategory, closeModal }) {
   const [categoryName, setCategoryName] = useState('');
 
   async function handleCategoryChange(event) {
     setCategoryName(event.target.value);
   }
 
-  async function handleSubmit() {
+  async function handleSubmit(event) {
+    event.preventDefault();
+
     const body = {
       name: categoryName,
     };
     try {
       if (categoryName) {
-        const Validate = await api.post('/category/', body);
-        console.log(Validate.data);
+        const { data } = await api.post('/category/', body);
+        closeModal();
+        addCategory(data);
       }
     } catch (error) {
       console.log(error);
@@ -94,14 +97,8 @@ export default function ModalAddCategory({ closeModal }) {
         <Input type="text" value={categoryName} onChange={handleCategoryChange} />
       </Fields>
       <Buttons>
-        <Button onClick={(e) => {
-          e.preventDefault();
-          handleSubmit();
-          closeModal();
-        }}
-        >
+        <Button onClick={handleSubmit}>
           Confirmar
-
         </Button>
         <Button.Cancel onClick={(e) => {
           e.preventDefault();

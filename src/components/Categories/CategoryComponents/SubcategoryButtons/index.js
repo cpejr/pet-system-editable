@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import EditSubcategory from '../Buttons/EditSubcategory';
 import DeleteSubcategory from '../Buttons/DeleteSubcategory';
+import EditSubcategory from '../Buttons/EditSubcategory';
 
 const Line = styled.div`
   display: flex;
@@ -11,12 +11,23 @@ const Line = styled.div`
   width: 60px;
 `;
 
-export default function SubcategoryButtons({ subcategory }) {
+export default function SubcategoryButtons({
+  subcategory, catIndex, subcatIndex, editSubcategory,
+}) {
   return (
     <div>
       <Line>
-        <EditSubcategory subcategory={subcategory} />
-        <DeleteSubcategory subcategory={subcategory} />
+        <EditSubcategory
+          subcategory={subcategory}
+          catIndex={catIndex}
+          subcatIndex={subcatIndex}
+          editSubcategory={editSubcategory}
+        />
+        <DeleteSubcategory
+          subcategory={subcategory}
+          catIndex={catIndex}
+          subcatIndex={subcatIndex}
+        />
       </Line>
     </div>
   );

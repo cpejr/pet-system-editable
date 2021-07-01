@@ -83,9 +83,9 @@ module.exports = {
 
   async createNewCategory(category) {
     try {
-      const response = await connection('Categories')
+      await connection('Categories')
         .insert(category);
-      return response;
+      return category;
     } catch (error) {
       throw new Error(error);
     }

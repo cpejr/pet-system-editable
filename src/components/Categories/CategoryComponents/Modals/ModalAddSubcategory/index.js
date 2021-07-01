@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import api from '../../../../../utils/api';
 
+const { v4: uuidv4 } = require('uuid');
+
 const Box = styled.div`
   display: flex;
   flex-direction: column;
@@ -66,22 +68,34 @@ Button.Cancel = styled.button`
   color: white;
 `;
 
-export default function ModalAddSubcategory({ category, closeModal }) {
+export default function ModalAddSubcategory({
+  category, subcategory, catIndex, addSubcategory, closeModal,
+}) {
   const [subcategoryName, setSubcategoryName] = useState('');
 
   async function handleSubcategoryChange(event) {
     setSubcategoryName(event.target.value);
   }
 
-  async function handleSubmit() {
+  async function handleSubmit(event) {
+    event.preventDefault();
+
     const body = {
       name: subcategoryName,
       category_id: category.id,
     };
+    console.log(body);
     try {
       if (subcategoryName) {
-        const Validate = await api.post('/subcategory/', body);
-        console.log(Validate.data);
+        const { data } = await api.post('/subcategory/', body);
+        /*
+        const newSubcategory = {
+          id: uuidv4(),
+          name: subcategoryName,
+        };
+        */
+        addSubcategory(data, catIndex);
+        closeModal();
       }
     } catch (error) {
       console.log(error);
@@ -95,14 +109,8 @@ export default function ModalAddSubcategory({ category, closeModal }) {
         <Input type="text" value={subcategoryName} onChange={handleSubcategoryChange} />
       </Fields>
       <Buttons>
-        <Button onClick={(e) => {
-          e.preventDefault();
-          handleSubmit();
-          closeModal();
-        }}
-        >
+        <Button onClick={handleSubmit}>
           Confirmar
-
         </Button>
         <Button.Cancel onClick={(e) => {
           e.preventDefault();
