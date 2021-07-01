@@ -23,8 +23,8 @@ module.exports = {
     }
   },
 
-  async deleteGroup(group_id, store_id) {
-    const del = await connection('group').where({ group_id, store_id }).del();
+  async deleteGroup(id, store_id) {
+    const del = await connection('group').where({ group_id: id, store_id }).delete();
     return del;
   },
 
@@ -55,7 +55,7 @@ module.exports = {
   async getAllGroupsFromSession(store_id) {
     try {
       const groups = await connection('group')
-        .where({ store_id })
+        .where('store_id', store_id)
         .select('*');
       return groups;
     } catch (error) {

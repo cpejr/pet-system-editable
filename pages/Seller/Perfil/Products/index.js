@@ -3,8 +3,6 @@ import styled from 'styled-components';
 import Link from 'next/link';
 // import { makeStyles } from '@material-ui/core/styles';
 // import Modal from '@material-ui/core/Modal';
-import { BsTrash } from 'react-icons/bs';
-import { BiEditAlt } from 'react-icons/bi';
 import HeaderSeller from '../../../../src/components/HeaderSeller';
 import WordsDivider from '../../../../src/components/WordsDivider';
 import FooterMobile from '../../../../src/components/Mobile/FooterMobile';
@@ -16,6 +14,9 @@ import ModalAddProducts from '../../../../src/components/ModalAddProducts';
 import LocationAndFilter from '../../../../src/components/Mobile/LocationAndFilter';
 import EditAddRemoveSection from '../../../../src/components/Mobile/EditAddRemoveSection';
 import ModalGroup from '../../../../src/components/ModalGroup';
+import ModalGroupEdit from '../../../../src/components/ModalGroupEdit';
+import ModalGroupRemove from '../../../../src/components/ModalGroupRemove';
+import api from '../../../../src/utils/api';
 
 const Title = styled.h1`
 align-items:initial;
@@ -261,6 +262,7 @@ const RemoveGroup = styled.button`
     background-color: ${({ theme }) => theme.colors.background};
     border: 0;
     outline:none;
+
     @media(max-width:1000px){
       display:flex;
     align-items:center;
@@ -294,6 +296,25 @@ const Groups = styled.h2`
 
 export default function Perfil(props) {
   const { groups } = props;
+  const PersonalGroups = () => (
+    <div>
+      {groups?.length > 0 && groups.map((group) => (
+        <div key={group.group_id}>
+          <Group.Title>
+            <Groups>{group.name}</Groups>
+            <EditGroup>
+              <ModalGroupEdit />
+            </EditGroup>
+            <RemoveGroup>
+              <ModalGroupRemove />
+            </RemoveGroup>
+          </Group.Title>
+          <Products />
+        </div>
+      ))}
+    </div>
+
+  );
   return (
     <div>
       <HeaderSeller />
@@ -340,20 +361,7 @@ export default function Perfil(props) {
         <ProductContainer.Col2>
           <Group>
             <ModalGroup />
-            {groups && (
-            <div>
-              <Group.Title>
-                <Groups>{groups.name}</Groups>
-                <EditGroup>
-                  <BiEditAlt size={22} style={{ color: '#AAABB0', cursor: 'pointer' }} />
-                </EditGroup>
-                <RemoveGroup>
-                  <BsTrash size={22} style={{ color: '#AA4545', cursor: 'pointer' }} />
-                </RemoveGroup>
-              </Group.Title>
-              <Products />
-            </div>
-            )}
+            <PersonalGroups />
           </Group>
         </ProductContainer.Col2>
 
@@ -363,10 +371,17 @@ export default function Perfil(props) {
     </div>
   );
 }
-// export async function getServerSideProps(context) {
-//   const { id } = context.session;
-//   const response = await api.get('');
-//   const session = response.data;
-//   console.log(session);
-//   return { props: { session } };
-// }
+
+export async function getServerSideProps(context) {
+  try {
+    const response = await api.get('myGroups');
+    const groups = response.data;
+    return { props: { groups } };
+  } catch (error) {
+    console.error(error);
+    const { res } = context;
+    res.setHeader('location', '/');
+    res.end();
+  }
+  return { props: {} };
+}

@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import axios from 'axios';
 import { notification } from 'antd';
+import { BiEditAlt } from 'react-icons/bi';
 
 const api = axios.create({ baseURL: 'http://localhost:3000/' });
 
@@ -31,7 +32,6 @@ width:100%;
 font-family:Roboto;
 font-weight: bold;
 font-size:24px;
-margin-bottom:5%;
 @media(max-width:860px){
         width:100%;
         font-size:18px;
@@ -105,7 +105,7 @@ const ButtonConfirm = styled.button`
     } 
 `;
 
-const AddGroup = styled.button`
+const EditGroup = styled.button`
   display:flex;
     align-items:center;
     justify-content:center;
@@ -113,12 +113,9 @@ const AddGroup = styled.button`
     font-size: 100%;
     font-weight: 500;
     background-color: ${({ theme }) => theme.colors.background};
-    color: ${({ theme }) => theme.colors.mediumGreen};
     border: 0;
     cursor:pointer;
     outline:none;    
-    margin-top: 5%;
-    margin-bottom: 2%;
     @media(max-width:1000px){
       display:flex;
     align-items:center;
@@ -170,12 +167,12 @@ export default function ModalGroup() {
     };
 
     try {
-      const Validate = await api.post('/api/group', body);
+      const Validate = await api.put('/api/group', body);
       console.log(Validate.data);
       notification.open({
         message: 'Sucesso!',
         description:
-          'O grupo foi criado com sucesso.',
+          'O grupo foi modificado com sucesso.',
         className: 'ant-notification',
         top: '100px',
         style: {
@@ -202,12 +199,12 @@ export default function ModalGroup() {
     <div style={modalStyle} className={classes.paper}>
       <ContainerModal>
         <Row>
-          <TitleModal>Adicione um grupo</TitleModal>
+          <TitleModal>Modifique grupo</TitleModal>
         </Row>
         <Row>
           <Ajust>
             <Ajust.Col1>
-              Nome do grupo:
+              Novo nome:
             </Ajust.Col1>
             <InputNameGroup placeholder="" require value={group} onChange={handleGroupChange} />
           </Ajust>
@@ -219,7 +216,7 @@ export default function ModalGroup() {
             handleClose();
           }}
           >
-            Confirmar grupo
+            Confirmar
 
           </ButtonConfirm>
         </Row>
@@ -228,9 +225,9 @@ export default function ModalGroup() {
   );
   return (
     <div>
-      <AddGroup onClick={handleOpen}>
-        Adicionar Grupo
-      </AddGroup>
+      <EditGroup onClick={handleOpen}>
+        <BiEditAlt size={22} style={{ color: '#AAABB0', cursor: 'pointer' }} />
+      </EditGroup>
       <Modal
         open={open}
         onClose={handleClose}

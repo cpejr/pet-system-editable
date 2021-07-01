@@ -6,6 +6,7 @@ import Cards from '../Cards';
 const api = axios.create({ baseURL: 'http://localhost:3000/' });
 const CardLine = styled.div`
 display: flex;
+align-items: center;
 justify-content: space-around;
 height: 40rem;
 width: 90%;
@@ -13,7 +14,8 @@ flex-direction: row;
 flex-wrap: wrap;
 @media(max-width:560px){
   display:flex;
-    width:80%;
+  align-items: center;
+    width:100%;
     flex-direction:row;
     flex-direction:row;
     flex-wrap: wrap;
