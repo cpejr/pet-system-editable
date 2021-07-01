@@ -83,9 +83,9 @@ module.exports = {
 
   async createNewCategory(category) {
     try {
-      const response = await connection('Categories')
+      await connection('Categories')
         .insert(category);
-      return response;
+      return category;
     } catch (error) {
       throw new Error(error);
     }
@@ -93,6 +93,10 @@ module.exports = {
 
   async deleteCategory(id) {
     try {
+      await connection('Subcategories')
+        .where({ category_id: id })
+        .delete();
+
       const response = await connection('Categories')
         .where({ category_id: id })
         .delete();

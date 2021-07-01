@@ -11,7 +11,7 @@ export default function handler(req, res) {
       return isAdmin(getOne)(req, res);
     }
     if (method === 'PUT') {
-      return isAdmin(getOne)(req, res);
+      return isAdmin(update)(req, res);
     }
     if (method === 'DELETE') {
       return isAdmin(remove)(req, res);

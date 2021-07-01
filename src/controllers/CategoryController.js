@@ -1,5 +1,6 @@
 const { v4: uuidv4 } = require('uuid');
 const CategoryModel = require('../models/CategoryModel');
+const SubCategoryModel = require('../models/SubCategoryModel');
 
 module.exports = {
   async getOne(request, response) {
@@ -36,14 +37,14 @@ module.exports = {
     };
 
     try {
-      await CategoryModel.createNewCategory(category);
+      const newCategory = await CategoryModel.createNewCategory(category);
+      return response.status(200).json(newCategory);
     } catch (error) {
       if (err.message) {
         return response.status(400).json({ notification: err.message });
       }
       return response.status(500).json({ notification: 'Internal server error while trying to create category' });
     }
-    return response.status(200).json({ notification: 'Category created' });
   },
 
   async remove(request, response) {
