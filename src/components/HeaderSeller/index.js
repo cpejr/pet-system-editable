@@ -7,6 +7,7 @@ import { MdShoppingCart } from 'react-icons/md';
 import { FiLogIn } from 'react-icons/fi';
 import { CgCloseO } from 'react-icons/cg';
 import Link from 'next/link';
+import { useAuth } from '../../contexts/AuthContext';
 
 Header.Wrapper = styled.div`
     display:flex;
@@ -164,6 +165,44 @@ background-color:${({ theme }) => theme.colors.rose} ;
 `;
 
 export default function Header() {
+  const { user, logout } = useAuth();
+  const PersonalButton = () => {
+    if (!user) {
+      return (
+        <Link href="/login">
+          <YourSpace.Word>
+            Login
+          </YourSpace.Word>
+        </Link>
+      );
+    }
+    switch (user.type) {
+      case 'admin':
+        return (
+          <Link href="/admin">
+            <YourSpace.Word>
+              {user.first_name}
+            </YourSpace.Word>
+          </Link>
+        );
+      case 'seller':
+        return (
+          <Link href="/Seller/Perfil/Products">
+            <YourSpace.Word>
+              {user.first_name}
+            </YourSpace.Word>
+          </Link>
+        );
+      default:
+        return (
+          <Link href="/User/Perfil/MyRequests">
+            <YourSpace.Word>
+              {user.first_name}
+            </YourSpace.Word>
+          </Link>
+        );
+    }
+  };
   return (
     <Header.Wrapper>
       <Header.Top>
@@ -186,15 +225,11 @@ export default function Header() {
         <YourSpaceContainer>
           <YourSpace>
             <BsFillPersonFill />
-            <Link href="/Seller/Perfil/Products">
-              <YourSpace.Word>
-                Seu espaço
-              </YourSpace.Word>
-            </Link>
+            <PersonalButton />
           </YourSpace>
         </YourSpaceContainer>
         <MdShoppingCart size="30" color="#AA4545" style={{ cursor: 'pointer' }} />
-        <LogOut>
+        <LogOut onClick={logout}>
           <Link href="/login">
             <FiLogIn size="30" color="#AA4545" style={{ cursor: 'pointer' }} />
           </Link>

@@ -75,12 +75,13 @@ const ButtonOrder = styled.button`
     font-size: 100%;
     font-weight: 500;
     border-color:${({ theme }) => theme.colors.mediumGreen};
-    border: 1;
-    border-radius: 15px;
+    color: white;
+    border: solid;
+    border-width: 1px;
+    border-radius: 5px;
     cursor:pointer;
     outline:none;
     margin-bottom:5%;
-    color:'#111';
     font-size:14px;
 `;
 const SubTitleCategory = styled.h3`
@@ -120,124 +121,145 @@ const ButtonCategory = styled.button`
     font-size: 100%;
     font-weight: 500;
     border-color:${({ theme }) => theme.colors.strongRed};
-    border: 1;
-    border-radius: 15px;
-    cursor:pointer;
-    outline:none;
-    margin-bottom:5%;
-    color:'#111';
-    font-size:14px;
-`;
-
-const ConfirmButton = styled.button`
-  height: 30px;
-    width: 60%;
-    font-family: Roboto;
-    font-size: 100%;
-    font-weight: 500;
-    background-color:${({ theme }) => theme.colors.blueButton};
-    border: 1;
+    color: white;
+    border: solid;
+    border-width: 1px;
     border-radius: 5px;
     cursor:pointer;
     outline:none;
-    color:${({ theme }) => theme.colors.titleGray};
+    margin-bottom:5%;
     font-size:14px;
-    margin-top:5%;
-    border:none;
-
-
 `;
 
 export default function Filter() {
-  const [checkedAvaliacao, setCheckedAvaliacao] = useState('#F8F8F8');
-  const handleClickAvaliacao = () => {
-    if (checkedAvaliacao === '#F8F8F8') {
-      setCheckedAvaliacao('#609694');
-    } else {
-      setCheckedAvaliacao('#F8F8F8');
-    }
-  };
+  const [backgroundAvaliacao, setBackgroundAvaliacao] = useState('#F8F8F8');
+  const [fontAvaliacao, setFontAvaliacao] = useState('#609694');
 
-  const [checkedMaisVistos, setCheckedMaisVistos] = useState('#F8F8F8');
-  const handleClickMaisVistos = () => {
-    if (checkedMaisVistos === '#F8F8F8') {
-      setCheckedMaisVistos('#609694');
+  function changeBackgroundAvaliacao() {
+    if (backgroundAvaliacao === '#F8F8F8') {
+      setBackgroundAvaliacao('#609694');
+      setFontAvaliacao('#F8F8F8');
     } else {
-      setCheckedMaisVistos('#F8F8F8');
+      setBackgroundAvaliacao('#F8F8F8');
+      setFontAvaliacao('#609694');
     }
-  };
+  }
 
-  const [checkedMaisPopulares, setCheckedMaisPopulares] = useState('#F8F8F8');
-  const handleClickMaisPopulares = () => {
-    if (checkedMaisPopulares === '#F8F8F8') {
-      setCheckedMaisPopulares('#609694');
-    } else {
-      setCheckedMaisPopulares('#F8F8F8');
-    }
-  };
+  const [backgroundMaisVistos, setBackgroundMaisVistos] = useState('#F8F8F8');
+  const [fontMaisVistos, setFontMaisVistos] = useState('#609694');
 
-  const [checkedRacao, setCheckedRacao] = useState('#F8F8F8');
-  const handleClickRacao = () => {
-    if (checkedRacao === '#F8F8F8') {
-      setCheckedRacao('#BD2B2B');
+  function changeBackgroundMaisVistos() {
+    if (backgroundMaisVistos === '#F8F8F8') {
+      setBackgroundMaisVistos('#609694');
+      setFontMaisVistos('#F8F8F8');
     } else {
-      setCheckedRacao('#F8F8F8');
+      setBackgroundMaisVistos('#F8F8F8');
+      setFontMaisVistos('#609694');
     }
-  };
+  }
 
-  const [checkedBrinquedos, setCheckedBrinquedos] = useState('#F8F8F8');
-  const handleClickBrinquedos = () => {
-    if (checkedBrinquedos === '#F8F8F8') {
-      setCheckedBrinquedos('#BD2B2B');
-    } else {
-      setCheckedBrinquedos('#F8F8F8');
-    }
-  };
+  const [backgroundMaisPopulares, setBackgroundMaisPopulares] = useState('#F8F8F8');
+  const [fontMaisPopulares, setFontMaisPopulares] = useState('#609694');
 
-  const [checkedVasilhas, setCheckedVasilhas] = useState('#F8F8F8');
-  const handleClickVasilhas = () => {
-    if (checkedVasilhas === '#F8F8F8') {
-      setCheckedVasilhas('#BD2B2B');
+  function changeBackgroundMaisPopulares() {
+    if (backgroundMaisPopulares === '#F8F8F8') {
+      setBackgroundMaisPopulares('#609694');
+      setFontMaisPopulares('#F8F8F8');
     } else {
-      setCheckedVasilhas('#F8F8F8');
+      setBackgroundMaisPopulares('#F8F8F8');
+      setFontMaisPopulares('#609694');
     }
-  };
+  }
 
-  const [checkedCasinhas, setCheckedCasinhas] = useState('#F8F8F8');
-  const handleClickCasinhas = () => {
-    if (checkedCasinhas === '#F8F8F8') {
-      setCheckedCasinhas('#BD2B2B');
-    } else {
-      setCheckedCasinhas('#F8F8F8');
-    }
-  };
+  const [backgroundRacao, setBackgroundRacao] = useState('#F8F8F8');
+  const [fontRacao, setFontRacao] = useState('#BD2B2B');
 
-  const [checkedPetiscos, setCheckedPetiscos] = useState('#F8F8F8');
-  const handleClickPetiscos = () => {
-    if (checkedPetiscos === '#F8F8F8') {
-      setCheckedPetiscos('#BD2B2B');
+  function changeBackgroundRacao() {
+    if (backgroundRacao === '#F8F8F8') {
+      setBackgroundRacao('#BD2B2B');
+      setFontRacao('#F8F8F8');
     } else {
-      setCheckedPetiscos('#F8F8F8');
+      setBackgroundRacao('#F8F8F8');
+      setFontRacao('#BD2B2B');
     }
-  };
+  }
 
-  const [checkedShampoo, setCheckedShampoo] = useState('#F8F8F8');
-  const handleClickShampoo = () => {
-    if (checkedShampoo === '#F8F8F8') {
-      setCheckedShampoo('#BD2B2B');
-    } else {
-      setCheckedShampoo('#F8F8F8');
-    }
-  };
+  const [backgroundBrinquedos, setBackgroundBrinquedos] = useState('#F8F8F8');
+  const [fontBrinquedos, setFontBrinquedos] = useState('#BD2B2B');
 
-  const [checkedPerfumes, setCheckedPerfumes] = useState('#F8F8F8');
-  const handleClickPerfumes = () => {
-    if (checkedPerfumes === '#F8F8F8') {
-      setCheckedPerfumes('#BD2B2B');
+  function changeBackgroundBrinquedos() {
+    if (backgroundBrinquedos === '#F8F8F8') {
+      setBackgroundBrinquedos('#BD2B2B');
+      setFontBrinquedos('#F8F8F8');
     } else {
-      setCheckedPerfumes('#F8F8F8');
+      setBackgroundBrinquedos('#F8F8F8');
+      setFontBrinquedos('#BD2B2B');
     }
-  };
+  }
+
+  const [backgroundVasilhas, setBackgroundVasilhas] = useState('#F8F8F8');
+  const [fontVasilhas, setFontVasilhas] = useState('#BD2B2B');
+
+  function changeBackgroundVasilhas() {
+    if (backgroundVasilhas === '#F8F8F8') {
+      setBackgroundVasilhas('#BD2B2B');
+      setFontVasilhas('#F8F8F8');
+    } else {
+      setBackgroundVasilhas('#F8F8F8');
+      setFontVasilhas('#BD2B2B');
+    }
+  }
+
+  const [backgroundCasinhas, setBackgroundCasinhas] = useState('#F8F8F8');
+  const [fontCasinhas, setFontCasinhas] = useState('#BD2B2B');
+
+  function changeBackgroundCasinhas() {
+    if (backgroundCasinhas === '#F8F8F8') {
+      setBackgroundCasinhas('#BD2B2B');
+      setFontCasinhas('#F8F8F8');
+    } else {
+      setBackgroundCasinhas('#F8F8F8');
+      setFontCasinhas('#BD2B2B');
+    }
+  }
+
+  const [backgroundPetiscos, setBackgroundPetiscos] = useState('#F8F8F8');
+  const [fontPetiscos, setFontPetiscos] = useState('#BD2B2B');
+
+  function changeBackgroundPetiscos() {
+    if (backgroundPetiscos === '#F8F8F8') {
+      setBackgroundPetiscos('#BD2B2B');
+      setFontPetiscos('#F8F8F8');
+    } else {
+      setBackgroundPetiscos('#F8F8F8');
+      setFontPetiscos('#BD2B2B');
+    }
+  }
+
+  const [backgroundShampoo, setBackgroundShampoo] = useState('#F8F8F8');
+  const [fontShampoo, setFontShampoo] = useState('#BD2B2B');
+
+  function changeBackgroundShampoo() {
+    if (backgroundShampoo === '#F8F8F8') {
+      setBackgroundShampoo('#BD2B2B');
+      setFontShampoo('#F8F8F8');
+    } else {
+      setBackgroundShampoo('#F8F8F8');
+      setFontShampoo('#BD2B2B');
+    }
+  }
+  const [backgroundPerfumes, setBackgroundPerfumes] = useState('#F8F8F8');
+  const [fontPerfumes, setFontPerfumes] = useState('#BD2B2B');
+
+  function changeBackgroundPerfumes() {
+    if (backgroundPerfumes === '#F8F8F8') {
+      setBackgroundPerfumes('#BD2B2B');
+      setFontPerfumes('#F8F8F8');
+    } else {
+      setBackgroundPerfumes('#F8F8F8');
+      setFontPerfumes('#BD2B2B');
+    }
+  }
   return (
     <div>
       <Container>
@@ -255,23 +277,23 @@ export default function Filter() {
         <OrderContainer>
           <OrderContainer.Col1>
             <ButtonOrder
-              onClick={handleClickAvaliacao}
-              style={{ backgroundColor: checkedAvaliacao }}
+              onClick={changeBackgroundAvaliacao}
+              style={{ backgroundColor: backgroundAvaliacao, borderColor: '#609694', color: fontAvaliacao }}
             >
               Avaliação
 
             </ButtonOrder>
             <ButtonOrder
-              onClick={handleClickMaisVistos}
-              style={{ backgroundColor: checkedMaisVistos }}
+              onClick={changeBackgroundMaisVistos}
+              style={{ backgroundColor: backgroundMaisVistos, borderColor: '#609694', color: fontMaisVistos }}
             >
               Mais vistos
             </ButtonOrder>
           </OrderContainer.Col1>
           <OrderContainer.Col2>
             <ButtonOrder
-              onClick={handleClickMaisPopulares}
-              style={{ backgroundColor: checkedMaisPopulares }}
+              onClick={changeBackgroundMaisPopulares}
+              style={{ backgroundColor: backgroundMaisPopulares, borderColor: '#609694', color: fontMaisPopulares }}
             >
               Mais populares
             </ButtonOrder>
@@ -284,53 +306,52 @@ export default function Filter() {
         <CategoryContainer>
           <CategoryContainer.Col1>
             <ButtonCategory
-              onClick={handleClickRacao}
-              style={{ backgroundColor: checkedRacao }}
+              onClick={changeBackgroundRacao}
+              style={{ backgroundColor: backgroundRacao, borderColor: '#BD2B2B', color: fontRacao }}
             >
               Raçao
             </ButtonCategory>
             <ButtonCategory
-              onClick={handleClickCasinhas}
-              style={{ backgroundColor: checkedCasinhas }}
+              onClick={changeBackgroundCasinhas}
+              style={{ backgroundColor: backgroundCasinhas, borderColor: '#BD2B2B', color: fontCasinhas }}
             >
               Casinhas
             </ButtonCategory>
             <ButtonCategory
-              onClick={handleClickShampoo}
-              style={{ backgroundColor: checkedShampoo }}
+              onClick={changeBackgroundShampoo}
+              style={{ backgroundColor: backgroundShampoo, borderColor: '#BD2B2B', color: fontShampoo }}
             >
               Shampoo
             </ButtonCategory>
             <ButtonCategory
-              onClick={handleClickPerfumes}
-              style={{ backgroundColor: checkedPerfumes }}
+              onClick={changeBackgroundPerfumes}
+              style={{ backgroundColor: backgroundPerfumes, borderColor: '#BD2B2B', color: fontPerfumes }}
             >
               Perfumes
             </ButtonCategory>
           </CategoryContainer.Col1>
           <OrderContainer.Col2>
             <ButtonCategory
-              onClick={handleClickBrinquedos}
-              style={{ backgroundColor: checkedBrinquedos }}
+              onClick={changeBackgroundBrinquedos}
+              style={{ backgroundColor: backgroundBrinquedos, borderColor: '#BD2B2B', color: fontBrinquedos }}
             >
               Brinquedos
             </ButtonCategory>
             <ButtonCategory
-              onClick={handleClickVasilhas}
-              style={{ backgroundColor: checkedVasilhas }}
+              onClick={changeBackgroundVasilhas}
+              style={{ backgroundColor: backgroundVasilhas, borderColor: '#BD2B2B', color: fontVasilhas }}
             >
               Vasilhas
             </ButtonCategory>
             <ButtonCategory
-              onClick={handleClickPetiscos}
-              style={{ backgroundColor: checkedPetiscos }}
+              onClick={changeBackgroundPetiscos}
+              style={{ backgroundColor: backgroundPetiscos, borderColor: '#BD2B2B', color: fontPetiscos }}
             >
               Petiscos
             </ButtonCategory>
           </OrderContainer.Col2>
 
         </CategoryContainer>
-        <ConfirmButton>Confirmar</ConfirmButton>
 
       </Container>
     </div>

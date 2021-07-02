@@ -43,12 +43,11 @@ module.exports = {
   },
 
   async del(req, res) {
-    const { group_id } = req.body;
-
+    const { id } = req.query;
     try {
       const user_id = req.session.get('user').user.firebase_id;
       const { store_id } = await StoreModel.getByUserId(user_id);
-      await GroupModel.deleteGroup(group_id, store_id);
+      await GroupModel.deleteGroup(id, store_id);
     } catch (err) {
       if (err.message) {
         return res.status(400).json({ notification: err.message });
@@ -61,16 +60,15 @@ module.exports = {
   // função para o usuário puxar todos os grupos pelo id da loja na URl
   async getAllFromStore(req, res) {
     const { id } = req.query;
-    const group = await GroupModel.getAllGroups(id);
-    return res.json(group);
+    const groups = await GroupModel.getAllGroups(id);
+    return res.json(groups);
   },
   // função para o seller pegar todos os grupos de sua loja pela sessão
   async getAllFromSession(req, res) {
     const id = req.session.get('user').user.firebase_id;
     const { store_id } = await StoreModel.getByUserId(id);
-    const group = await GroupModel.getAllGroupsFromSession(store_id);
-    console.log(id);
-    return res.json(group);
+    const groups = await GroupModel.getAllGroupsFromSession(store_id);
+    return res.json(groups);
   },
 
 };

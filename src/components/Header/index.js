@@ -159,7 +159,6 @@ background-color:${({ theme }) => theme.colors.rose} ;
 
 export default function Header() {
   const { user, logout } = useAuth();
-
   const PersonalButton = () => {
     if (!user) {
       return (

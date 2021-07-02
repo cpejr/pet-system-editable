@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import axios from 'axios';
 import { notification } from 'antd';
+import { BsTrash } from 'react-icons/bs';
 
 const api = axios.create({ baseURL: 'http://localhost:3000/' });
 
@@ -15,7 +16,6 @@ width:100%;
 height: 100%;
 flex-direction:column;
 `;
-
 const Row = styled.div`
 display:flex;
 align-items:center;
@@ -31,7 +31,6 @@ width:100%;
 font-family:Roboto;
 font-weight: bold;
 font-size:24px;
-margin-bottom:5%;
 @media(max-width:860px){
         width:100%;
         font-size:18px;
@@ -43,37 +42,7 @@ display:flex;
 align-items:center;
 justify-content:center;
 width:100%;
-margin-bottom:5%;
-@media(max-width:860px){
-        flex-direction:column;
-    } 
-`;
-
-Ajust.Col1 = styled.h3`
-display:flex;
-align-items:center;
-justify-content:center;
-width:30%;
-font-family:Roboto;
-@media(max-width:860px){
-        width:100%;
-        font-size:16px;
-    } 
-`;
-
-const InputNameGroup = styled.input`
-display:flex;
-align-items:center;
-justify-content:center;
-width:40%;
-font-family:Roboto;
-height:40px;
-border-radius:10px;
-border-color:${({ theme }) => theme.colors.borderBoxColor};
-@media(max-width:860px){
-        width:100%;
-        font-size:12px;
-    } 
+flex-direction: column;
 `;
 
 const ButtonConfirm = styled.button`
@@ -105,7 +74,38 @@ const ButtonConfirm = styled.button`
     } 
 `;
 
-const AddGroup = styled.button`
+const ButtonCancel = styled.button`
+    display:flex;
+    height: 55px;
+    width: 200px;
+    font-family: Roboto;
+    font-size: 18px;
+    font-weight: 500;
+    background-color: ${({ theme }) => theme.colors.background};
+    color: ${({ theme }) => theme.colors.darkRed};
+    border: solid;
+    border-width: 1px;
+    border-color: ${({ theme }) => theme.colors.darkRed};
+    border-radius: 5px;
+    align-items: center;
+    transform: translate(0%,-50%);
+    justify-content: center;
+    text-align: center;
+    cursor: pointer;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    :hover{
+    background-color: ${({ theme }) => theme.colors.darkRed};
+    color: ${({ theme }) => theme.colors.background};
+    border: solid;
+    border-color: ${({ theme }) => theme.colors.darkRed};
+    }
+    @media(max-width:860px){
+        width:150px;
+    } 
+`;
+
+const RemoveGroup = styled.button`
   display:flex;
     align-items:center;
     justify-content:center;
@@ -113,7 +113,6 @@ const AddGroup = styled.button`
     font-size: 100%;
     font-weight: 500;
     background-color: ${({ theme }) => theme.colors.background};
-    color: ${({ theme }) => theme.colors.mediumGreen};
     border: 0;
     cursor:pointer;
     outline:none;    
@@ -146,7 +145,7 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     position: 'absolute',
-    width: '60vw',
+    width: '50vw',
     height: '35vh',
     backgroundColor: theme.palette.background.paper,
     border: '2px solid #609694',
@@ -157,25 +156,20 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function ModalGroup() {
-  const [group, setGroup] = useState('');
-
-  async function handleGroupChange(event) {
-    setGroup(event.target.value);
-  }
+export default function ModalGroup(props) {
+  const { groups } = props;
+  const id = {
+    group_id: groups,
+  };
 
   async function handleSubmit() {
-    const body = {
-      name: group,
-    };
-
     try {
-      const Validate = await api.post('/api/group', body);
+      const Validate = await api.delete(`api/group/${id.group_id}`);
       console.log(Validate.data);
       notification.open({
         message: 'Sucesso!',
         description:
-          'O grupo foi criado com sucesso.',
+          'O grupo removido com sucesso.',
         className: 'ant-notification',
         top: '100px',
         style: {
@@ -202,35 +196,32 @@ export default function ModalGroup() {
     <div style={modalStyle} className={classes.paper}>
       <ContainerModal>
         <Row>
-          <TitleModal>Adicione um grupo</TitleModal>
+          <TitleModal>Apagar grupo</TitleModal>
         </Row>
-        <Row>
-          <Ajust>
-            <Ajust.Col1>
-              Nome do grupo:
-            </Ajust.Col1>
-            <InputNameGroup placeholder="" require value={group} onChange={handleGroupChange} />
-          </Ajust>
-        </Row>
-        <Row>
-          <ButtonConfirm onClick={(e) => {
-            e.preventDefault();
-            handleSubmit();
-            handleClose();
-          }}
-          >
-            Confirmar grupo
-
-          </ButtonConfirm>
-        </Row>
+        <Ajust>
+          <Row>
+            <ButtonCancel onClick={handleClose}>Cancelar</ButtonCancel>
+          </Row>
+          <Row>
+            <ButtonConfirm
+              onClick={(e) => {
+                e.preventDefault();
+                handleSubmit();
+                handleClose();
+              }}
+            >
+              Confirmar
+            </ButtonConfirm>
+          </Row>
+        </Ajust>
       </ContainerModal>
     </div>
   );
   return (
     <div>
-      <AddGroup onClick={handleOpen}>
-        Adicionar Grupo
-      </AddGroup>
+      <RemoveGroup onClick={handleOpen}>
+        <BsTrash size={22} style={{ color: '#AA4545', cursor: 'pointer' }} />
+      </RemoveGroup>
       <Modal
         open={open}
         onClose={handleClose}

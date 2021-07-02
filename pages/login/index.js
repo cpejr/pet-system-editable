@@ -16,7 +16,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
 
   const { login } = useAuth();
-
+/*eslint-disable*/
   const router = useRouter();
 
   function handleEmailChange(event) {
@@ -29,6 +29,7 @@ const Login = () => {
     event.preventDefault();
     try {
       await login(email, password);
+     
     } catch (error) {
       console.log(error); //eslint-disable-line
     }

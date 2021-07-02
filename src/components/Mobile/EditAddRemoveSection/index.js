@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import ModalAddProductsMobile from '../ModalAddProductsMobile';
 
 const Container = styled.div`
 display:none;
@@ -50,7 +51,7 @@ export default function LocationAndFilter() {
           Editar categorias
         </Container.Col1>
         <Container.Col2>
-          Adicionar produtos
+          <ModalAddProductsMobile />
         </Container.Col2>
         <Container.Col3>
           Remover categorias

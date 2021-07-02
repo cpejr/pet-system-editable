@@ -3,8 +3,6 @@ import styled from 'styled-components';
 import Link from 'next/link';
 // import { makeStyles } from '@material-ui/core/styles';
 // import Modal from '@material-ui/core/Modal';
-import { BsTrash } from 'react-icons/bs';
-import { BiEditAlt } from 'react-icons/bi';
 import HeaderSeller from '../../../../src/components/HeaderSeller';
 import WordsDivider from '../../../../src/components/WordsDivider';
 import FooterMobile from '../../../../src/components/Mobile/FooterMobile';
@@ -16,6 +14,9 @@ import ModalAddProducts from '../../../../src/components/ModalAddProducts';
 import LocationAndFilter from '../../../../src/components/Mobile/LocationAndFilter';
 import EditAddRemoveSection from '../../../../src/components/Mobile/EditAddRemoveSection';
 import ModalGroup from '../../../../src/components/ModalGroup';
+import ModalGroupEdit from '../../../../src/components/ModalGroupEdit';
+import ModalGroupRemove from '../../../../src/components/ModalGroupRemove';
+import api from '../../../../src/utils/api';
 
 const Title = styled.h1`
 align-items:initial;
@@ -74,13 +75,14 @@ font-family: Roboto;
 
 const ProductContainer = styled.div`
 display:flex;
-align-items:center;
+align-items:flex-start;
 justify-content:center;
 width:100%;
 flex-direction:row;
+margin-top: 1%;
 @media(max-width:1065px){
     display:flex;
-    align-items:center;
+    align-items:flex-start;
     justify-content:center;
     flex-direction:row;
     }
@@ -95,7 +97,7 @@ flex-direction:column;
 @media(max-width:1065px){
     display:flex;
     align-items:center;
-    justify-content:space-evenly;
+    justify-content:center;
     flex-direction:column;
     width:40%;
     }
@@ -261,6 +263,7 @@ const RemoveGroup = styled.button`
     background-color: ${({ theme }) => theme.colors.background};
     border: 0;
     outline:none;
+
     @media(max-width:1000px){
       display:flex;
     align-items:center;
@@ -292,8 +295,27 @@ const Groups = styled.h2`
   margin: 0;
   `;
 
-export default function Perfil(props) {
-  const { groups } = props;
+export default function Perfil({ groups }) {
+  // const { groups } = props;
+  const PersonalGroups = () => (
+    <div>
+      {groups?.length > 0 && groups.map((group) => (
+        <div key={group.group_id}>
+          <Group.Title>
+            <Groups>{group.name}</Groups>
+            <EditGroup>
+              <ModalGroupEdit groups={group.group_id} />
+            </EditGroup>
+            <RemoveGroup>
+              <ModalGroupRemove groups={group.group_id} />
+            </RemoveGroup>
+          </Group.Title>
+          <Products />
+        </div>
+      ))}
+    </div>
+
+  );
   return (
     <div>
       <HeaderSeller />
@@ -340,20 +362,7 @@ export default function Perfil(props) {
         <ProductContainer.Col2>
           <Group>
             <ModalGroup />
-            {groups && (
-            <div>
-              <Group.Title>
-                <Groups>{groups.name}</Groups>
-                <EditGroup>
-                  <BiEditAlt size={22} style={{ color: '#AAABB0', cursor: 'pointer' }} />
-                </EditGroup>
-                <RemoveGroup>
-                  <BsTrash size={22} style={{ color: '#AA4545', cursor: 'pointer' }} />
-                </RemoveGroup>
-              </Group.Title>
-              <Products />
-            </div>
-            )}
+            <PersonalGroups />
           </Group>
         </ProductContainer.Col2>
 
@@ -363,10 +372,28 @@ export default function Perfil(props) {
     </div>
   );
 }
-// export async function getServerSideProps(context) {
-//   const { id } = context.session;
-//   const response = await api.get('');
-//   const session = response.data;
-//   console.log(session);
-//   return { props: { session } };
-// }
+
+export async function getServerSideProps(context) {
+  try {
+    const { req } = context;
+
+    const cookies = req?.headers?.cookie;
+
+    if (!cookies) {
+      throw new Error('No session provided');
+    }
+
+    const response = await api.get('myGroups', { headers: { cookie: cookies } });
+    const groups = response.data;
+    console.log(groups);
+    return { props: { groups } };
+  } catch (error) {
+    console.error(error) // eslint-disable-line
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/',
+      },
+    };
+  }
+}
