@@ -75,13 +75,14 @@ font-family: Roboto;
 
 const ProductContainer = styled.div`
 display:flex;
-align-items:center;
+align-items:flex-start;
 justify-content:center;
 width:100%;
 flex-direction:row;
+margin-top: 1%;
 @media(max-width:1065px){
     display:flex;
-    align-items:center;
+    align-items:flex-start;
     justify-content:center;
     flex-direction:row;
     }
@@ -96,7 +97,7 @@ flex-direction:column;
 @media(max-width:1065px){
     display:flex;
     align-items:center;
-    justify-content:space-evenly;
+    justify-content:center;
     flex-direction:column;
     width:40%;
     }
@@ -294,8 +295,8 @@ const Groups = styled.h2`
   margin: 0;
   `;
 
-export default function Perfil(props) {
-  const { groups } = props;
+export default function Perfil({ groups }) {
+  // const { groups } = props;
   const PersonalGroups = () => (
     <div>
       {groups?.length > 0 && groups.map((group) => (
@@ -303,10 +304,10 @@ export default function Perfil(props) {
           <Group.Title>
             <Groups>{group.name}</Groups>
             <EditGroup>
-              <ModalGroupEdit />
+              <ModalGroupEdit groups={group.group_id} />
             </EditGroup>
             <RemoveGroup>
-              <ModalGroupRemove />
+              <ModalGroupRemove groups={group.group_id} />
             </RemoveGroup>
           </Group.Title>
           <Products />

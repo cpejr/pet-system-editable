@@ -8,7 +8,7 @@ const CardLine = styled.div`
 display: flex;
 align-items: center;
 justify-content: space-around;
-height: 40rem;
+height: auto;
 width: 90%;
 flex-direction: row;
 flex-wrap: wrap;

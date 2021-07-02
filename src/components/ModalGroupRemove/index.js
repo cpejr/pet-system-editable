@@ -156,12 +156,15 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function ModalGroup(context) {
-  const { group_id } = context;
+export default function ModalGroup(props) {
+  const { groups } = props;
+  const id = {
+    group_id: groups,
+  };
 
   async function handleSubmit() {
     try {
-      const Validate = await api.delete(`api/group/${group_id}`);
+      const Validate = await api.delete(`api/group/${id.group_id}`);
       console.log(Validate.data);
       notification.open({
         message: 'Sucesso!',

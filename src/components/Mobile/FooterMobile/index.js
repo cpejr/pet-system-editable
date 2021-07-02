@@ -16,6 +16,7 @@ flex-direction:row;
 border-top:solid;
 border-width:1px;
 border-color:${({ theme }) => theme.colors.borderBoxColor};
+background-color: ${({ theme }) => theme.colors.background} ;
 position:fixed;
 bottom:0;
 }

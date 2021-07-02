@@ -23,8 +23,8 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     position: 'absolute',
-    width: '65vw',
-    height: '55vh',
+    width: '80vw',
+    height: '60vh',
     backgroundColor: '#F8F8F8',
     border: '2px solid #609694',
     boxShadow: theme.shadows[5],
@@ -52,6 +52,32 @@ display:none;
   display:flex;
 }
 `;
+
+const BodyContainer = styled.div`
+display:flex;
+align-items:center;
+justify-content:center;
+flex-direction: column;
+`;
+
+const ConfirmButton = styled.button`
+    height: 30px;
+    width: 60%;
+    font-family: Roboto;
+    font-size: 100%;
+    font-weight: 500;
+    background-color:${({ theme }) => theme.colors.blueButton};
+    border: 1;
+    border-radius: 5px;
+    cursor:pointer;
+    outline:none;
+    color:${({ theme }) => theme.colors.titleGray};
+    font-size:14px;
+    margin-top:5%;
+    border:none;
+
+
+`;
 /*eslint-disable*/
 export default function ModalAddProducts() {
   const classes = useStyles();
@@ -68,9 +94,10 @@ export default function ModalAddProducts() {
   };
 
   const body = (
-    <div style={modalStyle} className={classes.paper}>
+    <BodyContainer style={modalStyle} className={classes.paper}>
       <Filter/>
-    </div>
+      <ConfirmButton onClick={handleClose} >Confirmar</ConfirmButton>
+    </BodyContainer>
   );
 
   return (

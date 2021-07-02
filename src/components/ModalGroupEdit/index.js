@@ -154,7 +154,9 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function ModalGroup() {
+export default function ModalGroup(props) {
+  const { groups } = props;
+  console.log(groups);
   const [group, setGroup] = useState('');
 
   async function handleGroupChange(event) {
@@ -164,6 +166,7 @@ export default function ModalGroup() {
   async function handleSubmit() {
     const body = {
       name: group,
+      group_id: groups,
     };
 
     try {
