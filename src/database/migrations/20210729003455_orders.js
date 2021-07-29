@@ -1,10 +1,10 @@
 exports.up = function (knex) {
-  return knex.schema.createTable('Orders', (table) => {
-    table.string('order_id').primary().notNullable();
-    table.string('store_id').notNullable();
+  return knex.schema.createTable('Order', (table) => {
+    table.uuid('order_id').primary().notNullable();
+    table.uuid('store_id').notNullable();
     table.foreign('store_id').references('store_id').inTable('Store');
-    table.string('user_id').notNullable();
-    table.foreign('user_id').references('user_id').inTable('Users');
+    table.string('firebase_id').notNullable();
+    table.foreign('firebase_id').references('firebase_id').inTable('Users');
     table.string('product_name').notNullable();
     table.float('total_price').notNullable();
     table.string('payment_type').notNullable();
@@ -17,5 +17,5 @@ exports.up = function (knex) {
 };
 
 exports.down = function (knex) {
-  return knex.schema.dropTable('orders');
+  return knex.schema.dropTable('Order');
 };
