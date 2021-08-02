@@ -3,8 +3,8 @@ const connection = require('../database/connection');
 module.exports = {
   async getCartById(id) {
     try {
-      const cart = await connection('cart')
-        .where('cart_id', id)
+      const cart = await connection('Cart')
+        .where('product_id', id)
         .select('*')
         .first();
       return cart;
@@ -13,9 +13,22 @@ module.exports = {
       throw new Error(error);
     }
   },
+
+  async getAllCarts(id) {
+    try {
+      const carts = await connection('Cart')
+        .where('user_id', id)
+        .select('*');
+      return carts;
+    } catch (error) {
+      console.error(error);
+      throw new Error(error);
+    }
+  },
+
   async createNewCart(cart) {
     try {
-      const cart_aux = await connection('cart')
+      const cart_aux = await connection('Cart')
         .insert(cart);
       return cart_aux;
     } catch (error) {
@@ -24,10 +37,22 @@ module.exports = {
     }
   },
 
-  async removeCart(cart_id) {
+  async removeCartByID(product_id) {
     try {
-      const response = await connection('cart')
-        .where({ cart_id })
+      const response = await connection('Cart')
+        .where({ product_id })
+        .delete();
+      return response;
+    } catch (error) {
+      console.error(error);
+      throw new Error(error);
+    }
+  },
+
+  async removeAllCarts(user_id) {
+    try {
+      const response = await connection('Cart')
+        .where({ user_id })
         .delete();
       return response;
     } catch (error) {
@@ -38,8 +63,8 @@ module.exports = {
 
   async updateCart(cart, id) {
     try {
-      const response = await connection('cart')
-        .where({ cart_id: id })
+      const response = await connection('Cart')
+        .where({ product_id: id })
         .update(cart);
       return response;
     } catch (error) {
