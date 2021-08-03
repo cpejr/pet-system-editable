@@ -6,8 +6,12 @@ module.exports = {
 
   async getOne(req, res) {
     const { id } = req.query;
-    const group = await GroupModel.getGroupById(id);
-    return res.json(group);
+    try {
+      const group = await GroupModel.getGroupById(id);
+      return res.json(group);
+    } catch (err) {
+      return res.status(500).json({ notification: err.message });
+    }
   },
 
   async create(req, res) {
