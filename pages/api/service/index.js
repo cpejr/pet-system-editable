@@ -1,23 +1,21 @@
 import {
-  getOne, create, update, remove, getAll,
-} from '../../src/controllers/ServiceController';
+  create, del, update, getAll,
+} from '../../../src/controllers/ServiceController';
+import { withAuthValidation, isAdminOrSelf } from '../../../src/utils/Auth';
 
 export default function handler(req, res) {
   try {
     const { method } = req;
-    if (method === 'GET') {
-      return getOne(req, res);
-    }
     if (method === 'POST') {
-      return create(req, res);
+      return withAuthValidation(create)(req, res);
     }
     if (method === 'PUT') {
-      return update(req, res);
+      return withAuthValidation(update)(req, res);
     }
     if (method === 'DELETE') {
-      return remove(req, res);
+      return isAdminOrSelf(del)(req, res);
     }
-    if (method === 'GETALL') {
+    if (method === 'GET') {
       return getAll(req, res);
     }
     return res.status(500).json({ message: 'Método incorreto' });

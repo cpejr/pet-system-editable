@@ -3,7 +3,7 @@ const connection = require('../database/connection');
 module.exports = {
   async getServiceById(id) {
     try {
-      const service = await connection('service')
+      const service = await connection('services')
         .where('service_id', id)
         .select('*')
         .first();
@@ -15,7 +15,7 @@ module.exports = {
   },
   async createNewService(service) {
     try {
-      const service_aux = await connection('service')
+      const service_aux = await connection('services')
         .insert(service);
       return service_aux;
     } catch (error) {
@@ -26,7 +26,7 @@ module.exports = {
 
   async removeService(id) {
     try {
-      const response = await connection('service')
+      const response = await connection('services')
         .where({ service_id: id })
         .delete();
       return response;
@@ -38,7 +38,7 @@ module.exports = {
 
   async updateService(service, id) {
     try {
-      const response = await connection('service')
+      const response = await connection('services')
         .where({ service_id: id })
         .update(service);
       return response;
@@ -49,7 +49,7 @@ module.exports = {
   },
   async getAllServices() {
     try {
-      const services = await connection('service')
+      const services = await connection('services')
         .select('*');
       return services;
     } catch (error) {

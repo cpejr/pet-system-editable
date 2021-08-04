@@ -22,7 +22,8 @@ module.exports = {
       const { store_id } = await StoreModel.getByUserId(user_id);
       service.store_id = store_id;
 
-      await ServiceModel.createNewProduct(product);
+      console.log({ service });
+      await ServiceModel.createNewService(service);
     } catch (err) {
       if (err.message) {
         return response.status(400).json({ notification: err.message });
@@ -33,10 +34,10 @@ module.exports = {
     return response.status(200).json({ notification: 'Product created' });
   },
   async update(request, response) {
-    const product = request.body;
+    const service = request.body;
 
     try {
-      await ServiceModel.updateProduct(product, product.product_id);
+      await ServiceModel.updateService(service, service.service_id);
     } catch (err) {
       if (err.message) {
         return response.status(400).json({ notification: err.message });
@@ -64,7 +65,7 @@ module.exports = {
       return response.status(200).json(services);
     } catch (error) {
       if (error.message) {
-        return response.status(400).json({ notification: err.message });
+        return response.status(400).json({ notification: error.message });
       }
       return response.status(500).json({ notification: 'Internal server error while trying to find products' });
     }
