@@ -1,7 +1,7 @@
 import {
   create, del, update,
 } from '../../../src/controllers/AddressController';
-import { withAuthValidation, isAdminOrSelf } from '../../../src/utils/Auth';
+import { withAuthValidation, isAdminOrSelf, isAdmin } from '../../../src/utils/Auth';
 
 export default function handler(req, res) {
   try {
@@ -14,6 +14,9 @@ export default function handler(req, res) {
     }
     if (method === 'DELETE') {
       return isAdminOrSelf(del)(req, res);
+    }
+    if (method === 'GETALL') {
+      return isAdmin(getAll)(req, res);
     }
     return res.status(500).json({ message: 'Método incorreto' });
   } catch (err) {

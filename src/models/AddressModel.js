@@ -13,6 +13,18 @@ module.exports = {
       throw new Error(error);
     }
   },
+
+  async getAllAddress() {
+    try {
+      const addresses = await connection('Address')
+        .select('*');
+      return addresses;
+    } catch (error) {
+      console.error(error);
+      throw new Error(error);
+    }
+  },
+
   async createNewAddress(address) {
     try {
       const address_aux = await connection('Address')

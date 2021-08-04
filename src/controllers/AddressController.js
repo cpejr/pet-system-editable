@@ -12,6 +12,18 @@ module.exports = {
     return response.json(address);
   },
 
+  async getAll(request, response) {
+    try {
+      const addresses = await AddressModel.getAllAddress();
+      return response.status(200).json(addresses);
+    } catch (error) {
+      if (err.message) {
+        return response.status(400).json({ notification: err.message });
+      }
+      return response.status(500).json({ notification: 'Internal server error while trying to find category' });
+    }
+  },
+
   async create(request, response) {
     const address = request.body;
     address.address_id = uuidv4();
