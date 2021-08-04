@@ -1,6 +1,7 @@
 const { v4: uuidv4 } = require('uuid');
 const UserModel = require('../models/ProductModel');
 const StoreModel = require('../models/StoreModel');
+const AddressModel = require('../models/AddressModel');
 
 module.exports = {
   async getOne(request, response) {
@@ -17,10 +18,11 @@ module.exports = {
 
     try {
       const user_id = request.session.get('user').user.firebase_id;
+      address.user_id = user_id;
       const { store_id } = await StoreModel.getByUserId(user_id);
       address.store_id = store_id;
 
-      await ProductModel.createNewProduct(address);
+      await AddressModel.createNewAddress(address);
     } catch (err) {
       if (err.message) {
         return response.status(400).json({ notification: err.message });
