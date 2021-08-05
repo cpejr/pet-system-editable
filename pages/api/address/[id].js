@@ -1,4 +1,5 @@
-import { getOne } from '../../../src/controllers/AddressController';
+import { getOne, remove } from '../../../src/controllers/AddressController';
+import { isAdminOrSelf } from '../../../src/utils/Auth';
 
 export default function handler(req, res) {
   try {
@@ -6,6 +7,9 @@ export default function handler(req, res) {
     console.log(method);
     if (method === 'GET') {
       return getOne(req, res);
+    }
+    if (method === 'DELETE') {
+      return isAdminOrSelf(remove)(req, res);
     }
     return res.status(500).json({ message: 'Método incorreto' });
   } catch (err) {

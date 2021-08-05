@@ -7,7 +7,7 @@ module.exports = {
   async getOne(request, response) {
     const { id } = request.query;
 
-    const address = await UserModel.getAddressById(id);
+    const address = await AddressModel.getAddressById(id);
 
     return response.json(address);
   },
@@ -58,10 +58,10 @@ module.exports = {
     return response.status(200).json({ notification: 'Address updated' });
   },
   async remove(request, response) {
-    const { address_id } = request.params;
+    const { id } = request.query;
 
     try {
-      await AddressModel.removeAddress(address_id);
+      await AddressModel.removeAddress(id);
     } catch (err) {
       if (err.message) {
         return response.status(400).json({ notification: err.message });
