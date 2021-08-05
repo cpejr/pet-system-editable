@@ -3,7 +3,7 @@ const connection = require('../database/connection');
 module.exports = {
   async getOrderById(id) {
     try {
-      const order = await connection('order')
+      const order = await connection('Order')
         .where('order_id', id)
         .select('*')
         .first();
@@ -15,7 +15,7 @@ module.exports = {
   },
   async createNewOrder(order) {
     try {
-      const order_aux = await connection('order')
+      const order_aux = await connection('Order')
         .insert(order);
       return order_aux;
     } catch (error) {
@@ -26,7 +26,7 @@ module.exports = {
 
   async removeOrder(order_id) {
     try {
-      const response = await connection('order')
+      const response = await connection('Order')
         .where({ order_id })
         .delete();
       return response;
@@ -38,7 +38,7 @@ module.exports = {
 
   async updateOrder(order, id) {
     try {
-      const response = await connection('order')
+      const response = await connection('Order')
         .where({ order_id: id })
         .update(order);
       return response;

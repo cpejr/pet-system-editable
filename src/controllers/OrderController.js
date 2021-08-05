@@ -16,6 +16,7 @@ module.exports = {
     try {
       const user_id = req.session.get('user').user.firebase_id;
       const { store_id } = await StoreModel.getByUserId(user_id);
+      console.log(order);
       order.store_id = store_id;
       order.firebase_id = user_id;
       await OrderModel.createNewOrder(order);
@@ -44,9 +45,9 @@ module.exports = {
   },
 
   async del(req, res) {
-    const { order_id } = req.params;
+    const { id } = req.query;
     try {
-      await OrderModel.removeOrder(order_id);
+      await OrderModel.removeOrder(id);
     } catch (err) {
       if (err.message) {
         return res.status(400).json({ notification: err.message });
