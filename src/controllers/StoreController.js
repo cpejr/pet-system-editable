@@ -8,10 +8,10 @@ const AwsModel = require('../models/AwsModel');
 
 module.exports = {
   async getOne(request, response) {
-    const { store_id } = request.query;
+    const { id } = request.query;
 
     try {
-      const store = await StoreModel.getStoreById(store_id);
+      const store = await StoreModel.getStoreById(id);
       return response.status(200).json(store);
     } catch (error) {
       if (err.message) {

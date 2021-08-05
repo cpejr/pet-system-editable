@@ -23,7 +23,7 @@ if (!firebase.apps.length) {
       databaseURL: process.env.NEXT_PUBLIC_FIREBASE_DATABASEURL,
     });
   } catch (err) {
-    console.error(error); //eslint-disable-line
+    console.error(err); //eslint-disable-line
   }
 }
 
