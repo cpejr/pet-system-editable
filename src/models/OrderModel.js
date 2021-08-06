@@ -13,6 +13,18 @@ module.exports = {
       throw new Error(error);
     }
   },
+
+  async getAllOrders() {
+    try {
+      const orders = await connection('Order')
+        .select('*');
+      return orders;
+    } catch (error) {
+      console.error(error);
+      throw new Error(error);
+    }
+  },
+
   async createNewOrder(order) {
     try {
       const order_aux = await connection('Order')

@@ -14,6 +14,19 @@ module.exports = {
     }
   },
 
+  async getAddressByUserId(id) {
+    try {
+      const address = await connection('Address')
+        .where('user_id', id)
+        .select('*')
+        .first();
+      return address;
+    } catch (error) {
+      console.error(error);
+      throw new Error(error);
+    }
+  },
+
   async getAllAddress() {
     try {
       const addresses = await connection('Address')
