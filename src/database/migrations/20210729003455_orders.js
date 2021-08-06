@@ -5,10 +5,11 @@ exports.up = function (knex) {
     table.foreign('store_id').references('store_id').inTable('Store');
     table.string('firebase_id').notNullable();
     table.foreign('firebase_id').references('firebase_id').inTable('Users');
+    table.string('address_id').notNullable();
+    table.foreign('address_id').references('address_id').inTable('Address');
     table.string('product_name').notNullable();
     table.float('total_price').notNullable();
     table.string('payment_type').notNullable();
-    table.string('address_id').notNullable();
     table.string('status').notNullable();
     table.int('payment_installments').notNullable();
     table.string('delivery_method').notNullable();
