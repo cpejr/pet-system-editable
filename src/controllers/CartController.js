@@ -2,16 +2,17 @@ const CartModel = require('../models/CartModel');
 
 module.exports = {
 
-  async getOne(req, res) {
-    const { product_id } = req.params;
-    const cart = await CartModel.getCartById(product_id);
-    return res.status(200).json(cart);
-  },
-
   async getAll(req, res) {
-    const { user_id } = req.params;
-    const cart = await CartModel.getAllCarts(user_id);
-    return res.status(200).json(cart);
+    const firebase_id = req.query.id;
+    try {
+      const cart = await CartModel.getAllCarts(firebase_id);
+      return res.status(200).json(cart);
+    } catch (error) {
+      if (error.message) {
+        return res.status(400).json({ notification: error.message });
+      }
+      return res.status(500).json({ notification: 'Internal server error while trying to find cart' });
+    }
   },
 
   async create(req, res) {
@@ -31,9 +32,8 @@ module.exports = {
 
   async update(request, response) {
     const cart = request.body;
-    const { product_id } = req.params;
     try {
-      await CartModel.updateCart(cart, product_id);
+      await CartModel.updateCart(cart, cart.product_id);
     } catch (err) {
       if (err.message) {
         return response.status(400).json({ notification: err.message });
@@ -44,7 +44,7 @@ module.exports = {
   },
 
   async deleteByID(req, res) {
-    const { product_id } = req.params;
+    const product_id = req.query.id;
     try {
       await CartModel.removeCartByID(product_id);
     } catch (err) {
@@ -58,7 +58,7 @@ module.exports = {
   },
 
   async deleteAll(req, res) {
-    const { user_id } = req.params;
+    const user_id = req.session.get('user').user.firebase_id;
     try {
       await CartModel.removeAllCarts(user_id);
     } catch (err) {
