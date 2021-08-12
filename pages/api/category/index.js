@@ -1,5 +1,5 @@
 import {
-  create,
+  create, getAll,
 } from '../../../src/controllers/CategoryController';
 import { isAdmin } from '../../../src/utils/Auth';
 
@@ -10,6 +10,9 @@ export default function handler(req, res) {
     if (method === 'POST') {
       // return isAdmin(create)(req, res);
       return create(req, res);
+    }
+    if (method === 'GET') {
+      return getAll(req, res);
     }
 
     return res.status(500).json({ message: 'Método incorreto' });
