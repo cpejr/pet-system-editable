@@ -17,7 +17,7 @@ module.exports = {
       if (err.message) {
         return response.status(400).json({ notification: err.message });
       }
-      return response.status(500).json({ notification: 'Internal server error while trying to find store' });
+      return response.status(500).json({ notification: 'Internal Server Error' });
     }
   },
 
@@ -29,7 +29,7 @@ module.exports = {
       if (err.message) {
         return response.status(400).json({ notification: err.message });
       }
-      return response.status(500).json({ notification: 'Internal server error while trying to find category' });
+      return response.status(500).json({ notification: 'Internal Server Error' });
     }
   },
 
@@ -85,7 +85,7 @@ module.exports = {
       if (err.message) {
         return response.status(400).json({ notification: err.message });
       }
-      return response.status(500).json({ notification: 'Internal server error while trying to register user' });
+      return response.status(500).json({ notification: 'Internal Server Error' });
     }
 
     // Criacao da Loja
@@ -103,7 +103,7 @@ module.exports = {
       if (err.message) {
         return response.status(400).json({ notification: err.message });
       }
-      return response.status(500).json({ notification: 'Internal server error while trying to register store' });
+      return response.status(500).json({ notification: 'Internal Server Error' });
     }
     return response.status(200).json({ notification: 'User and store created' });
   },
@@ -117,7 +117,7 @@ module.exports = {
       if (err.message) {
         return response.status(400).json({ notification: err.message });
       }
-      return response.status(500).json({ notification: 'Internal server error while trying to update store' });
+      return response.status(500).json({ notification: 'Internal Server Error' });
     }
     return response.status(200).json({ notification: 'Store updated' });
   },
@@ -133,7 +133,7 @@ module.exports = {
       if (err.message) {
         return response.status(400).json({ notification: err.message });
       }
-      return response.status(500).json({ notification: 'Internal server error while trying to delete users store' });
+      return response.status(500).json({ notification: 'Internal Server Error' });
     }
     // Apagando Loja do Bando de Dados
     try {
@@ -142,7 +142,7 @@ module.exports = {
       if (err.message) {
         return response.status(400).json({ notification: err.message });
       }
-      return response.status(500).json({ notification: 'Internal server error while trying to delete store' });
+      return response.status(500).json({ notification: 'Internal Server Error' });
     }
     return response.status(200).json({ notification: 'User and store were deleted' });
   },

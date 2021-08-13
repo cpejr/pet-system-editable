@@ -11,7 +11,7 @@ export default function handler(req, res) {
       return isAdmin(create)(req, res);
     }
 
-    return res.status(500).json({ message: 'Método incorreto' });
+    return res.status(500).json({ message: 'Internal Server Error' });
   } catch (error) {
     return res.status(500).json({ statusCode: 500, message: error.message });
   }

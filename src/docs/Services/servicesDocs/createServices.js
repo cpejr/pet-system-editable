@@ -41,5 +41,5 @@
 *        '400':
 *          description: No valid session provided
 *        '500':
-*          description: Internal server error while trying to create service
+*          description: Internal Server Error
 */

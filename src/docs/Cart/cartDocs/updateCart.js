@@ -27,5 +27,5 @@
 *       '403':
 *        description: Unauthorized
 *       '500':
-*        description: Internal server error while trying to update cart
+*        description: Internal Server Error
 */

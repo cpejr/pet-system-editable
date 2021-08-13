@@ -31,6 +31,6 @@
 *       '403':
 *        description: Unauthorized
 *       '500':
-*        description: Internal server error while trying to create subcategory
+*        description: Internal Server Error
 *
 */

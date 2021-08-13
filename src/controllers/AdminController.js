@@ -16,7 +16,7 @@ module.exports = {
       if (err.message) {
         return response.status(400).json({ notification: err.message });
       }
-      return response.status(500).json({ notification: 'Internal server error while trying to create admin share' });
+      return response.status(500).json({ notification: 'Internal Server Error' });
     }
     return response.status(200).json({ notification: 'Share created' });
   },
@@ -31,7 +31,7 @@ module.exports = {
       if (err.message) {
         return res.status(400).json({ notification: err.message });
       }
-      return res.status(500).json({ notification: 'Internal server error while trying to update commission' });
+      return res.status(500).json({ notification: 'Internal Server Error' });
     }
     return res.status(200).json({ notification: 'Admin share updated' });
   },
@@ -44,7 +44,7 @@ module.exports = {
       if (err.message) {
         return response.status(400).json({ notification: err.message });
       }
-      return response.status(500).json({ notification: 'Internal server error while trying to delete share' });
+      return response.status(500).json({ notification: 'Internal Server Error' });
     }
     return response.status(200).json({ notification: 'Share deleted' });
   },

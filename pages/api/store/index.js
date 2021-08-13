@@ -16,7 +16,7 @@ handler.post(async (req, res) => {
     if (method === 'POST') {
       return create(req, res);
     }
-    return res.status(500).json({ message: 'Método incorreto' });
+    return res.status(500).json({ message: 'Internal Server Error' });
   } catch (err) {
     return res.status(500).json({ statusCode: 500, message: err.message });
   }
@@ -29,7 +29,7 @@ handler.get(async (req, res) => {
     if (method === 'GET') {
       return getAll(req, res);
     }
-    return res.status(500).json({ message: 'Método incorreto' });
+    return res.status(500).json({ message: 'Internal Server Error' });
   } catch (err) {
     return res.status(500).json({ statusCode: 500, message: err.message });
   }
@@ -42,7 +42,7 @@ handler.put(async (req, res) => {
     if (method === 'PUT') {
       return update(req, res);
     }
-    return res.status(500).json({ message: 'Método incorreto' });
+    return res.status(500).json({ message: 'Internal Server Error' });
   } catch (err) {
     return res.status(500).json({ statusCode: 500, message: err.message });
   }
@@ -55,7 +55,7 @@ handler.delete(async (req, res) => {
     if (method === 'DELETE') {
       return isSeller(deleteBoth)(req, res);
     }
-    return res.status(500).json({ message: 'Método incorreto' });
+    return res.status(500).json({ message: 'Internal Server Error' });
   } catch (err) {
     return res.status(500).json({ statusCode: 500, message: err.message });
   }

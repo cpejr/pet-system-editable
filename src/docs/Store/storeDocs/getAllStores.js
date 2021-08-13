@@ -30,6 +30,6 @@
 *       '404':
 *        description: Not Found
 *       '500':
-*        description: Internal server error while trying to find stores
+*        description: Internal Server Error
 *
 */

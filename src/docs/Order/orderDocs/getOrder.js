@@ -31,5 +31,5 @@
 *       '404':
 *        description: Not Found
 *       '500':
-*        description: Internal server error while trying to find order
+*        description: Internal Server Error
 */

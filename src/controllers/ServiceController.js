@@ -29,7 +29,7 @@ module.exports = {
         return response.status(400).json({ notification: err.message });
       }
       console.error(error);
-      return response.status(500).json({ notification: 'Internal server error while trying to create product' });
+      return response.status(500).json({ notification: 'Internal Server Error' });
     }
     return response.status(200).json({ notification: 'Product created' });
   },
@@ -42,7 +42,7 @@ module.exports = {
       if (err.message) {
         return response.status(400).json({ notification: err.message });
       }
-      return response.status(500).json({ notification: 'Internal server error while trying to update product' });
+      return response.status(500).json({ notification: 'Internal Server Error' });
     }
     return response.status(200).json({ notification: 'Product updated' });
   },
@@ -55,7 +55,7 @@ module.exports = {
       if (err.message) {
         return response.status(400).json({ notification: err.message });
       }
-      return response.status(500).json({ notification: 'Internal server error while trying to delete product' });
+      return response.status(500).json({ notification: 'Internal Server Error' });
     }
     return response.status(200).json({ notification: 'Product deleted' });
   },
@@ -67,7 +67,7 @@ module.exports = {
       if (error.message) {
         return response.status(400).json({ notification: error.message });
       }
-      return response.status(500).json({ notification: 'Internal server error while trying to find products' });
+      return response.status(500).json({ notification: 'Internal Server Error' });
     }
   },
 };

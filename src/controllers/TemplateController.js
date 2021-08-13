@@ -8,7 +8,7 @@ export async function getTemplateById(req, res) {
     return res.status(200).json(template);
   } catch (error) {
     console.error(error); // eslint-disable-line
-    return res.status(500).json({ Message: 'Error while trying to fetch template' });
+    return res.status(500).json({ Message: 'Internal Server Error' });
   }
 }
 
@@ -20,6 +20,6 @@ export async function createTemplate(req, res) {
     return res.status(200).json({ Message: `Created template with id ${newId}` });
   } catch (error) {
     console.error(error); // eslint-disable-line
-    return res.status(500).json({ Message: 'Error while trying to create template' });
+    return res.status(500).json({ Message: 'Internal Server Error' });
   }
 }

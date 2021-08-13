@@ -23,6 +23,6 @@
 *       '403':
 *        description: Unauthorized
 *       '500':
-*        description: Internal server error while trying to update commission
+*        description: Internal Server Error
 *
 */

@@ -23,5 +23,5 @@
  *        '404':
  *          description: Not Found
  *        '500':
- *          description: Internal server error while trying to delete service
+ *          description: Internal Server Error
  */

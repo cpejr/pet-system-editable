@@ -28,5 +28,5 @@
 *       '403':
 *        description: Unauthorized
 *       '500':
-*        description: Internal server error while trying to update order
+*        description: Internal Server Error
 */

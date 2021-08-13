@@ -11,7 +11,7 @@ module.exports = {
       if (error.message) {
         return res.status(400).json({ notification: error.message });
       }
-      return res.status(500).json({ notification: 'Internal server error while trying to find cart' });
+      return res.status(500).json({ notification: 'Internal Server Error' });
     }
   },
 
@@ -25,7 +25,7 @@ module.exports = {
         return res.status(400).json({ notification: err.message });
       }
       console.error(err);
-      return res.status(500).json({ notification: 'Internal server error while trying to create cart' });
+      return res.status(500).json({ notification: 'Internal Server Error' });
     }
     return res.status(200).json({ notification: 'Cart created!' });
   },
@@ -38,7 +38,7 @@ module.exports = {
       if (err.message) {
         return response.status(400).json({ notification: err.message });
       }
-      return response.status(500).json({ notification: 'Internal server error while trying to update cart' });
+      return response.status(500).json({ notification: 'Internal Server Error' });
     }
     return response.status(200).json({ notification: 'Cart updated' });
   },
@@ -52,7 +52,7 @@ module.exports = {
         return res.status(400).json({ notification: err.message });
       }
       console.error(err);
-      return res.status(500).json({ notification: 'Internal server error while trying to delete cart' });
+      return res.status(500).json({ notification: 'Internal Server Error' });
     }
     return res.status(200).json({ notification: 'Cart deleted' });
   },
@@ -66,7 +66,7 @@ module.exports = {
         return res.status(400).json({ notification: err.message });
       }
       console.error(err);
-      return res.status(500).json({ notification: 'Internal server error while trying to delete cart' });
+      return res.status(500).json({ notification: 'Internal Server Error' });
     }
     return res.status(200).json({ notification: 'Cart deleted' });
   },

@@ -56,6 +56,6 @@
 *       '403':
 *        description: Unauthorized
 *       '500':
-*        description: Internal server error while trying to create product
+*        description: Internal Server Error
 *
 */

@@ -27,7 +27,7 @@ module.exports = {
         return res.status(400).json({ notification: err.message });
       }
       console.error(err);
-      return res.status(500).json({ notification: 'Internal server error while trying to create group' });
+      return res.status(500).json({ notification: 'Internal Server Error' });
     }
     return res.status(200).json({ notification: 'Group created!' });
   },
@@ -41,7 +41,7 @@ module.exports = {
       if (err.message) {
         return response.status(400).json({ notification: err.message });
       }
-      return response.status(500).json({ notification: 'Internal server error while trying to update group' });
+      return response.status(500).json({ notification: 'Internal Server Error' });
     }
     return response.status(200).json({ notification: 'Group updated' });
   },
@@ -57,7 +57,7 @@ module.exports = {
         return res.status(400).json({ notification: err.message });
       }
       console.error(err);
-      return res.status(500).json({ notification: 'Internal server error while trying to delete group' });
+      return res.status(500).json({ notification: 'Internal Server Error' });
     }
     return res.status(200).json({ notification: 'Group deleted' });
   },
