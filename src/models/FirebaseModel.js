@@ -77,4 +77,13 @@ module.exports = {
     }
   },
 
+  async firebaseChangeUserPassword(email) {
+    try {
+      const result = await firebase.auth().sendPasswordResetEmail(email);
+      return result;
+    } catch (error) {
+      throw new Error(error);
+    }
+  },
+
 };

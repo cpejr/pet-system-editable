@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { MdEdit } from 'react-icons/md';
+import { useAuth } from '../../contexts/AuthContext';
 
 const ContainerDatas = styled.div`
 display:flex;
@@ -47,15 +48,27 @@ display:flex;
 justify-content:flex-end;
 `;
 export default function MyDatas() {
+  const { user } = useAuth();
+
+  function dataNascimentoFormatada(bdate){
+    var data = new Date(bdate),
+        dia  = data.getDate().toString(),
+        diaF = (dia.length == 1) ? '0'+dia : dia,
+        mes  = (data.getMonth()+1).toString(), //+1 pois no getMonth Janeiro começa com zero.
+        mesF = (mes.length == 1) ? '0'+mes : mes,
+        anoF = data.getFullYear();
+    return diaF+"/"+mesF+"/"+anoF;
+}
+
   return (
     <ContainerDatas>
       <BoxDatas>
-        <p>Nome: Igor Amoras</p>
-        <p>Email: igoramoras@cpejr.com.br</p>
-        <p>CPF: 096.###.###-##</p>
-        <p>02/02/01</p>
+        <p>Nome: {user.first_name}</p>
+        <p>Email: {user.email}</p>
+        <p>CPF: {user.cpf}</p>
+        <p>Data de Nascimento: {dataNascimentoFormatada(user.birth_date)}</p>
         <RowEdit>
-          <p>(31) 99240-4607</p>
+          <p>Telefone: {user.telephone}</p>
           <Icon>
             <MdEdit />
           </Icon>
