@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Link from 'next/link';
 import Header from '../../../../src/components/Header';
-import MyDatas from '../../../../src/components/MyDatas';
+import MyDatasEdit from '../../../../src/components/MyDatasEdit';
 import MyLogOut from '../../../../src/components/MyLogOut';
 import WordsDivider from '../../../../src/components/WordsDivider';
 import FooterMobile from '../../../../src/components/Mobile/FooterMobile';
@@ -64,36 +64,9 @@ export default function Perfil() {
     <div>
       <Header />
 
-      <Title>Meu Perfil:</Title>
-
-      <SubTitle>
-        <Link href="http://localhost:3000/User/Perfil/MyRequests">
-          <Section>Meus pedidos</Section>
-        </Link>
-        <WordsDivider />
-        <Link href="http://localhost:3000/User/Perfil/MyAdresses">
-          <Section>Meus endereços</Section>
-        </Link>
-        <WordsDivider />
-        <Link href="http://localhost:3000/User/Perfil/MyDatas">
-          <Section.Select>Dados pessoais</Section.Select>
-        </Link>
-        <WordsDivider />
-        <Link href="http://localhost:3000/User/Perfil/ChangePassword">
-          <Section>Alterar Senha</Section>
-        </Link>
-        <WordsDivider />
-        <WordsDivider />
-        <Link href="http://localhost:3000/User/Perfil/MyDatasEdit">
-          <Section>Alterar dados</Section>
-        </Link>
-        <WordsDivider />
-        <Section>
-          <MyLogOut />
-        </Section>
-
-      </SubTitle>
-      <MyDatas />
+      <Title>Editar meus dados:</Title>
+      
+      <MyDatasEdit />
       <FooterMobile />
 
     </div>

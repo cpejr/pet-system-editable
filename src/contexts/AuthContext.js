@@ -60,7 +60,7 @@ function AuthProvider({ children }) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, forgottenPassword }}>
+    <AuthContext.Provider value={{ user, login, setUser, logout, forgottenPassword }}>
       {children}
     </AuthContext.Provider>
   );
