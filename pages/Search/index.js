@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import api from "../../src/utils/api"
 import styled from 'styled-components';
 import Image from 'next/image';
 import HeaderSearch from '../../src/components/HeaderSearch';
@@ -53,7 +54,8 @@ display:none;
 }
 `;
 SearchContainer.Col2 = styled.div`
-display:flex;
+display: grid;
+grid-template-columns: 1fr 1fr 1fr;
 align-items:center;
 justify-content:center;
 width:75%;
@@ -80,6 +82,13 @@ display:none;
 `;
 
 export default function Search() {
+  const [products, setProducts] = useState([]);
+  useEffect(() => {
+    api.get('products').then((res) => {
+      setProducts(res.data);
+    })
+  }, []);
+
   return (
     <div>
       <HeaderSearch />
@@ -134,7 +143,9 @@ export default function Search() {
           <Submit>Aplicar</Submit>
         </SearchContainer.Col1>
         <SearchContainer.Col2>
-          <SearchCards />
+          {products.map((p) => (
+            <SearchCards product={p} key={p.product_id} />
+          ))}
         </SearchContainer.Col2>
       </SearchContainer>
       <FooterMobile />
