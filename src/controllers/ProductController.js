@@ -71,8 +71,8 @@ module.exports = {
     try {
       const products = await ProductModel.getAllProducts();
       return response.status(200).json(products);
-    } catch (error) {
-      if (error.message) {
+    } catch (err) {
+      if (err.message) {
         return response.status(400).json({ notification: err.message });
       }
       return response.status(500).json({ notification: 'Internal Server Error' });
