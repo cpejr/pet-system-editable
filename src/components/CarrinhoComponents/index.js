@@ -107,7 +107,7 @@ font-family: Roboto;
 font-size: 1.2em;
 `;
 
-export const CarrinhoFinalButton = styled.div`
+export const CarrinhoFinalButton = styled.button`
 display: flex;
 background-color: #609694;
 color: #ffffff;
