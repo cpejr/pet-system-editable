@@ -3,13 +3,13 @@ import { IoTrashOutline } from "react-icons/io5"
 import { FaRegMinusSquare, FaRegPlusSquare } from "react-icons/fa"
 import Image from 'next/image';
 import styled from "styled-components";
-import { CarrinhoText } from "../CarrinhoComponents";
+import { CarrinhoText } from "..";
 
 const CarrinhoCardWrapper = styled.div`
 display: flex;
 align-items: center;
 justify-content: space-between;
-width: 65%;
+width: 65vw;
 margin-bottom: 1em;
 margin-left: 0.3em;
 border: 1px solid rgba(0, 0, 0, 0.6);

@@ -1,9 +1,10 @@
 import React from 'react';
 import Header from "../../src/components/Header"
 import {
-    CarrinhoIcon, CarrinhoText, CarrinhoTitle
+    CarrinhoBody, CarrinhoFinalButton, CarrinhoFrete, CarrinhoFreteButton, CarrinhoFreteInputFalso, CarrinhoIcon, CarrinhoText,
+    CarrinhoTitle, CarrinhoTotal, CarrinhoValor, CarrinhoValorText, CarrinhoValorTitle,
 } from "../../src/components/CarrinhoComponents"
-import CarrinhoCard from "../../src/components/CarrinhoCard";
+import CarrinhoCard from "../../src/components/CarrinhoComponents/CarrinhoCard";
 import { MdShoppingCart } from "react-icons/md"
 import { useEffect, useState } from "react"
 import api from "../../src/utils/api"
@@ -24,9 +25,29 @@ export default function Carrinho() {
                     <MdShoppingCart size="100%" color="#609694" />
                 </CarrinhoIcon>
             </CarrinhoTitle>
-            {products.map((p) => (
-                <CarrinhoCard product={p} key={p.product_id} />
-            ))}
+            <CarrinhoBody>
+                <div>
+                    {products.map((p) => (
+                        <CarrinhoCard product={p} key={p.product_id} />
+                    ))}
+                </div>
+                <CarrinhoValor>
+                    <CarrinhoValorTitle>Digite o seu CEP</CarrinhoValorTitle>
+                    <CarrinhoFrete>
+                        <CarrinhoFreteInputFalso>00000-00</CarrinhoFreteInputFalso>
+                        <CarrinhoFreteButton>Calcular</CarrinhoFreteButton>
+                    </CarrinhoFrete>
+                    <CarrinhoTotal>
+                        <CarrinhoValorText>SubTotal</CarrinhoValorText>
+                        <CarrinhoValorText>R$SubTotal</CarrinhoValorText>
+                        <CarrinhoValorText>Frete</CarrinhoValorText>
+                        <CarrinhoValorText>R$Frete</CarrinhoValorText>
+                        <CarrinhoValorText>Total</CarrinhoValorText>
+                        <CarrinhoValorText>R$Total</CarrinhoValorText>
+                    </CarrinhoTotal>
+                    <CarrinhoFinalButton>Continuar</CarrinhoFinalButton>
+                </CarrinhoValor>
+            </CarrinhoBody>
         </>
     )
 }
