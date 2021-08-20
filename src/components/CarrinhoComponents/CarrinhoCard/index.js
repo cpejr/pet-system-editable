@@ -16,7 +16,7 @@ border: 1px solid rgba(0, 0, 0, 0.6);
 box-sizing: border-box;
 box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 height: 100px;
-padding: 5px;
+padding: 5px 5px 5px 50px;
 `;
 
 const CarrinhoCardInfo = styled.div`
@@ -70,9 +70,14 @@ export default function CarrinhoCard(props) {
         else
             setQuantity(0);
     }
+
+    const myLoader = ({src}) => {
+        return `https://s3-sa-east-1.amazonaws.com/petsystembucket/${src}`;
+      }
+
     return (
         <CarrinhoCardWrapper>
-            {/* <Image src="" alt="racao" width="95px" height="95px" /> */}
+            <Image loader={myLoader} src={product.img} alt="racao" width="95px" height="95px" />
             <CarrinhoCardInfo>
                 <CarrinhoText>{ product.product_name }</CarrinhoText>
                 <CarrinhoCardInfoBottom>
