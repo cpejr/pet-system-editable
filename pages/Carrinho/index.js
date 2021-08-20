@@ -1,9 +1,10 @@
 import React from 'react';
 import Header from "../../src/components/Header"
 import {
-    CarrinhoBody, CarrinhoFinalButton, CarrinhoFrete, CarrinhoFreteButton, CarrinhoFreteInputFalso, CarrinhoIcon, CarrinhoText,
+    CarrinhoBody, CarrinhoFinalButton, CarrinhoIcon, CarrinhoText,
     CarrinhoTitle, CarrinhoTotal, CarrinhoValor, CarrinhoValorText, CarrinhoValorTitle,
 } from "../../src/components/CarrinhoComponents"
+import CarrinhoFrete from '../../src/components/CarrinhoComponents/CarrinhoFrete';
 import CarrinhoCard from "../../src/components/CarrinhoComponents/CarrinhoCard";
 import { MdShoppingCart } from "react-icons/md"
 import { useEffect, useState } from "react"
@@ -33,10 +34,7 @@ export default function Carrinho() {
                 </div>
                 <CarrinhoValor>
                     <CarrinhoValorTitle>Digite o seu CEP</CarrinhoValorTitle>
-                    <CarrinhoFrete>
-                        <CarrinhoFreteInputFalso>00000-00</CarrinhoFreteInputFalso>
-                        <CarrinhoFreteButton>Calcular</CarrinhoFreteButton>
-                    </CarrinhoFrete>
+                    <CarrinhoFrete />
                     <CarrinhoTotal>
                         <CarrinhoValorText>SubTotal</CarrinhoValorText>
                         <CarrinhoValorText>R$SubTotal</CarrinhoValorText>
