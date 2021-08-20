@@ -113,21 +113,13 @@ display:none;
 }
 
 `;
-const ImgLittle = styled.div`
-display:none;
-@media(max-width:560px){
-display:flex;
-margin-left:5%;
-margin-right:5%;
-}
-`;
 const ImgNormal = styled.div`
 display:flex;
 width: 100%;
-height: 90%;
+height: 10vw;
 padding: 5% 10%;
 @media(max-width:560px){
-display:none;
+display: flex;
 }
 `;
 
@@ -150,14 +142,14 @@ export default function SearchCards(props) {
       setCheckedFav1('#C4C4C4');
     }
   };
+
+  const myLoader = ({src}) => {
+    return `https://s3-sa-east-1.amazonaws.com/petsystembucket/${src}`;
+  }
+
   return (
     <CardWrapper>
-      <ImgLittle>
-        <Image src="/images/pet2Little.png" alt="" width="80" height="80" />
-      </ImgLittle>
-      <ImgNormal>
-        <Image src="/images/pet2.jpg" alt="" width="350" height="188" />
-      </ImgNormal>
+      <Image loader={myLoader} src={product.img} alt="" width="100%" height="100%" />
       <CardInfo>
         <CardDescription>
           <CardDescriptionTitle>

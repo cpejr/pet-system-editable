@@ -11,10 +11,14 @@ module.exports = {
     const store = await StoreModel.getStoreById(product.store_id);
     product.store = store;
 
-    // const readImage = await AwsModel.getAWS();
-
+    const readImage = await AwsModel.getAWS(product.img);
+    readImage.pipe(response);
+    //console.log(readImage);
+    product.image = readImage;
+    const stringfedProduct = JSON.stringify(product);
+    console.log(product);
     // readImage.pipe(response);
-    return response.json(product);
+    return response.status(200).send(stringfedProduct);
   },
 
   async create(request, response) {

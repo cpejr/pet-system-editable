@@ -11,6 +11,9 @@ module.exports = {
     NEXT_PUBLIC_FIREBASE_MEASUREMENTID: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENTID,
     NEXT_PUBLIC_JWT_SECRET: process.env.NEXT_PUBLIC_JWT_SECRET,
   },
+  images: {
+    domains: ["s3-sa-east-1.amazonaws.com"],
+  },
   async redirects() {
     return [
       {
