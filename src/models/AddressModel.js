@@ -14,12 +14,11 @@ module.exports = {
     }
   },
 
-  async getAddressByUserId(id) {
+  async getAddressesByUserId(id) {
     try {
       const address = await connection('Address')
         .where('user_id', id)
-        .select('*')
-        .first();
+        .select('*');
       return address;
     } catch (error) {
       console.error(error);
