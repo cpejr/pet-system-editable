@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -6,7 +6,7 @@ display:flex;
 align-items:center;
 justify-content:center;
 flex-direction:column;
-width:250px;
+width:300px;
 font-family:Roboto;
 margin-bottom:10%;
 @media(max-width:560px){
@@ -33,6 +33,7 @@ margin-top:5%;
 
 ContainerButtons.Col = styled.div`
 display:flex;
+flex-direction: column;
 align-items:center;
 justify-content:center;
 width:25%;
@@ -70,84 +71,32 @@ justify-content:center;
 flex-direction:row;
 width:100%;
 `;
-const PriceDeliveryButton = styled.button`
-display:flex;
-align-items:center;
-justify-content:center;
-flex-direction:row;
-width:25%;
-font-size:12px;
-background-color:${({ theme }) => theme.colors.background};
-border:none;
-cursor:pointer;
-`;
 
-export default function Price() {
-  const [checkedPrice1, setCheckedPrice1] = useState('#111111');
-  const handleClickPrice1 = () => {
-    if (checkedPrice1 === '#111111') {
-      setCheckedPrice1('#609694');
-    } else {
-      setCheckedPrice1('#111111');
-    }
-  };
-  const [checkedPrice2, setCheckedPrice2] = useState('#111111');
-  const handleClickPrice2 = () => {
-    if (checkedPrice2 === '#111111') {
-      setCheckedPrice2('#609694');
-    } else {
-      setCheckedPrice2('#111111');
-    }
-  };
-  const [checkedPrice3, setCheckedPrice3] = useState('#111111');
-  const handleClickPrice3 = () => {
-    if (checkedPrice3 === '#111111') {
-      setCheckedPrice3('#609694');
-    } else {
-      setCheckedPrice3('#111111');
-    }
-  };
-  const [checkedPrice4, setCheckedPrice4] = useState('#111111');
-  const handleClickPrice4 = () => {
-    if (checkedPrice4 === '#111111') {
-      setCheckedPrice4('#609694');
-    } else {
-      setCheckedPrice4('#111111');
-    }
-  };
+//#609694 ativo
+//#c4c4c4 inativo
+export default function Price({ setPrice }) {
+  const [checkedBorder1, setCheckedBorder1] = useState(false);
+  const [checkedBorder2, setCheckedBorder2] = useState(false);
+  const [checkedBorder3, setCheckedBorder3] = useState(false);
+  const [checkedBorder4, setCheckedBorder4] = useState(false);
+  const [localPrice, setLocalPrice] = useState();
 
-  const [checkedBorder1, setCheckedBorder1] = useState('#C4C4C4');
-  const handleClickBorder1 = () => {
-    if (checkedBorder1 === '#C4C4C4') {
-      setCheckedBorder1('#609694');
-    } else {
-      setCheckedBorder1('#C4C4C4');
+  useEffect(()=>{
+    setCheckedBorder1(false);
+    setCheckedBorder2(false);
+    setCheckedBorder3(false);
+    setCheckedBorder4(false);
+    if(localPrice === 25){
+      setCheckedBorder1(true);
+    }else if(localPrice === 50){
+      setCheckedBorder2(true);
+    }else if(localPrice === 100){
+      setCheckedBorder3(true);
+    }else if(localPrice === 200){
+      setCheckedBorder4(true);
     }
-  };
-  const [checkedBorder2, setCheckedBorder2] = useState('#C4C4C4');
-  const handleClickBorder2 = () => {
-    if (checkedBorder2 === '#C4C4C4') {
-      setCheckedBorder2('#609694');
-    } else {
-      setCheckedBorder2('#C4C4C4');
-    }
-  };
-  const [checkedBorder3, setCheckedBorder3] = useState('#C4C4C4');
-  const handleClickBorder3 = () => {
-    if (checkedBorder3 === '#C4C4C4') {
-      setCheckedBorder3('#609694');
-    } else {
-      setCheckedBorder3('#C4C4C4');
-    }
-  };
-  const [checkedBorder4, setCheckedBorder4] = useState('#C4C4C4');
-  const handleClickBorder4 = () => {
-    if (checkedBorder4 === '#C4C4C4') {
-      setCheckedBorder4('#609694');
-    } else {
-      setCheckedBorder4('#C4C4C4');
-    }
-  };
+    setPrice(localPrice);
+  },[localPrice])
 
   return (
     <div>
@@ -156,70 +105,45 @@ export default function Price() {
         <ContainerButtons>
           <ContainerButtons.Col>
             <Button
-              onClick={handleClickBorder1}
-              style={{ borderColor: checkedBorder1 }}
+              onClick={() => checkedBorder1 ? setLocalPrice(null) : setLocalPrice(25)}
+              style={checkedBorder1 ? { borderColor: "#609694" } : { borderColor: "#C4C4C4" }}
             >
               $
 
             </Button>
+            R$25,00
           </ContainerButtons.Col>
           <ContainerButtons.Col>
             <Button
-              onClick={handleClickBorder2}
-              style={{ borderColor: checkedBorder2 }}
+              onClick={() => checkedBorder2 ? setLocalPrice(null) : setLocalPrice(50)}
+              style={checkedBorder2 ? { borderColor: "#609694" } : { borderColor: "#C4C4C4" }}
             >
               $$
 
             </Button>
+            R$50,00
           </ContainerButtons.Col>
           <ContainerButtons.Col>
             <Button
-              onClick={handleClickBorder3}
-              style={{ borderColor: checkedBorder3 }}
+              onClick={() => checkedBorder3 ? setLocalPrice(null) : setLocalPrice(100)}
+              style={checkedBorder3 ? { borderColor: "#609694" } : { borderColor: "#C4C4C4" }}
             >
               $$$
 
             </Button>
+            R$100,00
           </ContainerButtons.Col>
           <ContainerButtons.Col>
             <Button
-              onClick={handleClickBorder4}
-              style={{ borderColor: checkedBorder4 }}
+              onClick={() => checkedBorder4 ? setLocalPrice(null) : setLocalPrice(200)}
+              style={checkedBorder4 ? { borderColor: "#609694" } : { borderColor: "#C4C4C4" }}
             >
               $$$$
 
             </Button>
+            R$100,00+
           </ContainerButtons.Col>
         </ContainerButtons>
-        <PriceDelivery>
-          <PriceDelivery.Title>Preço máximo de entrega</PriceDelivery.Title>
-          <PriceDelivery.Prices>
-            <PriceDeliveryButton
-              onClick={handleClickPrice1}
-              style={{ color: checkedPrice1 }}
-            >
-              R$ 2,99
-            </PriceDeliveryButton>
-            <PriceDeliveryButton
-              onClick={handleClickPrice2}
-              style={{ color: checkedPrice2 }}
-            >
-              R$ 3,99
-            </PriceDeliveryButton>
-            <PriceDeliveryButton
-              onClick={handleClickPrice3}
-              style={{ color: checkedPrice3 }}
-            >
-              R$ 4,99
-            </PriceDeliveryButton>
-            <PriceDeliveryButton
-              onClick={handleClickPrice4}
-              style={{ color: checkedPrice4 }}
-            >
-              R$ 6,99+
-            </PriceDeliveryButton>
-          </PriceDelivery.Prices>
-        </PriceDelivery>
       </Container>
     </div>
   );

@@ -8,6 +8,7 @@ display: flex;
 flex-direction: column;
 align-items: center;
 width: 100%;
+padding: 1vw;
 height: auto;
 font-family:Roboto;
 `;
@@ -15,7 +16,7 @@ font-family:Roboto;
 const CardInfo = styled.div`
 display:flex;
 align-items:center;
-justify-content:center;
+justify-content:space-around;
 padding: 3%;
 width:100%;
 font-size:16px;
@@ -26,11 +27,8 @@ const CardDescription = styled.div`
 display:flex;
 align-items:center;
 justify-content:center;
-width:85%;
+width: 50%;
 flex-direction:column;
-@media(max-width:880px){
-width:70%;
-}
 `;
 
 const CardDescriptionTitle = styled.h3`
@@ -42,7 +40,7 @@ margin-top:1%;
 margin-bottom:1%;
 `;
 
-const CardDescriptionDelivery = styled.p`
+const CardDescriptionValues = styled.p`
 display:flex;
 align-items:center;
 justify-content:flex-start;
@@ -66,19 +64,7 @@ font-size:14px;
 }
 `;
 
-const CardDescriptionDeliveryTime = styled.div`
-display:flex;
-align-items:center;
-justify-content:flex-start;
-width:40%;
-font-size:14px;
-color:${({ theme }) => theme.colors.baseGray};
-@media(max-width:560px){
-    width:100%;
-}
-`;
-
-const CardDescriptionButtons = styled.div`
+const CardButtons = styled.div`
 display:flex;
 align-items:center;
 justify-content:center;
@@ -113,15 +99,6 @@ display:none;
 }
 
 `;
-const ImgNormal = styled.div`
-display:flex;
-width: 100%;
-height: 10vw;
-padding: 5% 10%;
-@media(max-width:560px){
-display: flex;
-}
-`;
 
 const Star = styled.div`
 display:none;
@@ -155,20 +132,17 @@ export default function SearchCards(props) {
           <CardDescriptionTitle>
             {product.product_name}
           </CardDescriptionTitle>
-          <CardDescriptionDelivery>
+          <CardDescriptionValues>
             <CardDescriptionDeliveryPrice>
-              • Taxa de entrega:R$3,99
+              •Valor:{product.price}
             </CardDescriptionDeliveryPrice>
-            <CardDescriptionDeliveryTime>
-              • 25-20 min
-              <Star>
-                <AiFillStar />
-                5.0
-              </Star>
-            </CardDescriptionDeliveryTime>
-          </CardDescriptionDelivery>
+            <Star>
+              <AiFillStar />
+              5.0
+            </Star>
+          </CardDescriptionValues>
         </CardDescription>
-        <CardDescriptionButtons>
+        <CardButtons>
           <Button>5.0</Button>
           <FavButton>
             <AiFillHeart
@@ -177,7 +151,7 @@ export default function SearchCards(props) {
               style={{ color: checkedFav1 }}
             />
           </FavButton>
-        </CardDescriptionButtons>
+        </CardButtons>
       </CardInfo>
     </CardWrapper>
   );
