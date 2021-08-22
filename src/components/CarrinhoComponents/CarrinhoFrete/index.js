@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from "styled-components";
-import { Form, Input } from 'react-bootstrap';
 
 const CarrinhoFreteWrapper = styled.div`
 display: flex;
@@ -39,7 +38,6 @@ justify-content: center;
 export default function CarrinhoFrete() {
     return (
         <CarrinhoFreteWrapper>
-            <Input type="text" class="form-control" />
             <CarrinhoFreteButton>Calcular</CarrinhoFreteButton>
         </CarrinhoFreteWrapper>
     )

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IoTrashOutline } from "react-icons/io5"
 import { FaRegMinusSquare, FaRegPlusSquare } from "react-icons/fa"
 import Image from 'next/image';
@@ -60,17 +60,26 @@ height: 100%;
 
 export default function CarrinhoCard(props) {
     const { product } = props;
+    const { subTotal } = props;
+    const { setSubTotal } = props;
     const [quantity, setQuantity] = useState(0);
+
+    useEffect(()=>{
+        setSubTotal(subTotal + (product.price*quantity));
+    },[]);
+
     function handlePlus(){
         setQuantity(quantity+1);
+        setSubTotal(subTotal + product.price);
     }
     function handleMinus(){
-        if (quantity > 0)
+        if (quantity > 0){
             setQuantity(quantity-1);
-        else
+            setSubTotal(subTotal - product.price);
+        }else{
             setQuantity(0);
+        }
     }
-
     const myLoader = ({src}) => {
         return `https://s3-sa-east-1.amazonaws.com/petsystembucket/${src}`;
       }

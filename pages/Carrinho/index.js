@@ -12,6 +12,7 @@ import api from "../../src/utils/api"
 
 export default function Carrinho() {
     const [products, setProducts] = useState([]);
+    const [subTotal, setSubTotal] = useState(0);
     useEffect(() => {
         api.get('products').then((res) => {
             setProducts(res.data);
@@ -29,7 +30,7 @@ export default function Carrinho() {
             <CarrinhoBody>
                 <div>
                     {products.map((p) => (
-                        <CarrinhoCard product={p} key={p.product_id} />
+                        <CarrinhoCard product={p} key={p.product_id} setSubTotal={setSubTotal} subTotal={subTotal} />
                     ))}
                 </div>
                 <CarrinhoValor>
@@ -37,7 +38,7 @@ export default function Carrinho() {
                     <CarrinhoFrete />
                     <CarrinhoTotal>
                         <CarrinhoValorText>SubTotal</CarrinhoValorText>
-                        <CarrinhoValorText>R$SubTotal</CarrinhoValorText>
+                        <CarrinhoValorText>R${subTotal}</CarrinhoValorText>
                         <CarrinhoValorText>Frete</CarrinhoValorText>
                         <CarrinhoValorText>R$Frete</CarrinhoValorText>
                         <CarrinhoValorText>Total</CarrinhoValorText>
