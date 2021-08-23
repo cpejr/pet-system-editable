@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import Header from '../../../../src/components/Header';
-import MyDatasEdit from '../../../../src/components/MyDatasEdit';
+import MyIndividualOrder from '../../../../src/components/MyIndividualOrder';
 import FooterMobile from '../../../../src/components/Mobile/FooterMobile';
+import api from "../../../../src/utils/api";
 
 const Title = styled.h1`
 align-items:initial;
@@ -45,16 +46,25 @@ border-radius:5%;
 outline:none;
 font-family: Roboto;
 `;
-export default function Perfil() {
+
+export default function Perfil(props) {
+    const {order} = props;
   return (
     <div>
       <Header />
 
       <Title>Editar meus dados:</Title>
       
-      <MyDatasEdit />
+      <MyIndividualOrder order = {order} />
       <FooterMobile />
-
     </div>
   );
 }
+
+export async function getServerSideProps(context) {
+    const {id} = context.query;
+    const response = await api.get(`order/${id}`);
+    const order = response.data;
+    return { props: { order }};
+  }
+  

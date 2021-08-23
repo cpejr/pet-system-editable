@@ -43,7 +43,6 @@ const BoxDatas = styled.div`
   flex-direction: column;
   width: 65%;
   border-color: black;
-  border-radius: 5px;
   align-items: left;
   line-height: 100%;
   border-style: solid;

@@ -34,7 +34,6 @@ module.exports = {
   async getAll(request, response) {
     try {
       const addresses = await AddressModel.getAllAddress();
-      console.log("🚀 ~ file: AddressController.js ~ line 18 ~ getAll ~ addresses", addresses)
       return response.status(200).json(addresses);
     } catch (error) {
       if (err.message) {

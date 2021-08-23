@@ -246,7 +246,6 @@ export default function ModalEditAddresses(addressId) {
       setCity(response.data.city);
       setCep(response.data.cep);
       setState(response.data.state);
-      //console.log("🚀 ~ file: index.js ~ line 215 ~ loadAddress ~ response", response)
     } catch (error) {
       console.error(error); //eslint-disable-line
     }

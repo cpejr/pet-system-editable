@@ -5,6 +5,7 @@ const AwsModel = require('../models/AwsModel');
 
 module.exports = {
   async getOne(request, response) {
+    
     const { id } = request.query;
 
     const product = await ProductModel.getProductById(id);

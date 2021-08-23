@@ -12,6 +12,33 @@ module.exports = {
     return res.status(200).json(order);
   },
 
+  //Pegar todas as orders com os order products
+  async getOrderAndOrderProducts(req, res) {
+    const firebase_id = req.query.id;
+    try {
+      const orders = await OrderModel.getOrderAndOrderProducts(firebase_id);
+      return res.status(200).json(orders);
+    } catch (error) {
+      if (error.message) {
+        return res.status(400).json({ notification: error.message });
+      }
+      return res.status(500).json({ notification: 'Internal Server Error' });
+    }
+  },
+
+  async getAllByUser(req, res) {
+    const firebase_id = req.query.id;
+    try {
+      const orders = await OrderModel.getAddressesByUserId(firebase_id);
+      return res.status(200).json(orders);
+    } catch (error) {
+      if (error.message) {
+        return res.status(400).json({ notification: error.message });
+      }
+      return res.status(500).json({ notification: 'Internal Server Error' });
+    }
+  },
+
   async getAll(req, res) {
     try {
       const orders = await OrderModel.getAllOrders();
