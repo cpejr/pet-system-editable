@@ -36,7 +36,7 @@ module.exports = {
   async create(request, response) {
     const info = request.body;
     const { cover_img, logo_img } = request.files;
-
+console.log(cover_img);
     cover_img.name = uuidv4();
     logo_img.name = uuidv4();
 
