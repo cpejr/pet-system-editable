@@ -8,31 +8,28 @@ import styled from 'styled-components';
 import AddProducts from '../AddProducts';
 
 const ButtonAdd = styled(Button)`
-    margin-left: 10px;
-    height: 50px;
-    width: 125%;
-    font-family: Roboto;
-    font-size: 100%;
-    font-weight: 500;
-    background-color: ${({ theme }) => theme.colors.darkGreen};
-    color: white;
-    border: 0;
-    border-radius: 5px;
-    cursor:pointer;
-    outline:none;
-    margin-right:2%;
-    @media(max-width:1000px){
-      display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:14px;
-    width:100%;
-    height:50px;
-    
-}
-    @media(max-width:560px){
-    display:none;
+display:flex;
+height: 55px;
+width: 200px;
+font-family: Roboto;
+font-size: 18px;
+font-weight: 300;
+background-color: ${({ theme }) => theme.colors.darkGreen};
+color: white;
+border: 0;
+border-radius: 5px;
+align-items: center;
+text-align: center;
+margin-top:2%;
+margin-botton:2%;
+transform: translate(0%,-50%);
+justify-content: center;
+text-align: center;
+cursor: pointer;
     }
+    @media(max-width:860px){
+        width:150px;
+    } 
 `;
 function getModalStyle() {
   const top = 50;

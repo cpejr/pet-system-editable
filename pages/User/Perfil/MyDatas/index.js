@@ -83,6 +83,11 @@ export default function Perfil() {
           <Section>Alterar Senha</Section>
         </Link>
         <WordsDivider />
+        <WordsDivider />
+        <Link href="http://localhost:3000/User/Perfil/MyDatasEdit">
+          <Section>Alterar dados</Section>
+        </Link>
+        <WordsDivider />
         <Section>
           <MyLogOut />
         </Section>

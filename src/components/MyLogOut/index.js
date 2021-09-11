@@ -7,6 +7,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import { useAuth } from '../../contexts/AuthContext';
 
 const Section = styled.button`
 flex-direction:column;
@@ -24,6 +25,7 @@ outline:none;
 
 export default function MyLogOut() {
   const [open, setOpen] = React.useState(false);
+  const { logout } = useAuth();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -55,7 +57,7 @@ export default function MyLogOut() {
             Cancelar
           </Button>
           <Link href="http://localhost:3000/login" rel="login">
-            <Button onClick={handleClose} color="secondary" autoFocus>
+            <Button onClick={handleClose,logout} color="secondary" autoFocus>
               Sair
             </Button>
           </Link>

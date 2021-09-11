@@ -1,14 +1,11 @@
-import { getOne, update } from '../../../src/controllers/UserController';
-import { isAdminOrSelf } from '../../../src/utils/Auth';
+import { getOrderAndOrderProducts } from '../../../src/controllers/OrderController';
 
 export default function handler(req, res) {
   try {
     const { method } = req;
+    console.log(method);
     if (method === 'GET') {
-      return isAdminOrSelf(getOne)(req, res);
-    }
-    if (method === 'PUT') {
-      return isAdminOrSelf(update)(req, res);
+      return getOrderAndOrderProducts(req, res);
     }
     return res.status(500).json({ message: 'Internal Server Error' });
   } catch (err) {

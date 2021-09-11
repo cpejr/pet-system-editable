@@ -1,7 +1,7 @@
 exports.up = function (knex) {
   return knex.schema.createTable('orders_products', (table) => {
-    table.string('order_id').notNullable();
-    table.foreign('order_id').references('order_id').inTable('Orders');
+    table.uuid('order_id').notNullable();
+    table.foreign('order_id').references('order_id').inTable('Order');
     table.string('product_id').notNullable();
     table.foreign('product_id').references('product_id').inTable('product');
     table.integer('quantify').notNullable();

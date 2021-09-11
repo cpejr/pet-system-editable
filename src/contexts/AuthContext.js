@@ -6,6 +6,7 @@ const emptyContextInfo = {
   user: undefined,
   login: async () => null,
   logout: async () => null,
+  forgottenPassword: async () => null,
   validateSession: async () => null,
 };
 
@@ -20,6 +21,15 @@ function AuthProvider({ children }) {
     try {
       const response = await api.post('login', { email, password });
       setUser(response.data.user);
+      router.push('/');
+    } catch (error) {
+      console.error(error); //eslint-disable-line
+    }
+  }
+
+  async function forgottenPassword(email) {
+    try {
+      await api.post('forgottenPassword', { email });
       router.push('/');
     } catch (error) {
       console.error(error); //eslint-disable-line
@@ -50,7 +60,7 @@ function AuthProvider({ children }) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, login, setUser, logout, forgottenPassword }}>
       {children}
     </AuthContext.Provider>
   );

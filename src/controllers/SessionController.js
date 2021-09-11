@@ -51,3 +51,16 @@ export async function logout(req, res) {
     return res.status(500).json({ message: 'Could not log out' });
   }
 }
+
+export async function forgottenPassword(request, response) {
+  try {
+    const { email } = request.body;
+    const res = await FirebaseModel.firebaseChangeUserPassword(email);
+    return response.status(200).json({ res });
+  } catch (error) {
+    console.error(error);
+    return response.status(500).json({
+      notification: 'Error while trying to send reset password email',
+    });
+  }
+}
