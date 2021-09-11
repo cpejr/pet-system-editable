@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import api from "../../src/utils/api"
 import styled from 'styled-components';
 import Image from 'next/image';
 import HeaderSearch from '../../src/components/HeaderSearch';
@@ -26,8 +27,16 @@ display:flex;
 align-items:center;
 justify-content:center;
 flex-direction:column;
-width:10%;
+width:8%;
+margin: 0 1% 0 1%;
+cursor: pointer;
+border-radius: 10px;
+&:hover {
+  box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.2);
+}
 `;
+
+
 
 const SearchContainer = styled.div`
 display:flex;
@@ -44,6 +53,7 @@ display:flex;
 align-items:center;
 justify-content:center;
 width:25%;
+min-width: 300px;
 flex-direction:column;
 @media(max-width:880px){
 width:40%;
@@ -53,7 +63,8 @@ display:none;
 }
 `;
 SearchContainer.Col2 = styled.div`
-display:flex;
+display: grid;
+grid-template-columns: 1fr 1fr 1fr;
 align-items:center;
 justify-content:center;
 width:75%;
@@ -80,13 +91,30 @@ display:none;
 `;
 
 export default function Search() {
+  const [products, setProducts] = useState([]);
+  const [price, setPrice] = useState(0);
+
+  useEffect(() => {
+    api.get('products').then((res) => {
+      setProducts(res.data);
+      
+    })
+    console.log(products);
+  }, []);
+
+  const handleClick = () => {
+    api.get('products', { params: { price: price } }).then((res) => {
+      setProducts(res.data);
+    });
+  }
+
   return (
     <div>
       <HeaderSearch />
       <SearchHeader />
       <ContainerCategory>
         <ContainerCategory.Col>
-          <Image src="/images/racaopote.png" alt="" width="50" height="50" />
+          <Image src="/images/racaopote.png" alt="" width="50" height="50"/>
           Ração
         </ContainerCategory.Col>
         <ContainerCategory.Col>
@@ -130,11 +158,13 @@ export default function Search() {
         <SearchContainer.Col1>
           <OrderSearch />
           <Brands />
-          <Price />
-          <Submit>Aplicar</Submit>
+          <Price setPrice={setPrice} />
+          <Submit onClick={handleClick}>Aplicar</Submit>
         </SearchContainer.Col1>
         <SearchContainer.Col2>
-          <SearchCards />
+          {products.map((p) => (
+            <SearchCards product={p} key={p.product_id} />
+          ))}
         </SearchContainer.Col2>
       </SearchContainer>
       <FooterMobile />

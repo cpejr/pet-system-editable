@@ -8,7 +8,7 @@ export default function handler(req, res) {
     const { method } = req;
     console.log(method);
     if (method === 'GET') {
-      return isAdmin(getOne)(req, res);
+      return getOne(req, res);
     }
     if (method === 'PUT') {
       return isAdmin(update)(req, res);

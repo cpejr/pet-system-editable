@@ -47,10 +47,21 @@ module.exports = {
       throw new Error(error);
     }
   },
-  async getAllProducts() {
+  async getAllProducts(filter) {
     try {
+      console.log(filter);
+      const { price } = filter;
+      console.log(price);
       const products = await connection('product')
-        .select('*');
+        .select('*')
+        .where((builder) => {
+          if(price > 100){
+            builder.where("price", ">", 100);
+          }else if(price){
+            console.log("entrei");
+            builder.where("price", "<=", price);
+          }
+        });
       return products;
     } catch (error) {
       console.error(error);
