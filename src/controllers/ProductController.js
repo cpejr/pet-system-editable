@@ -5,7 +5,6 @@ const AwsModel = require('../models/AwsModel');
 
 module.exports = {
   async getOne(request, response) {
-    
     const { id } = request.query;
 
     const product = await ProductModel.getProductById(id);
@@ -14,7 +13,7 @@ module.exports = {
 
     const readImage = await AwsModel.getAWS(product.img);
     readImage.pipe(response);
-    //console.log(readImage);
+    // console.log(readImage);
     product.image = readImage;
     const stringfedProduct = JSON.stringify(product);
     console.log(product);
