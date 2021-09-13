@@ -17,6 +17,7 @@ module.exports = {
 
   async create(req, res) {
     const cart = req.body;
+    cart.cart_id = uuidv4();
     try {
       cart.firebase_id = req.session.get('user').user.firebase_id;
       await CartModel.createNewCart(cart);
@@ -33,7 +34,7 @@ module.exports = {
   async update(request, response) {
     const cart = request.body;
     try {
-      await CartModel.updateCart(cart, cart.product_id);
+      await CartModel.updateCart(cart, cart.cart_id);
     } catch (err) {
       if (err.message) {
         return response.status(400).json({ notification: err.message });
@@ -44,9 +45,9 @@ module.exports = {
   },
 
   async deleteByID(req, res) {
-    const product_id = req.query.id;
+    const cart_id = req.query.id;
     try {
-      await CartModel.removeCartByID(product_id);
+      await CartModel.removeCartByID(cart_id);
     } catch (err) {
       if (err.message) {
         return res.status(400).json({ notification: err.message });
@@ -58,9 +59,9 @@ module.exports = {
   },
 
   async deleteAll(req, res) {
-    const user_id = req.session.get('user').user.firebase_id;
+    const firebase_id = req.session.get('user').user.firebase_id;
     try {
-      await CartModel.removeAllCarts(user_id);
+      await CartModel.removeAllCarts(firebase_id);
     } catch (err) {
       if (err.message) {
         return res.status(400).json({ notification: err.message });

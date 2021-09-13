@@ -38,10 +38,10 @@ module.exports = {
     }
   },
 
-  async removeCartByID(product_id) {
+  async removeCartByID(cart_id) {
     try {
       const response = await connection('Cart')
-        .where({ product_id })
+        .where({ cart_id })
         .delete();
       return response;
     } catch (error) {
@@ -65,7 +65,7 @@ module.exports = {
   async updateCart(cart, id) {
     try {
       const response = await connection('Cart')
-        .where({ product_id: id })
+        .where({ cart_id: id })
         .update(cart);
       return response;
     } catch (error) {
