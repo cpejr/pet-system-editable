@@ -1,5 +1,5 @@
 exports.up = function (knex) {
-  return knex.schema.createTable('Users', (table) => {
+  return knex.schema.createTable('Cart_Products', (table) => {
     table.string('cart_id').notNullable();
     table.foreign('cart_id').references('cart_id').inTable('Cart').onDelete('cascade');
     table.string('product_id').notNullable();
