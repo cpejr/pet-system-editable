@@ -21,7 +21,7 @@ module.exports = {
   async getAllByUser(req, res) {
     const firebase_id = req.query.id;
     try {
-      const addresses = await AddressModel.getAddressesByUserId(firebase_id);
+      const addresses = await AddressModel.getAddressesByFirebaseId(firebase_id);
       return res.status(200).json(addresses);
     } catch (error) {
       if (error.message) {
@@ -48,10 +48,8 @@ module.exports = {
     address.address_id = uuidv4();
 
     try {
-      const user_id = request.session.get('user').user.firebase_id;
-      address.user_id = user_id;
-      const store = await StoreModel.getByUserId(user_id);
-      address.store_id = store.store_id;
+      const firebase_id = request.session.get('user').user.firebase_id;
+      address.firebase_id = firebase_id;
 
       await AddressModel.createNewAddress(address);
     } catch (err) {

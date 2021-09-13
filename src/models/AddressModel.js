@@ -14,10 +14,10 @@ module.exports = {
     }
   },
 
-  async getAddressesByUserId(id) {
+  async getAddressesByFirebaseId(id) {
     try {
       const address = await connection('Address')
-        .where('user_id', id)
+        .where('firebase_id', id)
         .select('*');
       return address;
     } catch (error) {
