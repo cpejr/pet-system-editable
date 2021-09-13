@@ -4,7 +4,7 @@ module.exports = {
   async getStoreById(id) {
     try {
       const store = await connection('Store')
-        .where('store_id', id)
+        .where('firebase_id_store', id)
         .select('*')
         .first();
       return store;
@@ -27,7 +27,7 @@ module.exports = {
   async deleteStore(id) {
     try {
       const response = await connection('Store')
-        .where({ user_id: id })
+        .where({ firebase_id_store: id })
         .delete();
       return response;
     } catch (error) {
@@ -39,7 +39,7 @@ module.exports = {
   async updateStore(store, id) {
     try {
       const response = await connection('Store')
-        .where({ store_id: id })
+        .where({ firebase_id_store: id })
         .update(store);
       return response;
     } catch (error) {
@@ -58,9 +58,9 @@ module.exports = {
     }
   },
 
-  async getByUserId(user_id) {
+  async getByUserId(firebase_id_store) {
     try {
-      const store = await connection('Store').select('*').where({ user_id }).first();
+      const store = await connection('Store').select('*').where({ firebase_id_store }).first();
       return store;
     } catch (error) {
       console.error(error);
