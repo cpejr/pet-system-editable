@@ -24,9 +24,9 @@ module.exports = {
         .select('*');
       const orderProducts = await OrderProductsModel.getAllOrderProducts();
       orders.forEach((order) => {
-        const orderProductsFilter = orderProducts.filter(orderProducts => orderProducts.order_id === order.order_id)
+        const orderProductsFilter = orderProducts.filter((orderProducts) => orderProducts.order_id === order.order_id);
         order.orderProducts = orderProductsFilter;
-      })
+      });
       return orders;
     } catch (error) {
       console.error(error);
