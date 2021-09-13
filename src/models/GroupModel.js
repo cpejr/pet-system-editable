@@ -3,7 +3,7 @@ const connection = require('../database/connection');
 module.exports = {
   async getGroupById(id) {
     try {
-      const group = await connection('group')
+      const group = await connection('Group')
         .where('group_id', id)
         .select('*')
         .first();
@@ -15,7 +15,7 @@ module.exports = {
 
   async createGroup(group) {
     try {
-      const newGroup = await connection('group').insert(group);
+      const newGroup = await connection('Group').insert(group);
       return newGroup;
     } catch (error) {
       console.error(error);
@@ -24,13 +24,13 @@ module.exports = {
   },
 
   async deleteGroup(id, store_id) {
-    const del = await connection('group').where({ group_id: id, store_id }).delete();
+    const del = await connection('Group').where({ group_id: id, store_id }).delete();
     return del;
   },
 
   async updateGroup(group, id) {
     try {
-      const response = await connection('group')
+      const response = await connection('Group')
         .where({ group_id: id })
         .update(group);
       return response;
@@ -42,7 +42,7 @@ module.exports = {
 
   async getAllGroups(id) {
     try {
-      const groups = await connection('group')
+      const groups = await connection('Group')
         .where('store_id', id)
         .select('*');
       return groups;
@@ -54,7 +54,7 @@ module.exports = {
 
   async getAllGroupsFromSession(store_id) {
     try {
-      const groups = await connection('group')
+      const groups = await connection('Group')
         .where('store_id', store_id)
         .select('*');
       return groups;
