@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState,useEffect } from 'react';
 import styled from 'styled-components';
 import Link from 'next/link';
 import Header from '../../../../src/components/Header';
 import MyRequest from '../../../../src/components/MyRequest';
+import MyListOrders from '../../../../src/components/MyListOrders';
+import MyListFinalizedOrders from '../../../../src/components/MyListFinalizedOrders';
 import MyLogOut from '../../../../src/components/MyLogOut';
 import WordsDivider from '../../../../src/components/WordsDivider';
 import FooterMobile from '../../../../src/components/Mobile/FooterMobile';
@@ -111,10 +113,9 @@ export default function Perfil() {
         </Section>
       </SubTitle>
       <ActualType>Pedido Atual</ActualType>
-      <MyRequest />
+      <MyListOrders/>
       <OldType>Pedidos Anteriores</OldType>
-      <MyRequest />
-
+      <MyListFinalizedOrders/>
       <FooterMobile />
 
     </div>

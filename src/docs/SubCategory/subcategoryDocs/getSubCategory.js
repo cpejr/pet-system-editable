@@ -23,6 +23,6 @@
 *       '404':
 *        description: Not Found
 *       '500':
-*        description: Internal server error while trying to find subcategory
+*        description: Internal Server Error
 *
 */

@@ -114,6 +114,6 @@
 *       '400':
 *        description: No valid session provided
 *       '500':
-*        description: Internal server error while trying to register store
+*        description: Internal Server Error
 *
 */

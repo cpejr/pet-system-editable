@@ -6,7 +6,7 @@ export default function change(request, response) {
     if (method === 'PUT') {
       return update(request, response);
     }
-    return response.status(500).json({ message: 'Método incorreto' });
+    return response.status(500).json({ message: 'Internal Server Error' });
   } catch (err) {
     return response.status(500).json({ statusCode: 500, message: err.message });
   }

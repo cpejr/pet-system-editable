@@ -23,7 +23,7 @@ if (!firebase.apps.length) {
       databaseURL: process.env.NEXT_PUBLIC_FIREBASE_DATABASEURL,
     });
   } catch (err) {
-    console.error(error); //eslint-disable-line
+    console.error(err); //eslint-disable-line
   }
 }
 
@@ -72,6 +72,15 @@ module.exports = {
       const result = await firebase.auth()
         .signInWithEmailAndPassword(email, password);
       return result.user.uid;
+    } catch (error) {
+      throw new Error(error);
+    }
+  },
+
+  async firebaseChangeUserPassword(email) {
+    try {
+      const result = await firebase.auth().sendPasswordResetEmail(email);
+      return result;
     } catch (error) {
       throw new Error(error);
     }

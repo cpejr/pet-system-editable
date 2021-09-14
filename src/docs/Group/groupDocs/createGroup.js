@@ -30,6 +30,6 @@
 *       '403':
 *        description: Unauthorized
 *       '500':
-*        description: Internal server error while trying to create group
+*        description: Internal Server Error
 *
 */

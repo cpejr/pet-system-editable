@@ -31,6 +31,6 @@
 *       '403':
 *        description: Unauthorized
 *       '500':
-*        description: Internal server error while trying to update subcategory
+*        description: Internal Server Error
 *
 */

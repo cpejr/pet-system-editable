@@ -11,7 +11,7 @@ module.exports = {
       readStream.pipe(res);
     } catch (err) {
       console.log(err);
-      return response.status(500).json({ notification: 'Internal server error while trying to get images' });
+      return response.status(500).json({ notification: 'Internal Server Error' });
     }
     return res.status(200).send(readStream);
   },

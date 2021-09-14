@@ -8,7 +8,7 @@ export default function handler(req, res) {
     const { method } = req;
     console.log(method);
     if (method === 'GET') {
-      return isAdmin(getOne)(req, res);
+      return getOne(req, res);
     }
     if (method === 'PUT') {
       return isAdmin(update)(req, res);
@@ -17,7 +17,7 @@ export default function handler(req, res) {
       return isAdmin(remove)(req, res);
     }
 
-    return res.status(500).json({ message: 'Método incorreto' });
+    return res.status(500).json({ message: 'Internal Server Error' });
   } catch (error) {
     return res.status(500).json({ statusCode: 500, message: error.message });
   }

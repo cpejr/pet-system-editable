@@ -6,5 +6,5 @@ export default function handler(req, res) {
   if (method === 'GET') {
     return withSession(logout)(req, res);
   }
-  return res.status(500).json({ message: 'Método incorreto' });
+  return res.status(500).json({ message: 'Internal Server Error' });
 }

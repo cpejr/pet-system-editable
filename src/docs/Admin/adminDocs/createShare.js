@@ -29,6 +29,6 @@
 *       '403':
 *        description: Unauthorized
 *       '500':
-*        description: Internal server error while trying to create admin share
+*        description: Internal Server Error
 *
 */

@@ -25,6 +25,6 @@
 *       '404':
 *        description: Not Found
 *       '500':
-*        description: Internal server error while trying to delete product
+*        description: Internal Server Error
 *
 */

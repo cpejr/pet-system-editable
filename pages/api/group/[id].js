@@ -11,7 +11,7 @@ export default function handler(req, res) {
     if (method === 'DELETE') {
       return isSeller(del)(req, res);
     }
-    return res.status(500).json({ message: 'Método incorreto' });
+    return res.status(500).json({ message: 'Internal Server Error' });
   } catch (err) {
     return res.status(500).json({ statusCode: 500, message: err.message });
   }

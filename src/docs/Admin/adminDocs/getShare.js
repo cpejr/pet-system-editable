@@ -16,6 +16,6 @@
 *       '404':
 *        description: Not Found
 *       '500':
-*        description: Internal server error while trying to find share
+*        description: Internal Server Error
 *
 */

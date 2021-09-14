@@ -12,7 +12,7 @@ module.exports = {
       if (err.message) {
         return response.status(400).json({ notification: err.message });
       }
-      return response.status(500).json({ notification: 'Internal server error while trying to find subcategory' });
+      return response.status(500).json({ notification: 'Internal Server Error' });
     }
   },
 
@@ -32,7 +32,7 @@ module.exports = {
       if (error.message) {
         return response.status(400).json({ notification: error.message });
       }
-      return response.status(500).json({ notification: 'Internal server error while trying to create subcategory' });
+      return response.status(500).json({ notification: 'Internal Server Error' });
     }
   },
 
@@ -44,7 +44,7 @@ module.exports = {
       if (error.message) {
         return response.status(400).json({ notification: error.message });
       }
-      return response.status(500).json({ notification: 'Internal server error while trying to delete subcategory' });
+      return response.status(500).json({ notification: 'Internal Server Error' });
     }
     return response.status(200).json({ notification: 'Subcategory deleted' });
   },
@@ -60,7 +60,7 @@ module.exports = {
       if (error.message) {
         return response.status(400).json({ notification: error.message });
       }
-      return response.status(500).json({ notification: 'Internal server error while trying to update subcategory' });
+      return response.status(500).json({ notification: 'Internal Server Error' });
     }
   },
 };

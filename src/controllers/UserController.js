@@ -11,7 +11,7 @@ export async function getOne(request, response) {
     if (err.message) {
       return response.status(400).json({ notification: err.message });
     }
-    return response.status(500).json({ notification: 'Internal server error while trying to find user' });
+    return response.status(500).json({ notification: 'Internal Server Error' });
   }
 }
 
@@ -33,7 +33,7 @@ export async function create(request, response) {
     if (err.message) {
       return response.status(400).json({ notification: err.message });
     }
-    return response.status(500).json({ notification: 'Internal server error while trying to register user' });
+    return response.status(500).json({ notification: 'Internal Server Error' });
   }
   return response.status(200).json({ notification: 'Usuario criado!' });
 }
@@ -49,21 +49,23 @@ export async function deleteBoth(request, response) {
     return response.status(200).json({ message: 'Sucesso!' });
   } catch (error) {
       console.error(error); //eslint-disable-line
-    return response.status(500).json({ notification: 'Internal server error while trying to delete user' });
+    return response.status(500).json({ notification: 'Internal Server Error' });
   }
 }
 
 export async function update(request, response) {
   try {
-    const { id } = request.params;
+    const { id } = request.query;
     const newUser = request.body;
     const { password, email } = request.body;
 
     if (password) {
       const user = await UserModel.getUserById(id);
-      const firebaseId = user.firebase;
+      const firebaseId = user.firebase_id;
+      console.log(firebaseId);
       await FirebaseModel.changeUserPassword(firebaseId, password);
       delete newUser.password;
+      return response.status(200).json({ message: 'Sucesso!' });
     }
 
     if (email) {
@@ -73,10 +75,12 @@ export async function update(request, response) {
     }
 
     await UserModel.updateUser(newUser, id);
-    return response.status(200).json({ message: 'Sucesso!' });
+
+    const updatedUser = await UserModel.getUserById(id);
+    return response.status(200).json(updatedUser , { message: 'Sucesso!' });
   } catch (error) {
       console.error(error); //eslint-disable-line
-    return response.status(500).json({ notification: 'Internal server error while trying to delete user' });
+    return response.status(500).json({ notification: 'Internal Server Error' });
   }
 }
 
@@ -89,7 +93,7 @@ export async function updatePassword(request, response) {
     if (err.message) {
       return response.status(400).json({ notification: err.message });
     }
-    return response.status(500).json({ notification: 'Internal server error while trying to update user password' });
+    return response.status(500).json({ notification: 'Internal Server Error' });
   }
   return response.status(200).json({ notification: 'User password updated' });
 }

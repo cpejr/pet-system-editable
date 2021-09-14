@@ -16,7 +16,7 @@ handler.post(async (req, res) => {
     if (method === 'POST') {
       return isSeller(create)(req, res);
     }
-    return res.status(500).json({ message: 'Método incorreto' });
+    return res.status(500).json({ message: 'Internal Server Error' });
   } catch (err) {
     return res.status(500).json({ statusCode: 500, message: err.message });
   }

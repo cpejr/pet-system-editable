@@ -22,6 +22,6 @@
 *       '404':
 *        description: Not Found
 *       '500':
-*        description: Internal server error while trying to find product
+*        description: Internal Server Error
 *
 */

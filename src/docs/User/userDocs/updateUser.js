@@ -29,5 +29,5 @@
 *       '403':
 *        description: Unauthorized
 *       '500':
-*        description: Internal server error while trying to delete user
+*        description: Internal Server Error
 */

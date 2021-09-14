@@ -29,7 +29,7 @@ export async function signIn(req, res) {
       return res.status(400).json({ message: 'Email ou senha incorreto' });
     }
   } catch (error) {
-    return res.status(500).json({ message: err.message });
+    return res.status(500).json({ message: error.message });
   }
 }
 
@@ -38,7 +38,7 @@ export async function validateSession(req, res) {
     const session = await req.session.get('user');
     return res.status(200).json(session);
   } catch (error) {
-    return res.status(500).json({ message: err.message });
+    return res.status(500).json({ message: error.message });
   }
 }
 
@@ -49,5 +49,18 @@ export async function logout(req, res) {
   } catch (error) {
     console.error(error); //eslint-disable-line
     return res.status(500).json({ message: 'Could not log out' });
+  }
+}
+
+export async function forgottenPassword(request, response) {
+  try {
+    const { email } = request.body;
+    const res = await FirebaseModel.firebaseChangeUserPassword(email);
+    return response.status(200).json({ res });
+  } catch (error) {
+    console.error(error);
+    return response.status(500).json({
+      notification: 'Error while trying to send reset password email',
+    });
   }
 }

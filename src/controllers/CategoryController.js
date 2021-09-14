@@ -12,7 +12,7 @@ module.exports = {
       if (err.message) {
         return response.status(400).json({ notification: err.message });
       }
-      return response.status(500).json({ notification: 'Internal server error while trying to find category' });
+      return response.status(500).json({ notification: 'Internal Server Error' });
     }
   },
 
@@ -24,7 +24,7 @@ module.exports = {
       if (err.message) {
         return response.status(400).json({ notification: err.message });
       }
-      return response.status(500).json({ notification: 'Internal server error while trying to find categories' });
+      return response.status(500).json({ notification: 'Internal Server Error' });
     }
   },
 
@@ -43,7 +43,7 @@ module.exports = {
       if (err.message) {
         return response.status(400).json({ notification: err.message });
       }
-      return response.status(500).json({ notification: 'Internal server error while trying to create category' });
+      return response.status(500).json({ notification: 'Internal Server Error' });
     }
   },
 
@@ -55,7 +55,7 @@ module.exports = {
       if (error.message) {
         return response.status(400).json({ notification: error.message });
       }
-      return response.status(500).json({ notification: 'Internal server error while trying to delete category' });
+      return response.status(500).json({ notification: 'Internal Server Error' });
     }
     return response.status(200).json({ notification: 'Category deleted' });
   },
@@ -69,7 +69,7 @@ module.exports = {
       if (error.message) {
         return response.status(400).json({ notification: error.message });
       }
-      return response.status(500).json({ notification: 'Internal server error while trying to update product' });
+      return response.status(500).json({ notification: 'Internal Server Error' });
     }
     return response.status(200).json({ notification: 'Category updated' });
   },
