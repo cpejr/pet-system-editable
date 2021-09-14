@@ -8,7 +8,7 @@ module.exports = {
     const { id } = request.query;
 
     const product = await ProductModel.getProductById(id);
-    const store = await StoreModel.getStoreById(product.store_id);
+    const store = await StoreModel.getStoreByFirebaseId(product.firebase_id_store);
     product.store = store;
 
     const readImage = await AwsModel.getAWS(product.img);
@@ -30,10 +30,8 @@ module.exports = {
     try {
       const image_id = await AwsModel.uploadAWS(file.img);
       product.img = image_id.key;
-
-      const user_id = request.session.get('user').user.firebase_id;
-      const { store_id } = await StoreModel.getByUserId(user_id);
-      product.store_id = store_id;
+      const { firebase_id_store } = request.session.get('user').Store.firebase_id_store; // ver se a sintaxe está correta
+      product.firebase_id_store = firebase_id_store;
 
       await ProductModel.createNewProduct(product);
     } catch (err) {
