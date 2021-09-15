@@ -6,7 +6,7 @@ module.exports = {
 
   async getUserById(id) {
     try {
-      const user = await connection('Users')
+      const user = await connection('User')
         .where('firebase_id', id)
         .select('*')
         .first();
@@ -19,7 +19,7 @@ module.exports = {
 
   async createNewUser(user) {
     try {
-      const user_aux = await connection('Users')
+      const user_aux = await connection('User')
         .insert(user);
       return user_aux;
     } catch (error) {
@@ -30,7 +30,7 @@ module.exports = {
 
   async deleteUser(id) {
     try {
-      const response = await connection('Users')
+      const response = await connection('User')
         .where({ firebase_id: id })
         .delete();
       return response;
@@ -42,7 +42,7 @@ module.exports = {
 
   async updateUser(user, id) {
     try {
-      const response = await connection('Users')
+      const response = await connection('User')
         .where({ firebase_id: id })
         .update(user);
       return response;
