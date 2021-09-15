@@ -1,6 +1,5 @@
 const { v4: uuidv4 } = require('uuid');
-const CategoryModel = require('../models/CategoryModel');
-const SubCategoryModel = require('../models/SubCategoryModel');
+const CategoryModel = require('../models/CategoriesModel');
 
 module.exports = {
   async getOne(request, response) {
