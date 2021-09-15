@@ -1,4 +1,4 @@
-import { getOne, remove,getAllByUser } from '../../../src/controllers/AddressController';
+import { getOne, remove } from '../../../src/controllers/AddressController';
 import { isAdminOrSelf } from '../../../src/utils/Auth';
 
 export default function handler(req, res) {
