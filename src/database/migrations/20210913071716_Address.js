@@ -3,7 +3,7 @@ exports.up = function (knex) {
     table.uuid('address_id').primary().notNullable();
     table.string('firebase_id').notNullable();
     table.foreign('firebase_id').references('firebase_id').inTable('User');
-    table.foreign('firebase_id').references('firebase_id_store').inTable('Store');
+    table.foreign('firebase_id_store').references('firebase_id_store').inTable('Store');
     table.string('zipcode').notNullable();
     table.string('state').notNullable();
     table.string('city').notNullable();

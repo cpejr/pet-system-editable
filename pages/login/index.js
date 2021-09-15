@@ -60,7 +60,9 @@ const Login = () => {
             </ItemFormulary>
 
             <ItemFormulary>
-              <ForgotPassword>Esqueceu a senha?</ForgotPassword>
+              <Link href="/ForgetPass"> 
+                <ForgotPassword>Esqueceu a senha?</ForgotPassword>
+              </Link>
             </ItemFormulary>
             <BottomFormulary>
               <Submit type="submit">Finalizar</Submit>

@@ -6,6 +6,7 @@ export const TitleLogin = styled.h1`
   font-size: 3remD;
   font-weight: 700;
   font-family: Roboto;
+  align-itens: center;
 `;
 
 export const TitleStore = styled.h1`

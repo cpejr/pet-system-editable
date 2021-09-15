@@ -7,7 +7,7 @@ exports.up = function (knex) {
     table.foreign('firebase_id_store').references('firebase_id_store').inTable('Store');
     table.uuid('address_id').notNullable();
     table.foreign('address_id').references('address_id').inTable('Address');
-    table.uuid('cart_id').notNullable();
+    table.string('cart_id').notNullable();
     table.foreign('cart_id').references('cart_id').inTable('Cart');
     table.float('total_price').notNullable();
     table.string('payment_type').notNullable();
