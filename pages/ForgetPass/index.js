@@ -28,6 +28,12 @@ const ForgetPass = () => (
         <TopFormulary>
           <TitleLogin>Esqueceu sua senha?</TitleLogin>
           <SubtitleLogin>Por favor, entre com seu email para enviarmos um email de redefinição</SubtitleLogin>
+          <ItemFormulary>
+            <TextBox type="text" placeholder="Email" />
+          </ItemFormulary>
+          <BottomFormulary>
+            <Submit type="submit">Enviar</Submit>
+          </BottomFormulary>
         </TopFormulary>
       </Body.Right>
     </Body>
