@@ -59,7 +59,7 @@ module.exports = {
       }
       return response.status(500).json({ notification: 'Internal Server Error' });
     }
-    return response.status(200).json({ notification: 'User and store created' });
+    return response.status(200).json({ notification: 'Store created' });
   },
 
   async update(request, response) {
@@ -89,6 +89,6 @@ module.exports = {
       }
       return response.status(500).json({ notification: 'Internal Server Error' });
     }
-    return response.status(200).json({ notification: 'User and store were deleted' });
+    return response.status(200).json({ notification: 'Store deleted' });
   },
 };

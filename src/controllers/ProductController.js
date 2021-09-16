@@ -30,7 +30,7 @@ module.exports = {
     try {
       const image_id = await AwsModel.uploadAWS(file.img);
       product.img = image_id.key;
-      const { firebase_id_store } = request.session.get('user').Store.firebase_id_store; // ver se a sintaxe está correta
+      const { firebase_id_store } = request.session.get('store').store.firebase_id_store; // ver se a sintaxe está correta
       product.firebase_id_store = firebase_id_store;
 
       await ProductModel.createNewProduct(product);
