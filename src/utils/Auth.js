@@ -1,5 +1,4 @@
 import { withIronSession } from 'next-iron-session';
-import { getSessionByAccessToken } from '../models/SessionModel';
 
 const sessionObject = {
   cookieName: 'userSession',
@@ -12,9 +11,8 @@ const sessionObject = {
 function withAuth(handler) {
   return async (req, res) => {
     try {
-      const { accessToken } = req.session.get('user');
 
-      const session = await getSessionByAccessToken(accessToken);
+      const session = await req.session.get('user');
 
       if (!session) throw new Error('No session corresponding to this token');
     } catch (error) {

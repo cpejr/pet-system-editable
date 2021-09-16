@@ -174,7 +174,7 @@ export default function Header() {
         return (
           <Link href="/admin">
             <YourSpace.Word>
-              {user.first_name}
+              {user.name}
             </YourSpace.Word>
           </Link>
         );
@@ -182,7 +182,7 @@ export default function Header() {
         return (
           <Link href="/Seller/Perfil/Products">
             <YourSpace.Word>
-              {user.first_name}
+              {user.name}
             </YourSpace.Word>
           </Link>
         );
@@ -190,7 +190,7 @@ export default function Header() {
         return (
           <Link href="/User/Perfil/MyRequests">
             <YourSpace.Word>
-              {user.first_name}
+              {user.name}
             </YourSpace.Word>
           </Link>
         );
