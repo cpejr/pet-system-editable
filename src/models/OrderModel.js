@@ -8,7 +8,7 @@ module.exports = {
         .where('order_id', id)
         .select('*')
         .first();
-      const orderProducts = await Cart_ProductsByOrderId.getCart_ProductsByOrderId(id);
+      const orderProducts = await Cart_ProductsModel.getCart_ProductsByOrderId(id);
       order.orderProducts = orderProducts;
       return order;
     } catch (error) {
@@ -17,12 +17,12 @@ module.exports = {
     }
   },
 
-  async getOrderAndOrderProducts(id) {
+  async getOrderAndCartProducts(id) {
     try {
       const orders = await connection('Order')
         .where('firebase_id', id)
         .select('*');
-      const orderProducts = await AllCart_Products.getAllCart_Products();
+      const orderProducts = await Cart_ProductsModel.getAllCart_Products();
       orders.forEach((order) => {
         const orderProductsFilter = orderProducts.filter((orderProducts) => orderProducts.order_id === order.order_id);
         order.orderProducts = orderProductsFilter;
@@ -34,7 +34,7 @@ module.exports = {
     }
   },
 
-  async getAddressesByUserId(id) {
+  async getOrdersByUserId(id) {
     try {
       const orders = await connection('Order')
         .where('firebase_id', id)

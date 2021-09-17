@@ -1,11 +1,11 @@
-import { getOrderAndOrderProducts } from '../../../src/controllers/OrderController';
+import { getOneOrderAndCartProducts } from '../../../src/controllers/OrderController';
 
 export default function handler(req, res) {
   try {
     const { method } = req;
     console.log(method);
     if (method === 'GET') {
-      return getOrderAndOrderProducts(req, res);
+      return getOneOrderAndCartProducts(req, res);
     }
     return res.status(500).json({ message: 'Internal Server Error' });
   } catch (err) {

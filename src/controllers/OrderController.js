@@ -6,14 +6,15 @@ const AddressModel = require('../models/AddressModel');
 
 module.exports = {
 
-  async getOne(req, res) {
+  //Pegar uma order com os order products
+  async getOneOrderAndCartProducts(req, res) {
     const order_id = req.query.id;
     const order = await OrderModel.getOrderById(order_id);
     return res.status(200).json(order);
   },
 
   //Pegar todas as orders com os order products
-  async getOrderAndOrderProducts(req, res) {
+  async getOrderAndCartProducts(req, res) {
     const firebase_id = req.query.id;
     try {
       const orders = await OrderModel.getOrderAndOrderProducts(firebase_id);
@@ -29,7 +30,7 @@ module.exports = {
   async getAllByUser(req, res) {
     const firebase_id = req.query.id;
     try {
-      const orders = await OrderModel.getAddressesByUserId(firebase_id);
+      const orders = await OrderModel.getOrdersByUserId(firebase_id);
       return res.status(200).json(orders);
     } catch (error) {
       if (error.message) {
@@ -55,14 +56,10 @@ module.exports = {
     const order = req.body;
     order.order_id = uuidv4();
     try {
-      const user_id = req.session.get('user').user.firebase_id;
-      const { product_id } = await CartModel.getCart(user_id);
-      const { store_id } = await ProductModel.getProductById(product_id);
-      const { address_id } = await AddressModel.getAddressByUserId(user_id);
-      console.log(address_id);
-      order.address_id = address_id;
-      order.store_id = store_id;
-      order.firebase_id = user_id;
+      const firebase_id = req.session.get('user').user.firebase_id;
+      const address = await AddressModel.getAddressByUserId(firebase_id);
+      order.address_id = address.address_id;
+      order.firebase_id = firebase_id;
       await OrderModel.createNewOrder(order);
     } catch (err) {
       if (err.message) {
