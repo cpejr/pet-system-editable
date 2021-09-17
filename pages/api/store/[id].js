@@ -1,4 +1,4 @@
-import { getOne } from '../../../src/controllers/StoreController';
+import { getOne, update, deleteBoth } from '../../../src/controllers/StoreController';
 
 export default function handler(req, res) {
   try {
@@ -6,6 +6,12 @@ export default function handler(req, res) {
     console.log(method);
     if (method === 'GET') {
       return getOne(req, res);
+    }
+    if (method === 'PUT') {
+      return update(req, res);
+    }
+    if (method === 'DELETE') {
+      return deleteBoth(req, res);
     }
     return res.status(500).json({ message: 'Internal Server Error' });
   } catch (err) {

@@ -1,5 +1,4 @@
 const { v4: uuidv4 } = require('uuid');
-const timestamp = require('time-stamp');
 const StoreModel = require('../models/StoreModel');
 const FirebaseModel = require('../models/FirebaseModel');
 const AwsModel = require('../models/AwsModel');
@@ -42,7 +41,6 @@ module.exports = {
 
     // Criacao da Loja
     try {
-
       firebase_id = await FirebaseModel.createNewUser(store.email, store.password);
       store.firebase_id_store = firebase_id;
       delete store.password;
@@ -77,9 +75,9 @@ module.exports = {
   },
 
   async deleteBoth(request, response) {
-    const { firebase_id_store } = request.query;
+    const firebase_id_store = request.query.id;
 
-    // Apagando Loja do Bando de Dados
+    // Apagando Loja do Banco de Dados
     try {
       await FirebaseModel.deleteUser(firebase_id_store);
       await StoreModel.deleteStore(firebase_id_store);
