@@ -53,10 +53,9 @@ export async function create(request, response) {
 
 export async function deleteBoth(request, response) {
   try {
-    const { id } = request.params;
-    const user = await UserModel.getUserById(id);
+    const id = request.query.id;
 
-    await FirebaseModel.deleteUser(user.firebase);
+    await FirebaseModel.deleteUser(id);
     await UserModel.deleteUser(id);
 
     return response.status(200).json({ message: 'Sucesso!' });
