@@ -1,6 +1,6 @@
 import {
   getOne, update, remove,
-} from '../../../src/controllers/CategoryController';
+} from '../../../src/controllers/CategoriesController';
 import { isAdmin } from '../../../src/utils/Auth';
 
 export default function handler(req, res) {
