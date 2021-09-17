@@ -1,5 +1,5 @@
 import { getOne, remove } from '../../../src/controllers/AddressController';
-import { isAdminOrSelf } from '../../../src/utils/Auth';
+import { withAuthValidation,isAdminOrSelf } from '../../../src/utils/Auth';
 
 export default function handler(req, res) {
   try {
@@ -9,7 +9,7 @@ export default function handler(req, res) {
       return getOne(req, res);
     }
     if (method === 'DELETE') {
-      return isAdminOrSelf(remove)(req, res);
+      return withAuthValidation(remove)(req, res);
     }
     return res.status(500).json({ message: 'Internal Server Error' });
   } catch (err) {

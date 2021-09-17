@@ -1,6 +1,4 @@
 const { v4: uuidv4 } = require('uuid');
-const UserModel = require('../models/ProductModel');
-const StoreModel = require('../models/StoreModel');
 const AddressModel = require('../models/AddressModel');
 
 module.exports = {
@@ -20,8 +18,11 @@ module.exports = {
 
   async getAllByUser(req, res) {
     const firebase_id = req.query.id;
+
+    const user = await req.session.get("user");
+
     try {
-      const addresses = await AddressModel.getAddressesByFirebaseId(firebase_id);
+      const addresses = await AddressModel.getAddressesByFirebaseId(firebase_id, user);
       return res.status(200).json(addresses);
     } catch (error) {
       if (error.message) {
@@ -73,11 +74,14 @@ module.exports = {
     }
     return response.status(200).json({ notification: 'Address updated' });
   },
+  
   async remove(request, response) {
-    const { id } = request.query.id;
+    const id = request.query.id;
+
+    const user = await request.session.get("user");
 
     try {
-      await AddressModel.removeAddress(id);
+      await AddressModel.removeAddress(id,user);
     } catch (err) {
       if (err.message) {
         return response.status(400).json({ notification: err.message });
