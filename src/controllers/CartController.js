@@ -16,6 +16,19 @@ module.exports = {
     }
   },
 
+  async getById(req, res) {
+    const cart_id = req.query.id;
+    try {
+      const cart = await CartModel.getCartById(cart_id);
+      return res.status(200).json(cart);
+    } catch (error) {
+      if (error.message) {
+        return res.status(400).json({ notification: error.message });
+      }
+      return res.status(500).json({ notification: 'Internal Server Error' });
+    }
+  },
+
   async create(req, res) {
     const cart = req.body;
     cart.cart_id = uuidv4();
