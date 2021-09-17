@@ -57,7 +57,7 @@ module.exports = {
     order.order_id = uuidv4();
     try {
       const firebase_id = req.session.get('user').user.firebase_id;
-      const address = await AddressModel.getAddressByUserId(firebase_id);
+      const address = await AddressModel.getMainAddressById(firebase_id);
       order.address_id = address.address_id;
       order.firebase_id = firebase_id;
       await OrderModel.createNewOrder(order);
