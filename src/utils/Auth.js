@@ -14,7 +14,11 @@ function withAuth(handler) {
 
       const session = await req.session.get('user');
 
-      if (!session) throw new Error('No session corresponding to this token');
+      if (!session){
+        const store = await req.session.get('store');
+
+        if(!store) throw new Error('No session corresponding to this token');
+      }
     } catch (error) {
       console.error(error); // eslint-disable-line
       await req.session.destroy();
@@ -51,9 +55,9 @@ export function isAdmin(handler) {
 // Quando precisa validar que o usuário é um lojista logado antes de operar a requisição
 export function isSeller(handler) {
   return withAuthValidation((req, res) => {
-    const { user: { type } } = req.session.get('user');
+    const store = req.session.get('store');
 
-    if (type === 'seller') {
+    if (store) {
       return handler(req, res);
     }
     return res.status(403).json({ message: 'Unauthorized' });

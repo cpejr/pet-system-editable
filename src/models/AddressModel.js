@@ -83,13 +83,23 @@ module.exports = {
 
   async getAllAddress() {
     try {
-      const addresses = await connection('Address')
-        .select('*').innerJoin(
-          'User_Address',
-          'Address.address_id',
+      const user_addresses = await connection('User_Address')
+        .select('*').leftJoin(
+          'Address',
           'User_Address.address_id',
+          'Address.address_id',
         );
-      return addresses;
+
+      const store_addresses = await connection('Store_Address')
+        .select('*').leftJoin(
+          'Address',
+          'Store_Address.address_id',
+          'Address.address_id',
+        );
+
+        
+
+      return {user_addresses,store_addresses};
     } catch (error) {
       console.error(error);
       throw new Error(error);
