@@ -48,10 +48,8 @@ module.exports = {
     address.address_id = uuidv4();
 
     try {
-      const firebase_id = request.session.get('user').user.firebase_id;
-      address.firebase_id = firebase_id;
 
-      await AddressModel.createNewAddress(address);
+      await AddressModel.createNewAddress(address, request);
     } catch (err) {
       if (err.message) {
         return response.status(400).json({ notification: err.message });
@@ -76,7 +74,7 @@ module.exports = {
     return response.status(200).json({ notification: 'Address updated' });
   },
   async remove(request, response) {
-    const { id } = request.query;
+    const { id } = request.query.id;
 
     try {
       await AddressModel.removeAddress(id);

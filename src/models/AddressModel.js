@@ -70,27 +70,29 @@ module.exports = {
     }
   },
 
-  async createNewAddress(address) {
+  async createNewAddress(address, req) {
     try {
       const address_aux = await connection('Address')
         .insert(address);
 
       const user = await req.session.get("user");
-
+      
       if (user) {
+        const firebase_user = await req.session.get("user").user.firebase_id;
         const user_address = {
-          firebase_id: user.firebase_id,
+          firebase_id: firebase_user,
           address_id: address.address_id,
           main_address: true
         }
+        
         const address_user_aux = await connection('User_Address')
         .insert(user_address);
       }
 
       if(!user){
-        const store = await req.session.get("store");
+        const firebase_id_store = await req.session.get("store").store.firebase_id_store;
         const store_address = {
-          firebase_id_store: store.firebase_id_store,
+          firebase_id_store: firebase_id_store,
           address_id: address.address_id
         }
         const address_store_aux = await connection('Store_Address')
