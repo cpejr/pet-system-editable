@@ -58,8 +58,12 @@ module.exports = {
     try {
       const firebase_id = req.session.get('user').user.firebase_id;
       const address = await AddressModel.getMainAddressById(firebase_id);
+      const cart = await CartModel.getCart(firebase_id);
+
+      order.cart_id = cart.cart_id;
       order.address_id = address.address_id;
       order.firebase_id = firebase_id;
+
       await OrderModel.createNewOrder(order);
     } catch (err) {
       if (err.message) {

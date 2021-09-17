@@ -15,6 +15,19 @@ export async function getOne(request, response) {
   }
 }
 
+export async function getAll(request, response) {
+
+  try {
+    const users = await UserModel.getAllUsers();
+    return response.status(200).json(users);
+  } catch (error) {
+    if (err.message) {
+      return response.status(400).json({ notification: err.message });
+    }
+    return response.status(500).json({ notification: 'Internal Server Error' });
+  }
+}
+
 export async function create(request, response) {
   const user = request.body;
   let firebase_id;
