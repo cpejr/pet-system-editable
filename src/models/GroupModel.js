@@ -23,15 +23,19 @@ module.exports = {
     }
   },
 
-  async deleteGroup(id, store_id) {
-    const del = await connection('Group').where({ group_id: id, store_id }).delete();
+  async deleteGroup(id) {
+    const del = await connection('Group')
+     .where('group_id', id)
+     .delete();
     return del;
   },
 
   async updateGroup(group, id) {
+    console.log("🚀 ~ file: GroupModel.js ~ line 34 ~ updateGroup ~ id", id)
+    console.log("🚀 ~ file: GroupModel.js ~ line 34 ~ updateGroup ~ group", group)
     try {
       const response = await connection('Group')
-        .where({ group_id: id })
+        .where('group_id', id)
         .update(group);
       return response;
     } catch (error) {
@@ -40,10 +44,10 @@ module.exports = {
     }
   },
 
-  async getAllGroups(id) {
+  async getAllGroupsFromStore(id) {
     try {
       const groups = await connection('Group')
-        .where('store_id', id)
+        .where('firebase_id_store', id)
         .select('*');
       return groups;
     } catch (error) {
@@ -52,10 +56,21 @@ module.exports = {
     }
   },
 
-  async getAllGroupsFromSession(store_id) {
+  async getAllGroups() {
     try {
       const groups = await connection('Group')
-        .where('store_id', store_id)
+        .select('*');
+      return groups;
+    } catch (error) {
+      console.error(error);
+      throw new Error(error);
+    }
+  },
+
+  async getAllGroupsFromSession(id) {
+    try {
+      const groups = await connection('Group')
+        .where('firebase_id_store', id)
         .select('*');
       return groups;
     } catch (error) {
