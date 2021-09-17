@@ -17,7 +17,7 @@ module.exports = {
   async getCart(id) {
     try {
       const cart = await connection('Cart')
-        .where('firebase_id', id)
+        .where('cart_id', id)
         .select('*')
         .first();
       return cart;

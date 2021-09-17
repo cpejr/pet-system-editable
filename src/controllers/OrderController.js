@@ -6,14 +6,14 @@ const AddressModel = require('../models/AddressModel');
 
 module.exports = {
 
-  //Pegar uma order com os order products
+  // Pegar uma order com os order products
   async getOneOrderAndCartProducts(req, res) {
     const order_id = req.query.id;
     const order = await OrderModel.getOrderById(order_id);
     return res.status(200).json(order);
   },
 
-  //Pegar todas as orders com os order products
+  // Pegar todas as orders com os order products
   async getOrderAndCartProducts(req, res) {
     const firebase_id = req.query.id;
     try {
