@@ -1,6 +1,6 @@
 import {
   create, getAll,
-} from '../../../src/controllers/CategoryController';
+} from '../../../src/controllers/CategoriesController';
 import { isAdmin } from '../../../src/utils/Auth';
 
 export default function handler(req, res) {
