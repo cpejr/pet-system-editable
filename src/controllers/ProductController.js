@@ -6,19 +6,19 @@ const AwsModel = require('../models/AwsModel');
 module.exports = {
   async getOne(request, response) {
     const { id } = request.query;
-
-    const product = await ProductModel.getProductById(id);
-    const store = await StoreModel.getStoreByFirebaseId(product.firebase_id_store);
-    product.store = store;
-
-    const readImage = await AwsModel.getAWS(product.img);
-    readImage.pipe(response);
-    // console.log(readImage);
-    product.image = readImage;
-    const stringfedProduct = JSON.stringify(product);
-    console.log(product);
-    // readImage.pipe(response);
-    return response.status(200).send(stringfedProduct);
+    try {
+      const product = await ProductModel.getProductById(id);
+      const readImage = await AwsModel.getAWS(product.img);
+      // readImage.pipe(response);
+      product.img = readImage;
+      const stringfedProduct = JSON.stringify(product);
+      return response.status(200).send(stringfedProduct);
+    } catch (err) {
+      if (err.message) {
+        return response.status(400).json({ notification: err.message });
+      }
+      return response.status(500).json({ notification: 'Internal Server Error' });
+    }
   },
 
   async create(request, response) {
@@ -26,11 +26,11 @@ module.exports = {
     const file = request.files;
     product.product_id = uuidv4();
     file.img.name = uuidv4();
-
     try {
       const image_id = await AwsModel.uploadAWS(file.img);
       product.img = image_id.key;
-      const { firebase_id_store } = request.session.get('store').store.firebase_id_store; // ver se a sintaxe está correta
+      // eslint-disable-next-line prefer-destructuring
+      const firebase_id_store = request.session.get('store').store.firebase_id_store; // ver se a sintaxe está correta
       product.firebase_id_store = firebase_id_store;
 
       await ProductModel.createNewProduct(product);
@@ -45,9 +45,10 @@ module.exports = {
   },
   async update(request, response) {
     const product = request.body;
+    const { id } = request.query;
 
     try {
-      await ProductModel.updateProduct(product, product.product_id);
+      await ProductModel.updateProduct(product, id);
     } catch (err) {
       if (err.message) {
         return response.status(400).json({ notification: err.message });
@@ -57,10 +58,10 @@ module.exports = {
     return response.status(200).json({ notification: 'Product updated' });
   },
   async remove(request, response) {
-    const { product_id } = request.body;
+    const { id } = request.query;
 
     try {
-      await ProductModel.removeProduct(product_id);
+      await ProductModel.removeProduct(id);
     } catch (err) {
       if (err.message) {
         return response.status(400).json({ notification: err.message });
@@ -71,7 +72,7 @@ module.exports = {
   },
   async getAll(request, response) {
     try {
-      filter = request.query;
+      const filter = request.query;
       const products = await ProductModel.getAllProducts(filter);
       return response.status(200).json(products);
     } catch (err) {

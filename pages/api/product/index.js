@@ -1,6 +1,6 @@
 import nextConnect from 'next-connect';
 import {
-  create,
+  create, getAll,
 } from '../../../src/controllers/ProductController';
 import { isSeller } from '../../../src/utils/Auth';
 import middleware from '../../../src/middleware/middleware';
@@ -12,9 +12,12 @@ handler.use(middleware);
 handler.post(async (req, res) => {
   try {
     const { method } = req;
-    console.log(method);
+    // console.log(method);
     if (method === 'POST') {
       return isSeller(create)(req, res);
+    }
+    if (method === 'GET') {
+      return isSeller(getAll)(req, res);
     }
     return res.status(500).json({ message: 'Internal Server Error' });
   } catch (err) {

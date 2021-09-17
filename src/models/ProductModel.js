@@ -49,16 +49,13 @@ module.exports = {
   },
   async getAllProducts(filter) {
     try {
-      console.log(filter);
       const { price } = filter;
-      console.log(price);
       const products = await connection('Product')
         .select('*')
         .where((builder) => {
           if (price > 100) {
             builder.where('price', '>', 100);
           } else if (price) {
-            console.log('entrei');
             builder.where('price', '<=', price);
           }
         });
