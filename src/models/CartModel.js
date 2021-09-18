@@ -30,6 +30,7 @@ module.exports = {
     try {
       const cart = await connection('Cart')
         .where('firebase_id', id)
+        .orderBy('created_at', 'desc')
         .select('*')
         .first();
       return cart;
