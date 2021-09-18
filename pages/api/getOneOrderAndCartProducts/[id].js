@@ -1,11 +1,12 @@
 import { getOneOrderAndCartProducts } from '../../../src/controllers/OrderController';
+import { withAuthValidation } from '../../../src/utils/Auth';
 
 export default function handler(req, res) {
   try {
     const { method } = req;
     console.log(method);
     if (method === 'GET') {
-      return getOneOrderAndCartProducts(req, res);
+      return withAuthValidation(getOneOrderAndCartProducts)(req, res);
     }
     return res.status(500).json({ message: 'Internal Server Error' });
   } catch (err) {

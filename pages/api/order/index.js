@@ -1,6 +1,4 @@
-import {
-  create, update, del, getAll,
-} from '../../../src/controllers/OrderController';
+import { create, update, getAll} from '../../../src/controllers/OrderController';
 import { withAuthValidation, isAdmin } from '../../../src/utils/Auth';
 
 export default function handler(req, res) {
@@ -11,9 +9,6 @@ export default function handler(req, res) {
     }
     if (method === 'PUT') {
       return isAdmin(update)(req, res);
-    }
-    if (method === 'DELETE') {
-      return isAdmin(del)(req, res);
     }
     if (method === 'GET') {
       return isAdmin(getAll)(req, res);

@@ -1,7 +1,6 @@
 const { v4: uuidv4 } = require('uuid');
 const OrderModel = require('../models/OrderModel');
 const CartModel = require('../models/CartModel');
-const ProductModel = require('../models/ProductModel');
 const AddressModel = require('../models/AddressModel');
 
 module.exports = {
@@ -9,15 +8,20 @@ module.exports = {
   // Pegar uma order com os order products
   async getOneOrderAndCartProducts(req, res) {
     const order_id = req.query.id;
-    const order = await OrderModel.getOrderById(order_id);
+    const firebase_id = req.session.get('user').user.firebase_id;
+    const cart = await CartModel.getCartByFirebaseId(firebase_id);
+    const cart_id = cart.cart_id;
+    const order = await OrderModel.getOrderById(order_id,cart_id);
     return res.status(200).json(order);
   },
 
   // Pegar todas as orders com os order products
   async getOrderAndCartProducts(req, res) {
-    const firebase_id = req.query.id;
+    const firebase_id = req.session.get('user').user.firebase_id;
+    const cart = await CartModel.getCartByFirebaseId(firebase_id);
+    const cart_id = cart.cart_id;
     try {
-      const orders = await OrderModel.getOrderAndOrderProducts(firebase_id);
+      const orders = await OrderModel.getOrderAndCartProducts(firebase_id,cart_id);
       return res.status(200).json(orders);
     } catch (error) {
       if (error.message) {
@@ -57,8 +61,8 @@ module.exports = {
     order.order_id = uuidv4();
     try {
       const firebase_id = req.session.get('user').user.firebase_id;
-      const address = await AddressModel.getMainAddressById(firebase_id);
-      const cart = await CartModel.getCart(firebase_id);
+      const address = await AddressModel.getUserMainAddressById(firebase_id);
+      const cart = await CartModel.getCartByFirebaseId(firebase_id);
 
       order.cart_id = cart.cart_id;
       order.address_id = address.address_id;

@@ -36,7 +36,7 @@ module.exports = {
       const addressFilter = addressRelation.filter((address) => address.main_address === true);
 
       const address = await connection('Address')
-        .where('address_id', addressFilter.address_id)
+        .where('address_id', addressFilter[0].address_id)
         .select('*')
         .first();
 

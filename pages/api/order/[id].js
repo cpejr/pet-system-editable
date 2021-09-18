@@ -1,4 +1,5 @@
-import { getOne } from '../../../src/controllers/OrderController';
+import { getOne, del } from '../../../src/controllers/OrderController';
+import { isAdmin } from '../../../src/utils/Auth';
 
 export default function handler(req, res) {
   try {
@@ -6,6 +7,9 @@ export default function handler(req, res) {
     console.log(method);
     if (method === 'GET') {
       return getOne(req, res);
+    }
+    if (method === 'DELETE') {
+      return isAdmin(del)(req, res);
     }
     return res.status(500).json({ message: 'Internal Server Error' });
   } catch (err) {
