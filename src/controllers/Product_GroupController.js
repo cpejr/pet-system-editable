@@ -44,7 +44,6 @@ module.exports = {
   async deleteById(req, res) {
     const group_id = req.query.id;
     const product = req.body;
-    console.log("🚀 ~ file: Product_GroupController.js ~ line 46 ~ deleteById ~ product_id", product.product_id)
     try {
       const product_groups = await Product_GroupModel.DeleteProduct_GroupById(group_id,product.product_id);
       return res.status(200).json(product_groups);
