@@ -26,6 +26,19 @@ module.exports = {
     }
   },
 
+  async getCartByFirebaseId(id) {
+    try {
+      const cart = await connection('Cart')
+        .where('firebase_id', id)
+        .select('*')
+        .first();
+      return cart;
+    } catch (error) {
+      console.error(error);
+      throw new Error(error);
+    }
+  },
+
   async createNewCart(cart) {
     try {
       const cart_aux = await connection('Cart')

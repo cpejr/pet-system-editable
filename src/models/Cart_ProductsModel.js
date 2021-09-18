@@ -31,4 +31,25 @@ module.exports = {
       throw new Error(error);
     }
   },
+  async createCart_Products(cart_product) {
+    try {
+      const result = await connection('Cart_Products')
+        .insert(cart_product);
+      return result;
+    } catch (error) {
+      console.error(error);
+      throw new Error(error);
+    }
+  },
+  async deleteCart_Products(product_id) {
+    try {
+      const result = await connection('Cart_Products')
+        .where('product_id', product_id)
+        .delete();
+      return result;
+    } catch (error) {
+      console.error(error);
+      throw new Error(error);
+    }
+  },
 };
