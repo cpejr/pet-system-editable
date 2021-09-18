@@ -1,4 +1,5 @@
-import { getById } from '../../../src/controllers/Cart_ProductsController';
+import { getById, deleteByID } from '../../../src/controllers/Cart_ProductsController';
+import { withAuthValidation } from '../../../src/utils/Auth';
 
 export default function handler(req, res) {
   try {
@@ -6,6 +7,9 @@ export default function handler(req, res) {
     console.log(method);
     if (method === 'GET') {
       return getById(req, res);
+    }
+    if (method === 'DELETE') {
+      return withAuthValidation(deleteByID)(req, res);
     }
     return res.status(500).json({ message: 'Internal Server Error' });
   } catch (err) {
