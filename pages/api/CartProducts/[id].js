@@ -6,7 +6,7 @@ export default function handler(req, res) {
     const { method } = req;
     console.log(method);
     if (method === 'GET') {
-      return getById(req, res);
+      return withAuthValidation(getById)(req, res);
     }
     if (method === 'DELETE') {
       return withAuthValidation(deleteByID)(req, res);

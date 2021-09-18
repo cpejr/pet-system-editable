@@ -3,6 +3,7 @@ exports.up = function (knex) {
     table.uuid('cart_id').primary().notNullable();
     table.string('firebase_id').notNullable();
     table.foreign('firebase_id').references('firebase_id').inTable('User');
+    table.timestamp('created_at').notNullable().defaultTo(knex.fn.now());
   });
 };
 

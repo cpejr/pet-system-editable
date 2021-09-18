@@ -4,7 +4,6 @@ exports.up = function (knex) {
     table.foreign('cart_id').references('cart_id').inTable('Cart').onDelete('cascade');
     table.uuid('product_id').notNullable();
     table.foreign('product_id').references('product_id').inTable('Product').onDelete('cascade');
-    table.string('company_name').notNullable();
     table.integer('amount').notNullable();
     table.integer('final_price').notNullable();
   });
@@ -12,4 +11,3 @@ exports.up = function (knex) {
 exports.down = function (knex) {
   return knex.schema.dropTable('Cart_Products');
 };
- 
