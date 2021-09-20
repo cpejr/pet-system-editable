@@ -4,10 +4,10 @@ const CartModel = require('../models/CartModel');
 module.exports = {
 
   async getById(req, res) {
-    const order_id = req.query.id;
+    const cart_id = req.query.id;
     try {
-      const order_products = await Cart_ProductsModel.getCart_ProductsByOrderId(order_id);
-      return res.status(200).json(order_products);
+      const cart_products = await Cart_ProductsModel.getCart_ProductsByCartId(cart_id);
+      return res.status(200).json(cart_products);
     } catch (error) {
       if (error.message) {
         return res.status(400).json({ notification: error.message });
@@ -17,8 +17,8 @@ module.exports = {
   },
   async getAll(req, res) {
     try {
-      const order_products = await Cart_ProductsModel.getAllCart_Products();
-      return res.status(200).json(order_products);
+      const cart_products = await Cart_ProductsModel.getAllCart_Products();
+      return res.status(200).json(cart_products);
     } catch (error) {
       if (error.message) {
         return res.status(400).json({ notification: error.message });
