@@ -346,7 +346,7 @@ export default function Signup() {
                 </Phone>
               </NumbersForms>
               <Buttons>
-                <Submit onClick={handleSubmit}>Finalizar</Submit>
+                <Submit onClick={handleSubmit}>Cadastrar</Submit>
 
                 <br />
                 <FormGroup>

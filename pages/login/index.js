@@ -65,7 +65,7 @@ const Login = () => {
               </Link>
             </ItemFormulary>
             <BottomFormulary>
-              <Submit type="submit">Finalizar</Submit>
+              <Submit type="submit">Entrar</Submit>
 
             </BottomFormulary>
             <BottomFormulary>
