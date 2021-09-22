@@ -51,7 +51,7 @@ flex-direction:row ;
 
 const Name = styled.div`
 display:flex;
-flex-direction:row;
+width: 430px;
 `;
 const NumbersForms = styled.div`
 flex-direction:row ;
@@ -128,7 +128,6 @@ cursor: pointer;
 
 export default function Signup() {
   const [name, setName] = useState('');
-  const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -139,9 +138,6 @@ export default function Signup() {
   const router = useRouter();
   function handleNameChange(event) {
     setName(event.target.value);
-  }
-  function handleLastNameChange(event) {
-    setLastName(event.target.value);
   }
   function handleEmailChange(event) {
     setEmail(event.target.value);
@@ -182,13 +178,12 @@ export default function Signup() {
     }
     const body = {
       type: 'buyer',
-      first_name: name,
-      last_name: lastName,
+      name: name,
       birth_date: date,
       email,
       password,
       cpf,
-      telephone: ddd + telephone,
+      phone: ddd + telephone,
     };
     try {
       const Validate = await api.post('/api/user', body);
@@ -236,7 +231,7 @@ export default function Signup() {
               <Name>
                 <MyFormGroup>
                   <FormLabel>Nome</FormLabel>
-                  <FormControl
+                  <EmailFormControl
                     type="text"
                     placeholder="Nome"
                     required
@@ -244,16 +239,6 @@ export default function Signup() {
                     onChange={handleNameChange}
                   />
                 </MyFormGroup>
-                <SobreFormGroup>
-                  <FormLabel>Sobrenome</FormLabel>
-                  <FormControl
-                    type="text"
-                    placeholder="Sobrenome"
-                    required
-                    value={lastName}
-                    onChange={handleLastNameChange}
-                  />
-                </SobreFormGroup>
               </Name>
 
               <MyFormGroup>

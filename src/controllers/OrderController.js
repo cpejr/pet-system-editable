@@ -8,20 +8,15 @@ module.exports = {
   // Pegar uma order com os order products
   async getOneOrderAndCartProducts(req, res) {
     const order_id = req.query.id;
-    const { firebase_id } = req.session.get('user').user;
-    const cart = await CartModel.getCartByFirebaseId(firebase_id);
-    const { cart_id } = cart;
-    const order = await OrderModel.getOrderById(order_id, cart_id);
+    const order = await OrderModel.getOrderById(order_id);
     return res.status(200).json(order);
   },
 
   // Pegar todas as orders com os order products
   async getOrderAndCartProducts(req, res) {
     const { firebase_id } = req.session.get('user').user;
-    const cart = await CartModel.getCartByFirebaseId(firebase_id);
-    const { cart_id } = cart;
     try {
-      const orders = await OrderModel.getOrderAndCartProducts(firebase_id, cart_id);
+      const orders = await OrderModel.getOrderAndCartProducts(firebase_id);
       return res.status(200).json(orders);
     } catch (error) {
       if (error.message) {

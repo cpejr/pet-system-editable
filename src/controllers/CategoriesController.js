@@ -20,8 +20,8 @@ module.exports = {
       const categories = await CategoryModel.getAllCategories();
       return response.status(200).json(categories);
     } catch (error) {
-      if (err.message) {
-        return response.status(400).json({ notification: err.message });
+      if (error.message) {
+        return response.status(400).json({ notification: error.message });
       }
       return response.status(500).json({ notification: 'Internal Server Error' });
     }
@@ -39,8 +39,8 @@ module.exports = {
       const newCategory = await CategoryModel.createNewCategory(category);
       return response.status(200).json(newCategory);
     } catch (error) {
-      if (err.message) {
-        return response.status(400).json({ notification: err.message });
+      if (error.message) {
+        return response.status(400).json({ notification: error.message });
       }
       return response.status(500).json({ notification: 'Internal Server Error' });
     }
