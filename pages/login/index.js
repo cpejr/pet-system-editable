@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
 import Header from '../../src/components/Header';
 import {
   Body, Formulary, TopFormulary, ItemFormulary, BottomFormulary,
@@ -10,6 +11,8 @@ import {
   TitleLogin, SubtitleLogin, TextBox, Submit, ForgotPassword, CreateAccount, Divider,
 } from '../../src/components/FormComponents';
 import { useAuth } from '../../src/contexts/AuthContext';
+
+toast.configure();
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -35,6 +38,10 @@ const Login = () => {
     }
   }
 
+  const notify = () => {
+    toast('Teste');
+  };
+
   return (
     <>
       <Header />
@@ -58,7 +65,7 @@ const Login = () => {
             <ItemFormulary>
               <TextBox type="password" placeholder="Senha" onChange={handlePasswordChange} value={password} />
             </ItemFormulary>
-
+            
             <ItemFormulary>
               <Link href="/ForgetPass"> 
                 <ForgotPassword>Esqueceu a senha?</ForgotPassword>
@@ -78,7 +85,7 @@ const Login = () => {
           </Formulary>
         </Body.Right>
       </Body>
-
+      <button onClick={notify}>Notificar!</button>
     </>
   );
 };
