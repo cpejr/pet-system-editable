@@ -5,7 +5,7 @@ import MyLogOut from '../MyLogOut';
 
 const SubTitle = styled.div`
   display: flex;
-  align-items: initial;
+  align-items: center;
   margin-left: 8%;
   font-family: Quicksand;
   @media (max-width: 560px) {
@@ -24,29 +24,38 @@ const Section = styled.button`
   /* margin-right: 1%; */
   /* margin-left: 1%; */
   border: none;
-  background-color: ${({ theme, selected }) => (selected ? theme.colors.hoverBackground : theme.colors.background)};
-  border-radius: ${({ selected }) => (selected ? '5%' : null)};
+  background-color: transparent;
+  /* background-color: ${({ theme, selected }) => (selected ? theme.colors.hoverBackground : theme.colors.background)};
+  border-radius: ${({ selected }) => (selected ? '5%' : null)}; */
   cursor: pointer;
   font-family: Quicksand;
   outline: none;
-  /* border-right: 1px  solid #000; */
-  /* margin: 0 2%; */
+  border-right: 1px  solid #000;
+  margin-right: 1%;
+  padding-right: 1%;
+
 `;
 
-const StyledDiv = styled.div`
-  margin-left: 1%;
-  padding-right: 1%;
-  position: relative;
-  display: flex;
-  &:after {
-    content: "";
-    width: 1px;
-    height: 100%;
-    position: absolute;
-    right: 1%;
-    background-color: #000;
-  }
+const StyledSpan = styled.span`
+  padding: 3px 6px;
+  background-color: ${({ theme, selected }) => (selected ? theme.colors.hoverBackground : theme.colors.background)};
+  border-radius: ${({ selected }) => (selected ? '5%' : null)};
 `;
+
+// const StyledDiv = styled.div`
+//   margin-left: 1%;
+//   padding-right: 1%;
+//   position: relative;
+//   display: flex;
+//   &:after {
+//     content: "";
+//     width: 1px;
+//     height: 100%;
+//     position: absolute;
+//     right: 1%;
+//     background-color: #000;
+//   }
+// `;
 
 const menuItens = [
   {
@@ -74,11 +83,15 @@ export default function PerfilMenu({ selectedItem }) {
         {menuItens.map((item) => (
           <>
             <Link href={item.url}>
-              <StyledDiv>
-                <Section selected={item.text === selectedItem}>
+              {/* <StyledDiv> */}
+              <Section selected={item.text === selectedItem}>
+                <StyledSpan
+                  selected={item.text === selectedItem}
+                >
                   {item.text}
-                </Section>
-              </StyledDiv>
+                </StyledSpan>
+              </Section>
+              {/* </StyledDiv> */}
             </Link>
             {/* <VerticalBar /> */}
           </>
