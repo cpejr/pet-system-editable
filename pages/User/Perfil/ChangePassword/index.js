@@ -1,38 +1,10 @@
 import React from 'react';
-import styled from 'styled-components';
+import { ContainerChangePassword, OutterContainer } from './styles';
 import Header from '../../../../src/components/Header';
 import MyChangePassword from '../../../../src/components/MyChangePassword';
 import PerfilMenu from '../../../../src/components/PerfilMenu';
 import FooterMobile from '../../../../src/components/Mobile/FooterMobile';
-
-const Title = styled.h1`
-  display: flex;
-  align-items: initial;
-  margin-left: 5%;
-  margin-top: 2%;
-  margin-bottom: 1%;
-  font-family: Quicksand;
-  @media (max-width: 560px) {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 2%;
-  }
-`;
-
-const ContainerChangePassword = styled.div`
-display:flex;
-flex-direction: column;
-justify-content:space-around;
-align-content:center;
-`;
-
-const MyQuack = styled.div`
-display:flex;
-justify-content:center;
-align-content:center;
-margin-top:3%;
-`;
+import Title from '../../../../src/components/Title';
 
 export default function Perfil() {
   return (
@@ -40,9 +12,9 @@ export default function Perfil() {
       <Header />
       <Title>Meu Perfil</Title>
       <PerfilMenu selectedItem="Alterar Senha" />
-      <MyQuack>
+      <OutterContainer>
         <MyChangePassword />
-      </MyQuack>
+      </OutterContainer>
       <FooterMobile />
 
     </ContainerChangePassword>
