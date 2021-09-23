@@ -1,10 +1,8 @@
 import React from 'react';
 import { ContainerChangePassword, OutterContainer } from './styles';
-import Header from '../../../../src/components/Header';
-import MyChangePassword from '../../../../src/components/MyChangePassword';
-import PerfilMenu from '../../../../src/components/PerfilMenu';
-import FooterMobile from '../../../../src/components/Mobile/FooterMobile';
-import Title from '../../../../src/components/Title';
+import {
+  Title, FooterMobile, PerfilMenu, MyChangePassword, Header,
+} from '../../../../src/components';
 
 export default function Perfil() {
   return (

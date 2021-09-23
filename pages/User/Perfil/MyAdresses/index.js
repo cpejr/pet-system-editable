@@ -1,9 +1,7 @@
 import React from 'react';
-import Header from '../../../../src/components/Header';
-import MyAdresses from '../../../../src/components/MyAdresses';
-import PerfilMenu from '../../../../src/components/PerfilMenu';
-import Title from '../../../../src/components/Title';
-import FooterMobile from '../../../../src/components/Mobile/FooterMobile';
+import {
+  Header, MyAdresses, PerfilMenu, Title, FooterMobile,
+} from '../../../../src/components';
 
 export default function Perfil() {
   return (

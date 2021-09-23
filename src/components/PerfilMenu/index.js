@@ -21,12 +21,8 @@ const Section = styled.button`
   font-size: 16px;
   align-items: center;
   justify-content: center;
-  /* margin-right: 1%; */
-  /* margin-left: 1%; */
   border: none;
   background-color: transparent;
-  /* background-color: ${({ theme, selected }) => (selected ? theme.colors.hoverBackground : theme.colors.background)};
-  border-radius: ${({ selected }) => (selected ? '5%' : null)}; */
   cursor: pointer;
   font-family: Quicksand;
   outline: none;
@@ -41,21 +37,6 @@ const StyledSpan = styled.span`
   background-color: ${({ theme, selected }) => (selected ? theme.colors.hoverBackground : theme.colors.background)};
   border-radius: ${({ selected }) => (selected ? '5%' : null)};
 `;
-
-// const StyledDiv = styled.div`
-//   margin-left: 1%;
-//   padding-right: 1%;
-//   position: relative;
-//   display: flex;
-//   &:after {
-//     content: "";
-//     width: 1px;
-//     height: 100%;
-//     position: absolute;
-//     right: 1%;
-//     background-color: #000;
-//   }
-// `;
 
 const menuItens = [
   {
@@ -83,7 +64,6 @@ export default function PerfilMenu({ selectedItem }) {
         {menuItens.map((item) => (
           <>
             <Link href={item.url}>
-              {/* <StyledDiv> */}
               <Section selected={item.text === selectedItem}>
                 <StyledSpan
                   selected={item.text === selectedItem}
@@ -91,9 +71,7 @@ export default function PerfilMenu({ selectedItem }) {
                   {item.text}
                 </StyledSpan>
               </Section>
-              {/* </StyledDiv> */}
             </Link>
-            {/* <VerticalBar /> */}
           </>
         ))}
         <Section style={{ border: 'none' }}>
