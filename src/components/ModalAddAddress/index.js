@@ -1,38 +1,38 @@
 import React, { useState, useEffect } from 'react';
-import api from "../../utils/api";
+import api from '../../utils/api';
 import styled from 'styled-components';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import { notification } from 'antd';
 import { MdEdit } from 'react-icons/md';
-import { useRouter } from "next/router";
+import { useRouter } from 'next/router';
 
 import {
-  Button,
+  Button, Form, FormControl, FormLabel, FormGroup,
 } from 'react-bootstrap';
-import Link from "next/link";
-import { Form, FormControl, FormLabel, FormGroup } from "react-bootstrap";
+import Link from 'next/link';
+
 import {
   KeyboardDatePicker,
   MuiPickersUtilsProvider,
-} from "@material-ui/pickers";
-import "date-fns";
-import DateFnsUtils from "@date-io/date-fns";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "antd/dist/antd.css";
-import { Body } from "../../../src/components/BodyForms";
-import WindowDivider from "../../../src/components/WindowDivider";
+} from '@material-ui/pickers';
+import 'date-fns';
+import DateFnsUtils from '@date-io/date-fns';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'antd/dist/antd.css';
+import { Body } from '../BodyForms';
+import WindowDivider from '../WindowDivider';
 
 const AddressModal = styled.div`
-position: fixed;
-top: 0;
-bottom:0;
-right:0;
-left: 0;
-z-index: 99;
-@media(max-width:1190px){
-    flex-direction:column;
-    overflow:auto;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 99;
+  @media (max-width: 1190px) {
+    flex-direction: column;
+    overflow: auto;
   }
 `;
 
@@ -48,63 +48,63 @@ z-index: 99;
 // `;
 
 const DivInput = styled.div`
-display:flex;
-align-items:center;
-justify-content:center;
-width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 `;
 
 const TitleModal = styled.div`
-display:flex;
-align-items:center;
-justify-content:center;
-width:100%;
-font-family:Roboto;
-font-weight: bold;
-font-size:24px;
-margin-bottom:5%;
-@media(max-width:860px){
-        width:100%;
-        font-size:18px;
-    } 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  font-family: Roboto;
+  font-weight: bold;
+  font-size: 24px;
+  margin-bottom: 5%;
+  @media (max-width: 860px) {
+    width: 100%;
+    font-size: 18px;
+  }
 `;
 
 const Espaçamento = styled.div`
-display:flex;
-align-items:center;
-justify-content:center;
-width:100%;
-margin-bottom:1%;
-@media(max-width:860px){
-        flex-direction:column;
-    } 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 1%;
+  @media (max-width: 860px) {
+    flex-direction: column;
+  }
 `;
 
 Espaçamento.Col1 = styled.h3`
-display:flex;
-align-items:center;
-justify-content:center;
-width:30%;
-font-family:Roboto;
-@media(max-width:860px){
-        width:100%;
-        font-size:16px;
-    } 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30%;
+  font-family: Roboto;
+  @media (max-width: 860px) {
+    width: 100%;
+    font-size: 16px;
+  }
 `;
 
 const InputNameGroup = styled.input`
-display:flex;
-align-items:center;
-justify-content:center;
-width:40%;
-font-family:Roboto;
-height:40px;
-border-radius:10px;
-border-color:${({ theme }) => theme.colors.borderBoxColor};
-@media(max-width:860px){
-        width:100%;
-        font-size:12px;
-    } 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40%;
+  font-family: Roboto;
+  height: 40px;
+  border-radius: 10px;
+  border-color: ${({ theme }) => theme.colors.borderBoxColor};
+  @media (max-width: 860px) {
+    width: 100%;
+    font-size: 12px;
+  }
 `;
 
 const ButtonConfirm = styled.button`
@@ -133,25 +133,25 @@ cursor: pointer;
 `;
 
 const AddGroup = styled.button`
-  display:flex;
-    align-items:center;
-    justify-content:center;
-    font-family: Roboto;
-    font-size: 100%;
-    font-weight: 500;
-    background-color: ${({ theme }) => theme.colors.background};
-    color: ${({ theme }) => theme.colors.mediumGreen};
-    border: 0;
-    cursor:pointer;
-    outline:none;    
-    margin-top: 5%;
-    margin-bottom: 2%;
-    @media(max-width:1000px){
-      display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:14px;
-}
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: Roboto;
+  font-size: 100%;
+  font-weight: 500;
+  background-color: ${({ theme }) => theme.colors.background};
+  color: ${({ theme }) => theme.colors.mediumGreen};
+  border: 0;
+  cursor: pointer;
+  outline: none;
+  margin-top: 5%;
+  margin-bottom: 2%;
+  @media (max-width: 1000px) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+  }
 `;
 
 const WordFormGroup = styled(FormGroup)`
@@ -273,10 +273,10 @@ const ContainerDatas = styled.div`
 
 const ButtonAdd = styled(Button)`
 display:flex;
-height: 55px;
-width: 200px;
-font-family: Roboto;
-font-size: 18px;
+height: 70px;
+width: 250px;
+font-family: Quicksand;
+font-size: 25px;
 font-weight: 300;
 background-color: ${({ theme }) => theme.colors.darkGreen};
 color: white;
@@ -343,24 +343,22 @@ const useStyles = makeStyles((theme) => ({
     border: '2px solid #609694',
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
-
   },
-
 }));
 
 export default function ModalAddProducts() {
-    const classes = useStyles();
+  const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
-     const [modalStyle] = useState(getModalStyle);
-     const [open, setOpen] = useState(false);
-     const router = useRouter();
+  const [modalStyle] = useState(getModalStyle);
+  const [open, setOpen] = useState(false);
+  const router = useRouter();
 
   const handleOpen = () => {
     setOpen(true);
   };
   const handleState = () => {
-    handleClose()
-  }
+    handleClose();
+  };
   const handleClose = () => {
     setOpen(false);
   };
@@ -373,35 +371,33 @@ export default function ModalAddProducts() {
   const [state, setState] = useState('');
 
   async function handleSubmit() {
-
     const body = {
-        street: street,
-        number: number,
-        neighbourhood: neighbourhood,
-        city: city,
-        cep: cep,
-        state: state,
+      street,
+      number,
+      neighbourhood,
+      city,
+      cep,
+      state,
     };
 
     try {
-      api.post("/address/", body);
+      api.post('/address/', body);
       notification.open({
-        message: "Sucesso!",
-        description: "Endereço criado com sucesso.",
-        className: "ant-notification",
-        top: "100px",
+        message: 'Sucesso!',
+        description: 'Endereço criado com sucesso.',
+        className: 'ant-notification',
+        top: '100px',
         style: {
           width: 600,
         },
-      }
-      );
+      });
     } catch (error) {
       console.error(error);
       notification.open({
-        message: "Erro!",
-        description: "Erro ao criar endereço.",
-        className: "ant-notification",
-        top: "100px",
+        message: 'Erro!',
+        description: 'Erro ao criar endereço.',
+        className: 'ant-notification',
+        top: '100px',
         style: {
           width: 600,
         },
@@ -413,100 +409,104 @@ export default function ModalAddProducts() {
   const body = (
     <div style={modalStyle} className={classes.paper}>
       <AddressModal>
-      <Body>
-        <WindowDivider />
-        <Body.Right>
-          <Register>
-            <FormRegister>
-              <Subtitle>Formulário de endereço</Subtitle>
-              <Name>
-                <MyFormGroup>
-                  <FormLabel>Rua:</FormLabel>
-                  <FormControl
-                    type="text"
-                    placeholder="Rua"
-                    required
-                    value={street} onChange={(e) => setStreet(e.target.value)}
-                  />
-                </MyFormGroup>
-                <SobreFormGroup>
-                  <FormLabel>Numero:</FormLabel>
-                  <FormControl
-                    type="text"
-                    placeholder="Numero"
-                    required
-                    value={number} onChange={(e) => setNumber(e.target.value)}
-                  />
-                </SobreFormGroup>
-              </Name>
+        <Body>
+          <WindowDivider />
+          <Body.Right>
+            <Register>
+              <FormRegister>
+                <Subtitle>Formulário de endereço</Subtitle>
+                <Name>
+                  <MyFormGroup>
+                    <FormLabel>Rua:</FormLabel>
+                    <FormControl
+                      type="text"
+                      placeholder="Rua"
+                      required
+                      value={street}
+                      onChange={(e) => setStreet(e.target.value)}
+                    />
+                  </MyFormGroup>
+                  <SobreFormGroup>
+                    <FormLabel>Numero:</FormLabel>
+                    <FormControl
+                      type="text"
+                      placeholder="Numero"
+                      required
+                      value={number}
+                      onChange={(e) => setNumber(e.target.value)}
+                    />
+                  </SobreFormGroup>
+                </Name>
 
-              <MyFormGroup>
-                <FormLabel>Bairro:</FormLabel>
-                <FormControl
+                <MyFormGroup>
+                  <FormLabel>Bairro:</FormLabel>
+                  <FormControl
                     type="text"
                     placeholder="Bairro"
                     required
-                    value={neighbourhood} onChange={(e) => setNeighbourhood(e.target.value)}
-                  />
-              </MyFormGroup>
-              <Pass></Pass>
-              <NumbersForms>
-                <MyFormGroup>
-                  <FormLabel>Cidade</FormLabel>
-                  <FormControl
-                    type="text"
-                    placeholder="Cidade"
-                    required
-                    value={city} onChange={(e) => setCity(e.target.value)}
+                    value={neighbourhood}
+                    onChange={(e) => setNeighbourhood(e.target.value)}
                   />
                 </MyFormGroup>
-                <Phone>
-                  <DDD>
-                    <MyFormGroup>
-                      <FormLabel>Cep:</FormLabel>
-                      <DDDFormControl
-                        type="text"
-                        placeholder="Cep"
-                        required
-                        value={cep} onChange={(e) => setCep(e.target.value)}
-                      />
-                    </MyFormGroup>
-                  </DDD>
+                <Pass />
+                <NumbersForms>
                   <MyFormGroup>
-                    <FormLabel>Estado:</FormLabel>
-                    <PhoneFormControl
+                    <FormLabel>Cidade</FormLabel>
+                    <FormControl
                       type="text"
-                      placeholder="Estado"
+                      placeholder="Cidade"
                       required
-                      value={state} onChange={(e) => setState(e.target.value)}
+                      value={city}
+                      onChange={(e) => setCity(e.target.value)}
                     />
                   </MyFormGroup>
-                </Phone>
-              </NumbersForms>
-              <Buttons>
-                <Submit onClick={handleSubmit}>Adicionar</Submit>
+                  <Phone>
+                    <DDD>
+                      <MyFormGroup>
+                        <FormLabel>Cep:</FormLabel>
+                        <DDDFormControl
+                          type="text"
+                          placeholder="Cep"
+                          required
+                          value={cep}
+                          onChange={(e) => setCep(e.target.value)}
+                        />
+                      </MyFormGroup>
+                    </DDD>
+                    <MyFormGroup>
+                      <FormLabel>Estado:</FormLabel>
+                      <PhoneFormControl
+                        type="text"
+                        placeholder="Estado"
+                        required
+                        value={state}
+                        onChange={(e) => setState(e.target.value)}
+                      />
+                    </MyFormGroup>
+                  </Phone>
+                </NumbersForms>
+                <Buttons>
+                  <Submit onClick={handleSubmit}>Adicionar</Submit>
 
-                <br />
-                <FormGroup>
-                  <FormLabel align="center">
-                    <Link href="/User/Perfil/MyDatas" rel="MyDatas">
-                      <CancelSubmit>Cancelar</CancelSubmit>
-                    </Link>
-                  </FormLabel>
-                </FormGroup>
-              </Buttons>
-            </FormRegister>
-          </Register>
-        </Body.Right>
-      </Body>
+                  <br />
+                  <FormGroup>
+                    <FormLabel align="center">
+                      <Link href="/User/Perfil/MyDatas" rel="MyDatas">
+                        <CancelSubmit>Cancelar</CancelSubmit>
+                      </Link>
+                    </FormLabel>
+                  </FormGroup>
+                </Buttons>
+              </FormRegister>
+            </Register>
+          </Body.Right>
+        </Body>
       </AddressModal>
     </div>
   );
   return (
     <div>
-      <ButtonAdd onClick={handleOpen}>
-        Adicionar novo endereço
-      </ButtonAdd>
+      <ButtonAdd onClick={handleOpen}>Novo endereço</ButtonAdd>
       <Modal
         open={open}
         onClose={handleClose}

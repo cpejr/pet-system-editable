@@ -1,19 +1,18 @@
-import React, { useEffect,useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
 import ModalEditAddresses from '../ModalEditAddresses';
 import ModalAddAddress from '../ModalAddAddress';
-import styled from 'styled-components';
-import { MdEdit } from 'react-icons/md';
-import api from "../../utils/api";
-import { useAuth } from "../../contexts/AuthContext";
+import api from '../../utils/api';
+import { useAuth } from '../../contexts/AuthContext';
 
 const ContainerAdresses = styled.div`
 display:flex;
+flex-direction:column;
 font: 1rem Roboto;
 width:100%;
 align-items:center;
-flex-direction:column;
 justify-content:space-around;
-margin-top:2%;
+margin-top:0%;
 @media(max-width:1075px){
 flex-direction:column;
 }
@@ -23,14 +22,12 @@ const BoxAdress = styled.div`
 display:flex;
 flex-direction:column;
 width:30%;
-border-color:black;
-border-radius:5px;
-background-color: #A6DAD8;
+background-color: #609694;
 line-height:100%;
-border-style: solid;
 border-width:1px;
-margin-top:2%;
+margin-top:0%;
 margin-bottom:2%;
+padding: 1%;
 
 @media(max-width:1050px){
 display:flex;
@@ -46,6 +43,10 @@ margin-bottom:2%;
 
 const Espaçamento = styled.div`
 display:flex;
+justify-content:center;
+font-size: 1.5rem;
+color: white;
+font-family:Quicksand;
 width:100%;
 margin-top:1%;
 margin-bottom:1%;
@@ -57,7 +58,6 @@ margin-bottom:1%;
 Espaçamento.Col1 = styled.h3`
 display:flex;
 width:30%;
-font-family:Roboto;
 @media(max-width:860px){
         width:100%;
         font-size:16px;
@@ -93,6 +93,13 @@ const Icon = styled.div`
 width:10%;
 display:flex;
 justify-content:flex-end;
+align-items:center;
+`;
+
+const SomTeste = styled.div`
+display:flex;
+flex-direction: column;
+justify-content:center;
 align-items:center;
 `;
 
@@ -143,10 +150,10 @@ export default function MyAdresses() {
     );
   }
   const [addresses, setAddresses] = useState('');
-  
+
   async function loadAddresses() {
     try {
-      const response = await api.get('/addresses/' + user.firebase_id);
+      const response = await api.get(`/addresses/${user.firebase_id}`);
       setAddresses(response.data);
     } catch (error) {
       console.error(error); //eslint-disable-line
@@ -156,62 +163,52 @@ export default function MyAdresses() {
   useEffect(() => {
     loadAddresses();
   }, []);
-  if(addresses){
+  if (addresses) {
     return (
-      <ContainerAdresses>
-        {addresses.map((endereco) =>(
-          <BoxAdress>
-            <Espaçamento>
-              <Espaçamento.Col1>
-              Rua:
-              </Espaçamento.Col1>
-            {endereco.street},{endereco.number}
-            </Espaçamento>
-            <Espaçamento>
-              <Espaçamento.Col1>
-              Complemento:
-              </Espaçamento.Col1>
-              Apartamento 601 Apartamento ?
-            </Espaçamento>
-            <Espaçamento>
-              <Espaçamento.Col1>
-              Bairro Cidade Estado:
-              </Espaçamento.Col1>
-              <p>{endereco.neighbourhood}, {endereco.city} , {endereco.state}</p>
-            </Espaçamento>
-            <Espaçamento>
-              <Espaçamento.Col1>
-              Cep:
-              </Espaçamento.Col1>
-              <p>{endereco.cep}</p>
-            </Espaçamento>
-            <Espaçamento>
-              <Espaçamento.Col1>
-              Rua:
-              </Espaçamento.Col1>
-            {endereco.street},{endereco.number}
-            </Espaçamento>
-            <Espaçamento>
-              <Espaçamento.Col1>
-              Icone:
-              </Espaçamento.Col1>
-              <Icon>
-            <ModalEditAddresses address_id={endereco.address_id} />
-            </Icon>
-            </Espaçamento>
-        </BoxAdress>
-        ))}
-          <ModalAddAddress></ModalAddAddress>
-      </ContainerAdresses>
+      <SomTeste>
+        <ContainerAdresses>
+          {addresses.map((endereco) => (
+            <BoxAdress>
+              <Espaçamento>
+                {endereco.street}
+                ,
+                {' '}
+                {endereco.address_num}
+              </Espaçamento>
+              <Espaçamento>
+                {endereco.complement}
+              </Espaçamento>
+              <Espaçamento>
+                {endereco.district}
+                ,
+                {' '}
+                {endereco.city}
+                {' '}
+                ,
+                {' '}
+                {endereco.state}
+              </Espaçamento>
+              <Espaçamento>
+                <p>{endereco.zipcode}</p>
+              </Espaçamento>
+              <Espaçamento>
+                <Icon>
+                  <ModalEditAddresses address_id={endereco.address_id} />
+                </Icon>
+              </Espaçamento>
+            </BoxAdress>
+          ))}
+        </ContainerAdresses>
+        <ModalAddAddress />
+      </SomTeste>
     );
   }
-  else{
-    return (
-      <ContainerDatas>
-        <BoxDatas>
-          <p>Dados do usuário não encontrados</p>
-        </BoxDatas>
-      </ContainerDatas>
-    );
-  }
+
+  return (
+    <ContainerDatas>
+      <BoxDatas>
+        <p>Dados do usuário não encontrados</p>
+      </BoxDatas>
+    </ContainerDatas>
+  );
 }

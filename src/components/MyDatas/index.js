@@ -1,9 +1,9 @@
-import React from "react";
-import styled from "styled-components";
-import { MdEdit } from "react-icons/md";
-import { useAuth } from "../../contexts/AuthContext";
-import Link from "next/link";
-import Button from "@material-ui/core/Button";
+import React from 'react';
+import styled from 'styled-components';
+import { MdEdit } from 'react-icons/md';
+import Link from 'next/link';
+import Button from '@material-ui/core/Button';
+import { useAuth } from '../../contexts/AuthContext';
 
 const ContainerDatas = styled.div`
   display: flex;
@@ -39,22 +39,31 @@ const SectionText = styled.button`
 
 const BoxDatas = styled.div`
   display: flex;
-  font: 1.5rem Roboto;
   flex-direction: column;
-  width: 65%;
+  width: 30%;
   border-color: black;
-  align-items: left;
+  border-radius: 5px;
+  background-color: #609694;
   line-height: 100%;
   border-style: solid;
   border-width: 1px;
-  border-radius: 5px;
-  @media (max-width: 976px) {
+  margin-top: 2%;
+  margin-bottom: 2%;
+  padding: 1%;
+  color: white;
+  justify-content: center;
+  
+  font-size: 1.5rem;
+
+  @media (max-width: 1050px) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
-    margin-bottom: 2%;
   }
   @media (max-width: 560px) {
     width: 80%;
-    font-size: 87.5%;
+    margin-bottom: 2%;
   }
 `;
 const RowEdit = styled.div`
@@ -75,21 +84,49 @@ export default function MyDatas() {
   const { user } = useAuth();
 
   function dataNascimentoFormatada(bdate) {
-    var data = new Date(bdate),
-      dia = data.getDate().toString(),
-      diaF = dia.length == 1 ? "0" + dia : dia,
-      mes = (data.getMonth() + 1).toString(), //+1 pois no getMonth Janeiro começa com zero.
-      mesF = mes.length == 1 ? "0" + mes : mes,
-      anoF = data.getFullYear();
-    return diaF + "/" + mesF + "/" + anoF;
+    const data = new Date(bdate);
+    const dia = data.getDate().toString();
+    const diaF = dia.length == 1 ? `0${dia}` : dia;
+    const mes = (data.getMonth() + 1).toString(); // +1 pois no getMonth Janeiro começa com zero.
+    const mesF = mes.length == 1 ? `0${mes}` : mes;
+    const anoF = data.getFullYear();
+    return `${diaF}/${mesF}/${anoF}`;
   }
 
   if (user) {
     return (
       <ContainerDatas>
         <BoxDatas>
+          <p>
+            Nome:
+            {' '}
+            {user.name}
+          </p>
+          <p>
+            Email:
+            {' '}
+            {user.email}
+          </p>
+          <p>
+            CPF:
+            {' '}
+            {user.cpf}
+          </p>
+          <p>
+            Data de Nascimento:
+            {' '}
+            {dataNascimentoFormatada(user.birth_date)}
+          </p>
+          <p>
+            Telefone:
+            {' '}
+            {user.phone}
+          </p>
           <RowEdit>
-            <Link href="http://localhost:3000/User/Perfil/MyDatasEdit" rel="MyDatasEdit">
+            <Link
+              href="http://localhost:3000/User/Perfil/MyDatasEdit"
+              rel="MyDatasEdit"
+            >
               <Button>
                 <Icon>
                   <Section>
@@ -102,23 +139,15 @@ export default function MyDatas() {
               </Button>
             </Link>
           </RowEdit>
-          <p>
-            Nome: {user.name}
-          </p>
-          <p>Email: {user.email}</p>
-          <p>CPF: {user.cpf}</p>
-          <p>Data de Nascimento: {dataNascimentoFormatada(user.birth_date)}</p>
-          <p>Telefone: {user.phone}</p>
-        </BoxDatas>
-      </ContainerDatas>
-    );
-  } else {
-    return (
-      <ContainerDatas>
-        <BoxDatas>
-          <p>Dados do usuário não encontrados</p>
         </BoxDatas>
       </ContainerDatas>
     );
   }
+  return (
+    <ContainerDatas>
+      <BoxDatas>
+        <p>Dados do usuário não encontrados</p>
+      </BoxDatas>
+    </ContainerDatas>
+  );
 }
