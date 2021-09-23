@@ -90,29 +90,51 @@ display:none;
 }
 `;
 
+const SubmitImg = styled.button`
+border: none;
+border-radius: 10px;
+background-color: transparent;
+@media(max-width:700px){
+display:none;
+}
+`;
+
 export default function Search() {
   const [products, setProducts] = useState([]);
-  const [price, setPrice] = useState(0);
+  const [categories, setCategories] = useState([]);
+  const [price, setPrice] = useState(90);
+  const [categoria, setCategoria] = useState();
 
   useEffect(() => {
-    api.get('products').then((res) => {
+   
+    api.get('products', { params: { price: price, category_id: categoria } }).then((res) => {
       setProducts(res.data);
-      
     })
-    console.log(products);
-  }, []);
 
-  const handleClick = () => {
-    api.get('products', { params: { price: price } }).then((res) => {
-      setProducts(res.data);
+    api.get('category').then((res) => {
+      setCategories(res.data); 
     });
-  }
+  }, [categoria,price]);
 
   return (
     <div>
       <HeaderSearch />
       <SearchHeader />
       <ContainerCategory>
+        <ContainerCategory.Col>
+          <SubmitImg onClick={() => setCategoria()}>
+           <Image src="/images/petiscos.png" alt="" width="50" height="50" />
+              Limpar categoria
+          </SubmitImg>
+        </ContainerCategory.Col>
+         {categories.map((categoria) => (
+            <ContainerCategory.Col>
+            <SubmitImg onClick={() => setCategoria(categoria.category_id)}>
+              <Image src="/images/racaopote.png" alt="" width="50" height="50"/>
+              {categoria.name}
+            </SubmitImg>
+            </ContainerCategory.Col>
+          ))}
         <ContainerCategory.Col>
           <Image src="/images/racaopote.png" alt="" width="50" height="50"/>
           Ração
@@ -157,9 +179,8 @@ export default function Search() {
       <SearchContainer>
         <SearchContainer.Col1>
           <OrderSearch />
-          <Brands />
-          <Price setPrice={setPrice} />
-          <Submit onClick={handleClick}>Aplicar</Submit>
+          <Price setPrice={setPrice}/>
+          <Brands categories={categories} key={categories.category_id} />
         </SearchContainer.Col1>
         <SearchContainer.Col2>
           {products.map((p) => (

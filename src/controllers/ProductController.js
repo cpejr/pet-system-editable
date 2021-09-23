@@ -72,8 +72,8 @@ module.exports = {
   },
   async getAll(request, response) {
     try {
-      const filter = request.query;
-      const products = await ProductModel.getAllProducts(filter);
+      const { price, category_id } = request.query;
+      const products = await ProductModel.getAllProducts(price, category_id);
       return response.status(200).json(products);
     } catch (err) {
       if (err.message) {

@@ -185,7 +185,9 @@ justify-content:initial;
 width:80%;
 `;
 
-export default function Category() {
+export default function Category(props) {
+  const { categories } = props;
+
   const [checkedPedigree, setCheckedPedigree] = useState(false);
   const handleClickPedigree = () => setCheckedPedigree(!checkedPedigree);
 
@@ -212,6 +214,17 @@ export default function Category() {
       <Container>
         <Container.Title>Marcas</Container.Title>
         <CategoryContainer>
+
+          {categories.map((categoria) => (
+            <CategoryContainer.Row1>
+            <CategoryContainer.Row1.Col1>
+              <input onClick={handleClickPedigree} checked={checkedPedigree} type="radio" />
+            </CategoryContainer.Row1.Col1>
+            <CategoryContainer.Row1.Col2>
+              {categoria.name}
+            </CategoryContainer.Row1.Col2>
+          </CategoryContainer.Row1>
+          ))}
 
           <CategoryContainer.Row1>
             <CategoryContainer.Row1.Col1>
