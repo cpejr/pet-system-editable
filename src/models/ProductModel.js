@@ -47,30 +47,40 @@ module.exports = {
     }
   },
   async getAllProducts(valor, category_id) {
+    let minPrice = 0;
+    let maxPrice = 0;
     try {
-      const price = valor;
+      
+      if(valor!==undefined) {
+        minPrice = valor[0];
+        maxPrice = valor[1];
+      }else{
+        minPrice = 0;
+        maxPrice = 5000;
+      }
+
       if (category_id !== undefined) {
         const products = await connection("Product")
           .select("*")
           .where("category_id", category_id)
-          .where((builder) => {
-            if (price > 100) {
-              builder.where("price", ">", 100);
-            } else if (price) {
-              builder.where("price", "<=", price);
-            }
-          });
+          .where("price", ">=", minPrice)
+          .where("price", "<=", maxPrice);
+        
         return products;
       }
+
+      if(valor){
+        const products = await connection("Product")
+          .select("*")
+          .where("price", ">=", minPrice)
+          .where("price", "<=", maxPrice);
+        
+        return products;
+      }
+
       const products = await connection("Product")
-        .select("*")
-        .where((builder) => {
-          if (price > 100) {
-            builder.where("price", ">", 100);
-          } else if (price) {
-            builder.where("price", "<=", price);
-          }
-        });
+      .select("*");
+ 
       return products;
     } catch (error) {
       console.error(error);

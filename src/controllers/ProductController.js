@@ -1,6 +1,5 @@
 const { v4: uuidv4 } = require('uuid');
 const ProductModel = require('../models/ProductModel');
-const StoreModel = require('../models/StoreModel');
 const AwsModel = require('../models/AwsModel');
 
 module.exports = {
@@ -9,7 +8,6 @@ module.exports = {
     try {
       const product = await ProductModel.getProductById(id);
       const readImage = await AwsModel.getAWS(product.img);
-      // readImage.pipe(response);
       product.img = readImage;
       const stringfedProduct = JSON.stringify(product);
       return response.status(200).send(stringfedProduct);
@@ -30,7 +28,7 @@ module.exports = {
       const image_id = await AwsModel.uploadAWS(file.img);
       product.img = image_id.key;
       // eslint-disable-next-line prefer-destructuring
-      const firebase_id_store = request.session.get('store').store.firebase_id_store; // ver se a sintaxe está correta
+      const firebase_id_store = request.session.get('store').store.firebase_id_store;
       product.firebase_id_store = firebase_id_store;
 
       await ProductModel.createNewProduct(product);
@@ -72,7 +70,9 @@ module.exports = {
   },
   async getAll(request, response) {
     try {
-      const { price, category_id } = request.query;
+      const { category_id } = request.query;
+      const price = request.query["price[]"];
+      
       const products = await ProductModel.getAllProducts(price, category_id);
       return response.status(200).json(products);
     } catch (err) {

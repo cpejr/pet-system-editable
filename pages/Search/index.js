@@ -1,185 +1,155 @@
-import React, { useEffect, useState } from 'react';
-import api from "../../src/utils/api"
-import styled from 'styled-components';
-import Image from 'next/image';
-import HeaderSearch from '../../src/components/HeaderSearch';
-import OrderSearch from '../../src/components/Filter/OrderSearch';
-import Brands from '../../src/components/Filter/Brands';
-import Price from '../../src/components/Filter/Price';
-import SearchCards from '../../src/components/SearchCards';
-import FooterMobile from '../../src/components/Mobile/FooterMobile';
-import SearchHeader from '../../src/components/Mobile/SearchHeader';
+import React, { useEffect, useState } from "react";
+import api from "../../src/utils/api";
+import styled from "styled-components";
+import Image from "next/image";
+import HeaderSearch from "../../src/components/HeaderSearch";
+import OrderSearch from "../../src/components/Filter/OrderSearch";
+import Brands from "../../src/components/Filter/Brands";
+import Price from "../../src/components/Filter/Price";
+import SearchCards from "../../src/components/SearchCards";
+import FooterMobile from "../../src/components/Mobile/FooterMobile";
+import SearchHeader from "../../src/components/Mobile/SearchHeader";
 
 const ContainerCategory = styled.div`
-display:flex;
-align-items:center;
-justify-content:center;
-width:100%;
-flex-direction:row;
-font-family:Roboto;
-@media(max-width:700px){
-display:none;
-}
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  flex-direction: row;
+  font-family: Roboto;
+  @media (max-width: 700px) {
+    display: none;
+  }
 `;
 
 ContainerCategory.Col = styled.div`
-display:flex;
-align-items:center;
-justify-content:center;
-flex-direction:column;
-width:8%;
-margin: 0 1% 0 1%;
-cursor: pointer;
-border-radius: 10px;
-&:hover {
-  box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.2);
-}
+  flex-direction: column;
+  margin: 0 1% 0 1%;
 `;
 
+ContainerCategory.submitImg = styled.button`
+  border: none;
+  flex-direction: column;
+  padding: 10%;
+  border-radius: 10px;
+  margin: 0% 1% 0% 0%;
+  background-color: transparent;
+  cursor: pointer;
+  &:hover {
+    box-shadow: 0 16px 40px 0px rgba(112, 144, 176, 0.2);
+    transform: scale(1.02);
+  }
+  @media (max-width: 700px) {
+    display: none;
+  }
+`;
 
+ContainerCategory.CategoryName = styled.div`
+  display: flex;
+  justify-content: center;
+`;
 
 const SearchContainer = styled.div`
-display:flex;
-align-items:flex-start;
-justify-content:center;
-width:100%;
-flex-direction:row;
-margin-top:2%;
-margin-bottom:2%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
+  flex-direction: row;
+  margin-top: 2%;
+  margin-bottom: 2%;
 `;
 
 SearchContainer.Col1 = styled.div`
-display:flex;
-align-items:center;
-justify-content:center;
-width:25%;
-min-width: 300px;
-flex-direction:column;
-@media(max-width:880px){
-width:40%;
-}
-@media(max-width:560px){
-display:none;
-}
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 25%;
+  min-width: 300px;
+  flex-direction: column;
+  @media (max-width: 880px) {
+    width: 40%;
+  }
+  @media (max-width: 560px) {
+    display: none;
+  }
 `;
 SearchContainer.Col2 = styled.div`
-display: grid;
-grid-template-columns: 1fr 1fr 1fr;
-align-items:center;
-justify-content:center;
-width:75%;
-flex-direction:column;
-@media(max-width:560px){
-width:100%;
-}
-`;
-const Submit = styled.button`
-height: 40px;
-width: 50%;
-font-family: Roboto;
-font-size: 100%;
-font-weight: 500;
-background-color: ${({ theme }) => theme.colors.mediumGreen};
-color: white;
-border: 0;
-border-radius: 5px;
-cursor:pointer;
-outline:none;
-@media(max-width:560px){
-display:none;
-}
-`;
-
-const SubmitImg = styled.button`
-border: none;
-border-radius: 10px;
-background-color: transparent;
-@media(max-width:700px){
-display:none;
-}
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  justify-content: center;
+  width: 75%;
+  flex-direction: column;
+  @media (max-width: 560px) {
+    width: 100%;
+  }
 `;
 
 export default function Search() {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [price, setPrice] = useState(90);
+  const [price, setPrice] = useState([0, 5000]);
   const [categoria, setCategoria] = useState();
 
-  useEffect(() => {
-   
-    api.get('products', { params: { price: price, category_id: categoria } }).then((res) => {
-      setProducts(res.data);
-    })
+  const defineBackgroundColor = (category_id) => {
+    return categoria === category_id
+      ? { backgroundColor: "#A6DAD8" }
+      : { backgroundColor: "#F8F8F8" };
+  };
 
-    api.get('category').then((res) => {
-      setCategories(res.data); 
+  const myLoader = ({ src }) => {
+    return `https://s3-sa-east-1.amazonaws.com/petsystembucket/${src}`;
+  };
+
+  useEffect(() => {
+    api.get("category").then((res) => {
+      setCategories(res.data);
     });
-  }, [categoria,price]);
+
+    api
+      .get("products", { params: { price: price, category_id: categoria } })
+      .then((res) => {
+        setProducts(res.data);
+      });
+  }, [categoria, price]);
 
   return (
     <div>
       <HeaderSearch />
       <SearchHeader />
       <ContainerCategory>
+        {categories.map((categoria) => (
+          <ContainerCategory.Col>
+            <ContainerCategory.submitImg
+              style={defineBackgroundColor(categoria.category_id)}
+              onClick={() => setCategoria(categoria.category_id)}
+            >
+              <Image
+                loader={myLoader}
+                src={categoria.img}
+                alt=""
+                width="50"
+                height="50"
+              />
+              <ContainerCategory.CategoryName>
+                {categoria.name}
+              </ContainerCategory.CategoryName>
+            </ContainerCategory.submitImg>
+          </ContainerCategory.Col>
+        ))}
         <ContainerCategory.Col>
-          <SubmitImg onClick={() => setCategoria()}>
-           <Image src="/images/petiscos.png" alt="" width="50" height="50" />
+          <ContainerCategory.submitImg onClick={() => setCategoria()}>
+            <Image src="/images/Xvermelho.png" alt="" width="50" height="50" />
+            <ContainerCategory.CategoryName>
               Limpar categoria
-          </SubmitImg>
-        </ContainerCategory.Col>
-         {categories.map((categoria) => (
-            <ContainerCategory.Col>
-            <SubmitImg onClick={() => setCategoria(categoria.category_id)}>
-              <Image src="/images/racaopote.png" alt="" width="50" height="50"/>
-              {categoria.name}
-            </SubmitImg>
-            </ContainerCategory.Col>
-          ))}
-        <ContainerCategory.Col>
-          <Image src="/images/racaopote.png" alt="" width="50" height="50"/>
-          Ração
-        </ContainerCategory.Col>
-        <ContainerCategory.Col>
-          <Image src="/images/brinquedos.png" alt="" width="50" height="50" />
-          Brinquedos
-        </ContainerCategory.Col>
-        <ContainerCategory.Col>
-          <Image src="/images/vasilhas.png" alt="" width="50" height="50" />
-          Vasilhas
-        </ContainerCategory.Col>
-        <ContainerCategory.Col>
-          <Image src="/images/casinhas.png" alt="" width="50" height="50" />
-          Casinhas
-        </ContainerCategory.Col>
-        <ContainerCategory.Col>
-          <Image src="/images/petiscos.png" alt="" width="50" height="50" />
-          Petiscos
-        </ContainerCategory.Col>
-        <ContainerCategory.Col>
-          <Image src="/images/shampoo.png" alt="" width="50" height="50" />
-          Shampoo
-        </ContainerCategory.Col>
-        <ContainerCategory.Col>
-          <Image src="/images/perfumes.png" alt="" width="50" height="50" />
-          Perfumes
-        </ContainerCategory.Col>
-        <ContainerCategory.Col>
-          <Image src="/images/banho.png" alt="" width="50" height="50" />
-          Banho
-        </ContainerCategory.Col>
-        <ContainerCategory.Col>
-          <Image src="/images/tosa.png" alt="" width="50" height="50" />
-          Tosa
-        </ContainerCategory.Col>
-        <ContainerCategory.Col>
-          <Image src="/images/outrosservicos.png" alt="" width="50" height="50" />
-          Serviços
+            </ContainerCategory.CategoryName>
+          </ContainerCategory.submitImg>
         </ContainerCategory.Col>
       </ContainerCategory>
       <SearchContainer>
         <SearchContainer.Col1>
           <OrderSearch />
-          <Price setPrice={setPrice}/>
+          <Price setPrice={setPrice} />
           <Brands categories={categories} key={categories.category_id} />
         </SearchContainer.Col1>
         <SearchContainer.Col2>
