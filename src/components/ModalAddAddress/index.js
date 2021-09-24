@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import { notification } from 'antd';
 import { useRouter } from 'next/router';
@@ -7,7 +6,6 @@ import { useRouter } from 'next/router';
 import {
   FormControl, FormLabel,
 } from 'react-bootstrap';
-import Link from 'next/link';
 import Title from '../Title';
 import api from '../../utils/api';
 
@@ -17,44 +15,11 @@ import 'antd/dist/antd.css';
 
 import WindowDivider from '../WindowDivider';
 import {
-  AddressModal, ButtonAdd, Buttons, CancelSubmit, DDD, DDDFormControl,
-  FormRegister, MyFormGroup, Name, NumbersForms, Pass, Phone,
-  PhoneFormControl, Register, SobreFormGroup, Submit, Subtitle, Body,
+  AddressModal, ButtonAdd, Buttons, CancelSubmit,
+  FormRegister, MyFormGroup, Name, Register, SobreFormGroup, Submit, Body,
 } from './styles';
 
-function getModalStyle() {
-  const top = 50;
-  const left = 50;
-
-  return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`,
-  };
-}
-
-const useStyles = makeStyles((theme) => ({
-  modal: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  paper: {
-    display: 'flex',
-    position: 'absolute',
-    width: '439px',
-    height: 'fit-content',
-    backgroundColor: theme.palette.background.paper,
-    border: '2px solid #609694',
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-  },
-}));
-
 export default function ModalAddProducts() {
-  const classes = useStyles();
-  // getModalStyle is not a pure function, we roll the style only on the first render
-  const [modalStyle] = useState(getModalStyle);
   const [open, setOpen] = useState(false);
   const router = useRouter();
 
@@ -67,20 +32,22 @@ export default function ModalAddProducts() {
   };
 
   const [street, setStreet] = useState('');
-  const [number, setNumber] = useState('');
-  const [neighbourhood, setNeighbourhood] = useState('');
+  const [address_num, setNumber] = useState('');
+  const [district, setDistrict] = useState('');
   const [city, setCity] = useState('');
-  const [cep, setCep] = useState('');
+  const [zipcode, setZipcode] = useState('');
   const [state, setState] = useState('');
+  const [complement, setComplement] = useState('');
 
   async function handleSubmit() {
     const body = {
       street,
-      number,
-      neighbourhood,
+      address_num,
+      district,
       city,
-      cep,
+      zipcode,
       state,
+      complement,
     };
 
     try {
@@ -114,7 +81,7 @@ export default function ModalAddProducts() {
         <WindowDivider />
         <Register>
           <FormRegister>
-            <Title>Formulário de endereço</Title>
+            <Title>Cadastrar endereço</Title>
             <Name>
               <MyFormGroup>
                 <FormLabel>Rua:</FormLabel>
@@ -132,7 +99,7 @@ export default function ModalAddProducts() {
                   type="text"
                   placeholder="Numero"
                   required
-                  value={number}
+                  value={address_num}
                   onChange={(e) => setNumber(e.target.value)}
                 />
               </SobreFormGroup>
@@ -144,8 +111,8 @@ export default function ModalAddProducts() {
                   type="text"
                   placeholder="Bairro"
                   required
-                  value={neighbourhood}
-                  onChange={(e) => setNeighbourhood(e.target.value)}
+                  value={district}
+                  onChange={(e) => setDistrict(e.target.value)}
                 />
               </MyFormGroup>
               <SobreFormGroup>
@@ -154,8 +121,8 @@ export default function ModalAddProducts() {
                   type="text"
                   placeholder="Cep"
                   required
-                  value={cep}
-                  onChange={(e) => setCep(e.target.value)}
+                  value={zipcode}
+                  onChange={(e) => setZipcode(e.target.value)}
                 />
               </SobreFormGroup>
             </Name>
@@ -181,6 +148,16 @@ export default function ModalAddProducts() {
                 />
               </SobreFormGroup>
             </Name>
+            <MyFormGroup>
+              <FormLabel>Complemento</FormLabel>
+              <FormControl
+                type="text"
+                placeholder="Complement"
+                required
+                value={complement}
+                onChange={(e) => setComplement(e.target.value)}
+              />
+            </MyFormGroup>
             <Buttons>
               <CancelSubmit onClick={handleClose}>Cancelar</CancelSubmit>
               <Submit onClick={handleSubmit}>Adicionar</Submit>

@@ -4,54 +4,19 @@ import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import { notification } from 'antd';
 import { MdEdit } from 'react-icons/md';
+import {
+  FormControl, FormLabel,
+} from 'react-bootstrap';
+import Button from '@material-ui/core/Button';
 import { useRouter } from 'next/router';
+import WindowDivider from '../WindowDivider';
 import api from '../../utils/api';
-
-const AddressModal = styled.div`
-position: fixed;
-top: 0;
-bottom:0;
-right:0;
-left: 0;
-z-index: 99;
-@media(max-width:1190px){
-    flex-direction:column;
-    overflow:auto;
-  }
-`;
-
-// AddProductsContainer.Col1 = styled.div`
-// display:flex;
-// align-items:center;
-// justify-content:center;
-// width:70%;
-// flex-direction:column;
-// @media(max-width:1190px){
-//   width:100%;
-// }
-// `;
-
-const DivInput = styled.div`
-display:flex;
-align-items:center;
-justify-content:center;
-width: 100%;
-`;
-
-const TitleModal = styled.div`
-display:flex;
-align-items:center;
-justify-content:center;
-width:100%;
-font-family:Roboto;
-font-weight: bold;
-font-size:24px;
-margin-bottom:5%;
-@media(max-width:860px){
-        width:100%;
-        font-size:18px;
-    } 
-`;
+import Title from '../Title';
+import {
+  AddressModal, ButtonAdd, Buttons, CancelSubmit, DDD, DDDFormControl,
+  FormRegister, MyFormGroup, Name, NumbersForms, Pass, Phone,
+  PhoneFormControl, Register, SobreFormGroup, Submit, Subtitle, Body,
+} from './styles';
 
 const Espaçamento = styled.div`
 display:flex;
@@ -69,7 +34,7 @@ display:flex;
 align-items:center;
 justify-content:center;
 width:30%;
-font-family:Roboto;
+font-family:Quicksand;
 @media(max-width:860px){
         width:100%;
         font-size:16px;
@@ -158,7 +123,7 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     position: 'absolute',
     width: '65vw',
-    height: '60%',
+    height: '70%',
     backgroundColor: theme.palette.background.paper,
     border: '2px solid #609694',
     boxShadow: theme.shadows[5],
@@ -258,81 +223,100 @@ export default function ModalEditAddresses(addressId) {
   }, []);
 
   const body = (
-    <div style={modalStyle} className={classes.paper}>
-      <AddressModal>
-        <DivInput>
-          <TitleModal>Edite um endereço</TitleModal>
-        </DivInput>
-        <DivInput>
-          <Espaçamento>
-            <Espaçamento.Col1>
-              Rua:
-            </Espaçamento.Col1>
-            <InputNameGroup placeholder="" value={street} onChange={(e) => setStreet(e.target.value)} />
-          </Espaçamento>
-        </DivInput>
-        <DivInput>
-          <Espaçamento>
-            <Espaçamento.Col1>
-              Numero:
-            </Espaçamento.Col1>
-            <InputNameGroup placeholder="" value={address_num} onChange={(e) => setNumber(e.target.value)} />
-          </Espaçamento>
-        </DivInput>
-        <DivInput>
-          <Espaçamento>
-            <Espaçamento.Col1>
-              Bairro:
-            </Espaçamento.Col1>
-            <InputNameGroup placeholder="" value={district} onChange={(e) => setDistrict(e.target.value)} />
-          </Espaçamento>
-        </DivInput>
-        <DivInput>
-          <Espaçamento>
-            <Espaçamento.Col1>
-              Cidade
-            </Espaçamento.Col1>
-            <InputNameGroup placeholder="" value={city} onChange={(e) => setCity(e.target.value)} />
-          </Espaçamento>
-        </DivInput>
-        <DivInput>
-          <Espaçamento>
-            <Espaçamento.Col1>
-              cep:
-            </Espaçamento.Col1>
-            <InputNameGroup placeholder="" value={zipcode} onChange={(e) => setZipcode(e.target.value)} />
-          </Espaçamento>
-        </DivInput>
-        <DivInput>
-          <Espaçamento>
-            <Espaçamento.Col1>
-              Estado:
-            </Espaçamento.Col1>
-            <InputNameGroup placeholder="" value={state} onChange={(e) => setState(e.target.value)} />
-          </Espaçamento>
-          <Espaçamento>
-            <Espaçamento.Col1>
-              Complemento:
-            </Espaçamento.Col1>
-            <InputNameGroup placeholder="" value={complement} onChange={(e) => setComplement(e.target.value)} />
-          </Espaçamento>
-        </DivInput>
-        <DivInput>
-          <ButtonConfirm onClick={
-            handleSubmit
-          }
-          >
-            Confirmar edição
-          </ButtonConfirm>
-        </DivInput>
-      </AddressModal>
-    </div>
+    <AddressModal>
+      <Body>
+        <WindowDivider />
+        <Register>
+          <FormRegister>
+            <Title>Formulário de endereço</Title>
+            <Name>
+              <MyFormGroup>
+                <FormLabel>Rua:</FormLabel>
+                <FormControl
+                  type="text"
+                  placeholder="Rua"
+                  required
+                  value={street}
+                  onChange={(e) => setStreet(e.target.value)}
+                />
+              </MyFormGroup>
+              <SobreFormGroup>
+                <FormLabel>Numero:</FormLabel>
+                <FormControl
+                  type="text"
+                  placeholder="Numero"
+                  required
+                  value={address_num}
+                  onChange={(e) => setNumber(e.target.value)}
+                />
+              </SobreFormGroup>
+            </Name>
+            <Name>
+              <MyFormGroup>
+                <FormLabel>Bairro:</FormLabel>
+                <FormControl
+                  type="text"
+                  placeholder="Bairro"
+                  required
+                  value={district}
+                  onChange={(e) => setNeighbourhood(e.target.value)}
+                />
+              </MyFormGroup>
+              <SobreFormGroup>
+                <FormLabel>Cep:</FormLabel>
+                <FormControl
+                  type="text"
+                  placeholder="Cep"
+                  required
+                  value={zipcode}
+                  onChange={(e) => setCep(e.target.value)}
+                />
+              </SobreFormGroup>
+            </Name>
+            <Name>
+              <MyFormGroup>
+                <FormLabel>Cidade</FormLabel>
+                <FormControl
+                  type="text"
+                  placeholder="Cidade"
+                  required
+                  value={city}
+                  onChange={(e) => setCity(e.target.value)}
+                />
+              </MyFormGroup>
+              <SobreFormGroup>
+                <FormLabel>Estado:</FormLabel>
+                <FormControl
+                  type="text"
+                  placeholder="Estado"
+                  required
+                  value={state}
+                  onChange={(e) => setState(e.target.value)}
+                />
+              </SobreFormGroup>
+            </Name>
+            <MyFormGroup>
+              <FormLabel>Cidade</FormLabel>
+              <FormControl
+                type="text"
+                placeholder="Complemento"
+                required
+                value={complement}
+                onChange={(e) => setCity(e.target.value)}
+              />
+            </MyFormGroup>
+            <Buttons>
+              <CancelSubmit onClick={handleClose}>Cancelar</CancelSubmit>
+              <Submit onClick={handleSubmit}>Adicionar</Submit>
+            </Buttons>
+          </FormRegister>
+        </Register>
+      </Body>
+    </AddressModal>
   );
   return (
     <div>
-      <AddGroup onClick={handleOpen}>
-        <MdEdit />
-      </AddGroup>
+      <Button onClick={handleOpen} variant="contained">Editar</Button>
       <Modal
         open={open}
         onClose={handleClose}

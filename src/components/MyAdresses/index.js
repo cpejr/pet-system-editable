@@ -64,39 +64,7 @@ width:30%;
     } 
 `;
 
-const ButtonConfirm = styled.button`
-display:flex;
-height: 55px;
-width: 200px;
-font-family: Roboto;
-font-size: 18px;
-font-weight: 300;
-background-color: ${({ theme }) => theme.colors.darkGreen};
-color: white;
-border: 0;
-border-radius: 5px;
-align-items: center;
-text-align: center;
-margin-top:2%;
-margin-botton:2%;
-transform: translate(0%,-50%);
-justify-content: center;
-text-align: center;
-cursor: pointer;
-    }
-    @media(max-width:860px){
-        width:150px;
-    } 
-`;
-
-const Icon = styled.div`
-width:10%;
-display:flex;
-justify-content:flex-end;
-align-items:center;
-`;
-
-const SomTeste = styled.div`
+const Geral = styled.div`
 display:flex;
 flex-direction: column;
 justify-content:center;
@@ -165,7 +133,7 @@ export default function MyAdresses() {
   }, []);
   if (addresses) {
     return (
-      <SomTeste>
+      <Geral>
         <ContainerAdresses>
           {addresses.map((endereco) => (
             <BoxAdress>
@@ -192,15 +160,13 @@ export default function MyAdresses() {
                 <p>{endereco.zipcode}</p>
               </Espaçamento>
               <Espaçamento>
-                <Icon>
-                  <ModalEditAddresses address_id={endereco.address_id} />
-                </Icon>
+                <ModalEditAddresses address_id={endereco.address_id} />
               </Espaçamento>
             </BoxAdress>
           ))}
         </ContainerAdresses>
         <ModalAddAddress />
-      </SomTeste>
+      </Geral>
     );
   }
 
