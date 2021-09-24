@@ -12,6 +12,7 @@ const ContainerDatas = styled.div`
   flex-direction: row;
   justify-content: center;
   margin-top: 2%;
+  padding-bottom: 5%;
   @media (max-width: 560px) {
     flex-direction: column;
   }
