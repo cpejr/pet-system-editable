@@ -169,11 +169,10 @@ export default function MyDatasEdit() {
     );
   }
   
-  const [firstName, setfirstName] = useState(user.first_name);
-  const [lastName, setLastName] = useState(user.last_name);
+  const [name, setName] = useState(user.name);
   const [cpf, setCpf] = useState(user.cpf);
-  const [ddd, setDdd] = useState(user.telephone.substring(0, 2));
-  const [telephone, setTelephone] = useState(user.telephone.substring(2));
+  const [ddd, setDdd] = useState(user.phone.substring(0, 2));
+  const [phone, setPhone] = useState(user.phone.substring(2));
   const [date, setDate] = useState(user.birth_date);
   const router = useRouter();
 
@@ -183,7 +182,7 @@ export default function MyDatasEdit() {
       alert("CPF inválido");
       return;
     }
-    if (telephone?.length !== 9) {
+    if (phone?.length !== 9) {
       alert("Número inválido");
       return;
     }
@@ -192,11 +191,10 @@ export default function MyDatasEdit() {
       return;
     }
     const body = {
-      first_name: firstName,
-      last_name: lastName,
+      name: name,
       birth_date: date,
       cpf: cpf,
-      telephone: ddd + telephone,
+      phone: ddd + phone,
     };
     try {
       api.put("/user/" + user.firebase_id, body).then((response) => {
@@ -243,20 +241,10 @@ export default function MyDatasEdit() {
                     type="text"
                     placeholder="Nome"
                     required
-                    value={firstName}
-                    onChange={(e) => setfirstName(e.target.value)}
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                   />
                 </MyFormGroup>
-                <SobreFormGroup>
-                  <FormLabel>Sobrenome</FormLabel>
-                  <FormControl
-                    type="text"
-                    placeholder="Sobrenome"
-                    required
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
-                  />
-                </SobreFormGroup>
               </Name>
 
               <MyFormGroup>
@@ -307,8 +295,8 @@ export default function MyDatasEdit() {
                       placeholder="00000-0000"
                       pattern="[0-9]$"
                       required
-                      value={telephone}
-                      onChange={(e) => setTelephone(e.target.value)}
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
                     />
                   </MyFormGroup>
                 </Phone>

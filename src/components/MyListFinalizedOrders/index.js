@@ -11,7 +11,7 @@ const FullRequest = styled.div`
   justify-content: center;
   width: 100%;
   flex-direction: row;
-  c
+  padding-bottom: 5%;
 `;
 
 FullRequest.Col1 = styled.div`

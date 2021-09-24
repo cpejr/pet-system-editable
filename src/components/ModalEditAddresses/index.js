@@ -187,21 +187,22 @@ export default function ModalEditAddresses(addressId) {
   };
 
   async function handleSubmit() {
-    if (cep?.length !== 8) {
-      alert('CEP inválido');
-      return;
-    }
-    if (number?.length !== 3) {
-      alert('Número inválido');
-      return;
-    }
+    if (zipcode?.length !== 8) {
+        alert("CEP inválido");
+        return;
+      }
+      if (address_num?.length > 4 || address_num?.length <= 0) {
+        alert("Número inválido");
+        return;
+      }
     const body = {
-      address_id: addressId.address_id,
-      street,
-      number,
-      neighbourhood,
-      city,
-      state,
+        address_id: addressId.address_id,
+        street: street,
+        address_num: address_num,
+        district: district,
+        city: city,
+        zipcode: zipcode,
+        state: state,
     };
     try {
       api.put('/address/', body);
@@ -230,21 +231,23 @@ export default function ModalEditAddresses(addressId) {
   }
 
   const [street, setStreet] = useState();
-  const [number, setNumber] = useState();
-  const [neighbourhood, setNeighbourhood] = useState();
+  const [address_num, setNumber] = useState();
+  const [district, setDistrict] = useState();
   const [city, setCity] = useState();
-  const [cep, setCep] = useState();
+  const [zipcode, setZipcode] = useState();
   const [state, setState] = useState();
+  const [complement, setComplement] = useState();
 
   async function loadAddress() {
     try {
       const response = await api.get(`/address/${addressId.address_id}`);
       setStreet(response.data.street);
-      setNumber(response.data.number);
-      setNeighbourhood(response.data.neighbourhood);
+      setNumber(response.data.address_num);
+      setDistrict(response.data.district);
       setCity(response.data.city);
-      setCep(response.data.cep);
+      setZipcode(response.data.zipcode);
       setState(response.data.state);
+      setComplement(response.data.complement);
     } catch (error) {
       console.error(error); //eslint-disable-line
     }
@@ -256,59 +259,66 @@ export default function ModalEditAddresses(addressId) {
 
   const body = (
     <div style={modalStyle} className={classes.paper}>
-      <DivInput>
-        <TitleModal>Edite um endereço</TitleModal>
-      </DivInput>
-      <DivInput>
-        <Espaçamento>
-          <Espaçamento.Col1>
-            Rua:
-          </Espaçamento.Col1>
-          <InputNameGroup placeholder="" value={street} onChange={(e) => setStreet(e.target.value)} />
-        </Espaçamento>
-      </DivInput>
-      <DivInput>
-        <Espaçamento>
-          <Espaçamento.Col1>
-            Numero:
-          </Espaçamento.Col1>
-          <InputNameGroup placeholder="" value={number} onChange={(e) => setNumber(e.target.value)} />
-        </Espaçamento>
-      </DivInput>
-      <DivInput>
-        <Espaçamento>
-          <Espaçamento.Col1>
-            Bairro:
-          </Espaçamento.Col1>
-          <InputNameGroup placeholder="" value={neighbourhood} onChange={(e) => setNeighbourhood(e.target.value)} />
-        </Espaçamento>
-      </DivInput>
-      <DivInput>
-        <Espaçamento>
-          <Espaçamento.Col1>
-            Cidade
-          </Espaçamento.Col1>
-          <InputNameGroup placeholder="" value={city} onChange={(e) => setCity(e.target.value)} />
-        </Espaçamento>
-      </DivInput>
-      <DivInput>
-        <Espaçamento>
-          <Espaçamento.Col1>
-            Cep:
-          </Espaçamento.Col1>
-          <InputNameGroup placeholder="" value={cep} onChange={(e) => setCep(e.target.value)} />
-        </Espaçamento>
-      </DivInput>
-      <DivInput>
-        <Espaçamento>
-          <Espaçamento.Col1>
-            Estado:
-          </Espaçamento.Col1>
-          <InputNameGroup placeholder="" value={state} onChange={(e) => setState(e.target.value)} />
-        </Espaçamento>
-      </DivInput>
-      <DivInput>
-        <ButtonConfirm onClick={
+      <AddressModal>
+        <DivInput>
+          <TitleModal>Edite um endereço</TitleModal>
+        </DivInput>
+        <DivInput>
+          <Espaçamento>
+            <Espaçamento.Col1>
+              Rua:
+            </Espaçamento.Col1>
+            <InputNameGroup placeholder="" value={street} onChange={(e) => setStreet(e.target.value)} />
+          </Espaçamento>
+        </DivInput>
+        <DivInput>
+          <Espaçamento>
+            <Espaçamento.Col1>
+              Numero:
+            </Espaçamento.Col1>
+            <InputNameGroup placeholder="" value={address_num} onChange={(e) => setNumber(e.target.value)} />
+          </Espaçamento>
+        </DivInput>
+        <DivInput>
+          <Espaçamento>
+            <Espaçamento.Col1>
+              Bairro:
+            </Espaçamento.Col1>
+            <InputNameGroup placeholder="" value={district} onChange={(e) => setDistrict(e.target.value)} />
+          </Espaçamento>
+        </DivInput>
+        <DivInput>
+          <Espaçamento>
+            <Espaçamento.Col1>
+              Cidade
+            </Espaçamento.Col1>
+            <InputNameGroup placeholder="" value={city} onChange={(e) => setCity(e.target.value)} />
+          </Espaçamento>
+        </DivInput>
+        <DivInput>
+          <Espaçamento>
+            <Espaçamento.Col1>
+              cep:
+            </Espaçamento.Col1>
+            <InputNameGroup placeholder="" value={zipcode} onChange={(e) => setZipcode(e.target.value)} />
+          </Espaçamento>
+        </DivInput>
+        <DivInput>
+          <Espaçamento>
+            <Espaçamento.Col1>
+              Estado:
+            </Espaçamento.Col1>
+            <InputNameGroup placeholder="" value={state} onChange={(e) => setState(e.target.value)} />
+          </Espaçamento>
+          <Espaçamento>
+            <Espaçamento.Col1>
+              Complemento:
+            </Espaçamento.Col1>
+            <InputNameGroup placeholder="" value={complement} onChange={(e) => setComplement(e.target.value)} />
+          </Espaçamento>
+        </DivInput>
+        <DivInput>
+          <ButtonConfirm onClick={
             handleSubmit
           }
         >
