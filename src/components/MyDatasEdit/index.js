@@ -16,6 +16,7 @@ import { useRouter } from "next/router";
 import { Body } from "../../../src/components/BodyForms";
 import WindowDivider from "../../../src/components/WindowDivider";
 import api from "../../utils/api";
+import Title from "../../../src/components/Title";
 
 const WordFormGroup = styled(FormGroup)`
   display: flex;
@@ -34,12 +35,15 @@ const MyFormGroup = styled(FormGroup)`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  margin-left: 2%;
+  margin-right: 2%;
 `;
 
 const Phone = styled.div`
   display: flex;
   flex-direction: row;
   margin-left: 30px;
+  margin-right: 2%;
 `;
 
 const Pass = styled.div`
@@ -48,12 +52,12 @@ const Pass = styled.div`
 `;
 
 const Name = styled.div`
-  display: flex;
-  flex-direction: row;
+  padding: 1%;
 `;
 const NumbersForms = styled.div`
   flex-direction: row;
   display: flex;
+  padding: 1%;
 `;
 const DDD = styled.div`
   flex-direction: row;
@@ -85,12 +89,15 @@ const Subtitle = styled.p`
 
 const Register = styled.div`
   border: 1px solid;
+  padding-bottom: 5%;
 `;
 
 const Buttons = styled.div`
   display: flex;
   align-items: center;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-top: 5%;
 `;
 const FormRegister = styled(Form)``;
 
@@ -129,12 +136,13 @@ const ContainerDatas = styled.div`
   flex-direction: row;
   justify-content: center;
   margin-top: 5%;
+  padding-bottom: 5%;
   @media (max-width: 560px) {
     flex-direction: column;
   }
 `;
-
-const BoxDatas = styled.div`
+//padding-bottom: 5%;
+ContainerDatas.BoxDatas = styled.div`
   display: flex;
   font: 1.5rem Roboto;
   flex-direction: column;
@@ -158,17 +166,17 @@ const BoxDatas = styled.div`
 
 export default function MyDatasEdit() {
   const { user, validateSession, setUser } = useAuth();
-  
+
   if (!user) {
     return (
       <ContainerDatas>
-        <BoxDatas>
+        <ContainerDatas.BoxDatas>
           <p>Dados do usuário não encontrados</p>
-        </BoxDatas>
+        </ContainerDatas.BoxDatas>
       </ContainerDatas>
     );
   }
-  
+
   const [name, setName] = useState(user.name);
   const [cpf, setCpf] = useState(user.cpf);
   const [ddd, setDdd] = useState(user.phone.substring(0, 2));
@@ -198,8 +206,8 @@ export default function MyDatasEdit() {
     };
     try {
       api.put("/user/" + user.firebase_id, body).then((response) => {
-        setUser(response.data);    
-      })
+        setUser(response.data);
+      });
       notification.open({
         message: "Sucesso!",
         description: "Alteraçao realizada com sucesso.",
@@ -208,9 +216,8 @@ export default function MyDatasEdit() {
         style: {
           width: 600,
         },
-      }
-      );
-      router.push('/User/Perfil/MyDatas');
+      });
+      router.push("/User/Perfil/MyDatas");
     } catch (error) {
       console.error(error);
       notification.open({
@@ -233,7 +240,7 @@ export default function MyDatasEdit() {
         <Body.Right>
           <Register>
             <FormRegister>
-              <Subtitle>Formulário de edição</Subtitle>
+              <Title>Formulário de edição</Title>
               <Name>
                 <MyFormGroup>
                   <FormLabel>Nome</FormLabel>
@@ -260,7 +267,6 @@ export default function MyDatasEdit() {
                   />
                 </MuiPickersUtilsProvider>
               </MyFormGroup>
-              <Pass></Pass>
               <NumbersForms>
                 <MyFormGroup>
                   <FormLabel>CPF</FormLabel>
@@ -302,16 +308,10 @@ export default function MyDatasEdit() {
                 </Phone>
               </NumbersForms>
               <Buttons>
+                <Link href="/User/Perfil/MyDatas" rel="MyDatas">
+                  <CancelSubmit>Cancelar</CancelSubmit>
+                </Link>
                 <Submit onClick={handleSubmit}>Finalizar</Submit>
-
-                <br />
-                <FormGroup>
-                  <FormLabel align="center">
-                    <Link href="/User/Perfil/MyDatas" rel="MyDatas">
-                      <CancelSubmit>Cancelar</CancelSubmit>
-                    </Link>
-                  </FormLabel>
-                </FormGroup>
               </Buttons>
             </FormRegister>
           </Register>
@@ -321,9 +321,9 @@ export default function MyDatasEdit() {
   } else {
     return (
       <ContainerDatas>
-        <BoxDatas>
+        <ContainerDatas.BoxDatas>
           <p>Dados do usuário não encontrados</p>
-        </BoxDatas>
+        </ContainerDatas.BoxDatas>
       </ContainerDatas>
     );
   }
