@@ -91,7 +91,7 @@ export default function ModalEditAddresses(addressId) {
         },
       });
     }
-    router.push('/User/Perfil/MyDatas');
+    router.push('/User/Perfil/MyAdresses');
   }
 
   const [street, setStreet] = useState();
@@ -168,7 +168,7 @@ export default function ModalEditAddresses(addressId) {
                   placeholder="Cep"
                   required
                   value={zipcode}
-                  onChange={(e) => setCep(e.target.value)}
+                  onChange={(e) => setZipcode(e.target.value)}
                 />
               </SobreFormGroup>
             </Name>

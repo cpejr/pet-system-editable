@@ -25,12 +25,6 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: '#609694',
     },
   },
-  roote: {
-    '& > *': {
-      fontfamily: 'Quicksand',
-      backgroundColor: '#f6c8ca',
-    },
-  },
 }));
 
 const BoxDatas = styled.div`
@@ -130,12 +124,10 @@ export default function MyDatas() {
                 href="http://localhost:3000/User/Perfil/MyDatasEdit"
                 rel="MyDatasEdit"
               >
-                <div className={classes.roote}>
-                  <Button variant="contained">
-                    Editar
-                    <Icon />
-                  </Button>
-                </div>
+                <Button variant="contained">
+                  Editar
+                  <Icon />
+                </Button>
               </Link>
             </RowEdit>
           </Paper>
