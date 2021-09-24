@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import api from "../../utils/api";
 import styled from 'styled-components';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import { notification } from 'antd';
 import { MdEdit } from 'react-icons/md';
-import { useRouter } from "next/router";
+import { useRouter } from 'next/router';
+import api from '../../utils/api';
 
 const AddressModal = styled.div`
 position: fixed;
@@ -169,59 +169,58 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ModalEditAddresses(addressId) {
-    const classes = useStyles();
+  const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
-     const [group, setGroup] = useState('');
-     const [modalStyle] = useState(getModalStyle);
-     const [open, setOpen] = useState(false);
-     const router = useRouter();
+  const [group, setGroup] = useState('');
+  const [modalStyle] = useState(getModalStyle);
+  const [open, setOpen] = useState(false);
+  const router = useRouter();
 
   const handleOpen = () => {
     setOpen(true);
   };
   const handleState = () => {
-    handleClose()
-  }
+    handleClose();
+  };
   const handleClose = () => {
     setOpen(false);
   };
 
   async function handleSubmit() {
     if (cep?.length !== 8) {
-        alert("CEP inválido");
-        return;
-      }
-      if (number?.length !== 3) {
-        alert("Número inválido");
-        return;
-      }
+      alert('CEP inválido');
+      return;
+    }
+    if (number?.length !== 3) {
+      alert('Número inválido');
+      return;
+    }
     const body = {
-        address_id: addressId.address_id,
-        street: street,
-        number: number,
-        neighbourhood: neighbourhood,
-        city: city,
-        state: state,
+      address_id: addressId.address_id,
+      street,
+      number,
+      neighbourhood,
+      city,
+      state,
     };
     try {
-      api.put("/address/", body);
+      api.put('/address/', body);
       notification.open({
-        message: "Sucesso!",
-        description: "Alteraçao realizada com sucesso.",
-        className: "ant-notification",
-        top: "100px",
+        message: 'Sucesso!',
+        description: 'Alteraçao realizada com sucesso.',
+        className: 'ant-notification',
+        top: '100px',
         style: {
           width: 600,
         },
-      }
-      );
+      });
     } catch (error) {
       console.error(error);
       notification.open({
-        message: "Erro!",
-        description: "Erro ao atualizar dados.",
-        className: "ant-notification",
-        top: "100px",
+        message: 'Erro!',
+        description: 'Erro ao atualizar dados.',
+        className: 'ant-notification',
+        top: '100px',
         style: {
           width: 600,
         },
@@ -239,7 +238,7 @@ export default function ModalEditAddresses(addressId) {
 
   async function loadAddress() {
     try {
-      const response = await api.get('/address/'+ addressId.address_id);
+      const response = await api.get(`/address/${addressId.address_id}`);
       setStreet(response.data.street);
       setNumber(response.data.number);
       setNeighbourhood(response.data.neighbourhood);
@@ -257,74 +256,72 @@ export default function ModalEditAddresses(addressId) {
 
   const body = (
     <div style={modalStyle} className={classes.paper}>
-      <AddressModal>
-        <DivInput>
-          <TitleModal>Edite um endereço</TitleModal>
-        </DivInput>
-        <DivInput>
-          <Espaçamento>
-            <Espaçamento.Col1>
-              Rua:
-            </Espaçamento.Col1>
-            <InputNameGroup placeholder="" value={street} onChange={(e) => setStreet(e.target.value)} />
-          </Espaçamento>
-        </DivInput>
-        <DivInput>
-          <Espaçamento>
-            <Espaçamento.Col1>
-              Numero:
-            </Espaçamento.Col1>
-            <InputNameGroup placeholder="" value={number} onChange={(e) => setNumber(e.target.value)} />
-          </Espaçamento>
-        </DivInput>
-        <DivInput>
-          <Espaçamento>
-            <Espaçamento.Col1>
-              Bairro:
-            </Espaçamento.Col1>
-            <InputNameGroup placeholder="" value={neighbourhood} onChange={(e) => setNeighbourhood(e.target.value)} />
-          </Espaçamento>
-        </DivInput>
-        <DivInput>
-          <Espaçamento>
-            <Espaçamento.Col1>
-              Cidade
-            </Espaçamento.Col1>
-            <InputNameGroup placeholder="" value={city} onChange={(e) => setCity(e.target.value)} />
-          </Espaçamento>
-        </DivInput>
-        <DivInput>
-          <Espaçamento>
-            <Espaçamento.Col1>
-              Cep:
-            </Espaçamento.Col1>
-            <InputNameGroup placeholder="" value={cep} onChange={(e) => setCep(e.target.value)} />
-          </Espaçamento>
-        </DivInput>
-        <DivInput>
-          <Espaçamento>
-            <Espaçamento.Col1>
-              Estado:
-            </Espaçamento.Col1>
-            <InputNameGroup placeholder="" value={state} onChange={(e) => setState(e.target.value)} />
-          </Espaçamento>
-        </DivInput>
-        <DivInput>
-          <ButtonConfirm onClick={
+      <DivInput>
+        <TitleModal>Edite um endereço</TitleModal>
+      </DivInput>
+      <DivInput>
+        <Espaçamento>
+          <Espaçamento.Col1>
+            Rua:
+          </Espaçamento.Col1>
+          <InputNameGroup placeholder="" value={street} onChange={(e) => setStreet(e.target.value)} />
+        </Espaçamento>
+      </DivInput>
+      <DivInput>
+        <Espaçamento>
+          <Espaçamento.Col1>
+            Numero:
+          </Espaçamento.Col1>
+          <InputNameGroup placeholder="" value={number} onChange={(e) => setNumber(e.target.value)} />
+        </Espaçamento>
+      </DivInput>
+      <DivInput>
+        <Espaçamento>
+          <Espaçamento.Col1>
+            Bairro:
+          </Espaçamento.Col1>
+          <InputNameGroup placeholder="" value={neighbourhood} onChange={(e) => setNeighbourhood(e.target.value)} />
+        </Espaçamento>
+      </DivInput>
+      <DivInput>
+        <Espaçamento>
+          <Espaçamento.Col1>
+            Cidade
+          </Espaçamento.Col1>
+          <InputNameGroup placeholder="" value={city} onChange={(e) => setCity(e.target.value)} />
+        </Espaçamento>
+      </DivInput>
+      <DivInput>
+        <Espaçamento>
+          <Espaçamento.Col1>
+            Cep:
+          </Espaçamento.Col1>
+          <InputNameGroup placeholder="" value={cep} onChange={(e) => setCep(e.target.value)} />
+        </Espaçamento>
+      </DivInput>
+      <DivInput>
+        <Espaçamento>
+          <Espaçamento.Col1>
+            Estado:
+          </Espaçamento.Col1>
+          <InputNameGroup placeholder="" value={state} onChange={(e) => setState(e.target.value)} />
+        </Espaçamento>
+      </DivInput>
+      <DivInput>
+        <ButtonConfirm onClick={
             handleSubmit
           }
-          >
-            Confirmar edição
+        >
+          Confirmar edição
 
-          </ButtonConfirm>
-        </DivInput>
-      </AddressModal>
+        </ButtonConfirm>
+      </DivInput>
     </div>
   );
   return (
     <div>
       <AddGroup onClick={handleOpen}>
-         <MdEdit />
+        <MdEdit />
       </AddGroup>
       <Modal
         open={open}

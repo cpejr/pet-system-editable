@@ -12,6 +12,10 @@ export const AddressModal = styled.div`
   left: 0;
   z-index: 99;
   height: 70%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   @media (max-width: 1190px) {
     flex-direction: column;
     overflow: auto;
@@ -106,6 +110,7 @@ export const Name = styled.div`
 export const NumbersForms = styled.div`
   flex-direction: row;
   display: flex;
+  margin-bottom: 10%;
 `;
 export const DDD = styled.div`
   flex-direction: row;
@@ -136,6 +141,7 @@ export const Subtitle = styled.p`
 export const Register = styled.div`
   border: 1px solid;
   padding: 5%;
+  background-color: #fff;
 `;
 
 export const Buttons = styled.div`
@@ -143,6 +149,7 @@ export const Buttons = styled.div`
   align-items: center;
   flex-direction: row;
   justify-content: space-around;
+  margin-top: 5%;
 `;
 export const FormRegister = styled(Form)``;
 

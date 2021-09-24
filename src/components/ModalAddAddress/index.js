@@ -8,6 +8,7 @@ import {
   FormControl, FormLabel,
 } from 'react-bootstrap';
 import Link from 'next/link';
+import Title from '../Title';
 import api from '../../utils/api';
 
 import 'date-fns';
@@ -39,9 +40,10 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
   },
   paper: {
+    display: 'flex',
     position: 'absolute',
-    width: '65vw',
-    height: '60%',
+    width: '439px',
+    height: 'fit-content',
     backgroundColor: theme.palette.background.paper,
     border: '2px solid #609694',
     boxShadow: theme.shadows[5],
@@ -107,98 +109,88 @@ export default function ModalAddProducts() {
   }
 
   const body = (
-    <div style={modalStyle} className={classes.paper}>
-      <AddressModal>
-        <Body>
-          <WindowDivider />
-          <Body.Right>
-            <Register>
-              <FormRegister>
-                <Subtitle>Formulário de endereço</Subtitle>
-                <Name>
-                  <MyFormGroup>
-                    <FormLabel>Rua:</FormLabel>
-                    <FormControl
-                      type="text"
-                      placeholder="Rua"
-                      required
-                      value={street}
-                      onChange={(e) => setStreet(e.target.value)}
-                    />
-                  </MyFormGroup>
-                  <SobreFormGroup>
-                    <FormLabel>Numero:</FormLabel>
-                    <FormControl
-                      type="text"
-                      placeholder="Numero"
-                      required
-                      value={number}
-                      onChange={(e) => setNumber(e.target.value)}
-                    />
-                  </SobreFormGroup>
-                </Name>
-
-                <MyFormGroup>
-                  <FormLabel>Bairro:</FormLabel>
-                  <FormControl
-                    type="text"
-                    placeholder="Bairro"
-                    required
-                    value={neighbourhood}
-                    onChange={(e) => setNeighbourhood(e.target.value)}
-                  />
-                </MyFormGroup>
-                <Pass />
-                <NumbersForms>
-                  <MyFormGroup>
-                    <FormLabel>Cidade</FormLabel>
-                    <FormControl
-                      type="text"
-                      placeholder="Cidade"
-                      required
-                      value={city}
-                      onChange={(e) => setCity(e.target.value)}
-                    />
-                  </MyFormGroup>
-                  <Phone>
-                    <DDD>
-                      <MyFormGroup>
-                        <FormLabel>Cep:</FormLabel>
-                        <DDDFormControl
-                          type="text"
-                          placeholder="Cep"
-                          required
-                          value={cep}
-                          onChange={(e) => setCep(e.target.value)}
-                        />
-                      </MyFormGroup>
-                    </DDD>
-                    <MyFormGroup>
-                      <FormLabel>Estado:</FormLabel>
-                      <PhoneFormControl
-                        type="text"
-                        placeholder="Estado"
-                        required
-                        value={state}
-                        onChange={(e) => setState(e.target.value)}
-                      />
-                    </MyFormGroup>
-                  </Phone>
-                </NumbersForms>
-                <Buttons>
-                  <Submit onClick={handleSubmit}>Adicionar</Submit>
-
-                  <Link href="/User/Perfil/MyDatas" rel="MyDatas">
-                    <CancelSubmit>Cancelar</CancelSubmit>
-                  </Link>
-
-                </Buttons>
-              </FormRegister>
-            </Register>
-          </Body.Right>
-        </Body>
-      </AddressModal>
-    </div>
+    <AddressModal>
+      <Body>
+        <WindowDivider />
+        <Register>
+          <FormRegister>
+            <Title>Formulário de endereço</Title>
+            <Name>
+              <MyFormGroup>
+                <FormLabel>Rua:</FormLabel>
+                <FormControl
+                  type="text"
+                  placeholder="Rua"
+                  required
+                  value={street}
+                  onChange={(e) => setStreet(e.target.value)}
+                />
+              </MyFormGroup>
+              <SobreFormGroup>
+                <FormLabel>Numero:</FormLabel>
+                <FormControl
+                  type="text"
+                  placeholder="Numero"
+                  required
+                  value={number}
+                  onChange={(e) => setNumber(e.target.value)}
+                />
+              </SobreFormGroup>
+            </Name>
+            <Name>
+              <MyFormGroup>
+                <FormLabel>Bairro:</FormLabel>
+                <FormControl
+                  type="text"
+                  placeholder="Bairro"
+                  required
+                  value={neighbourhood}
+                  onChange={(e) => setNeighbourhood(e.target.value)}
+                />
+              </MyFormGroup>
+              <SobreFormGroup>
+                <FormLabel>Cep:</FormLabel>
+                <FormControl
+                  type="text"
+                  placeholder="Cep"
+                  required
+                  value={cep}
+                  onChange={(e) => setCep(e.target.value)}
+                />
+              </SobreFormGroup>
+            </Name>
+            <Name>
+              <MyFormGroup>
+                <FormLabel>Cidade</FormLabel>
+                <FormControl
+                  type="text"
+                  placeholder="Cidade"
+                  required
+                  value={city}
+                  onChange={(e) => setCity(e.target.value)}
+                />
+              </MyFormGroup>
+              <SobreFormGroup>
+                <FormLabel>Estado:</FormLabel>
+                <FormControl
+                  type="text"
+                  placeholder="Estado"
+                  required
+                  value={state}
+                  onChange={(e) => setState(e.target.value)}
+                />
+              </SobreFormGroup>
+            </Name>
+            <Buttons>
+              <Link href="/User/Perfil/MyDatas" rel="MyDatas">
+                <CancelSubmit>Cancelar</CancelSubmit>
+              </Link>
+              <Submit onClick={handleSubmit}>Adicionar</Submit>
+            </Buttons>
+          </FormRegister>
+        </Register>
+      </Body>
+    </AddressModal>
   );
   return (
     <div>
