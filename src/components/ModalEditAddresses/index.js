@@ -188,21 +188,21 @@ export default function ModalEditAddresses(addressId) {
 
   async function handleSubmit() {
     if (zipcode?.length !== 8) {
-        alert("CEP inválido");
-        return;
-      }
-      if (address_num?.length > 4 || address_num?.length <= 0) {
-        alert("Número inválido");
-        return;
-      }
+      alert('CEP inválido');
+      return;
+    }
+    if (address_num?.length > 4 || address_num?.length <= 0) {
+      alert('Número inválido');
+      return;
+    }
     const body = {
-        address_id: addressId.address_id,
-        street: street,
-        address_num: address_num,
-        district: district,
-        city: city,
-        zipcode: zipcode,
-        state: state,
+      address_id: addressId.address_id,
+      street,
+      address_num,
+      district,
+      city,
+      zipcode,
+      state,
     };
     try {
       api.put('/address/', body);
@@ -321,11 +321,11 @@ export default function ModalEditAddresses(addressId) {
           <ButtonConfirm onClick={
             handleSubmit
           }
-        >
-          Confirmar edição
-
-        </ButtonConfirm>
-      </DivInput>
+          >
+            Confirmar edição
+          </ButtonConfirm>
+        </DivInput>
+      </AddressModal>
     </div>
   );
   return (
