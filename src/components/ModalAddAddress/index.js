@@ -182,9 +182,7 @@ export default function ModalAddProducts() {
               </SobreFormGroup>
             </Name>
             <Buttons>
-              <Link href="/User/Perfil/MyDatas" rel="MyDatas">
-                <CancelSubmit>Cancelar</CancelSubmit>
-              </Link>
+              <CancelSubmit onClick={handleClose}>Cancelar</CancelSubmit>
               <Submit onClick={handleSubmit}>Adicionar</Submit>
             </Buttons>
           </FormRegister>

@@ -194,7 +194,7 @@ border: 0;
 border-radius: 5px;
 align-items: center;
 text-align: center;
-margin-top: 2%;
+margin-top: 20%;
 margin-bottom: 2%;
 transform: translate(0%,-50%);
 justify-content: center;
