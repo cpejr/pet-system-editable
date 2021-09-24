@@ -2,9 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
 import { GrLocation } from 'react-icons/gr';
-import { BsSearch, BsFillPersonFill } from 'react-icons/bs';
+import { BsSearch, BsFillPersonFill, BsTrashFill } from 'react-icons/bs';
 import { MdShoppingCart } from 'react-icons/md';
 import { FiLogIn } from 'react-icons/fi';
+
 import { CgCloseO } from 'react-icons/cg';
 import Link from 'next/link';
 import { useAuth } from '../../contexts/AuthContext';

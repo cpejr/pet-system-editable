@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import { notification } from 'antd';
-import { MdEdit } from 'react-icons/md';
 import {
   FormControl, FormLabel,
 } from 'react-bootstrap';
@@ -13,9 +11,8 @@ import WindowDivider from '../WindowDivider';
 import api from '../../utils/api';
 import Title from '../Title';
 import {
-  AddressModal, ButtonAdd, Buttons, CancelSubmit, DDD, DDDFormControl,
-  FormRegister, MyFormGroup, Name, NumbersForms, Pass, Phone,
-  PhoneFormControl, Register, SobreFormGroup, Submit, Subtitle, Body,
+  AddressModal, Buttons, CancelSubmit,
+  FormRegister, MyFormGroup, Name, Register, SobreFormGroup, Submit, Body,
 } from './styles';
 
 const Espaçamento = styled.div`
@@ -41,112 +38,14 @@ font-family:Quicksand;
     } 
 `;
 
-const InputNameGroup = styled.input`
-display:flex;
-align-items:center;
-justify-content:center;
-width:40%;
-font-family:Roboto;
-height:40px;
-border-radius:10px;
-border-color:${({ theme }) => theme.colors.borderBoxColor};
-@media(max-width:860px){
-        width:100%;
-        font-size:12px;
-    } 
-`;
-
-const ButtonConfirm = styled.button`
-display:flex;
-margin-top: 50px;
-height: 55px;
-width: 200px;
-font-family: Roboto;
-font-size: 18px;
-font-weight: 300;
-background-color: ${({ theme }) => theme.colors.darkGreen};
-color: white;
-border: 0;
-border-radius: 5px;
-align-items: center;
-text-align: center;
-transform: translate(0%,-50%);
-justify-content: center;
-text-align: center;
-margin-top:10%;
-cursor: pointer;
-    }
-    @media(max-width:860px){
-        width:150px;
-    } 
-`;
-
-const AddGroup = styled.button`
-  display:flex;
-    align-items:center;
-    justify-content:center;
-    font-family: Roboto;
-    font-size: 100%;
-    font-weight: 500;
-    background-color: ${({ theme }) => theme.colors.background};
-    color: ${({ theme }) => theme.colors.mediumGreen};
-    border: 0;
-    cursor:pointer;
-    outline:none;    
-    margin-top: 5%;
-    margin-bottom: 2%;
-    @media(max-width:1000px){
-      display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:14px;
-}
-`;
-
-function getModalStyle() {
-  const top = 50;
-  const left = 50;
-
-  return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`,
-  };
-}
-
-const useStyles = makeStyles((theme) => ({
-  modal: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  paper: {
-    position: 'absolute',
-    width: '65vw',
-    height: '70%',
-    backgroundColor: theme.palette.background.paper,
-    border: '2px solid #609694',
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-
-  },
-
-}));
-
 export default function ModalEditAddresses(addressId) {
-  const classes = useStyles();
-  // getModalStyle is not a pure function, we roll the style only on the first render
-  const [group, setGroup] = useState('');
-  const [modalStyle] = useState(getModalStyle);
   const [open, setOpen] = useState(false);
   const router = useRouter();
 
   const handleOpen = () => {
     setOpen(true);
   };
-  const handleState = () => {
-    handleClose();
-  };
+
   const handleClose = () => {
     setOpen(false);
   };
@@ -228,7 +127,7 @@ export default function ModalEditAddresses(addressId) {
         <WindowDivider />
         <Register>
           <FormRegister>
-            <Title>Formulário de endereço</Title>
+            <Title>Editar endereço</Title>
             <Name>
               <MyFormGroup>
                 <FormLabel>Rua:</FormLabel>
@@ -296,7 +195,7 @@ export default function ModalEditAddresses(addressId) {
               </SobreFormGroup>
             </Name>
             <MyFormGroup>
-              <FormLabel>Cidade</FormLabel>
+              <FormLabel>Complemento</FormLabel>
               <FormControl
                 type="text"
                 placeholder="Complemento"
@@ -307,7 +206,7 @@ export default function ModalEditAddresses(addressId) {
             </MyFormGroup>
             <Buttons>
               <CancelSubmit onClick={handleClose}>Cancelar</CancelSubmit>
-              <Submit onClick={handleSubmit}>Adicionar</Submit>
+              <Submit onClick={handleSubmit}>Atualizar</Submit>
             </Buttons>
           </FormRegister>
         </Register>

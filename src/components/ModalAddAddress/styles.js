@@ -14,7 +14,7 @@ export const AddressModal = styled.div`
   height: 70%;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: bottom;
 
   @media (max-width: 1190px) {
     flex-direction: column;

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Modal from '@material-ui/core/Modal';
 import { notification } from 'antd';
-import { useRouter } from 'next/router';
 
 import {
   FormControl, FormLabel,
@@ -19,9 +18,8 @@ import {
   FormRegister, MyFormGroup, Name, Register, SobreFormGroup, Submit, Body,
 } from './styles';
 
-export default function ModalAddProducts() {
+export default function ModalAddProducts({ loadAddresses }) {
   const [open, setOpen] = useState(false);
-  const router = useRouter();
 
   const handleOpen = () => {
     setOpen(true);
@@ -49,9 +47,9 @@ export default function ModalAddProducts() {
       state,
       complement,
     };
-
     try {
-      api.post('/address/', body);
+      await api.post('/address/', body);
+      setOpen(false);
       notification.open({
         message: 'Sucesso!',
         description: 'Endereço criado com sucesso.',
@@ -72,7 +70,7 @@ export default function ModalAddProducts() {
         },
       });
     }
-    router.push('/User/Perfil/MyDatas');
+    loadAddresses();
   }
 
   const body = (
