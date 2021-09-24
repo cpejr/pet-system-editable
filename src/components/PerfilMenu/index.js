@@ -6,8 +6,8 @@ import MyLogOut from '../MyLogOut';
 const SubTitle = styled.div`
   display: flex;
   align-items: center;
-  margin-left: 8%;
   font-family: Quicksand;
+  justify-content: center;
   @media (max-width: 560px) {
     display: flex;
     align-items: center;

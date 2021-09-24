@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useAuth } from '../../contexts/AuthContext';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -8,11 +7,14 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { notification } from 'antd';
+import { useAuth } from '../../contexts/AuthContext';
+import Title from '../Title';
 
 const Container = styled.div`
 display:flex;
 align-items:center;
 justify-content:center;
+justify-items: center;
 width:50%;
 background-color: whitesmoke;
 border-color: black;
@@ -22,15 +24,7 @@ border-radius: 5px;
 border: 1px solid rgba(0, 0, 0, 0.4);
 box-sizing: border-box;
 flex-direction:column;
-`;
-
-const Title = styled.h3`
-display:flex;
-align-items:center;
-justify-content:center;
-width:100%;
-font-family:Roboto;
-margin-bottom:2%;
+padding-bottom: 2%;
 `;
 
 const ConfirmButton = styled.div`
@@ -55,6 +49,14 @@ justify-content:center;
     outline:none;
 `;
 
+const Caixa = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  vertical-align: middle;
+
+`;
+
 export default function MyDatasMobile() {
   const [checkedCredito, setCheckedCredito] = useState(false);
   const handleClickCredito = () => setCheckedCredito(!checkedCredito);
@@ -64,7 +66,7 @@ export default function MyDatasMobile() {
 
   const [checkedBoleto, setCheckedBoleto] = useState(false);
   const handleClickBoleto = () => setCheckedBoleto(!checkedBoleto);
-  
+
   const { user, forgottenPassword } = useAuth();
 
   const [Open, setOpen] = React.useState(false);
@@ -92,7 +94,6 @@ export default function MyDatasMobile() {
           width: 600,
         },
       });
-     
     } catch (error) {
       console.log(error);
       notification.open({
@@ -109,35 +110,35 @@ export default function MyDatasMobile() {
   }
 
   return (
-    <div>
+    <Caixa>
       <Container>
-        <Title>Alterar Senha:</Title>
+        <Title>Alterar Senha</Title>
         <DialogContent>Clique no botão abaixo para que um link seja enviado para seu email com os dados de alteração de senha.</DialogContent>
         <Dialog
-        open={Open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
+          open={Open}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
         >
-        <DialogTitle id="alert-dialog-title">Recuperação de senha</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Você tem certeza que deseja enviar um email para recuperação de senha ?
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="secondary">
-            Cancelar
-          </Button>
+          <DialogTitle id="alert-dialog-title">Recuperação de senha</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Você tem certeza que deseja enviar um email para recuperação de senha ?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} color="secondary">
+              Cancelar
+            </Button>
             <Button onClick={sendResetEmail} color="primary" autoFocus>
               Enviar
             </Button>
-        </DialogActions>
-      </Dialog>
+          </DialogActions>
+        </Dialog>
         <ConfirmButton onClick={handleClickOpen}>
           <Submit>Confirmar</Submit>
         </ConfirmButton>
       </Container>
-    </div>
+    </Caixa>
   );
 }

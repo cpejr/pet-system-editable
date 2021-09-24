@@ -8,11 +8,10 @@ import { useAuth } from '../../contexts/AuthContext';
 const ContainerDatas = styled.div`
   display: flex;
   width: 100%;
-  align-items: flex-start;
+  align-items: center;
   flex-direction: row;
-  justify-content: left;
+  justify-content: center;
   margin-top: 2%;
-  margin-left: 5%;
   @media (max-width: 560px) {
     flex-direction: column;
   }

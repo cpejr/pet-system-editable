@@ -8,13 +8,13 @@ import { useAuth } from '../../contexts/AuthContext';
 const ContainerAdresses = styled.div`
 display:flex;
 flex-direction:column;
-font: 1rem Roboto;
+font: 1rem Quicksand;
 width:100%;
 align-items:center;
 justify-content:space-around;
-margin-top:0%;
 @media(max-width:1075px){
 flex-direction:column;
+padding-left: 5%;
 }
 `;
 
