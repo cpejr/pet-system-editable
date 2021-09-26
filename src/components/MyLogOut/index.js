@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
 import Link from 'next/link';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -8,20 +7,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useAuth } from '../../contexts/AuthContext';
-
-const Section = styled.button`
-flex-direction:column;
-font-size:16px;
-margin-top:1%;
-margin-bottom:1%;
-margin-right:1%;
-margin-left:1%;
-border:none;
-background-color:#F8F8F8;
-cursor: pointer;
-font-family: Quicksand;
-outline:none;
-`;
+import { Section } from './styles';
 
 export default function MyLogOut() {
   const [open, setOpen] = React.useState(false);
@@ -57,7 +43,7 @@ export default function MyLogOut() {
             Cancelar
           </Button>
           <Link href="http://localhost:3000/login" rel="login">
-            <Button onClick={handleClose,logout} color="secondary" autoFocus>
+            <Button onClick={handleClose, logout} color="secondary" autoFocus>
               Sair
             </Button>
           </Link>

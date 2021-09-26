@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
 import Modal from '@material-ui/core/Modal';
 import { notification } from 'antd';
 import {
@@ -14,29 +13,6 @@ import {
   AddressModal, Buttons, CancelSubmit,
   FormRegister, MyFormGroup, Name, Register, SobreFormGroup, Submit, Body,
 } from './styles';
-
-const Espaçamento = styled.div`
-display:flex;
-align-items:center;
-justify-content:center;
-width:100%;
-margin-bottom:1%;
-@media(max-width:860px){
-        flex-direction:column;
-    } 
-`;
-
-Espaçamento.Col1 = styled.h3`
-display:flex;
-align-items:center;
-justify-content:center;
-width:30%;
-font-family:Quicksand;
-@media(max-width:860px){
-        width:100%;
-        font-size:16px;
-    } 
-`;
 
 export default function ModalEditAddresses(addressId) {
   const [open, setOpen] = useState(false);

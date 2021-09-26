@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
+import React from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -9,63 +8,19 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { notification } from 'antd';
 import { useAuth } from '../../contexts/AuthContext';
 import Title from '../Title';
-
-const Container = styled.div`
-display:flex;
-align-items:center;
-justify-content:center;
-justify-items: center;
-width:50%;
-background-color: whitesmoke;
-border-color: black;
-border-style: solid;
-border-width: 1px;
-border-radius: 5px;
-border: 1px solid rgba(0, 0, 0, 0.4);
-box-sizing: border-box;
-flex-direction:column;
-padding-bottom: 2%;
-`;
-
-const ConfirmButton = styled.div`
-display:flex;
-align-items:center;
-`;
-
-const Submit = styled.button`
-display:flex;
-align-items:center;
-justify-content:center;
-    height: 40px;
-    width: 150px;
-    font-family: Roboto;
-    font-size: 20px;
-    font-weight: 500;
-    background-color: ${({ theme }) => theme.colors.mediumGreen};
-    color: white;
-    border: 0;
-    border-radius: 5px;
-    cursor: pointer;
-    outline:none;
-`;
-
-const Caixa = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  vertical-align: middle;
-
-`;
+import {
+  Container, ConfirmButton, Submit, Caixa,
+} from './styles';
 
 export default function MyDatasMobile() {
-  const [checkedCredito, setCheckedCredito] = useState(false);
-  const handleClickCredito = () => setCheckedCredito(!checkedCredito);
+  // const [checkedCredito, setCheckedCredito] = useState(false);
+  // const handleClickCredito = () => setCheckedCredito(!checkedCredito);
 
-  const [checkedDebito, setCheckedDebito] = useState(false);
-  const handleClickDebito = () => setCheckedDebito(!checkedDebito);
+  // const [checkedDebito, setCheckedDebito] = useState(false);
+  // const handleClickDebito = () => setCheckedDebito(!checkedDebito);
 
-  const [checkedBoleto, setCheckedBoleto] = useState(false);
-  const handleClickBoleto = () => setCheckedBoleto(!checkedBoleto);
+  // const [checkedBoleto, setCheckedBoleto] = useState(false);
+  // const handleClickBoleto = () => setCheckedBoleto(!checkedBoleto);
 
   const { user, forgottenPassword } = useAuth();
 

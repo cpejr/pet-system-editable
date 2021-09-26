@@ -1,22 +1,11 @@
-import React from 'react';
-import styled from 'styled-components';
-import Link from 'next/link';
-import Button from '@material-ui/core/Button';
+import React, { useEffect } from 'react';
 import { Paper, makeStyles } from '@material-ui/core';
+import api from '../../utils/api';
 import { useAuth } from '../../contexts/AuthContext';
-
-const ContainerDatas = styled.div`
-  display: flex;
-  width: 100%;
-  align-items: center;
-  flex-direction: row;
-  justify-content: center;
-  margin-top: 2%;
-  padding-bottom: 5%;
-  @media (max-width: 560px) {
-    flex-direction: column;
-  }
-`;
+import {
+  BoxDatas, ContainerDatas, AddressData,
+} from './styles';
+import MyDatasEdit from '../MyDatasEdit';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,57 +16,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const BoxDatas = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 30%;
-  border-color: black;
-  border-radius: 5px;
-  background-color: #609694;
-  line-height: 100%;
-  border-style: solid;
-  border-width: 1px;
-  margin-top: 2%;
-  margin-bottom: 2%;
-  padding: 1%;
-  color: white;
-  justify-content: center;
-
-  font-size: 3rem;
-
-  @media (max-width: 1050px) {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-  }
-  @media (max-width: 560px) {
-    width: 80%;
-    margin-bottom: 2%;
-  }
-`;
-const RowEdit = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  align-items: center;
-  justify-content: center;
-  letter-spacing: 30%;
-`;
-const Icon = styled.div`
-  width: 10%;
-  display: flex;
-  justify-content: center;
-`;
-const AddressData = styled.p`
-  font-size: 1.5rem;
-  justify-content: center;
-  color: white;
-`;
-
 export default function MyDatas() {
-  const { user } = useAuth();
+  const { user, setUser } = useAuth();
   const classes = useStyles();
+
+  async function loadUser() {
+    try {
+      const response = await api.get(`/user/${user.firebase_id}`);
+      setUser(response.data);
+    } catch (error) {
+      console.error(error); //eslint-disable-line
+    }
+  }
 
   function dataNascimentoFormatada(bdate) {
     const data = new Date(bdate);
@@ -88,6 +38,10 @@ export default function MyDatas() {
     const anoF = data.getFullYear();
     return `${diaF}/${mesF}/${anoF}`;
   }
+
+  useEffect(() => {
+    loadUser();
+  }, []);
 
   if (user) {
     return (
@@ -119,17 +73,7 @@ export default function MyDatas() {
               {' '}
               {user.phone}
             </AddressData>
-            <RowEdit>
-              <Link
-                href="http://localhost:3000/User/Perfil/MyDatasEdit"
-                rel="MyDatasEdit"
-              >
-                <Button variant="contained">
-                  Editar
-                  <Icon />
-                </Button>
-              </Link>
-            </RowEdit>
+            <MyDatasEdit />
           </Paper>
         </div>
       </ContainerDatas>
