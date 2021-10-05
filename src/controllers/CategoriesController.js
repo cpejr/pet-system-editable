@@ -1,5 +1,7 @@
 const { v4: uuidv4 } = require('uuid');
 const CategoryModel = require('../models/CategoriesModel');
+const AwsModel = require('../models/AwsModel');
+
 
 module.exports = {
   async getOne(request, response) {
@@ -29,13 +31,17 @@ module.exports = {
 
   async create(request, response) {
     const info = request.body;
-
-    const category = {
-      category_id: uuidv4(),
-      name: info.name,
-    };
+    console.log("🚀 ~ file: CategoriesController.js ~ line 33 ~ create ~ request", request.files)
+    const { img } = request.files;
+    img.name = uuidv4();
 
     try {
+      const image_id = await AwsModel.uploadAWS(img);
+      const category = {
+        category_id: uuidv4(),
+        name: info.name,
+        img: image_id.key
+      };
       const newCategory = await CategoryModel.createNewCategory(category);
       return response.status(200).json(newCategory);
     } catch (error) {
