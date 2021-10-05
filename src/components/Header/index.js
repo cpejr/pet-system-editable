@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState,useEffect } from 'react';
+import api from "../../utils/api";
 import Image from 'next/image';
 import { GrLocation } from 'react-icons/gr';
 import { BsSearch, BsFillPersonFill } from 'react-icons/bs';
@@ -42,6 +43,21 @@ Header.Bottom = styled.div`
 
 export default function Header() {
   const { user, logout } = useAuth();
+  const [categories, setCategories] = useState([]);
+
+  async function loadCategories() {
+    try {
+      const response = await api.get("category");
+      setCategories(response.data);
+    } catch (error) {
+      console.error(error); //eslint-disable-line
+    }
+  }
+  
+  useEffect(() => {
+    loadCategories();
+  }, []);
+
   const PersonalButton = () => {
     if (!user) {
       return (
@@ -113,16 +129,9 @@ export default function Header() {
         </LogOut>
       </Header.Top>
       <Header.Bottom>
-        <ItemBottomHeader>Rações</ItemBottomHeader>
-        <ItemBottomHeader>Petiscos</ItemBottomHeader>
-        <ItemBottomHeader>Brinquedos</ItemBottomHeader>
-        <ItemBottomHeader>Banhos</ItemBottomHeader>
-        <ItemBottomHeader>Tosa</ItemBottomHeader>
-        <ItemBottomHeader>Shampoos</ItemBottomHeader>
-        <ItemBottomHeader>Perfumes</ItemBottomHeader>
-        <ItemBottomHeader>Vasilhas</ItemBottomHeader>
-        <ItemBottomHeader>Casinhas</ItemBottomHeader>
-        <ItemBottomHeader>Outros serviços</ItemBottomHeader>
+      {categories.map((categoria) => (
+              <Link key={categoria.category_id} href={`/Search/${categoria.category_id}`}><ItemBottomHeader>{categoria.name}</ItemBottomHeader></Link>
+          ))}
       </Header.Bottom>
     </Header.Wrapper>
   );
