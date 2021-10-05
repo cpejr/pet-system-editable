@@ -2,7 +2,7 @@ exports.up = function (knex) {
   return knex.schema.createTable('Cart', (table) => {
     table.uuid('cart_id').primary().notNullable();
     table.string('firebase_id').notNullable();
-    table.foreign('firebase_id').references('firebase_id').inTable('User');
+    table.foreign('firebase_id').references('firebase_id').inTable('User').onDelete('cascade');
     table.timestamp('created_at').notNullable().defaultTo(knex.fn.now());
   });
 };

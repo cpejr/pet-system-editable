@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
 import Image from 'next/image';
 import { GrLocation } from 'react-icons/gr';
 import { BsSearch, BsFillPersonFill } from 'react-icons/bs';
@@ -7,7 +6,11 @@ import { MdShoppingCart } from 'react-icons/md';
 import { FiLogIn } from 'react-icons/fi';
 import { CgCloseO } from 'react-icons/cg';
 import Link from 'next/link';
+import styled from 'styled-components';
 import { useAuth } from '../../contexts/AuthContext';
+import {
+  ImageBox, TextBox, YourSpace, YourSpaceContainer, ItemBottomHeader, LogOut,
+} from './styles';
 
 Header.Wrapper = styled.div`
     display:flex;
@@ -35,126 +38,6 @@ Header.Bottom = styled.div`
     justify-content: space-around;  // space evenly
     height: 35%;
     background-color: ${({ theme }) => theme.colors.mediumGreen};
-`;
-
-const ImageBox = styled.div`
-display:flex;
-align-items:center;
-justify-content:center;
-width:20%;
-cursor:pointer;
-`;
-
-const TextBox = styled.div`
-    display:flex;
-    align-items:center;
-    justify-content: space-around;
-    height: 100%;
-    width: 55%;
-    border-radius: 5px;
-`;
-
-TextBox.LocationContainer = styled.div`
-  display:flex;
-  flex-direction:row;
-  align-items:center;
-  justify-content:center;
-  height:45%;
-  width: 30%;
-  border-radius: 5px;
-  border: 0px;
-  background: #FFF1F1;
-  padding-left:0.5%;  
-`;
-
-TextBox.Location = styled.input`
-display:flex;
-  height: 90%;
-  width: 90%;
-  margin-left:1%;
-  border-radius: 5px;
-  border: 0px;
-  background: #FFF1F1;
-  outline:none;
-  
-`;
-
-TextBox.SearchContainer = styled.div`
-  display:flex;
-  flex-direction:row;
-  align-items:center;
-  justify-content:center;
-  width: 60%;
-  height:45%;
-  border-radius: 5px;
-  border: 0px;
-  padding-left:0.5%;
-  padding-right:0.5%;
-  background: #FFF1F1;
-`;
-
-TextBox.Search = styled.input`
-  display:flex;
-  height: 90%;
-  width: 90%;
-  margin-left:1%;
-  border-radius: 5px;
-  border: 0px;
-  background: #FFF1F1;
-  outline:none;
-`;
-
-const YourSpaceContainer = styled.div`
-display:flex;
-align-items:center;
-justify-content:center;
-width:10%;
-height:100%;
-`;
-
-const YourSpace = styled.button`
-    display:flex;
-    flex-direction:row;
-    align-items:center;
-    justify-content:space-around;
-    width: 100%;
-    height:45%;
-    font-family: Roboto;
-    font-size: 20px;
-    font-weight: 300;
-    background-color: ${({ theme }) => theme.colors.mediumGreen};
-    color: white;
-    border: 0;
-    border-radius: 5px;
-    cursor:pointer;
-`;
-
-YourSpace.Word = styled.p`
-display:flex;
-align-items:center;
-justify-content:center;
-font-size: 100%;
-margin: 0;
-`;
-
-const ItemBottomHeader = styled.p`
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-family: Poiret One;
-  font-size: 100%;
-  color: white;
-  cursor: pointer;
-  margin: 0;
-
-`;
-const LogOut = styled.button`
-display: flex;
-align-items: center;
-justify-content: center;
-border: 0;
-outline: none;
-background-color:${({ theme }) => theme.colors.rose} ;
 `;
 
 export default function Header() {

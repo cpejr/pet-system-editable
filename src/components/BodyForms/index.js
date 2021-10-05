@@ -5,6 +5,8 @@ export const Body = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
+    margin-top: 10%;
+    padding-bottom: 10%;
     justify-content: center;
 `;
 
