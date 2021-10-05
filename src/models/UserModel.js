@@ -17,6 +17,17 @@ module.exports = {
     }
   },
 
+  async getAllUsers() {
+    try {
+      const users = await connection('User')
+        .select('*')
+      return users;
+    } catch (error) {
+      console.error(error);
+      throw new Error(error);
+    }
+  },
+
   async createNewUser(user) {
     try {
       const user_aux = await connection('User')

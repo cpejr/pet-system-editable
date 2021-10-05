@@ -16,8 +16,7 @@ module.exports = {
   async getAllCategories() {
     try {
       const categories = await connection('Categories')
-        .where('category_id', id)
-        .select('*')
+        .select('*');
 
       return categories;
     } catch (error) {

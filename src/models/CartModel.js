@@ -2,10 +2,9 @@ const connection = require('../database/connection');
 
 module.exports = {
 
-  async getAllCarts(id) {
+  async getAllCarts() {
     try {
       const carts = await connection('Cart')
-        .where('firebase_id', id)
         .select('*');
       return carts;
     } catch (error) {
@@ -14,10 +13,24 @@ module.exports = {
     }
   },
 
-  async getCart(id) {
+  async getCartById(id) {
+    try {
+      const cart = await connection('Cart')
+        .where('cart_id', id)
+        .select('*')
+        .first();
+      return cart;
+    } catch (error) {
+      console.error(error);
+      throw new Error(error);
+    }
+  },
+
+  async getCartByFirebaseId(id) {
     try {
       const cart = await connection('Cart')
         .where('firebase_id', id)
+        .orderBy('created_at', 'desc')
         .select('*')
         .first();
       return cart;
@@ -38,10 +51,10 @@ module.exports = {
     }
   },
 
-  async removeCartByID(product_id) {
+  async removeCartByID(cart_id) {
     try {
       const response = await connection('Cart')
-        .where({ product_id })
+        .where({ cart_id })
         .delete();
       return response;
     } catch (error) {
@@ -55,18 +68,6 @@ module.exports = {
       const response = await connection('Cart')
         .where({ firebase_id })
         .delete();
-      return response;
-    } catch (error) {
-      console.error(error);
-      throw new Error(error);
-    }
-  },
-
-  async updateCart(cart, id) {
-    try {
-      const response = await connection('Cart')
-        .where({ product_id: id })
-        .update(cart);
       return response;
     } catch (error) {
       console.error(error);

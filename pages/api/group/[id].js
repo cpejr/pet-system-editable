@@ -1,4 +1,4 @@
-import { getOne, del } from '../../../src/controllers/GroupController';
+import { getOne, del, update } from '../../../src/controllers/GroupController';
 import { isSeller } from '../../../src/utils/Auth';
 
 export default function handler(req, res) {
@@ -10,6 +10,9 @@ export default function handler(req, res) {
     }
     if (method === 'DELETE') {
       return isSeller(del)(req, res);
+    }
+    if (method === 'PUT') {
+      return isSeller(update)(req, res);
     }
     return res.status(500).json({ message: 'Internal Server Error' });
   } catch (err) {

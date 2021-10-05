@@ -18,9 +18,8 @@ module.exports = {
     const group = req.body;
     group.group_id = uuidv4();
     try {
-      const user_id = req.session.get('user').user.firebase_id;
-      const { store_id } = await StoreModel.getByUserId(user_id);
-      group.store_id = store_id;
+      const firebase_id_store = req.session.get('store').store.firebase_id_store;
+      group.firebase_id_store = firebase_id_store;
       await GroupModel.createGroup(group);
     } catch (err) {
       if (err.message) {
@@ -33,10 +32,13 @@ module.exports = {
   },
 
   async update(request, response) {
+    const id = request.query.id;
+    console.log("🚀 ~ file: GroupController.js ~ line 36 ~ update ~ id", id)
     const group = request.body;
+    console.log("🚀 ~ file: GroupController.js ~ line 38 ~ update ~ group", group)
 
     try {
-      await GroupModel.updateGroup(group, group.group_id);
+      await GroupModel.updateGroup(group, id);
     } catch (err) {
       if (err.message) {
         return response.status(400).json({ notification: err.message });
@@ -47,11 +49,9 @@ module.exports = {
   },
 
   async del(req, res) {
-    const { id } = req.query;
+    const id = req.query.id;
     try {
-      const user_id = req.session.get('user').user.firebase_id;
-      const { store_id } = await StoreModel.getByUserId(user_id);
-      await GroupModel.deleteGroup(id, store_id);
+      await GroupModel.deleteGroup(id);
     } catch (err) {
       if (err.message) {
         return res.status(400).json({ notification: err.message });
@@ -63,15 +63,19 @@ module.exports = {
   },
   // função para o usuário puxar todos os grupos pelo id da loja na URl
   async getAllFromStore(req, res) {
-    const { id } = req.query;
-    const groups = await GroupModel.getAllGroups(id);
+    const firebase_id_store = req.query.id;
+    const groups = await GroupModel.getAllGroupsFromStore(firebase_id_store);
     return res.json(groups);
   },
   // função para o seller pegar todos os grupos de sua loja pela sessão
   async getAllFromSession(req, res) {
-    const id = req.session.get('user').user.firebase_id;
-    const { store_id } = await StoreModel.getByUserId(id);
-    const groups = await GroupModel.getAllGroupsFromSession(store_id);
+    const firebase_id_store = req.session.get('store').store.firebase_id_store;
+    const groups = await GroupModel.getAllGroupsFromSession(firebase_id_store);
+    return res.json(groups);
+  },
+  // função para o admin puxar todos os grupos existentes.
+  async getAll(req, res) {
+    const groups = await GroupModel.getAllGroups();
     return res.json(groups);
   },
 

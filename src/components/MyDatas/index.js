@@ -103,12 +103,12 @@ export default function MyDatas() {
             </Link>
           </RowEdit>
           <p>
-            Nome: {user.first_name} {user.last_name}
+            Nome: {user.name}
           </p>
           <p>Email: {user.email}</p>
           <p>CPF: {user.cpf}</p>
           <p>Data de Nascimento: {dataNascimentoFormatada(user.birth_date)}</p>
-          <p>Telefone: {user.telephone}</p>
+          <p>Telefone: {user.phone}</p>
         </BoxDatas>
       </ContainerDatas>
     );

@@ -1,10 +1,10 @@
 const connection = require('../database/connection');
 
 module.exports = {
-  async getStoreById(id) {
+  async getStoreById(firebase_id_store) {
     try {
       const store = await connection('Store')
-        .where('firebase_id_store', id)
+        .where('firebase_id_store', firebase_id_store)
         .select('*')
         .first();
       return store;
@@ -57,14 +57,5 @@ module.exports = {
       throw new Error(error);
     }
   },
-
-  async getByUserId(firebase_id_store) {
-    try {
-      const store = await connection('Store').select('*').where({ firebase_id_store }).first();
-      return store;
-    } catch (error) {
-      console.error(error);
-      throw new Error(error);
-    }
-  },
+  
 };

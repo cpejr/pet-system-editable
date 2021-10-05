@@ -1,11 +1,14 @@
-import { isAdmin } from '../../../src/utils/Auth';
-import { getAllFromStore } from "../../../src/controllers/GroupController";
+import { isSeller } from '../../../src/utils/Auth';
+import { getById,deleteById } from "../../../src/controllers/Product_GroupController";
 
 export default function handleGroup(req, res) {
   try {
     const { method } = req;
     if (method === "GET") {
-      return isAdmin(getAllFromStore)(req, res);
+      return isSeller(getById)(req, res);
+    }
+    if (method === "DELETE") {
+      return isSeller(deleteById)(req, res);
     }
     return res.status(500).json({ message: "Internal Server Error" });
   } catch (err) {

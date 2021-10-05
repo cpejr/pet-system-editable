@@ -1,5 +1,5 @@
 import {
-  create, deleteAll, update,
+  create, deleteAll, update,getAll,
 } from '../../../src/controllers/CartController';
 import { withAuthValidation } from '../../../src/utils/Auth';
 
@@ -14,6 +14,9 @@ export default function handler(req, res) {
     }
     if (method === 'DELETE') {
       return withAuthValidation(deleteAll)(req, res);
+    }
+    if (method === 'GET') {
+      return withAuthValidation(getAll)(req, res);
     }
     return res.status(500).json({ message: 'Internal Server Error' });
   } catch (error) {

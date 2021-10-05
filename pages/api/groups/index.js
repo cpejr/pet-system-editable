@@ -1,11 +1,11 @@
-import { getById } from '../../../src/controllers/OrderProductsController';
+import { isAdmin } from '../../../src/utils/Auth';
+import { getAll } from '../../../src/controllers/GroupController';
 
-export default function handler(req, res) {
+export default function handleGroup(req, res) {
   try {
     const { method } = req;
-    console.log(method);
     if (method === 'GET') {
-      return getById(req, res);
+      return isAdmin(getAll)(req, res);
     }
     return res.status(500).json({ message: 'Internal Server Error' });
   } catch (err) {

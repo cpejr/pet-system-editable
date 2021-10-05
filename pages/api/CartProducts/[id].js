@@ -1,11 +1,15 @@
-import { getOneOrderAndOrderProducts } from '../../../src/controllers/OrderController';
+import { getById, deleteByID } from '../../../src/controllers/Cart_ProductsController';
+import { withAuthValidation } from '../../../src/utils/Auth';
 
 export default function handler(req, res) {
   try {
     const { method } = req;
     console.log(method);
     if (method === 'GET') {
-      return getOneOrderAndOrderProducts(req, res);
+      return withAuthValidation(getById)(req, res);
+    }
+    if (method === 'DELETE') {
+      return withAuthValidation(deleteByID)(req, res);
     }
     return res.status(500).json({ message: 'Internal Server Error' });
   } catch (err) {

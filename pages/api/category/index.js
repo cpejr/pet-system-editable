@@ -1,6 +1,6 @@
 import {
   create, getAll,
-} from '../../../src/controllers/CategoryController';
+} from '../../../src/controllers/CategoriesController';
 import { isAdmin } from '../../../src/utils/Auth';
 
 export default function handler(req, res) {
@@ -8,8 +8,7 @@ export default function handler(req, res) {
     const { method } = req;
     console.log(method);
     if (method === 'POST') {
-      // return isAdmin(create)(req, res);
-      return create(req, res);
+      return isAdmin(create)(req, res);
     }
     if (method === 'GET') {
       return getAll(req, res);

@@ -1,14 +1,14 @@
 import { isSeller } from '../../../src/utils/Auth';
-import { create, getAllFromSession } from '../../../src/controllers/GroupController';
+import { getAll,create } from '../../../src/controllers/Product_GroupController';
 
 export default function handleGroup(req, res) {
   try {
     const { method } = req;
-    if (method === 'GET') {
-      return isSeller(getAllFromSession)(req, res);
-    }
     if (method === 'POST') {
       return isSeller(create)(req, res);
+    }
+    if (method === 'GET') {
+      return isSeller(getAll)(req, res);
     }
     return res.status(500).json({ message: 'Internal Server Error' });
   } catch (err) {

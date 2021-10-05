@@ -1,6 +1,6 @@
 exports.up = function (knex) {
   return knex.schema.createTable('Categories', (table) => {
-    table.string('category_id').primary().notNullable();
+    table.uuid('category_id').primary().notNullable();
     table.string('name').notNullable();
   });
 };
