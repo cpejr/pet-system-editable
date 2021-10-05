@@ -4,10 +4,20 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Header from '../../src/components/Header';
 import {
-  Body, Formulary, TopFormulary, ItemFormulary, BottomFormulary,
+  Body,
+  Formulary,
+  TopFormulary,
+  ItemFormulary,
+  BottomFormulary,
 } from '../../src/components/BodyForms';
 import {
-  TitleLogin, SubtitleLogin, TextBox, Submit, ForgotPassword, CreateAccount, Divider,
+  TitleLogin,
+  SubtitleLogin,
+  TextBox,
+  Submit,
+  ForgotPassword,
+  CreateAccount,
+  Divider,
 } from '../../src/components/FormComponents';
 import { useAuth } from '../../src/contexts/AuthContext';
 
@@ -16,7 +26,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
 
   const { login } = useAuth();
-/*eslint-disable*/
+  /*eslint-disable*/
   const router = useRouter();
 
   function handleEmailChange(event) {
@@ -29,7 +39,6 @@ const Login = () => {
     event.preventDefault();
     try {
       await login(email, password);
-     
     } catch (error) {
       console.log(error); //eslint-disable-line
     }
@@ -41,7 +50,12 @@ const Login = () => {
 
       <Body>
         <Body.Left>
-          <Image src="/images/BannerLogin.jpg" alt="" width="600" height="400" />
+          <Image
+            src="/images/BannerLogin.jpg"
+            alt=""
+            width="600"
+            height="400"
+          />
         </Body.Left>
 
         <Divider width="1" display="block" size="300" />
@@ -50,29 +64,45 @@ const Login = () => {
           <Formulary onSubmit={handleSubmit}>
             <TopFormulary>
               <TitleLogin>Bem vindo de volta!</TitleLogin>
-              <SubtitleLogin>Por favor, entre com seu email e sua senha:</SubtitleLogin>
+              <SubtitleLogin>
+                Por favor, entre com seu email e sua senha:
+              </SubtitleLogin>
             </TopFormulary>
             <ItemFormulary>
-              <TextBox type="text" placeholder="Email" onChange={handleEmailChange} value={email} />
+              <TextBox
+                type="text"
+                placeholder="Email"
+                onChange={handleEmailChange}
+                value={email}
+              />
             </ItemFormulary>
             <ItemFormulary>
-              <TextBox type="password" placeholder="Senha" onChange={handlePasswordChange} value={password} />
+              <TextBox
+                type="password"
+                placeholder="Senha"
+                onChange={handlePasswordChange}
+                value={password}
+              />
             </ItemFormulary>
-            
+
             <ItemFormulary>
-              <Link href="/ForgetPass"> 
+              <Link href="/ForgetPass">
                 <ForgotPassword>Esqueceu a senha?</ForgotPassword>
               </Link>
             </ItemFormulary>
             <BottomFormulary>
               <Submit type="submit">Entrar</Submit>
-
             </BottomFormulary>
             <BottomFormulary>
-
               <CreateAccount>Não tem uma conta?</CreateAccount>
               <Link href="/Register">
                 <CreateAccount.Right>Cadastre-se</CreateAccount.Right>
+              </Link>
+            </BottomFormulary>
+            <BottomFormulary>
+              <CreateAccount>Quer se tornar um parceiro?</CreateAccount>
+              <Link href="/CreateStore">
+                <CreateAccount.Right>Registre-se</CreateAccount.Right>
               </Link>
             </BottomFormulary>
           </Formulary>
