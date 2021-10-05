@@ -1,6 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import api from '../utils/api';
+
+toast.configure();
 
 const emptyContextInfo = {
   user: undefined,
@@ -14,7 +18,6 @@ const AuthContext = React.createContext(emptyContextInfo);
 
 function AuthProvider({ children }) {
   const [user, setUser] = useState(undefined);
-
   const router = useRouter();
 
   async function login(email, password) {
@@ -22,8 +25,10 @@ function AuthProvider({ children }) {
       const response = await api.post('login', { email, password });
       setUser(response.data.user);
       router.push('/');
+      toast('Login efetuado com sucesso', { position: toast.POSITION.BOTTOM_RIGHT });
     } catch (error) {
       console.error(error); //eslint-disable-line
+      toast('E-mail ou senha incorretos!', { position: toast.POSITION.BOTTOM_RIGHT });
     }
   }
 
@@ -60,7 +65,10 @@ function AuthProvider({ children }) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, login, setUser, logout, forgottenPassword }}>
+    <AuthContext.Provider value={{
+      user, login, setUser, logout, forgottenPassword,
+    }}
+    >
       {children}
     </AuthContext.Provider>
   );

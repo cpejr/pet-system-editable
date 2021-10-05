@@ -58,7 +58,7 @@ const Login = () => {
             <ItemFormulary>
               <TextBox type="password" placeholder="Senha" onChange={handlePasswordChange} value={password} />
             </ItemFormulary>
-
+            
             <ItemFormulary>
               <Link href="/ForgetPass"> 
                 <ForgotPassword>Esqueceu a senha?</ForgotPassword>
@@ -78,7 +78,6 @@ const Login = () => {
           </Formulary>
         </Body.Right>
       </Body>
-
     </>
   );
 };
