@@ -1,5 +1,6 @@
 import React, { useState,useEffect } from 'react';
 import api from "../../utils/api";
+import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { GrLocation } from 'react-icons/gr';
 import { BsSearch, BsFillPersonFill } from 'react-icons/bs';
@@ -44,6 +45,21 @@ Header.Bottom = styled.div`
 export default function Header() {
   const { user, logout } = useAuth();
   const [categories, setCategories] = useState([]);
+
+  const [searchText, setSearchText] = useState("");
+
+  const router = useRouter();
+
+  const handleFilterSearchText = (e) => setSearchText(e.target.value);
+
+  const handleSubmit = () => router.push({ pathname: "/Search", query: { keyword: searchText } });
+
+  const handleKeypress = (e) => {
+    //it triggers by pressing the enter key
+    if (e.key === 'Enter') {
+      handleSubmit();
+    }
+  };
 
   async function loadCategories() {
     try {
@@ -110,9 +126,26 @@ export default function Header() {
             <TextBox.Location type="" placeholder="Localização" />
           </TextBox.LocationContainer>
           <TextBox.SearchContainer>
-            <BsSearch size="15" />
-            <TextBox.Search type="text" placeholder="Busque por uma loja, produto, serviço" />
-            <CgCloseO />
+            <Link href={{ pathname: "/Search" }}>
+              <CgCloseO onClick={() => setSearchText("")} />
+            </Link>
+            <TextBox.Search
+              value={searchText}
+              type="text"
+              placeholder="Busque por uma loja, produto, serviço"
+              onChange={handleFilterSearchText}
+              onKeyPress={handleKeypress}
+            />
+            <Link
+              onKeyPress={handleKeypress} href={{ pathname: "/Search", query: { keyword: searchText } }}
+            >
+              <BsSearch
+                size="15"
+                type="submit"
+                onSubmit={handleSubmit}
+                style={{ cursor: "pointer" }}
+              />
+            </Link>
           </TextBox.SearchContainer>
         </TextBox>
         <YourSpaceContainer>
@@ -130,7 +163,9 @@ export default function Header() {
       </Header.Top>
       <Header.Bottom>
       {categories.map((categoria) => (
-              <Link key={categoria.category_id} href={`/Search/${categoria.category_id}`}><ItemBottomHeader>{categoria.name}</ItemBottomHeader></Link>
+              <Link key={categoria.category_id} href={{ pathname: "/Search", query: { id: categoria.category_id } }}>
+                <ItemBottomHeader>{categoria.name}</ItemBottomHeader>
+              </Link>
           ))}
       </Header.Bottom>
     </Header.Wrapper>
