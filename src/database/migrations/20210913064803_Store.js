@@ -3,8 +3,8 @@ exports.up = function (knex) {
     table.string('firebase_id_store').primary().notNullable();
     table.string('company_name').notNullable();
     table.string('email').notNullable();
-    table.integer('phone').notNullable();
-    table.integer('cnpj').notNullable();
+    table.string('phone').notNullable();
+    table.string('cnpj').notNullable();
     table.string('cover_img').notNullable();
     table.string('logo_img').notNullable();
     table.timestamp('created_at').notNullable().defaultTo(knex.fn.now());
