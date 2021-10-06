@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const CardWrapper = styled.div`
+export const CardWrapper = styled.button`
 display: flex;
 flex-direction: column;
 align-items: center;
@@ -8,6 +8,13 @@ width: 100%;
 padding: 1vw;
 height: auto;
 font-family:Roboto;
+background-color: transparent;
+border: none;
+cursor: pointer;
+  &:hover {
+    box-shadow: 0 16px 40px 0px rgba(112, 144, 176, 0.2);
+    transform: scale(1.02);
+  }
 `;
 
 export const CardInfo = styled.div`

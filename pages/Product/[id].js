@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaArrowLeft } from 'react-icons/fa';
 import api from '../../src/utils/api';
 import { Header, FooterMobile } from '../../src/components/index';
@@ -9,6 +9,14 @@ import {
 } from './styles';
 
 export default function Product(props) {
+  const [store, setStore] = useState([]);
+  useEffect(() => {
+    api.get(`store/${product.firebase_id_store}`).then((res) => {
+      setStore(res.data);
+      console.log(res.data);
+    });
+  }, []);
+  console.log(store);
   const { product } = props;
   return (
     <div>
@@ -58,7 +66,7 @@ export default function Product(props) {
                   Loja
                 </Store.Title>
                 <Store.Text>
-                  {product.store.company_name}
+                  {store.company_name}
                 </Store.Text>
               </Store>
             </ProductContainer.Col2>
@@ -84,6 +92,5 @@ export async function getServerSideProps(context) {
   const { id } = context.query;
   const response = await api.get(`product/${id}`);
   const product = response.data;
-  console.log(product);
   return { props: { product } };
 }

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Link from 'next/link';
 import Image from 'next/image';
 import { AiFillHeart, AiFillStar } from 'react-icons/ai';
 import {
@@ -19,37 +20,40 @@ export default function SearchCards(props) {
   };
 
   const myLoader = ({ src }) => `https://s3-sa-east-1.amazonaws.com/petsystembucket/${src}`;
+  console.log(product);
 
   return (
-    <CardWrapper>
-      <Image loader={myLoader} src={product.img} alt="" width="100%" height="100%" />
-      <CardInfo>
-        <CardDescription>
-          <CardDescriptionTitle>
-            {product.product_name}
-          </CardDescriptionTitle>
-          <CardDescriptionValues>
-            <CardDescriptionDeliveryPrice>
-              •Valor:
-              {product.price}
-            </CardDescriptionDeliveryPrice>
-            <Star>
-              <AiFillStar />
-              5.0
-            </Star>
-          </CardDescriptionValues>
-        </CardDescription>
-        <CardButtons>
-          <Button>5.0</Button>
-          <FavButton>
-            <AiFillHeart
-              size={24}
-              onClick={handleClickFav1}
-              style={{ color: checkedFav1 }}
-            />
-          </FavButton>
-        </CardButtons>
-      </CardInfo>
-    </CardWrapper>
+    <Link href={`/Product/${product.product_id}`}>
+      <CardWrapper>
+        <Image loader={myLoader} src={product.img} alt="" width="100%" height="100%" />
+        <CardInfo>
+          <CardDescription>
+            <CardDescriptionTitle>
+              {product.product_name}
+            </CardDescriptionTitle>
+            <CardDescriptionValues>
+              <CardDescriptionDeliveryPrice>
+                •Valor:
+                {product.price}
+              </CardDescriptionDeliveryPrice>
+              <Star>
+                <AiFillStar />
+                5.0
+              </Star>
+            </CardDescriptionValues>
+          </CardDescription>
+          <CardButtons>
+            <Button>5.0</Button>
+            <FavButton>
+              <AiFillHeart
+                size={24}
+                onClick={handleClickFav1}
+                style={{ color: checkedFav1 }}
+              />
+            </FavButton>
+          </CardButtons>
+        </CardInfo>
+      </CardWrapper>
+    </Link>
   );
 }
