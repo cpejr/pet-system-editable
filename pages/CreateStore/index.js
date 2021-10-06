@@ -197,13 +197,11 @@ export default function Store() {
                 <Text>DDD + phone: *</Text>
                 <MaskedInput name="phone" id="phone" mask="(99)99999-9999" value={phone} onChange={handlePhoneChange} />
               </ItemFormulary>
-            </DividedItemFormulary>
-
-            <DividedItemFormulary>
               <ItemFormulary>
                 <Text>CNPJ: *</Text>
                 <MaskedInput name="cnpj" id="cnpj" mask="99.999.999/9999-99" value={cnpj} onChange={handleCnpjChange} />
               </ItemFormulary>
+
             </DividedItemFormulary>
 
             <DividedItemFormulary>
