@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { notification } from 'antd';
 import 'antd/dist/antd.css';
-import axios from 'axios';
 import Link from 'next/link';
+import axios from 'axios';
 import Header from '../../src/components/Header';
 import {
   StoreBodyWrapper, StoreBody, StoreFormulary, TopFormulary, ItemFormulary, IEItemFormulary, DividedItemFormulary, BottomFormulary,
@@ -12,7 +12,8 @@ import {
   TitleStore, SubtitleStore, Text, Text2, SubText, TextBox, Submit,
 } from '../../src/components/FormComponents';
 import MaskedInput from '../../src/components/MasketInput';
-import SelectState from '../../src/components/SelectState';
+
+const api = axios.create({ baseURL: 'http://localhost:3000/' });
 
 const Img = styled.img` 
   display:flex;
@@ -44,54 +45,30 @@ margin-top: 1rem;
 `;
 
 export default function Store() {
-  // Usuario:
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [cpf, setCpf] = useState('');
-  const [birthDate, setBirthDate] = useState('');
   // Loja:
   const [companyName, setCompanyName] = useState('');
   const [email, setEmail] = useState('');
-  const [cellphone, setCellphone] = useState('');
-  const [telephone, setTelephone] = useState('');
+  const [phone, setPhone] = useState('');
   const [cnpj, setCnpj] = useState('');
-  const [cep, setCep] = useState('');
   const [password, setPassword] = useState('');
   const [confPassword, setConfPassword] = useState('');
-  const [ie, setIe] = useState('');
-  const [ieState, setIeState] = useState('');
+  // const [ie, setIe] = useState('');
+  // const [ieState, setIeState] = useState('');
   const [cover_img, setCover_img] = useState({ file: null, url: null });
   const [logo_img, setLogo_img] = useState({ file: null, url: null });
 
-  function handleFirstNameChange(event) {
-    setFirstName(event.target.value);
-  }
-  function handleLastNameChange(event) {
-    setLastName(event.target.value);
-  }
-  function handleCpfChange(event) {
-    setCpf(event.target.value);
-  }
-  function handleBirthDateChange(event) {
-    setBirthDate(event.target.value);
-  }
   function handleCompanyNameChange(event) {
     setCompanyName(event.target.value);
   }
   function handleEmailChange(event) {
     setEmail(event.target.value);
   }
-  function handleCellphoneChange(event) {
-    setCellphone(event.target.value);
+  function handlePhoneChange(event) {
+    setPhone(event.target.value);
   }
-  function handleTelephoneChange(event) {
-    setTelephone(event.target.value);
-  }
+
   function handleCnpjChange(event) {
     setCnpj(event.target.value);
-  }
-  function handleCepChange(event) {
-    setCep(event.target.value);
   }
   function handlePasswordChange(event) {
     setPassword(event.target.value);
@@ -99,12 +76,12 @@ export default function Store() {
   function handleConfPasswordChange(event) {
     setConfPassword(event.target.value);
   }
-  function handleIeChange(event) {
-    setIe(event.target.value);
-  }
-  function handleIeStateChange(event) {
-    setIeState(event.target.value);
-  }
+  // function handleIeChange(event) {
+  //   setIe(event.target.value);
+  // }
+  // function handleIeStateChange(event) {
+  //   setIeState(event.target.value);
+  // }
   function handleCover_img(event) {
     setCover_img({
       file: event.target.files[0],
@@ -120,22 +97,6 @@ export default function Store() {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    if (firstName?.length < 1) {
-      alert('Nome vazio!');
-      return;
-    }
-    if (lastName?.length < 1) {
-      alert('Sobrenome vazio!');
-      return;
-    }
-    if (cpf?.length !== 11) {
-      alert('CPF inválido!');
-      return;
-    }
-    if (birthDate?.length !== 8) {
-      alert('Data de nascimento inválida!');
-      return;
-    }
     if (companyName?.length < 1) {
       alert('Nome da Empresa vazio!');
       return;
@@ -144,11 +105,7 @@ export default function Store() {
       alert('Email vazio!');
       return;
     }
-    if (cellphone?.length !== 11) {
-      alert('Celular inválido!');
-      return;
-    }
-    if (telephone?.length !== 11) {
+    if (phone?.length !== 11) {
       alert('Telefone inválido!');
       return;
     }
@@ -156,44 +113,28 @@ export default function Store() {
       alert('CNPJ inválido!');
       return;
     }
-    if (cep?.length !== 8) {
-      alert('CEP inválido!');
-      return;
-    }
     if (password !== confPassword) {
       alert('As senhas precisam ser iguais!');
       return;
     }
 
-    const body = {
-      // Dados do usuario
-      first_name: firstName,
-      last_name: lastName,
-      cpf,
-      birth_date: birthDate,
-      type: 'vendedor',
-      // Dados do Formulario da Loja
-      company_name: companyName,
-      email,
-      telephone, // Tambem e guardado no usuario
-      cellphone,
-      cnpj,
-      cep,
-      password,
-      ie,
-      ie_state: ieState,
-      // Resto dos dados da loja - Teste
-      cover_img: cover_img.file,
-      logo_img: logo_img.file,
-      evaluation: '10',
-      status: 'Aprovado',
-    };
+    const formData = new FormData();
 
-    const data = new FormData();
-    Object.keys(body).forEach((key) => data.append(key, body[key]));
+    formData.append('company_name', companyName);
+    formData.append('email', email);
+    formData.append('phone', phone);
+    formData.append('cnpj', cnpj);
+    formData.append('password', password);
+    formData.append('status', '1');
+    formData.append('cover_img', cover_img.file);
+    formData.append('logo_img', logo_img.file);
 
     try {
-      const Validate = await axios.post('/api/store', data);
+      const Validate = await api.post('api/store', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
       console.log(Validate.data);
       notification.open({
         message: 'Sucesso!',
@@ -207,18 +148,28 @@ export default function Store() {
       });
     } catch (error) {
       console.log(error);
+      notification.open({
+        message: 'Erro!',
+        description:
+            'Erro ao cadastrar usuário.',
+        className: 'ant-notification',
+        top: '100px',
+        style: {
+          width: 600,
+        },
+      });
     }
   }
 
-  function enableInput() {
-    document.getElementById('ie').disabled = false;
-    document.getElementById('ieState').disabled = false;
-  }
+  // function enableInput() {
+  //   document.getElementById('ie').disabled = false;
+  //   document.getElementById('ieState').disabled = false;
+  // }
 
-  function disableInput() {
-    document.getElementById('ie').disabled = true;
-    document.getElementById('ieState').disabled = true;
-  }
+  // function disableInput() {
+  //   document.getElementById('ie').disabled = true;
+  //   document.getElementById('ieState').disabled = true;
+  // }
 
   return (
     <>
@@ -228,32 +179,8 @@ export default function Store() {
           <StoreFormulary>
             <TopFormulary>
               <TitleStore>Bora começar a vender?</TitleStore>
-              <SubtitleStore>Por favor, preenchar as informações referentes ao usuário: </SubtitleStore>
+              <SubtitleStore>Por favor, preencha as informações referentes à sua loja: </SubtitleStore>
             </TopFormulary>
-
-            <DividedItemFormulary>
-              <ItemFormulary>
-                <Text>Nome: *</Text>
-                <TextBox type="text" id="firstName" onChange={handleFirstNameChange} value={firstName} />
-              </ItemFormulary>
-              <ItemFormulary>
-                <Text>Sobrenomes: *</Text>
-                <TextBox type="text" id="lastName" onChange={handleLastNameChange} value={lastName} />
-              </ItemFormulary>
-            </DividedItemFormulary>
-
-            <DividedItemFormulary>
-              <ItemFormulary>
-                <Text>CPF: *</Text>
-                <MaskedInput name="cpf" id="cpf" mask="999.999.999-99" value={cpf} onChange={handleCpfChange} />
-              </ItemFormulary>
-              <ItemFormulary>
-                <Text>Data de Nascimento:</Text>
-                <MaskedInput name="birthDate" id="birthDate" mask="99/99/9999" value={birthDate} onChange={handleBirthDateChange} />
-              </ItemFormulary>
-            </DividedItemFormulary>
-
-            <SubtitleStore>Agora, entre com as informações da sua loja:</SubtitleStore>
 
             <ItemFormulary>
               <Text>Razão Social: *</Text>
@@ -267,12 +194,8 @@ export default function Store() {
 
             <DividedItemFormulary>
               <ItemFormulary>
-                <Text>DDD + cellphone: *</Text>
-                <MaskedInput name="cellphone" id="cellphone" mask="(99)99999-9999" value={cellphone} onChange={handleCellphoneChange} />
-              </ItemFormulary>
-              <ItemFormulary>
-                <Text>DDD + telephone: *</Text>
-                <MaskedInput name="telephone" id="telephone" mask="(99)99999-9999" value={telephone} onChange={handleTelephoneChange} />
+                <Text>DDD + phone: *</Text>
+                <MaskedInput name="phone" id="phone" mask="(99)99999-9999" value={phone} onChange={handlePhoneChange} />
               </ItemFormulary>
             </DividedItemFormulary>
 
@@ -280,10 +203,6 @@ export default function Store() {
               <ItemFormulary>
                 <Text>CNPJ: *</Text>
                 <MaskedInput name="cnpj" id="cnpj" mask="99.999.999/9999-99" value={cnpj} onChange={handleCnpjChange} />
-              </ItemFormulary>
-              <ItemFormulary>
-                <Text>CEP: *</Text>
-                <MaskedInput name="cep" id="cep" mask="99.999.999" value={cep} onChange={handleCepChange} />
               </ItemFormulary>
             </DividedItemFormulary>
 
@@ -298,15 +217,15 @@ export default function Store() {
               </ItemFormulary>
             </DividedItemFormulary>
 
-            <IEItemFormulary>
+            {/* <IEItemFormulary>
               <Text>Isento de IE: *</Text>
               <input type="radio" id="yes" name="yes_no" value="yes" onClick={disableInput} />
               <Text2>Sim</Text2>
               <input type="radio" id="no" name="yes_no" value="no" onClick={enableInput} />
               <Text2>Não</Text2>
-            </IEItemFormulary>
+            </IEItemFormulary> */}
 
-            <DividedItemFormulary>
+            {/* <DividedItemFormulary>
               <ItemFormulary>
                 <Text>IE: *   </Text>
                 <TextBox type="text" id="ie" placeholder="" onChange={handleIeChange} value={ie} />
@@ -315,7 +234,7 @@ export default function Store() {
                 <Text>Estado da IE: *</Text>
                 <SelectState name="ieState" id="ieState" onChange={handleIeStateChange} value={ieState} />
               </ItemFormulary>
-            </DividedItemFormulary>
+            </DividedItemFormulary> */}
 
             <DividedItemFormulary>
               <ItemFormulary>
