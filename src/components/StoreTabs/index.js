@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
 import styled from 'styled-components';
+import api from '../../utils/api';
 import { Tabs } from 'antd';
 import 'antd/dist/antd.css';
 import ProductsCarousel from '../Carousels/ProductsCarousel';
@@ -46,12 +47,21 @@ width: 50%;
 flex-direction: column;
 `;
 
-export default function StoreTabs({ store }) {
+export default function StoreTabs({ store, myLoader }) {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    api.get("products").then((res) => {
+      setProducts(res.data);
+    });
+
+  }, []);
+
   return (
     <Container>
       <Tabs defaultActiveKey="1" onChange={callback} centered size="large">
         <TabPane tab="Produtos" key="1">
-          <ProductsCarousel />
+          <ProductsCarousel products={products} myLoader={myLoader} />
         </TabPane>
         <TabPane tab="Serviços" key="2">
           <StoreServices store={store} />

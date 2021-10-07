@@ -16,10 +16,16 @@ module.exports = {
 
   async getStoreAddressById(id) {
     try {
-      const address = await connection('Store_Address')
-        .where('firebase_id_store', id)
+      const { address_id } = await connection('Store_Address')
+      .where('firebase_id_store', id)
+      .select('*')
+      .first();
+
+      const address = await connection('Address')
+        .where('address_id', address_id)
         .select('*')
         .first();
+
       return address;
     } catch (error) {
       console.error(error);

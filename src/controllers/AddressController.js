@@ -16,6 +16,20 @@ module.exports = {
     }
   },
 
+  async getOneByStoreId(request, response) {
+    const { id } = request.query;
+
+    try {
+    const address = await AddressModel.getStoreAddressById(id);
+    return response.status(200).json(address);
+    } catch (err) {
+      if (err.message) {
+        return response.status(400).json({ notification: err.message });
+      }
+      return response.status(500).json({ notification: 'Internal Server Error' });
+    }
+  },
+
   async getAllByUser(req, res) {
     const firebase_id = req.query.id;
 
