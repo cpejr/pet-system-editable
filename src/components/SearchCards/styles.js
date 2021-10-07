@@ -17,6 +17,9 @@ export const CardWrapper = styled.button`
     box-shadow: 0 16px 40px 0px rgba(112, 144, 176, 0.2);
     transform: scale(1.02);
   }
+  @media (max-width: 1000px) {
+    flex-direction: column;
+  }
 `;
 
 export const CardInfo = styled.div`
