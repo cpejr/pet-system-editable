@@ -62,7 +62,11 @@ export default function Product(props) {
               {product.price}
             </Price>
             <Delivery>
-              Frete: R$ 4,99
+              Frete:
+              {' '}
+              R$
+              {' '}
+              {store.shipping_tax}
             </Delivery>
             <ButtonsContainer>
               <ButtonsContainer.Col>

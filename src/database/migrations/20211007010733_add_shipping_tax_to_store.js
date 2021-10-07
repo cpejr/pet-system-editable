@@ -1,6 +1,6 @@
 exports.up = async function (knex) {
   await knex.schema.table('Store', (table) => {
-    table.integer('shipping_tax').notNullable().defaultTo(0);
+    table.float('shipping_tax').notNullable().defaultTo(0);
   });
   await knex.schema.raw(`
         ALTER TABLE "Store"
