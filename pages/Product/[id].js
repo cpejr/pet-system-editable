@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FaArrowLeft } from 'react-icons/fa';
 import Image from 'next/image';
+import Link from 'next/link';
 import api from '../../src/utils/api';
 import { Header, FooterMobile } from '../../src/components/index';
 import {
@@ -52,9 +53,11 @@ export default function Product(props) {
               <Store.Title>
                 Vendido e entregue por:
               </Store.Title>
-              <Store.Text>
-                {store.company_name}
-              </Store.Text>
+              <Link href={`/Store/${store.firebase_id_store}`}>
+                <Store.Text>
+                  {store.company_name}
+                </Store.Text>
+              </Link>
             </Store>
             <Price>
               R$

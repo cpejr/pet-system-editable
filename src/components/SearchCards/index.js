@@ -35,7 +35,9 @@ export default function SearchCards(props) {
                 {product.price}
               </CardDescriptionProductPrice>
               <CardDescriptionDeliveryPrice>
-                Entrega:
+                Frete:
+                {' '}
+                R$
                 {' '}
                 {store.shipping_tax}
               </CardDescriptionDeliveryPrice>
