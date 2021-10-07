@@ -1,89 +1,11 @@
-import React, { useEffect, useState } from "react";
-import api from "../../src/utils/api";
-import styled from "styled-components";
-import Image from "next/image";
-import HeaderSearch from "../../src/components/HeaderSearch";
-import OrderSearch from "../../src/components/Filter/OrderSearch";
-import Brands from "../../src/components/Filter/Brands";
-import Price from "../../src/components/Filter/Price";
-import SearchCards from "../../src/components/SearchCards";
-import FooterMobile from "../../src/components/Mobile/FooterMobile";
-import SearchHeader from "../../src/components/Mobile/SearchHeader";
-
-const ContainerCategory = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  flex-direction: row;
-  font-family: Roboto;
-  @media (max-width: 700px) {
-    display: none;
-  }
-`;
-
-ContainerCategory.Col = styled.div`
-  flex-direction: column;
-  margin: 0 1% 0 1%;
-`;
-
-ContainerCategory.submitImg = styled.button`
-  border: none;
-  flex-direction: column;
-  padding: 10%;
-  border-radius: 10px;
-  margin: 0% 1% 0% 0%;
-  background-color: transparent;
-  cursor: pointer;
-  &:hover {
-    box-shadow: 0 16px 40px 0px rgba(112, 144, 176, 0.2);
-    transform: scale(1.02);
-  }
-  @media (max-width: 700px) {
-    display: none;
-  }
-`;
-
-ContainerCategory.CategoryName = styled.div`
-  display: flex;
-  justify-content: center;
-`;
-
-const SearchContainer = styled.div`
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  width: 100%;
-  flex-direction: row;
-  margin-top: 2%;
-  margin-bottom: 2%;
-`;
-
-SearchContainer.Col1 = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 25%;
-  min-width: 300px;
-  flex-direction: column;
-  @media (max-width: 880px) {
-    width: 40%;
-  }
-  @media (max-width: 560px) {
-    display: none;
-  }
-`;
-SearchContainer.Col2 = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  align-items: center;
-  justify-content: center;
-  width: 75%;
-  flex-direction: column;
-  @media (max-width: 560px) {
-    width: 100%;
-  }
-`;
+import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
+import api from '../../src/utils/api';
+import { ContainerCategory, SearchContainer, Submit } from './styles';
+import {
+  HeaderSearch, OrderSearch, Brands, Price,
+  SearchCards, FooterMobile, SearchHeader,
+} from '../../src/components/index';
 
 export default function Search(props) {
   const {categoriaHeader} = props;
