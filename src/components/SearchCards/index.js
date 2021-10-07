@@ -5,6 +5,7 @@ import api from '../../utils/api';
 import {
   CardWrapper, CardInfo, CardDescription, CardDescriptionTitle,
   CardDescriptionValues, CardDescriptionDeliveryPrice,
+  CardDescriptionProductPrice,
 } from './styles';
 
 export default function SearchCards(props) {
@@ -28,10 +29,15 @@ export default function SearchCards(props) {
               {product.product_name}
             </CardDescriptionTitle>
             <CardDescriptionValues>
-              <CardDescriptionDeliveryPrice>
+              <CardDescriptionProductPrice>
                 R$
                 {' '}
                 {product.price}
+              </CardDescriptionProductPrice>
+              <CardDescriptionDeliveryPrice>
+                Entrega:
+                {' '}
+                R$
                 {' '}
                 {store.shipping_tax}
               </CardDescriptionDeliveryPrice>

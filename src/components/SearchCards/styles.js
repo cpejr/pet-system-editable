@@ -50,22 +50,33 @@ export const CardDescriptionTitle = styled.h3`
 
 export const CardDescriptionValues = styled.p`
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: left;
   width: 100%;
   margin: 0;
-  flex-direction: row;
   @media (max-width: 880px) {
     flex-direction: column;
     align-items: initial;
   }
 `;
+export const CardDescriptionProductPrice = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  width: 100%;
+  font-size: 24px;
+  @media (max-width: 560px) {
+    width: 100%;
+    color: ${({ theme }) => theme.colors.baseGray};
+  }
+`;
 export const CardDescriptionDeliveryPrice = styled.div`
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  width: 60%;
-  font-size: 24px;
+  justify-content: left;
+  width: 100%;
+  font-size: 16px;
   @media (max-width: 560px) {
     width: 100%;
     color: ${({ theme }) => theme.colors.baseGray};
