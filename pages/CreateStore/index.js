@@ -52,6 +52,7 @@ export default function Store() {
   const [cnpj, setCnpj] = useState('');
   const [password, setPassword] = useState('');
   const [confPassword, setConfPassword] = useState('');
+  const [shippingTax, setShippingTax] = useState('');
   // const [ie, setIe] = useState('');
   // const [ieState, setIeState] = useState('');
   const [cover_img, setCover_img] = useState({ file: null, url: null });
@@ -75,6 +76,9 @@ export default function Store() {
   }
   function handleConfPasswordChange(event) {
     setConfPassword(event.target.value);
+  }
+  function handleShippingTaxChange(event) {
+    setShippingTax(event.target.value);
   }
   // function handleIeChange(event) {
   //   setIe(event.target.value);
@@ -105,6 +109,11 @@ export default function Store() {
       alert('Email vazio!');
       return;
     }
+    const regex = new RegExp('.+@.+\..+');
+    if (!regex.test(email)) {
+      alert('Email inválido!');
+      return;
+    }
     if (phone?.length !== 11) {
       alert('Telefone inválido!');
       return;
@@ -115,6 +124,11 @@ export default function Store() {
     }
     if (password !== confPassword) {
       alert('As senhas precisam ser iguais!');
+      return;
+    }
+    const shippingTaxRegex = new RegExp('([0-9])+');
+    if (!shippingTaxRegex.test(shippingTax)) {
+      alert('Insira uma taxa válida');
       return;
     }
 
@@ -128,7 +142,7 @@ export default function Store() {
     formData.append('status', '1');
     formData.append('cover_img', cover_img.file);
     formData.append('logo_img', logo_img.file);
-
+    formData.append('shipping_tax', shippingTax);
     try {
       const Validate = await api.post('api/store', formData, {
         headers: {
@@ -187,19 +201,28 @@ export default function Store() {
               <TextBox type="text" id="birthDate" onChange={handleCompanyNameChange} value={companyName} />
             </ItemFormulary>
 
-            <ItemFormulary>
-              <Text>Email: *</Text>
-              <TextBox type="text" id="email" onChange={handleEmailChange} value={email} />
-            </ItemFormulary>
-
             <DividedItemFormulary>
+
+              <ItemFormulary>
+                <Text>Email: *</Text>
+                <TextBox type="text" id="email" onChange={handleEmailChange} value={email} />
+              </ItemFormulary>
               <ItemFormulary>
                 <Text>DDD + phone: *</Text>
                 <MaskedInput name="phone" id="phone" mask="(99)99999-9999" value={phone} onChange={handlePhoneChange} />
               </ItemFormulary>
+            </DividedItemFormulary>
+
+            <DividedItemFormulary>
+
               <ItemFormulary>
                 <Text>CNPJ: *</Text>
                 <MaskedInput name="cnpj" id="cnpj" mask="99.999.999/9999-99" value={cnpj} onChange={handleCnpjChange} />
+              </ItemFormulary>
+
+              <ItemFormulary>
+                <Text>Taxa de envio: *</Text>
+                <MaskedInput name="shippingTax" id="shipping" mask="R$ 99,99" value={shippingTax} onChange={handleShippingTaxChange} />
               </ItemFormulary>
 
             </DividedItemFormulary>
