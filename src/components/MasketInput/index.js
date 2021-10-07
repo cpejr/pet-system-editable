@@ -35,7 +35,9 @@ export default function MaskedInput({
         mask={mask}
         value={value}
         onChange={handleChange}
-        style={{ border: 'none', outline: 'none', backgroundColor: 'transparent' }}
+        style={{
+          border: 'none', outline: 'none', backgroundColor: 'transparent', width: '100%',
+        }}
       />
     </TextBox>
   );
