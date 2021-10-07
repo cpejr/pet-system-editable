@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FaArrowLeft } from 'react-icons/fa';
+import Image from 'next/image';
 import api from '../../src/utils/api';
 import { Header, FooterMobile } from '../../src/components/index';
 import {
@@ -13,11 +14,12 @@ export default function Product(props) {
   useEffect(() => {
     api.get(`store/${product.firebase_id_store}`).then((res) => {
       setStore(res.data);
-      console.log(res.data);
     });
   }, []);
-  console.log(store);
   const { product } = props;
+
+  const myLoader = ({ src }) => `https://s3-sa-east-1.amazonaws.com/petsystembucket/${src}`;
+
   return (
     <div>
       <Header />
@@ -28,61 +30,55 @@ export default function Product(props) {
         </BackButton>
       </BackPage>
       { product && (
-        <Container>
-          <ProductContainer>
-            <ProductContainer.Col1>
-              <img src={`https://s3-sa-east-1.amazonaws.com/petsystembucket/${product.img}`} width="300" height="350" alt="" />
-            </ProductContainer.Col1>
+      <Container>
+        <ProductContainer>
+          <ProductContainer.Col1>
+            <Image loader={myLoader} src={product.img} alt="" width="751" height="689" />
+            <Description>
+              <Description.Title>
+                Descrição do produto:
+              </Description.Title>
+              <Description.Text>
+                {product.description}
+              </Description.Text>
+            </Description>
+          </ProductContainer.Col1>
 
-            <ProductContainer.Col2>
-              <ProductTitle>
-                {product.product_name}
-              </ProductTitle>
-              <Price>
-                R$
-                {' '}
-                {product.price}
-              </Price>
-              <Delivery>
-                Frete: R$ 4,99
-              </Delivery>
-              <Delivery>
-                Tempo de entrega: 15 - 20 min
-              </Delivery>
-              <ButtonsContainer>
-                <ButtonsContainer.Col>
-                  <Button>
-                    Comprar
-                  </Button>
-                </ButtonsContainer.Col>
-                <ButtonsContainer.Col>
-                  <AddCarButton>
-                    Adicionar ao carrinho
-                  </AddCarButton>
-                </ButtonsContainer.Col>
-              </ButtonsContainer>
-              <Store>
-                <Store.Title>
-                  Loja
-                </Store.Title>
-                <Store.Text>
-                  {store.company_name}
-                </Store.Text>
-              </Store>
-            </ProductContainer.Col2>
-          </ProductContainer>
-          <Description>
-
-            <Description.Title>
-              Descrição do produto:
-            </Description.Title>
-            <Description.Text>
-              {product.description}
-            </Description.Text>
-
-          </Description>
-
-        </Container>
+          <ProductContainer.Col2>
+            <ProductTitle>
+              {product.product_name}
+            </ProductTitle>
+            <Store>
+              <Store.Title>
+                Vendido e entregue por:
+              </Store.Title>
+              <Store.Text>
+                {store.company_name}
+              </Store.Text>
+            </Store>
+            <Price>
+              R$
+              {' '}
+              {product.price}
+            </Price>
+            <Delivery>
+              Frete: R$ 4,99
+            </Delivery>
+            <ButtonsContainer>
+              <ButtonsContainer.Col>
+                <Button>
+                  Comprar
+                </Button>
+              </ButtonsContainer.Col>
+              <ButtonsContainer.Col>
+                <AddCarButton>
+                  Adicionar ao carrinho
+                </AddCarButton>
+              </ButtonsContainer.Col>
+            </ButtonsContainer>
+          </ProductContainer.Col2>
+        </ProductContainer>
+      </Container>
       )}
       <FooterMobile />
     </div>

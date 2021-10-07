@@ -20,7 +20,6 @@ export default function SearchCards(props) {
   };
 
   const myLoader = ({ src }) => `https://s3-sa-east-1.amazonaws.com/petsystembucket/${src}`;
-  console.log(product);
 
   return (
     <Link href={`/Product/${product.product_id}`}>

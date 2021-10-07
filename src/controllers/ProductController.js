@@ -7,10 +7,7 @@ module.exports = {
     const { id } = request.query;
     try {
       const product = await ProductModel.getProductById(id);
-      const readImage = await AwsModel.getAWS(product.img);
-      product.img = readImage;
-      const stringfedProduct = JSON.stringify(product);
-      return response.status(200).send(stringfedProduct);
+      return response.status(200).json(product);
     } catch (err) {
       if (err.message) {
         return response.status(400).json({ notification: err.message });
@@ -71,8 +68,8 @@ module.exports = {
   async getAll(request, response) {
     try {
       const { category_id } = request.query;
-      const price = request.query["price[]"];
-      
+      const price = request.query['price[]'];
+
       const products = await ProductModel.getAllProducts(price, category_id);
       return response.status(200).json(products);
     } catch (err) {
