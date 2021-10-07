@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
-import api from "../../src/utils/api";
-import styled from "styled-components";
-import Image from "next/image";
-import HeaderSearch from "../../src/components/HeaderSearch";
-import OrderSearch from "../../src/components/Filter/OrderSearch";
-import Brands from "../../src/components/Filter/Brands";
-import Price from "../../src/components/Filter/Price";
-import SearchCards from "../../src/components/SearchCards";
-import SearchCardsStore from "../../src/components/SearchCardsStore";
-import FooterMobile from "../../src/components/Mobile/FooterMobile";
-import SearchHeader from "../../src/components/Mobile/SearchHeader";
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import Image from 'next/image';
+import api from '../../src/utils/api';
+import HeaderSearch from '../../src/components/HeaderSearch';
+import OrderSearch from '../../src/components/Filter/OrderSearch';
+import Brands from '../../src/components/Filter/Brands';
+import Price from '../../src/components/Filter/Price';
+import SearchCards from '../../src/components/SearchCards';
+import SearchCardsStore from '../../src/components/SearchCardsStore';
+import FooterMobile from '../../src/components/Mobile/FooterMobile';
+import SearchHeader from '../../src/components/Mobile/SearchHeader';
 
 const ContainerCategory = styled.div`
   display: flex;
@@ -133,52 +133,44 @@ export default function Search(props) {
   const [stores, setStores] = useState([]);
   const [price, setPrice] = useState([0, 5000]);
   const [categoria, setCategoria] = useState(id);
-  const [checkedStore, setCheckedStore] = useState("#AAABB0");
-  const [checkedProducts, setCheckedProducts] = useState("#609694");
+  const [checkedStore, setCheckedStore] = useState('#AAABB0');
+  const [checkedProducts, setCheckedProducts] = useState('#609694');
 
   const handleClickStore = () => {
-    setCheckedStore("#609694");
-    setCheckedProducts("#AAABB0");
+    setCheckedStore('#609694');
+    setCheckedProducts('#AAABB0');
   };
 
   const handleClickProducts = () => {
-    setCheckedProducts("#609694");
-    setCheckedStore("#AAABB0");
+    setCheckedProducts('#609694');
+    setCheckedStore('#AAABB0');
   };
 
-  const defineBackgroundColor = (category_id) => {
-    return categoria === category_id
-      ? { backgroundColor: "#A6DAD8" }
-      : { backgroundColor: "#F8F8F8" };
-  };
+  const defineBackgroundColor = (category_id) => (categoria === category_id
+    ? { backgroundColor: '#A6DAD8' }
+    : { backgroundColor: '#F8F8F8' });
 
-  const myLoader = ({ src }) => {
-    return `https://s3-sa-east-1.amazonaws.com/petsystembucket/${src}`;
-  };
+  const myLoader = ({ src }) => `https://s3-sa-east-1.amazonaws.com/petsystembucket/${src}`;
 
   useEffect(() => {
-    api.get("category").then((res) => {
+    api.get('category').then((res) => {
       setCategories(res.data);
     });
 
     api
-      .get("products", { params: { price: price, category_id: categoria } })
+      .get('products', { params: { price, category_id: categoria } })
       .then((res) => {
         if (keyword) {
-          const FilteredProducts = res.data.filter((item) =>
-            item.product_name.toLowerCase().includes(keyword.toLowerCase())
-          );
+          const FilteredProducts = res.data.filter((item) => item.product_name.toLowerCase().includes(keyword.toLowerCase()));
           setProducts(FilteredProducts);
         } else {
           setProducts(res.data);
         }
       });
 
-    api.get("store").then((res) => {
+    api.get('store').then((res) => {
       if (keyword) {
-        const FilteredStores = res.data.filter((item) =>
-          item.company_name.toLowerCase().includes(keyword.toLowerCase())
-        );
+        const FilteredStores = res.data.filter((item) => item.company_name.toLowerCase().includes(keyword.toLowerCase()));
         setStores(FilteredStores);
       } else {
         setStores(res.data);
@@ -186,7 +178,7 @@ export default function Search(props) {
     });
   }, [categoria, price, keyword]);
 
-  if (checkedProducts === "#609694") {
+  if (checkedProducts === '#609694') {
     return (
       <div>
         <HeaderSearch keyword={keyword} />
@@ -255,7 +247,7 @@ export default function Search(props) {
       </div>
     );
   }
-  if (checkedProducts === "#AAABB0") {
+  if (checkedProducts === '#AAABB0') {
     return (
       <div>
         <HeaderSearch />
