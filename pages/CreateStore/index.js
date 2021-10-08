@@ -1,48 +1,24 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
-import { notification } from 'antd';
 import 'antd/dist/antd.css';
 import Link from 'next/link';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 import Header from '../../src/components/Header';
 import {
-  StoreBodyWrapper, StoreBody, StoreFormulary, TopFormulary, ItemFormulary, IEItemFormulary, DividedItemFormulary, BottomFormulary,
+  StoreBodyWrapper, StoreBody, StoreFormulary, TopFormulary, ItemFormulary,
+  DividedItemFormulary, BottomFormulary,
 } from '../../src/components/BodyForms';
 import {
-  TitleStore, SubtitleStore, Text, Text2, SubText, TextBox, Submit,
+  Img, UploadContainer, ImageSelected, Label,
+} from './styles';
+import {
+  TitleStore, SubtitleStore, Text, SubText, TextBox, Submit,
 } from '../../src/components/FormComponents';
 import MaskedInput from '../../src/components/MasketInput';
+import 'react-toastify/dist/ReactToastify.css';
 
 const api = axios.create({ baseURL: 'http://localhost:3000/' });
-
-const Img = styled.img` 
-  display:flex;
-align-items:center;
-justify-content:center;
-  width: 200px;
-  height: 200px;
-  margin-bottom:5%;
-  margin-top:5%;
-  `;
-const UploadContainer = styled.div`
-display:flex;
-align-items:center;
-justify-content:center;
-flex-direction:column;
-`;
-
-const ImageSelected = styled.input`
-`;
-
-const Label = styled.label`
-background-color:  ${({ theme }) => theme.colors.mediumGreen};;
-color: white;
-padding: 0.5rem;
-font-family: sans-serif;
-border-radius: 0.3rem;
-cursor: pointer;
-margin-top: 1rem;
-`;
+toast.configure();
 
 export default function Store() {
   // Loja:
@@ -102,33 +78,41 @@ export default function Store() {
   async function handleSubmit(event) {
     event.preventDefault();
     if (companyName?.length < 1) {
-      alert('Nome da Empresa vazio!');
+      toast('Nome da Empresa vazio!', { position: toast.POSITION.BOTTOM_RIGHT });
       return;
     }
     if (email?.length < 1) {
-      alert('Email vazio!');
+      toast('Email vazio!', { position: toast.POSITION.BOTTOM_RIGHT });
       return;
     }
     const regex = new RegExp('.+@.+\..+');
     if (!regex.test(email)) {
-      alert('Email inválido!');
+      toast('Email inválido!', { position: toast.POSITION.BOTTOM_RIGHT });
       return;
     }
     if (phone?.length !== 11) {
-      alert('Telefone inválido!');
+      toast('Telefone inválido', { position: toast.POSITION.BOTTOM_RIGHT });
       return;
     }
     if (cnpj?.length !== 14) {
-      alert('CNPJ inválido!');
+      toast('CNPJ inválido', { position: toast.POSITION.BOTTOM_RIGHT });
       return;
     }
     if (password !== confPassword) {
-      alert('As senhas precisam ser iguais!');
+      toast('As senhas precisam ser iguais!', { position: toast.POSITION.BOTTOM_RIGHT });
       return;
     }
     const shippingTaxRegex = new RegExp('([0-9])+');
     if (!shippingTaxRegex.test(shippingTax)) {
-      alert('Insira uma taxa válida');
+      toast('Insira uma taxa válida!', { position: toast.POSITION.BOTTOM_RIGHT });
+      return;
+    }
+    if (!cover_img.file) {
+      toast('Insira uma capa!', { position: toast.POSITION.BOTTOM_RIGHT });
+      return;
+    }
+    if (!logo_img.file) {
+      toast('Insira uma logo!', { position: toast.POSITION.BOTTOM_RIGHT });
       return;
     }
 
@@ -150,28 +134,9 @@ export default function Store() {
         },
       });
       console.log(Validate.data);
-      notification.open({
-        message: 'Sucesso!',
-        description:
-          'O registro da loja e do usuário foi concluído com sucesso.',
-        className: 'ant-notification',
-        top: '100px',
-        style: {
-          width: 600,
-        },
-      });
+      toast('Sucesso!', { position: toast.POSITION.BOTTOM_RIGHT });
     } catch (error) {
-      console.log(error);
-      notification.open({
-        message: 'Erro!',
-        description:
-            'Erro ao cadastrar usuário.',
-        className: 'ant-notification',
-        top: '100px',
-        style: {
-          width: 600,
-        },
-      });
+      toast('Erro ao cadastrar usuário.', { position: toast.POSITION.BOTTOM_RIGHT });
     }
   }
 
@@ -193,7 +158,11 @@ export default function Store() {
           <StoreFormulary>
             <TopFormulary>
               <TitleStore>Bora começar a vender?</TitleStore>
-              <SubtitleStore>Por favor, preencha as informações referentes à sua loja: </SubtitleStore>
+              <SubtitleStore>
+                Por favor, preencha as informações referentes
+                à sua loja:
+                {' '}
+              </SubtitleStore>
             </TopFormulary>
 
             <ItemFormulary>
