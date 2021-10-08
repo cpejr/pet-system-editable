@@ -16,7 +16,6 @@ export async function getOne(request, response) {
 }
 
 export async function getAll(request, response) {
-
   try {
     const users = await UserModel.getAllUsers();
     return response.status(200).json(users);
@@ -33,6 +32,10 @@ export async function create(request, response) {
   let firebase_id;
 
   try {
+    const regex = new RegExp('.+@.+\..+');
+    if (!regex.test(request.body.email)) {
+      throw new Error('Formato de email inválido');
+    }
     firebase_id = await FirebaseModel
       .createNewUser(user.email, user.password);
 
@@ -53,7 +56,7 @@ export async function create(request, response) {
 
 export async function deleteBoth(request, response) {
   try {
-    const id = request.query.id;
+    const { id } = request.query;
 
     await FirebaseModel.deleteUser(id);
     await UserModel.deleteUser(id);
@@ -89,7 +92,7 @@ export async function update(request, response) {
     await UserModel.updateUser(newUser, id);
 
     const updatedUser = await UserModel.getUserById(id);
-    return response.status(200).json(updatedUser , { message: 'Sucesso!' });
+    return response.status(200).json(updatedUser, { message: 'Sucesso!' });
   } catch (error) {
       console.error(error); //eslint-disable-line
     return response.status(500).json({ notification: 'Internal Server Error' });
