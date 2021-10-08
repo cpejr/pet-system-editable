@@ -41,6 +41,10 @@ module.exports = {
 
     // Criacao da Loja
     try {
+      const regex = new RegExp('.+@.+\..+');
+      if (!regex.test(request.body.email)) {
+        throw new Error('Formato de email inválido');
+      }
       firebase_id = await FirebaseModel.createNewUser(store.email, store.password);
       store.firebase_id_store = firebase_id;
       delete store.password;
