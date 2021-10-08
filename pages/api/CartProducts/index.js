@@ -1,5 +1,5 @@
 import { create, getAll, deleteAllProductsCart } from '../../../src/controllers/Cart_ProductsController';
-import { isAdmin,withAuthValidation } from '../../../src/utils/Auth';
+import { isAdmin, withAuthValidation } from '../../../src/utils/Auth';
 
 export default function handler(req, res) {
   try {

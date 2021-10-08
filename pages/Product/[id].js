@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FaArrowLeft } from 'react-icons/fa';
+import { notification } from 'antd';
 import Image from 'next/image';
 import api from '../../src/utils/api';
 import { Header, FooterMobile } from '../../src/components/index';
@@ -10,6 +11,30 @@ import {
 } from './styles';
 
 export default function Product(props) {
+  async function handleAddCart() {
+    const body = {
+      product_id: product.product_id,
+      amount: 4,
+      final_price: 4 * product.price,
+    };
+    try {
+      console.log(body);
+      const Add = await api.post('/CartProducts', body);
+      console.log(Add.data);
+      notification.open({
+        message: 'Sucesso!',
+        description:
+          'O produto foi adicionado ao seu carrinho.',
+        className: 'ant-notification',
+        top: '100px',
+        style: {
+          width: 600,
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
   const [store, setStore] = useState([]);
   useEffect(() => {
     api.get(`store/${product.firebase_id_store}`).then((res) => {
@@ -71,7 +96,7 @@ export default function Product(props) {
                 </Button>
               </ButtonsContainer.Col>
               <ButtonsContainer.Col>
-                <AddCarButton>
+                <AddCarButton onClick={handleAddCart}>
                   Adicionar ao carrinho
                 </AddCarButton>
               </ButtonsContainer.Col>
