@@ -15,7 +15,7 @@ export default function Carrinho() {
   const [products, setProducts] = useState([]);
   const [subTotal, setSubTotal] = useState(0);
   useEffect(() => {
-    api.get('products').then((res) => {
+    api.get('/CartProducts').then((res) => {
       setProducts(res.data);
     });
   }, []);
