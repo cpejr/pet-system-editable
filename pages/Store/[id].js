@@ -218,6 +218,5 @@ export async function getServerSideProps(context) {
 
   const address = response_address.data;
   const store = response_store.data;
-  console.log(store);
   return { props: { store, address } };
 }

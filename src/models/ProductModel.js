@@ -46,15 +46,26 @@ module.exports = {
       throw new Error(error);
     }
   },
+  async getAllByStore(firebase_id_store) {
+    try {
+      const products = await connection("Product")
+        .where("firebase_id_store", firebase_id_store)
+        .select("*");
+
+      return products;
+    } catch (error) {
+      console.error(error);
+      throw new Error(error);
+    }
+  },
   async getAllProducts(valor, category_id) {
     let minPrice = 0;
     let maxPrice = 0;
     try {
-      
-      if(valor!==undefined) {
+      if (valor !== undefined) {
         minPrice = valor[0];
         maxPrice = valor[1];
-      }else{
+      } else {
         minPrice = 0;
         maxPrice = 5000;
       }
@@ -65,22 +76,21 @@ module.exports = {
           .where("category_id", category_id)
           .where("price", ">=", minPrice)
           .where("price", "<=", maxPrice);
-        
+
         return products;
       }
 
-      if(valor){
+      if (valor) {
         const products = await connection("Product")
           .select("*")
           .where("price", ">=", minPrice)
           .where("price", "<=", maxPrice);
-        
+
         return products;
       }
 
-      const products = await connection("Product")
-      .select("*");
- 
+      const products = await connection("Product").select("*");
+
       return products;
     } catch (error) {
       console.error(error);

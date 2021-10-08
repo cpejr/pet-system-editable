@@ -51,7 +51,7 @@ export default function StoreTabs({ store, myLoader }) {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    api.get("products").then((res) => {
+    api.get(`productsByStore/${store.firebase_id_store}`).then((res) => {
       setProducts(res.data);
     });
 
