@@ -6,7 +6,7 @@ module.exports = {
     const product_group = req.body;
     try {
       const result = await Product_GroupModel.createProduct_Group(product_group);
-      return res.status(200).json({ notification: 'Product Group Created Successfully!' });
+      return res.status(200).json({ notification: 'Product Successfully added to group' });
     } catch (error) {
       if (error.message) {
         return res.status(400).json({ notification: error.message });

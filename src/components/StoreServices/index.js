@@ -101,7 +101,17 @@ export default function StoreServices(props) {
             </Services>
             <Services>
               <Services.Contact>• Celular:</Services.Contact>
-              {store.cellphone}
+              <InputMask
+                name={store.cellphone}
+                mask={'(99)99999-9999'}
+                value={store.cellphone}
+                style={{
+                  border: "none",
+                  outline: "none",
+                  backgroundColor: "transparent",
+                  width: "auto",
+                }}
+              />
             </Services>
             <Services>
               <Services.Contact>• Email:</Services.Contact>
@@ -109,7 +119,7 @@ export default function StoreServices(props) {
             </Services>
             <Services>
               <Services.Contact>• Horário de funcionamento:</Services.Contact>
-              10:00h - 18:30h
+              {store.opening_time}h - {store.closing_time}h
             </Services>
           </ServiceContainer.Col2>
         )}

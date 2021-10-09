@@ -6,6 +6,10 @@ import HeaderSearch from "../../src/components/HeaderSearch";
 import FooterMobile from "../../src/components/Mobile/FooterMobile";
 import StoreTabs from "../../src/components/StoreTabs";
 
+
+const ContainerDoContainer = styled.div`
+`;
+
 const Container = styled.div`
   display: flex;
   align-items: center;
@@ -32,13 +36,13 @@ StoreContainer.Col1 = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40%;
+  width: 50%;
 `;
 StoreContainer.Col2 = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40%;
+  width: 50%;
   flex-direction: column;
   @media (max-width: 880px) {
     width: 100%;
@@ -46,16 +50,6 @@ StoreContainer.Col2 = styled.div`
   }
 `;
 
-StoreContainer.Col3 = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 20%;
-  @media (max-width: 880px) {
-    width: 50%;
-    justify-content: center;
-  }
-`;
 
 const StoreName = styled.h1`
   display: flex;
@@ -76,24 +70,6 @@ const StoreDatas = styled.h3`
   @media (max-width: 880px) {
     width: 100%;
     justify-content: center;
-  }
-`;
-
-const Button = styled.button`
-  height: 40px;
-  width: 70%;
-  font-family: Roboto;
-  font-size: 100%;
-  font-weight: 500;
-  background-color: ${({ theme }) => theme.colors.mediumGreen};
-  color: white;
-  border: solid;
-  border-width: 1px;
-  border-radius: 5px;
-  cursor: pointer;
-  outline: none;
-  @media (max-width: 880px) {
-    width: 80%;
   }
 `;
 
@@ -129,31 +105,15 @@ const LittleBanner = styled.div`
 `;
 
 export default function Store({ store, address }) {
-  const [followBackground, setFollowBackground] = useState("#F8F8F8");
-  const [followFont, setFollowFont] = useState("#609694");
-  const [follow, setFollow] = useState("Seguir");
-
   const myLoader = ({ src }) => {
     return `https://s3-sa-east-1.amazonaws.com/petsystembucket/${src}`;
   };
 
-  function changeFollowBackground() {
-    if (followBackground === "#F8F8F8") {
-      setFollowBackground("#609694");
-      setFollowFont("#F8F8F8");
-      setFollow("Seguindo");
-    } else {
-      setFollowBackground("#F8F8F8");
-      setFollowFont("#609694");
-      setFollow("Seguir");
-    }
-  }
 
   return (
-    <div>
+    <ContainerDoContainer>
       <HeaderSearch />
       <Container>
-        {store && (
           <StoreContainer>
             <StoreContainer.Col1>
               <BigBanner>
@@ -186,29 +146,19 @@ export default function Store({ store, address }) {
             </StoreContainer.Col1>
             <StoreContainer.Col2>
               <StoreName>{store.company_name}</StoreName>
-              <StoreDatas>Taxa de entrega: R$ {store.shipping_tax}</StoreDatas>
+              <StoreDatas>•Taxa de entrega: R$ {store.shipping_tax}</StoreDatas>
               <StoreDatas>
-                {address.zipcode}, {address.state}
+              •Endereço: {address.street}, {address.address_num}, {address.city}, {address.state}
+              </StoreDatas>
+              <StoreDatas>
+              •CEP:  {address.zipcode}
               </StoreDatas>
             </StoreContainer.Col2>
-            <StoreContainer.Col3>
-              <Button
-                onClick={changeFollowBackground}
-                style={{
-                  backgroundColor: followBackground,
-                  borderColor: "#609694",
-                  color: followFont,
-                }}
-              >
-                {follow}
-              </Button>
-            </StoreContainer.Col3>
           </StoreContainer>
-        )}
       </Container>
       <StoreTabs store={store} myLoader={myLoader} />
       <FooterMobile />
-    </div>
+    </ContainerDoContainer>
   );
 }
 export async function getServerSideProps(context) {
