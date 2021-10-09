@@ -79,4 +79,16 @@ module.exports = {
       return response.status(500).json({ notification: 'Internal Server Error' });
     }
   },
+  async getAllByStoreId(request, response) {
+    const { id } = request.query;
+    try {
+      const product = await ProductModel.getAllByStore(id);
+      return response.status(200).json(product);
+    } catch (err) {
+      if (err.message) {
+        return response.status(400).json({ notification: err.message });
+      }
+      return response.status(500).json({ notification: 'Internal Server Error' });
+    }
+  },
 };

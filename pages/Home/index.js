@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
 import api from '../../src/utils/api';
 import Header from '../../src/components/Header';
 import MobileHeader from '../../src/components/MobileHeader';
@@ -11,7 +11,15 @@ import {
   Cards, CardItem, CardImage1, CardImage2, CardImage3, Container, Mosaic, Text, Divider, Button,
 } from '../../src/components/HomeComponents';
 
-export default function Home({ stores }) {
+export default function Home() {
+  const [stores, setStores] = useState([]);
+
+  useEffect(() => {
+    api.get("store").then((res) => {
+      setStores(res.data);
+    });
+  }, []);
+
   return (
     <>
       <Header />
@@ -68,10 +76,4 @@ export default function Home({ stores }) {
 
     </>
   );
-}
-
-export async function getServerSideProps() {
-  const response = await api.get('store');
-  const stores = response.data;
-  return { props: { stores } };
 }

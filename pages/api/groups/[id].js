@@ -1,11 +1,10 @@
-import { isAdmin } from '../../../src/utils/Auth';
 import { getAllFromStore } from "../../../src/controllers/GroupController";
 
 export default function handleGroup(req, res) {
   try {
     const { method } = req;
     if (method === "GET") {
-      return isAdmin(getAllFromStore)(req, res);
+      return getAllFromStore(req, res);
     }
     return res.status(500).json({ message: "Internal Server Error" });
   } catch (err) {
