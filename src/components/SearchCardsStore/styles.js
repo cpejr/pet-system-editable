@@ -1,9 +1,20 @@
 import styled from 'styled-components';
 
-export const CardWrapper = styled.button`
+export const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: auto;
+  padding: 0.5%;
+  margin: 0.5%;
+  font-family: Roboto;
+`;
+
+export const CardWrapper = styled.div`
   display: flex;
   align-items: center;
-  width: auto;
+  width: 100%;
   padding: 1vw;
   height: auto;
   font-family: Roboto;
@@ -25,10 +36,9 @@ export const CardWrapper = styled.button`
 export const CardInfo = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-around;
   padding: 3%;
-  width: 100%;
   font-size: 16px;
+  width: 100%;
   flex-direction: row;
   border-left: 1px solid #f2f2f2;
   margin-left: 5%;
@@ -38,7 +48,7 @@ export const CardDescription = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: auto;
+  width: 50%;
   flex-direction: column;
 `;
 
@@ -49,7 +59,6 @@ export const CardDescriptionTitle = styled.h3`
   width: 100%;
   margin-top: 1%;
   margin-bottom: 1%;
-  font-size: 26px;
 `;
 
 export const CardDescriptionValues = styled.p`
@@ -64,6 +73,18 @@ export const CardDescriptionValues = styled.p`
     align-items: initial;
   }
 `;
+export const CardDescriptionDeliveryPrice = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  width: 100%;
+  font-size: 16px;
+  @media (max-width: 560px) {
+    width: 100%;
+    color: ${({ theme }) => theme.colors.baseGray};
+  }
+`;
+
 export const CardDescriptionProductPrice = styled.div`
   display: flex;
   align-items: center;
@@ -75,14 +96,6 @@ export const CardDescriptionProductPrice = styled.div`
     color: ${({ theme }) => theme.colors.baseGray};
   }
 `;
-export const CardDescriptionDeliveryPrice = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: left;
-  width: 100%;
-  font-size: 16px;
-  @media (max-width: 560px) {
-    width: 100%;
-    color: ${({ theme }) => theme.colors.baseGray};
-  }
+export const ImgBox = styled.h1`
+    border-radius: 20px;
 `;
