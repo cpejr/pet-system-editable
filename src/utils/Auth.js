@@ -11,13 +11,12 @@ const sessionObject = {
 function withAuth(handler) {
   return async (req, res) => {
     try {
-
       const session = await req.session.get('user');
 
-      if (!session){
+      if (!session) {
         const store = await req.session.get('store');
 
-        if(!store) throw new Error('No session corresponding to this token');
+        if (!store) throw new Error('No session corresponding to this token');
       }
     } catch (error) {
       console.error(error); // eslint-disable-line

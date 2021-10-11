@@ -3,7 +3,8 @@ import { MdShoppingCart } from 'react-icons/md';
 import Header from '../../src/components/Header';
 import {
   CarrinhoBody, CarrinhoFinalButton, CarrinhoIcon, CarrinhoText,
-  CarrinhoTitle, CarrinhoTotal, CarrinhoValor, CarrinhoValorText, CarrinhoValorTitle,
+  CarrinhoTitle, CarrinhoTotal, CarrinhoValor, CarrinhoValorText,
+  CarrinhoValorTitle,
 } from '../../src/components/CarrinhoComponents';
 import CarrinhoFrete from '../../src/components/CarrinhoComponents/CarrinhoFrete';
 import CarrinhoCard from '../../src/components/CarrinhoComponents/CarrinhoCard';
@@ -14,7 +15,7 @@ export default function Carrinho() {
   const [products, setProducts] = useState([]);
   const [subTotal, setSubTotal] = useState(0);
   useEffect(() => {
-    api.get('products').then((res) => {
+    api.get('/CartProducts').then((res) => {
       setProducts(res.data);
     });
   }, []);
