@@ -45,14 +45,14 @@ module.exports = {
     const group_id = req.query.id;
     const product = req.body;
     try {
-      const product_groups = await Product_GroupModel.DeleteProduct_GroupById(group_id,product.product_id);
-      return res.status(200).json(product_groups);
+      await Product_GroupModel.DeleteProduct_GroupById(group_id,product.product_id);
     } catch (error) {
       if (error.message) {
         return res.status(400).json({ notification: error.message });
       }
       return res.status(500).json({ notification: 'Internal Server Error' });
     }
+    return res.status(200).json({ notification: 'Product Removed From Group' });
   },
 
 }
