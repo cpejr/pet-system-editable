@@ -15,3 +15,4 @@ export { default as Brands } from './Filter/Brands';
 export { default as Price } from './Filter/Price';
 export { default as SearchCards } from './SearchCards';
 export { default as SearchHeader } from './Mobile/SearchHeader';
+export { default as StoreTabs } from './StoreTabs';

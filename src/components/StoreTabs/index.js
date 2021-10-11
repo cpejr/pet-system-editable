@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
-import styled from "styled-components";
-import api from "../../utils/api";
-import { Tabs } from "antd";
-import "antd/dist/antd.css";
-import ProductsCarousel from "../Carousels/ProductsCarousel";
-import StoreServices from "../StoreServices";
-import SearchCards from "../SearchCards";
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import { Tabs } from 'antd';
+import api from '../../utils/api';
+import 'antd/dist/antd.css';
+import ProductsCarousel from '../Carousels/ProductsCarousel';
+import StoreServices from '../StoreServices';
+import SearchCards from '../SearchCards';
 
 const { TabPane } = Tabs;
 
@@ -89,6 +89,7 @@ const Title = styled.h1`
   margin-left: 5%;
   margin-top: 2%;
   margin-bottom: 1%;
+  width: 100%;
   font-family: Roboto;
   @media (max-width: 560px) {
     display: flex;
