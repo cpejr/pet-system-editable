@@ -86,7 +86,7 @@ SearchContainer.Row = styled.div`
 const Title = styled.h1`
   align-items: initial;
   display: flex;
-  margin-left: 5%;
+  margin-left: 0.5%;
   margin-top: 2%;
   margin-bottom: 1%;
   width: 100%;

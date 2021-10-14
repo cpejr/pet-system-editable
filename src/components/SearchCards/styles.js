@@ -5,7 +5,7 @@ export const CardWrapper = styled.button`
   align-items: center;
   width: auto;
   padding: 1vw;
-  height: auto;
+  height: 100%;
   font-family: Roboto;
   background-color: transparent;
   border: 1px solid #f2f2f2;     
