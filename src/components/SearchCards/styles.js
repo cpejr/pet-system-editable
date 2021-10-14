@@ -14,7 +14,6 @@ export const CardWrapper = styled.button`
   cursor: pointer;
   text-align: justify;
   text-justify: inter-word;
-  margin: 10px;
   &:hover {
     box-shadow: 0 16px 40px 0px rgba(112, 144, 176, 0.2);
     transform: scale(1.02);

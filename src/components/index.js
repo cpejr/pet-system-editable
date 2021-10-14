@@ -16,3 +16,5 @@ export { default as Price } from './Filter/Price';
 export { default as SearchCards } from './SearchCards';
 export { default as SearchHeader } from './Mobile/SearchHeader';
 export { default as StoreTabs } from './StoreTabs';
+export { default as StoreServices } from './StoreServices';
+export { default as ProductsCarousel } from './Carousels/ProductsCarousel';
