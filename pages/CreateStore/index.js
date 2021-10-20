@@ -25,10 +25,14 @@ export default function Store() {
   const [companyName, setCompanyName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
+  const [cellphone, setCellphone] = useState('');
   const [cnpj, setCnpj] = useState('');
   const [password, setPassword] = useState('');
   const [confPassword, setConfPassword] = useState('');
   const [shippingTax, setShippingTax] = useState('');
+  const [deliveryTime, setDeliveryTime] = useState('');
+  const [openingTime, setOpeningTime] = useState('');
+  const [closingTime, setClosingTime] = useState('');
   // const [ie, setIe] = useState('');
   // const [ieState, setIeState] = useState('');
   const [cover_img, setCover_img] = useState({ file: null, url: null });
@@ -43,7 +47,9 @@ export default function Store() {
   function handlePhoneChange(event) {
     setPhone(event.target.value);
   }
-
+  function handleCellphoneChange(event) {
+    setCellphone(event.target.value);
+  }
   function handleCnpjChange(event) {
     setCnpj(event.target.value);
   }
@@ -55,6 +61,15 @@ export default function Store() {
   }
   function handleShippingTaxChange(event) {
     setShippingTax(event.target.value);
+  }
+  function handleDeliveryTimeChange(event) {
+    setDeliveryTime(event.target.value);
+  }
+  function handleOpeningTimeChange(event) {
+    setOpeningTime(event.target.value);
+  }
+  function handleClosingTimeChange(event) {
+    setClosingTime(event.target.value);
   }
   // function handleIeChange(event) {
   //   setIe(event.target.value);
@@ -90,7 +105,11 @@ export default function Store() {
       toast('Email inválido!', { position: toast.POSITION.BOTTOM_RIGHT });
       return;
     }
-    if (phone?.length !== 11) {
+    if (phone?.length !== 10) {
+      toast('Telefone inválido', { position: toast.POSITION.BOTTOM_RIGHT });
+      return;
+    }
+    if (cellphone?.length !== 11) {
       toast('Telefone inválido', { position: toast.POSITION.BOTTOM_RIGHT });
       return;
     }
@@ -98,13 +117,17 @@ export default function Store() {
       toast('CNPJ inválido', { position: toast.POSITION.BOTTOM_RIGHT });
       return;
     }
-    if (password !== confPassword) {
-      toast('As senhas precisam ser iguais!', { position: toast.POSITION.BOTTOM_RIGHT });
-      return;
-    }
     const shippingTaxRegex = new RegExp('([0-9])+');
     if (!shippingTaxRegex.test(shippingTax)) {
       toast('Insira uma taxa válida!', { position: toast.POSITION.BOTTOM_RIGHT });
+      return;
+    }
+    if (openingTime === closingTime) {
+      toast('Horários de abertura e encerramento precisam ser diferentes!', { position: toast.POSITION.BOTTOM_RIGHT });
+      return;
+    }
+    if (password !== confPassword) {
+      toast('As senhas precisam ser iguais!', { position: toast.POSITION.BOTTOM_RIGHT });
       return;
     }
     if (!cover_img.file) {
@@ -121,12 +144,17 @@ export default function Store() {
     formData.append('company_name', companyName);
     formData.append('email', email);
     formData.append('phone', phone);
+    formData.append('cellphone', cellphone);
     formData.append('cnpj', cnpj);
     formData.append('password', password);
-    formData.append('status', '1');
+    formData.append('status', '1'); // olhar o que significa no plano de negócio
     formData.append('cover_img', cover_img.file);
     formData.append('logo_img', logo_img.file);
     formData.append('shipping_tax', shippingTax);
+    formData.append('delivery_time', deliveryTime);
+    formData.append('opening_time', openingTime);
+    formData.append('closing_time', closingTime);
+
     try {
       const Validate = await api.post('api/store', formData, {
         headers: {
@@ -177,21 +205,46 @@ export default function Store() {
                 <TextBox type="text" id="email" onChange={handleEmailChange} value={email} />
               </ItemFormulary>
               <ItemFormulary>
-                <Text>DDD + phone: *</Text>
-                <MaskedInput name="phone" id="phone" mask="(99)99999-9999" value={phone} onChange={handlePhoneChange} />
-              </ItemFormulary>
-            </DividedItemFormulary>
-
-            <DividedItemFormulary>
-
-              <ItemFormulary>
                 <Text>CNPJ: *</Text>
                 <MaskedInput name="cnpj" id="cnpj" mask="99.999.999/9999-99" value={cnpj} onChange={handleCnpjChange} />
               </ItemFormulary>
 
+            </DividedItemFormulary>
+
+            <DividedItemFormulary>
+              <ItemFormulary>
+                <Text>DDD + phone: *</Text>
+                <MaskedInput name="phone" id="phone" mask="(99)9999-9999" value={phone} onChange={handlePhoneChange} />
+              </ItemFormulary>
+
+              <ItemFormulary>
+                <Text>DDD + cellphone: *</Text>
+                <MaskedInput name="cellphone" id="cellphone" mask="(99)99999-9999" value={cellphone} onChange={handleCellphoneChange} />
+              </ItemFormulary>
+            </DividedItemFormulary>
+
+            <DividedItemFormulary>
               <ItemFormulary>
                 <Text>Taxa de envio: *</Text>
                 <MaskedInput name="shippingTax" id="shipping" mask="R$ 99,99" value={shippingTax} onChange={handleShippingTaxChange} />
+              </ItemFormulary>
+
+              <ItemFormulary>
+                <Text>Tempo de entrega: *</Text>
+                <MaskedInput name="delivery_time" id="delivery_time" mask="99:99" value={deliveryTime} onChange={handleDeliveryTimeChange} />
+              </ItemFormulary>
+
+            </DividedItemFormulary>
+
+            <DividedItemFormulary>
+              <ItemFormulary>
+                <Text>Horário de abertura: *</Text>
+                <MaskedInput name="opening_time" id="opening_time" mask="99:99" value={openingTime} onChange={handleOpeningTimeChange} />
+              </ItemFormulary>
+
+              <ItemFormulary>
+                <Text>Horário de encerramento: *</Text>
+                <MaskedInput name="closing_time" id="closing_time" mask="99:99" value={closingTime} onChange={handleClosingTimeChange} />
               </ItemFormulary>
 
             </DividedItemFormulary>
