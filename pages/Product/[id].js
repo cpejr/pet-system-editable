@@ -1,17 +1,16 @@
-import React, { useState, useEffect } from 'react';
 import { FaArrowLeft } from 'react-icons/fa';
 import { notification } from 'antd';
 import Image from 'next/image';
 import Link from 'next/link';
 import api from '../../src/utils/api';
-import { Header, FooterMobile } from '../../src/components/index';
+import { FooterMobile } from '../../src/components/index';
 import {
   Container, ProductContainer, ProductTitle, Price, Delivery,
   ButtonsContainer, Button, AddCarButton, Store, Description,
   BackPage, BackButton,
 } from './styles';
 
-export default function Product(props) {
+export default function Product({ product, store }) {
   async function handleAddCart() {
     const body = {
       product_id: product.product_id,
@@ -19,9 +18,7 @@ export default function Product(props) {
       final_price: 4 * product.price,
     };
     try {
-      console.log(body);
-      const Add = await api.post('/CartProducts', body);
-      console.log(Add.data);
+      await api.post('/CartProducts', body);
       notification.open({
         message: 'Sucesso!',
         description:
@@ -33,22 +30,14 @@ export default function Product(props) {
         },
       });
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
-  const [store, setStore] = useState([]);
-  useEffect(() => {
-    api.get(`store/${product.firebase_id_store}`).then((res) => {
-      setStore(res.data);
-    });
-  }, []);
-  const { product } = props;
 
   const myLoader = ({ src }) => `https://s3-sa-east-1.amazonaws.com/petsystembucket/${src}`;
 
   return (
     <div>
-      <Header />
       <BackPage>
         <BackButton>
           <FaArrowLeft size={24} />
@@ -116,9 +105,23 @@ export default function Product(props) {
     </div>
   );
 }
-export async function getServerSideProps(context) {
-  const { id } = context.query;
-  const response = await api.get(`product/${id}`);
-  const product = response.data;
-  return { props: { product } };
+
+export async function getStaticPaths() {
+  const { data: products } = await api.get('products');
+
+  return {
+    paths: products.map((product) => ({
+      params: { id: product.product_id },
+    })),
+    fallback: 'blocking',
+  };
+}
+
+export async function getStaticProps({ params }) {
+  const { data: product } = await api.get(`product/${params.id}`);
+  const { data: store } = await api.get(`store/${product.firebase_id_store}`);
+  return {
+    props: { store, product },
+    revalidate: 60, // 1 minuto
+  };
 }

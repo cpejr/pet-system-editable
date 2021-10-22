@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import {
   FormControl, FormLabel, FormGroup,
@@ -11,7 +11,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
-import Header from '../../src/components/Header';
 import { Body } from '../../src/components/BodyForms';
 import WindowDivider from '../../src/components/WindowDivider';
 import 'react-toastify/dist/ReactToastify.css';
@@ -59,7 +58,7 @@ export default function Signup() {
   async function handleSubmit(event) {
     event.preventDefault();
 
-    const regex = new RegExp('.+@.+\..+');
+    const regex = new RegExp('.+@.+..+');
     if (!regex.test(email)) {
       toast('Email inválido!', { position: toast.POSITION.BOTTOM_RIGHT });
       return;
@@ -102,7 +101,6 @@ export default function Signup() {
 
   return (
     <>
-      <Header />
       <Body>
         <Body.Left>
 

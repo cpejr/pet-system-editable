@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import Header from '../../src/components/Header';
 import {
   Body,
   Formulary,
@@ -46,8 +45,6 @@ const Login = () => {
 
   return (
     <>
-      <Header />
-
       <Body>
         <Body.Left>
           <Image
@@ -57,9 +54,7 @@ const Login = () => {
             height="400"
           />
         </Body.Left>
-
         <Divider width="1" display="block" size="300" />
-
         <Body.Right>
           <Formulary onSubmit={handleSubmit}>
             <TopFormulary>
@@ -84,7 +79,6 @@ const Login = () => {
                 value={password}
               />
             </ItemFormulary>
-
             <ItemFormulary>
               <Link href="/ForgetPass">
                 <ForgotPassword>Esqueceu a senha?</ForgotPassword>

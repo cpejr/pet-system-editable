@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { MdShoppingCart } from 'react-icons/md';
-import Header from '../../src/components/Header';
 import {
   CarrinhoBody, CarrinhoFinalButton, CarrinhoIcon, CarrinhoText,
   CarrinhoTitle, CarrinhoTotal, CarrinhoValor, CarrinhoValorText,
@@ -21,7 +20,6 @@ export default function Carrinho() {
   }, []);
   return (
     <>
-      <Header />
       <CarrinhoTitle>
         <CarrinhoText>Carrinho de Compras</CarrinhoText>
         <CarrinhoIcon>

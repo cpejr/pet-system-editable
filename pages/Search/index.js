@@ -181,7 +181,6 @@ export default function Search(props) {
   if (checkedProducts === '#609694') {
     return (
       <div>
-        <HeaderSearch keyword={keyword} />
         <SearchHeader />
         <TypeContainer>
           <TypeContainer.Cols

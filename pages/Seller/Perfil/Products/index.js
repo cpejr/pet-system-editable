@@ -1,15 +1,10 @@
-import React from 'react';
 import styled from 'styled-components';
 import Link from 'next/link';
-// import { makeStyles } from '@material-ui/core/styles';
-// import Modal from '@material-ui/core/Modal';
-import HeaderSeller from '../../../../src/components/HeaderSeller';
 import WordsDivider from '../../../../src/components/WordsDivider';
 import FooterMobile from '../../../../src/components/Mobile/FooterMobile';
 import Order from '../../../../src/components/Filter/Order';
 import Category from '../../../../src/components/Filter/Category';
 import Products from '../../../../src/components/Products';
-// import MyProducts from '../../../MyProducts';
 import ModalAddProducts from '../../../../src/components/ModalAddProducts';
 import LocationAndFilter from '../../../../src/components/Mobile/LocationAndFilter';
 import EditAddRemoveSection from '../../../../src/components/Mobile/EditAddRemoveSection';
@@ -318,10 +313,7 @@ export default function Perfil({ groups }) {
   );
   return (
     <div>
-      <HeaderSeller />
-
       <Title>Perfil da loja:</Title>
-
       <SubTitle>
         <Link href="http://localhost:3000/Seller/Perfil/Products">
           <Section.Select>Meus produtos</Section.Select>
@@ -353,7 +345,6 @@ export default function Perfil({ groups }) {
           <ModalAddProducts />
         </MarketContainer.Col2>
       </MarketContainer>
-
       <ProductContainer>
         <ProductContainer.Col1>
           <Order />
@@ -365,10 +356,8 @@ export default function Perfil({ groups }) {
             <PersonalGroups />
           </Group>
         </ProductContainer.Col2>
-
       </ProductContainer>
       <FooterMobile />
-
     </div>
   );
 }

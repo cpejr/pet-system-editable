@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from "react";
 import api from '../../src/utils/api';
-import Header from '../../src/components/Header';
 import MobileHeader from '../../src/components/MobileHeader';
 import BannerCarousel from '../../src/components/Carousels/BannerCarousel';
 import CardsCarousel from '../../src/components/Carousels/CardsCarousel';
@@ -11,18 +9,9 @@ import {
   Cards, CardItem, CardImage1, CardImage2, CardImage3, Container, Mosaic, Text, Divider, Button,
 } from '../../src/components/HomeComponents';
 
-export default function Home() {
-  const [stores, setStores] = useState([]);
-
-  useEffect(() => {
-    api.get("store").then((res) => {
-      setStores(res.data);
-    });
-  }, []);
-
+export default function Home({ stores }) {
   return (
     <>
-      <Header />
       <MobileHeader />
       <BannerCarousel />
       <Container>
@@ -76,4 +65,12 @@ export default function Home() {
 
     </>
   );
+}
+
+export async function getStaticProps() {
+  const { data: stores } = await api.get('store');
+  return {
+    props: { stores },
+    revalidate: 60 * 10, // 10 minutos
+  };
 }

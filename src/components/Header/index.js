@@ -1,50 +1,53 @@
-import React, { useState,useEffect } from 'react';
-import api from "../../utils/api";
-import { useRouter } from 'next/router';
-import Image from 'next/image';
-import { GrLocation } from 'react-icons/gr';
-import { BsSearch, BsFillPersonFill } from 'react-icons/bs';
-import { MdShoppingCart } from 'react-icons/md';
-import { FiLogIn } from 'react-icons/fi';
-import { CgCloseO } from 'react-icons/cg';
-import Link from 'next/link';
-import styled from 'styled-components';
-import { useAuth } from '../../contexts/AuthContext';
+import { useState } from "react";
+import { useRouter } from "next/router";
+import Image from "next/image";
+import { GrLocation } from "react-icons/gr";
+import { BsSearch, BsFillPersonFill } from "react-icons/bs";
+import { MdShoppingCart } from "react-icons/md";
+import { FiLogIn } from "react-icons/fi";
+import { CgCloseO } from "react-icons/cg";
+import Link from "next/link";
+import styled from "styled-components";
+import { useAuth } from "../../contexts/AuthContext";
 import {
-  ImageBox, TextBox, YourSpace, YourSpaceContainer, ItemBottomHeader, LogOut,
-} from './styles';
+  ImageBox,
+  TextBox,
+  YourSpace,
+  YourSpaceContainer,
+  ItemBottomHeader,
+  LogOut,
+} from "./styles";
 
 Header.Wrapper = styled.div`
-    display:flex;
-    width: 100%;
-    height: 25vh;
-    flex-direction: column;
-    @media(max-width:800px){
-    display:none;
-    }
+  display: flex;
+  width: 100%;
+  height: 25vh;
+  flex-direction: column;
+  @media (max-width: 800px) {
+    display: none;
+  }
 `;
 
 Header.Top = styled.div`
-    display: flex;
-    width:100%;
-    align-items: center;
-    justify-content: space-around;
-    height: 75%;
-    background-color: ${({ theme }) => theme.colors.rose};
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-around;
+  height: 75%;
+  background-color: ${({ theme }) => theme.colors.rose};
 `;
 
 Header.Bottom = styled.div`
-    display: flex;
-    width:100%;
-    flex-direction: row;
-    justify-content: space-around;  // space evenly
-    height: 35%;
-    background-color: ${({ theme }) => theme.colors.mediumGreen};
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-around; // space evenly
+  height: 35%;
+  background-color: ${({ theme }) => theme.colors.mediumGreen};
 `;
 
-export default function Header() {
-  const { user, logout } = useAuth();
-  const [categories, setCategories] = useState([]);
+export default function Header({ categories }) {
+  const { user, store, logout } = useAuth();
 
   const [searchText, setSearchText] = useState("");
 
@@ -52,63 +55,37 @@ export default function Header() {
 
   const handleFilterSearchText = (e) => setSearchText(e.target.value);
 
-  const handleSubmit = () => router.push({ pathname: "/Search", query: { keyword: searchText } });
+  const handleSubmit = () =>
+    router.push({ pathname: "/Search", query: { keyword: searchText } });
 
   const handleKeypress = (e) => {
     //it triggers by pressing the enter key
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       handleSubmit();
     }
   };
 
-  async function loadCategories() {
-    try {
-      const response = await api.get("category");
-      setCategories(response.data);
-    } catch (error) {
-      console.error(error); //eslint-disable-line
-    }
-  }
-  
-  useEffect(() => {
-    loadCategories();
-  }, []);
-
   const PersonalButton = () => {
-    if (!user) {
+    if (!user && !store) {
       return (
         <Link href="/login">
-          <YourSpace.Word>
-            Login
-          </YourSpace.Word>
+          <YourSpace.Word>Login</YourSpace.Word>
         </Link>
       );
     }
-    switch (user.type) {
-      case 'admin':
-        return (
-          <Link href="/admin">
-            <YourSpace.Word>
-              {user.name}
-            </YourSpace.Word>
-          </Link>
-        );
-      case 'seller':
-        return (
-          <Link href="/Seller/Perfil/Products">
-            <YourSpace.Word>
-              {user.name}
-            </YourSpace.Word>
-          </Link>
-        );
-      default:
-        return (
-          <Link href="/User/Perfil/MyRequests">
-            <YourSpace.Word>
-              {user.name}
-            </YourSpace.Word>
-          </Link>
-        );
+    if(user){
+      return (
+        <Link href="/User/Perfil/MyRequests">
+          <YourSpace.Word>{user.name}</YourSpace.Word>
+        </Link>
+      );
+    }
+    if(store){
+      return (
+        <Link href="/Seller/Perfil/Products">
+          <YourSpace.Word>{store.company_name}</YourSpace.Word>
+        </Link>
+      );
     }
   };
 
@@ -137,7 +114,8 @@ export default function Header() {
               onKeyPress={handleKeypress}
             />
             <Link
-              onKeyPress={handleKeypress} href={{ pathname: "/Search", query: { keyword: searchText } }}
+              onKeyPress={handleKeypress}
+              href={{ pathname: "/Search", query: { keyword: searchText } }}
             >
               <BsSearch
                 size="15"
@@ -154,19 +132,28 @@ export default function Header() {
             <PersonalButton />
           </YourSpace>
         </YourSpaceContainer>
-        <MdShoppingCart size="30" color="#AA4545" style={{ cursor: 'pointer' }} />
+        <Link href="/Carrinho">
+          <MdShoppingCart
+            size="30"
+            color="#AA4545"
+            style={{ cursor: "pointer" }}
+          />
+        </Link>
         <LogOut onClick={logout}>
           <Link href="/login">
-            <FiLogIn size="30" color="#AA4545" style={{ cursor: 'pointer' }} />
+            <FiLogIn size="30" color="#AA4545" style={{ cursor: "pointer" }} />
           </Link>
         </LogOut>
       </Header.Top>
       <Header.Bottom>
-      {categories.map((categoria) => (
-              <Link key={categoria.category_id} href={{ pathname: "/Search", query: { id: categoria.category_id } }}>
-                <ItemBottomHeader>{categoria.name}</ItemBottomHeader>
-              </Link>
-          ))}
+        {categories.map((categoria) => (
+          <Link
+            key={categoria.category_id}
+            href={{ pathname: "/Search", query: { id: categoria.category_id } }}
+          >
+            <ItemBottomHeader>{categoria.name}</ItemBottomHeader>
+          </Link>
+        ))}
       </Header.Bottom>
     </Header.Wrapper>
   );
