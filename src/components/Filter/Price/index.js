@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { Slider } from '@material-ui/core'
+import { Slider } from '@material-ui/core';
 
 const Container = styled.div`
 display:flex;
@@ -28,40 +28,40 @@ width:100%;
 margin-top:10%;
 `;
 
-//#609694 ativo
-//#c4c4c4 inativo
+// #609694 ativo
+// #c4c4c4 inativo
 export default function Price({ setPrice }) {
-  const [range, setRange] = useState([0,5000]);
   const [localPrice, setLocalPrice] = useState();
-  const [val, setVal] = useState([0,5000]);
+  const [val, setVal] = useState([0, 5000]);
 
-  const updateVal = (e,data) => setVal(data)
+  const updateVal = (e, data) => setVal(data);
 
-  const handleRange = (e,data) => {
+  const handleRange = (e, data) => {
     setLocalPrice(data);
-    setRange(data);
-  }
+  };
 
-  const getText = (value) => `${value}`
+  const getText = (value) => `${value}`;
 
-  useEffect(()=>{
-    setPrice(localPrice);
-  },[localPrice])
+  useEffect(() => {
+    if (localPrice !== undefined) {
+      setPrice(localPrice);
+    }
+  }, [localPrice]);
 
   return (
     <div>
       <Container>
         <Container.Title>Faixa de preço</Container.Title>
         <ContainerSlider>
-        <Slider
-        value={val}
-        min={0}
-        max={5000}
-        onChange={updateVal}
-        onChangeCommitted={handleRange}
-        valueLabelDisplay="auto"
-        getAriaValueText={getText}
-      />
+          <Slider
+            value={val}
+            min={0}
+            max={5000}
+            onChange={updateVal}
+            onChangeCommitted={handleRange}
+            valueLabelDisplay="auto"
+            getAriaValueText={getText}
+          />
         </ContainerSlider>
       </Container>
     </div>

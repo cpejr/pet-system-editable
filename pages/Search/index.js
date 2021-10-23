@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-pascal-case */
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import api from '../../src/utils/api';
 import { ContainerCategory, SearchContainer, TypeContainer } from './styles';
@@ -8,11 +8,8 @@ import {
   SearchCardsStore, FooterMobile, SearchHeader,
 } from '../../src/components/index';
 
-export default function Search(props) {
-  const { keyword, id } = props;
-
+export default function Search({ keyword, id, categories }) {
   const [products, setProducts] = useState([]);
-  const [categories, setCategories] = useState([]);
   const [stores, setStores] = useState([]);
   const [price, setPrice] = useState([0, 5000]);
   const [categoria, setCategoria] = useState(id);
@@ -36,10 +33,6 @@ export default function Search(props) {
   const myLoader = ({ src }) => `https://s3-sa-east-1.amazonaws.com/petsystembucket/${src}`;
 
   useEffect(() => {
-    api.get('category').then((res) => {
-      setCategories(res.data);
-    });
-
     api
       .get('products', { params: { price, category_id: categoria } })
       .then((res) => {
@@ -52,7 +45,9 @@ export default function Search(props) {
           setProducts(res.data);
         }
       });
+  }, [categoria, price, keyword]);
 
+  useEffect(() => {
     api.get('store').then((res) => {
       if (keyword) {
         const FilteredStores = res.data.filter((item) => item.company_name
@@ -63,7 +58,7 @@ export default function Search(props) {
         setStores(res.data);
       }
     });
-  }, [categoria, price, keyword]);
+  }, [keyword]);
 
   if (checkedProducts === '#609694') {
     return (
@@ -166,6 +161,7 @@ export default function Search(props) {
 }
 
 export async function getServerSideProps({ query }) {
+  const { data: categories } = await api.get('category');
   let { keyword, id } = query;
   if (keyword === undefined) {
     keyword = null;
@@ -173,5 +169,5 @@ export async function getServerSideProps({ query }) {
   if (id === undefined) {
     id = null;
   }
-  return { props: { keyword, id } };
+  return { props: { keyword, id, categories } };
 }
