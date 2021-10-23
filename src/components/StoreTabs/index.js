@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Tabs } from 'antd';
 import api from '../../utils/api';
 import 'antd/dist/antd.css';
-import {
-  Title, SearchCards, StoreServices, ProductsCarousel,
-} from '../index';
 import { Container, SearchContainer } from './styles';
+import Title from '../Title';
+import SearchCards from '../SearchCards';
+import StoreServices from '../StoreServices';
+import ProductsCarousel from '../Carousels/ProductsCarousel';
 
 const { TabPane } = Tabs;
 

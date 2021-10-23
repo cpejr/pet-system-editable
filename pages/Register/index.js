@@ -8,9 +8,9 @@ import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/picker
 import 'date-fns';
 import DateFnsUtils from '@date-io/date-fns';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import axios from 'axios';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
+import api from '../../src/utils/api';
 import { Body } from '../../src/components/BodyForms';
 import WindowDivider from '../../src/components/WindowDivider';
 import 'react-toastify/dist/ReactToastify.css';
@@ -21,7 +21,6 @@ import {
 } from './styles';
 
 toast.configure();
-const api = axios.create({ baseURL: 'http://localhost:3000/' });
 
 export default function Signup() {
   const [name, setName] = useState('');

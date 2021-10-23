@@ -291,7 +291,6 @@ const Groups = styled.h2`
   `;
 
 export default function Perfil({ groups }) {
-  // const { groups } = props;
   const PersonalGroups = () => (
     <div>
       {groups?.length > 0 && groups.map((group) => (
@@ -362,7 +361,7 @@ export default function Perfil({ groups }) {
   );
 }
 
-export async function getServerSideProps(context) {
+export async function getStaticProps(context) {
   try {
     const { req } = context;
 
@@ -374,8 +373,10 @@ export async function getServerSideProps(context) {
 
     const response = await api.get('myGroups', { headers: { cookie: cookies } });
     const groups = response.data;
-    console.log(groups);
-    return { props: { groups } };
+    return {
+      props: { groups },
+      revalidade: 300,
+    };
   } catch (error) {
     console.error(error) // eslint-disable-line
     return {

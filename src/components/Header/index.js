@@ -1,14 +1,14 @@
-import { useState } from "react";
-import { useRouter } from "next/router";
-import Image from "next/image";
-import { GrLocation } from "react-icons/gr";
-import { BsSearch, BsFillPersonFill } from "react-icons/bs";
-import { MdShoppingCart } from "react-icons/md";
-import { FiLogIn } from "react-icons/fi";
-import { CgCloseO } from "react-icons/cg";
-import Link from "next/link";
-import styled from "styled-components";
-import { useAuth } from "../../contexts/AuthContext";
+import { useState } from 'react';
+import { useRouter } from 'next/router';
+import Image from 'next/image';
+import { GrLocation } from 'react-icons/gr';
+import { BsSearch, BsFillPersonFill } from 'react-icons/bs';
+import { MdShoppingCart } from 'react-icons/md';
+import { FiLogIn } from 'react-icons/fi';
+import { CgCloseO } from 'react-icons/cg';
+import Link from 'next/link';
+import styled from 'styled-components';
+import { useAuth } from '../../contexts/AuthContext';
 import {
   ImageBox,
   TextBox,
@@ -16,7 +16,7 @@ import {
   YourSpaceContainer,
   ItemBottomHeader,
   LogOut,
-} from "./styles";
+} from './styles';
 
 Header.Wrapper = styled.div`
   display: flex;
@@ -49,18 +49,17 @@ Header.Bottom = styled.div`
 export default function Header({ categories }) {
   const { user, store, logout } = useAuth();
 
-  const [searchText, setSearchText] = useState("");
+  const [searchText, setSearchText] = useState('');
 
   const router = useRouter();
 
   const handleFilterSearchText = (e) => setSearchText(e.target.value);
 
-  const handleSubmit = () =>
-    router.push({ pathname: "/Search", query: { keyword: searchText } });
+  const handleSubmit = () => router.push({ pathname: '/Search', query: { keyword: searchText } });
 
   const handleKeypress = (e) => {
-    //it triggers by pressing the enter key
-    if (e.key === "Enter") {
+    // it triggers by pressing the enter key
+    if (e.key === 'Enter') {
       handleSubmit();
     }
   };
@@ -73,14 +72,14 @@ export default function Header({ categories }) {
         </Link>
       );
     }
-    if(user){
+    if (user) {
       return (
         <Link href="/User/Perfil/MyRequests">
           <YourSpace.Word>{user.name}</YourSpace.Word>
         </Link>
       );
     }
-    if(store){
+    if (store) {
       return (
         <Link href="/Seller/Perfil/Products">
           <YourSpace.Word>{store.company_name}</YourSpace.Word>
@@ -103,8 +102,8 @@ export default function Header({ categories }) {
             <TextBox.Location type="" placeholder="Localização" />
           </TextBox.LocationContainer>
           <TextBox.SearchContainer>
-            <Link href={{ pathname: "/Search" }}>
-              <CgCloseO onClick={() => setSearchText("")} />
+            <Link href={{ pathname: '/Search' }}>
+              <CgCloseO onClick={() => setSearchText('')} />
             </Link>
             <TextBox.Search
               value={searchText}
@@ -115,13 +114,13 @@ export default function Header({ categories }) {
             />
             <Link
               onKeyPress={handleKeypress}
-              href={{ pathname: "/Search", query: { keyword: searchText } }}
+              href={{ pathname: '/Search', query: { keyword: searchText } }}
             >
               <BsSearch
                 size="15"
                 type="submit"
                 onSubmit={handleSubmit}
-                style={{ cursor: "pointer" }}
+                style={{ cursor: 'pointer' }}
               />
             </Link>
           </TextBox.SearchContainer>
@@ -136,12 +135,12 @@ export default function Header({ categories }) {
           <MdShoppingCart
             size="30"
             color="#AA4545"
-            style={{ cursor: "pointer" }}
+            style={{ cursor: 'pointer' }}
           />
         </Link>
         <LogOut onClick={logout}>
           <Link href="/login">
-            <FiLogIn size="30" color="#AA4545" style={{ cursor: "pointer" }} />
+            <FiLogIn size="30" color="#AA4545" style={{ cursor: 'pointer' }} />
           </Link>
         </LogOut>
       </Header.Top>
@@ -149,7 +148,7 @@ export default function Header({ categories }) {
         {categories.map((categoria) => (
           <Link
             key={categoria.category_id}
-            href={{ pathname: "/Search", query: { id: categoria.category_id } }}
+            href={{ pathname: '/Search', query: { id: categoria.category_id } }}
           >
             <ItemBottomHeader>{categoria.name}</ItemBottomHeader>
           </Link>
