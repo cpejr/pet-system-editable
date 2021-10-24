@@ -1,7 +1,5 @@
-import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import api from '../../utils/api';
 import {
   CardWrapper, CardInfo, CardDescription, CardDescriptionTitle,
   CardDescriptionValues, CardDescriptionDeliveryPrice,
@@ -10,12 +8,6 @@ import {
 
 export default function SearchCards(props) {
   const { product } = props;
-  const [store, setStore] = useState([]);
-  useEffect(() => {
-    api.get(`store/${product.firebase_id_store}`).then((res) => {
-      setStore(res.data);
-    });
-  }, []);
 
   const myLoader = ({ src }) => `https://s3-sa-east-1.amazonaws.com/petsystembucket/${src}`;
 
@@ -40,9 +32,7 @@ export default function SearchCards(props) {
               <CardDescriptionDeliveryPrice>
                 Frete:
                 {' '}
-                R$
-                {' '}
-                {store.shipping_tax}
+                {`${product?.shipping_tax ? `R$${product?.shipping_tax}` : 'Gratis'}`}
               </CardDescriptionDeliveryPrice>
             </CardDescriptionValues>
           </CardDescription>

@@ -4,12 +4,19 @@ import Image from 'next/image';
 import api from '../../src/utils/api';
 import { ContainerCategory, SearchContainer, TypeContainer } from './styles';
 import {
-  HeaderSearch, OrderSearch, Brands, Price, SearchCards,
-  SearchCardsStore, FooterMobile, SearchHeader,
+  HeaderSearch,
+  OrderSearch,
+  Brands,
+  Price,
+  SearchCards,
+  SearchCardsStore,
+  FooterMobile,
+  SearchHeader,
 } from '../../src/components/index';
 
 export default function Search({ keyword, id, categories }) {
   const [products, setProducts] = useState([]);
+  const [allStores, setAllStores] = useState([]);
   const [stores, setStores] = useState([]);
   const [price, setPrice] = useState([0, 5000]);
   const [categoria, setCategoria] = useState(id);
@@ -33,22 +40,42 @@ export default function Search({ keyword, id, categories }) {
   const myLoader = ({ src }) => `https://s3-sa-east-1.amazonaws.com/petsystembucket/${src}`;
 
   useEffect(() => {
-    api
-      .get('products', { params: { price, category_id: categoria } })
-      .then((res) => {
-        if (keyword) {
-          const FilteredProducts = res.data.filter((item) => item.product_name
-            .toLowerCase()
-            .includes(keyword.toLowerCase()));
-          setProducts(FilteredProducts);
-        } else {
-          setProducts(res.data);
-        }
-      });
-  }, [categoria, price, keyword]);
+    if (Object.keys(allStores).length > 0) {
+      api
+        .get('products', { params: { price, category_id: categoria } })
+        .then((res) => {
+          if (keyword) {
+            const FilteredProducts = res.data.filter((item) => item.product_name
+              .toLowerCase()
+              .includes(keyword.toLowerCase()));
+            allStores.forEach((store) => {
+              FilteredProducts.forEach((product) => {
+                if (product.firebase_id_store === store.firebase_id_store) {
+                  product.shipping_tax = store.shipping_tax;
+                }
+              });
+            });
+            setProducts(FilteredProducts);
+          } else {
+            allStores.forEach((store) => {
+              res.data.forEach((product) => {
+                if (product.firebase_id_store === store.firebase_id_store) {
+                  product.shipping_tax = store.shipping_tax;
+                }
+              });
+            });
+            setProducts(res.data);
+          }
+        });
+    }
+  }, [categoria, price, keyword, allStores]);
 
   useEffect(() => {
     api.get('store').then((res) => {
+      if (Object.keys(res.data).length !== Object.keys(allStores).length
+      && Object.keys(res.data).length !== 0) {
+        setAllStores(res.data);
+      }
       if (keyword) {
         const FilteredStores = res.data.filter((item) => item.company_name
           .toLowerCase()
