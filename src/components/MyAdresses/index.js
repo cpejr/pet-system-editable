@@ -26,7 +26,6 @@ export default function MyAdresses() {
 
   async function loadAddresses() {
     try {
-      console.log('Teste');
       const response = await api.get(`/addresses/${user.firebase_id}`);
       setAddresses(response.data);
     } catch (error) {
@@ -62,7 +61,6 @@ export default function MyAdresses() {
 
   useEffect(() => {
     loadAddresses();
-    console.log();
   }, []);
   if (addresses) {
     return (

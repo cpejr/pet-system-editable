@@ -1,12 +1,11 @@
 import React from 'react';
 import {
-  Title, PerfilMenu, FooterMobile, MyListFinalizedOrders, MyListOrders, Header,
+  Title, PerfilMenu, FooterMobile, MyListFinalizedOrders, MyListOrders,
 } from '../../../../src/components';
 
 export default function Perfil() {
   return (
     <div>
-      <Header />
       <Title>Meu Perfil</Title>
       <PerfilMenu selectedItem="Meus Pedidos" />
       <Title>Pedido Atual</Title>

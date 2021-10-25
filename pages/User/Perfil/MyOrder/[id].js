@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import Header from '../../../../src/components/Header';
 import MyIndividualOrder from '../../../../src/components/MyIndividualOrder';
 import FooterMobile from '../../../../src/components/Mobile/FooterMobile';
 import api from '../../../../src/utils/api';
@@ -51,7 +50,6 @@ export default function Perfil(props) {
   const { order } = props;
   return (
     <div>
-      <Header />
 
       <Title>Editar meus dados:</Title>
 

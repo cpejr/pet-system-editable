@@ -13,15 +13,6 @@ import {
 } from './styles';
 
 export default function MyDatasMobile() {
-  // const [checkedCredito, setCheckedCredito] = useState(false);
-  // const handleClickCredito = () => setCheckedCredito(!checkedCredito);
-
-  // const [checkedDebito, setCheckedDebito] = useState(false);
-  // const handleClickDebito = () => setCheckedDebito(!checkedDebito);
-
-  // const [checkedBoleto, setCheckedBoleto] = useState(false);
-  // const handleClickBoleto = () => setCheckedBoleto(!checkedBoleto);
-
   const { user, forgottenPassword } = useAuth();
 
   const [Open, setOpen] = React.useState(false);
