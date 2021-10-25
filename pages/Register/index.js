@@ -88,8 +88,7 @@ export default function Signup() {
       phone: ddd + telephone,
     };
     try {
-      const Validate = await api.post('/api/user', body);
-      console.log(Validate.data);
+      await api.post('/user', body);
       toast('Sucesso', { position: toast.POSITION.BOTTOM_RIGHT });
       router.push('/login');
     } catch (error) {
