@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from 'react';
 import { Tabs } from 'antd';
-import api from '../../utils/api';
 import 'antd/dist/antd.css';
 import { Container, SearchContainer } from './styles';
 import Title from '../Title';
@@ -14,20 +12,9 @@ function callback(key) {
   console.log(key);
 }
 
-export default function StoreTabs({ store, myLoader }) {
-  const [products, setProducts] = useState([]);
-  const [groups, setGroups] = useState([]);
-
-  useEffect(() => {
-    api.get(`productsByStore/${store.firebase_id_store}`).then((res) => {
-      setProducts(res.data);
-    });
-
-    api.get(`groups/${store.firebase_id_store}`).then((res) => {
-      setGroups(res.data);
-    });
-  }, []);
-
+export default function StoreTabs({
+  store, products, groups, myLoader,
+}) {
   return (
     <Container>
       <Tabs defaultActiveKey="1" onChange={callback} centered size="large">
@@ -39,7 +26,7 @@ export default function StoreTabs({ store, myLoader }) {
                 <Title>{group.name}</Title>
                 <SearchContainer.Col>
                   {group.product_groups.map((product) => (
-                    <SearchCards product={product} key={product.product_id} />
+                    <SearchCards product={product} store={store} key={product.product_id} />
                   ))}
                 </SearchContainer.Col>
               </SearchContainer.Row>

@@ -1,18 +1,25 @@
-import React from 'react';
 import Image from 'next/image';
+import axios from 'axios';
 import {
-  ContainerDoContainer, Container, StoreContainer, StoreName,
-  StoreDatas, BigBanner, MediumBanner, LittleBanner,
+  ContainerDoContainer,
+  Container,
+  StoreContainer,
+  StoreName,
+  StoreDatas,
+  BigBanner,
+  MediumBanner,
+  LittleBanner,
 } from './styles';
 import api from '../../src/utils/api';
-import { HeaderSearch, FooterMobile, StoreTabs } from '../../src/components';
+import { FooterMobile, StoreTabs } from '../../src/components';
 
-export default function Store({ store, address }) {
+export default function Store({
+  store, address, products, groups,
+}) {
   const myLoader = ({ src }) => `https://s3-sa-east-1.amazonaws.com/petsystembucket/${src}`;
 
   return (
     <ContainerDoContainer>
-      <HeaderSearch />
       <Container>
         <StoreContainer>
           <StoreContainer.Col1>
@@ -66,17 +73,46 @@ export default function Store({ store, address }) {
           </StoreContainer.Col2>
         </StoreContainer>
       </Container>
-      <StoreTabs store={store} myLoader={myLoader} />
+      <StoreTabs
+        store={store}
+        address={address}
+        products={products}
+        groups={groups}
+        myLoader={myLoader}
+      />
       <FooterMobile />
     </ContainerDoContainer>
   );
 }
-export async function getServerSideProps(context) {
-  const { id } = context.query;
-  const response_store = await api.get(`store/${id}`);
-  const response_address = await api.get(`storeAddress/${id}`);
 
-  const address = response_address.data;
-  const store = response_store.data;
-  return { props: { store, address } };
+export async function getStaticPaths() {
+  const { data: stores } = await api.get('store');
+
+  return {
+    paths: stores.map((store) => ({
+      params: { id: store.firebase_id_store },
+    })),
+    fallback: 'blocking',
+  };
+}
+
+export async function getStaticProps({ params }) {
+  const [{ data: store },
+    { data: address },
+    { data: products },
+    { data: groups }] = await axios.all([
+    api.get(`store/${params.id}`),
+    api.get(`storeAddress/${params.id}`),
+    api.get(`productsByStore/${params.id}`),
+    api.get(`groups/${params.id}`),
+  ]);
+  return {
+    props: {
+      store,
+      address,
+      products,
+      groups,
+    },
+    revalidate: 20, // 20 segundos
+  };
 }
