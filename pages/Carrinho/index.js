@@ -29,20 +29,21 @@ export default function Carrinho() {
       <CarrinhoBody>
         <div>
           {products.map((p) => (
-            <CarrinhoCard product={p} key={p.product_id} setSubTotal={setSubTotal} subTotal={subTotal} />
+            <CarrinhoCard
+              product={p}
+              key={p.product_id}
+              setSubTotal={setSubTotal}
+              subTotal={subTotal}
+            />
           ))}
         </div>
         <CarrinhoValor>
-          <CarrinhoValorTitle>Digite o seu CEP</CarrinhoValorTitle>
-          <CarrinhoFrete />
           <CarrinhoTotal>
             <CarrinhoValorText>SubTotal</CarrinhoValorText>
             <CarrinhoValorText>
               R$
               {subTotal}
             </CarrinhoValorText>
-            <CarrinhoValorText>Frete</CarrinhoValorText>
-            <CarrinhoValorText>R$Frete</CarrinhoValorText>
             <CarrinhoValorText>Total</CarrinhoValorText>
             <CarrinhoValorText>R$Total</CarrinhoValorText>
           </CarrinhoTotal>

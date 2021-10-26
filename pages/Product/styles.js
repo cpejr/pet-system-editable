@@ -1,5 +1,30 @@
 import styled from 'styled-components';
 
+export const CarrinhoCardText = styled.p`
+  display: flex;
+  font-family: Roboto;
+  font-size: 2em;
+  text-align: center;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 16px;
+  align-items:center;
+  @media screen and (max-width: 900px) {
+    font-size: 1em;
+  }
+  @media screen and (max-width: 600px) {
+    font-size: 0.6em;
+  }
+`;
+
+export const CarrinhoCardInfoQuantity = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 80px;
+`;
+
 export const Container = styled.div`
   display: flex;
   align-items: center;
