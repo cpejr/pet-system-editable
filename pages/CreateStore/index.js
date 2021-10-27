@@ -38,6 +38,10 @@ export default function Store() {
   const [cover_img, setCover_img] = useState({ file: null, url: null });
   const [logo_img, setLogo_img] = useState({ file: null, url: null });
 
+  function addStr(str, index, stringToAdd) {
+    return str.substring(0, index) + stringToAdd + str.substring(index, str.length);
+  }
+
   function handleCompanyNameChange(event) {
     setCompanyName(event.target.value);
   }
@@ -60,16 +64,23 @@ export default function Store() {
     setConfPassword(event.target.value);
   }
   function handleShippingTaxChange(event) {
-    setShippingTax(event.target.value);
+    const aux = `${event.target.value}`;
+    const aux2 = aux * 10;
+    console.log('🚀 ~ file: index.js ~ line 69 ~ handleShippingTaxChange ~ aux2', aux2);
+    setShippingTax(aux2);
   }
   function handleDeliveryTimeChange(event) {
     setDeliveryTime(event.target.value);
   }
   function handleOpeningTimeChange(event) {
-    setOpeningTime(event.target.value);
+    const aux = `${event.target.value}`;
+    const aux2 = addStr(aux, 2, ':');
+    setOpeningTime(aux2);
   }
   function handleClosingTimeChange(event) {
-    setClosingTime(event.target.value);
+    const aux = `${event.target.value}`;
+    const aux2 = addStr(aux, 2, ':');
+    setClosingTime(aux2);
   }
   // function handleIeChange(event) {
   //   setIe(event.target.value);
@@ -147,7 +158,7 @@ export default function Store() {
     formData.append('cellphone', cellphone);
     formData.append('cnpj', cnpj);
     formData.append('password', password);
-    formData.append('status', '1'); // olhar o que significa no plano de negócio
+    formData.append('status', '0'); // olhar o que significa no plano de negócio
     formData.append('cover_img', cover_img.file);
     formData.append('logo_img', logo_img.file);
     formData.append('shipping_tax', shippingTax);
