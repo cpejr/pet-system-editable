@@ -64,10 +64,7 @@ export default function Store() {
     setConfPassword(event.target.value);
   }
   function handleShippingTaxChange(event) {
-    const aux = `${event.target.value}`;
-    const aux2 = aux * 10;
-    console.log('🚀 ~ file: index.js ~ line 69 ~ handleShippingTaxChange ~ aux2', aux2);
-    setShippingTax(aux2);
+    setShippingTax(event.target.value * 10);
   }
   function handleDeliveryTimeChange(event) {
     setDeliveryTime(event.target.value);
@@ -135,6 +132,10 @@ export default function Store() {
     }
     if (openingTime === closingTime) {
       toast('Horários de abertura e encerramento precisam ser diferentes!', { position: toast.POSITION.BOTTOM_RIGHT });
+      return;
+    }
+    if (parseInt(openingTime.substring(0, 2), 10) > 23 || parseInt(closingTime.substring(0, 2), 10) > 23 || parseInt(openingTime.substring(3, 5), 10) > 59 || parseInt(closingTime.substring(3, 5), 10) > 59) {
+      toast('Favor inserir horários entre 00:00 e 23:59!', { position: toast.POSITION.BOTTOM_RIGHT });
       return;
     }
     if (password !== confPassword) {
@@ -241,8 +242,8 @@ export default function Store() {
               </ItemFormulary>
 
               <ItemFormulary>
-                <Text>Tempo de entrega: *</Text>
-                <MaskedInput name="delivery_time" id="delivery_time" mask="99:99" value={deliveryTime} onChange={handleDeliveryTimeChange} />
+                <Text>Tempo de entrega em minutos: *</Text>
+                <MaskedInput name="delivery_time" id="delivery_time" value={deliveryTime} onChange={handleDeliveryTimeChange} />
               </ItemFormulary>
 
             </DividedItemFormulary>
