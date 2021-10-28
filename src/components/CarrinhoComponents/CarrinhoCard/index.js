@@ -14,7 +14,8 @@ export default function CarrinhoCard(props) {
   const { product } = props;
   const { subTotal } = props;
   const { setSubTotal } = props;
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState(product.amount);
+  console.log(product);
 
   useEffect(() => {
     setSubTotal(subTotal + product.price * quantity);

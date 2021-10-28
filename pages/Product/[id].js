@@ -18,8 +18,8 @@ export default function Product({ product, store }) {
   async function handleAddCart() {
     const body = {
       product_id: product.product_id,
-      amount: product.quantity,
-      final_price: product.quantity * product.price,
+      amount: quantity,
+      final_price: quantity * product.price,
     };
     try {
       await api.post('/CartProducts', body);
@@ -35,23 +35,27 @@ export default function Product({ product, store }) {
       });
     } catch (error) {
       console.error(error);
+      notification.open({
+        message: 'Falha :(',
+        description:
+          'Erro ao adicionar produto ao carrinho',
+        className: 'ant-notification',
+        top: '100px',
+        style: {
+          width: 600,
+        },
+      });
     }
   }
 
   function handlePlus() {
-    console.log(product.quantity);
-    product.quantity += 1;
-    console.log(product.quantity);
-    setQuantity(product.quantity);
+    setQuantity(quantity + 1);
   }
-
   function handleMinus() {
-    if (product.quantity > 0) {
-      product.quantity -= 1;
-      setQuantity(product.quantity);
+    if (quantity > 0) {
+      setQuantity(quantity - 1);
     } else {
-      product.quantity = 0;
-      setQuantity(product.quantity);
+      setQuantity(0);
     }
   }
 

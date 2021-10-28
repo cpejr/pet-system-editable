@@ -1,5 +1,8 @@
 import FirebaseModel from '../models/FirebaseModel';
 import UserModel from '../models/UserModel';
+import CartModel from '../models/CartModel';
+
+const { v4: uuidv4 } = require('uuid');
 
 export async function getOne(request, response) {
   const { id } = request.query;
@@ -29,6 +32,7 @@ export async function getAll(request, response) {
 
 export async function create(request, response) {
   const user = request.body;
+  const cart_id = uuidv4();
   let firebase_id;
 
   try {
@@ -41,7 +45,12 @@ export async function create(request, response) {
 
     user.firebase_id = firebase_id;
     delete user.password;
+    const newCart = {
+      firebase_id,
+      cart_id,
+    };
     await UserModel.createNewUser(user);
+    const createNewCart = await CartModel.createNewCart(newCart);
   } catch (err) {
     if (firebase_id) {
       await FirebaseModel.deleteUser(firebase_id);
