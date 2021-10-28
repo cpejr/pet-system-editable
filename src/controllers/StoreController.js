@@ -38,7 +38,6 @@ module.exports = {
     logo_img.name = uuidv4();
 
     let firebase_id;
-
     // Criacao da Loja
     try {
       const regex = new RegExp('.+@.+\..+');
@@ -53,7 +52,6 @@ module.exports = {
       // await unlinkFile(file.img.path);
       store.cover_img = cover.key;
       store.logo_img = logo.key;
-
       await StoreModel.createNewStore(store);
     } catch (err) {
       if (err.message) {

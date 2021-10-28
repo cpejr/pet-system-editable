@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import CurrencyFormat from 'react-currency-format';
 
 export const Img = styled.img` 
   display:flex;
@@ -27,4 +28,14 @@ export const Label = styled.label`
   border-radius: 0.3rem;
   cursor: pointer;
   margin-top: 1rem;
+`;
+
+export const CurrencyInput = styled(CurrencyFormat)`
+  width: 90%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  height: 25px;
+  border-radius: 5px;
+  border: 1px solid ${({ theme }) => theme.colors.baseGray};
+  background: #F2F2F2;
 `;

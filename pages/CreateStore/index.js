@@ -9,7 +9,7 @@ import {
   DividedItemFormulary, BottomFormulary,
 } from '../../src/components/BodyForms';
 import {
-  Img, UploadContainer, ImageSelected, Label,
+  Img, UploadContainer, ImageSelected, Label, CurrencyInput,
 } from './styles';
 import {
   TitleStore, SubtitleStore, Text, SubText, TextBox, Submit,
@@ -64,8 +64,9 @@ export default function Store() {
     setConfPassword(event.target.value);
   }
   function handleShippingTaxChange(event) {
-    setShippingTax(event.target.value * 10);
+    setShippingTax(event.target.value);
   }
+
   function handleDeliveryTimeChange(event) {
     setDeliveryTime(event.target.value);
   }
@@ -150,7 +151,7 @@ export default function Store() {
       toast('Insira uma logo!', { position: toast.POSITION.BOTTOM_RIGHT });
       return;
     }
-
+    const formatShippingTax = parseFloat(shippingTax.replace(',', '.').split('R$')[1]);
     const formData = new FormData();
 
     formData.append('company_name', companyName);
@@ -159,10 +160,10 @@ export default function Store() {
     formData.append('cellphone', cellphone);
     formData.append('cnpj', cnpj);
     formData.append('password', password);
-    formData.append('status', '0'); // olhar o que significa no plano de negócio
+    formData.append('status', '0');
     formData.append('cover_img', cover_img.file);
     formData.append('logo_img', logo_img.file);
-    formData.append('shipping_tax', shippingTax);
+    formData.append('shipping_tax', (formatShippingTax)); // a variável armazena como inteiro. a divisão é pra separar os centavos
     formData.append('delivery_time', deliveryTime);
     formData.append('opening_time', openingTime);
     formData.append('closing_time', closingTime);
@@ -238,7 +239,7 @@ export default function Store() {
             <DividedItemFormulary>
               <ItemFormulary>
                 <Text>Taxa de envio: *</Text>
-                <MaskedInput name="shippingTax" id="shipping" mask="R$ 99,99" value={shippingTax} onChange={handleShippingTaxChange} />
+                <CurrencyInput name="shippingTax" decimalSeparator="," decimalScale="2" allowNegative={false} prefix="R$" value={shippingTax} onChange={handleShippingTaxChange} />
               </ItemFormulary>
 
               <ItemFormulary>
