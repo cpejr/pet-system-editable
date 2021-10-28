@@ -68,4 +68,18 @@ module.exports = {
       return res.status(500).json({ notification: 'Internal Server Error' });
     }
   },
+  async updateProductAmount(req, res) {
+    const amount = req.body;
+    const { firebase_id } = req.session.get('user').user;
+    try {
+      const cart = await CartModel.getCartByFirebaseId(firebase_id);
+      await Cart_ProductsModel.updateProductAmount(amount, cart.cart_id);
+      return res.status(200).json({ notification: 'Cart Products Deleted Successfully!' });
+    } catch (error) {
+      if (error.message) {
+        return res.status(400).json({ notification: error.message });
+      }
+      return res.status(500).json({ notification: 'Internal Server Error' });
+    }
+  },
 };

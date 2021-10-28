@@ -20,7 +20,12 @@ export default function CarrinhoCard(props) {
   const { setSubTotal } = props;
   const [quantity, setQuantity] = useState(product.amount);
   const [sent, setSent] = useState(true);
-  console.log(product);
+
+  const body = {
+    product_id: product.product_id,
+    amount: quantity,
+    final_price: quantity * product.price,
+  };
 
   const updateQuantity = () => {
     setSent(false);
@@ -28,10 +33,16 @@ export default function CarrinhoCard(props) {
       clearTimeout();
     } else {
       setTimeout(() => {
-        api.update('/CartProducts/${product}').then((response) => {
-          console.log(response);
-          setSent(true);
-        });
+        try {
+          api.update(`/CartProducts/${product.product_id}`, body).then((response) => {
+            console.log(response);
+            setSent(true);
+          });
+          console.log('não deu biziu');
+        } catch (error) {
+          console.log('deu biziu');
+          console.error(error);
+        }
       }, 3000);
     }
   };
@@ -99,7 +110,7 @@ export default function CarrinhoCard(props) {
           </CarrinhoCardText>
           <CarrinhoCardInfoQuantity>
             <FaRegMinusSquare size="18px" onClick={() => handleMinus()} />
-            <CarrinhoCardText>{product.amount}</CarrinhoCardText>
+            <CarrinhoCardText>{quantity}</CarrinhoCardText>
             <FaRegPlusSquare size="18px" onClick={() => handlePlus()} />
           </CarrinhoCardInfoQuantity>
         </CarrinhoCardInfoBottom>

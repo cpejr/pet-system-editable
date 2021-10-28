@@ -1,4 +1,6 @@
-import { create, getAll, deleteAllProductsCart } from '../../../src/controllers/Cart_ProductsController';
+import {
+  create, getAll, deleteAllProductsCart, updateProductAmount,
+} from '../../../src/controllers/Cart_ProductsController';
 import { withAuthValidation } from '../../../src/utils/Auth';
 
 export default function handler(req, res) {
@@ -13,6 +15,9 @@ export default function handler(req, res) {
     }
     if (method === 'DELETE') {
       return withAuthValidation(deleteAllProductsCart)(req, res);
+    }
+    if (method === 'PUT') {
+      return withAuthValidation(updateProductAmount)(req, res);
     }
     return res.status(500).json({ message: 'Internal Server Error' });
   } catch (error) {

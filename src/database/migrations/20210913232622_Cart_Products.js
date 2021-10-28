@@ -5,7 +5,7 @@ exports.up = function (knex) {
     table.uuid('product_id').notNullable();
     table.foreign('product_id').references('product_id').inTable('Product').onDelete('cascade');
     table.integer('amount').notNullable();
-    table.integer('final_price').notNullable();
+    table.float('final_price').notNullable();
   });
 };
 exports.down = function (knex) {
