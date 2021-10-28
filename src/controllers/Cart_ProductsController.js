@@ -6,7 +6,8 @@ module.exports = {
   async getById(req, res) {
     const cart_id = req.query.id;
     try {
-      const cart_products = await Cart_ProductsModel.getCart_ProductsByCartId(cart_id);
+      const cart_products = await Cart_ProductsModel
+        .getCart_ProductsByCartId(cart_id);
       return res.status(200).json(cart_products);
     } catch (error) {
       if (error.message) {
@@ -29,11 +30,8 @@ module.exports = {
   async create(req, res) {
     const cart_product = req.body;
     const { firebase_id } = req.session.get('user').user;
-    console.log(firebase_id);
     try {
-      console.log(firebase_id);
       const cart = await CartModel.getCartByFirebaseId(firebase_id);
-      console.log(cart);
       cart_product.cart_id = cart.cart_id;
       const result = await Cart_ProductsModel.createCart_Products(cart_product);
       return res.status(200).json({ notification: 'Cart Product Created Successfully!' });

@@ -6,8 +6,12 @@ import Image from 'next/image';
 import api from '../../../utils/api';
 import { CarrinhoText } from '..';
 import {
-  CarrinhoCardWrapper, CarrinhoCardInfo, CarrinhoCardInfoBottom,
-  CarrinhoCardText, CarrinhoCardInfoQuantity, CarrinhoCardIcon,
+  CarrinhoCardWrapper,
+  CarrinhoCardInfo,
+  CarrinhoCardInfoBottom,
+  CarrinhoCardText,
+  CarrinhoCardInfoQuantity,
+  CarrinhoCardIcon,
 } from './styles';
 
 export default function CarrinhoCard(props) {
@@ -15,10 +19,25 @@ export default function CarrinhoCard(props) {
   const { subTotal } = props;
   const { setSubTotal } = props;
   const [quantity, setQuantity] = useState(product.amount);
+  const [sent, setSent] = useState(true);
   console.log(product);
 
+  const updateQuantity = () => {
+    setSent(false);
+    if (sent) {
+      clearTimeout();
+    } else {
+      setTimeout(() => {
+        api.update('/CartProducts/${product}').then((response) => {
+          console.log(response);
+          setSent(true);
+        });
+      }, 3000);
+    }
+  };
   useEffect(() => {
     setSubTotal(subTotal + product.price * quantity);
+    updateQuantity();
   }, []);
 
   async function handleDelete(product_id) {
@@ -38,7 +57,8 @@ export default function CarrinhoCard(props) {
       console.error(error); //eslint-disable-line
       notification.open({
         message: 'Erro!',
-        description: 'Tivemos um problema ao apagar o endereço que você deseja!',
+        description:
+          'Tivemos um problema ao apagar o endereço que você deseja!',
         className: 'ant-notification',
         top: '100px',
         style: {
@@ -79,15 +99,16 @@ export default function CarrinhoCard(props) {
           </CarrinhoCardText>
           <CarrinhoCardInfoQuantity>
             <FaRegMinusSquare size="18px" onClick={() => handleMinus()} />
-            <CarrinhoCardText>{quantity}</CarrinhoCardText>
+            <CarrinhoCardText>{product.amount}</CarrinhoCardText>
             <FaRegPlusSquare size="18px" onClick={() => handlePlus()} />
           </CarrinhoCardInfoQuantity>
         </CarrinhoCardInfoBottom>
       </CarrinhoCardInfo>
       <CarrinhoCardIcon>
-        <IoTrashOutline onClick={() => {
-          handleDelete(product.product_id);
-        }}
+        <IoTrashOutline
+          onClick={() => {
+            handleDelete(product.product_id);
+          }}
         />
       </CarrinhoCardIcon>
     </CarrinhoCardWrapper>
