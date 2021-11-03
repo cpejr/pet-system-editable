@@ -1,5 +1,5 @@
-const CartModel = require('../models/CartModel');
 const { v4: uuidv4 } = require('uuid');
+const CartModel = require('../models/CartModel');
 
 module.exports = {
 
@@ -73,7 +73,7 @@ module.exports = {
   },
 
   async deleteAll(req, res) {
-    const firebase_id = req.session.get('user').user.firebase_id;
+    const { firebase_id } = req.session.get('user').user;
     try {
       await CartModel.removeAllCarts(firebase_id);
     } catch (err) {
@@ -85,5 +85,16 @@ module.exports = {
     }
     return res.status(200).json({ notification: 'Cart deleted' });
   },
-
+  async getCartByFirebaseId(req, res) {
+    const firebase_id = req.query.id;
+    try {
+      const cart = await CartModel.getCartByFirebaseId(firebase_id);
+      return res.status(200).json(cart);
+    } catch (error) {
+      if (error.message) {
+        return res.status(400).json({ notification: error.message });
+      }
+      return res.status(500).json({ notification: 'Internal Server Error' });
+    }
+  },
 };

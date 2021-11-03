@@ -19,7 +19,7 @@ export default function CarrinhoCard(props) {
   const { subTotal } = props;
   const { setSubTotal } = props;
   const [quantity, setQuantity] = useState(product.amount);
-  const [sent, setSent] = useState(true);
+  // const [sent, setSent] = useState(true);
 
   const body = {
     product_id: product.product_id,
@@ -28,28 +28,24 @@ export default function CarrinhoCard(props) {
   };
 
   const updateQuantity = () => {
-    setSent(false);
-    if (sent) {
-      clearTimeout();
-    } else {
-      setTimeout(() => {
-        try {
-          api.update(`/CartProducts/${product.product_id}`, body).then((response) => {
-            console.log(response);
-            setSent(true);
-          });
-          console.log('não deu biziu');
-        } catch (error) {
-          console.log('deu biziu');
-          console.error(error);
-        }
-      }, 3000);
+    try {
+      api.put('/CartProducts', body).then((response) => {
+        // setSent(true);
+        console.log(body);
+        console.log(response);
+      });
+    } catch (error) {
+      console.error(error);
     }
   };
   useEffect(() => {
     setSubTotal(subTotal + product.price * quantity);
-    updateQuantity();
   }, []);
+
+  useEffect(() => {
+    console.log('Opa');
+    updateQuantity();
+  }, [quantity]);
 
   async function handleDelete(product_id) {
     console.log(product_id);
