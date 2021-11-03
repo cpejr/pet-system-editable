@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import Link from 'next/link';
-import HeaderSeller from '../../../../src/components/HeaderSeller';
 import WordsDivider from '../../../../src/components/WordsDivider';
 import MySales from '../../../../src/components/MySales';
 import MySearchDateMonth from '../../../../src/components/MySearchDateMonth';
@@ -104,8 +103,6 @@ width:66%;
 export default function Perfil() {
   return (
     <div>
-      <HeaderSeller />
-
       <Title>Perfil da loja:</Title>
 
       <SubTitle>

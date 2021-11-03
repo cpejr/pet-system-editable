@@ -5,6 +5,7 @@ import Modal from '@material-ui/core/Modal';
 import axios from 'axios';
 import { notification } from 'antd';
 import { BiEditAlt } from 'react-icons/bi';
+import { useRouter } from 'next/router';
 
 const api = axios.create({ baseURL: 'http://localhost:3000/' });
 
@@ -154,24 +155,22 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function ModalGroup(props) {
-  const { groups } = props;
-  console.log(groups);
-  const [group, setGroup] = useState('');
+export default function ModalGroup({ group, setAtt, att }) {
+  const [groupName, setGroupName] = useState(group.name);
+  const router = useRouter();
 
   async function handleGroupChange(event) {
-    setGroup(event.target.value);
+    setGroupName(event.target.value);
   }
 
   async function handleSubmit() {
     const body = {
-      name: group,
-      group_id: groups,
+      name: groupName,
     };
 
     try {
-      const Validate = await api.put('/api/group', body);
-      console.log(Validate.data);
+      await api.put(`/api/group/${group.group_id}`, body);
+      setAtt(!att);
       notification.open({
         message: 'Sucesso!',
         description:
@@ -182,9 +181,13 @@ export default function ModalGroup(props) {
           width: 600,
         },
       });
+      router.reload(window.location.pathname);
     } catch (error) {
       console.error(error);
     }
+    api.get('/group/').then((res) => {
+      setGroups(res.data);
+    });
   }
 
   const classes = useStyles();
@@ -209,7 +212,7 @@ export default function ModalGroup(props) {
             <Ajust.Col1>
               Novo nome:
             </Ajust.Col1>
-            <InputNameGroup placeholder="" require value={group} onChange={handleGroupChange} />
+            <InputNameGroup placeholder="" require value={groupName} onChange={handleGroupChange} />
           </Ajust>
         </Row>
         <Row>

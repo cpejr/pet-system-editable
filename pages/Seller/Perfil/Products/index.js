@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import Link from 'next/link';
+import { useState, useEffect } from 'react';
 import WordsDivider from '../../../../src/components/WordsDivider';
 import FooterMobile from '../../../../src/components/Mobile/FooterMobile';
 import Order from '../../../../src/components/Filter/Order';
@@ -290,7 +291,16 @@ const Groups = styled.h2`
   margin: 0;
   `;
 
-export default function Perfil({ groups }) {
+export default function Perfil() {
+  const [groups, setGroups] = useState([]);
+  const [att, setAtt] = useState(false);
+
+  useEffect(() => {
+    api.get('group').then((res) => {
+      setGroups(res.data);
+    });
+  }, [att]);
+
   const PersonalGroups = () => (
     <div>
       {groups?.length > 0 && groups.map((group) => (
@@ -298,10 +308,10 @@ export default function Perfil({ groups }) {
           <Group.Title>
             <Groups>{group.name}</Groups>
             <EditGroup>
-              <ModalGroupEdit groups={group.group_id} />
+              <ModalGroupEdit group={group} setAtt={setAtt} att={att} />
             </EditGroup>
             <RemoveGroup>
-              <ModalGroupRemove groups={group.group_id} />
+              <ModalGroupRemove group={group} setAtt={setAtt} att={att} />
             </RemoveGroup>
           </Group.Title>
           <Products />
@@ -359,31 +369,4 @@ export default function Perfil({ groups }) {
       <FooterMobile />
     </div>
   );
-}
-
-export async function getStaticProps(context) {
-  try {
-    const { req } = context;
-
-    const cookies = req?.headers?.cookie;
-
-    if (!cookies) {
-      throw new Error('No session provided');
-    }
-
-    const response = await api.get('myGroups', { headers: { cookie: cookies } });
-    const groups = response.data;
-    return {
-      props: { groups },
-      revalidade: 300,
-    };
-  } catch (error) {
-    console.error(error) // eslint-disable-line
-    return {
-      redirect: {
-        permanent: false,
-        destination: '/',
-      },
-    };
-  }
 }
