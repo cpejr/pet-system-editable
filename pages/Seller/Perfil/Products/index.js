@@ -13,6 +13,7 @@ import ModalGroup from '../../../../src/components/ModalGroup';
 import ModalGroupEdit from '../../../../src/components/ModalGroupEdit';
 import ModalGroupRemove from '../../../../src/components/ModalGroupRemove';
 import api from '../../../../src/utils/api';
+import axios from 'axios';
 
 const Title = styled.h1`
 align-items:initial;
@@ -296,7 +297,8 @@ export default function Perfil() {
   const [att, setAtt] = useState(false);
 
   useEffect(() => {
-    api.get('group').then((res) => {
+    console.log('Entrou aqui Use Effect');
+    axios.get('http://localhost:3000/api/group').then((res) => {
       setGroups(res.data);
     });
   }, [att]);

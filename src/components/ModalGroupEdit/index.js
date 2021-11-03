@@ -181,7 +181,7 @@ export default function ModalGroup({ group, setAtt, att }) {
           width: 600,
         },
       });
-      router.reload(window.location.pathname);
+      // router.reload(window.location.pathname);
     } catch (error) {
       console.error(error);
     }
