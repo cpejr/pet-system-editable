@@ -8,7 +8,6 @@ handler.use(middleware);
 handler.post(async (req, res) => {
   try {
     const { files } = req;
-    console.log(req.files);
 
     // do stuff with files and body
     res.status(200).json({ files });

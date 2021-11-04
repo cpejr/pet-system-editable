@@ -128,12 +128,11 @@ export default function Store() {
     formData.append('logo_img', logo_img.file);
     formData.append('shipping_tax', shippingTax);
     try {
-      const Validate = await api.post('api/store', formData, {
+      await api.post('api/store', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
-      console.log(Validate.data);
       toast('Sucesso!', { position: toast.POSITION.BOTTOM_RIGHT });
     } catch (error) {
       toast('Erro ao cadastrar usuário.', { position: toast.POSITION.BOTTOM_RIGHT });

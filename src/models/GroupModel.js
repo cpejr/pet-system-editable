@@ -29,11 +29,6 @@ module.exports = {
   },
 
   async updateGroup(group, id) {
-    console.log('🚀 ~ file: GroupModel.js ~ line 34 ~ updateGroup ~ id', id);
-    console.log(
-      '🚀 ~ file: GroupModel.js ~ line 34 ~ updateGroup ~ group',
-      group,
-    );
     try {
       const response = await connection('Group')
         .where('group_id', id)

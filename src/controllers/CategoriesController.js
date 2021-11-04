@@ -31,7 +31,6 @@ module.exports = {
 
   async create(request, response) {
     const info = request.body;
-    console.log("🚀 ~ file: CategoriesController.js ~ line 33 ~ create ~ request", request.files)
     const { img } = request.files;
     img.name = uuidv4();
 
