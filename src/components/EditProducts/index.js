@@ -397,7 +397,7 @@ export default function EditProducts({
                   required
                   value={price}
                   onChange={handlePriceChange}
-                  thousandSeparator
+                  decimalSeparator="."
                 />
               </DivInput>
             </PriceAndDiscont.Col1>
@@ -407,8 +407,8 @@ export default function EditProducts({
               <DivInput>
                 <PriceAndDiscont.Col2.Row2
                   as={InputMask}
-                  placeholder="% 00,00"
-                  mask="99,99"
+                  placeholder="% 00.00"
+                  mask="99.99"
                   required
                   value={discount}
                   onChange={handleDiscountChange}

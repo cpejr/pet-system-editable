@@ -363,7 +363,7 @@ export default function Perfil({ categories }) {
         <MarketContainer.Col2>
           <EditCategory>Editar Categoria</EditCategory>
           <RemoveProducts>Remover produtos</RemoveProducts>
-          <ModalAddProducts />
+          <ModalAddProducts categories={categories} setAtt={setAtt} att={att} />
         </MarketContainer.Col2>
       </MarketContainer>
       <ProductContainer>
