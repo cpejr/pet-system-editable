@@ -34,6 +34,7 @@ EditProductsContainer.Col1 = styled.div`
 `;
 
 const DivInput = styled.div`
+  display: flex;
   width: 100%;
   @media (max-width: 1190px) {
     justify-content: center;
@@ -203,11 +204,10 @@ const SelectImage = styled.p`
   margin: 0;
   @media (max-width: 1190px) {
     justify-content: center;
+    margin-top: 5%;
   }
 `;
 const ButtonCancel = styled.button`
-  display: flex;
-  margin-top: 50px;
   height: 55px;
   width: 200px;
   font-family: Roboto;
@@ -217,12 +217,8 @@ const ButtonCancel = styled.button`
   color: white;
   border: 0;
   border-radius: 5px;
-  align-items: center;
-  text-align: center;
   transform: translate(0%, -50%);
-  justify-content: center;
-  text-align: center;
-  margin-top: 10%;
+  margin-top: 15%;
   cursor: pointer;
 `;
 const ButtonConfirm = styled.button`

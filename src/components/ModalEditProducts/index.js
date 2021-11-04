@@ -38,9 +38,11 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
   },
   paper: {
+    display: 'flex',
+    justifyContent: 'center',
     position: 'absolute',
-    width: '65vw',
-    height: '80vh',
+    width: '75vh',
+    height: '70vh',
     backgroundColor: theme.palette.background.paper,
     border: '2px solid #609694',
     boxShadow: theme.shadows[5],
