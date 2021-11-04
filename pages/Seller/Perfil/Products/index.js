@@ -293,16 +293,24 @@ const Groups = styled.h2`
 
 export default function Perfil() {
   const [groups, setGroups] = useState([]);
+  const [products, setProducts] = useState([]);
   const [att, setAtt] = useState(false);
 
   useEffect(() => {
     api.get('group').then((res) => {
       setGroups(res.data);
     });
+    api.get('/product').then((res) => {
+      setProducts(res.data);
+    });
   }, [att]);
 
   const PersonalGroups = () => (
     <div>
+      <Group.Title>
+        <Groups>Todos os meus produtos</Groups>
+      </Group.Title>
+      <Products products={products} />
       {groups?.length > 0 && groups.map((group) => (
         <div key={group.group_id}>
           <Group.Title>
@@ -314,7 +322,7 @@ export default function Perfil() {
               <ModalGroupRemove group={group} setAtt={setAtt} att={att} />
             </RemoveGroup>
           </Group.Title>
-          <Products />
+          <Products group={group} />
         </div>
       ))}
     </div>

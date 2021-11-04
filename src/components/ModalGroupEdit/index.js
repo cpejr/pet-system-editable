@@ -5,7 +5,6 @@ import Modal from '@material-ui/core/Modal';
 import axios from 'axios';
 import { notification } from 'antd';
 import { BiEditAlt } from 'react-icons/bi';
-import { useRouter } from 'next/router';
 
 const api = axios.create({ baseURL: 'http://localhost:3000/' });
 
@@ -157,7 +156,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ModalGroup({ group, setAtt, att }) {
   const [groupName, setGroupName] = useState(group.name);
-  const router = useRouter();
 
   async function handleGroupChange(event) {
     setGroupName(event.target.value);
@@ -181,13 +179,9 @@ export default function ModalGroup({ group, setAtt, att }) {
           width: 600,
         },
       });
-      router.reload(window.location.pathname);
     } catch (error) {
       console.error(error);
     }
-    api.get('/group/').then((res) => {
-      setGroups(res.data);
-    });
   }
 
   const classes = useStyles();

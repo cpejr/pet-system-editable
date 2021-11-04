@@ -152,7 +152,6 @@ export default function Store() {
 
   return (
     <>
-      <Header />
       <StoreBodyWrapper>
         <StoreBody>
           <StoreFormulary>

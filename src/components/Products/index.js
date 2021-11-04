@@ -21,22 +21,18 @@ flex-wrap: wrap;
     flex-wrap: wrap;
 }
 `;
-export default function MyProducts() {
-  const [myProducts, setMyProducts] = useState([]);
-  useEffect(() => {
-    async function fetchData() {
-      const response = await api.get('api/products');
-      console.log(response.data);
-      const { data } = response;
-      setMyProducts(data);
-    }
-    fetchData();
-  }, []);
+export default function MyProducts({ group, products }) {
   return (
-    <CardLine>
-      {myProducts.length > 0
-        && myProducts.map((product) => (<Cards product={product} key={product.product_id} />))}
-    </CardLine>
-
+    group ? (
+      <CardLine>
+        {group.product_groups.length > 0
+        && group.product_groups.map((product) => (<Cards product={product} key={product.product_id} />))}
+      </CardLine>
+    ) : (
+      <CardLine>
+        {products.length > 0
+        && products.map((product) => (<Cards product={product} key={product.product_id} />))}
+      </CardLine>
+    )
   );
 }
