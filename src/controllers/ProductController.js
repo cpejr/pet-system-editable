@@ -41,11 +41,17 @@ module.exports = {
     const product = request.body;
     const { id } = request.query;
     const file = request.files;
-    file.img.name = uuidv4();
-
     try {
-      const image_id = await AwsModel.uploadAWS(file.img);
-      product.img = image_id.key;
+      if (Object.keys(file).length > 0) {
+        file.img.name = uuidv4();
+      }
+
+      const image_id = Object.keys(file).length > 0
+        ? await AwsModel.uploadAWS(file.img) : null;
+
+      if (image_id) {
+        product.img = image_id.key;
+      }
       await ProductModel.updateProduct(product, id);
     } catch (err) {
       if (err.message) {

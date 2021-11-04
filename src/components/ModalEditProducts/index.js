@@ -49,8 +49,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 /*eslint-disable*/
-export default function ModalEditProducts({ product }) {
-  console.log("🚀 ~ Linha do grande vapo", product)
+export default function ModalEditProducts({ product, categories, att, setAtt }) {
   const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = useState(getModalStyle);
@@ -68,7 +67,7 @@ export default function ModalEditProducts({ product }) {
 
   const body = (
     <div style={modalStyle} className={classes.paper}>
-      <EditProducts closeModal={handleState} product={product} />
+      <EditProducts closeModal={handleState} product={product} categories={categories} setAtt={setAtt} att={att} />
     </div>
   );
 

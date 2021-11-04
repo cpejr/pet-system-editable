@@ -37,12 +37,18 @@ const Price = styled.div`
   border-radius: 0 0 20px 20px;
   margin-top: 10px;
 `;
-export default function Cards(props) {
-  const { product } = props;
+export default function Cards({
+  product, categories, att, setAtt,
+}) {
   const myLoader = ({ src }) => `https://s3-sa-east-1.amazonaws.com/petsystembucket/${src}`;
   return (
     <Card>
-      <ModalEditProducts product={product} />
+      <ModalEditProducts
+        product={product}
+        categories={categories}
+        setAtt={setAtt}
+        att={att}
+      />
       <Container>
         <Image
           loader={myLoader}
