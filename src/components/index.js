@@ -19,3 +19,6 @@ export { default as StoreTabs } from './StoreTabs';
 export { default as StoreServices } from './StoreServices';
 export { default as ProductsCarousel } from './Carousels/ProductsCarousel';
 export { default as SearchCardsStore } from './SearchCardsStore';
+export { default as PerfilStoreMenu } from './PerfilStoreMenu';
+export { default as MyStoreData } from './MyStoreData';
+export { default as MyStoreDataEdit } from './MyStoreDataEdit';
