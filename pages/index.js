@@ -1,6 +1,5 @@
 import React from 'react';
 import Image from 'next/image';
-import Header from '../src/components/Header';
 import MobileHeader from '../src/components/MobileHeader';
 import BannerCarousel from '../src/components/Carousels/BannerCarousel';
 import CardsCarousel from '../src/components/Carousels/CardsCarousel';
@@ -14,7 +13,6 @@ import {
 export default function Home() {
   return (
     <>
-      <Header />
       <MobileHeader />
       <BannerCarousel />
       <Container>

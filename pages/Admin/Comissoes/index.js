@@ -115,8 +115,7 @@ export default function Admin() {
     };
     try {
       if (comission != null) {
-        const Validate = await api.put('/api/admin', body);
-        console.log(Validate.data);
+        await api.put('/api/admin', body);
       }
     } catch (error) {
       console.log(error);

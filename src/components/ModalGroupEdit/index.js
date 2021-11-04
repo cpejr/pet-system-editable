@@ -154,24 +154,21 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function ModalGroup(props) {
-  const { groups } = props;
-  console.log(groups);
-  const [group, setGroup] = useState('');
+export default function ModalGroup({ group, setAtt, att }) {
+  const [groupName, setGroupName] = useState(group.name);
 
   async function handleGroupChange(event) {
-    setGroup(event.target.value);
+    setGroupName(event.target.value);
   }
 
   async function handleSubmit() {
     const body = {
-      name: group,
-      group_id: groups,
+      name: groupName,
     };
 
     try {
-      const Validate = await api.put('/api/group', body);
-      console.log(Validate.data);
+      await api.put(`/api/group/${group.group_id}`, body);
+      setAtt(!att);
       notification.open({
         message: 'Sucesso!',
         description:
@@ -209,7 +206,7 @@ export default function ModalGroup(props) {
             <Ajust.Col1>
               Novo nome:
             </Ajust.Col1>
-            <InputNameGroup placeholder="" require value={group} onChange={handleGroupChange} />
+            <InputNameGroup placeholder="" require value={groupName} onChange={handleGroupChange} />
           </Ajust>
         </Row>
         <Row>

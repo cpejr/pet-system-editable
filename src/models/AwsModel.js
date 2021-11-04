@@ -67,7 +67,6 @@ module.exports = {
         };
 
         const awsRes =  await s3.upload(uploadParams).promise();
-        console.log(awsRes);
 
         resolve(awsRes);
       } catch (error) {

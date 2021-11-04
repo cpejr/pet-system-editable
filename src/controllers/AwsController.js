@@ -4,7 +4,6 @@ module.exports = {
 
   async getImagesAWS(req, res) {
     try {
-      // console.log(req.params)
       const { key } = req.params;
       const readStream = await AwsModel.getAWS(key);
 

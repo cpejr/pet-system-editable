@@ -305,9 +305,7 @@ export default function AddProducts({ closeModal }) {
     Object.keys(body).forEach((key) => data.append(key, body[key]));
 
     try {
-      console.log(body);
-      const Validate = await api.post('/api/product', data);
-      console.log(Validate.data);
+      await api.post('/api/product', data);
       notification.open({
         message: 'Sucesso!',
         description:
