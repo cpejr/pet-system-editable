@@ -25,6 +25,8 @@ export default function MyStoreDataEdit() {
   const [phone, setPhone] = useState(store.phone.substring(2));
   const [opening_time, setOpenTime] = useState(store.opening_time);
   const [closing_time, setCloseTime] = useState(store.closing_time);
+  const [shipping_tax, setShippingTax] = useState(store.shipping_tax);
+  const [delivery_time, setDeliveryTime] = useState(store.delivery_time);
 
   const handleOpen = () => {
     setOpen(true);
@@ -51,6 +53,8 @@ export default function MyStoreDataEdit() {
       phone: ddd + phone,
       opening_time,
       closing_time,
+      shipping_tax,
+      delivery_time,
     };
     try {
       console.log(store.firebase_id_store);
@@ -127,24 +131,52 @@ export default function MyStoreDataEdit() {
                 />
               </MyFormGroup>
             </NumbersForms>
-            <MyFormGroup>
-              <FormLabel>Abertura</FormLabel>
-              <TimeFormControl
-                type="numbers"
-                placeholder="00:00"
-                required
-                value={opening_time}
-                onChange={(e) => setOpenTime(e.target.value)}
-              />
-              <FormLabel>Fechamento</FormLabel>
-              <TimeFormControl
-                type="numbers"
-                placeholder="00:00"
-                required
-                value={closing_time}
-                onChange={(e) => setCloseTime(e.target.value)}
-              />
-            </MyFormGroup>
+            <NumbersForms>
+              <MyFormGroup>
+                <FormLabel>Abertura</FormLabel>
+                <TimeFormControl
+                  type="numbers"
+                  placeholder="00:00"
+                  required
+                  value={opening_time}
+                  onChange={(e) => setOpenTime(e.target.value)}
+                />
+              </MyFormGroup>
+              <MyFormGroup>
+                <FormLabel>Fechamento</FormLabel>
+                <TimeFormControl
+                  type="numbers"
+                  placeholder="00:00"
+                  required
+                  value={closing_time}
+                  onChange={(e) => setCloseTime(e.target.value)}
+                />
+              </MyFormGroup>
+            </NumbersForms>
+            <NumbersForms>
+              <MyFormGroup>
+                <FormLabel>Taxa de Entrega:</FormLabel>
+                <TimeFormControl
+                  type="numbers"
+                  placeholder="0,00"
+                  required
+                  value={shipping_tax}
+                  onChange={(e) => setShippingTax(e.target.value)}
+                />
+              </MyFormGroup>
+              <MyFormGroup>
+                <FormLabel>Tempo de Entrega</FormLabel>
+                <TimeFormControl
+                  type="numbers"
+                  placeholder="00:00"
+                  required
+                  value={delivery_time}
+                  onChange={(e) => setDeliveryTime(e.target.value)}
+                />
+              </MyFormGroup>
+
+            </NumbersForms>
+
             <Buttons>
               <CancelSubmit onClick={handleClose}>Cancelar</CancelSubmit>
               <Submit onClick={handleSubmit}>Atualizar</Submit>

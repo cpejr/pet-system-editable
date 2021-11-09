@@ -16,16 +16,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function MyDatas() {
-  const { store, setStore } = useAuth();
+export default function MyStoreData() {
+  const { store } = useAuth();
+  const [MyStore, setMyStore] = useState();
   const classes = useStyles();
 
   async function loadStore() {
-    try {
-      const response = await api.get(`/store/${store.firebase_id_store}`);
-      setStore(response.data);
-    } catch (error) {
-      console.error(error); //eslint-disable-line
+    if (store) {
+      try {
+        const response = await api.get(`/store/${store.firebase_id_store}`);
+        setMyStore(response.data);
+      } catch (error) {
+        console.error(error); //eslint-disable-line
+      }
     }
   }
 
@@ -43,7 +46,7 @@ export default function MyDatas() {
     loadStore();
   }, []);
 
-  if (store) {
+  if (MyStore) {
     return (
       <ContainerDatas>
         <div className={classes.root}>
@@ -51,36 +54,41 @@ export default function MyDatas() {
             <AddressData>
               Nome:
               {' '}
-              {store.company_name}
+              {MyStore.company_name}
             </AddressData>
             <AddressData>
               Email:
               {' '}
-              {store.email}
+              {MyStore.email}
             </AddressData>
             <AddressData>
               CNPJ:
               {' '}
-              {store.cnpj}
+              {MyStore.cnpj}
             </AddressData>
             <AddressData>
               Parceira desde:
               {' '}
-              {dataNascimentoFormatada(store.created_at)}
+              {dataNascimentoFormatada(MyStore.created_at)}
             </AddressData>
             <AddressData>
               Telefone:
               {' '}
-              {store.phone}
+              {MyStore.phone}
             </AddressData>
             <AddressData>
               Horario de funcionamento:
               {' '}
-              {store.opening_time}
+              {MyStore.opening_time}
               {' '}
               -
               {' '}
-              {store.closing_time}
+              {MyStore.closing_time}
+            </AddressData>
+            <AddressData>
+              Taxa de entrega:
+              {' '}
+              {MyStore.delivery_price}
             </AddressData>
             <MyStoreDataEdit />
           </Paper>
