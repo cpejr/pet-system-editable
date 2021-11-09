@@ -1,7 +1,5 @@
 import styled from 'styled-components';
-import Link from 'next/link';
 import { useState, useEffect } from 'react';
-import WordsDivider from '../../../../src/components/WordsDivider';
 import FooterMobile from '../../../../src/components/Mobile/FooterMobile';
 import Order from '../../../../src/components/Filter/Order';
 import Category from '../../../../src/components/Filter/Category';
@@ -12,22 +10,8 @@ import EditAddRemoveSection from '../../../../src/components/Mobile/EditAddRemov
 import ModalGroup from '../../../../src/components/ModalGroup';
 import ModalGroupEdit from '../../../../src/components/ModalGroupEdit';
 import ModalGroupRemove from '../../../../src/components/ModalGroupRemove';
+import { Title, PerfilStoreMenu } from '../../../../src/components/index';
 import api from '../../../../src/utils/api';
-
-const Title = styled.h1`
-  align-items: initial;
-  display: flex;
-  margin-left: 5%;
-  margin-top: 2%;
-  margin-bottom: 1%;
-  font-family: Roboto;
-  @media (max-width: 560px) {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 2%;
-  }
-`;
 
 const SubTitle = styled.div`
   display: flex;
@@ -337,23 +321,7 @@ export default function Perfil({ categories }) {
   return (
     <div>
       <Title>Perfil da loja:</Title>
-      <SubTitle>
-        <Link href="http://localhost:3000/Seller/Perfil/Products">
-          <Section.Select>Meus produtos</Section.Select>
-        </Link>
-        <WordsDivider />
-        <Link href="http://localhost:3000/Seller/Perfil/Store">
-          <Section>Minha loja</Section>
-        </Link>
-        <WordsDivider />
-        <Link href="http://localhost:3000/Seller/Perfil/SellerRequests">
-          <Section>Pedidos</Section>
-        </Link>
-        <WordsDivider />
-        <Link href="http://localhost:3000/Seller/Perfil/Sales">
-          <Section>Minhas vendas</Section>
-        </Link>
-      </SubTitle>
+      <PerfilStoreMenu selectedItem="Meus produtos" />
       <LocationAndFilter />
       <EditAddRemoveSection />
       <MarketContainer>
