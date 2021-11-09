@@ -17,22 +17,23 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function MyStoreData() {
-  const { store } = useAuth();
-  const [MyStore, setMyStore] = useState();
+  const { store, setStore } = useAuth();
+  console.log(store, 'front');
   const classes = useStyles();
 
   async function loadStore() {
     if (store) {
       try {
         const response = await api.get(`/store/${store.firebase_id_store}`);
-        setMyStore(response.data);
+        setStore(response.data);
       } catch (error) {
-        console.error(error); //eslint-disable-line
+      console.error(error); //eslint-disable-line
       }
     }
   }
 
   function dataNascimentoFormatada(bdate) {
+    console.log(bdate);
     const data = new Date(bdate);
     const dia = data.getDate().toString();
     const diaF = dia.length === 1 ? `0${dia}` : dia;
@@ -46,7 +47,8 @@ export default function MyStoreData() {
     loadStore();
   }, []);
 
-  if (MyStore) {
+  if (store) {
+    console.log(store);
     return (
       <ContainerDatas>
         <div className={classes.root}>
@@ -54,41 +56,41 @@ export default function MyStoreData() {
             <AddressData>
               Nome:
               {' '}
-              {MyStore.company_name}
+              {store.company_name}
             </AddressData>
             <AddressData>
               Email:
               {' '}
-              {MyStore.email}
+              {store.email}
             </AddressData>
             <AddressData>
               CNPJ:
               {' '}
-              {MyStore.cnpj}
+              {store.cnpj}
             </AddressData>
             <AddressData>
               Parceira desde:
               {' '}
-              {dataNascimentoFormatada(MyStore.created_at)}
+              {dataNascimentoFormatada(store.created_at)}
             </AddressData>
             <AddressData>
               Telefone:
               {' '}
-              {MyStore.phone}
+              {store.phone}
             </AddressData>
             <AddressData>
               Horario de funcionamento:
               {' '}
-              {MyStore.opening_time}
+              {store.opening_time}
               {' '}
               -
               {' '}
-              {MyStore.closing_time}
+              {store.closing_time}
             </AddressData>
             <AddressData>
               Taxa de entrega:
               {' '}
-              {MyStore.delivery_price}
+              {store.delivery_price}
             </AddressData>
             <MyStoreDataEdit />
           </Paper>

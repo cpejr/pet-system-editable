@@ -27,6 +27,7 @@ export default function MyStoreDataEdit() {
   const [closing_time, setCloseTime] = useState(store.closing_time);
   const [shipping_tax, setShippingTax] = useState(store.shipping_tax);
   const [delivery_time, setDeliveryTime] = useState(store.delivery_time);
+  const router = useRouter();
 
   const handleOpen = () => {
     setOpen(true);
@@ -59,8 +60,8 @@ export default function MyStoreDataEdit() {
     try {
       console.log(store.firebase_id_store);
       api.put(`/store/${store.firebase_id_store}`, body).then((response) => {
-        setStore(response.data);
-        console.log(store);
+        setStore(response.data.store);
+        console.log(response.data);
       });
       notification.open({
         message: 'Sucesso!',
@@ -73,7 +74,7 @@ export default function MyStoreDataEdit() {
       });
       router.push('/Seller/Perfil/Store');
     } catch (error) {
-      console.error(error);
+      console.error('erro aqui', error);
       notification.open({
         message: 'Erro!',
         description: 'Erro ao atualizar dados.',

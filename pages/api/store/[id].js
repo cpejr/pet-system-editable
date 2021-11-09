@@ -1,4 +1,5 @@
 import { getOne, update, deleteBoth } from '../../../src/controllers/StoreController';
+import { withAuthValidation } from '../../../src/utils/Auth';
 
 export default function handler(req, res) {
   try {
@@ -8,10 +9,10 @@ export default function handler(req, res) {
       return getOne(req, res);
     }
     if (method === 'PUT') {
-      return update(req, res);
+      return withAuthValidation(update)(req, res);
     }
     if (method === 'DELETE') {
-      return deleteBoth(req, res);
+      return withAuthValidation(deleteBoth)(req, res);
     }
     return res.status(500).json({ message: 'Internal Server Error' });
   } catch (err) {

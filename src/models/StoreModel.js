@@ -37,11 +37,13 @@ module.exports = {
   },
 
   async updateStore(store, id) {
+    console.log('firebase', id);
     try {
       const response = await connection('Store')
         .where({ firebase_id_store: id })
-        .update(store);
-      return response;
+        .update(store)
+        .returning('*');
+      return response[0];
     } catch (error) {
       console.error(error);
       throw new Error(error);
@@ -57,5 +59,5 @@ module.exports = {
       throw new Error(error);
     }
   },
-  
+
 };

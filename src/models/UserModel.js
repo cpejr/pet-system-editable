@@ -20,7 +20,7 @@ module.exports = {
   async getAllUsers() {
     try {
       const users = await connection('User')
-        .select('*')
+        .select('*');
       return users;
     } catch (error) {
       console.error(error);

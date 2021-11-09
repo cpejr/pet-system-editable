@@ -10,27 +10,8 @@ import EditAddRemoveSection from '../../../../src/components/Mobile/EditAddRemov
 import ModalGroup from '../../../../src/components/ModalGroup';
 import ModalGroupEdit from '../../../../src/components/ModalGroupEdit';
 import ModalGroupRemove from '../../../../src/components/ModalGroupRemove';
+import { Title, PerfilStoreMenu } from '../../../../src/components/index';
 import api from '../../../../src/utils/api';
-<<<<<<< Updated upstream
-
-const Title = styled.h1`
-  align-items: initial;
-  display: flex;
-  margin-left: 5%;
-  margin-top: 2%;
-  margin-bottom: 1%;
-  font-family: Roboto;
-  @media (max-width: 560px) {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 2%;
-  }
-`;
-=======
-import PerfilStoreMenu from '../../../../src/components/PerfilStoreMenu';
-import Title from '../../../../src/components/Title';
->>>>>>> Stashed changes
 
 const SubTitle = styled.div`
   display: flex;
