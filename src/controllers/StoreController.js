@@ -64,16 +64,20 @@ module.exports = {
 
   async update(request, response) {
     const store = request.body;
-
+    const { accessToken } = await request.session.get('store');
+    let updatedStore;
     try {
-      await StoreModel.updateStore(store, store.firebase_id_store);
+      updatedStore = await StoreModel
+        .updateStore(store, store.firebase_id_store);
+      request.session.set('store', { store: updatedStore, accessToken });
+      await request.session.save();
     } catch (err) {
       if (err.message) {
         return response.status(400).json({ notification: err.message });
       }
       return response.status(500).json({ notification: 'Internal Server Error' });
     }
-    return response.status(200).json({ notification: 'Store updated' });
+    return response.status(200).json({ notification: 'Store updated', store: updatedStore });
   },
 
   async deleteBoth(request, response) {
