@@ -13,6 +13,19 @@ import ModalGroupRemove from '../../../../src/components/ModalGroupRemove';
 import { Title, PerfilStoreMenu } from '../../../../src/components/index';
 import api from '../../../../src/utils/api';
 
+const SubTitle = styled.div`
+  display: flex;
+  align-items: initial;
+  margin-left: 8%;
+  font-family: Roboto;
+  @media (max-width: 560px) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+  }
+`;
+
 const Section = styled.button`
   display: flex;
   font-size: 16px;
