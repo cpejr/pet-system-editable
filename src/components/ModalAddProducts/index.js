@@ -8,28 +8,29 @@ import styled from 'styled-components';
 import AddProducts from '../AddProducts';
 
 const ButtonAdd = styled(Button)`
-display:flex;
-height: 55px;
-width: 200px;
-font-family: Roboto;
-font-size: 18px;
-font-weight: 300;
-background-color: ${({ theme }) => theme.colors.darkGreen};
-color: white;
-border: 0;
-border-radius: 5px;
-align-items: center;
-text-align: center;
-margin-top:2%;
-margin-botton:2%;
-transform: translate(0%,-50%);
-justify-content: center;
-text-align: center;
-cursor: pointer;
-    }
-    @media(max-width:860px){
-        width:150px;
-    } 
+  height: 50px;
+  width: 100%;
+  font-family: Roboto;
+  font-size: 100%;
+  font-weight: 500;
+  background-color: ${({ theme }) => theme.colors.darkGreen};
+  color: white;
+  border: 0;
+  margin-left: 8%;
+  border-radius: 5px;
+  cursor: pointer;
+  outline: none;
+  @media (max-width: 1010px) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    width: 100%;
+    height: 50px;
+  }
+  @media (max-width: 560px) {
+    display: none;
+  }
 `;
 function getModalStyle() {
   const top = 50;
@@ -49,20 +50,21 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
   },
   paper: {
+    display: 'flex',
+    justifyContent: 'center',
     position: 'absolute',
-    width: '65vw',
-    height: '80vh',
+    width: '75vh',
+    height: '70vh',
     backgroundColor: theme.palette.background.paper,
     border: '2px solid #609694',
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
     overflow: 'auto',
-
   },
 
 }));
 /*eslint-disable*/
-export default function ModalAddProducts() {
+export default function ModalAddProducts({ categories, att, setAtt}) {
   const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = useState(getModalStyle);
@@ -80,7 +82,7 @@ export default function ModalAddProducts() {
 
   const body = (
     <div style={modalStyle} className={classes.paper}>
-      <AddProducts closeModal = {handleState}/>
+      <AddProducts closeModal = {handleState} categories={categories} setAtt={setAtt} att={att} />
     </div>
   );
 

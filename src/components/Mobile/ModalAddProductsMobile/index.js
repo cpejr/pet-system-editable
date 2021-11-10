@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 /*eslint-disable*/
-export default function ModalAddProductsMobile() {
+export default function ModalAddProductsMobile({ categories, att, setAtt}) {
   const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = useState(getModalStyle);
@@ -62,7 +62,7 @@ export default function ModalAddProductsMobile() {
 
   const body = (
     <div style={modalStyle} className={classes.paper}>
-      <AddProducts closeModal = {handleState}/>
+      <AddProducts closeModal = {handleState} categories={categories} setAtt={setAtt} att={att} />
     </div>
   );
 

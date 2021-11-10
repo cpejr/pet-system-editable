@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { notification } from 'antd';
+import MenuItem from '@material-ui/core/MenuItem';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import { Select } from '@material-ui/core';
 import 'antd/dist/antd.css';
 import InputMask from 'react-input-mask';
 import CurrencyFormat from 'react-currency-format';
@@ -51,7 +54,7 @@ font-family: Roboto;
 }
 `;
 
-const NameProduct = styled.p`
+const SubTitleProduct = styled.p`
 display:flex;
 align-items:center;
 justify-content:initial;
@@ -165,7 +168,7 @@ display:flex;
 align-items:center;
 justify-content:center;
 width:80%;
-height:250px;
+height:200px;
 border-radius:5px;
 border-color: ${({ theme }) => theme.colors.borderBoxColor};
 border-width:1px;
@@ -197,24 +200,18 @@ margin: 0;
 }
 `;
 const ButtonCancel = styled.button`
-    display:flex;
-    margin-top: 50px;
-    height: 55px;
-    width: 200px;
-    font-family: Roboto;
-    font-size: 18px;
-    font-weight: 300;
-    background-color: ${({ theme }) => theme.colors.strongRed};
-    color: white;
-    border: 0;
-    border-radius: 5px;
-    align-items: center;
-    text-align: center;
-    transform: translate(0%,-50%);
-    justify-content: center;
-    text-align: center;
-    margin-top:10%;
-    cursor: pointer;
+  height: 55px;
+  width: 200px;
+  font-family: Roboto;
+  font-size: 18px;
+  font-weight: 300;
+  background-color: ${({ theme }) => theme.colors.strongRed};
+  color: white;
+  border: 0;
+  border-radius: 5px;
+  transform: translate(0%, -50%);
+  margin-top: 15%;
+  cursor: pointer;
 `;
 const ButtonConfirm = styled.button`
     display:flex;
@@ -266,12 +263,14 @@ cursor: pointer;
 margin-top: 1rem;
 `;
 
-export default function AddProducts({ closeModal }) {
+export default function AddProducts({ closeModal, categories, att, setAtt }) {
   const [productName, setProductName] = useState('');
   const [price, setPrice] = useState('');
   const [discount, setDiscount] = useState('');
   const [description, setDescription] = useState('');
   const [photo, setPhoto] = useState({ file: null, url: null }); /* Caminho da imagem no lugar de null */
+  const [type, setType] = useState('');
+  const [categoryId, setCategoryId] = useState();
 
   function handleChange(event) {
     setPhoto({
@@ -293,19 +292,21 @@ export default function AddProducts({ closeModal }) {
     setDescription(event.target.value);
   }
   async function handleSubmit() {
-    const body = {
-      store_id: '65bd2c00-b1fc-4117-94da-5c78d60c2adc',
-      product_name: productName,
-      price,
-      discount,
-      description,
-      img: photo.file,
-    };
-    const data = new FormData();
-    Object.keys(body).forEach((key) => data.append(key, body[key]));
+    const formData = new FormData();
+
+    formData.append('category_id', categoryId);
+    formData.append('product_name', productName);
+    formData.append('price', price);
+    formData.append('discount', discount);
+    formData.append('description', description);
+    formData.append('available', 1);
+    if (photo.file) {
+      formData.append('img', photo.file);
+    }
 
     try {
-      await api.post('/api/product', data);
+      await api.post('/api/product', formData);
+      setAtt(!att);
       notification.open({
         message: 'Sucesso!',
         description:
@@ -325,7 +326,7 @@ export default function AddProducts({ closeModal }) {
       <AddProductsContainer>
         <AddProductsContainer.Col1>
           <AddTitle>Cadastro de Produto</AddTitle>
-          <NameProduct>Nome do Produto:</NameProduct>
+          <SubTitleProduct>Nome do Produto:</SubTitleProduct>
           <DivInput>
             <NameProductInput
               type="text"
@@ -333,6 +334,27 @@ export default function AddProducts({ closeModal }) {
               value={productName}
               onChange={handleProductNameChange}
             />
+          </DivInput>
+          <SubTitleProduct>Categoria:</SubTitleProduct>
+          <DivInput>
+            <Select
+              labelId="label"
+              id="select"
+              value={type}
+              onChange={(e) => setType(e.target.value)}
+              input={<OutlinedInput />}
+              style={{ width: '80%', height: '40px' }}
+            >
+              {categories.map((category) => (
+                <MenuItem
+                  key={category.category_id}
+                  value={category.name}
+                  onClick={() => setCategoryId(category.category_id)}
+                >
+                  {category.name}
+                </MenuItem>
+              ))}
+            </Select>
           </DivInput>
           <PriceAndDiscont>
             <PriceAndDiscont.Col1>
@@ -345,7 +367,7 @@ export default function AddProducts({ closeModal }) {
                   required
                   value={price}
                   onChange={handlePriceChange}
-                  thousandSeparator
+                  decimalSeparator="."
                 />
               </DivInput>
             </PriceAndDiscont.Col1>
@@ -357,8 +379,8 @@ export default function AddProducts({ closeModal }) {
               <DivInput>
                 <PriceAndDiscont.Col2.Row2
                   as={InputMask}
-                  placeholder="% 00,00"
-                  mask="99,99"
+                  placeholder="% 00.00"
+                  mask="99.99"
                   required
                   value={discount}
                   onChange={handleDiscountChange}
