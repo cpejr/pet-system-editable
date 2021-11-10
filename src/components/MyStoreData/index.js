@@ -18,7 +18,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function MyStoreData() {
   const { store, setStore } = useAuth();
-  console.log(store, 'front');
   const classes = useStyles();
 
   async function loadStore() {
@@ -33,7 +32,6 @@ export default function MyStoreData() {
   }
 
   function dataNascimentoFormatada(bdate) {
-    console.log(bdate);
     const data = new Date(bdate);
     const dia = data.getDate().toString();
     const diaF = dia.length === 1 ? `0${dia}` : dia;
@@ -48,7 +46,6 @@ export default function MyStoreData() {
   }, []);
 
   if (store) {
-    console.log(store);
     return (
       <ContainerDatas>
         <div className={classes.root}>
@@ -89,8 +86,7 @@ export default function MyStoreData() {
             </AddressData>
             <AddressData>
               Taxa de entrega:
-              {' '}
-              {store.delivery_price}
+              {` R$${store.shipping_tax}`}
             </AddressData>
             <MyStoreDataEdit />
           </Paper>

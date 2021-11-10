@@ -37,7 +37,6 @@ module.exports = {
   },
 
   async updateStore(store, id) {
-    console.log('firebase', id);
     try {
       const response = await connection('Store')
         .where({ firebase_id_store: id })

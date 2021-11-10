@@ -58,10 +58,8 @@ export default function MyStoreDataEdit() {
       delivery_time,
     };
     try {
-      console.log(store.firebase_id_store);
       api.put(`/store/${store.firebase_id_store}`, body).then((response) => {
         setStore(response.data.store);
-        console.log(response.data);
       });
       notification.open({
         message: 'Sucesso!',
