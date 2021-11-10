@@ -13,19 +13,6 @@ import ModalGroupRemove from '../../../../src/components/ModalGroupRemove';
 import { Title, PerfilStoreMenu } from '../../../../src/components/index';
 import api from '../../../../src/utils/api';
 
-const SubTitle = styled.div`
-  display: flex;
-  align-items: initial;
-  margin-left: 8%;
-  font-family: Roboto;
-  @media (max-width: 560px) {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0;
-  }
-`;
-
 const Section = styled.button`
   display: flex;
   font-size: 16px;
@@ -99,9 +86,6 @@ ProductContainer.Col2 = styled.div`
 
 const MarketContainer = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: row;
   width: 100%;
   @media (max-width: 1010px) {
     display: flex;
@@ -138,8 +122,8 @@ MarketContainer.Col1 = styled.div`
 
 MarketContainer.Col2 = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: initial;
+  align-items: flex-end;
+  justify-content: space-around;
   width: 38%;
   @media (max-width: 1010px) {
     width: 100%;
@@ -162,57 +146,6 @@ const TitleMarket = styled.h2`
   margin-top: 30px;
   font-family: Roboto;
   font-size: 25px;
-`;
-const EditCategory = styled.button`
-  height: 50px;
-  width: 30%;
-  font-family: Roboto;
-  font-size: 100%;
-  font-weight: 500;
-  background-color: ${({ theme }) => theme.colors.darkGreen};
-  color: white;
-  border: 0;
-  border-radius: 5px;
-  cursor: pointer;
-  outline: none;
-  margin-right: 2%;
-  margin-top: --5px;
-  @media (max-width: 1010px) {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    width: 20%;
-    height: 50px;
-  }
-  @media (max-width: 560px) {
-    display: none;
-  }
-`;
-
-const RemoveProducts = styled.button`
-  height: 50px;
-  width: 30%;
-  font-family: Roboto;
-  font-size: 100%;
-  font-weight: 500;
-  background-color: ${({ theme }) => theme.colors.strongRed};
-  color: white;
-  border: 0;
-  border-radius: 5px;
-  cursor: pointer;
-  outline: none;
-  @media (max-width: 1010px) {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    width: 20%;
-    height: 50px;
-  }
-  @media (max-width: 560px) {
-    display: none;
-  }
 `;
 
 const EditGroup = styled.button`
@@ -323,14 +256,12 @@ export default function Perfil({ categories }) {
       <Title>Perfil da loja:</Title>
       <PerfilStoreMenu selectedItem="Meus produtos" />
       <LocationAndFilter />
-      <EditAddRemoveSection />
+      <EditAddRemoveSection categories={categories} setAtt={setAtt} att={att} />
       <MarketContainer>
         <MarketContainer.Col1>
           <TitleMarket>Produtos do meu MarketPlace</TitleMarket>
         </MarketContainer.Col1>
         <MarketContainer.Col2>
-          <EditCategory>Editar Categoria</EditCategory>
-          <RemoveProducts>Remover produtos</RemoveProducts>
           <ModalAddProducts categories={categories} setAtt={setAtt} att={att} />
         </MarketContainer.Col2>
       </MarketContainer>

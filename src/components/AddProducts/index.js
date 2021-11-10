@@ -54,7 +54,7 @@ font-family: Roboto;
 }
 `;
 
-const NameProduct = styled.p`
+const SubTitleProduct = styled.p`
 display:flex;
 align-items:center;
 justify-content:initial;
@@ -168,7 +168,7 @@ display:flex;
 align-items:center;
 justify-content:center;
 width:80%;
-height:250px;
+height:200px;
 border-radius:5px;
 border-color: ${({ theme }) => theme.colors.borderBoxColor};
 border-width:1px;
@@ -326,7 +326,7 @@ export default function AddProducts({ closeModal, categories, att, setAtt }) {
       <AddProductsContainer>
         <AddProductsContainer.Col1>
           <AddTitle>Cadastro de Produto</AddTitle>
-          <NameProduct>Nome do Produto:</NameProduct>
+          <SubTitleProduct>Nome do Produto:</SubTitleProduct>
           <DivInput>
             <NameProductInput
               type="text"
@@ -335,6 +335,7 @@ export default function AddProducts({ closeModal, categories, att, setAtt }) {
               onChange={handleProductNameChange}
             />
           </DivInput>
+          <SubTitleProduct>Categoria:</SubTitleProduct>
           <DivInput>
             <Select
               labelId="label"
