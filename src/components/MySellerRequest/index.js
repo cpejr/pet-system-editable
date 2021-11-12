@@ -1,10 +1,12 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import MyProductRequest from '../MyProductRequest';
+import api from '../../utils/api';
 import MyTotalRequestSeller from '../MyTotalRequestSeller';
 
 const BodyContainer = styled.div`
 display:flex;
+flex-direction: column;
 align-items:center;
 justify-content:center;
 width:100%;
@@ -23,6 +25,7 @@ height:100%;
 border-style:solid;
 border-width:1px;   
 border-color:${({ theme }) => theme.colors.borderBoxColor};
+margin-bottom: 50px;
 @media(max-width:560px){
   width:90%;
 }
@@ -61,20 +64,43 @@ justify-content:center;
 width:30%;
 `;
 export default function MySellerRequest() {
+  const [orders, setOrders] = useState([]);
+
+  useEffect(() => {
+    api.get('ordersByStore').then((res) => {
+      setOrders(res.data);
+    });
+  }, []);
+
+  function dataFormatada(bdate) {
+    const data = new Date(bdate);
+    const minutos = data.getMinutes().toString();
+    const minutosF = minutos.length === 1 ? `0${minutos}` : minutos;
+    const horas = data.getHours().toString();
+    const horasF = horas.length === 1 ? `0${horas}` : horas;
+    const dia = data.getDate().toString();
+    const diaF = dia.length === 1 ? `0${dia}` : dia;
+    const mes = (data.getMonth() + 1).toString();
+    const mesF = mes.length === 1 ? `0${mes}` : mes;
+    const anoF = data.getFullYear();
+    return `${diaF}/${mesF}/${anoF}   ${horasF}:${minutosF}`;
+  }
+
   return (
     <div>
       <BodyContainer>
-        <RequestContainer>
-          <UserBox>
-            <UserBox.Col1>Carla Almeida</UserBox.Col1>
-            <UserBox.Col2>carlinha@hotmail.com</UserBox.Col2>
-            <UserBox.Col3>30/01/2021</UserBox.Col3>
-          </UserBox>
-          <MyProductRequest />
-          <MyTotalRequestSeller />
+        {orders.map((order) => (
+          <RequestContainer>
+            <UserBox>
+              <UserBox.Col1>{order.name}</UserBox.Col1>
+              <UserBox.Col2>{order.email}</UserBox.Col2>
+              <UserBox.Col3>{dataFormatada(order.created_at)}</UserBox.Col3>
+            </UserBox>
+            <MyProductRequest order_products={order.order_products} />
+            <MyTotalRequestSeller order={order} />
 
-        </RequestContainer>
-
+          </RequestContainer>
+        ))}
       </BodyContainer>
     </div>
   );
