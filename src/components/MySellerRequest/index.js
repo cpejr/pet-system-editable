@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import MyProductRequest from '../MyProductRequest';
 import api from '../../utils/api';
 import MyTotalRequestSeller from '../MyTotalRequestSeller';
+import ModalOrderStatusEdit from '../ModalOrderStatusEdit';
 
 const BodyContainer = styled.div`
 display:flex;
@@ -45,6 +46,19 @@ border-bottom-color:${({ theme }) => theme.colors.borderBoxColor};
 }
 `;
 
+const StatusBox = styled.div`
+display:flex;
+width:100%;
+align-items:center;
+justify-content:center;
+border-bottom-style:solid;
+border-bottom-width:1px;
+border-bottom-color:${({ theme }) => theme.colors.borderBoxColor};
+@media(max-width:560px){
+  font-size:13px;
+}
+`;
+
 UserBox.Col1 = styled.p`
 display:flex;
 align-items:center;
@@ -65,12 +79,13 @@ width:30%;
 `;
 export default function MySellerRequest() {
   const [orders, setOrders] = useState([]);
+  const [att, setAtt] = useState(true);
 
   useEffect(() => {
     api.get('ordersByStore').then((res) => {
       setOrders(res.data);
     });
-  }, []);
+  }, [att]);
 
   function dataFormatada(bdate) {
     const data = new Date(bdate);
@@ -96,6 +111,13 @@ export default function MySellerRequest() {
               <UserBox.Col2>{order.email}</UserBox.Col2>
               <UserBox.Col3>{dataFormatada(order.created_at)}</UserBox.Col3>
             </UserBox>
+            <StatusBox>
+              Status:
+              {' '}
+              {order.status}
+              {'  '}
+              <ModalOrderStatusEdit order={order} att={att} setAtt={setAtt} />
+            </StatusBox>
             <MyProductRequest order_products={order.order_products} />
             <MyTotalRequestSeller order={order} />
 
