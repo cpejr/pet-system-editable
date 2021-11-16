@@ -1,4 +1,5 @@
-import { FaArrowLeft } from 'react-icons/fa';
+import { useState } from 'react';
+import { FaArrowLeft, FaRegMinusSquare, FaRegPlusSquare } from 'react-icons/fa';
 import { notification } from 'antd';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -7,15 +8,18 @@ import { FooterMobile } from '../../src/components/index';
 import {
   Container, ProductContainer, ProductTitle, Price, Delivery,
   ButtonsContainer, Button, AddCarButton, Store, Description,
-  BackPage, BackButton,
+  BackPage, BackButton, CarrinhoCardInfoQuantity,
+  CarrinhoCardText,
 } from './styles';
 
 export default function Product({ product, store }) {
+  const [quantity, setQuantity] = useState(0);
+
   async function handleAddCart() {
     const body = {
       product_id: product.product_id,
-      amount: 4,
-      final_price: 4 * product.price,
+      amount: quantity,
+      final_price: quantity * product.price,
     };
     try {
       await api.post('/CartProducts', body);
@@ -31,6 +35,27 @@ export default function Product({ product, store }) {
       });
     } catch (error) {
       console.error(error);
+      notification.open({
+        message: 'Falha :(',
+        description:
+          'Erro ao adicionar produto ao carrinho',
+        className: 'ant-notification',
+        top: '100px',
+        style: {
+          width: 600,
+        },
+      });
+    }
+  }
+
+  function handlePlus() {
+    setQuantity(quantity + 1);
+  }
+  function handleMinus() {
+    if (quantity > 0) {
+      setQuantity(quantity - 1);
+    } else {
+      setQuantity(0);
     }
   }
 
@@ -85,6 +110,11 @@ export default function Product({ product, store }) {
               {' '}
               {store.shipping_tax}
             </Delivery>
+            <CarrinhoCardInfoQuantity>
+              <FaRegMinusSquare size="2x" onClick={() => handleMinus()} />
+              <CarrinhoCardText>{quantity}</CarrinhoCardText>
+              <FaRegPlusSquare size="2x" onClick={() => handlePlus()} />
+            </CarrinhoCardInfoQuantity>
             <ButtonsContainer>
               <ButtonsContainer.Col>
                 <Button>

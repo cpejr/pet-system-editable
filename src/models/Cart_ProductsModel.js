@@ -64,4 +64,16 @@ module.exports = {
       throw new Error(error);
     }
   },
+
+  async updateProductAmount(amount, id) {
+    try {
+      const response = await connection('Cart_Products')
+        .where({ cart_id: id })
+        .update(amount);
+      return response;
+    } catch (error) {
+      console.error(error);
+      throw new Error(error);
+    }
+  },
 };
