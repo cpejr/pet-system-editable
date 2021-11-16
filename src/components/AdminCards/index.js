@@ -231,11 +231,9 @@ export default function AdminCards() {
     };
     try {
       if (commission != null) {
-        const Validate = await api.put('/api/admin', body);
-        console.log(Validate.data);
+        await api.put('/api/admin', body);
       } else {
-        const Validate = await api.post('/api/admin', body);
-        console.log(Validate.data);
+        await api.post('/api/admin', body);
       }
     } catch (error) {
       console.error(error);

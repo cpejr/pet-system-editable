@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
+import { Select } from '@material-ui/core';
+import MenuItem from '@material-ui/core/MenuItem';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
 import axios from 'axios';
 import { notification } from 'antd';
 import { BiEditAlt } from 'react-icons/bi';
@@ -58,21 +61,6 @@ font-family:Roboto;
 @media(max-width:860px){
         width:100%;
         font-size:16px;
-    } 
-`;
-
-const InputNameGroup = styled.input`
-display:flex;
-align-items:center;
-justify-content:center;
-width:40%;
-font-family:Roboto;
-height:40px;
-border-radius:10px;
-border-color:${({ theme }) => theme.colors.borderBoxColor};
-@media(max-width:860px){
-        width:100%;
-        font-size:12px;
     } 
 `;
 
@@ -154,25 +142,29 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function ModalGroup({ group, setAtt, att }) {
-  const [groupName, setGroupName] = useState(group.name);
+export default function ModalGroup({ order, att, setAtt }) {
+  const [selectedStatus, setSelectedStatus] = useState(order.status);
 
-  async function handleGroupChange(event) {
-    setGroupName(event.target.value);
-  }
+  const allStatus = [
+    'Pedido a ser aceito pela loja',
+    'Separando os produtos',
+    'Pedido saiu para entrega',
+    'Pedido finalizado',
+  ];
 
   async function handleSubmit() {
     const body = {
-      name: groupName,
+      order_id: order.order_id,
+      status: selectedStatus,
     };
 
     try {
-      await api.put(`/api/group/${group.group_id}`, body);
+      await api.put('/api/order/', body);
       setAtt(!att);
       notification.open({
         message: 'Sucesso!',
         description:
-          'O grupo foi modificado com sucesso.',
+          'O status do pedido foi modificado com sucesso.',
         className: 'ant-notification',
         top: '100px',
         style: {
@@ -199,14 +191,30 @@ export default function ModalGroup({ group, setAtt, att }) {
     <div style={modalStyle} className={classes.paper}>
       <ContainerModal>
         <Row>
-          <TitleModal>Modifique grupo</TitleModal>
+          <TitleModal>Modifique o status do pedido</TitleModal>
         </Row>
         <Row>
           <Ajust>
             <Ajust.Col1>
-              Novo nome:
+              Novo status:
             </Ajust.Col1>
-            <InputNameGroup placeholder="" require value={groupName} onChange={handleGroupChange} />
+            <Select
+              labelId="label"
+              id="select"
+              value={selectedStatus}
+              input={<OutlinedInput />}
+              style={{ width: '80%', height: '40px' }}
+            >
+              {allStatus.map((status) => (
+                <MenuItem
+                  key={status}
+                  value={status}
+                  onClick={() => setSelectedStatus(status)}
+                >
+                  {status}
+                </MenuItem>
+              ))}
+            </Select>
           </Ajust>
         </Row>
         <Row>

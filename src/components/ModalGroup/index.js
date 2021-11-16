@@ -170,8 +170,7 @@ export default function ModalGroup() {
     };
 
     try {
-      const Validate = await api.post('/api/group', body);
-      console.log(Validate.data);
+      await api.post('/api/group', body);
       notification.open({
         message: 'Sucesso!',
         description:

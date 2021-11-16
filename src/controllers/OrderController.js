@@ -51,6 +51,19 @@ module.exports = {
     }
   },
 
+  async getAllOrdersByStore(req, res) {
+    try {
+      const { firebase_id_store } = req.session.get('store').store;
+      const orders = await OrderModel.getOrdersByStoreId(firebase_id_store);
+      return res.status(200).json(orders);
+    } catch (error) {
+      if (error.message) {
+        return res.status(400).json({ notification: error.message });
+      }
+      return res.status(500).json({ notification: 'Internal Server Error' });
+    }
+  },
+
   async create(req, res) {
     const order = req.body;
     order.order_id = uuidv4();
@@ -63,7 +76,7 @@ module.exports = {
         firebase_id,
         cart_id,
       };
-      const createNewCart = await CartModel.createNewCart(newCart);
+      await CartModel.createNewCart(newCart);
       order.cart_id = cart.cart_id;
       order.address_id = address.address_id;
       order.firebase_id = firebase_id;

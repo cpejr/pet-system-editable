@@ -33,7 +33,7 @@ export default function SearchCards(props) {
               <CardDescriptionDeliveryPrice>
                 Frete:
                 {' '}
-                {`${store?.shipping_tax ? store?.shipping_tax : product?.shipping_tax ? `R$${product?.shipping_tax}` : 'Gratis'}`}
+                {`${store?.shipping_tax ? store?.shipping_tax : product?.shipping_tax === 0 ? `R$${product?.shipping_tax}` : 'Gratis'}`}
               </CardDescriptionDeliveryPrice>
             </CardDescriptionValues>
           </CardDescription>

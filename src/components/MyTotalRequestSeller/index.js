@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import Image from 'next/image';
+import api from '../../utils/api';
 
 const Description = styled.div`
 display:flex;
-flex-direction:row;
+flex-direction:column;
 width:50vw;
 @media(max-width:560px){
   width:100vw;
@@ -28,9 +28,9 @@ width:70%;
 
 Description.Delivery = styled.div`
 display:flex;
-align-items:center;
+align-items:flex-start;
 flex-direction:column;
-width:30%;
+width:70%;
 @media(max-width:560px){
   font-size:13px;
   width:100%;
@@ -43,6 +43,7 @@ display:flex;
 justify-content:center;
 flex-direction:column;
 width:50vw;
+margin-bottom: 50px;
 @media(max-width:560px){
   font-size:13px;
   width:100%;
@@ -52,24 +53,6 @@ width:50vw;
 Payment.Title = styled.h3`
 display:flex;
 align-items:center;
-`;
-
-Payment.Card = styled.div`
-display:flex;
-align-items:center;
-flex-direction:row;
-`;
-Payment.Card.Col1 = styled.div`
-display:flex;
-align-items:center;
-flex-direction:column;
-width:20%;
-`;
-Payment.Card.Col2 = styled.p`
-display:flex;
-
-flex-direction:column;
-width:80%;
 `;
 
 const TotalSellerContainer = styled.div`
@@ -127,8 +110,15 @@ const Submit = styled.button`
     cursor:pointer;
     outline:none;
 `;
-export default function MyTotalRequestSellerOpen() {
+export default function MyTotalRequestSellerOpen({ order }) {
   const [divOpen, setDivOpen] = useState(false);
+  const [store, setStore] = useState([]);
+
+  useEffect(() => {
+    api.get(`store/${order.firebase_id_store}`).then((res) => {
+      setStore(res.data);
+    });
+  }, []);
 
   const HandleChange = () => {
     setDivOpen(divOpen === false);
@@ -137,52 +127,70 @@ export default function MyTotalRequestSellerOpen() {
   const insideButton = divOpen;
   return (
     <div>
-      {insideButton && (
-        <div>
-          <Description>
-            <Description.Adress>
-              <h3>A entrega foi realizada em:</h3>
-              <p>Carla Almeida</p>
-              <p>Av. João Cesar,828 casa, Eldorado</p>
-              <p>Contagem- MG</p>
-              <p>CEP: 32600-000</p>
-            </Description.Adress>
-            <Description.Delivery>
-              <h4>Tipo de Entrega: Motoboy</h4>
-            </Description.Delivery>
-          </Description>
-          <Payment>
-            <Payment.Title>
-              O pagamento foi feito com:
-            </Payment.Title>
-            <Payment.Card>
-              <Payment.Card.Col1>
-                <Image src="/images/card.jpg" width="100" height="50" />
-              </Payment.Card.Col1>
-              <Payment.Card.Col2>
-                2x de R$ 101,00 sem juros
-              </Payment.Card.Col2>
-            </Payment.Card>
-          </Payment>
-        </div>
-      )}
       <TotalSellerContainer>
         <TotalSellerContainer.Col1>
           <Submit onClick={HandleChange}>{insideButton ? 'Fechar detalhes' : 'Detalhes' }</Submit>
         </TotalSellerContainer.Col1>
 
         <TotalSellerContainer.Col2>
-          <p>Subtotal:</p>
-          <p>Frete:</p>
+          <p>
+            Subtotal:
+          </p>
+          <p>
+            Frete:
+          </p>
           <p>Total:</p>
         </TotalSellerContainer.Col2>
         <TotalSellerContainer.Col3>
-          <p>R$ 187,00</p>
-          <p>R$ 15,00</p>
-          <p>R$ 202,00</p>
+          <p>R$ {order.total_price}</p>
+          <p>R$ {store.shipping_tax}</p>
+          <p>R$ {order.total_price + parseFloat(store.shipping_tax)}</p>
         </TotalSellerContainer.Col3>
 
       </TotalSellerContainer>
+      {insideButton && (
+        <div>
+          <Description>
+            <Description.Adress>
+              <h3>A entrega foi realizada em:</h3>
+              <p>
+                {order.street}
+                ,
+                {order.address_num}
+                ,
+                {order.complement}
+                ,
+                {order.district}
+              </p>
+              <p>
+                {order.city}
+                -
+                {order.state}
+              </p>
+              <p>
+                CEP:
+                {' '}
+                {order.zipcode}
+              </p>
+            </Description.Adress>
+            <Description.Delivery>
+              <h3>
+                Tipo de Entrega:
+              </h3>
+              <p>
+                {' '}
+                {order.delivery_method}
+              </p>
+            </Description.Delivery>
+          </Description>
+          <Payment>
+            <Payment.Title>
+              O pagamento foi feito com:
+            </Payment.Title>
+            {order.payment_type}
+          </Payment>
+        </div>
+      )}
     </div>
   );
 }

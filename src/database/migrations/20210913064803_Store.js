@@ -9,6 +9,11 @@ exports.up = function (knex) {
     table.string('logo_img').notNullable();
     table.timestamp('created_at').notNullable().defaultTo(knex.fn.now());
     table.boolean('status').notNullable();
+    table.decimal('shipping_tax', { precision: 2 }).notNullable().defaultTo(0);
+    table.integer('delivery_time').notNullable().defaultTo(0);
+    table.string('cellphone').notNullable().defaultTo('');
+    table.string('opening_time').notNullable().defaultTo('0');
+    table.string('closing_time').notNullable().defaultTo('0');
   });
 };
 

@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 const connection = require('../database/connection');
 const Cart_ProductsModel = require('./Cart_ProductsModel');
 
@@ -39,6 +40,38 @@ module.exports = {
       const orders = await connection('Order')
         .where('firebase_id', id)
         .select('*');
+      return orders;
+    } catch (error) {
+      console.error(error);
+      throw new Error(error);
+    }
+  },
+
+  async getOrdersByStoreId(id) {
+    try {
+      const orders = await connection('Order')
+        .where('firebase_id_store', id)
+        .select('*')
+        .innerJoin(
+          'User',
+          'Order.firebase_id',
+          'User.firebase_id',
+        )
+        .innerJoin(
+          'Address',
+          'Order.address_id',
+          'Address.address_id',
+        );
+
+      for (const order of orders) {
+        delete order.type;
+        delete order.birth_date;
+        delete order.cpf;
+
+        order.order_products = await Cart_ProductsModel
+          .getCart_ProductsByCartId(order.cart_id);
+      }
+
       return orders;
     } catch (error) {
       console.error(error);

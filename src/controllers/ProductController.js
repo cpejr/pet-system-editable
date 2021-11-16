@@ -24,8 +24,7 @@ module.exports = {
     try {
       const image_id = await AwsModel.uploadAWS(file.img);
       product.img = image_id.key;
-      // eslint-disable-next-line prefer-destructuring
-      const firebase_id_store = request.session.get('store').store.firebase_id_store;
+      const { firebase_id_store } = request.session.get('store').store;
       product.firebase_id_store = firebase_id_store;
 
       await ProductModel.createNewProduct(product);
@@ -41,8 +40,18 @@ module.exports = {
   async update(request, response) {
     const product = request.body;
     const { id } = request.query;
-
+    const file = request.files;
     try {
+      if (Object.keys(file).length > 0) {
+        file.img.name = uuidv4();
+      }
+
+      const image_id = Object.keys(file).length > 0
+        ? await AwsModel.uploadAWS(file.img) : null;
+
+      if (image_id) {
+        product.img = image_id.key;
+      }
       await ProductModel.updateProduct(product, id);
     } catch (err) {
       if (err.message) {
@@ -83,6 +92,18 @@ module.exports = {
     const { id } = request.query;
     try {
       const product = await ProductModel.getAllByStore(id);
+      return response.status(200).json(product);
+    } catch (err) {
+      if (err.message) {
+        return response.status(400).json({ notification: err.message });
+      }
+      return response.status(500).json({ notification: 'Internal Server Error' });
+    }
+  },
+  async getAllByStoreSession(req, response) {
+    const { firebase_id_store } = req.session.get('store').store;
+    try {
+      const product = await ProductModel.getAllByStore(firebase_id_store);
       return response.status(200).json(product);
     } catch (err) {
       if (err.message) {

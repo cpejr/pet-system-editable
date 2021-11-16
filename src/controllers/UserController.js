@@ -86,7 +86,6 @@ export async function update(request, response) {
     if (password) {
       const user = await UserModel.getUserById(id);
       const firebaseId = user.firebase_id;
-      console.log(firebaseId);
       await FirebaseModel.changeUserPassword(firebaseId, password);
       delete newUser.password;
       return response.status(200).json({ message: 'Sucesso!' });

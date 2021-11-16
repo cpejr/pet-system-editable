@@ -75,3 +75,19 @@ export function isAdminOrSelf(handler) {
     return res.status(403).json({ message: 'Unauthorized' });
   });
 }
+
+export function isAdminOrSeller(handler) {
+  return withAuthValidation((req, res) => {
+    const store = req.session.get('store');
+
+    if (store) {
+      return handler(req, res);
+    }
+
+    const { user: { type } } = req.session.get('user');
+    if (type === 'admin') {
+      return handler(req, res);
+    }
+    return res.status(403).json({ message: 'Unauthorized' });
+  });
+}

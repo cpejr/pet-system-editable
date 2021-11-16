@@ -1,35 +1,23 @@
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
-import {
-  Button,
-} from 'react-bootstrap';
+import { BiEditAlt } from 'react-icons/bi';
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import AddProducts from '../AddProducts';
+import EditProducts from '../EditProducts';
 
-const ButtonAdd = styled(Button)`
-  height: 50px;
-  width: 100%;
-  font-family: Roboto;
-  font-size: 100%;
-  font-weight: 500;
-  background-color: ${({ theme }) => theme.colors.darkGreen};
-  color: white;
+const EditGroup = styled.button`
+  display: flex;
+  align-Self: flex-end;
+  background-color: transparent;
   border: 0;
-  margin-left: 8%;
-  border-radius: 5px;
-  cursor: pointer;
-  outline: none;
-  @media (max-width: 1010px) {
+  margin-top: 2%;
+  margin-left: 2%;
+  margin-right: 1%;
+  @media (max-width: 1000px) {
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 14px;
-    width: 100%;
-    height: 50px;
-  }
-  @media (max-width: 560px) {
-    display: none;
   }
 `;
 function getModalStyle() {
@@ -61,10 +49,9 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2, 4, 3),
     overflow: 'auto',
   },
-
 }));
 /*eslint-disable*/
-export default function ModalAddProducts({ categories, att, setAtt}) {
+export default function ModalEditProducts({ product, categories, att, setAtt }) {
   const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = useState(getModalStyle);
@@ -74,30 +61,29 @@ export default function ModalAddProducts({ categories, att, setAtt}) {
     setOpen(true);
   };
   const handleState = () => {
-    handleClose()
-  }
+    handleClose();
+  };
   const handleClose = () => {
     setOpen(false);
   };
 
   const body = (
     <div style={modalStyle} className={classes.paper}>
-      <AddProducts closeModal = {handleState} categories={categories} setAtt={setAtt} att={att} />
+      <EditProducts closeModal={handleState} product={product} categories={categories} setAtt={setAtt} att={att} />
     </div>
   );
 
   return (
     <div>
-
-      <ButtonAdd onClick={handleOpen}>
-        Adicionar produto
-      </ButtonAdd>
+      <EditGroup onClick={handleOpen}>
+        <BiEditAlt size={22} style={{ color: "#AAABB0", cursor: "pointer" }} />
+      </EditGroup>
       <Modal
         open={open}
         onClose={handleClose}
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
-        >
+      >
         {body}
       </Modal>
     </div>

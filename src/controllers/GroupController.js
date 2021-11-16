@@ -1,6 +1,5 @@
 const { v4: uuidv4 } = require('uuid');
 const GroupModel = require('../models/GroupModel');
-const StoreModel = require('../models/StoreModel');
 
 module.exports = {
 
@@ -18,7 +17,7 @@ module.exports = {
     const group = req.body;
     group.group_id = uuidv4();
     try {
-      const firebase_id_store = req.session.get('store').store.firebase_id_store;
+      const { firebase_id_store } = req.session.get('store').store;
       group.firebase_id_store = firebase_id_store;
       await GroupModel.createGroup(group);
     } catch (err) {
@@ -32,10 +31,8 @@ module.exports = {
   },
 
   async update(request, response) {
-    const id = request.query.id;
-    console.log("🚀 ~ file: GroupController.js ~ line 36 ~ update ~ id", id)
+    const { id } = request.query;
     const group = request.body;
-    console.log("🚀 ~ file: GroupController.js ~ line 38 ~ update ~ group", group)
 
     try {
       await GroupModel.updateGroup(group, id);
@@ -49,7 +46,7 @@ module.exports = {
   },
 
   async del(req, res) {
-    const id = req.query.id;
+    const { id } = req.query;
     try {
       await GroupModel.deleteGroup(id);
     } catch (err) {
@@ -69,7 +66,7 @@ module.exports = {
   },
   // função para o seller pegar todos os grupos de sua loja pela sessão
   async getAllFromSession(req, res) {
-    const firebase_id_store = req.session.get('store').store.firebase_id_store;
+    const { firebase_id_store } = req.session.get('store').store;
     const groups = await GroupModel.getAllGroupsFromSession(firebase_id_store);
     return res.json(groups);
   },
