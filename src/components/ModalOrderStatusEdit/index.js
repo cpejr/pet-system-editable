@@ -146,9 +146,10 @@ export default function ModalGroup({ order, att, setAtt }) {
   const [selectedStatus, setSelectedStatus] = useState(order.status);
 
   const allStatus = [
-    'Enviado',
-    'Em andamento',
-    'Finalizado',
+    'Pedido a ser aceito pela loja',
+    'Separando os produtos',
+    'Pedido saiu para entrega',
+    'Pedido finalizado',
   ];
 
   async function handleSubmit() {
@@ -163,7 +164,7 @@ export default function ModalGroup({ order, att, setAtt }) {
       notification.open({
         message: 'Sucesso!',
         description:
-          'O grupo foi modificado com sucesso.',
+          'O status do pedido foi modificado com sucesso.',
         className: 'ant-notification',
         top: '100px',
         style: {

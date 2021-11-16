@@ -107,7 +107,11 @@ export default function MySellerRequest() {
         {orders.map((order) => (
           <RequestContainer>
             <UserBox>
-              <UserBox.Col1>{order.name}</UserBox.Col1>
+              <UserBox.Col1>
+                Cliente:
+                {' '}
+                {order.name}
+              </UserBox.Col1>
               <UserBox.Col2>{order.email}</UserBox.Col2>
               <UserBox.Col3>{dataFormatada(order.created_at)}</UserBox.Col3>
             </UserBox>
