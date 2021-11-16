@@ -158,7 +158,6 @@ export default function Search({ keyword, id, categories }) {
   if (checkedProducts === '#AAABB0') {
     return (
       <div>
-        <HeaderSearch />
         <SearchHeader />
         <TypeContainer>
           <TypeContainer.Cols

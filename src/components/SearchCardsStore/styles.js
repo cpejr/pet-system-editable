@@ -61,6 +61,15 @@ export const CardDescriptionTitle = styled.h3`
   margin-bottom: 1%;
 `;
 
+export const CardDescriptionTime = styled.p`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  margin-top: 1%;
+  margin-bottom: 1%;
+`;
+
 export const CardDescriptionValues = styled.p`
   display: flex;
   flex-direction: column;
