@@ -1,4 +1,4 @@
-import { getCartByFirebaseId } from '../../../../src/controllers/CartController';
+import { getCart } from '../../../../src/controllers/Cart_ProductsController';
 import { withAuthValidation } from '../../../../src/utils/Auth';
 
 export default function handler(req, res) {
@@ -6,7 +6,7 @@ export default function handler(req, res) {
     const { method } = req;
     console.log(method);
     if (method === 'GET') {
-      return withAuthValidation(getCartByFirebaseId)(req, res);
+      return withAuthValidation(getCart)(req, res);
     }
     return res.status(500).json({ message: 'Internal Server Error' });
   } catch (err) {
