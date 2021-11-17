@@ -6,7 +6,7 @@ import {
 } from './styles';
 import StoreIsOpen from '../StoreIsOpen';
 
-export default function SearchCards(props) {
+export default function SearchCardsStore(props) {
   const { store } = props;
 
   const myLoader = ({ src }) => `https://s3-sa-east-1.amazonaws.com/petsystembucket/${src}`;

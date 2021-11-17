@@ -4,12 +4,13 @@ import Image from 'next/image';
 import api from '../../src/utils/api';
 import { ContainerCategory, SearchContainer, TypeContainer } from './styles';
 import {
-  HeaderSearch,
   OrderSearch,
   Brands,
   Price,
+  SearchCardsClosed,
   SearchCards,
   SearchCardsStore,
+  SearchCardsStoreClosed,
   FooterMobile,
   SearchHeader,
 } from '../../src/components/index';
@@ -176,7 +177,7 @@ export default function Search({ keyword, id, categories }) {
         <SearchContainer>
           <SearchContainer.Col>
             {stores.map((store) => (
-              <SearchCardsStore store={store} key={store.firebase_id_store} />
+              <SearchCardsStoreClosed store={store} key={store.firebase_id_store} />
             ))}
           </SearchContainer.Col>
         </SearchContainer>
