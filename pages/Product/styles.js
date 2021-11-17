@@ -80,6 +80,10 @@ ProductContainer.Col1 = styled.div`
   width: 40%;
   margin: 0;
   margin-right: 131px;
+  @media (max-width: 880px) {
+    width: 70%;
+    margin-right: 0px;
+  }
 `;
 
 ProductContainer.Col2 = styled.div`
@@ -236,8 +240,8 @@ export const Description = styled.div`
   width: 100%;
   flex-direction: column;
   @media (max-width: 880px) {
-    width: 70%;
     margin-bottom: 15%;
+    font-size: 14px;
   }
 `;
 Description.Container = styled.h3`
