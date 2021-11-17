@@ -13,12 +13,10 @@ import {
 } from './styles';
 import StoreIsOpen from '../StoreIsOpen';
 
-export default function SearchCardsStoreClosed(props) {
-  const { store } = props;
-
+export default function SearchCardsStoreClosed({ store }) {
   const myLoader = ({ src }) => `https://s3-sa-east-1.amazonaws.com/petsystembucket/${src}`;
 
-  if (StoreIsOpen(store.opening_time, store.closing_time)) {
+  if (StoreIsOpen(store.opening_time, store.closing_time) === false) {
     return (
       <Link href={`/Store/${store.firebase_id_store}`}>
         <Wrapper>

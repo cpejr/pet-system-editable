@@ -6,43 +6,45 @@ import {
   CardDescriptionValues, CardDescriptionClosed,
   CardDescriptionProductPrice, CardDescriptionDescription,
 } from './styles';
+import StoreIsOpen from '../StoreIsOpen';
 
-export default function SearchCardsClosed(props) {
-  const { product } = props;
-
+export default function SearchCardsClosed({ product }) {
   const myLoader = ({ src }) => `https://s3-sa-east-1.amazonaws.com/petsystembucket/${src}`;
 
-  return (
-    <Link href={`/Product/${product.product_id}`}>
-      <CardWrapper>
-        <Image
-          loader={myLoader}
-          src={product.img}
-          alt=""
-          width="200"
-          height="200"
-        />
-        <CardInfo>
-          <CardDescription>
-            <CardDescriptionTitle>
-              {product.product_name}
-            </CardDescriptionTitle>
-            <CardDescriptionValues>
-              <CardDescriptionDescription>
-                {product.description}
-              </CardDescriptionDescription>
-              <CardDescriptionProductPrice>
-                R$
-                {' '}
-                {product.price}
-              </CardDescriptionProductPrice>
-              <CardDescriptionClosed>
-                ESTABELECIMENTO FECHADO
-              </CardDescriptionClosed>
-            </CardDescriptionValues>
-          </CardDescription>
-        </CardInfo>
-      </CardWrapper>
-    </Link>
-  );
+  if (StoreIsOpen(product.opening_time, product.closing_time) === false) {
+    return (
+      <Link href={`/Product/${product.product_id}`}>
+        <CardWrapper>
+          <Image
+            loader={myLoader}
+            src={product.img}
+            alt=""
+            width="200"
+            height="200"
+          />
+          <CardInfo>
+            <CardDescription>
+              <CardDescriptionTitle>
+                {product.product_name}
+              </CardDescriptionTitle>
+              <CardDescriptionValues>
+                <CardDescriptionDescription>
+                  {product.description}
+                </CardDescriptionDescription>
+                <CardDescriptionProductPrice>
+                  R$
+                  {' '}
+                  {product.price}
+                </CardDescriptionProductPrice>
+                <CardDescriptionClosed>
+                  ESTABELECIMENTO FECHADO
+                </CardDescriptionClosed>
+              </CardDescriptionValues>
+            </CardDescription>
+          </CardInfo>
+        </CardWrapper>
+      </Link>
+    );
+  }
+  return null;
 }

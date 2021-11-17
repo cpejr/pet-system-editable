@@ -2,7 +2,10 @@ import { Tabs } from 'antd';
 import 'antd/dist/antd.css';
 import { Container, SearchContainer } from './styles';
 import Title from '../Title';
-import SearchCards from '../SearchCards';
+import {
+  SearchCardsClosed,
+  SearchCards,
+} from '../index';
 import StoreServices from '../StoreServices';
 import ProductsCarousel from '../Carousels/ProductsCarousel';
 
@@ -27,6 +30,9 @@ export default function StoreTabs({
                 <SearchContainer.Col>
                   {group.product_groups.map((product) => (
                     <SearchCards product={product} store={store} key={product.product_id} />
+                  ))}
+                  {group.product_groups.map((product) => (
+                    <SearchCardsClosed product={product} store={store} key={product.product_id} />
                   ))}
                 </SearchContainer.Col>
               </SearchContainer.Row>

@@ -17,6 +17,31 @@ export const CarrinhoCardText = styled.p`
   }
 `;
 
+export const StoreStatusClosed = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  width: 100%;
+  font-size: 16px;
+  color: red;
+  @media (max-width: 560px) {
+    width: 100%;
+    color: ${({ theme }) => theme.colors.baseGray};
+  }
+`;
+
+export const StoreOpenedTime = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  width: 100%;
+  font-size: 16px;
+  @media (max-width: 560px) {
+    width: 100%;
+    color: ${({ theme }) => theme.colors.baseGray};
+  }
+`;
+
 export const CarrinhoCardInfoQuantity = styled.div`
   display: flex;
   flex-direction: row;
@@ -121,6 +146,13 @@ export const ButtonsContainer = styled.div`
   width: 100%;
   flex-direction: row;
   margin-top: 10%;
+  @media (max-width: 880px) {
+    flex-direction: column;
+  }
+`;
+
+export const StatusContainer = styled.div`
+  width: 100%;
   @media (max-width: 880px) {
     flex-direction: column;
   }

@@ -53,6 +53,8 @@ export default function Search({ keyword, id, categories }) {
               FilteredProducts.forEach((product) => {
                 if (product.firebase_id_store === store.firebase_id_store) {
                   product.shipping_tax = store.shipping_tax;
+                  product.opening_time = store.opening_time;
+                  product.closing_time = store.closing_time;
                 }
               });
             });
@@ -62,6 +64,8 @@ export default function Search({ keyword, id, categories }) {
               res.data.forEach((product) => {
                 if (product.firebase_id_store === store.firebase_id_store) {
                   product.shipping_tax = store.shipping_tax;
+                  product.opening_time = store.opening_time;
+                  product.closing_time = store.closing_time;
                 }
               });
             });
