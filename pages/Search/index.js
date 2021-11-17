@@ -150,6 +150,9 @@ export default function Search({ keyword, id, categories }) {
             {products.map((p) => (
               <SearchCards product={p} key={p.product_id} />
             ))}
+            {products.map((p) => (
+              <SearchCardsClosed product={p} key={p.product_id} />
+            ))}
           </SearchContainer.Col2>
         </SearchContainer>
         <FooterMobile />
@@ -176,6 +179,9 @@ export default function Search({ keyword, id, categories }) {
         </TypeContainer>
         <SearchContainer>
           <SearchContainer.Col>
+            {stores.map((store) => (
+              <SearchCardsStore store={store} key={store.firebase_id_store} />
+            ))}
             {stores.map((store) => (
               <SearchCardsStoreClosed store={store} key={store.firebase_id_store} />
             ))}
