@@ -1,6 +1,5 @@
-import React from "react";
-import styled from "styled-components";
-import InputMask from "react-input-mask";
+import styled from 'styled-components';
+import InputMask from 'react-input-mask';
 
 const ServiceContainer = styled.div`
   display: flex;
@@ -72,8 +71,7 @@ Services.Contact = styled.h4`
   font-weight: bold;
 `;
 
-export default function StoreServices(props) {
-  const { store } = props;
+export default function StoreServices({ store }) {
   return (
     <div>
       <ServiceContainer>
@@ -89,13 +87,13 @@ export default function StoreServices(props) {
               <Services.Contact>• Telefone:</Services.Contact>
               <InputMask
                 name={store.phone}
-                mask={'(99)9999-9999'}
+                mask="(99)9999-9999"
                 value={store.phone}
                 style={{
-                  border: "none",
-                  outline: "none",
-                  backgroundColor: "transparent",
-                  width: "auto",
+                  border: 'none',
+                  outline: 'none',
+                  backgroundColor: 'transparent',
+                  width: 'auto',
                 }}
               />
             </Services>
@@ -103,13 +101,13 @@ export default function StoreServices(props) {
               <Services.Contact>• Celular:</Services.Contact>
               <InputMask
                 name={store.cellphone}
-                mask={'(99)99999-9999'}
+                mask="(99)99999-9999"
                 value={store.cellphone}
                 style={{
-                  border: "none",
-                  outline: "none",
-                  backgroundColor: "transparent",
-                  width: "auto",
+                  border: 'none',
+                  outline: 'none',
+                  backgroundColor: 'transparent',
+                  width: 'auto',
                 }}
               />
             </Services>
@@ -119,7 +117,11 @@ export default function StoreServices(props) {
             </Services>
             <Services>
               <Services.Contact>• Horário de funcionamento:</Services.Contact>
-              {store.opening_time}h - {store.closing_time}h
+              {store.opening_time}
+              h -
+              {' '}
+              {store.closing_time}
+              h
             </Services>
           </ServiceContainer.Col2>
         )}

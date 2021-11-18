@@ -1,25 +1,15 @@
 import styled from 'styled-components';
 
-export const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  height: auto;
-  padding: 0.5%;
-  margin: 0.5%;
-  font-family: Roboto;
-`;
-
-export const CardWrapper = styled.div`
+export const CardWrapper = styled.button`
   display: flex;
   align-items: center;
-  width: 100%;
+  width: auto;
   padding: 1vw;
-  height: auto;
+  height: 100%;
   font-family: Roboto;
   background-color: transparent;
   border: 1px solid #f2f2f2;
+  box-shadow: 0px 1px 4px rgb(0 0 0 / 7%);
   border-radius: 4px;
   cursor: pointer;
   text-align: justify;
@@ -31,14 +21,26 @@ export const CardWrapper = styled.div`
   @media (max-width: 1000px) {
     flex-direction: column;
   }
+  .Image {
+    height: 100%;
+    width: 100%;
+    object-fit: fill;
+    mask-image: linear-gradient(45deg, #000000 25%, rgba(0, 0, 0, 0.2) 25%),
+      linear-gradient(-45deg, #000000 25%, rgba(0, 0, 0, 0.2) 25%),
+      linear-gradient(45deg, rgba(0, 0, 0, 0.2) 75%, #000000 75%),
+      linear-gradient(-45deg, rgba(0, 0, 0, 0.2) 75%, #000000 75%);
+    mask-size: 20px 20px;
+    mask-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+  }
 `;
 
 export const CardInfo = styled.div`
   display: flex;
   align-items: center;
+  justify-content: start;
   padding: 3%;
-  font-size: 16px;
   width: 100%;
+  font-size: 16px;
   flex-direction: row;
   border-left: 1px solid #f2f2f2;
   margin-left: 5%;
@@ -48,8 +50,16 @@ export const CardDescription = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 50%;
+  width: auto;
   flex-direction: column;
+`;
+
+export const CardDescriptionDescription = styled.div`
+  display: flex;
+  justify-content: left;
+  width: 100%;
+  font-family: Roboto;
+  font-size: 16px;
 `;
 
 export const CardDescriptionTitle = styled.h3`
@@ -59,15 +69,7 @@ export const CardDescriptionTitle = styled.h3`
   width: 100%;
   margin-top: 1%;
   margin-bottom: 1%;
-`;
-
-export const CardDescriptionTime = styled.p`
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  width: 100%;
-  margin-top: 1%;
-  margin-bottom: 1%;
+  font-size: 26px;
 `;
 
 export const CardDescriptionValues = styled.p`
@@ -82,18 +84,6 @@ export const CardDescriptionValues = styled.p`
     align-items: initial;
   }
 `;
-export const CardDescriptionDeliveryPrice = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: left;
-  width: 100%;
-  font-size: 16px;
-  @media (max-width: 560px) {
-    width: 100%;
-    color: ${({ theme }) => theme.colors.baseGray};
-  }
-`;
-
 export const CardDescriptionProductPrice = styled.div`
   display: flex;
   align-items: center;
@@ -105,6 +95,15 @@ export const CardDescriptionProductPrice = styled.div`
     color: ${({ theme }) => theme.colors.baseGray};
   }
 `;
-export const ImgBox = styled.h1`
-    border-radius: 20px;
+export const CardDescriptionClosed = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  width: 100%;
+  font-size: 16px;
+  color: red;
+  @media (max-width: 560px) {
+    width: 100%;
+    color: ${({ theme }) => theme.colors.baseGray};
+  }
 `;

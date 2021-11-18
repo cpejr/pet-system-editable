@@ -5,7 +5,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import {
   BoxDatas, ContainerDatas, AddressData,
 } from './styles';
-import { MyStoreDataEdit } from '../index';
+import MyStoreDataEdit from '../MyStoreDataEdit/index';
 
 const useStyles = makeStyles((theme) => ({
   root: {

@@ -108,3 +108,16 @@ export const CardDescriptionProductPrice = styled.div`
 export const ImgBox = styled.h1`
     border-radius: 20px;
 `;
+
+export const CardDescriptionClosed = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  width: 100%;
+  font-size: 16px;
+  color: red;
+  @media (max-width: 560px) {
+    width: 100%;
+    color: ${({ theme }) => theme.colors.baseGray};
+  }
+`;

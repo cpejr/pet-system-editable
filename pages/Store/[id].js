@@ -12,6 +12,7 @@ import {
 } from './styles';
 import api from '../../src/utils/api';
 import { FooterMobile, StoreTabs } from '../../src/components';
+import StoreIsOpen from '../../src/components/StoreIsOpen';
 
 export default function Store({
   store, address, products, groups,
@@ -69,6 +70,9 @@ export default function Store({
               ,
               {' '}
               {address.state}
+            </StoreDatas>
+            <StoreDatas>
+              {`${StoreIsOpen(store.opening_time, store.closing_time) ? `Funcionamento: ${store.opening_time}h - ${store.closing_time}h` : 'Estabelecimento Fechado'}`}
             </StoreDatas>
           </StoreContainer.Col2>
         </StoreContainer>

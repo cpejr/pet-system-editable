@@ -9,8 +9,9 @@ import {
   Container, ProductContainer, ProductTitle, Price, Delivery,
   ButtonsContainer, Button, AddCarButton, Store, Description,
   BackPage, BackButton, CarrinhoCardInfoQuantity,
-  CarrinhoCardText,
+  CarrinhoCardText, StoreStatusClosed, StatusContainer, StoreOpenedTime,
 } from './styles';
+import StoreIsOpen from '../../src/components/StoreIsOpen';
 
 export default function Product({ product, store }) {
   const [quantity, setQuantity] = useState(0);
@@ -115,18 +116,29 @@ export default function Product({ product, store }) {
               <CarrinhoCardText>{quantity}</CarrinhoCardText>
               <FaRegPlusSquare size="2x" onClick={() => handlePlus()} />
             </CarrinhoCardInfoQuantity>
-            <ButtonsContainer>
-              <ButtonsContainer.Col>
-                <Button>
-                  Comprar
-                </Button>
-              </ButtonsContainer.Col>
-              <ButtonsContainer.Col>
-                <AddCarButton onClick={handleAddCart}>
-                  Adicionar ao carrinho
-                </AddCarButton>
-              </ButtonsContainer.Col>
-            </ButtonsContainer>
+            {StoreIsOpen(store.opening_time, store.closing_time) ? (
+              <ButtonsContainer>
+                <ButtonsContainer.Col>
+                  <Button>
+                    Comprar
+                  </Button>
+                </ButtonsContainer.Col>
+                <ButtonsContainer.Col>
+                  <AddCarButton onClick={handleAddCart}>
+                    Adicionar ao carrinho
+                  </AddCarButton>
+                </ButtonsContainer.Col>
+              </ButtonsContainer>
+            ) : (
+              <StatusContainer>
+                <StoreStatusClosed>
+                  ESTABELECIMENTO FECHADO
+                </StoreStatusClosed>
+                <StoreOpenedTime>
+                  {`Funcionamento: ${store.opening_time}h - ${store.closing_time}h`}
+                </StoreOpenedTime>
+              </StatusContainer>
+            ) }
           </ProductContainer.Col2>
         </ProductContainer>
       </Container>
