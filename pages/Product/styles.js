@@ -36,6 +36,9 @@ export const StoreOpenedTime = styled.div`
   justify-content: left;
   width: 100%;
   font-size: 16px;
+  @media (max-width: 880px) {
+    margin-bottom: 10%;
+  }
   @media (max-width: 560px) {
     width: 100%;
     color: ${({ theme }) => theme.colors.baseGray};
@@ -127,6 +130,10 @@ export const Price = styled.h3`
   font-size: 45px;
   line-height: 53px;
   margin-bottom: 66px;
+  @media (max-width: 880px) {
+    font-size: 38px;
+    margin-bottom: 5%;
+  }
 `;
 
 export const Delivery = styled.p`
@@ -240,7 +247,7 @@ export const Description = styled.div`
   width: 100%;
   flex-direction: column;
   @media (max-width: 880px) {
-    margin-bottom: 15%;
+    margin-bottom: 2%;
     font-size: 14px;
   }
 `;
