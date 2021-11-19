@@ -8,6 +8,7 @@ import {
 } from '../index';
 import StoreServices from '../StoreServices';
 import ProductsCarousel from '../Carousels/ProductsCarousel';
+import StoreIsOpen from '../StoreIsOpen';
 
 const { TabPane } = Tabs;
 
@@ -28,12 +29,15 @@ export default function StoreTabs({
               <SearchContainer.Row>
                 <Title>{group.name}</Title>
                 <SearchContainer.Col>
-                  {group.product_groups.map((product) => (
-                    <SearchCards product={product} store={store} key={product.product_id} />
-                  ))}
-                  {group.product_groups.map((product) => (
-                    <SearchCardsClosed product={product} store={store} key={product.product_id} />
-                  ))}
+                  {StoreIsOpen(store.opening_time, store.closing_time) ? (
+                    group.product_groups.map((product) => (
+                      <SearchCards product={product} store={store} key={product.product_id} />
+                    ))
+                  ) : (
+                    group.product_groups.map((product) => (
+                      <SearchCardsClosed product={product} store={store} key={product.product_id} />
+                    ))
+                  )}
                 </SearchContainer.Col>
               </SearchContainer.Row>
             </SearchContainer>

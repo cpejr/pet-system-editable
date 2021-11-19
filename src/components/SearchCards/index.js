@@ -4,13 +4,13 @@ import Image from 'next/image';
 import {
   CardWrapper, CardInfo, CardDescription, CardDescriptionTitle,
   CardDescriptionValues, CardDescriptionDeliveryPrice,
-  CardDescriptionProductPrice, CardDescriptionDescription,
+  CardDescriptionProductPrice,
 } from './styles';
 import StoreIsOpen from '../StoreIsOpen';
 
 export default function SearchCards({ product, store }) {
   const myLoader = ({ src }) => `https://s3-sa-east-1.amazonaws.com/petsystembucket/${src}`;
-  if (StoreIsOpen(product.opening_time, product.closing_time)) {
+  if (StoreIsOpen(product.opening_time, product.closing_time) || StoreIsOpen(store.opening_time, store.closing_time)) {
     return (
       <Link href={`/Product/${product.product_id}`}>
         <CardWrapper>
@@ -21,9 +21,6 @@ export default function SearchCards({ product, store }) {
                 {product.product_name}
               </CardDescriptionTitle>
               <CardDescriptionValues>
-                <CardDescriptionDescription>
-                  {product.description}
-                </CardDescriptionDescription>
                 <CardDescriptionProductPrice>
                   R$
                   {' '}
@@ -32,7 +29,7 @@ export default function SearchCards({ product, store }) {
                 <CardDescriptionDeliveryPrice>
                   Frete:
                   {' '}
-                  {`${store?.shipping_tax ? store?.shipping_tax : product?.shipping_tax === 0 ? `R$${product?.shipping_tax}` : 'Gratis'}`}
+                  {store ? (store?.shipping_tax === 0 ? 'Gratis' : `R$${store?.shipping_tax}`) : (product?.shipping_tax === 0 ? 'Gratis' : `R$${product?.shipping_tax}`) }
                 </CardDescriptionDeliveryPrice>
               </CardDescriptionValues>
             </CardDescription>

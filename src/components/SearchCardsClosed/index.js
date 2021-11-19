@@ -4,7 +4,7 @@ import Image from 'next/image';
 import {
   CardWrapper, CardInfo, CardDescription, CardDescriptionTitle,
   CardDescriptionValues, CardDescriptionClosed,
-  CardDescriptionProductPrice, CardDescriptionDescription,
+  CardDescriptionProductPrice,
 } from './styles';
 import StoreIsOpen from '../StoreIsOpen';
 
@@ -28,9 +28,6 @@ export default function SearchCardsClosed({ product }) {
                 {product.product_name}
               </CardDescriptionTitle>
               <CardDescriptionValues>
-                <CardDescriptionDescription>
-                  {product.description}
-                </CardDescriptionDescription>
                 <CardDescriptionProductPrice>
                   R$
                   {' '}
