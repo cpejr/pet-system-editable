@@ -3,9 +3,9 @@ import { MdShoppingCart } from 'react-icons/md';
 import {
   CarrinhoBody, CarrinhoFinalButton, CarrinhoIcon, CarrinhoText,
   CarrinhoTitle, CarrinhoTotal, CarrinhoValor, CarrinhoValorText,
-  CarrinhoValorTitle,
+  // CarrinhoValorTitle,
 } from '../../src/components/CarrinhoComponents';
-import CarrinhoFrete from '../../src/components/CarrinhoComponents/CarrinhoFrete';
+// import CarrinhoFrete from '../../src/components/CarrinhoComponents/CarrinhoFrete';
 import CarrinhoCard from '../../src/components/CarrinhoComponents/CarrinhoCard';
 import { useAuth } from '../../src/contexts/AuthContext';
 import { ContainerDatas, BoxDatas } from '../../src/components/MyAdresses/styles';
@@ -13,18 +13,29 @@ import api from '../../src/utils/api';
 
 export default function Carrinho() {
   const [products, setProducts] = useState([]);
+  const [att, setAtt] = useState(false);
   const [subTotal, setSubTotal] = useState(0);
   const { user } = useAuth();
 
   useEffect(() => {
+    let somaPrecos = 0;
     if (user) {
-      console.log(user);
       api.get('/cart/firebase').then((res) => {
-        console.log(res.data);
-        setProducts(res.data);
+        if (res.data.length > 0) {
+          res.data.forEach((product) => {
+            somaPrecos += product.price * product.amount;
+          });
+          setSubTotal(parseFloat(somaPrecos.toFixed(2)));
+          api.get(`/store/${res.data[0].firebase_id_store}`).then((store) => {
+            res.data.shipping_tax = store.data.shipping_tax;
+            setProducts(res.data);
+          });
+        } else {
+          setProducts(res.data);
+        }
       });
     }
-  }, [user]);
+  }, [user, att]);
   if (products.length > 0) {
     return (
       <>
@@ -37,22 +48,28 @@ export default function Carrinho() {
         <CarrinhoBody>
           <div>
             {products.map((p) => (
-              <CarrinhoCard product={p} key={p.product_id} setSubTotal={setSubTotal} subTotal={subTotal} />
+              <CarrinhoCard product={p} key={p.product_id} setSubTotal={setSubTotal} subTotal={subTotal} att={att} setAtt={setAtt} />
             ))}
           </div>
           <CarrinhoValor>
-            <CarrinhoValorTitle>Digite o seu CEP</CarrinhoValorTitle>
-            <CarrinhoFrete />
+            {/* <CarrinhoValorTitle>Digite o seu CEP</CarrinhoValorTitle>
+            <CarrinhoFrete /> */}
             <CarrinhoTotal>
               <CarrinhoValorText>SubTotal</CarrinhoValorText>
               <CarrinhoValorText>
                 R$
                 {subTotal}
               </CarrinhoValorText>
-              <CarrinhoValorText>Frete</CarrinhoValorText>
-              <CarrinhoValorText>R$Frete</CarrinhoValorText>
+              <CarrinhoValorText>Frete:</CarrinhoValorText>
+              <CarrinhoValorText>
+                R$
+                {products.shipping_tax}
+              </CarrinhoValorText>
               <CarrinhoValorText>Total</CarrinhoValorText>
-              <CarrinhoValorText>R$Total</CarrinhoValorText>
+              <CarrinhoValorText>
+                R$
+                {subTotal + parseFloat(products.shipping_tax)}
+              </CarrinhoValorText>
             </CarrinhoTotal>
             <CarrinhoFinalButton>Continuar</CarrinhoFinalButton>
           </CarrinhoValor>

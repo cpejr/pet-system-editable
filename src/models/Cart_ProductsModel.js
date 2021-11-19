@@ -41,15 +41,17 @@ module.exports = {
         .first();
 
       if (produto) {
-        const quantity = produto.amount + parseInt(cart_product.amount);
+        const quantity = produto.amount + parseInt(cart_product.amount, 10);
         const body = {
           amount: quantity,
           final_price: produto.final_price + parseFloat(cart_product.final_price),
         };
         const result = await connection('Cart_Products')
-          .where({ cart_id: cart_product.cart_id })
+          .where('cart_id', cart_product.cart_id)
+          .where('product_id', cart_product.product_id)
           .update(body);
 
+        console.log("🚀 ~ file: Cart_ProductsModel.js ~ line 56 ~ createCart_Products ~ result", result)
         return result;
       }
 
@@ -89,6 +91,7 @@ module.exports = {
     try {
       const response = await connection('Cart_Products')
         .where({ cart_id: id })
+        .where({ product_id: amount.product_id })
         .update(amount);
       return response;
     } catch (error) {

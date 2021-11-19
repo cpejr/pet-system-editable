@@ -44,6 +44,7 @@ display: flex;
 flex-direction: column;
 align-items: center;
 margin-left: 5em;
+width: 100%;
 `;
 
 export const CarrinhoValorTitle = styled.div`
@@ -63,6 +64,7 @@ margin: 0;
 export const CarrinhoTotal = styled.div`
 display: grid;
 grid-template-columns: 1fr 1fr;
+justify-items: center;
 width: 100%;
 margin-bottom: 2em;
 padding: 0em 1em;

@@ -14,46 +14,35 @@ import {
   CarrinhoCardIcon,
 } from './styles';
 
-export default function CarrinhoCard(props) {
-  const { product } = props;
-  const { subTotal } = props;
-  const { setSubTotal } = props;
+export default function CarrinhoCard({
+  product, subTotal, setSubTotal, setAtt, att,
+}) {
   const [quantity, setQuantity] = useState(product.amount);
-  // const [sent, setSent] = useState(true);
 
   const body = {
     product_id: product.product_id,
     amount: quantity,
-    final_price: quantity * product.price,
+    final_price: (parseFloat((quantity * product.price).toFixed(2))),
   };
-
   const updateQuantity = () => {
     try {
-      api.put('/CartProducts', body).then((response) => {
-        // setSent(true);
-        console.log(body);
-        console.log(response);
-      });
+      api.put('/CartProducts', body);
     } catch (error) {
       console.error(error);
     }
   };
-  useEffect(() => {
-    setSubTotal(subTotal + product.price * quantity);
-  }, []);
 
   useEffect(() => {
-    console.log('Opa');
     updateQuantity();
   }, [quantity]);
 
   async function handleDelete(product_id) {
-    console.log(product_id);
     try {
       await api.delete(`/CartProducts/${product_id}`);
+      setAtt(!att);
       notification.open({
         message: 'Sucesso!',
-        description: 'Endereço deletado com sucesso.',
+        description: 'Produto deletado do carrinho com sucesso.',
         className: 'ant-notification',
         top: '100px',
         style: {
@@ -65,7 +54,7 @@ export default function CarrinhoCard(props) {
       notification.open({
         message: 'Erro!',
         description:
-          'Tivemos um problema ao apagar o endereço que você deseja!',
+          'Tivemos um problema ao apagar o produto que você deseja!',
         className: 'ant-notification',
         top: '100px',
         style: {
@@ -76,12 +65,12 @@ export default function CarrinhoCard(props) {
   }
   function handlePlus() {
     setQuantity(quantity + 1);
-    setSubTotal(subTotal + product.price);
+    setSubTotal(parseFloat((subTotal + product.price).toFixed(2)));
   }
   function handleMinus() {
     if (quantity > 0) {
       setQuantity(quantity - 1);
-      setSubTotal(subTotal - product.price);
+      setSubTotal(parseFloat((subTotal - product.price).toFixed(2)));
     } else {
       setQuantity(0);
     }
