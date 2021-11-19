@@ -18,7 +18,6 @@ export default function Store({
   store, address, products, groups,
 }) {
   const myLoader = ({ src }) => `https://s3-sa-east-1.amazonaws.com/petsystembucket/${src}`;
-
   return (
     <ContainerDoContainer>
       <Container>
@@ -72,7 +71,7 @@ export default function Store({
               {address.state}
             </StoreDatas>
             <StoreDatas>
-              {`${StoreIsOpen(store.opening_time, store.closing_time) ? `Funcionamento: ${store.opening_time}h - ${store.closing_time}h` : 'Estabelecimento Fechado'}`}
+              {StoreIsOpen(store.opening_time, store.closing_time) ? `Funcionamento: ${store.opening_time}h - ${store.closing_time}h` : 'Estabelecimento Fechado'}
             </StoreDatas>
           </StoreContainer.Col2>
         </StoreContainer>
