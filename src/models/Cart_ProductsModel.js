@@ -51,7 +51,6 @@ module.exports = {
           .where('product_id', cart_product.product_id)
           .update(body);
 
-        console.log("🚀 ~ file: Cart_ProductsModel.js ~ line 56 ~ createCart_Products ~ result", result)
         return result;
       }
 
