@@ -10,7 +10,7 @@ import StoreIsOpen from '../StoreIsOpen';
 
 export default function SearchCards({ product, store }) {
   const myLoader = ({ src }) => `https://s3-sa-east-1.amazonaws.com/petsystembucket/${src}`;
-  if (StoreIsOpen(product.opening_time, product.closing_time) || StoreIsOpen(store.opening_time, store.closing_time)) {
+  if (store ? StoreIsOpen(store.opening_time, store.closing_time) : StoreIsOpen(product.opening_time, product.closing_time)) {
     return (
       <Link href={`/Product/${product.product_id}`}>
         <CardWrapper>
