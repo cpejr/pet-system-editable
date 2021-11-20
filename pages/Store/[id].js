@@ -9,7 +9,7 @@ import {
   BigBanner,
   MediumBanner,
   LittleBanner,
-} from './styles';
+} from '../../src/styles/storeStyles';
 import api from '../../src/utils/api';
 import { FooterMobile, StoreTabs } from '../../src/components';
 import StoreIsOpen from '../../src/components/StoreIsOpen';
@@ -88,18 +88,7 @@ export default function Store({
   );
 }
 
-export async function getStaticPaths() {
-  const { data: stores } = await api.get('store');
-
-  return {
-    paths: stores.map((store) => ({
-      params: { id: store.firebase_id_store },
-    })),
-    fallback: 'blocking',
-  };
-}
-
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
   const [{ data: store },
     { data: address },
     { data: products },
@@ -116,6 +105,5 @@ export async function getStaticProps({ params }) {
       products,
       groups,
     },
-    revalidate: 20, // 20 segundos
   };
 }

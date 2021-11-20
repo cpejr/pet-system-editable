@@ -67,10 +67,9 @@ export default function Home({ stores }) {
   );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const { data: stores } = await api.get('store');
   return {
-    props: { stores },
-    revalidate: 60 * 10, // 10 minutos
+    props: { stores }, // 10 minutos
   };
 }

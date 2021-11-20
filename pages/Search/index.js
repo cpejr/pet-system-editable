@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import api from '../../src/utils/api';
-import { ContainerCategory, SearchContainer, TypeContainer } from './styles';
+import { ContainerCategory, SearchContainer, TypeContainer } from '../../src/styles/searchStyles';
 import {
   OrderSearch,
   Brands,

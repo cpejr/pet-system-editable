@@ -3,14 +3,13 @@ import 'antd/dist/antd.css';
 import Link from 'next/link';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import Header from '../../src/components/Header';
 import {
   StoreBodyWrapper, StoreBody, StoreFormulary, TopFormulary, ItemFormulary,
   DividedItemFormulary, BottomFormulary,
 } from '../../src/components/BodyForms';
 import {
   Img, UploadContainer, ImageSelected, Label, CurrencyInput,
-} from './styles';
+} from '../../src/styles/createStoreStyles';
 import {
   TitleStore, SubtitleStore, Text, SubText, TextBox, Submit,
 } from '../../src/components/FormComponents';

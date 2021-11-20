@@ -3,7 +3,7 @@ import MySales from '../../../../src/components/MySales';
 import MySearchDateMonth from '../../../../src/components/MySearchDateMonth';
 import MySearchDateYear from '../../../../src/components/MySearchDateYear';
 import { Title, PerfilStoreMenu, FooterMobile } from '../../../../src/components/index';
-import { ContainerDate } from './styles';
+import { ContainerDate } from '../../../../src/styles/perfilSellerSalesStyles';
 
 export default function Perfil() {
   return (

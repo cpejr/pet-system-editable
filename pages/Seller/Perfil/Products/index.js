@@ -13,19 +13,6 @@ import ModalGroupRemove from '../../../../src/components/ModalGroupRemove';
 import { Title, PerfilStoreMenu } from '../../../../src/components/index';
 import api from '../../../../src/utils/api';
 
-const SubTitle = styled.div`
-  display: flex;
-  align-items: initial;
-  margin-left: 8%;
-  font-family: Roboto;
-  @media (max-width: 560px) {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0;
-  }
-`;
-
 const Section = styled.button`
   display: flex;
   font-size: 16px;
@@ -295,11 +282,10 @@ export default function Perfil({ categories }) {
   );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const { data: categories } = await api.get('category');
 
   return {
-    props: { categories },
-    revalidate: 60, // 1hora
+    props: { categories }, // 1hora
   };
 }
