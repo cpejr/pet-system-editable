@@ -103,7 +103,7 @@ module.exports = {
         },
       ];
 
-      body.customer.cpf = undefined;
+      delete body.customer.cpf;
       delete body.customer.birth_date;
       delete body.customer.type;
       delete body.customer.firebase_id;
