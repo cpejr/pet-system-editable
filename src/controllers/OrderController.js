@@ -76,7 +76,6 @@ module.exports = {
     const cart_id = uuidv4();
     try {
       const { user } = req.session.get('user');
-
       const address = await AddressModel
         .getUserMainAddressById(user.firebase_id);
       const cart = await CartModel.getCartByFirebaseId(user.firebase_id);
@@ -163,8 +162,7 @@ module.exports = {
 
       const response = await axios.post(url, body, { headers });
 
-      // Criando Order Local
-      // order.pagSeguro_id = responde.data.id
+      order.Pagseguro_id = response.data.id;
       await OrderModel.createNewOrder(order);
 
       return res.status(200).json(response.data);
