@@ -1,11 +1,12 @@
 /* eslint-disable no-await-in-loop */
-const connection = require('../database/connection');
+// const connection = require('../database/connection');
+const { db } = require('../database/connection');
 const Cart_ProductsModel = require('./Cart_ProductsModel');
 
 module.exports = {
   async getOrderById(order_id) {
     try {
-      const order = await connection('Order')
+      const order = await db('Order')
         .where('order_id', order_id)
         .select('*')
         .first();
@@ -20,7 +21,7 @@ module.exports = {
 
   async getOrderAndCartProducts(firebase_id) {
     try {
-      const orders = await connection('Order')
+      const orders = await db('Order')
         .where('firebase_id', firebase_id)
         .select('*');
       const orderProducts = await Cart_ProductsModel.getAllCart_Products(orders.cart_id);
@@ -37,7 +38,7 @@ module.exports = {
 
   async getOrdersByUserId(id) {
     try {
-      const orders = await connection('Order')
+      const orders = await db('Order')
         .where('firebase_id', id)
         .select('*');
       return orders;
@@ -49,7 +50,7 @@ module.exports = {
 
   async getOrdersByStoreId(id) {
     try {
-      const orders = await connection('Order')
+      const orders = await db('Order')
         .where('firebase_id_store', id)
         .select('*')
         .innerJoin(
@@ -81,7 +82,7 @@ module.exports = {
 
   async getAllOrders() {
     try {
-      const orders = await connection('Order')
+      const orders = await db('Order')
         .select('*');
       return orders;
     } catch (error) {
@@ -92,7 +93,7 @@ module.exports = {
 
   async createNewOrder(order) {
     try {
-      const order_aux = await connection('Order')
+      const order_aux = await db('Order')
         .insert(order);
       return order_aux;
     } catch (error) {
@@ -103,7 +104,7 @@ module.exports = {
 
   async removeOrder(order_id) {
     try {
-      const response = await connection('Order')
+      const response = await db('Order')
         .where({ order_id })
         .delete();
       return response;
@@ -115,7 +116,7 @@ module.exports = {
 
   async updateOrder(order, id) {
     try {
-      const response = await connection('Order')
+      const response = await db('Order')
         .where({ order_id: id })
         .update(order);
       return response;
