@@ -21,9 +21,9 @@ export default function EditProducts({
   att,
   setAtt,
 }) {
-  console.log(product);
   const [groups, setGroups] = useState([]);
   const [selected, setSelected] = useState([]);
+  const [currentGroups, setCurrentGroups] = useState([]);
   const [productName, setProductName] = useState(product.product_name);
   const [price, setPrice] = useState(product.price);
   const [discount, setDiscount] = useState(product.discount);
@@ -34,11 +34,18 @@ export default function EditProducts({
   }); /* Caminho da imagem no lugar de null */
   const [type, setType] = useState('');
   const [categoryId, setCategoryId] = useState();
-  const vilicius = useState('true');
 
   useEffect(() => {
     api.get('group').then((res) => {
       setGroups(res.data);
+    });
+    api.get('group').then((res) => {
+      setGroups(res.data);
+    });
+    api.get(`/product_group/${product.product_id}`).then((res) => {
+      console.log('res.data', res.data);
+      setCurrentGroups(res.data);
+      console.log('current', currentGroups);
     });
     const FilteredCategory = categories.filter(
       (category) => category.category_id === product.category_id,
@@ -75,6 +82,19 @@ export default function EditProducts({
       setSelected(aux);
     }
   }
+  function isChecked(group_id) {
+    let auxiliar = 0;
+    for (let i = 0; i < currentGroups.length; i++) {
+      if (currentGroups[i].group_id === group_id) {
+        auxiliar += 1;
+      }
+    }
+    if (auxiliar > 0) {
+      return true;
+    }
+    return false;
+  }
+
   async function handleSubmit() {
     const formData = new FormData();
 
@@ -97,8 +117,8 @@ export default function EditProducts({
           },
         },
       );
-      console.log('antes o matheus apaga');
-      await api.post('/product_group', { selected, productId: product.product_id });
+      console.log('selected', selected);
+      // await api.post('/product_group', { selected, productId: product.product_id });
       setAtt(!att);
       notification.open({
         message: 'Sucesso!',
@@ -196,7 +216,7 @@ export default function EditProducts({
             <CategoryContainer.Row2.Col1>
               <input
                 onClick={(e) => handleSelect(group.group_id, selected, e)}
-                defaultChecked={vilicius}
+                defaultChecked={isChecked(group.group_id)}
                 type="checkbox"
               />
             </CategoryContainer.Row2.Col1>

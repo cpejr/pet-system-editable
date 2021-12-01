@@ -3,9 +3,8 @@ const Product_GroupModel = require('../models/Product_GroupModel');
 module.exports = {
 
   async create(req, res) {
-    console.log('req', req.body);
     const { selected, productId } = req.body;
-    console.log('selected', selected);
+    console.log(selected);
     try {
       const fieldsToInsert = selected.map((groupId) => ({ group_id: groupId, product_id: productId }));
       await Product_GroupModel.createProduct_Group(fieldsToInsert);
@@ -56,6 +55,19 @@ module.exports = {
       return res.status(500).json({ notification: 'Internal Server Error' });
     }
     return res.status(200).json({ notification: 'Product Removed From Group' });
+  },
+
+  async getGroupsById(req, res) {
+    const product_id = req.query.id;
+    try {
+      const groups = await Product_GroupModel.getGroupsByProductId(product_id);
+      return res.status(200).json(groups);
+    } catch (error) {
+      if (error.message) {
+        return res.status(400).json({ notification: error.message });
+      }
+      return res.status(500).json({ notification: 'Internal Server Error' });
+    }
   },
 
 };
