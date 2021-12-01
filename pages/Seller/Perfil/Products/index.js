@@ -208,6 +208,7 @@ Group.Title = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: row;
+  margin: 5%;
 `;
 
 const Groups = styled.h2`
@@ -268,16 +269,16 @@ export default function Perfil({ categories }) {
     <div>
       <Title>Perfil da loja:</Title>
       <PerfilStoreMenu selectedItem="Meus produtos" />
-      <LocationAndFilter />
-      <EditAddRemoveSection categories={categories} setAtt={setAtt} att={att} />
-      <MarketContainer>
+      {/* <LocationAndFilter />
+      <EditAddRemoveSection categories={categories} setAtt={setAtt} att={att} /> */}
+      {/* <MarketContainer>
         <MarketContainer.Col1>
           <TitleMarket>Produtos do meu MarketPlace</TitleMarket>
         </MarketContainer.Col1>
         <MarketContainer.Col2>
           <ModalAddProducts categories={categories} setAtt={setAtt} att={att} />
         </MarketContainer.Col2>
-      </MarketContainer>
+      </MarketContainer> */}
       <ProductContainer>
         <ProductContainer.Col1>
           <Order />
@@ -285,7 +286,7 @@ export default function Perfil({ categories }) {
         </ProductContainer.Col1>
         <ProductContainer.Col2>
           <Group>
-            <ModalGroup />
+            {/* <ModalGroup /> */}
             <PersonalGroups />
           </Group>
         </ProductContainer.Col2>
