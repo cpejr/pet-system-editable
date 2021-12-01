@@ -1,9 +1,10 @@
-const connection = require('../database/connection');
+// const connection = require('../database/connection');
+const { db } = require('../database/connection');
 
 module.exports = {
   async getCategoryById(id) {
     try {
-      const category = await connection('Categories')
+      const category = await db('Categories')
         .where('category_id', id)
         .select('*')
         .first();
@@ -15,7 +16,7 @@ module.exports = {
 
   async getAllCategories() {
     try {
-      const categories = await connection('Categories')
+      const categories = await db('Categories')
         .select('*');
 
       return categories;
@@ -26,7 +27,7 @@ module.exports = {
 
   async createNewCategory(category) {
     try {
-      await connection('Categories')
+      await db('Categories')
         .insert(category);
       return category;
     } catch (error) {
@@ -36,7 +37,7 @@ module.exports = {
 
   async deleteCategory(id) {
     try {
-      const response = await connection('Categories')
+      const response = await db('Categories')
         .where({ category_id: id })
         .delete();
       return response;
@@ -47,7 +48,7 @@ module.exports = {
 
   async updateCategory(category, id) {
     try {
-      const response = await connection('Categories')
+      const response = await db('Categories')
         .where({ category_id: id })
         .update(category);
       return response;
