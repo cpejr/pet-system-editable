@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import FooterMobile from '../../../../src/components/Mobile/FooterMobile';
 import Order from '../../../../src/components/Filter/Order';
@@ -11,212 +10,11 @@ import ModalGroup from '../../../../src/components/ModalGroup';
 import ModalGroupEdit from '../../../../src/components/ModalGroupEdit';
 import ModalGroupRemove from '../../../../src/components/ModalGroupRemove';
 import { Title, PerfilStoreMenu } from '../../../../src/components/index';
+import {
+  Subtitle, Section, ProductContainer, MarketContainer,
+  TitleMarket, EditGroup, RemoveGroup, Group, Groups, Botoes,
+} from './styles';
 import api from '../../../../src/utils/api';
-
-const SubTitle = styled.div`
-  display: flex;
-  align-items: initial;
-  margin-left: 8%;
-  font-family: Roboto;
-  @media (max-width: 560px) {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0;
-  }
-`;
-
-const Section = styled.button`
-  display: flex;
-  font-size: 16px;
-  align-items: center;
-  justify-content: center;
-  margin-right: 1%;
-  margin-left: 1%;
-  border: none;
-  background-color: ${({ theme }) => theme.colors.background};
-  cursor: pointer;
-  font-family: Roboto;
-  outline: none;
-`;
-
-Section.Select = styled.button`
-  display: flex;
-  font-size: 16px;
-  align-items: center;
-  margin-left: 1%;
-  margin-right: 1%;
-  border: none;
-  background-color: ${({ theme }) => theme.colors.hoverBackground};
-  border-radius: 5%;
-  outline: none;
-  font-family: Roboto;
-`;
-
-const ProductContainer = styled.div`
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  width: 100%;
-  flex-direction: row;
-  margin-top: 1%;
-  @media (max-width: 1065px) {
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    flex-direction: row;
-  }
-`;
-
-ProductContainer.Col1 = styled.div`
-  width: 20%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  @media (max-width: 1065px) {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    width: 40%;
-  }
-  @media (max-width: 560px) {
-    display: none;
-  }
-`;
-
-ProductContainer.Col2 = styled.div`
-  width: 80%;
-  display: flex;
-  align-items: center;
-  justify-content: initial;
-  @media (max-width: 560px) {
-    width: 100%;
-    justify-content: center;
-  }
-`;
-
-const MarketContainer = styled.div`
-  display: flex;
-  width: 100%;
-  @media (max-width: 1010px) {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-  }
-`;
-
-MarketContainer.Col1 = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 62%;
-  @media (max-width: 1010px) {
-    width: 100%;
-  }
-
-  @media (max-width: 700px) {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-  }
-
-  @media (max-width: 560px) {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    width: 100%;
-  }
-`;
-
-MarketContainer.Col2 = styled.div`
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-around;
-  width: 38%;
-  @media (max-width: 1010px) {
-    width: 100%;
-    justify-content: center;
-  }
-
-  @media (max-width: 560px) {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 90%;
-    margin-bottom: 2%;
-  }
-`;
-
-const TitleMarket = styled.h2`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 30px;
-  font-family: Roboto;
-  font-size: 25px;
-`;
-
-const EditGroup = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: ${({ theme }) => theme.colors.background};
-  border: 0;
-  outline: none;
-  margin-left: 2%;
-  margin-right: 1%;
-  @media (max-width: 1000px) {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-  }
-`;
-
-const RemoveGroup = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: ${({ theme }) => theme.colors.background};
-  border: 0;
-  outline: none;
-
-  @media (max-width: 1000px) {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-  }
-`;
-
-const Group = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-`;
-
-Group.Title = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: row;
-  margin: 5%;
-`;
-
-const Groups = styled.h2`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0;
-`;
 
 export default function Perfil({ categories }) {
   const [groups, setGroups] = useState([]);
@@ -269,24 +67,21 @@ export default function Perfil({ categories }) {
     <div>
       <Title>Perfil da loja:</Title>
       <PerfilStoreMenu selectedItem="Meus produtos" />
-      {/* <LocationAndFilter />
-      <EditAddRemoveSection categories={categories} setAtt={setAtt} att={att} /> */}
-      {/* <MarketContainer>
-        <MarketContainer.Col1>
-          <TitleMarket>Produtos do meu MarketPlace</TitleMarket>
-        </MarketContainer.Col1>
-        <MarketContainer.Col2>
-          <ModalAddProducts categories={categories} setAtt={setAtt} att={att} />
-        </MarketContainer.Col2>
-      </MarketContainer> */}
+      <LocationAndFilter />
+      <EditAddRemoveSection categories={categories} setAtt={setAtt} att={att} />
+      <MarketContainer />
       <ProductContainer>
         <ProductContainer.Col1>
           <Order />
           <Category />
+          <MarketContainer.Col2 />
+          <Botoes>
+            <ModalAddProducts categories={categories} setAtt={setAtt} att={att} />
+            <ModalGroup />
+          </Botoes>
         </ProductContainer.Col1>
         <ProductContainer.Col2>
           <Group>
-            {/* <ModalGroup /> */}
             <PersonalGroups />
           </Group>
         </ProductContainer.Col2>

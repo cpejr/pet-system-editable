@@ -8,6 +8,7 @@ import 'antd/dist/antd.css';
 import InputMask from 'react-input-mask';
 import CurrencyFormat from 'react-currency-format';
 import api from '../../utils/api';
+import { CategoryContainer } from './styles';
 
 const EditProductsContainer = styled.div`
   display: flex;
@@ -277,6 +278,7 @@ export default function EditProducts({
   att,
   setAtt,
 }) {
+  const [groups, setGroups] = useState([]);
   const [productName, setProductName] = useState(product.product_name);
   const [price, setPrice] = useState(product.price);
   const [discount, setDiscount] = useState(product.discount);
@@ -289,6 +291,9 @@ export default function EditProducts({
   const [categoryId, setCategoryId] = useState();
 
   useEffect(() => {
+    api.get('group').then((res) => {
+      setGroups(res.data);
+    });
     const FilteredCategory = categories.filter(
       (category) => category.category_id === product.category_id,
     );
@@ -427,6 +432,18 @@ export default function EditProducts({
               onChange={handleDescriptionChange}
             />
           </DivInput>
+          <DescriptionProduct>Grupos do produto:</DescriptionProduct>
+          {groups?.length > 0
+        && groups.map((group) => (
+          <DivInput>
+            <CategoryContainer.Row2.Col1>
+              <input type="checkbox" />
+            </CategoryContainer.Row2.Col1>
+            <CategoryContainer.Row2.Col2>
+              {group.name}
+            </CategoryContainer.Row2.Col2>
+          </DivInput>
+        ))}
         </EditProductsContainer.Col1>
 
         <EditProductsContainer.Col2>
