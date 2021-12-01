@@ -1,13 +1,12 @@
 /* eslint-disable no-async-promise-executor */
-// const connection = require('../database/connection');
-const { db } = require('../database/connection');
+const { connection } = require('../database/connection');
 // const FirebaseModel = require('./FirebaseModel');
 
 module.exports = {
 
   async getUserById(id) {
     try {
-      const user = await db('User')
+      const user = await connection('User')
         .where('firebase_id', id)
         .select('*')
         .first();
@@ -20,7 +19,7 @@ module.exports = {
 
   async getAllUsers() {
     try {
-      const users = await db('User')
+      const users = await connection('User')
         .select('*');
       return users;
     } catch (error) {
@@ -31,7 +30,7 @@ module.exports = {
 
   async createNewUser(user) {
     try {
-      const user_aux = await db('User')
+      const user_aux = await connection('User')
         .insert(user);
       return user_aux;
     } catch (error) {
@@ -42,7 +41,7 @@ module.exports = {
 
   async deleteUser(id) {
     try {
-      const response = await db('User')
+      const response = await connection('User')
         .where({ firebase_id: id })
         .delete();
       return response;
@@ -54,7 +53,7 @@ module.exports = {
 
   async updateUser(user, id) {
     try {
-      const response = await db('User')
+      const response = await connection('User')
         .where({ firebase_id: id })
         .update(user);
       return response;
