@@ -1,275 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
 import { notification } from 'antd';
 import MenuItem from '@material-ui/core/MenuItem';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import { Select } from '@material-ui/core';
 import 'antd/dist/antd.css';
 import InputMask from 'react-input-mask';
-import CurrencyFormat from 'react-currency-format';
 import api from '../../utils/api';
-import { CategoryContainer } from './styles';
-
-const EditProductsContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  flex-direction: row;
-  margin-bottom: 2%;
-  @media (max-width: 1190px) {
-    flex-direction: column;
-    overflow: auto;
-  }
-`;
-
-EditProductsContainer.Col1 = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 70%;
-  flex-direction: column;
-  @media (max-width: 1190px) {
-    width: 100%;
-  }
-`;
-
-const DivInput = styled.div`
-  display: flex;
-  width: 100%;
-  @media (max-width: 1190px) {
-    justify-content: center;
-  }
-`;
-const EditTitle = styled.h2`
-  display: flex;
-  align-items: center;
-  justify-content: initial;
-  width: 100%;
-  font-family: Roboto;
-  @media (max-width: 1190px) {
-    justify-content: center;
-  }
-`;
-
-const NameProduct = styled.p`
-  display: flex;
-  align-items: center;
-  justify-content: initial;
-  width: 100%;
-  margin: 0;
-  font-family: Roboto;
-  @media (max-width: 1190px) {
-    justify-content: center;
-  }
-`;
-const NameProductInput = styled.input`
-  display: flex;
-  align-items: center;
-  justify-content: initial;
-  width: 80%;
-  height: 40px;
-  border-radius: 5px;
-  border-color: ${({ theme }) => theme.colors.borderBoxColor};
-  border-width: 1px;
-  margin-bottom: 2%;
-  margin-top: 1%;
-  font-family: Roboto;
-`;
-
-const CategoryProduct = styled.p`
-  display: flex;
-  align-items: center;
-  justify-content: initial;
-  width: 100%;
-  margin: 0;
-  font-family: Roboto;
-  @media (max-width: 1190px) {
-    justify-content: center;
-  }
-`;
-const PriceAndDiscont = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: initial;
-  width: 100%;
-  flex-direction: row;
-  margin-bottom: 2%;
-`;
-PriceAndDiscont.Col1 = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 50%;
-  flex-direction: column;
-`;
-PriceAndDiscont.Col1.Row1 = styled.p`
-  display: flex;
-  align-items: center;
-  justify-content: initial;
-  width: 100%;
-  margin: 0;
-  font-family: Roboto;
-  @media (max-width: 1190px) {
-    justify-content: center;
-  }
-`;
-PriceAndDiscont.Col1.Row2 = styled(CurrencyFormat)`
-  display: flex;
-  align-items: center;
-  justify-content: initial;
-  width: 60%;
-  height: 40px;
-  border-radius: 5px;
-  border-color: ${({ theme }) => theme.colors.borderBoxColor};
-  border-width: 1px;
-  margin-top: 1%;
-  font-family: Roboto;
-`;
-
-PriceAndDiscont.Col2 = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 50%;
-  flex-direction: column;
-`;
-
-PriceAndDiscont.Col2.Row1 = styled.p`
-  display: flex;
-  align-items: center;
-  justify-content: initial;
-  width: 100%;
-  margin: 0;
-  font-family: Roboto;
-  @media (max-width: 1190px) {
-    justify-content: center;
-  }
-`;
-
-PriceAndDiscont.Col2.Row2 = styled.input`
-  display: flex;
-  align-items: center;
-  justify-content: initial;
-  width: 60%;
-  height: 40px;
-  border-radius: 5px;
-  border-color: ${({ theme }) => theme.colors.borderBoxColor};
-  border-width: 1px;
-  margin-top: 1%;
-  font-family: Roboto;
-`;
-
-const DescriptionProduct = styled.p`
-  display: flex;
-  align-items: center;
-  justify-content: initial;
-  width: 100%;
-  margin: 0;
-  font-family: Roboto;
-  @media (max-width: 1190px) {
-    justify-content: center;
-  }
-`;
-const DescriptionInput = styled.input`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 80%;
-  height: 250px;
-  border-radius: 5px;
-  border-color: ${({ theme }) => theme.colors.borderBoxColor};
-  border-width: 1px;
-  margin-top: 1%;
-  font-family: Roboto;
-`;
-
-EditProductsContainer.Col2 = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 30%;
-  flex-direction: column;
-  @media (max-width: 1190px) {
-    width: 100%;
-    justify-content: center;
-  }
-`;
-
-const SelectImage = styled.p`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  font-family: Roboto;
-  margin: 0;
-  @media (max-width: 1190px) {
-    justify-content: center;
-    margin-top: 5%;
-  }
-`;
-const ButtonCancel = styled.button`
-  height: 55px;
-  width: 200px;
-  font-family: Roboto;
-  font-size: 18px;
-  font-weight: 300;
-  background-color: ${({ theme }) => theme.colors.strongRed};
-  color: white;
-  border: 0;
-  border-radius: 5px;
-  transform: translate(0%, -50%);
-  margin-top: 15%;
-  cursor: pointer;
-`;
-const ButtonConfirm = styled.button`
-  display: flex;
-  margin-top: 50px;
-  height: 55px;
-  width: 200px;
-  font-family: Roboto;
-  font-size: 18px;
-  font-weight: 300;
-  background-color: ${({ theme }) => theme.colors.darkGreen};
-  color: white;
-  border: 0;
-  border-radius: 5px;
-  align-items: center;
-  text-align: center;
-  transform: translate(0%, -50%);
-  justify-content: center;
-  text-align: center;
-  margin-top: 10%;
-  cursor: pointer;
-`;
-
-const Img = styled.img`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 200px;
-  height: 200px;
-  margin-bottom: 5%;
-  margin-top: 5%;
-`;
-const UploadContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-`;
-
-const ImageSelected = styled.input``;
-
-const Label = styled.label`
-  background-color: ${({ theme }) => theme.colors.mediumGreen};
-  color: white;
-  padding: 0.5rem;
-  font-family: sans-serif;
-  border-radius: 0.3rem;
-  cursor: pointer;
-  margin-top: 1rem;
-`;
+import {
+  CategoryContainer, EditProductsContainer, DivInput, EditTitle, NameProduct,
+  NameProductInput, CategoryProduct, PriceAndDiscont, DescriptionProduct,
+  DescriptionInput, SelectImage, ButtonCancel, ButtonConfirm, Img,
+  UploadContainer, ImageSelected, Label,
+}
+  from './styles';
 
 export default function EditProducts({
   closeModal,
@@ -278,6 +21,7 @@ export default function EditProducts({
   att,
   setAtt,
 }) {
+  console.log(product);
   const [groups, setGroups] = useState([]);
   const [selected, setSelected] = useState([]);
   const [productName, setProductName] = useState(product.product_name);
@@ -290,6 +34,7 @@ export default function EditProducts({
   }); /* Caminho da imagem no lugar de null */
   const [type, setType] = useState('');
   const [categoryId, setCategoryId] = useState();
+  const vilicius = useState('true');
 
   useEffect(() => {
     api.get('group').then((res) => {
@@ -324,22 +69,12 @@ export default function EditProducts({
   function handleSelect(group_id, aux, e) {
     if (e.target.checked) {
       aux.push(group_id);
-      console.log(selected);
-      console.log(e.target.checked);
       setSelected(aux);
     } else {
       aux = aux.filter(((item) => (item !== group_id)));
       setSelected(aux);
-      console.log('aux', aux);
-      // for (let i = 0; i < selected.length; i++) {
-      //   if (selected[i] === group_id) {
-      //     selected.splice(i, 1);
-      //     console.log(selected);
-      //   }
-      // }
     }
   }
-  console.log('out selected', selected);
   async function handleSubmit() {
     const formData = new FormData();
 
@@ -362,6 +97,8 @@ export default function EditProducts({
           },
         },
       );
+      console.log('antes o matheus apaga');
+      await api.post('/product_group', { selected, productId: product.product_id });
       setAtt(!att);
       notification.open({
         message: 'Sucesso!',
@@ -459,6 +196,7 @@ export default function EditProducts({
             <CategoryContainer.Row2.Col1>
               <input
                 onClick={(e) => handleSelect(group.group_id, selected, e)}
+                defaultChecked={vilicius}
                 type="checkbox"
               />
             </CategoryContainer.Row2.Col1>

@@ -12,7 +12,7 @@ module.exports = {
     }
   },
 
-  async getProduct_GroupByProductId(group_id,product_id) {
+  async getProduct_GroupByProductId(group_id, product_id) {
     try {
       const result = await connection('Product_Group')
         .where('group_id', group_id)
@@ -36,7 +36,7 @@ module.exports = {
     }
   },
 
-  async DeleteProduct_GroupById(group_id,product_id) {
+  async DeleteProduct_GroupById(group_id, product_id) {
     try {
       const result = await connection('Product_Group')
         .where('group_id', group_id)

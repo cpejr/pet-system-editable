@@ -3,9 +3,12 @@ const Product_GroupModel = require('../models/Product_GroupModel');
 module.exports = {
 
   async create(req, res) {
-    const product_group = req.body;
+    console.log('req', req.body);
+    const { selected, productId } = req.body;
+    console.log('selected', selected);
     try {
-      const result = await Product_GroupModel.createProduct_Group(product_group);
+      const fieldsToInsert = selected.map((groupId) => ({ group_id: groupId, product_id: productId }));
+      await Product_GroupModel.createProduct_Group(fieldsToInsert);
       return res.status(200).json({ notification: 'Product Successfully added to group' });
     } catch (error) {
       if (error.message) {
@@ -19,7 +22,7 @@ module.exports = {
     const group_id = req.query.id;
     const product = req.body;
     try {
-      const product_group = await Product_GroupModel.getProduct_GroupByProductId(group_id,product.product_id);
+      const product_group = await Product_GroupModel.getProduct_GroupByProductId(group_id, product.product_id);
       return res.status(200).json(product_group);
     } catch (error) {
       if (error.message) {
@@ -45,7 +48,7 @@ module.exports = {
     const group_id = req.query.id;
     const product = req.body;
     try {
-      await Product_GroupModel.DeleteProduct_GroupById(group_id,product.product_id);
+      await Product_GroupModel.DeleteProduct_GroupById(group_id, product.product_id);
     } catch (error) {
       if (error.message) {
         return res.status(400).json({ notification: error.message });
@@ -55,4 +58,4 @@ module.exports = {
     return res.status(200).json({ notification: 'Product Removed From Group' });
   },
 
-}
+};
