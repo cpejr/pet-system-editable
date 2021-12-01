@@ -160,6 +160,7 @@ export default function Store() {
     formData.append('cellphone', cellphone);
     formData.append('cnpj', cnpj);
     formData.append('password', password);
+    formData.append('working_days', workingDays);
     formData.append('status', '0');
     formData.append('cover_img', cover_img.file);
     formData.append('logo_img', logo_img.file);
@@ -224,12 +225,12 @@ export default function Store() {
 
             <DividedItemFormulary>
               <ItemFormulary>
-                <Text>DDD + phone: *</Text>
+                <Text>DDD + telefone: *</Text>
                 <MaskedInput name="phone" id="phone" mask="(99)9999-9999" value={phone} onChange={handlePhoneChange} />
               </ItemFormulary>
 
               <ItemFormulary>
-                <Text>DDD + cellphone: *</Text>
+                <Text>DDD + celular: *</Text>
                 <MaskedInput name="cellphone" id="cellphone" mask="(99)99999-9999" value={cellphone} onChange={handleCellphoneChange} />
               </ItemFormulary>
             </DividedItemFormulary>
@@ -249,24 +250,11 @@ export default function Store() {
 
             <DividedItemFormulary>
               <ItemFormulary>
-                <Text>Horário de abertura: *</Text>
-                <MaskedInput name="opening_time" id="opening_time" mask="99:99" value={openingTime} onChange={handleOpeningTimeChange} />
-              </ItemFormulary>
-
-              <ItemFormulary>
-                <Text>Horário de encerramento: *</Text>
-                <MaskedInput name="closing_time" id="closing_time" mask="99:99" value={closingTime} onChange={handleClosingTimeChange} />
-              </ItemFormulary>
-
-            </DividedItemFormulary>
-
-            <DividedItemFormulary>
-              <ItemFormulary>
-                <Text>Password: *</Text>
+                <Text>Senha: *</Text>
                 <TextBox type="password" id="password" placeholder="" onChange={handlePasswordChange} value={password} />
               </ItemFormulary>
               <ItemFormulary>
-                <Text>Confirma password: *</Text>
+                <Text>Confirmar senha: *</Text>
                 <TextBox type="password" id="confPassword" placeholder="" onChange={handleConfPasswordChange} value={confPassword} />
               </ItemFormulary>
             </DividedItemFormulary>
