@@ -279,6 +279,7 @@ export default function EditProducts({
   setAtt,
 }) {
   const [groups, setGroups] = useState([]);
+  const [selected, setSelected] = useState([]);
   const [productName, setProductName] = useState(product.product_name);
   const [price, setPrice] = useState(product.price);
   const [discount, setDiscount] = useState(product.discount);
@@ -320,6 +321,25 @@ export default function EditProducts({
   function handleDescriptionChange(event) {
     setDescription(event.target.value);
   }
+  function handleSelect(group_id, aux, e) {
+    if (e.target.checked) {
+      aux.push(group_id);
+      console.log(selected);
+      console.log(e.target.checked);
+      setSelected(aux);
+    } else {
+      aux = aux.filter(((item) => (item !== group_id)));
+      setSelected(aux);
+      console.log('aux', aux);
+      // for (let i = 0; i < selected.length; i++) {
+      //   if (selected[i] === group_id) {
+      //     selected.splice(i, 1);
+      //     console.log(selected);
+      //   }
+      // }
+    }
+  }
+  console.log('out selected', selected);
   async function handleSubmit() {
     const formData = new FormData();
 
@@ -437,7 +457,10 @@ export default function EditProducts({
         && groups.map((group) => (
           <DivInput>
             <CategoryContainer.Row2.Col1>
-              <input type="checkbox" />
+              <input
+                onClick={(e) => handleSelect(group.group_id, selected, e)}
+                type="checkbox"
+              />
             </CategoryContainer.Row2.Col1>
             <CategoryContainer.Row2.Col2>
               {group.name}
