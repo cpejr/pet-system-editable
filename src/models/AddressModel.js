@@ -144,7 +144,7 @@ module.exports = {
         .insert(user_address);
       }
 
-      if(!user){
+      if (!user) {
         const firebase_id_store = await req.session.get("store").store.firebase_id_store;
         const store_address = {
           firebase_id_store: firebase_id_store,

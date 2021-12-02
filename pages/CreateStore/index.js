@@ -3,7 +3,6 @@ import 'antd/dist/antd.css';
 import Link from 'next/link';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import Header from '../../src/components/Header';
 import {
   StoreBodyWrapper, StoreBody, StoreFormulary, TopFormulary, ItemFormulary,
   DividedItemFormulary, BottomFormulary,
@@ -26,6 +25,13 @@ export default function Store() {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [cellphone, setCellphone] = useState('');
+  const [street, setStreet] = useState('');
+  const [addressNum, setAddressNum] = useState('');
+  const [complement, setComplement] = useState('');
+  const [district, setDistrict] = useState('');
+  const [zipcode, setZipcode] = useState('');
+  const [city, setCity] = useState('');
+  const [state, setState] = useState('');
   const [cnpj, setCnpj] = useState('');
   const [password, setPassword] = useState('');
   const [confPassword, setConfPassword] = useState('');
@@ -33,6 +39,7 @@ export default function Store() {
   const [deliveryTime, setDeliveryTime] = useState('');
   const [openingTime, setOpeningTime] = useState('');
   const [closingTime, setClosingTime] = useState('');
+  const workingDays = 'Segunda';
   // const [ie, setIe] = useState('');
   // const [ieState, setIeState] = useState('');
   const [cover_img, setCover_img] = useState({ file: null, url: null });
@@ -54,6 +61,27 @@ export default function Store() {
   function handleCellphoneChange(event) {
     setCellphone(event.target.value);
   }
+  function handleStreetChange(event) {
+    setStreet(event.target.value);
+  }
+  function handleAddressNumChange(event) {
+    setAddressNum(event.target.value);
+  }
+  function handleComplementChange(event) {
+    setComplement(event.target.value);
+  }
+  function handleDistrictChange(event) {
+    setDistrict(event.target.value);
+  }
+  function handleZipcodeChange(event) {
+    setZipcode(event.target.value);
+  }
+  function handleCityChange(event) {
+    setCity(event.target.value);
+  }
+  function handleStateChange(event) {
+    setState(event.target.value);
+  }
   function handleCnpjChange(event) {
     setCnpj(event.target.value);
   }
@@ -66,7 +94,6 @@ export default function Store() {
   function handleShippingTaxChange(event) {
     setShippingTax(event.target.value);
   }
-
   function handleDeliveryTimeChange(event) {
     setDeliveryTime(event.target.value);
   }
@@ -122,6 +149,30 @@ export default function Store() {
       toast('Telefone inválido', { position: toast.POSITION.BOTTOM_RIGHT });
       return;
     }
+    if (street?.length < 1) {
+      toast('Rua inválida', { position: toast.POSITION.BOTTOM_RIGHT });
+      return;
+    }
+    if (addressNum?.length < 1) {
+      toast('Número inválido', { position: toast.POSITION.BOTTOM_RIGHT });
+      return;
+    }
+    if (district?.length < 1) {
+      toast('Bairro inválido', { position: toast.POSITION.BOTTOM_RIGHT });
+      return;
+    }
+    if (zipcode?.length !== 8) {
+      toast('CEP inválido', { position: toast.POSITION.BOTTOM_RIGHT });
+      return;
+    }
+    if (city?.length < 1) {
+      toast('Cidade inválida', { position: toast.POSITION.BOTTOM_RIGHT });
+      return;
+    }
+    if (state?.length < 1) {
+      toast('Estado inválido', { position: toast.POSITION.BOTTOM_RIGHT });
+      return;
+    }
     if (cnpj?.length !== 14) {
       toast('CNPJ inválido', { position: toast.POSITION.BOTTOM_RIGHT });
       return;
@@ -153,6 +204,7 @@ export default function Store() {
     }
     const formatShippingTax = parseFloat(shippingTax.replace(',', '.').split('R$')[1]);
     const formData = new FormData();
+    const formDataAddress = new FormData();
 
     formData.append('company_name', companyName);
     formData.append('email', email);
@@ -167,9 +219,22 @@ export default function Store() {
     formData.append('delivery_time', deliveryTime);
     formData.append('opening_time', openingTime);
     formData.append('closing_time', closingTime);
+    formData.append('working_days', workingDays);
+    formDataAddress.append('street', street);
+    formDataAddress.append('address_num', addressNum);
+    formDataAddress.append('complement', complement);
+    formDataAddress.append('district', district);
+    formDataAddress.append('zipcode', zipcode);
+    formDataAddress.append('city', city);
+    formDataAddress.append('state', state);
 
     try {
       await api.post('api/store', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      await api.post('api/address', formDataAddress, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -231,6 +296,48 @@ export default function Store() {
               <ItemFormulary>
                 <Text>DDD + cellphone: *</Text>
                 <MaskedInput name="cellphone" id="cellphone" mask="(99)99999-9999" value={cellphone} onChange={handleCellphoneChange} />
+              </ItemFormulary>
+            </DividedItemFormulary>
+            {/* Rua: */}
+            <ItemFormulary>
+              <Text>Rua: *</Text>
+              <TextBox type="text" id="street" onChange={handleStreetChange} value={street} />
+            </ItemFormulary>
+
+            {/* Número: Complemento: */}
+            <DividedItemFormulary>
+              <ItemFormulary>
+                <Text>Número: *</Text>
+                <MaskedInput name="addressNum" id="addressNum" value={addressNum} onChange={handleAddressNumChange} />
+              </ItemFormulary>
+
+              <ItemFormulary>
+                <Text>Complemento:</Text>
+                <TextBox type="text" id="complement" value={complement} onChange={handleComplementChange} />
+              </ItemFormulary>
+            </DividedItemFormulary>
+            {/* Bairro: CEP: */}
+            <DividedItemFormulary>
+              <ItemFormulary>
+                <Text>Bairro: *</Text>
+                <TextBox type="text" id="district" value={district} onChange={handleDistrictChange} />
+              </ItemFormulary>
+
+              <ItemFormulary>
+                <Text>CEP: *</Text>
+                <MaskedInput name="cep" id="cep" mask="99999-999" value={zipcode} onChange={handleZipcodeChange} />
+              </ItemFormulary>
+            </DividedItemFormulary>
+            {/* Cidade: Estado: */}
+            <DividedItemFormulary>
+              <ItemFormulary>
+                <Text>Cidade: *</Text>
+                <TextBox type="text" id="city" value={city} onChange={handleCityChange} />
+              </ItemFormulary>
+
+              <ItemFormulary>
+                <Text>Estado: *</Text>
+                <TextBox type="text" id="state" value={state} onChange={handleStateChange} />
               </ItemFormulary>
             </DividedItemFormulary>
 
