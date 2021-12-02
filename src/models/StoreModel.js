@@ -17,6 +17,7 @@ module.exports = {
     try {
       const store_aux = await connection('Store')
         .insert(store);
+      console.log(store_aux);
       return store_aux;
     } catch (error) {
       console.error(error);

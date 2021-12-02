@@ -204,7 +204,6 @@ export default function Store() {
     }
     const formatShippingTax = parseFloat(shippingTax.replace(',', '.').split('R$')[1]);
     const formData = new FormData();
-    const formDataAddress = new FormData();
 
     formData.append('company_name', companyName);
     formData.append('email', email);
@@ -220,25 +219,24 @@ export default function Store() {
     formData.append('opening_time', openingTime);
     formData.append('closing_time', closingTime);
     formData.append('working_days', workingDays);
-    formDataAddress.append('street', street);
-    formDataAddress.append('address_num', addressNum);
-    formDataAddress.append('complement', complement);
-    formDataAddress.append('district', district);
-    formDataAddress.append('zipcode', zipcode);
-    formDataAddress.append('city', city);
-    formDataAddress.append('state', state);
 
     try {
-      await api.post('api/store', formData, {
+      const response = await api.post('api/store', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
-      await api.post('api/address', formDataAddress, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      const address = {
+        id: response.data.id,
+        street,
+        address_num: addressNum,
+        complement,
+        district,
+        zipcode,
+        city,
+        state,
+      };
+      await api.post('api/address', address);
       toast('Sucesso!', { position: toast.POSITION.BOTTOM_RIGHT });
     } catch (error) {
       toast('Erro ao cadastrar usuário.', { position: toast.POSITION.BOTTOM_RIGHT });
