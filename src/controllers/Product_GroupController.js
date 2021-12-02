@@ -3,11 +3,10 @@ const Product_GroupModel = require('../models/Product_GroupModel');
 module.exports = {
 
   async create(req, res) {
-    const { currentGroups, productId } = req.body;
+    const product_group = req.body;
+    console.log(product_group);
     try {
-      // await Product_GroupModel.DeleteGroupById(productId);
-      const fieldsToInsert = currentGroups.map((groupId) => ({ group_id: groupId, product_id: productId }));
-      await Product_GroupModel.createProduct_Group(fieldsToInsert);
+      const result = await Product_GroupModel.createProduct_Group(product_group);
       return res.status(200).json({ notification: 'Product Successfully added to group' });
     } catch (error) {
       if (error.message) {
@@ -16,7 +15,26 @@ module.exports = {
       return res.status(500).json({ notification: 'Internal Server Error' });
     }
   },
-
+  async update(req, res) {
+    const { currentGroups, productId } = req.body;
+    try {
+      await Product_GroupModel.DeleteGroupById(productId);
+      currentGroups.forEach((group) => {
+        const product_group = {
+          product_id: productId,
+          group_id: group.group_id,
+        };
+        console.log('🚀 ~ file: Product_GroupController.js ~ line 27 ~ currentGroups.forEach ~ product_group', product_group);
+        Product_GroupModel.createProduct_Group(product_group);
+      });
+      return res.status(200).json({ notification: 'Product Successfully added to group' });
+    } catch (error) {
+      if (error.message) {
+        return res.status(400).json({ notification: error.message });
+      }
+      return res.status(500).json({ notification: 'Internal Server Error' });
+    }
+  },
   async getById(req, res) {
     const group_id = req.query.id;
     const product = req.body;

@@ -114,7 +114,7 @@ export default function EditProducts({
           },
         },
       );
-      await api.post('/product_group', { currentGroups, productId: product.product_id });
+      await api.put('/product_group', { currentGroups, productId: product.product_id });
       setAtt(!att);
       notification.open({
         message: 'Sucesso!',

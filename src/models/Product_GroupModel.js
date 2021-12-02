@@ -62,6 +62,7 @@ module.exports = {
       throw new Error(error);
     }
   },
+
   async DeleteGroupById(product_id) {
     try {
       const result = await db('Product_Group')
