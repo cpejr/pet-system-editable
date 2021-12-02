@@ -3,10 +3,10 @@ const Product_GroupModel = require('../models/Product_GroupModel');
 module.exports = {
 
   async create(req, res) {
-    const { selected, productId } = req.body;
-    console.log(selected);
+    const { currentGroups, productId } = req.body;
     try {
-      const fieldsToInsert = selected.map((groupId) => ({ group_id: groupId, product_id: productId }));
+      // await Product_GroupModel.DeleteGroupById(productId);
+      const fieldsToInsert = currentGroups.map((groupId) => ({ group_id: groupId, product_id: productId }));
       await Product_GroupModel.createProduct_Group(fieldsToInsert);
       return res.status(200).json({ notification: 'Product Successfully added to group' });
     } catch (error) {

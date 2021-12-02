@@ -62,4 +62,15 @@ module.exports = {
       throw new Error(error);
     }
   },
+  async DeleteGroupById(product_id) {
+    try {
+      const result = await db('Product_Group')
+        .where('product_id', product_id)
+        .delete('*');
+      return result;
+    } catch (error) {
+      console.error(error);
+      throw new Error(error);
+    }
+  },
 };
