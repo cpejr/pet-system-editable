@@ -177,12 +177,40 @@ module.exports = {
     }
   },
 
+  async pay(req, res) {
+    const charges = req.body;
+    const { id } = req.query;
+    charges.reference_id = uuidv4();
+    try {
+      // Realizando requisição
+
+      const url = `${process.env.PAGSEGURO_ENDPOINT_API}/${id}/pay`;
+      const headers = {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${process.env.PAGSEGURO_MERCHANT_ID}`,
+      };
+
+      const response = await axios.post(url, charges, { headers });
+
+      const order = {
+        status: response.data.charges[0].status,
+      };
+
+      await OrderModel.updateOrder(order, response.data.reference_id);
+
+      return res.status(200).json(response.data);
+    } catch (err) {
+      return res.status(err.response.status).json(err.response.data);
+    }
+  },
+
   async update(request, response) {
     const order = request.body;
     try {
       await OrderModel.updateOrder(order, order.order_id);
     } catch (err) {
       if (err.message) {
+        console.error({ notification: err.message });
         return response.status(400).json({ notification: err.message });
       }
       return response.status(500).json({ notification: 'Internal Server Error' });
