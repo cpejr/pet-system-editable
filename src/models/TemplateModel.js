@@ -1,8 +1,9 @@
 import connection from '../database/connection';
+const { db } = require('../database/connection');
 
 export async function getTemplate(id) {
   try {
-    const requiredTemplate = await connection('template')
+    const requiredTemplate = await db('template')
       .where('id', id)
       .select('*')
       .first();
@@ -15,7 +16,7 @@ export async function getTemplate(id) {
 
 export async function createNewTemplate(newTemplate) {
   try {
-    const response = await connection('template').insert(newTemplate);
+    const response = await db('template').insert(newTemplate);
 
     const { id } = response;
 
