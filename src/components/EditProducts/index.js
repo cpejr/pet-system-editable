@@ -22,7 +22,6 @@ export default function EditProducts({
   setAtt,
 }) {
   const [groups, setGroups] = useState([]);
-  const [selected, setSelected] = useState([]);
   const [currentGroups, setCurrentGroups] = useState([]);
   const [productName, setProductName] = useState(product.product_name);
   const [price, setPrice] = useState(product.price);
@@ -43,9 +42,7 @@ export default function EditProducts({
       setGroups(res.data);
     });
     api.get(`/product_group/${product.product_id}`).then((res) => {
-      console.log('res.data', res.data);
       setCurrentGroups(res.data);
-      console.log('current', currentGroups);
     });
     const FilteredCategory = categories.filter(
       (category) => category.category_id === product.category_id,
@@ -117,8 +114,7 @@ export default function EditProducts({
           },
         },
       );
-      console.log('selected', selected);
-      // await api.post('/product_group', { selected, productId: product.product_id });
+      await api.post('/product_group', { currentGroups, productId: product.product_id });
       setAtt(!att);
       notification.open({
         message: 'Sucesso!',
@@ -215,7 +211,19 @@ export default function EditProducts({
           <DivInput>
             <CategoryContainer.Row2.Col1>
               <input
-                onClick={(e) => handleSelect(group.group_id, selected, e)}
+                value={group.group_id}
+                onClick={(e) => {
+                  if (e.target.checked) {
+                    setCurrentGroups([...currentGroups, { group_id: e.target.value }]);
+                  } else {
+                    const aux = currentGroups;
+                    const index = aux.findIndex((x) => x.group_id === e.target.value);
+                    if (index !== -1) {
+                      aux.splice(index, 1);
+                      setCurrentGroups([...aux]);
+                    }
+                  }
+                }}
                 defaultChecked={isChecked(group.group_id)}
                 type="checkbox"
               />
