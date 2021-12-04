@@ -1,7 +1,6 @@
 import React from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
@@ -49,10 +48,10 @@ const options = [
   'Fechado',
 ];
 
-function getStyles(option, status, theme) {
+function getStyles(option, situation, theme) {
   return {
     fontWeight:
-      status.indexOf(option) === -1
+      situation.indexOf(option) === -1
         ? theme.typography.fontWeightRegular
         : theme.typography.fontWeightMedium,
   };
@@ -61,26 +60,25 @@ function getStyles(option, status, theme) {
 export default function MultipleSelect() {
   const classes = useStyles();
   const theme = useTheme();
-  const [status, setStatus] = React.useState([]);
+  const [situatuion, setSituation] = React.useState([]);
 
   const handleChange = (event) => {
-    setStatus(event.target.value);
+    setSituation(event.target.value);
   };
 
   return (
     <div>
       <FormControl className={classes.formControl}>
         <Select
-          labelId="demo-mutiple-month-label"
-          id="demo-mutiple-month"
-          multiple
-          value={status}
+          labelId="demo-mutiple-option-label"
+          id="demo-mutiple-option"
+          value={situatuion}
           onChange={handleChange}
           input={<Input />}
           MenuProps={MenuProps}
         >
           {options.map((option) => (
-            <MenuItem key={option} value={option} style={getStyles(option, status, theme)}>
+            <MenuItem key={option} value={option} style={getStyles(option, situatuion, theme)}>
               {option}
             </MenuItem>
           ))}

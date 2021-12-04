@@ -3,27 +3,30 @@ import 'antd/dist/antd.css';
 import Link from 'next/link';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { MenuItem } from 'rc-menu';
-import Header from '../../src/components/Header';
+import Input from '@material-ui/core/Input';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
+import Header from '../Header';
 import {
   StoreBodyWrapper, StoreBody, StoreFormulary, TopFormulary, ItemFormulary,
   DividedItemFormulary, BottomFormulary,
-} from '../../src/components/BodyForms';
+} from '../BodyForms';
 import {
   Img, UploadContainer, ImageSelected, Label, CurrencyInput,
 } from './styles';
 import {
   TitleStore, SubtitleStore, Text, SubText, TextBox, Submit,
-} from '../../src/components/FormComponents';
-import WeekDays from '../../src/utils/WeekDays';
-import MaskedInput from '../../src/components/MasketInput';
-import StoreStatus from '../../src/components/StoreStatus';
+} from '../FormComponents';
+import WeekDays from '../../utils/WeekDays';
+import MaskedInput from '../MasketInput';
+import StoreStatus from '../StoreStatus';
 import 'react-toastify/dist/ReactToastify.css';
 
 const api = axios.create({ baseURL: 'http://localhost:3000/' });
 toast.configure();
 
-export default function Store() {
+export default function StoreCreate({ detail }) {
+  console.log('🚀 ~ file: index.js ~ line 29 ~ StoreCreate ~ info', detail);
   const [openingTimeSeg, setOpeningTimeSeg] = useState('');
   const [closingTimeSeg, setClosingTimeSeg] = useState('');
   const [openingTimeTer, setOpeningTimeTer] = useState('');
@@ -119,9 +122,27 @@ export default function Store() {
     const aux2 = addStr(aux, 2, ':');
     setClosingTimeDom(aux2);
   }
-  function handleSituationSeg(event) {
+  const handleChangeSeg = (event) => {
     setSituationSeg(event.target.value);
-  }
+  };
+  const handleChangeTer = (event) => {
+    setSituationTer(event.target.value);
+  };
+  const handleChangeQua = (event) => {
+    setSituationQua(event.target.value);
+  };
+  const handleChangeQui = (event) => {
+    setSituationQui(event.target.value);
+  };
+  const handleChangeSex = (event) => {
+    setSituationSex(event.target.value);
+  };
+  const handleChangeSab = (event) => {
+    setSituationSab(event.target.value);
+  };
+  const handleChangeDom = (event) => {
+    setSituationDom(event.target.value);
+  };
   const opening = {
     openingTimeSeg,
     openingTimeTer,
@@ -149,6 +170,20 @@ export default function Store() {
     situationSab,
     situationDom,
   };
+  const options = [
+    'Aberto',
+    'Fechado',
+  ];
+  const ITEM_HEIGHT = 48;
+  const ITEM_PADDING_TOP = 8;
+  const MenuProps = {
+    PaperProps: {
+      style: {
+        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+        width: 250,
+      },
+    },
+  };
   console.log('🚀 ~ file: index.js ~ line 117 ~ Store ~ opening', opening);
   console.log('🚀 ~ file: index.js ~ line 117 ~ Store ~ opening', closing);
   console.log('🚀 ~ file: index.js ~ line 117 ~ Store ~ opening', situation);
@@ -166,18 +201,6 @@ export default function Store() {
     const formatShippingTax = parseFloat(shippingTax.replace(',', '.').split('R$')[1]);
     const formData = new FormData();
 
-    formData.append('company_name', companyName);
-    formData.append('email', email);
-    formData.append('phone', phone);
-    formData.append('cellphone', cellphone);
-    formData.append('cnpj', cnpj);
-    formData.append('password', password);
-    formData.append('working_days', workingDays);
-    formData.append('status', '0');
-    formData.append('cover_img', cover_img.file);
-    formData.append('logo_img', logo_img.file);
-    formData.append('shipping_tax', (formatShippingTax)); // a variável armazena como inteiro. a divisão é pra separar os centavos
-    formData.append('delivery_time', deliveryTime);
     formData.append('opening_time', openingTime);
     formData.append('closing_time', closingTime);
 
@@ -232,7 +255,20 @@ export default function Store() {
               </ItemFormulary>
 
               <ItemFormulary>
-                <StoreStatus value={situationSeg} onChange={handleSituationSeg} />
+                <Select
+                  labelId="demo-mutiple-option-label"
+                  id="demo-mutiple-option"
+                  value={situationSeg}
+                  onChange={handleChangeSeg}
+                  input={<Input />}
+                  MenuProps={MenuProps}
+                >
+                  {options.map((option) => (
+                    <MenuItem key={option} value={option}>
+                      {option}
+                    </MenuItem>
+                  ))}
+                </Select>
               </ItemFormulary>
 
               <ItemFormulary>
@@ -252,7 +288,20 @@ export default function Store() {
               </ItemFormulary>
 
               <ItemFormulary>
-                <StoreStatus />
+                <Select
+                  labelId="demo-mutiple-option-label"
+                  id="demo-mutiple-option"
+                  value={situationTer}
+                  onChange={handleChangeTer}
+                  input={<Input />}
+                  MenuProps={MenuProps}
+                >
+                  {options.map((option) => (
+                    <MenuItem key={option} value={option}>
+                      {option}
+                    </MenuItem>
+                  ))}
+                </Select>
               </ItemFormulary>
 
               <ItemFormulary>
@@ -272,7 +321,20 @@ export default function Store() {
               </ItemFormulary>
 
               <ItemFormulary>
-                <StoreStatus />
+                <Select
+                  labelId="demo-mutiple-option-label"
+                  id="demo-mutiple-option"
+                  value={situationQua}
+                  onChange={handleChangeQua}
+                  input={<Input />}
+                  MenuProps={MenuProps}
+                >
+                  {options.map((option) => (
+                    <MenuItem key={option} value={option}>
+                      {option}
+                    </MenuItem>
+                  ))}
+                </Select>
               </ItemFormulary>
 
               <ItemFormulary>
@@ -292,7 +354,20 @@ export default function Store() {
               </ItemFormulary>
 
               <ItemFormulary>
-                <StoreStatus />
+                <Select
+                  labelId="demo-mutiple-option-label"
+                  id="demo-mutiple-option"
+                  value={situationQui}
+                  onChange={handleChangeQui}
+                  input={<Input />}
+                  MenuProps={MenuProps}
+                >
+                  {options.map((option) => (
+                    <MenuItem key={option} value={option}>
+                      {option}
+                    </MenuItem>
+                  ))}
+                </Select>
               </ItemFormulary>
 
               <ItemFormulary>
@@ -312,7 +387,20 @@ export default function Store() {
               </ItemFormulary>
 
               <ItemFormulary>
-                <StoreStatus />
+                <Select
+                  labelId="demo-mutiple-option-label"
+                  id="demo-mutiple-option"
+                  value={situationSex}
+                  onChange={handleChangeSex}
+                  input={<Input />}
+                  MenuProps={MenuProps}
+                >
+                  {options.map((option) => (
+                    <MenuItem key={option} value={option}>
+                      {option}
+                    </MenuItem>
+                  ))}
+                </Select>
               </ItemFormulary>
 
               <ItemFormulary>
@@ -332,7 +420,20 @@ export default function Store() {
               </ItemFormulary>
 
               <ItemFormulary>
-                <StoreStatus />
+                <Select
+                  labelId="demo-mutiple-option-label"
+                  id="demo-mutiple-option"
+                  value={situationSab}
+                  onChange={handleChangeSab}
+                  input={<Input />}
+                  MenuProps={MenuProps}
+                >
+                  {options.map((option) => (
+                    <MenuItem key={option} value={option}>
+                      {option}
+                    </MenuItem>
+                  ))}
+                </Select>
               </ItemFormulary>
 
               <ItemFormulary>
@@ -352,7 +453,20 @@ export default function Store() {
               </ItemFormulary>
 
               <ItemFormulary>
-                <StoreStatus />
+                <Select
+                  labelId="demo-mutiple-option-label"
+                  id="demo-mutiple-option"
+                  value={situationDom}
+                  onChange={handleChangeDom}
+                  input={<Input />}
+                  MenuProps={MenuProps}
+                >
+                  {options.map((option) => (
+                    <MenuItem key={option} value={option}>
+                      {option}
+                    </MenuItem>
+                  ))}
+                </Select>
               </ItemFormulary>
 
               <ItemFormulary>
@@ -379,4 +493,8 @@ export default function Store() {
       </StoreBodyWrapper>
     </>
   );
+}
+export async function getServerSideProps({ query }) {
+  const { detail } = query;
+  return { props: { detail } };
 }
