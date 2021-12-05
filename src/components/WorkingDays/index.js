@@ -1,32 +1,57 @@
 import React, { useState } from 'react';
 import 'antd/dist/antd.css';
-import Link from 'next/link';
 import axios from 'axios';
+import { makeStyles } from '@material-ui/core/styles';
 import { toast } from 'react-toastify';
 import Input from '@material-ui/core/Input';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
-import Header from '../Header';
+import { useRouter } from 'next/router';
 import {
   StoreBodyWrapper, StoreBody, StoreFormulary, TopFormulary, ItemFormulary,
   DividedItemFormulary, BottomFormulary,
 } from '../BodyForms';
 import {
-  Img, UploadContainer, ImageSelected, Label, CurrencyInput,
-} from './styles';
-import {
   TitleStore, SubtitleStore, Text, SubText, TextBox, Submit,
 } from '../FormComponents';
-import WeekDays from '../../utils/WeekDays';
 import MaskedInput from '../MasketInput';
-import StoreStatus from '../StoreStatus';
 import 'react-toastify/dist/ReactToastify.css';
 
 const api = axios.create({ baseURL: 'http://localhost:3000/' });
 toast.configure();
 
-export default function StoreCreate({ detail }) {
-  console.log('🚀 ~ file: index.js ~ line 29 ~ StoreCreate ~ info', detail);
+const useStyles = makeStyles((theme) => ({
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+    maxWidth: 300,
+    width: '90%',
+    marginTop: '10px',
+    marginBottom: '10px',
+    height: '25px',
+    borderRadius: '5px',
+    border: '1px solid #AAABB0',
+    background: '#F2F2F2',
+    padding: '1px 2px',
+    fontFamily: 'Roboto',
+  },
+  chips: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  chip: {
+    margin: 2,
+  },
+  noLabel: {
+    marginTop: theme.spacing(3),
+    padding: '5px',
+  },
+}));
+
+export default function StoreCreate(props) {
+  const dados = { props };
+  const router = useRouter();
+  const classes = useStyles();
   const [openingTimeSeg, setOpeningTimeSeg] = useState('');
   const [closingTimeSeg, setClosingTimeSeg] = useState('');
   const [openingTimeTer, setOpeningTimeTer] = useState('');
@@ -124,26 +149,54 @@ export default function StoreCreate({ detail }) {
   }
   const handleChangeSeg = (event) => {
     setSituationSeg(event.target.value);
+    if (event.target.value === 'Fechado') {
+      setOpeningTimeSeg('00:00');
+      setClosingTimeSeg('00:00');
+    }
   };
   const handleChangeTer = (event) => {
     setSituationTer(event.target.value);
+    if (event.target.value === 'Fechado') {
+      setOpeningTimeTer('00:00');
+      setClosingTimeTer('00:00');
+    }
   };
   const handleChangeQua = (event) => {
     setSituationQua(event.target.value);
+    if (event.target.value === 'Fechado') {
+      setOpeningTimeQua('00:00');
+      setClosingTimeQua('00:00');
+    }
   };
   const handleChangeQui = (event) => {
     setSituationQui(event.target.value);
+    if (event.target.value === 'Fechado') {
+      setOpeningTimeQui('00:00');
+      setClosingTimeQui('00:00');
+    }
   };
   const handleChangeSex = (event) => {
     setSituationSex(event.target.value);
+    if (event.target.value === 'Fechado') {
+      setOpeningTimeSex('00:00');
+      setClosingTimeSex('00:00');
+    }
   };
   const handleChangeSab = (event) => {
     setSituationSab(event.target.value);
+    if (event.target.value === 'Fechado') {
+      setOpeningTimeSab('00:00');
+      setClosingTimeSab('00:00');
+    }
   };
   const handleChangeDom = (event) => {
     setSituationDom(event.target.value);
+    if (event.target.value === 'Fechado') {
+      setOpeningTimeDom('00:00');
+      setClosingTimeDom('00:00');
+    }
   };
-  const opening = {
+  const opening = [
     openingTimeSeg,
     openingTimeTer,
     openingTimeQua,
@@ -151,8 +204,8 @@ export default function StoreCreate({ detail }) {
     openingTimeSex,
     openingTimeSab,
     openingTimeDom,
-  };
-  const closing = {
+  ];
+  const closing = [
     closingTimeSeg,
     closingTimeTer,
     closingTimeQua,
@@ -160,8 +213,8 @@ export default function StoreCreate({ detail }) {
     closingTimeSex,
     closingTimeSab,
     closingTimeDom,
-  };
-  const situation = {
+  ];
+  const situation = [
     situationSeg,
     situationTer,
     situationQua,
@@ -169,7 +222,7 @@ export default function StoreCreate({ detail }) {
     situationSex,
     situationSab,
     situationDom,
-  };
+  ];
   const options = [
     'Aberto',
     'Fechado',
@@ -184,25 +237,48 @@ export default function StoreCreate({ detail }) {
       },
     },
   };
-  console.log('🚀 ~ file: index.js ~ line 117 ~ Store ~ opening', opening);
-  console.log('🚀 ~ file: index.js ~ line 117 ~ Store ~ opening', closing);
-  console.log('🚀 ~ file: index.js ~ line 117 ~ Store ~ opening', situation);
-
   async function handleSubmit(event) {
     event.preventDefault();
-    if (openingTime === closingTime) {
-      toast('Horários de abertura e encerramento precisam ser diferentes!', { position: toast.POSITION.BOTTOM_RIGHT });
+    if (situationSeg === '' || situationTer === '' || situationQua === ''
+      || situationQui === '' || situationSex === ''
+      || situationSab === '' || situationDom === '') {
+      toast('Defina o Status de funcionamento para todos os dias da semana!', { position: toast.POSITION.BOTTOM_RIGHT });
       return;
     }
-    if (parseInt(openingTime.substring(0, 2), 10) > 23 || parseInt(closingTime.substring(0, 2), 10) > 23 || parseInt(openingTime.substring(3, 5), 10) > 59 || parseInt(closingTime.substring(3, 5), 10) > 59) {
+    if ((openingTimeSeg === closingTimeSeg && situationSeg === 'Aberto') || (openingTimeTer === closingTimeTer && situationTer === 'Aberto')
+      || (openingTimeQua === closingTimeQua && situationQua === 'Aberto') || (openingTimeQui === closingTimeQui && situationQui === 'Aberto')
+      || (openingTimeSex === closingTimeSex && situationSex === 'Aberto') || (openingTimeSab === closingTimeSab && situationSab === 'Aberto')
+      || (openingTimeDom === closingTimeDom && situationDom === 'Aberto')) {
+      toast('Horários de abertura e encerramento precisam ser diferentes nos dias com Status "Aberto"!', { position: toast.POSITION.BOTTOM_RIGHT });
+      return;
+    }
+    if (parseInt(openingTimeSeg.substring(0, 2), 10) > 23 || parseInt(closingTimeSeg.substring(0, 2), 10) > 23 || parseInt(openingTimeSeg.substring(3, 5), 10) > 59 || parseInt(closingTimeSeg.substring(3, 5), 10) > 59
+      || parseInt(openingTimeTer.substring(0, 2), 10) > 23 || parseInt(closingTimeTer.substring(0, 2), 10) > 23 || parseInt(openingTimeTer.substring(3, 5), 10) > 59 || parseInt(closingTimeTer.substring(3, 5), 10) > 59
+      || parseInt(openingTimeQua.substring(0, 2), 10) > 23 || parseInt(closingTimeQua.substring(0, 2), 10) > 23 || parseInt(openingTimeQua.substring(3, 5), 10) > 59 || parseInt(closingTimeQua.substring(3, 5), 10) > 59
+      || parseInt(openingTimeQui.substring(0, 2), 10) > 23 || parseInt(closingTimeQui.substring(0, 2), 10) > 23 || parseInt(openingTimeQui.substring(3, 5), 10) > 59 || parseInt(closingTimeQui.substring(3, 5), 10) > 59
+      || parseInt(openingTimeSex.substring(0, 2), 10) > 23 || parseInt(closingTimeSex.substring(0, 2), 10) > 23 || parseInt(openingTimeSex.substring(3, 5), 10) > 59 || parseInt(closingTimeSex.substring(3, 5), 10) > 59
+      || parseInt(openingTimeSab.substring(0, 2), 10) > 23 || parseInt(closingTimeSab.substring(0, 2), 10) > 23 || parseInt(openingTimeSab.substring(3, 5), 10) > 59 || parseInt(closingTimeSab.substring(3, 5), 10) > 59
+      || parseInt(openingTimeDom.substring(0, 2), 10) > 23 || parseInt(closingTimeDom.substring(0, 2), 10) > 23 || parseInt(openingTimeDom.substring(3, 5), 10) > 59 || parseInt(closingTimeDom.substring(3, 5), 10) > 59) {
       toast('Favor inserir horários entre 00:00 e 23:59!', { position: toast.POSITION.BOTTOM_RIGHT });
       return;
     }
-    const formatShippingTax = parseFloat(shippingTax.replace(',', '.').split('R$')[1]);
+    const formatShippingTax = parseFloat(dados.props.form[8].replace(',', '.').split('R$')[1]);
     const formData = new FormData();
 
-    formData.append('opening_time', openingTime);
-    formData.append('closing_time', closingTime);
+    formData.append('company_name', dados.props.form[0]);
+    formData.append('email', dados.props.form[1]);
+    formData.append('phone', dados.props.form[2]);
+    formData.append('cellphone', dados.props.form[3]);
+    formData.append('cnpj', dados.props.form[4]);
+    formData.append('password', dados.props.form[5]);
+    formData.append('status', '0');
+    formData.append('cover_img', dados.props.form[6]);
+    formData.append('logo_img', dados.props.form[7]);
+    formData.append('shipping_tax', (formatShippingTax)); // a variável armazena como inteiro. a divisão é pra separar os centavos
+    formData.append('delivery_time', dados.props.form[9]);
+    formData.append('opening_time', opening);
+    formData.append('closing_time', closing);
+    formData.append('working_days', situation);
 
     try {
       await api.post('api/store', formData, {
@@ -211,6 +287,7 @@ export default function StoreCreate({ detail }) {
         },
       });
       toast('Sucesso!', { position: toast.POSITION.BOTTOM_RIGHT });
+      router.push('/login');
     } catch (error) {
       toast('Erro ao cadastrar usuário.', { position: toast.POSITION.BOTTOM_RIGHT });
     }
@@ -232,7 +309,7 @@ export default function StoreCreate({ detail }) {
 
             <DividedItemFormulary>
               <ItemFormulary>
-                <Text>Dia *</Text>
+                <Text>Dia</Text>
               </ItemFormulary>
 
               <ItemFormulary>
@@ -251,11 +328,13 @@ export default function StoreCreate({ detail }) {
             <DividedItemFormulary>
 
               <ItemFormulary>
-                <TextBox type="text" id="email" value="Segunda" />
+                <TextBox type="text" value="Segunda" />
               </ItemFormulary>
 
               <ItemFormulary>
+
                 <Select
+                  className={classes.formControl}
                   labelId="demo-mutiple-option-label"
                   id="demo-mutiple-option"
                   value={situationSeg}
@@ -269,6 +348,7 @@ export default function StoreCreate({ detail }) {
                     </MenuItem>
                   ))}
                 </Select>
+
               </ItemFormulary>
 
               <ItemFormulary>
@@ -284,11 +364,12 @@ export default function StoreCreate({ detail }) {
             <DividedItemFormulary>
 
               <ItemFormulary>
-                <TextBox type="text" id="email" value="Terça" />
+                <TextBox type="text" value="Terça" />
               </ItemFormulary>
 
               <ItemFormulary>
                 <Select
+                  className={classes.formControl}
                   labelId="demo-mutiple-option-label"
                   id="demo-mutiple-option"
                   value={situationTer}
@@ -317,11 +398,12 @@ export default function StoreCreate({ detail }) {
             <DividedItemFormulary>
 
               <ItemFormulary>
-                <TextBox type="text" id="email" value="Quarta" />
+                <TextBox type="text" value="Quarta" />
               </ItemFormulary>
 
               <ItemFormulary>
                 <Select
+                  className={classes.formControl}
                   labelId="demo-mutiple-option-label"
                   id="demo-mutiple-option"
                   value={situationQua}
@@ -350,11 +432,12 @@ export default function StoreCreate({ detail }) {
             <DividedItemFormulary>
 
               <ItemFormulary>
-                <TextBox type="text" id="email" value="Quinta" />
+                <TextBox type="text" value="Quinta" />
               </ItemFormulary>
 
               <ItemFormulary>
                 <Select
+                  className={classes.formControl}
                   labelId="demo-mutiple-option-label"
                   id="demo-mutiple-option"
                   value={situationQui}
@@ -383,11 +466,12 @@ export default function StoreCreate({ detail }) {
             <DividedItemFormulary>
 
               <ItemFormulary>
-                <TextBox type="text" id="email" value="Sexta" />
+                <TextBox type="text" value="Sexta" />
               </ItemFormulary>
 
               <ItemFormulary>
                 <Select
+                  className={classes.formControl}
                   labelId="demo-mutiple-option-label"
                   id="demo-mutiple-option"
                   value={situationSex}
@@ -416,11 +500,12 @@ export default function StoreCreate({ detail }) {
             <DividedItemFormulary>
 
               <ItemFormulary>
-                <TextBox type="text" id="email" value="Sábado" />
+                <TextBox type="text" value="Sábado" />
               </ItemFormulary>
 
               <ItemFormulary>
                 <Select
+                  className={classes.formControl}
                   labelId="demo-mutiple-option-label"
                   id="demo-mutiple-option"
                   value={situationSab}
@@ -449,11 +534,12 @@ export default function StoreCreate({ detail }) {
             <DividedItemFormulary>
 
               <ItemFormulary>
-                <TextBox type="text" id="email" value="Domingo" />
+                <TextBox type="text" value="Domingo" />
               </ItemFormulary>
 
               <ItemFormulary>
                 <Select
+                  className={classes.formControl}
                   labelId="demo-mutiple-option-label"
                   id="demo-mutiple-option"
                   value={situationDom}
@@ -484,17 +570,11 @@ export default function StoreCreate({ detail }) {
             </ItemFormulary>
 
             <BottomFormulary>
-              <Link href="/Seller/Perfil/Products">
-                <Submit value="submit" onClick={handleSubmit}>Finalizar</Submit>
-              </Link>
+              <Submit value="submit" onClick={handleSubmit}>Finalizar</Submit>
             </BottomFormulary>
           </StoreFormulary>
         </StoreBody>
       </StoreBodyWrapper>
     </>
   );
-}
-export async function getServerSideProps({ query }) {
-  const { detail } = query;
-  return { props: { detail } };
 }
