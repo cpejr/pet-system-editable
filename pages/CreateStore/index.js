@@ -83,6 +83,30 @@ export default function Store() {
       toast('Insira um tempo de entrega!', { position: toast.POSITION.BOTTOM_RIGHT });
       return;
     }
+    if (street?.length < 1) {
+      toast('Rua inválida', { position: toast.POSITION.BOTTOM_RIGHT });
+      return;
+    }
+    if (addressNum?.length < 1) {
+      toast('Número inválido', { position: toast.POSITION.BOTTOM_RIGHT });
+      return;
+    }
+    if (district?.length < 1) {
+      toast('Bairro inválido', { position: toast.POSITION.BOTTOM_RIGHT });
+      return;
+    }
+    if (zipcode?.length !== 8) {
+      toast('CEP inválido', { position: toast.POSITION.BOTTOM_RIGHT });
+      return;
+    }
+    if (city?.length < 1) {
+      toast('Cidade inválida', { position: toast.POSITION.BOTTOM_RIGHT });
+      return;
+    }
+    if (state?.length < 1) {
+      toast('Estado inválido', { position: toast.POSITION.BOTTOM_RIGHT });
+      return;
+    }
     const newActiveStep = activeStep + 1;
     setActiveStep(newActiveStep);
     setCompletedTwo(true);
@@ -114,6 +138,13 @@ export default function Store() {
   const [confPassword, setConfPassword] = useState('');
   const [shippingTax, setShippingTax] = useState('');
   const [deliveryTime, setDeliveryTime] = useState('');
+  const [street, setStreet] = useState('');
+  const [addressNum, setAddressNum] = useState('');
+  const [complement, setComplement] = useState('');
+  const [district, setDistrict] = useState('');
+  const [zipcode, setZipcode] = useState('');
+  const [city, setCity] = useState('');
+  const [state, setState] = useState('');
   const [cover_img, setCover_img] = useState({ file: null, url: null });
   const [logo_img, setLogo_img] = useState({ file: null, url: null });
 
@@ -157,6 +188,27 @@ export default function Store() {
       url: URL.createObjectURL(event.target.files[0]),
     });
   }
+  function handleStreetChange(event) {
+    setStreet(event.target.value);
+  }
+  function handleAddressNumChange(event) {
+    setAddressNum(event.target.value);
+  }
+  function handleComplementChange(event) {
+    setComplement(event.target.value);
+  }
+  function handleDistrictChange(event) {
+    setDistrict(event.target.value);
+  }
+  function handleZipcodeChange(event) {
+    setZipcode(event.target.value);
+  }
+  function handleCityChange(event) {
+    setCity(event.target.value);
+  }
+  function handleStateChange(event) {
+    setState(event.target.value);
+  }
   const inform = [
     companyName,
     email,
@@ -168,6 +220,15 @@ export default function Store() {
     logo_img.file,
     shippingTax,
     deliveryTime,
+  ];
+  const address = [
+    street,
+    addressNum,
+    complement,
+    district,
+    zipcode,
+    city,
+    state,
   ];
 
   return (
@@ -281,15 +342,60 @@ export default function Store() {
                           {' '}
                         </SubtitleStore>
                       </TopFormulary>
+                      {/* Rua: */}
                       <ItemFormulary>
-                        <Text>Taxa de envio: *</Text>
-                        <CurrencyInput name="shippingTax" decimalSeparator="," decimalScale="2" allowNegative={false} prefix="R$" value={shippingTax} onChange={handleShippingTaxChange} />
+                        <Text>Rua: *</Text>
+                        <TextBox type="text" id="street" onChange={handleStreetChange} value={street} />
                       </ItemFormulary>
 
-                      <ItemFormulary>
-                        <Text>Tempo de entrega em minutos: *</Text>
-                        <MaskedInput name="delivery_time" id="delivery_time" value={deliveryTime} onChange={handleDeliveryTimeChange} />
-                      </ItemFormulary>
+                      {/* Número: Complemento: */}
+                      <DividedItemFormulary>
+                        <ItemFormulary>
+                          <Text>Número: *</Text>
+                          <MaskedInput name="addressNum" id="addressNum" value={addressNum} onChange={handleAddressNumChange} />
+                        </ItemFormulary>
+
+                        <ItemFormulary>
+                          <Text>Complemento:</Text>
+                          <TextBox type="text" id="complement" value={complement} onChange={handleComplementChange} />
+                        </ItemFormulary>
+                      </DividedItemFormulary>
+                      {/* Bairro: CEP: */}
+                      <DividedItemFormulary>
+                        <ItemFormulary>
+                          <Text>Bairro: *</Text>
+                          <TextBox type="text" id="district" value={district} onChange={handleDistrictChange} />
+                        </ItemFormulary>
+
+                        <ItemFormulary>
+                          <Text>CEP: *</Text>
+                          <MaskedInput name="cep" id="cep" mask="99999-999" value={zipcode} onChange={handleZipcodeChange} />
+                        </ItemFormulary>
+                      </DividedItemFormulary>
+                      {/* Cidade: Estado: */}
+                      <DividedItemFormulary>
+                        <ItemFormulary>
+                          <Text>Cidade: *</Text>
+                          <TextBox type="text" id="city" value={city} onChange={handleCityChange} />
+                        </ItemFormulary>
+
+                        <ItemFormulary>
+                          <Text>Estado: *</Text>
+                          <TextBox type="text" id="state" value={state} onChange={handleStateChange} />
+                        </ItemFormulary>
+                      </DividedItemFormulary>
+
+                      <DividedItemFormulary>
+                        <ItemFormulary>
+                          <Text>Taxa de envio: *</Text>
+                          <CurrencyInput name="shippingTax" decimalSeparator="," decimalScale="2" allowNegative={false} prefix="R$" value={shippingTax} onChange={handleShippingTaxChange} />
+                        </ItemFormulary>
+
+                        <ItemFormulary>
+                          <Text>Tempo de entrega em minutos: *</Text>
+                          <MaskedInput name="delivery_time" id="delivery_time" value={deliveryTime} onChange={handleDeliveryTimeChange} />
+                        </ItemFormulary>
+                      </DividedItemFormulary>
 
                       <ItemFormulary>
                         <SubText>*Os campos com asterisco são obrigatórios</SubText>
@@ -313,7 +419,7 @@ export default function Store() {
               )}
               {activeStep === 2 && (
                 <>
-                  <WorkingDays form={inform} />
+                  <WorkingDays form={inform} add={address} />
                   <BottomFormulary>
                     <Submit value="submit" onClick={handleBack} sx={{ mr: 1 }}>Voltar</Submit>
                   </BottomFormulary>

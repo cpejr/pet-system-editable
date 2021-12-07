@@ -50,6 +50,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function StoreCreate(props) {
   const dados = { props };
+  console.log('🚀 ~ file: index.js ~ line 53 ~ StoreCreate ~ dados', dados);
   const router = useRouter();
   const classes = useStyles();
   const [openingTimeSeg, setOpeningTimeSeg] = useState('');
@@ -281,11 +282,22 @@ export default function StoreCreate(props) {
     formData.append('working_days', situation);
 
     try {
-      await api.post('api/store', formData, {
+      const response = await api.post('api/store', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
+      const address = [
+        response.data.id,
+        dados.props.add[0],
+        dados.props.add[1],
+        dados.props.add[2],
+        dados.props.add[3],
+        dados.props.add[4],
+        dados.props.add[5],
+        dados.props.add[6],
+      ];
+      await api.post('api/address', address);
       toast('Sucesso!', { position: toast.POSITION.BOTTOM_RIGHT });
       router.push('/login');
     } catch (error) {
