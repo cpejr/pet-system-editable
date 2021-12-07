@@ -133,6 +133,13 @@ export default function Store() {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [cellphone, setCellphone] = useState('');
+  const [street, setStreet] = useState('');
+  const [addressNum, setAddressNum] = useState('');
+  const [complement, setComplement] = useState('');
+  const [district, setDistrict] = useState('');
+  const [zipcode, setZipcode] = useState('');
+  const [city, setCity] = useState('');
+  const [state, setState] = useState('');
   const [cnpj, setCnpj] = useState('');
   const [password, setPassword] = useState('');
   const [confPassword, setConfPassword] = useState('');
@@ -160,6 +167,27 @@ export default function Store() {
   function handleCellphoneChange(event) {
     setCellphone(event.target.value);
   }
+  function handleStreetChange(event) {
+    setStreet(event.target.value);
+  }
+  function handleAddressNumChange(event) {
+    setAddressNum(event.target.value);
+  }
+  function handleComplementChange(event) {
+    setComplement(event.target.value);
+  }
+  function handleDistrictChange(event) {
+    setDistrict(event.target.value);
+  }
+  function handleZipcodeChange(event) {
+    setZipcode(event.target.value);
+  }
+  function handleCityChange(event) {
+    setCity(event.target.value);
+  }
+  function handleStateChange(event) {
+    setState(event.target.value);
+  }
   function handleCnpjChange(event) {
     setCnpj(event.target.value);
   }
@@ -172,7 +200,6 @@ export default function Store() {
   function handleShippingTaxChange(event) {
     setShippingTax(event.target.value);
   }
-
   function handleDeliveryTimeChange(event) {
     setDeliveryTime(event.target.value);
   }

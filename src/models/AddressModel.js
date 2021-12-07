@@ -17,10 +17,10 @@ module.exports = {
 
   async getStoreAddressById(id) {
     try {
-      const { address_id } = await db('Store_Address')
-      .where('firebase_id_store', id)
-      .select('*')
-      .first();
+      const { address_id } = await connection('Store_Address')
+        .where('firebase_id_store', id)
+        .select('*')
+        .first();
 
       const address = await db('Address')
         .where('address_id', address_id)
@@ -56,27 +56,26 @@ module.exports = {
 
   async getAddressesByFirebaseId(id, user) {
     try {
-
-      if (user) {      
-        const address = await db('User_Address')
-        .where({ firebase_id: id })
-        .select().innerJoin(
-          'Address',
-          'User_Address.address_id',
-          'Address.address_id',
-        );
+      if (user) {
+        const address = await connection('User_Address')
+          .where({ firebase_id: id })
+          .select().innerJoin(
+            'Address',
+            'User_Address.address_id',
+            'Address.address_id',
+          );
 
         return address;
       }
 
-      if(!user){
-        const address = await db('Store_Address')
-        .where({ firebase_id_store: id })
-        .select().innerJoin(
-          'Address',
-          'Store_Address.address_id',
-          'Address.address_id',
-        );
+      if (!user) {
+        const address = await connection('Store_Address')
+          .where({ firebase_id_store: id })
+          .select().innerJoin(
+            'Address',
+            'Store_Address.address_id',
+            'Address.address_id',
+          );
 
         return address;
       }
@@ -104,55 +103,58 @@ module.exports = {
           'Address.address_id',
         );
 
-        
-
-      return {user_addresses,store_addresses};
+      return { user_addresses, store_addresses };
     } catch (error) {
       console.error(error);
       throw new Error(error);
     }
   },
 
-  async createNewAddress(address, req) {
+  async createNewAddress(data, req) {
+    const address = {
+      street: data.street,
+      address_num: data.address_num,
+      complement: data.complement,
+      district: data.district,
+      zipcode: data.zipcode,
+      city: data.city,
+      state: data.state,
+      address_id: data.address_id,
+    };
     try {
       const address_aux = await db('Address')
         .insert(address);
+      try {
+        const firebase_user = await req.session.get('user').user.firebase_id;
 
-      const user = await req.session.get("user");
-      
-      if (user) {
-        const firebase_user = await req.session.get("user").user.firebase_id;
+        const change_main_address = await connection('User_Address')
+          .where({ firebase_id: firebase_user })
+          .select('*');
 
-        const change_main_address = await db('User_Address')
-        .where({ firebase_id: firebase_user })
-        .select('*');
-        
-        //Tipo um forEach. Troca todos os main_address para false e atualiza no banco de dados.
+        // Tipo um forEach. Troca todos os main_address para false e atualiza no banco de dados.
         for (const address of change_main_address) {
           address.main_address = false;
-          await db('User_Address')
-          .where({ address_id: address.address_id })
-          .update(address);
+          await connection('User_Address')
+            .where({ address_id: address.address_id })
+            .update(address);
         }
-        
+
         const user_address = {
           firebase_id: firebase_user,
           address_id: address.address_id,
           main_address: true
         }
-        
-        await db('User_Address')
-        .insert(user_address);
-      }
 
-      if(!user){
-        const firebase_id_store = await req.session.get("store").store.firebase_id_store;
+        await connection('User_Address')
+          .insert(user_address);
+      } catch {
+        const firebase_id_store = data.id;
         const store_address = {
-          firebase_id_store: firebase_id_store,
-          address_id: address.address_id
+          firebase_id_store,
+          address_id: address.address_id,
         }
-        await db('Store_Address')
-        .insert(store_address);
+        await connection('Store_Address')
+          .insert(store_address);
       }
 
       return address_aux;
@@ -162,19 +164,19 @@ module.exports = {
     }
   },
 
-  async removeAddress(id,user) {
+  async removeAddress(id, user) {
     try {
 
-      if (user) {      
-        await db('User_Address')
-        .where({ address_id: id })
-        .delete();
+      if (user) {
+        await connection('User_Address')
+          .where({ address_id: id })
+          .delete();
       }
 
-      if(!user){
-        await db('Store_Address')
-        .where({ address_id: id })
-        .delete();
+      if (!user) {
+        await connection('Store_Address')
+          .where({ address_id: id })
+          .delete();
       }
 
       const response = await db('Address')

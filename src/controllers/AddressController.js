@@ -61,7 +61,7 @@ module.exports = {
   async create(request, response) {
     const address = request.body;
     address.address_id = uuidv4();
-
+    console.log(address);
     try {
 
       await AddressModel.createNewAddress(address, request);
