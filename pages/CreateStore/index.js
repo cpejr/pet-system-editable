@@ -145,13 +145,6 @@ export default function Store() {
   const [confPassword, setConfPassword] = useState('');
   const [shippingTax, setShippingTax] = useState('');
   const [deliveryTime, setDeliveryTime] = useState('');
-  const [street, setStreet] = useState('');
-  const [addressNum, setAddressNum] = useState('');
-  const [complement, setComplement] = useState('');
-  const [district, setDistrict] = useState('');
-  const [zipcode, setZipcode] = useState('');
-  const [city, setCity] = useState('');
-  const [state, setState] = useState('');
   const [cover_img, setCover_img] = useState({ file: null, url: null });
   const [logo_img, setLogo_img] = useState({ file: null, url: null });
 
@@ -215,27 +208,6 @@ export default function Store() {
       url: URL.createObjectURL(event.target.files[0]),
     });
   }
-  function handleStreetChange(event) {
-    setStreet(event.target.value);
-  }
-  function handleAddressNumChange(event) {
-    setAddressNum(event.target.value);
-  }
-  function handleComplementChange(event) {
-    setComplement(event.target.value);
-  }
-  function handleDistrictChange(event) {
-    setDistrict(event.target.value);
-  }
-  function handleZipcodeChange(event) {
-    setZipcode(event.target.value);
-  }
-  function handleCityChange(event) {
-    setCity(event.target.value);
-  }
-  function handleStateChange(event) {
-    setState(event.target.value);
-  }
   const inform = [
     companyName,
     email,
@@ -249,13 +221,13 @@ export default function Store() {
     deliveryTime,
   ];
   const address = [
+    zipcode,
+    state,
+    city,
     street,
+    district,
     addressNum,
     complement,
-    district,
-    zipcode,
-    city,
-    state,
   ];
 
   return (

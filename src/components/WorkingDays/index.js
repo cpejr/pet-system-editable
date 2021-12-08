@@ -238,6 +238,7 @@ export default function StoreCreate(props) {
       },
     },
   };
+
   async function handleSubmit(event) {
     event.preventDefault();
     if (situationSeg === '' || situationTer === '' || situationQua === ''
@@ -265,6 +266,7 @@ export default function StoreCreate(props) {
     }
     const formatShippingTax = parseFloat(dados.props.form[8].replace(',', '.').split('R$')[1]);
     const formData = new FormData();
+    const formAddress = new FormData();
 
     formData.append('company_name', dados.props.form[0]);
     formData.append('email', dados.props.form[1]);
@@ -287,17 +289,18 @@ export default function StoreCreate(props) {
           'Content-Type': 'multipart/form-data',
         },
       });
-      const address = [
-        response.data.id,
-        dados.props.add[0],
-        dados.props.add[1],
-        dados.props.add[2],
-        dados.props.add[3],
-        dados.props.add[4],
-        dados.props.add[5],
-        dados.props.add[6],
-      ];
-      await api.post('api/address', address);
+
+      formAddress.append('address_id', response.data.id);
+      formAddress.append('zipcode', dados.props.add[0]);
+      formAddress.append('state', dados.props.add[1]);
+      formAddress.append('city', dados.props.add[2]);
+      formAddress.append('street', dados.props.add[3]);
+      formAddress.append('district', dados.props.add[4]);
+      formAddress.append('address_num', dados.props.add[5]);
+      formAddress.append('complement', dados.props.add[6]);
+
+      await api.post('api/address', formAddress);
+
       toast('Sucesso!', { position: toast.POSITION.BOTTOM_RIGHT });
       router.push('/login');
     } catch (error) {
