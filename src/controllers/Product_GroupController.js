@@ -4,7 +4,6 @@ module.exports = {
 
   async create(req, res) {
     const product_group = req.body;
-    console.log(product_group);
     try {
       const result = await Product_GroupModel.createProduct_Group(product_group);
       return res.status(200).json({ notification: 'Product Successfully added to group' });
@@ -24,7 +23,6 @@ module.exports = {
           product_id: productId,
           group_id: group.group_id,
         };
-        console.log('🚀 ~ file: Product_GroupController.js ~ line 27 ~ currentGroups.forEach ~ product_group', product_group);
         Product_GroupModel.createProduct_Group(product_group);
       });
       return res.status(200).json({ notification: 'Product Successfully added to group' });
@@ -80,6 +78,19 @@ module.exports = {
     try {
       const groups = await Product_GroupModel.getGroupsByProductId(product_id);
       return res.status(200).json(groups);
+    } catch (error) {
+      if (error.message) {
+        return res.status(400).json({ notification: error.message });
+      }
+      return res.status(500).json({ notification: 'Internal Server Error' });
+    }
+  },
+  async getProductsById(req, res) {
+    const group_id = req.query.id;
+    try {
+      const products = await Product_GroupModel.getProductsByGroup_Id(group_id);
+      console.log('🚀 ~ file: Product_GroupController.js ~ line 96 ~ getProductsById ~ products', products);
+      return res.status(200).json(products);
     } catch (error) {
       if (error.message) {
         return res.status(400).json({ notification: error.message });

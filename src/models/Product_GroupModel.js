@@ -31,6 +31,18 @@ module.exports = {
       const result = await db('Product_Group')
         .where('product_id', product_id)
         .column('group_id')
+        .select('*');
+      return result;
+    } catch (error) {
+      console.error(error);
+      throw new Error(error);
+    }
+  },
+  async getProductsByGroup_Id(group_id) {
+    try {
+      const result = await db('Product_Group')
+        .where('group_id', group_id)
+        .column('product_id')
         .select();
       return result;
     } catch (error) {
@@ -38,7 +50,6 @@ module.exports = {
       throw new Error(error);
     }
   },
-
   async getAllProduct_Group() {
     try {
       const result = await db('Product_Group')

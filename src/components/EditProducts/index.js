@@ -38,9 +38,6 @@ export default function EditProducts({
     api.get('group').then((res) => {
       setGroups(res.data);
     });
-    api.get('group').then((res) => {
-      setGroups(res.data);
-    });
     api.get(`/product_group/${product.product_id}`).then((res) => {
       setCurrentGroups(res.data);
     });
@@ -80,6 +77,7 @@ export default function EditProducts({
     }
   }
   function isChecked(group_id) {
+    console.log('🚀 ~ file: index.js ~ line 86 ~ isChecked ~ currentGroups', currentGroups);
     let auxiliar = 0;
     for (let i = 0; i < currentGroups.length; i++) {
       if (currentGroups[i].group_id === group_id) {
