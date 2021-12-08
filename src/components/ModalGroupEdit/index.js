@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
 export default function ModalGroup({ group, setAtt, att }) {
   const [groupName, setGroupName] = useState(group.name);
   const [products, setProducts] = useState([]);
-  const [currentProducts, setCurrentProducts] = useState();
+  const [currentProducts, setCurrentProducts] = useState([]);
 
   const { store } = useAuth();
 
@@ -72,6 +72,7 @@ export default function ModalGroup({ group, setAtt, att }) {
 
     try {
       await api.put(`/api/group/${group.group_id}`, body);
+      await api.put('/api/productsOfGroup', { currentProducts, groupId: group.group_id });
       setAtt(!att);
       notification.open({
         message: 'Sucesso!',

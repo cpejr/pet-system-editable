@@ -67,17 +67,7 @@ export default function EditProducts({
   function handleDescriptionChange(event) {
     setDescription(event.target.value);
   }
-  function handleSelect(group_id, aux, e) {
-    if (e.target.checked) {
-      aux.push(group_id);
-      setSelected(aux);
-    } else {
-      aux = aux.filter(((item) => (item !== group_id)));
-      setSelected(aux);
-    }
-  }
   function isChecked(group_id) {
-    console.log('🚀 ~ file: index.js ~ line 86 ~ isChecked ~ currentGroups', currentGroups);
     let auxiliar = 0;
     for (let i = 0; i < currentGroups.length; i++) {
       if (currentGroups[i].group_id === group_id) {
