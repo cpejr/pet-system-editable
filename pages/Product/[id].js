@@ -156,7 +156,7 @@ export default function Product({ product, store }) {
               <CarrinhoCardText>{quantity}</CarrinhoCardText>
               <FaRegPlusSquare size="2x" onClick={() => handlePlus()} />
             </CarrinhoCardInfoQuantity>
-            {(StoreIsOpen(openingTime[today], closingTime[today]) && situation === 'Aberto') ? (
+            {(StoreIsOpen(openingTime[today], closingTime[today])) ? (
               <ButtonsContainer>
                 <ButtonsContainer.Col>
                   <Button>
