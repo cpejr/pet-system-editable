@@ -1,9 +1,10 @@
-const connection = require('../database/connection');
+// const connection = require('../database/connection');
+const { db } = require('../database/connection');
 
 module.exports = {
   async getGroupById(id) {
     try {
-      const group = await connection('Group')
+      const group = await db('Group')
         .where('group_id', id)
         .select('*')
         .first();
@@ -15,7 +16,7 @@ module.exports = {
 
   async createGroup(group) {
     try {
-      const newGroup = await connection('Group').insert(group);
+      const newGroup = await db('Group').insert(group);
       return newGroup;
     } catch (error) {
       console.error(error);
@@ -24,13 +25,13 @@ module.exports = {
   },
 
   async deleteGroup(id) {
-    const del = await connection('Group').where('group_id', id).delete();
+    const del = await db('Group').where('group_id', id).delete();
     return del;
   },
 
   async updateGroup(group, id) {
     try {
-      const response = await connection('Group')
+      const response = await db('Group')
         .where('group_id', id)
         .update(group);
       return response;
@@ -42,12 +43,12 @@ module.exports = {
 
   async getAllGroupsFromStore(id) {
     try {
-      const groups = await connection('Group')
+      const groups = await db('Group')
         .where('firebase_id_store', id)
         .select('*');
 
       for (const group of groups) {
-        const product_groups = await connection('Product_Group')
+        const product_groups = await db('Product_Group')
           .where('group_id', group.group_id)
           .select('*')
           .innerJoin(
@@ -67,7 +68,7 @@ module.exports = {
 
   async getAllGroups() {
     try {
-      const groups = await connection('Group').select('*');
+      const groups = await db('Group').select('*');
       return groups;
     } catch (error) {
       console.error(error);
@@ -77,12 +78,12 @@ module.exports = {
 
   async getAllGroupsFromSession(id) {
     try {
-      const groups = await connection('Group')
+      const groups = await db('Group')
         .where('firebase_id_store', id)
         .select('*');
 
       for (const group of groups) {
-        const product_groups = await connection('Product_Group')
+        const product_groups = await db('Product_Group')
           .where('group_id', group.group_id)
           .select('*')
           .innerJoin(

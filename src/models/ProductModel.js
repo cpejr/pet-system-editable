@@ -1,9 +1,10 @@
-const connection = require('../database/connection');
+// const connection = require('../database/connection');
+const { db } = require('../database/connection');
 
 module.exports = {
   async getProductById(id) {
     try {
-      const product = await connection('Product')
+      const product = await db('Product')
         .where('product_id', id)
         .select('*')
         .first();
@@ -15,7 +16,7 @@ module.exports = {
   },
   async createNewProduct(product) {
     try {
-      const product_aux = await connection('Product').insert(product);
+      const product_aux = await db('Product').insert(product);
       return product_aux;
     } catch (error) {
       console.error(error);
@@ -25,7 +26,7 @@ module.exports = {
 
   async removeProduct(id) {
     try {
-      const response = await connection('Product')
+      const response = await db('Product')
         .where({ product_id: id })
         .delete();
       return response;
@@ -37,7 +38,7 @@ module.exports = {
 
   async updateProduct(product, id) {
     try {
-      const response = await connection('Product')
+      const response = await db('Product')
         .where({ product_id: id })
         .update(product);
       return response;
@@ -48,7 +49,7 @@ module.exports = {
   },
   async getAllByStore(firebase_id_store) {
     try {
-      const products = await connection('Product')
+      const products = await db('Product')
         .where('firebase_id_store', firebase_id_store)
         .select('*');
 
@@ -71,7 +72,7 @@ module.exports = {
       }
 
       if (category_id !== undefined) {
-        const products = await connection('Product')
+        const products = await db('Product')
           .select('*')
           .where('category_id', category_id)
           .where('price', '>=', minPrice)
@@ -82,7 +83,7 @@ module.exports = {
       }
 
       if (valor) {
-        const products = await connection('Product')
+        const products = await db('Product')
           .select('*')
           .where('price', '>=', minPrice)
           .where('price', '<=', maxPrice)
@@ -91,7 +92,7 @@ module.exports = {
         return products;
       }
 
-      const products = await connection('Product').select('*');
+      const products = await db('Product').select('*');
 
       return products;
     } catch (error) {
