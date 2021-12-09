@@ -17,7 +17,7 @@ module.exports = {
 
   async getStoreAddressById(id) {
     try {
-      const { address_id } = await connection('Store_Address')
+      const { address_id } = await db('Store_Address')
         .where('firebase_id_store', id)
         .select('*')
         .first();
@@ -57,7 +57,7 @@ module.exports = {
   async getAddressesByFirebaseId(id, user) {
     try {
       if (user) {
-        const address = await connection('User_Address')
+        const address = await db('User_Address')
           .where({ firebase_id: id })
           .select().innerJoin(
             'Address',
@@ -69,7 +69,7 @@ module.exports = {
       }
 
       if (!user) {
-        const address = await connection('Store_Address')
+        const address = await db('Store_Address')
           .where({ firebase_id_store: id })
           .select().innerJoin(
             'Address',
@@ -127,14 +127,14 @@ module.exports = {
       try {
         const firebase_user = await req.session.get('user').user.firebase_id;
 
-        const change_main_address = await connection('User_Address')
+        const change_main_address = await db('User_Address')
           .where({ firebase_id: firebase_user })
           .select('*');
 
         // Tipo um forEach. Troca todos os main_address para false e atualiza no banco de dados.
         for (const address of change_main_address) {
           address.main_address = false;
-          await connection('User_Address')
+          await db('User_Address')
             .where({ address_id: address.address_id })
             .update(address);
         }
@@ -145,7 +145,7 @@ module.exports = {
           main_address: true
         }
 
-        await connection('User_Address')
+        await db('User_Address')
           .insert(user_address);
       } catch {
         const firebase_id_store = data.id;
@@ -153,7 +153,7 @@ module.exports = {
           firebase_id_store,
           address_id: address.address_id,
         }
-        await connection('Store_Address')
+        await db('Store_Address')
           .insert(store_address);
       }
 
@@ -168,13 +168,13 @@ module.exports = {
     try {
 
       if (user) {
-        await connection('User_Address')
+        await db('User_Address')
           .where({ address_id: id })
           .delete();
       }
 
       if (!user) {
-        await connection('Store_Address')
+        await db('Store_Address')
           .where({ address_id: id })
           .delete();
       }

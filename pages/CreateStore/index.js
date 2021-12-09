@@ -25,7 +25,7 @@ const api = axios.create({ baseURL: 'http://localhost:3000/' });
 toast.configure();
 
 export default function Store() {
-  const steps = ['Dados da loja', 'Entrega', 'Horário de funcionamento'];
+  const steps = ['Dados da loja', 'Endereço e Entrega', 'Horário de funcionamento'];
   const [activeStep, setActiveStep] = React.useState(0);
   const [completedOne, setCompletedOne] = React.useState(false);
   const [completedTwo, setCompletedTwo] = React.useState(false);
@@ -334,10 +334,10 @@ export default function Store() {
                   <StoreBody>
                     <StoreFormulary>
                       <TopFormulary>
-                        <TitleStore>Entrega</TitleStore>
+                        <TitleStore>Endereço e Entrega</TitleStore>
                         <SubtitleStore>
-                          Por favor, preencha as informações referentes
-                          à entrega da loja:
+                          Por favor, preencha as informações referentes ao
+                          endereço e à entrega da loja:
                           {' '}
                         </SubtitleStore>
                       </TopFormulary>

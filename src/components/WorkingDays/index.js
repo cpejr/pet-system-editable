@@ -22,7 +22,7 @@ toast.configure();
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
-    margin: theme.spacing(1),
+    margin: theme.spacing(0),
     minWidth: 120,
     maxWidth: 300,
     width: '90%',
@@ -50,7 +50,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function StoreCreate(props) {
   const dados = { props };
-  console.log('🚀 ~ file: index.js ~ line 53 ~ StoreCreate ~ dados', dados);
   const router = useRouter();
   const classes = useStyles();
   const [openingTimeSeg, setOpeningTimeSeg] = useState('');
@@ -266,7 +265,6 @@ export default function StoreCreate(props) {
     }
     const formatShippingTax = parseFloat(dados.props.form[8].replace(',', '.').split('R$')[1]);
     const formData = new FormData();
-    const formAddress = new FormData();
 
     formData.append('company_name', dados.props.form[0]);
     formData.append('email', dados.props.form[1]);
@@ -290,16 +288,24 @@ export default function StoreCreate(props) {
         },
       });
 
-      formAddress.append('address_id', response.data.id);
-      formAddress.append('zipcode', dados.props.add[0]);
-      formAddress.append('state', dados.props.add[1]);
-      formAddress.append('city', dados.props.add[2]);
-      formAddress.append('street', dados.props.add[3]);
-      formAddress.append('district', dados.props.add[4]);
-      formAddress.append('address_num', dados.props.add[5]);
-      formAddress.append('complement', dados.props.add[6]);
+      const body = {
+        id: response.data.id,
+        zipcode: dados.props.add[0],
+        state: dados.props.add[1],
+        city: dados.props.add[2],
+        street: dados.props.add[3],
+        district: dados.props.add[4],
+        address_num: dados.props.add[5],
+        complement: dados.props.add[6],
+      };
 
-      await api.post('api/address', formAddress);
+      try {
+        await api.post('api/address', body);
+      } catch {
+        await api.delete(`api/store/${response.data.id}`);
+        toast('Erro ao inserir endereço.', { position: toast.POSITION.BOTTOM_RIGHT });
+        return;
+      }
 
       toast('Sucesso!', { position: toast.POSITION.BOTTOM_RIGHT });
       router.push('/login');
@@ -307,7 +313,6 @@ export default function StoreCreate(props) {
       toast('Erro ao cadastrar usuário.', { position: toast.POSITION.BOTTOM_RIGHT });
     }
   }
-
   return (
     <>
       <StoreBodyWrapper>
