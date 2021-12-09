@@ -50,7 +50,7 @@ export default function SearchCardsStore({ store }) {
       }
     }
   }, [day]);
-  if (StoreIsOpen(store.opening_time, store.closing_time) && situation[today] === 'Aberto') {
+  if (StoreIsOpen(openingTime[today], closingTime[today]) && situation[today] === 'Aberto') {
     return (
       <Link href={`/Store/${store.firebase_id_store}`}>
         <Wrapper>
