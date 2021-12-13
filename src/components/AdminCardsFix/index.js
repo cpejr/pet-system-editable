@@ -74,13 +74,13 @@ export default function Cards() {
               <Card.Title>Notificações</Card.Title>
             </Card>
           </Link>
-          <Link href="http://localhost:3000/Admin">
+          <Link href="http://localhost:3000/Admin/">
             <Card>
               <CgShoppingCart size={50} style={{ color: '#609694' }} />
               <Card.Title>Vendas</Card.Title>
             </Card>
           </Link>
-          <Link href="http://localhost:3000/Admin">
+          <Link href="http://localhost:3000/Admin/SolicitacaoLojas">
             <Card>
               <FiUserPlus size={50} style={{ color: '#609694' }} />
               <Card.Title>Solicitação de Lojas</Card.Title>
