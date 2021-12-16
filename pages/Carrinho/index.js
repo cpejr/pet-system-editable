@@ -6,9 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import {
   CarrinhoBody, CarrinhoFinalButton, CarrinhoIcon, CarrinhoText,
   CarrinhoTitle, CarrinhoTotal, CarrinhoValor, CarrinhoValorText,
-  // CarrinhoValorTitle,
 } from '../../src/components/CarrinhoComponents';
-// import CarrinhoFrete from '../../src/components/CarrinhoComponents/CarrinhoFrete';
 import CarrinhoCard from '../../src/components/CarrinhoComponents/CarrinhoCard';
 import { useAuth } from '../../src/contexts/AuthContext';
 import { ContainerDatas, BoxDatas } from '../../src/components/MyAdresses/styles';

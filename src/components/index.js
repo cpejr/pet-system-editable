@@ -24,3 +24,4 @@ export { default as PerfilStoreMenu } from './PerfilStoreMenu';
 export { default as MyStoreDataEdit } from './MyStoreDataEdit';
 export { default as SearchCardsClosed } from './SearchCardsClosed';
 export { default as SearchCardsStoreClosed } from './SearchCardsStoreClosed';
+export { default as WindowDivider } from './WindowDivider';
