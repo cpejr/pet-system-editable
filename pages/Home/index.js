@@ -62,7 +62,6 @@ export default function Home({ stores }) {
         <Text>Bichinhos mais procurados</Text>
         <AnimalsCarousel />
       </Container>
-
     </>
   );
 }
