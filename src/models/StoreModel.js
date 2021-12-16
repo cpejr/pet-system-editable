@@ -49,10 +49,16 @@ module.exports = {
       throw new Error(error);
     }
   },
-  async getAllStore() {
+  async getAllStore(filter) {
     try {
       const stores = await connection('Store')
-        .select('*');
+        .select('*')
+        .where((builder) => {
+          if (filter) {
+            // eslint-disable-next-line quotes
+            builder.whereRaw(`EXTRACT(MONTH FROM created_at::date) = ? AND EXTRACT(YEAR FROM created_at::date) = ?`, [filter.month, filter.year]);
+          }
+        });
       return stores;
     } catch (error) {
       console.error(error);
