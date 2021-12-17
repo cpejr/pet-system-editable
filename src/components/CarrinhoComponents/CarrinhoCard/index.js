@@ -13,10 +13,18 @@ import {
   CarrinhoCardInfoQuantity,
   CarrinhoCardIcon,
 } from './styles';
+import { useCart } from '../../CardContext/CardContext';
 
 export default function CarrinhoCard({
   product, subTotal, setSubTotal, setAtt, att,
 }) {
+  const cart = useCart();
+  // const remove = (id) => () => {
+  //   cart.removeFromCart(id);
+  // };
+  function remove(id) {
+    cart.removeFromCart(id);
+  }
   const [quantity, setQuantity] = useState(product.amount);
 
   const body = {
@@ -104,7 +112,9 @@ export default function CarrinhoCard({
         <IoTrashOutline
           onClick={() => {
             handleDelete(product.product_id);
+            remove(product.product_id);
           }}
+          // onClick={remove(product.product_id)}
         />
       </CarrinhoCardIcon>
     </CarrinhoCardWrapper>

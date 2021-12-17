@@ -1,24 +1,12 @@
 import { useEffect, useState } from 'react';
+import api from '../../src/utils/api';
+import { useAuth } from '../../src/contexts/AuthContext';
+import { Title, WindowDivider } from '../../src/components/index';
 import {
-  MainContainer,
-  Forms,
-  InputField,
-  InputName,
-  FieldSpace,
-  LeftContainer,
-  RightContainer,
-  Button,
-  Subtitle,
-  Qnt,
-  Product,
-  Price,
-  Data,
-  Subtotal,
+  MainContainer, Forms, InputField, InputName, FieldSpace, LeftContainer,
+  RightContainer, Button, Subtitle, Qnt, Product, Price, Data, Subtotal,
   Space,
 } from './styles';
-import { Title, WindowDivider } from '../../src/components/index';
-import { useAuth } from '../../src/contexts/AuthContext';
-import api from '../../src/utils/api';
 
 export default function Checkout() {
   const [name, setName] = useState();
