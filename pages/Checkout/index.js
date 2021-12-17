@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import Head from 'next/head';
 import api from '../../src/utils/api';
 import { useAuth } from '../../src/contexts/AuthContext';
 import { Title, WindowDivider } from '../../src/components/index';
@@ -52,6 +53,12 @@ export default function Checkout() {
 
   return (
     <MainContainer>
+      <Head>
+        <script
+          type="text/javascript"
+          src="https://stc.sandbox.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.directpayment.js"
+        />
+      </Head>
       <Title>Finalizar Compra</Title>
       <MainContainer.Data>
         <LeftContainer>
