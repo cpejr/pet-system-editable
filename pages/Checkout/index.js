@@ -16,9 +16,17 @@ export default function Checkout() {
   const [CVV, setCVV] = useState();
   const [products, setProducts] = useState([]);
   const [subTotal, setSubTotal] = useState(0);
+  const [session, setSession] = useState();
   const { user } = useAuth();
 
   useEffect(() => {
+    try {
+      api.post('/payCheckout/Session').then((response) => {
+        setSession(response.data);
+      });
+    } catch (error) {
+      console.error(error);
+    }
     let somaPrecos = 0;
     if (user) {
       api.get('/cart/firebase').then((res) => {
@@ -57,7 +65,9 @@ export default function Checkout() {
         <script
           type="text/javascript"
           src="https://stc.sandbox.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.directpayment.js"
-        />
+        >
+          Teste
+        </script>
       </Head>
       <Title>Finalizar Compra</Title>
       <MainContainer.Data>

@@ -354,4 +354,16 @@ module.exports = {
     return res.status(200).json({ notification: 'Order deleted' });
   },
 
+  async createSession(req, res) {
+    try {
+      const url = 'https://ws.sandbox.pagseguro.uol.com.br/v2/sessions?email=vicepresidencia@cpejr.com.br&token=6B2B8617225E4CA8870633A697CA6DD6';
+      const response = await axios.post(url);
+      console.log('🚀 ~ file: OrderController.js ~ line 361 ~ createSession ~ response', response.data);
+      const { session } = await parseStringPromise(response.data);
+      return res.status(200).json(session.id[0]);
+    } catch (err) {
+      return res.status(err.response.status).json(err.response.data);
+    }
+  },
+
 };
