@@ -1,11 +1,10 @@
-// const connection = require('../database/connection');
-const { db } = require('../database/connection');
+const { connection } = require('../database/connection');
 
 module.exports = {
 
   async getAll() {
     try {
-      const response = await db('Admin_share')
+      const response = await connection('Admin_share')
         .select('*').first();
       return response;
     } catch (error) {
@@ -15,7 +14,7 @@ module.exports = {
 
   async createShare(share) {
     try {
-      const share_aux = await db('Admin_share')
+      const share_aux = await connection('Admin_share')
         .insert(share);
       return share_aux;
     } catch (error) {
@@ -25,7 +24,7 @@ module.exports = {
   },
   async changeAdminShare(share_, commission) {
     try {
-      const response = await db('Admin_share')
+      const response = await connection('Admin_share')
         .where({ share: share_ })
         .update({ share: commission });
       return response;
@@ -36,7 +35,7 @@ module.exports = {
   },
   async deleteShare() {
     try {
-      const response = await db('Admin_share')
+      const response = await connection('Admin_share')
         .select('*')
         .first()
         .delete();
