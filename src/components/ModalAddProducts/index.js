@@ -16,7 +16,6 @@ const ButtonAdd = styled(Button)`
   background-color: ${({ theme }) => theme.colors.darkGreen};
   color: white;
   border: 0;
-  margin-left: 8%;
   border-radius: 5px;
   cursor: pointer;
   outline: none;

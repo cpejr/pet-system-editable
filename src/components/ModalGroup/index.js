@@ -14,6 +14,7 @@ justify-content:space-between;
 width:100%;
 height: 100%;
 flex-direction:column;
+margin-bottom: 300px;
 `;
 
 const Row = styled.div`

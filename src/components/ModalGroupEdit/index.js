@@ -1,133 +1,21 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import axios from 'axios';
 import { notification } from 'antd';
 import { BiEditAlt } from 'react-icons/bi';
+import { useAuth } from '../../contexts/AuthContext';
+import Title from '../Title';
+import {
+  ContainerModal, Row, Ajust, Ajust2, InputNameGroup, ButtonConfirm, EditGroup,
+  CategoryContainer, DivInput,
+} from './styles';
 
 const api = axios.create({ baseURL: 'http://localhost:3000/' });
-
-const ContainerModal = styled.div`
-display:flex;
-align-items:center;
-justify-content:space-between;
-width:100%;
-height: 100%;
-flex-direction:column;
-`;
-
-const Row = styled.div`
-display:flex;
-align-items:center;
-justify-content:center;
-width: 100%;
-`;
-
-const TitleModal = styled.div`
-display:flex;
-align-items:center;
-justify-content:center;
-width:100%;
-font-family:Roboto;
-font-weight: bold;
-font-size:24px;
-@media(max-width:860px){
-        width:100%;
-        font-size:18px;
-    } 
-`;
-
-const Ajust = styled.div`
-display:flex;
-align-items:center;
-justify-content:center;
-width:100%;
-margin-bottom:5%;
-@media(max-width:860px){
-        flex-direction:column;
-    } 
-`;
-
-Ajust.Col1 = styled.h3`
-display:flex;
-align-items:center;
-justify-content:center;
-width:30%;
-font-family:Roboto;
-@media(max-width:860px){
-        width:100%;
-        font-size:16px;
-    } 
-`;
-
-const InputNameGroup = styled.input`
-display:flex;
-align-items:center;
-justify-content:center;
-width:40%;
-font-family:Roboto;
-height:40px;
-border-radius:10px;
-border-color:${({ theme }) => theme.colors.borderBoxColor};
-@media(max-width:860px){
-        width:100%;
-        font-size:12px;
-    } 
-`;
-
-const ButtonConfirm = styled.button`
-    display:flex;
-    height: 55px;
-    width: 200px;
-    font-family: Roboto;
-    font-size: 18px;
-    font-weight: 500;
-    background-color: ${({ theme }) => theme.colors.background};
-    color: ${({ theme }) => theme.colors.darkGreen};
-    border: solid;
-    border-width: 1px;
-    border-color: ${({ theme }) => theme.colors.darkGreen};
-    border-radius: 5px;
-    align-items: center;
-    transform: translate(0%,-50%);
-    justify-content: center;
-    text-align: center;
-    cursor: pointer;
-    :hover{
-    background-color: ${({ theme }) => theme.colors.darkGreen};
-    color: ${({ theme }) => theme.colors.background};
-    border: solid;
-    border-color: ${({ theme }) => theme.colors.darkGreen};
-    }
-    @media(max-width:860px){
-        width:150px;
-    } 
-`;
-
-const EditGroup = styled.button`
-  display:flex;
-    align-items:center;
-    justify-content:center;
-    font-family: Roboto;
-    font-size: 100%;
-    font-weight: 500;
-    background-color: ${({ theme }) => theme.colors.background};
-    border: 0;
-    cursor:pointer;
-    outline:none;    
-    @media(max-width:1000px){
-      display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:14px;
-}
-`;
 
 function getModalStyle() {
   const top = 50;
   const left = 50;
-
   return {
     top: `${top}%`,
     left: `${left}%`,
@@ -144,21 +32,37 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     position: 'absolute',
     width: '60vw',
-    height: '35vh',
+    height: 'fit-content',
     backgroundColor: theme.palette.background.paper,
     border: '2px solid #609694',
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
 
   },
-
 }));
 
 export default function ModalGroup({ group, setAtt, att }) {
   const [groupName, setGroupName] = useState(group.name);
+  const [products, setProducts] = useState([]);
+  const [currentProducts, setCurrentProducts] = useState([]);
+
+  const { store } = useAuth();
 
   async function handleGroupChange(event) {
     setGroupName(event.target.value);
+  }
+  function isChecked(product_id) {
+    console.log('🚀 ~ file: index.js ~ line 48 ~ ModalGroup ~ currentProducts', currentProducts);
+    let auxiliar = 0;
+    for (let i = 0; i < currentProducts.length; i++) {
+      if (currentProducts[i].product_id === product_id) {
+        auxiliar += 1;
+      }
+    }
+    if (auxiliar > 0) {
+      return true;
+    }
+    return false;
   }
 
   async function handleSubmit() {
@@ -168,6 +72,7 @@ export default function ModalGroup({ group, setAtt, att }) {
 
     try {
       await api.put(`/api/group/${group.group_id}`, body);
+      await api.put('/api/productsOfGroup', { currentProducts, groupId: group.group_id });
       setAtt(!att);
       notification.open({
         message: 'Sucesso!',
@@ -195,19 +100,63 @@ export default function ModalGroup({ group, setAtt, att }) {
   const handleClose = () => {
     setOpen(false);
   };
+  useEffect(() => {
+    api.get(`/api/productsByStore/${store.firebase_id_store}`).then((res) => {
+      setProducts(res.data);
+    });
+    console.log('🚀 ~ file: index.js ~ line 109 ~ api.get ~ group.group_id', group.group_id);
+    api.get(`/api/productsOfGroup/${group.group_id}`).then((res) => {
+      setCurrentProducts(res.data);
+    });
+  }, []);
+  console.log(currentProducts);
   const body = (
     <div style={modalStyle} className={classes.paper}>
       <ContainerModal>
         <Row>
-          <TitleModal>Modifique grupo</TitleModal>
+          <Title>Editar grupo</Title>
         </Row>
         <Row>
           <Ajust>
             <Ajust.Col1>
-              Novo nome:
+              Nome:
             </Ajust.Col1>
             <InputNameGroup placeholder="" require value={groupName} onChange={handleGroupChange} />
           </Ajust>
+        </Row>
+        <Row>
+          <Ajust2>
+            <Ajust.Col2>
+              Produtos do grupo:
+            </Ajust.Col2>
+            {products?.length > 0
+        && products.map((product) => (
+          <DivInput>
+            <CategoryContainer.Row2.Col1>
+              <input
+                value={product.product_id}
+                onClick={(e) => {
+                  if (e.target.checked) {
+                    setCurrentProducts([...currentProducts, { product_id: e.target.value }]);
+                  } else {
+                    const aux = currentProducts;
+                    const index = aux.findIndex((x) => x.product_id === e.target.value);
+                    if (index !== -1) {
+                      aux.splice(index, 1);
+                      setCurrentProducts([...aux]);
+                    }
+                  }
+                }}
+                defaultChecked={isChecked(product.product_id)}
+                type="checkbox"
+              />
+            </CategoryContainer.Row2.Col1>
+            <CategoryContainer.Row2.Col2>
+              {product.product_name}
+            </CategoryContainer.Row2.Col2>
+          </DivInput>
+        ))}
+          </Ajust2>
         </Row>
         <Row>
           <ButtonConfirm onClick={(e) => {
