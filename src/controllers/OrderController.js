@@ -358,9 +358,60 @@ module.exports = {
     try {
       const url = 'https://ws.sandbox.pagseguro.uol.com.br/v2/sessions?email=vicepresidencia@cpejr.com.br&token=6B2B8617225E4CA8870633A697CA6DD6';
       const response = await axios.post(url);
-      console.log('🚀 ~ file: OrderController.js ~ line 361 ~ createSession ~ response', response.data);
       const { session } = await parseStringPromise(response.data);
       return res.status(200).json(session.id[0]);
+    } catch (err) {
+      return res.status(err.response.status).json(err.response.data);
+    }
+  },
+
+  async creditCardPagSeguro(req, res) {
+    const { body } = req;
+    try {
+      const { user } = req.session.get('user');
+      const address = await AddressModel
+        .getUserMainAddressById(user.firebase_id);
+
+      // Setando modo de pagamento
+      body.paymentMode = 'default';
+
+      // Setando id de referencia da compra, mesmo do orderId
+      body.reference = uuidv4();
+
+      // Setando email do recebedor
+      body.receiverEmail = process.env.PAGSEGURO_MERCHANT_EMAIL;
+
+      // Setando moeda
+      body.currency = 'BRL';
+
+      // Setando dados do comprador
+      body.senderAreaCode = user.phone.substring(0, 2);
+      body.senderCPF = user.cpf;
+      body.senderEmail = 'c35506161624506613573@sandbox.pagseguro.com.br'; // ESTÁTICO!
+      body.senderName = user.name;
+      body.senderPhone = user.phone.substring(2);
+
+      // Setando endereço de cobrança
+      body.billingAddressCity = address.city;
+      body.billingAddressComplement = address.complement;
+      body.billingAddressCountry = 'BRA';
+      body.billingAddressDistrict = address.district;
+      body.billingAddressNumber = address.address_num;
+      body.billingAddressPostalCode = address.zipcode;
+      body.billingAddressState = address.state;
+      body.billingAddressStreet = address.street;
+
+      // Endereço de entrega como False;
+      body.shippingAddressRequired = 'False';
+
+      // Setando requisição
+      const options = {
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      };
+      const url = `https://ws.sandbox.pagseguro.uol.com.br/v2/transactions?email=${process.env.PAGSEGURO_MERCHANT_EMAIL}&token=${process.env.PAGSEGURO_MERCHANT_ID}`;
+      const response = await axios.post(url, qs.stringify(body), options);
+      const { transaction } = await parseStringPromise(response.data);
+      return res.status(200).json(transaction);
     } catch (err) {
       return res.status(err.response.status).json(err.response.data);
     }
