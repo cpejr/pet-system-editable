@@ -11,7 +11,6 @@ let items = [];
 const shipping = {};
 
 module.exports = {
-
   // Pegar uma order com os order products
   async getOneOrderAndCartProducts(req, res) {
     const order_id = req.query.id;
@@ -84,8 +83,9 @@ module.exports = {
     const cart_id = uuidv4();
     try {
       const { user } = req.session.get('user');
-      const address = await AddressModel
-        .getUserMainAddressById(user.firebase_id);
+      const address = await AddressModel.getUserMainAddressById(
+        user.firebase_id,
+      );
       const cart = await CartModel.getCartByFirebaseId(user.firebase_id);
       const newCart = {
         firebase_id: user.firebase_id,
@@ -118,8 +118,7 @@ module.exports = {
       delete body.customer.phone;
 
       // Setando items
-      items = await Cart_ProductsModel
-        .getCart_ProductsByCartId(cart.cart_id);
+      items = await Cart_ProductsModel.getCart_ProductsByCartId(cart.cart_id);
 
       for (let i = 0; i < items.length; i++) {
         items[i].reference_id = items[i].product_id;
@@ -335,7 +334,9 @@ module.exports = {
         console.error({ notification: err.message });
         return response.status(400).json({ notification: err.message });
       }
-      return response.status(500).json({ notification: 'Internal Server Error' });
+      return response
+        .status(500)
+        .json({ notification: 'Internal Server Error' });
     }
     return response.status(200).json({ notification: 'Order updated' });
   },
@@ -367,16 +368,26 @@ module.exports = {
 
   async creditCardPagSeguro(req, res) {
     const { body } = req;
+    const order = {};
+    order.order_id = uuidv4();
+    const cart_id = uuidv4();
     try {
       const { user } = req.session.get('user');
-      const address = await AddressModel
-        .getUserMainAddressById(user.firebase_id);
+      const address = await AddressModel.getUserMainAddressById(
+        user.firebase_id,
+      );
+
+      order.firebase_id_store = body.firebase_id_store;
+      order.delivery_method = body.delivery_method;
+
+      delete body.firebase_id_store;
+      delete body.delivery_method;
 
       // Setando modo de pagamento
       body.paymentMode = 'default';
 
       // Setando id de referencia da compra, mesmo do orderId
-      body.reference = uuidv4();
+      body.reference = order.order_id;
 
       // Setando email do recebedor
       body.receiverEmail = process.env.PAGSEGURO_MERCHANT_EMAIL;
@@ -404,17 +415,75 @@ module.exports = {
       // Endereço de entrega como False;
       body.shippingAddressRequired = 'False';
 
+      // Setando items
+
+      const cart = await CartModel.getCartByFirebaseId(user.firebase_id);
+
+      items = await Cart_ProductsModel.getCart_ProductsByCartId(cart.cart_id);
+
+      for (let i = 0; i < items.length; i++) {
+        items[i].itemId = items[i].product_id;
+        items[i].itemDescription = items[i].product_name;
+        items[i].itemQuantity = items[i].amount;
+        items[i].itemAmount = items[i].final_price.toFixed(2).toString();
+        delete items[i].cart_id;
+        delete items[i].final_price;
+        delete items[i].firebase_id_store;
+        delete items[i].category_id;
+        delete items[i].price;
+        delete items[i].discount;
+        delete items[i].description;
+        delete items[i].img;
+        delete items[i].created_at;
+        delete items[i].available;
+        delete items[i].product_name;
+        delete items[i].amount;
+        delete items[i].product_id;
+      }
+
+      items.forEach((item, index) => {
+        Object.keys(item).forEach((key) => {
+          body[`${key}${index + 1}`] = item[key];
+        });
+      });
+
       // Setando requisição
+
       const options = {
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       };
+
       const url = `https://ws.sandbox.pagseguro.uol.com.br/v2/transactions?email=${process.env.PAGSEGURO_MERCHANT_EMAIL}&token=${process.env.PAGSEGURO_MERCHANT_ID}`;
+
       const response = await axios.post(url, qs.stringify(body), options);
+
       const { transaction } = await parseStringPromise(response.data);
+
+      // Criando Order interno do sistema
+      order.firebase_id = user.firebase_id;
+      order.address_id = address.address_id;
+      order.cart_id = cart.cart_id;
+      order.total_price = body.installmentValue * body.installmentQuantity;
+      order.payment_type = body.paymentMethod;
+      order.status = 'Aguardando pagamento';
+      order.Pagseguro_id = transaction.code[0];
+
+      await OrderModel.createNewOrder(order);
+
+      // Criando novo carrinho
+
+      const newCart = {
+        firebase_id: user.firebase_id,
+        cart_id,
+      };
+
+      await CartModel.createNewCart(newCart);
+
+      // Finalizando requisição
+
       return res.status(200).json(transaction);
     } catch (err) {
       return res.status(err.response.status).json(err.response.data);
     }
   },
-
 };
