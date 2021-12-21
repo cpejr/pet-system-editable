@@ -397,9 +397,11 @@ module.exports = {
 
       // Setando dados do comprador
       body.senderAreaCode = user.phone.substring(0, 2);
+      body.creditCardHolderAreaCode = user.phone.substring(0, 2);
       body.senderCPF = user.cpf;
       body.senderEmail = 'c35506161624506613573@sandbox.pagseguro.com.br'; // ESTÁTICO!
       body.senderName = user.name;
+      body.creditCardHolderPhone = user.phone.substring(2);
       body.senderPhone = user.phone.substring(2);
 
       // Setando endereço de cobrança
