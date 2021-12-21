@@ -50,7 +50,6 @@ export const InputField = styled.input`
   justify-content: initial;
   width: 100%;
   height: 30px;
-  margin-bottom: 30px;
   font-family: Roboto;
   border-radius: 5px;
   border: 1px solid ${({ theme }) => theme.colors.baseGray};
@@ -64,12 +63,24 @@ InputField.Line = styled.div`
   font-family: Roboto;
   flex-direction: row;
   align-items: center;
+  margin-bottom: 10px;
+  width: 100%;
 `;
 InputField.LineField = styled.input`
-  width: 70px;
+  width: 100px;
   border-radius: 5px;
   border: 1px solid ${({ theme }) => theme.colors.baseGray};
   background: #f2f2f2;
+`;
+InputField.InsideLine = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+`;
+InputField.InsideLineBrand = styled.div`
+  width: 68px;
+  height: 30px;
+  margin-top: 25px;
 `;
 
 export const InputName = styled.div`
@@ -95,8 +106,8 @@ export const Forms = styled.div`
   justify-content: center;
   align-items: center;
   height: 100%;
-  width: 50%;
-  max-width: 300px;
+  width: 100%;
+  max-width: 350px;
   margin: 10px;
   @media screen and (max-width: 1200px) {
     display: none !important;
