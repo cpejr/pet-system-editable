@@ -6,8 +6,6 @@ const environment = process.env.NODE_ENV || 'development';
 
 const configuration = config[environment];
 
-const connection = knex(configuration);
-
 const registerService = (name, initFn) => {
   if (process.env.NODE_ENV === 'development') {
     if (!(name in global)) {
@@ -18,6 +16,4 @@ const registerService = (name, initFn) => {
   return initFn();
 };
 
-export const db = registerService('db', () => knex(configuration));
-
-// module.exports = connection;
+export const connection = registerService('db', () => knex(configuration));

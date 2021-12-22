@@ -59,7 +59,7 @@ module.exports = {
       }
       return response.status(500).json({ notification: 'Internal Server Error' });
     }
-    return response.status(200).json({ notification: 'Store created' });
+    return response.status(200).json({ notification: 'Store created', id: store.firebase_id_store });
   },
 
   async update(request, response) {
