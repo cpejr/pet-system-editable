@@ -175,11 +175,11 @@ export default function ModalAdmin({store}) {
   const [open, setOpen] = useState(false);
 
   async function updateApprovedStore(id) {
-    body = { 
-      status: 1,
+    const body = { 
+      status: true,
     }
     try {
-      const response = await api.put(`store/${id}`, body);
+      const response = await api.put(`store_status/${id}`, body);
     } catch (error) {
       console.warn(error);
       alert("Algo deu errado");

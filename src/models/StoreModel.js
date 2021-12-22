@@ -50,6 +50,21 @@ module.exports = {
       throw new Error(error);
     }
   },
+
+  async updateStoreStatus(store, id) {
+    console.log('firebase', id);
+    try {
+      const response = await db('Store')
+        .where({ status: true })
+        .update(store)
+        .returning('*');
+      return response[0];
+    } catch (error) {
+      console.error(error);
+      throw new Error(error);
+    }
+  },
+
   async getAllStore() {
     try {
       const stores = await db('Store')
