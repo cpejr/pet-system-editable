@@ -13,7 +13,7 @@ export const FooterWrap = styled.div`
   @media (max-width: 600px){
     padding: 0 10px;
   }
-  @media (max-width: 450px){
+  @media (max-width: 460px){
     grid-template:
     "logo cpe" 100px
     "text text" auto
