@@ -54,10 +54,13 @@ module.exports = {
   async updateStoreStatus(store, id) {
     console.log('firebase', id);
     try {
-      const response = await db('Store')
+      
+      const response = await connection('Store')
         .where({ status: true })
         .update(store)
         .returning('*');
+      
+      console.log(response);
       return response[0];
     } catch (error) {
       console.error(error);
