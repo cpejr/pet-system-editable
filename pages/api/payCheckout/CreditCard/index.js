@@ -4,7 +4,7 @@ import { withAuthValidation } from '../../../../src/utils/Auth';
 export default function handler(req, res) {
   try {
     const { method } = req;
-    console.log('createSession', method);
+    console.log('CreditCard', method);
     if (method === 'POST') {
       return withAuthValidation(creditCardPagSeguro)(req, res);
     }

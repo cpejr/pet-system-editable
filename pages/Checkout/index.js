@@ -19,7 +19,7 @@ export default function Checkout() {
   const [cardNumber, setCardNumber] = useState('');
   const [cardBrand, setBrand] = useState();
   const [expires, setExpires] = useState();
-  const [CVV, setCVV] = useState();
+  const [CVV, setCVV] = useState('');
   const [date, setDate] = useState(new Date());
   const [cpf, setCpf] = useState('');
   const [products, setProducts] = useState([]);
@@ -29,6 +29,39 @@ export default function Checkout() {
   const [hash, setHash] = useState();
   const [cardToken, setCardToken] = useState();
   const { user } = useAuth();
+
+  function handleChangeName(event) {
+    setName(event.target.value);
+  }
+  function handleChangeCardNumber(event) {
+    setCardNumber(event.target.value);
+    if (cardNumber.length >= 6) {
+      PagSeguroDirectPayment.getBrand({
+        cardBin: Number(cardNumber),
+        success(response) {
+          setBrand(response.brand.name);
+          // bandeira encontrada
+        },
+        error(response) {
+          // tratamento do erro
+        },
+        complete(response) {
+          // tratamento comum para todas chamadas
+        },
+      });
+    } else setBrand(undefined);
+  }
+  function handleChangeExpires(event) {
+    setExpires(event.target.value);
+  }
+  function handleChangeCVV(event) {
+    if (event.target.value.length === 3) {
+      setCVV(event.target.value, handleFinish);
+    } else setCVV(event.target.value);
+  }
+  function handleCpfChange(event) {
+    setCpf(event.target.value);
+  }
 
   useEffect(() => {
     try {
@@ -71,33 +104,6 @@ export default function Checkout() {
     }
   }, [user]);
 
-  function handleChangeName(event) {
-    setName(event.target.value);
-  }
-  function handleChangeCardNumber(event) {
-    setCardNumber(event.target.value);
-    if (cardNumber.length >= 6) {
-      PagSeguroDirectPayment.getBrand({
-        cardBin: Number(cardNumber),
-        success(response) {
-          setBrand(response.brand.name);
-          // bandeira encontrada
-        },
-        error(response) {
-          // tratamento do erro
-        },
-        complete(response) {
-          // tratamento comum para todas chamadas
-        },
-      });
-    } else setBrand(undefined);
-  }
-  function handleChangeExpires(event) {
-    setExpires(event.target.value);
-  }
-  function handleChangeCVV(event) {
-    setCVV(event.target.value);
-  }
   function handleFinish() {
     PagSeguroDirectPayment.createCardToken({
       cardNumber,
@@ -112,10 +118,22 @@ export default function Checkout() {
         // Callback para chamadas que falharam.
       },
     });
+    api.post('/payCheckout/CreditCard', body);
   }
-  function handleCpfChange(event) {
-    setCpf(event.target.value);
-  }
+  const body = {
+    firebase_id_store: store,
+    creditCardHolderBirthDate: dataNascimentoFormatada(date),
+    creditCardHolderCPF: cpf,
+    creditCardHolderName: name,
+    creditCardToken: cardToken,
+    installmentQuantity: '1',
+    installmentValue: String((subTotal + parseFloat(products.shipping_tax)).toFixed(2)),
+    extraAmount: String(parseFloat(products.shipping_tax).toFixed(2)),
+    paymentMethod: 'creditCard',
+    senderHash: hash,
+    delivery_method: 'Proprio',
+  };
+
   function loadHash() {
     PagSeguroDirectPayment.onSenderHashReady((response) => {
       if (response.status === 'error') {
@@ -134,18 +152,18 @@ export default function Checkout() {
     const anoF = data.getFullYear();
     return `${diaF}/${mesF}/${anoF}`;
   }
-  const body = {
-    firebase_id_store: store,
-    creditCardHolderBirthDate: dataNascimentoFormatada(date),
-    creditCardHolderCPF: cpf,
-    creditCardHolderHolderName: name,
-    creditCardHolderToken: cardToken,
-    installmentQuantity: '1',
-    instalmentValue: String(subTotal + parseFloat(products.shipping_tax)),
-    paymentMethod: 'creditCard',
-    senderHash: hash,
-    delivery_method: 'Proprio',
-  };
+  // const body = {
+  //   firebase_id_store: store,
+  //   creditCardHolderBirthDate: dataNascimentoFormatada(date),
+  //   creditCardHolderCPF: cpf,
+  //   creditCardHolderHolderName: name,
+  //   creditCardToken: cardToken,
+  //   installmentQuantity: '1',
+  //   instalmentValue: String(subTotal + parseFloat(products.shipping_tax)),
+  //   paymentMethod: 'creditCard',
+  //   senderHash: hash,
+  //   delivery_method: 'Proprio',
+  // };
   const myLoader = ({ src }) => `https://stc.pagseguro.uol.com.br/${src}`;
   return (
     <>
@@ -164,7 +182,7 @@ export default function Checkout() {
               <Qnt>
                 Qnt
                 {products.map((p) => (
-                  <Data>{p.name}</Data>
+                  <Data>{p.amount}</Data>
                 ))}
               </Qnt>
               <Product>
@@ -179,7 +197,7 @@ export default function Checkout() {
                   <Data>
                     R$
                     {' '}
-                    {p.price}
+                    {(p.price.toFixed(2))}
                   </Data>
                 ))}
               </Price>
@@ -196,7 +214,7 @@ export default function Checkout() {
                 <Data>
                   R$
                   {' '}
-                  {subTotal}
+                  {subTotal.toFixed(2)}
                 </Data>
                 <Data>
                   R$
@@ -206,7 +224,7 @@ export default function Checkout() {
                 <Data>
                   R$
                   {' '}
-                  {subTotal + parseFloat(products.shipping_tax)}
+                  {(subTotal + parseFloat(products.shipping_tax)).toFixed(2)}
                 </Data>
               </Subtotal>
             </Subtitle>

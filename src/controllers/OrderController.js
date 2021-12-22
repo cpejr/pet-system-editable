@@ -376,7 +376,6 @@ module.exports = {
       const address = await AddressModel.getUserMainAddressById(
         user.firebase_id,
       );
-
       order.firebase_id_store = body.firebase_id_store;
       order.delivery_method = body.delivery_method;
 
