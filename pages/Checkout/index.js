@@ -8,6 +8,7 @@ import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/picker
 import api from '../../src/utils/api';
 import { useAuth } from '../../src/contexts/AuthContext';
 import { Title, WindowDivider } from '../../src/components/index';
+import MaskedInput from '../../src/components/MasketInput';
 import {
   MainContainer, Forms, InputField, InputName, FieldSpace, LeftContainer,
   RightContainer, Button, Subtitle, Qnt, Product, Price, Data, Subtotal,
@@ -239,14 +240,7 @@ export default function Checkout() {
               <InputField.Line>
                 <InputField.InsideLine>
                   <InputName.Inp2>CPF</InputName.Inp2>
-                  <InputField
-                    type="number"
-                    placeholder="123.456.789-00"
-                    pattern="[0-9]$"
-                    required
-                    title="Digite um CPF válido"
-                    onChange={handleCpfChange}
-                  />
+                  <MaskedInput name="cpf" id="cpf" mask="999.999.999-99" onChange={handleCpfChange} />
                 </InputField.InsideLine>
                 <FieldSpace />
                 <InputField.InsideLine>
@@ -288,12 +282,7 @@ export default function Checkout() {
               <InputField.Line>
                 <InputField.InsideLine>
                   <InputName.Inp2>Validade:</InputName.Inp2>
-                  <InputField.LineField
-                    type="text"
-                    placeholder="MM/AAAA"
-                    onChange={handleChangeExpires}
-                    value={expires}
-                  />
+                  <MaskedInput name="expires" id="expires" mask="99/9999" onChange={handleChangeExpires} />
                 </InputField.InsideLine>
                 <FieldSpace />
                 <InputField.InsideLine>
@@ -302,6 +291,7 @@ export default function Checkout() {
                     type="text"
                     placeholder="000"
                     onChange={handleChangeCVV}
+                    maxlength="4"
                     value={CVV}
                   />
                 </InputField.InsideLine>
