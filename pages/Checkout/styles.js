@@ -110,7 +110,6 @@ export const Forms = styled.div`
   max-width: 350px;
   margin: 10px;
   @media screen and (max-width: 1200px) {
-    display: none !important;
   }
 `;
 

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import 'date-fns';
 import DateFnsUtils from '@date-io/date-fns';
+import { toast } from 'react-toastify';
 import Head from 'next/head';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import api from '../../src/utils/api';
@@ -24,29 +25,38 @@ export default function Checkout() {
   const [cpf, setCpf] = useState('');
   const [products, setProducts] = useState([]);
   const [subTotal, setSubTotal] = useState(0);
-  const [session, setSession] = useState();
+  const [paymentData, setPaymentData] = useState();
   const [paymentMethod, setPaymentMethod] = useState([]);
   const [hash, setHash] = useState();
   const [cardToken, setCardToken] = useState();
   const { user } = useAuth();
-
+  const body = {
+    firebase_id_store: store,
+    creditCardHolderBirthDate: dataNascimentoFormatada(date),
+    creditCardHolderCPF: cpf,
+    creditCardHolderName: name,
+    creditCardToken: cardToken,
+    installmentQuantity: '1',
+    installmentValue: String((subTotal + parseFloat(products.shipping_tax)).toFixed(2)),
+    extraAmount: String(parseFloat(products.shipping_tax).toFixed(2)),
+    paymentMethod: 'creditCard',
+    senderHash: hash,
+    delivery_method: 'Proprio',
+  };
   function handleChangeName(event) {
     setName(event.target.value);
   }
   function handleChangeCardNumber(event) {
     setCardNumber(event.target.value);
-    if (cardNumber.length >= 6) {
+    if (cardNumber.length >= 6 && cardNumber.length <= 7) {
       PagSeguroDirectPayment.getBrand({
         cardBin: Number(cardNumber),
         success(response) {
+          setPaymentData(response);
           setBrand(response.brand.name);
-          // bandeira encontrada
+          console.log('🚀 ~ file: index.js ~ line 56 ~ success ~ response', paymentData.brand.cvvSize);
         },
         error(response) {
-          // tratamento do erro
-        },
-        complete(response) {
-          // tratamento comum para todas chamadas
         },
       });
     } else setBrand(undefined);
@@ -62,11 +72,55 @@ export default function Checkout() {
   function handleCpfChange(event) {
     setCpf(event.target.value);
   }
+  function handleFinish() {
+    if (cpf?.length !== 11) {
+      toast('CPF inválido', { position: toast.POSITION.BOTTOM_RIGHT });
+      return;
+    }
+    if (cardNumber?.length < 13 || cardNumber?.length > 16) {
+      toast('Número do cartão inválido', { position: toast.POSITION.BOTTOM_RIGHT });
+      return;
+    }
+    if (CVV?.length !== paymentData.brand.cvvSize) {
+      toast('Número do cartão inválido', { position: toast.POSITION.BOTTOM_RIGHT });
+      return;
+    }
+    PagSeguroDirectPayment.createCardToken({
+      cardNumber,
+      brand: cardBrand,
+      cvv: CVV,
+      expirationMonth: expires.substring(0, 2),
+      expirationYear: expires.substring(3, 7),
+      success(response) {
+        setCardToken(response.card.token);
+      },
+      error(response) {
+        toast('Informações Inválidas, por favor tente novamente!', { position: toast.POSITION.BOTTOM_RIGHT });// Callback para chamadas que falharam.
+      },
+    });
+    api.post('/payCheckout/CreditCard', body);
+  }
+  function loadHash() {
+    PagSeguroDirectPayment.onSenderHashReady((response) => {
+      if (response.status === 'error') {
+        return false;
+      }
+      setHash(response.senderHash);
+    });
+  }
+  function dataNascimentoFormatada(bdate) {
+    const data = new Date(bdate);
+    const dia = data.getDate().toString();
+    const diaF = dia.length === 1 ? `0${dia}` : dia;
+    const mes = (data.getMonth() + 1).toString(); // +1 pois no getMonth Janeiro começa com zero.
+    const mesF = mes.length === 1 ? `0${mes}` : mes;
+    const anoF = data.getFullYear();
+    return `${diaF}/${mesF}/${anoF}`;
+  }
 
   useEffect(() => {
     try {
       api.post('/payCheckout/Session').then((res) => {
-        setSession(res.data);
         PagSeguroDirectPayment.setSessionId(res.data);
         PagSeguroDirectPayment.getPaymentMethods({
           amount: subTotal,
@@ -75,9 +129,6 @@ export default function Checkout() {
           },
           error(response) {
             // Callback para chamadas que falharam.
-          },
-          complete(response) {
-            // Callback para todas chamadas.
           },
         });
       });
@@ -104,66 +155,6 @@ export default function Checkout() {
     }
   }, [user]);
 
-  function handleFinish() {
-    PagSeguroDirectPayment.createCardToken({
-      cardNumber,
-      brand: cardBrand,
-      cvv: CVV,
-      expirationMonth: expires.substring(0, 2),
-      expirationYear: expires.substring(3, 7),
-      success(response) {
-        setCardToken(response.card.token);
-      },
-      error(response) {
-        // Callback para chamadas que falharam.
-      },
-    });
-    api.post('/payCheckout/CreditCard', body);
-  }
-  const body = {
-    firebase_id_store: store,
-    creditCardHolderBirthDate: dataNascimentoFormatada(date),
-    creditCardHolderCPF: cpf,
-    creditCardHolderName: name,
-    creditCardToken: cardToken,
-    installmentQuantity: '1',
-    installmentValue: String((subTotal + parseFloat(products.shipping_tax)).toFixed(2)),
-    extraAmount: String(parseFloat(products.shipping_tax).toFixed(2)),
-    paymentMethod: 'creditCard',
-    senderHash: hash,
-    delivery_method: 'Proprio',
-  };
-
-  function loadHash() {
-    PagSeguroDirectPayment.onSenderHashReady((response) => {
-      if (response.status === 'error') {
-        return false;
-      }
-      setHash(response.senderHash);
-    });
-  }
-
-  function dataNascimentoFormatada(bdate) {
-    const data = new Date(bdate);
-    const dia = data.getDate().toString();
-    const diaF = dia.length === 1 ? `0${dia}` : dia;
-    const mes = (data.getMonth() + 1).toString(); // +1 pois no getMonth Janeiro começa com zero.
-    const mesF = mes.length === 1 ? `0${mes}` : mes;
-    const anoF = data.getFullYear();
-    return `${diaF}/${mesF}/${anoF}`;
-  }
-  // const body = {
-  //   firebase_id_store: store,
-  //   creditCardHolderBirthDate: dataNascimentoFormatada(date),
-  //   creditCardHolderCPF: cpf,
-  //   creditCardHolderHolderName: name,
-  //   creditCardToken: cardToken,
-  //   installmentQuantity: '1',
-  //   instalmentValue: String(subTotal + parseFloat(products.shipping_tax)),
-  //   paymentMethod: 'creditCard',
-  //   senderHash: hash,
-  //   delivery_method: 'Proprio',
-  // };
   const myLoader = ({ src }) => `https://stc.pagseguro.uol.com.br/${src}`;
   return (
     <>

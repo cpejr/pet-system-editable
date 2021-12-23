@@ -19,7 +19,7 @@ export default function Product({ product, store }) {
   // const add = (product) => () => {
   //   cart.addToCart(product)
   // }
-  function add(product){
+  function add(product) {
     cart.addToCart(product);
   }
   const [quantity, setQuantity] = useState(0);
@@ -132,10 +132,11 @@ export default function Product({ product, store }) {
                   </Button>
                 </ButtonsContainer.Col>
                 <ButtonsContainer.Col>
-                  <AddCarButton onClick={()=>{
+                  <AddCarButton onClick={() => {
                     handleAddCart();
                     add(product);
-                  }}>
+                  }}
+                  >
                     Adicionar ao carrinho
                   </AddCarButton>
                 </ButtonsContainer.Col>
@@ -143,7 +144,7 @@ export default function Product({ product, store }) {
             ) : (
               <StatusContainer>
                 <StoreStatusClosed>
-                    ESTABELECIMENTO FECHADO
+                  ESTABELECIMENTO FECHADO
                 </StoreStatusClosed>
                 <StoreOpenedTime>
                   {`Funcionamento: ${store.opening_time}h - ${store.closing_time}h`}
