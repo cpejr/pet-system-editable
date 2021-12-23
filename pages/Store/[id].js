@@ -13,7 +13,7 @@ import {
   LittleBanner,
 } from './styles';
 import api from '../../src/utils/api';
-import { FooterMobile, StoreTabs } from '../../src/components';
+import {  StoreTabs } from '../../src/components';
 import StoreIsOpen from '../../src/components/StoreIsOpen';
 
 export default function Store({
@@ -124,7 +124,6 @@ export default function Store({
         groups={groups}
         myLoader={myLoader}
       />
-      <FooterMobile />
     </ContainerDoContainer>
   );
 }

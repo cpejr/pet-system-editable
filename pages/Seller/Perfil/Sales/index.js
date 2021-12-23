@@ -2,7 +2,7 @@ import React from 'react';
 import MySales from '../../../../src/components/MySales';
 import MySearchDateMonth from '../../../../src/components/MySearchDateMonth';
 import MySearchDateYear from '../../../../src/components/MySearchDateYear';
-import { Title, PerfilStoreMenu, FooterMobile } from '../../../../src/components/index';
+import { Title, PerfilStoreMenu } from '../../../../src/components/index';
 import { ContainerDate } from './styles';
 
 export default function Perfil() {
@@ -24,7 +24,6 @@ export default function Perfil() {
       </ContainerDate>
 
       <MySales />
-      <FooterMobile />
 
     </div>
   );
