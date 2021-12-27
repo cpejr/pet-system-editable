@@ -460,8 +460,6 @@ module.exports = {
 
       // const url = `https://ws.sandbox.pagseguro.uol.com.br/v2/transactions?email=${process.env.PAGSEGURO_MERCHANT_EMAIL}&token=${process.env.PAGSEGURO_MERCHANT_ID}`;
       const url = `https://ws.sandbox.pagseguro.uol.com.br/transactions?appId=${process.env.PAGSEGURO_MERCHANT_APP_ID}&appKey=${process.env.PAGSEGURO_MERCHANT_KEY}`;
-      console.log("🚀 ~ file: OrderController.js ~ line 465 ~ creditCardPagSeguro ~ body", body)
-      console.log("🚀 ~ file: OrderController.js ~ line 466 ~ creditCardPagSeguro ~ qs.stringify(body)", qs.stringify(body))
       const response = await axios.post(url, qs.stringify(body), options);
 
       const { transaction } = await parseStringPromise(response.data);
@@ -490,6 +488,7 @@ module.exports = {
 
       return res.status(200).json(transaction);
     } catch (err) {
+      console.log(err);
       return res.status(err.response.status).json(err.response.data);
     }
   },
