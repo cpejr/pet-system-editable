@@ -357,11 +357,12 @@ module.exports = {
 
   async createSession(req, res) {
     try {
-      const url = 'https://ws.sandbox.pagseguro.uol.com.br/v2/sessions?email=vicepresidencia@cpejr.com.br&token=6B2B8617225E4CA8870633A697CA6DD6';
+      const url = `https://ws.sandbox.pagseguro.uol.com.br/sessions?appId=${process.env.PAGSEGURO_MERCHANT_APP_ID}&appKey=${process.env.PAGSEGURO_MERCHANT_KEY}`;
       const response = await axios.post(url);
       const { session } = await parseStringPromise(response.data);
       return res.status(200).json(session.id[0]);
     } catch (err) {
+      console.error(err);
       return res.status(err.response.status).json(err.response.data);
     }
   },
@@ -420,42 +421,47 @@ module.exports = {
 
       const cart = await CartModel.getCartByFirebaseId(user.firebase_id);
 
-      items = await Cart_ProductsModel.getCart_ProductsByCartId(cart.cart_id);
+      // items = await Cart_ProductsModel.getCart_ProductsByCartId(cart.cart_id);
 
-      for (let i = 0; i < items.length; i++) {
-        items[i].itemId = items[i].product_id;
-        items[i].itemDescription = items[i].product_name;
-        items[i].itemQuantity = items[i].amount;
-        items[i].itemAmount = items[i].final_price.toFixed(2).toString();
-        delete items[i].cart_id;
-        delete items[i].final_price;
-        delete items[i].firebase_id_store;
-        delete items[i].category_id;
-        delete items[i].price;
-        delete items[i].discount;
-        delete items[i].description;
-        delete items[i].img;
-        delete items[i].created_at;
-        delete items[i].available;
-        delete items[i].product_name;
-        delete items[i].amount;
-        delete items[i].product_id;
-      }
+      // for (let i = 0; i < items.length; i++) {
+      //   items[i].itemId = items[i].product_id;
+      //   items[i].itemDescription = items[i].product_name;
+      //   items[i].itemQuantity = items[i].amount;
+      //   items[i].itemAmount = items[i].final_price.toFixed(2).toString();
+      //   delete items[i].cart_id;
+      //   delete items[i].final_price;
+      //   delete items[i].firebase_id_store;
+      //   delete items[i].category_id;
+      //   delete items[i].price;
+      //   delete items[i].discount;
+      //   delete items[i].description;
+      //   delete items[i].img;
+      //   delete items[i].created_at;
+      //   delete items[i].available;
+      //   delete items[i].product_name;
+      //   delete items[i].amount;
+      //   delete items[i].product_id;
+      // }
 
-      items.forEach((item, index) => {
-        Object.keys(item).forEach((key) => {
-          body[`${key}${index + 1}`] = item[key];
-        });
-      });
+      // items.forEach((item, index) => {
+      //   Object.keys(item).forEach((key) => {
+      //     body[`${key}${index + 1}`] = item[key];
+      //   });
+      // });
 
       // Setando requisição
 
       const options = {
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          Accept: 'application/vnd.pagseguro.com.br.v3+xml',
+        },
       };
 
-      const url = `https://ws.sandbox.pagseguro.uol.com.br/v2/transactions?email=${process.env.PAGSEGURO_MERCHANT_EMAIL}&token=${process.env.PAGSEGURO_MERCHANT_ID}`;
-
+      // const url = `https://ws.sandbox.pagseguro.uol.com.br/v2/transactions?email=${process.env.PAGSEGURO_MERCHANT_EMAIL}&token=${process.env.PAGSEGURO_MERCHANT_ID}`;
+      const url = `https://ws.sandbox.pagseguro.uol.com.br/transactions?appId=${process.env.PAGSEGURO_MERCHANT_APP_ID}&appKey=${process.env.PAGSEGURO_MERCHANT_KEY}`;
+      console.log("🚀 ~ file: OrderController.js ~ line 465 ~ creditCardPagSeguro ~ body", body)
+      console.log("🚀 ~ file: OrderController.js ~ line 466 ~ creditCardPagSeguro ~ qs.stringify(body)", qs.stringify(body))
       const response = await axios.post(url, qs.stringify(body), options);
 
       const { transaction } = await parseStringPromise(response.data);
