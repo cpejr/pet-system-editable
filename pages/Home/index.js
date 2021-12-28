@@ -10,24 +10,6 @@ import {
 } from '../../src/components/HomeComponents';
 
 export default function Home({ stores }) {
-  function handleEmail() {
-    const name = 'julia';
-    fetch('/api/mail/mail', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'aplication/json',
-      },
-      body: JSON.stringify({
-        name,
-      }),
-    }).then((res) => {
-      console.log(res);
-      alert('foi');
-    }).catch((error) => {
-      console.log(error);
-      alert('deu ruim');
-    });
-  }
   return (
     <>
       <MobileHeader />
@@ -36,7 +18,7 @@ export default function Home({ stores }) {
         <Cards>
           <CardItem>
             <CardImage1>
-              <Button onClick={handleEmail}>Acessórios</Button>
+              <Button>Acessórios</Button>
             </CardImage1>
           </CardItem>
           <CardItem>

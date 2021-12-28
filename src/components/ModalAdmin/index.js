@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import styled from 'styled-components';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
@@ -202,19 +204,32 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function ModalAdmin({ store, stores, setStores }) {
+toast.configure();
+
+export default function ModalAdmin({ store, setStores }) {
   const classes = useStyles();
   const [modalStyle] = useState(getModalStyle);
   const [open, setOpen] = useState(false);
 
+  function handleSendEmail(name, email) {
+    fetch('/api/mail/mail', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'aplication/json',
+      },
+      body: JSON.stringify({
+        name,
+        email,
+      }),
+    });
+  }
+
   async function getWaitingStores() {
     try {
       const response = await api.get('store');
-      setStores([...response.data].filter((this_store) => this_store.status === false));
-      console.log(stores);
+      setStores([...response.data].filter((stores) => stores.status === false));
     } catch (error) {
       console.warn(error);
-      alert('Algo deu errado');
     }
   }
 
@@ -224,20 +239,23 @@ export default function ModalAdmin({ store, stores, setStores }) {
     };
     try {
       await api.put(`store_status/${id}`, body);
+      handleSendEmail(store.company_name, store.email);
+      toast('Loja aprovada com sucesso!', { position: toast.POSITION.BOTTOM_RIGHT });
       getWaitingStores();
     } catch (error) {
       console.warn(error);
-      alert('Algo deu errado');
+      toast('Erro ao aprovar loja.', { position: toast.POSITION.BOTTOM_RIGHT });
     }
   }
 
   async function deleteStore(id) {
     try {
       await api.delete(`store/${id}`);
+      toast('Loja reprovada com sucesso!', { position: toast.POSITION.BOTTOM_RIGHT });
       getWaitingStores();
     } catch (error) {
       console.warn(error);
-      alert('Algo deu errado');
+      toast('Erro ao reprovar loja.', { position: toast.POSITION.BOTTOM_RIGHT });
     }
   }
 

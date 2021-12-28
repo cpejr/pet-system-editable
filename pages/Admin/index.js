@@ -11,6 +11,7 @@ display:flex;
 align-items:center;
 justify-content:center;
 flex-direction:row;
+margin-top: 10px;
 width:100%;
 @media(max-width:860px){
     flex-direction:column;
@@ -49,7 +50,7 @@ width:60%;
 export default function Admin() {
   return (
     <div>
-      <HeaderAdmin />
+      {/* <HeaderAdmin /> */}
       <Container>
         <Container.Col1>
           <Container.Col1.Row1>
