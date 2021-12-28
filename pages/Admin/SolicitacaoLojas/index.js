@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { FaRegUserCircle } from 'react-icons/fa';
+import Image from 'next/image';
 import HeaderAdmin from '../../../src/components/HeaderAdmin';
 import AdminCardsFix from '../../../src/components/AdminCardsFix';
-import { FaRegUserCircle } from 'react-icons/fa';
 import WindowDividerAdmin from '../../../src/components/WindowDividerAdmin';
 import api from '../../../src/utils/api';
-import Image from 'next/image';
 import ModalAdmin from '../../../src/components/ModalAdmin';
-
-
 
 const Container = styled.div` 
 display:flex;
@@ -90,59 +88,54 @@ const Img = styled.div`
 padding:10px 15px 10px;
 `;
 
-
-export default function Admin ({}) {
-
+export default function Admin({ }) {
   const [stores, setStores] = useState([]);
   const myLoader = ({ src }) => `https://s3-sa-east-1.amazonaws.com/petsystembucket/${src}`;
 
   async function getWaitingStores() {
     try {
       const response = await api.get('store');
-      setStores([...response.data].filter(store => store.status === false));
+      setStores([...response.data].filter((store) => store.status === false));
       console.log(stores);
     } catch (error) {
       console.warn(error);
-      alert("Algo deu errado");
+      alert('Algo deu errado');
     }
   }
 
   useEffect(() => {
-    getWaitingStores()
-  }, [])
-
+    getWaitingStores();
+  }, []);
 
   return (
-      <div>
-          <HeaderAdmin />
-          <Container>
-            <Container.Col1>
-              <Container.Col1.Row1>
-                <FaRegUserCircle size={80} style={{ color: '#609694' }} />
-              </Container.Col1.Row1>
-              <AdminCardsFix />
-            </Container.Col1>
-            <WindowDividerAdmin />
-            <Container.Col2>
-              <Title>Lojas em espera:</Title>
-              <CardsLojas>
-                {stores.map((store) => {
-                  return (
-                    <>
-                      <Content>
-                        <ModalAdmin store={store} stores={stores} setStores={setStores}/>
-                        <Img>
-                          <Image loader={myLoader} src={store.cover_img} alt="" width="100" height="100"/>
-                        </Img>
-                        <CardTitle>{store.company_name}</CardTitle>
-                      </Content>
-                    </> 
-                  );
-                })}
-              </CardsLojas> 
-            </Container.Col2>
-          </Container>       
-      </div>
+    <div>
+      <HeaderAdmin />
+      <Container>
+        <Container.Col1>
+          <Container.Col1.Row1>
+            <FaRegUserCircle size={80} style={{ color: '#609694' }} />
+          </Container.Col1.Row1>
+          <AdminCardsFix />
+        </Container.Col1>
+        <WindowDividerAdmin />
+        <Container.Col2>
+          <Title>Lojas em espera:</Title>
+          <CardsLojas>
+            {stores.map((store) => (
+              <>
+                <Content>
+                  <ModalAdmin store={store} stores={stores} setStores={setStores} />
+                  <Img>
+                    <Image loader={myLoader} src={store.logo_img} alt="" width="100" height="100" />
+                  </Img>
+                  <CardTitle>{store.company_name}</CardTitle>
+                </Content>
+              </>
+            ))}
+          </CardsLojas>
+        </Container.Col2>
+      </Container>
+    </div>
 
   );
 }

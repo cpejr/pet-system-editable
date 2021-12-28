@@ -1,5 +1,5 @@
-import { getOne, update, deleteBoth } from '../../../../src/controllers/StoreController';
-import { withAuthValidation } from '../../../../src/utils/Auth';
+import { getOne, update, deleteBoth } from '../../../src/controllers/StoreController';
+import { withAuthValidation } from '../../../src/utils/Auth';
 
 export default function handler(req, res) {
   try {

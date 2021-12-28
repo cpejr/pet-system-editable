@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
-import api from '../../../src/utils/api';
 import { IoMdClose } from 'react-icons/io';
-
+import api from '../../utils/api';
 
 const ContainerModal = styled.div`
 display:flex;
@@ -59,7 +58,6 @@ font-family:Roboto;
         font-size:16px;
     } 
 `;
-
 
 const ButtonConfirm = styled.button`
     display: flex;
@@ -172,7 +170,7 @@ const Exit = styled.div`
   flex-direction:row;
   justify-content:right;
   width:100%;
-`
+`;
 
 function getModalStyle() {
   const top = 50;
@@ -204,8 +202,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function ModalAdmin({store, stores, setStores}) {
-
+export default function ModalAdmin({ store, stores, setStores }) {
   const classes = useStyles();
   const [modalStyle] = useState(getModalStyle);
   const [open, setOpen] = useState(false);
@@ -213,30 +210,34 @@ export default function ModalAdmin({store, stores, setStores}) {
   async function getWaitingStores() {
     try {
       const response = await api.get('store');
-      setStores([...response.data].filter(store => store.status === false));
+      setStores([...response.data].filter((this_store) => this_store.status === false));
       console.log(stores);
     } catch (error) {
       console.warn(error);
-      alert("Algo deu errado");
-    }}
+      alert('Algo deu errado');
+    }
+  }
 
   async function updateApprovedStore(id) {
-    const body = { 
+    const body = {
       status: true,
+    };
+    try {
+      await api.put(`store_status/${id}`, body);
+      getWaitingStores();
+    } catch (error) {
+      console.warn(error);
+      alert('Algo deu errado');
     }
-    try {
-      const response = await api.put(`store_status/${id}`, body);
-    } catch (error) {
-      console.warn(error);
-      alert("Algo deu errado");
-    }}
+  }
 
-  async function deleteStore(id){
+  async function deleteStore(id) {
     try {
-      const response = await api.delete(`store/${id}`);
+      await api.delete(`store/${id}`);
+      getWaitingStores();
     } catch (error) {
       console.warn(error);
-      alert("Algo deu errado");
+      alert('Algo deu errado');
     }
   }
 
@@ -251,10 +252,11 @@ export default function ModalAdmin({store, stores, setStores}) {
     <div style={modalStyle} className={classes.paper}>
       <ContainerModal>
         <Exit>
-          <ButtonExit onClick={(e) => {
-              handleClose();
-          }}>
-            <IoMdClose size={30} style={{ color: ({ theme }) => theme.colors.mediumGreen}}/>
+          <ButtonExit onClick={() => {
+            handleClose();
+          }}
+          >
+            <IoMdClose size={30} style={{ color: ({ theme }) => theme.colors.mediumGreen }} />
           </ButtonExit>
         </Exit>
         <Row>
@@ -262,34 +264,50 @@ export default function ModalAdmin({store, stores, setStores}) {
         </Row>
         <Row>
           <Ajust>
-            <Ajust.Col1>Nome: {store.company_name}</Ajust.Col1>
-            <Ajust.Col1>CNPJ: {store.cnpj}</Ajust.Col1>
-            <Ajust.Col1>Celular: {store.cellphone}</Ajust.Col1>
-            <Ajust.Col1>Telefone: {store.phone}</Ajust.Col1>
-            <Ajust.Col1>Email: {store.email}</Ajust.Col1> 
+            <Ajust.Col1>
+              Nome:
+              {' '}
+              {store.company_name}
+            </Ajust.Col1>
+            <Ajust.Col1>
+              CNPJ:
+              {' '}
+              {store.cnpj}
+            </Ajust.Col1>
+            <Ajust.Col1>
+              Celular:
+              {' '}
+              {store.cellphone}
+            </Ajust.Col1>
+            <Ajust.Col1>
+              Telefone:
+              {' '}
+              {store.phone}
+            </Ajust.Col1>
+            <Ajust.Col1>
+              Email:
+              {' '}
+              {store.email}
+            </Ajust.Col1>
 
           </Ajust>
         </Row>
         <Row>
-          <ButtonConfirm onClick={(e) => {
+          <ButtonConfirm onClick={() => {
             updateApprovedStore(store.firebase_id_store);
-            getWaitingStores();
             handleClose();
-            
           }}
           >
             Aprovar loja
 
           </ButtonConfirm>
-          <ButtonDelete onClick={(e) => {
+          <ButtonDelete onClick={() => {
             deleteStore(store.firebase_id_store);
-            getWaitingStores();
             handleClose();
-            
           }}
           >
             Recusar loja
-            
+
           </ButtonDelete>
         </Row>
       </ContainerModal>
