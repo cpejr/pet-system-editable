@@ -7,9 +7,7 @@ import WindowDividerAdmin from '../../../src/components/WindowDividerAdmin';
 import api from '../../../src/utils/api';
 import Image from 'next/image';
 import ModalAdmin from '../../../src/components/ModalAdmin';
-//import ModalGroupEdit from '../../../src/components/ModalGroupEdit';
-// import ModalGroupRemove from '../../../src/components/ModalGroupRemove';
-import { Button } from '../../../src/components/HomeComponents';
+
 
 
 const Container = styled.div` 
@@ -132,7 +130,7 @@ export default function Admin ({}) {
                   return (
                     <>
                       <Content>
-                        <ModalAdmin store={store} />
+                        <ModalAdmin store={store} stores={stores} setStores={setStores}/>
                         <Img>
                           <Image loader={myLoader} src={store.cover_img} alt="" width="100" height="100"/>
                         </Img>

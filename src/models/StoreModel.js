@@ -54,9 +54,9 @@ module.exports = {
   async updateStoreStatus(store, id) {
     console.log('firebase', id);
     try {
-      
+      console.log(store);
       const response = await connection('Store')
-        .where({ status: true })
+        .where({ firebase_id_store: id })
         .update(store)
         .returning('*');
       

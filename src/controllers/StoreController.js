@@ -82,13 +82,11 @@ module.exports = {
 
   async updateStatus(request, response) {
     const store = request.body;
-    const { accessToken } = await request.session.get('store');
+    const { id } = request.query;
     let updatedStore;
     try {
       updatedStore = await StoreModel
-        .updateStoreStatus(store, store.firebase_id_store);
-      request.session.set('store', { store: updatedStore, accessToken });
-      await request.session.save();
+        .updateStoreStatus(store, id);
     } catch (err) {
       if (err.message) {
         return response.status(400).json({ notification: err.message });

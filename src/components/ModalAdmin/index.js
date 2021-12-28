@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import api from '../../../src/utils/api';
-import { notification } from 'antd';
+import { IoMdClose } from 'react-icons/io';
 
 
 const ContainerModal = styled.div`
@@ -31,6 +31,7 @@ font-family:Roboto;
 font-weight: bold;
 font-size:24px;
 margin-bottom:1%;
+margin-top:-2%;
 @media(max-width:860px){
         width:100%;
         font-size:18px;
@@ -59,14 +60,42 @@ font-family:Roboto;
     } 
 `;
 
+
 const ButtonConfirm = styled.button`
-    display:flex;
+    display: flex;
     height: 30px;
     width: 100px;
     font-family: Roboto;
     font-size: 13px;
     font-weight: 500;
     margin-right: 10px;
+    background-color: ${({ theme }) => theme.colors.background};
+    color: ${({ theme }) => theme.colors.darkGreen};
+    border: solid;
+    border-width: 1px;
+    border-color: ${({ theme }) => theme.colors.darkGreen};
+    border-radius: 5px;
+    align-items: center;
+    transform: translate(0%,-50%);
+    justify-content: center;
+    text-align: center;
+    cursor: pointer;
+    :hover{
+    background-color: ${({ theme }) => theme.colors.darkGreen};
+    color: ${({ theme }) => theme.colors.background};
+    border: solid;
+    border-color: ${({ theme }) => theme.colors.darkGreen};
+    }
+    @media(max-width:860px){
+        width:150px;
+    } 
+`;
+const ButtonExit = styled.button`
+    display: flex;
+    height: 30px;
+    width: 30px;
+    font-family: Roboto;
+    margin-top: 10px;
     background-color: ${({ theme }) => theme.colors.background};
     color: ${({ theme }) => theme.colors.darkGreen};
     border: solid;
@@ -138,6 +167,13 @@ const SeeData = styled.button`
 }
 `;
 
+const Exit = styled.div`
+  display:flex;
+  flex-direction:row;
+  justify-content:right;
+  width:100%;
+`
+
 function getModalStyle() {
   const top = 50;
   const left = 50;
@@ -158,21 +194,31 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     position: 'absolute',
     width: '60vw',
-    height: '50vh',
+    height: '52vh',
     backgroundColor: theme.palette.background.paper,
     border: '2px solid #609694',
     boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
+    padding: theme.spacing(2, 1.5),
 
   },
 
 }));
 
-export default function ModalAdmin({store}) {
+export default function ModalAdmin({store, stores, setStores}) {
 
   const classes = useStyles();
   const [modalStyle] = useState(getModalStyle);
   const [open, setOpen] = useState(false);
+
+  async function getWaitingStores() {
+    try {
+      const response = await api.get('store');
+      setStores([...response.data].filter(store => store.status === false));
+      console.log(stores);
+    } catch (error) {
+      console.warn(error);
+      alert("Algo deu errado");
+    }}
 
   async function updateApprovedStore(id) {
     const body = { 
@@ -204,6 +250,13 @@ export default function ModalAdmin({store}) {
   const body = (
     <div style={modalStyle} className={classes.paper}>
       <ContainerModal>
+        <Exit>
+          <ButtonExit onClick={(e) => {
+              handleClose();
+          }}>
+            <IoMdClose size={30} style={{ color: ({ theme }) => theme.colors.mediumGreen}}/>
+          </ButtonExit>
+        </Exit>
         <Row>
           <TitleModal>Dados da loja</TitleModal>
         </Row>
@@ -220,7 +273,9 @@ export default function ModalAdmin({store}) {
         <Row>
           <ButtonConfirm onClick={(e) => {
             updateApprovedStore(store.firebase_id_store);
+            getWaitingStores();
             handleClose();
+            
           }}
           >
             Aprovar loja
@@ -228,7 +283,9 @@ export default function ModalAdmin({store}) {
           </ButtonConfirm>
           <ButtonDelete onClick={(e) => {
             deleteStore(store.firebase_id_store);
+            getWaitingStores();
             handleClose();
+            
           }}
           >
             Recusar loja
