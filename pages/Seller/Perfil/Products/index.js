@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import FooterMobile from '../../../../src/components/Mobile/FooterMobile';
 import Order from '../../../../src/components/Filter/Order';
 import Category from '../../../../src/components/Filter/Category';
 import Products from '../../../../src/components/Products';
@@ -86,7 +85,6 @@ export default function Perfil({ categories }) {
           </Group>
         </ProductContainer.Col2>
       </ProductContainer>
-      <FooterMobile />
     </div>
   );
 }

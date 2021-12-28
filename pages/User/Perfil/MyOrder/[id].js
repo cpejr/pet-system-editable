@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import MyIndividualOrder from '../../../../src/components/MyIndividualOrder';
-import FooterMobile from '../../../../src/components/Mobile/FooterMobile';
 import api from '../../../../src/utils/api';
 
 const Title = styled.h1`
@@ -54,7 +53,6 @@ export default function Perfil(props) {
       <Title>Editar meus dados:</Title>
 
       <MyIndividualOrder order={order} />
-      <FooterMobile />
     </div>
   );
 }
