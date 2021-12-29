@@ -14,6 +14,9 @@ justify-content:space-between;
 width:100%;
 height: 100%;
 flex-direction:column;
+@media(max-width:860px){
+  width:100%;
+}
 `;
 
 const Row = styled.div`
@@ -21,6 +24,7 @@ display:flex;
 align-items:center;
 justify-content:center;
 width: 100%;
+height: 70%;
 `;
 
 const TitleModal = styled.div`
@@ -113,9 +117,6 @@ const ButtonExit = styled.button`
     border: solid;
     border-color: ${({ theme }) => theme.colors.darkGreen};
     }
-    @media(max-width:860px){
-        width:150px;
-    } 
 `;
 
 const ButtonDelete = styled.button`
@@ -199,7 +200,9 @@ const useStyles = makeStyles((theme) => ({
     border: '2px solid #609694',
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 1.5),
-
+    ['@media (max-width:460px)']: { // eslint-disable-line no-useless-computed-key
+      width: '100%',
+    },
   },
 
 }));

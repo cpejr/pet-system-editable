@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { FaRegUserCircle } from 'react-icons/fa';
-import HeaderAdmin from '../../src/components/HeaderAdmin';
+// import HeaderAdmin from '../../src/components/HeaderAdmin';
 // import AdminCards from '../../src/components/AdminCards';
 import AdminCardsFix from '../../src/components/AdminCardsFix';
 import WindowDividerAdmin from '../../src/components/WindowDividerAdmin';
@@ -12,6 +12,7 @@ align-items:center;
 justify-content:center;
 flex-direction:row;
 margin-top: 10px;
+margin-bottom: 10px;
 width:100%;
 @media(max-width:860px){
     flex-direction:column;

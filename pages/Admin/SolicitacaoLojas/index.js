@@ -12,6 +12,8 @@ const Container = styled.div`
 display:flex;
 align-items:center;
 justify-content:center;
+margin-top: 10px;
+margin-bottom: 10px;
 flex-direction:row;
 width:100%;
 @media(max-width:860px){
@@ -52,9 +54,12 @@ const CardsLojas = styled.div`
 display:grid;
 align-items:center;
 justify-content:center;
-grid-template-columns:1fr 1fr 1fr 1fr 1fr;
+grid-template-columns:1fr 1fr 1fr 1fr;
 gap:15px;
 margin-top:32px;
+@media(max-width: 910px){
+  grid-template-columns:1fr 1fr;
+}
 `;
 
 const Content = styled.div`
@@ -109,7 +114,6 @@ export default function Admin({ }) {
 
   return (
     <div>
-      <HeaderAdmin />
       <Container>
         <Container.Col1>
           <Container.Col1.Row1>

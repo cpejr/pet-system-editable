@@ -12,6 +12,9 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  @media(max-width:860px){
+    width:100%;
+}
 `;
 
 Container.Line = styled.div`
@@ -36,6 +39,9 @@ const Card = styled.button`
   border-radius: 10px;
   background-color:${({ theme }) => theme.colors.background};
   border-color:${({ theme }) => theme.colors.borderBoxColor};
+  @media(max-width:860px){
+    width:100%;
+}
 `;
 
 Card.Title = styled.p`
