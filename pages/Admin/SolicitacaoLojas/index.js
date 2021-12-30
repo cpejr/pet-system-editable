@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { FaRegUserCircle } from 'react-icons/fa';
 import Image from 'next/image';
-import HeaderAdmin from '../../../src/components/HeaderAdmin';
 import AdminCardsFix from '../../../src/components/AdminCardsFix';
 import WindowDividerAdmin from '../../../src/components/WindowDividerAdmin';
 import api from '../../../src/utils/api';

@@ -1,8 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { FaRegUserCircle } from 'react-icons/fa';
-// import HeaderAdmin from '../../src/components/HeaderAdmin';
-// import AdminCards from '../../src/components/AdminCards';
 import AdminCardsFix from '../../src/components/AdminCardsFix';
 import WindowDividerAdmin from '../../src/components/WindowDividerAdmin';
 
@@ -51,15 +49,11 @@ width:60%;
 export default function Admin() {
   return (
     <div>
-      {/* <HeaderAdmin /> */}
       <Container>
         <Container.Col1>
           <Container.Col1.Row1>
             <FaRegUserCircle size={80} style={{ color: '#609694', cursor: 'pointer' }} />
           </Container.Col1.Row1>
-          {/**
-              <AdminCards />
-           */}
           <AdminCardsFix />
         </Container.Col1>
         <WindowDividerAdmin />

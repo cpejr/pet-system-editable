@@ -2,8 +2,7 @@ const nodemailer = require('nodemailer');
 require('dotenv').config();
 
 export default function (req, res) {
-  const dados = req.body;
-  console.log('🚀 ~ file: mail.js ~ line 5 ~', dados[email]);
+  const body = JSON.parse(req.body);
   const transporter = nodemailer.createTransport({
     port: 587,
     host: 'smtp.gmail.com',
@@ -15,15 +14,15 @@ export default function (req, res) {
 
   transporter.sendMail({
     from: `${process.env.EMAIL_LOGIN}`,
-    to: req.body.email,
-    subject: 'Bem vindo ao Pet System!',
-    text: `Olá ${req.body.name},
-    Seu pedido de cadastro no nosso sistema foi aceito. Seja bem vindo e boas vendas!`,
-    html: `<div>Olá ${req.body.name},
-    Seu pedido para se tornar um lojista no nosso sistema foi aceito. Seja bem vindo e boas vendas!</div>
+    to: body.email,
+    subject: `${body.aproved === true ? 'Bem vindo ao Pet System!' : 'Equipe do Pet System'}`,
+    text: `Olá ${body.name},
+    Seu pedido de cadastro no nosso sistema foi ${body.aproved === true ? 'aceito. Seja bem vindo e boas vendas!' : 'recusado.'}`,
+    html: `<div>Olá ${body.name},
+    Seu pedido para se tornar um lojista no nosso sistema foi ${body.aproved ? 'aceito. Seja bem vindo e boas vendas!' : 'recusado.'}</div>
     <p>____________________</p>
     <p>Equipe do Pet System</p>`,
   }).then((response) => { res.send(response); })
     .catch((error) => { res.send(error); });
-  res.status(200);
+  return res.status(200);
 }

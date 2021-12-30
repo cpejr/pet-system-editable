@@ -212,9 +212,10 @@ toast.configure();
 export default function ModalAdmin({ store, setStores }) {
   const classes = useStyles();
   const [modalStyle] = useState(getModalStyle);
+  const [aprove, setAprove] = useState();
   const [open, setOpen] = useState(false);
 
-  function handleSendEmail(name, email) {
+  function handleSendEmail(name, email, aproved) {
     fetch('/api/mail/mail', {
       method: 'POST',
       headers: {
@@ -223,6 +224,7 @@ export default function ModalAdmin({ store, setStores }) {
       body: JSON.stringify({
         name,
         email,
+        aproved,
       }),
     });
   }
@@ -237,12 +239,13 @@ export default function ModalAdmin({ store, setStores }) {
   }
 
   async function updateApprovedStore(id) {
+    setAprove(true);
     const body = {
       status: true,
     };
     try {
       await api.put(`store_status/${id}`, body);
-      handleSendEmail(store.company_name, store.email);
+      handleSendEmail(store.company_name, store.email, true);
       toast('Loja aprovada com sucesso!', { position: toast.POSITION.BOTTOM_RIGHT });
       getWaitingStores();
     } catch (error) {
@@ -252,8 +255,10 @@ export default function ModalAdmin({ store, setStores }) {
   }
 
   async function deleteStore(id) {
+    setAprove(false);
     try {
       await api.delete(`store/${id}`);
+      handleSendEmail(store.company_name, store.email, aprove);
       toast('Loja reprovada com sucesso!', { position: toast.POSITION.BOTTOM_RIGHT });
       getWaitingStores();
     } catch (error) {
