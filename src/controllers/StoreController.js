@@ -80,6 +80,22 @@ module.exports = {
     return response.status(200).json({ notification: 'Store updated', store: updatedStore });
   },
 
+  async updateStatus(request, response) {
+    const store = request.body;
+    const { id } = request.query;
+    let updatedStore;
+    try {
+      updatedStore = await StoreModel
+        .updateStoreStatus(store, id);
+    } catch (err) {
+      if (err.message) {
+        return response.status(400).json({ notification: err.message });
+      }
+      return response.status(500).json({ notification: 'Internal Server Error' });
+    }
+    return response.status(200).json({ notification: 'Store updated', store: updatedStore });
+  },
+
   async deleteBoth(request, response) {
     const firebase_id_store = request.query.id;
 

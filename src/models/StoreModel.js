@@ -50,6 +50,24 @@ module.exports = {
       throw new Error(error);
     }
   },
+
+  async updateStoreStatus(store, id) {
+    console.log('firebase', id);
+    try {
+      console.log(store);
+      const response = await connection('Store')
+        .where({ firebase_id_store: id })
+        .update(store)
+        .returning('*');
+      
+      console.log(response);
+      return response[0];
+    } catch (error) {
+      console.error(error);
+      throw new Error(error);
+    }
+  },
+
   async getAllStore() {
     try {
       const stores = await connection('Store')
