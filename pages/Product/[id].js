@@ -5,7 +5,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import moment from 'moment';
 import api from '../../src/utils/api';
-import { FooterMobile } from '../../src/components/index';
 import {
   Container, ProductContainer, ProductTitle, Price, Delivery,
   ButtonsContainer, Button, AddCarButton, Store, Description,
@@ -183,7 +182,6 @@ export default function Product({ product, store }) {
         </ProductContainer>
       </Container>
       )}
-      <FooterMobile />
     </div>
   );
 }

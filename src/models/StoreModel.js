@@ -1,10 +1,9 @@
-// const connection = require('../database/connection');
-const { db } = require('../database/connection');
+const { connection } = require('../database/connection');
 
 module.exports = {
   async getStoreById(firebase_id_store) {
     try {
-      const store = await db('Store')
+      const store = await connection('Store')
         .where('firebase_id_store', firebase_id_store)
         .select('*')
         .first();
@@ -16,7 +15,7 @@ module.exports = {
 
   async createNewStore(store) {
     try {
-      const store_aux = await db('Store')
+      const store_aux = await connection('Store')
         .insert(store);
       console.log(store_aux);
       return store_aux;
@@ -28,7 +27,7 @@ module.exports = {
 
   async deleteStore(id) {
     try {
-      const response = await db('Store')
+      const response = await connection('Store')
         .where({ firebase_id_store: id })
         .delete();
       return response;
@@ -41,7 +40,7 @@ module.exports = {
   async updateStore(store, id) {
     console.log('firebase', id);
     try {
-      const response = await db('Store')
+      const response = await connection('Store')
         .where({ firebase_id_store: id })
         .update(store)
         .returning('*');
@@ -51,9 +50,27 @@ module.exports = {
       throw new Error(error);
     }
   },
+
+  async updateStoreStatus(store, id) {
+    console.log('firebase', id);
+    try {
+      console.log(store);
+      const response = await connection('Store')
+        .where({ firebase_id_store: id })
+        .update(store)
+        .returning('*');
+      
+      console.log(response);
+      return response[0];
+    } catch (error) {
+      console.error(error);
+      throw new Error(error);
+    }
+  },
+
   async getAllStore() {
     try {
-      const stores = await db('Store')
+      const stores = await connection('Store')
         .select('*');
       return stores;
     } catch (error) {
