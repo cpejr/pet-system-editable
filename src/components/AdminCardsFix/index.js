@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Link from 'next/link';
 import { CgTikcode, CgShoppingCart, CgDollar } from 'react-icons/cg';
+import { notification } from 'antd';
 import { HiOutlineHome } from 'react-icons/hi';
 import { IoMdNotificationsOutline } from 'react-icons/io';
 import { FiUserPlus } from 'react-icons/fi';
@@ -54,10 +55,27 @@ Card.Title = styled.p`
 export default function Cards() {
   const [storeData, setStoreData] = useState([]);
   const [storeCSVLoading, setStoreCSVLoading] = useState(false);
-  useEffect(async () => {
+
+  const getStoreData = async () => {
+    try {
+      const { data } = await api.get('store');
+      setStoreData(data);
+    } catch (error) {
+      notification.open({
+        message: 'Erro!',
+        description: 'Erro ao pegar as lojas cadastradas.',
+        className: 'ant-notification',
+        top: '100px',
+        style: {
+          width: 600,
+        },
+      });
+    }
+  };
+
+  useEffect(() => {
     setStoreCSVLoading(true);
-    const { data } = await api.get('store');
-    setStoreData(data);
+    getStoreData();
   }, []);
 
   return (
