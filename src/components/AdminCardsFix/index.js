@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Link from 'next/link';
 import { CgTikcode, CgShoppingCart, CgDollar } from 'react-icons/cg';
@@ -6,6 +6,8 @@ import { HiOutlineHome } from 'react-icons/hi';
 import { IoMdNotificationsOutline } from 'react-icons/io';
 import { FiUserPlus } from 'react-icons/fi';
 import { MdBuild } from 'react-icons/md';
+import JsonToCSV from '../JsonToCSV';
+import api from '../../utils/api';
 
 const Container = styled.div`
   display: flex;
@@ -44,6 +46,14 @@ Card.Title = styled.p`
 `;
 
 export default function Cards() {
+  const [storeData, setStoreData] = useState([]);
+  const [storeCSVLoading, setStoreCSVLoading] = useState(false);
+  useEffect(async () => {
+    setStoreCSVLoading(true);
+    const { data } = await api.get('store');
+    setStoreData(data);
+  }, []);
+
   return (
     <div>
       <Container>
@@ -54,12 +64,14 @@ export default function Cards() {
               <Card.Title>Perfil de Controle</Card.Title>
             </Card>
           </Link>
-          <Link href="http://localhost:3000/Admin">
-            <Card>
-              <HiOutlineHome size={50} style={{ color: '#609694' }} />
-              <Card.Title>Lojas cadastradas</Card.Title>
-            </Card>
-          </Link>
+          <Card>
+            <HiOutlineHome size={50} style={{ color: '#609694' }} />
+            <JsonToCSV
+              data={storeData}
+              loading={storeCSVLoading}
+              setLoading={setStoreCSVLoading}
+            />
+          </Card>
           <Link href="http://localhost:3000/Admin/Comissoes">
             <Card>
               <CgDollar size={50} style={{ color: '#609694' }} />
