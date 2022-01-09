@@ -16,7 +16,7 @@ export default function JsonToCSV({ data, loading, setLoading }) {
   const [month, setMonth] = useState();
   const [year, setYear] = useState();
 
-  useEffect(async () => {
+  useEffect(() => {
     setMonth(moment().locale('pt-br').format('MMMM'));
     setYear(moment().year());
     setTimeout(() => {
