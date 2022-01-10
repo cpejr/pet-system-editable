@@ -86,6 +86,7 @@ export default function Header({ categories }) {
         </Link>
       );
     }
+    return null;
   };
 
   return (
@@ -145,14 +146,14 @@ export default function Header({ categories }) {
         </LogOut>
       </Header.Top>
       <Header.Bottom>
-        {categories.map((categoria) => (
+        {/* {categories.map((categoria) => (
           <Link
             key={categoria.category_id}
             href={{ pathname: '/Search', query: { id: categoria.category_id } }}
           >
             <ItemBottomHeader>{categoria.name}</ItemBottomHeader>
           </Link>
-        ))}
+        ))} */}
       </Header.Bottom>
     </Header.Wrapper>
   );
