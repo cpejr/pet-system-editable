@@ -1,5 +1,5 @@
 /* eslint-disable no-await-in-loop */
-const connection = require('../database/connection');
+const { connection } = require('../database/connection');
 const Cart_ProductsModel = require('./Cart_ProductsModel');
 
 module.exports = {

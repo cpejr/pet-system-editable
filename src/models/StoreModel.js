@@ -1,4 +1,4 @@
-const connection = require('../database/connection');
+const { connection } = require('../database/connection');
 
 module.exports = {
   async getStoreById(firebase_id_store) {
@@ -17,6 +17,7 @@ module.exports = {
     try {
       const store_aux = await connection('Store')
         .insert(store);
+      console.log(store_aux);
       return store_aux;
     } catch (error) {
       console.error(error);
@@ -49,6 +50,24 @@ module.exports = {
       throw new Error(error);
     }
   },
+
+  async updateStoreStatus(store, id) {
+    console.log('firebase', id);
+    try {
+      console.log(store);
+      const response = await connection('Store')
+        .where({ firebase_id_store: id })
+        .update(store)
+        .returning('*');
+      
+      console.log(response);
+      return response[0];
+    } catch (error) {
+      console.error(error);
+      throw new Error(error);
+    }
+  },
+
   async getAllStore(filter) {
     try {
       const stores = await connection('Store')

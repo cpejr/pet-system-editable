@@ -1,11 +1,5 @@
 import styled from 'styled-components';
 
-export const Footer = styled.div`
-  height: 100px;
-  background-color: ${({ theme }) => theme.colors.mediumGreen};
-  margin-top: 5%;
-`;
-
 export const Cards = styled.div`
   display: flex;
   align-items: center;

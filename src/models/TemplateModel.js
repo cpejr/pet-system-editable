@@ -1,4 +1,4 @@
-import connection from '../database/connection';
+const { connection } = require('../database/connection');
 
 export async function getTemplate(id) {
   try {

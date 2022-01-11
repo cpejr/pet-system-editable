@@ -12,6 +12,9 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  @media(max-width:860px){
+    width:100%;
+}
 `;
 
 Container.Line = styled.div`
@@ -36,6 +39,9 @@ const Card = styled.button`
   border-radius: 10px;
   background-color:${({ theme }) => theme.colors.background};
   border-color:${({ theme }) => theme.colors.borderBoxColor};
+  @media(max-width:860px){
+    width:100%;
+}
 `;
 
 Card.Title = styled.p`
@@ -74,13 +80,13 @@ export default function Cards() {
               <Card.Title>Notificações</Card.Title>
             </Card>
           </Link>
-          <Link href="http://localhost:3000/Admin">
+          <Link href="http://localhost:3000/Admin/">
             <Card>
               <CgShoppingCart size={50} style={{ color: '#609694' }} />
               <Card.Title>Vendas</Card.Title>
             </Card>
           </Link>
-          <Link href="http://localhost:3000/Admin">
+          <Link href="http://localhost:3000/Admin/SolicitacaoLojas">
             <Card>
               <FiUserPlus size={50} style={{ color: '#609694' }} />
               <Card.Title>Solicitação de Lojas</Card.Title>
