@@ -55,12 +55,11 @@ export default function Checkout() {
         success(response) {
           setPaymentData(response);
           setBrand(response.brand.name);
-          console.log('🚀 ~ file: index.js ~ line 56 ~ success ~ response', paymentData.brand.cvvSize);
         },
         error(response) {
         },
       });
-    } else setBrand(undefined);
+    } else if (cardNumber.length <= 6) setBrand(undefined);
   }
   function handleChangeExpires(event) {
     setExpires(event.target.value);
@@ -74,6 +73,7 @@ export default function Checkout() {
     setCpf(event.target.value);
   }
   function handleFinish() {
+    console.log(body);
     if (cpf?.length !== 11) {
       toast('CPF inválido', { position: toast.POSITION.BOTTOM_RIGHT });
       return;
@@ -91,7 +91,7 @@ export default function Checkout() {
       brand: cardBrand,
       cvv: CVV,
       expirationMonth: expires.substring(0, 2),
-      expirationYear: expires.substring(3, 7),
+      expirationYear: expires.substring(2, 7),
       success(response) {
         setCardToken(response.card.token);
       },
@@ -101,6 +101,7 @@ export default function Checkout() {
     });
     api.post('/payCheckout/CreditCard', body);
   }
+
   function loadHash() {
     PagSeguroDirectPayment.onSenderHashReady((response) => {
       if (response.status === 'error') {
@@ -109,6 +110,7 @@ export default function Checkout() {
       setHash(response.senderHash);
     });
   }
+
   function dataNascimentoFormatada(bdate) {
     const data = new Date(bdate);
     const dia = data.getDate().toString();
@@ -126,10 +128,10 @@ export default function Checkout() {
         PagSeguroDirectPayment.getPaymentMethods({
           amount: subTotal,
           success(response) {
-            setPaymentMethod(response);// Retorna os meios de pagamento disponíveis.
+            setPaymentMethod(response); // Retorna os meios de pagamento disponíveis.
           },
           error(response) {
-            // Callback para chamadas que falharam.
+            console.log(response); // Callback para chamadas que falharam.
           },
         });
       });
