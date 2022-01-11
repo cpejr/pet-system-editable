@@ -59,7 +59,7 @@ module.exports = {
         .where({ firebase_id_store: id })
         .update(store)
         .returning('*');
-      
+
       console.log(response);
       return response[0];
     } catch (error) {
@@ -71,6 +71,18 @@ module.exports = {
   async getAllStore() {
     try {
       const stores = await connection('Store')
+        .select('*');
+      return stores;
+    } catch (error) {
+      console.error(error);
+      throw new Error(error);
+    }
+  },
+
+  async getApprovedStore() {
+    try {
+      const stores = await connection('Store')
+        .where({ status: true })
         .select('*');
       return stores;
     } catch (error) {

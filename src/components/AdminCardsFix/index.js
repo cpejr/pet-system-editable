@@ -58,7 +58,7 @@ export default function Cards() {
 
   const getStoreData = async () => {
     try {
-      const { data } = await api.get('store');
+      const { data } = await api.get('store/approvedStore');
       setStoreData(data);
     } catch (error) {
       notification.open({
