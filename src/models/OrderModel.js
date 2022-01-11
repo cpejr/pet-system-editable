@@ -90,24 +90,6 @@ module.exports = {
     }
   },
 
-  async getOrderRevenue(filter) {
-    try {
-      const orders = await connection('Order')
-        .sum('total_price')
-        .where((builder) => {
-          if (filter) {
-            // eslint-disable-next-line quotes
-            builder.whereRaw(`EXTRACT(MONTH FROM created_at::date) = ? AND EXTRACT(YEAR FROM created_at::date) = ?`, [filter.month, filter.year]);
-          }
-        })
-        .first();
-      return orders;
-    } catch (error) {
-      console.error(error);
-      throw new Error(error);
-    }
-  },
-
   async createNewOrder(order) {
     try {
       const order_aux = await connection('Order')

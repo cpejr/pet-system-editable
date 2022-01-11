@@ -12,7 +12,6 @@
     "@date-io/date-fns": "1.x",
     "@material-ui/core": "^4.11.3",
     "@material-ui/pickers": "^3.3.10",
-    "@mui/lab": "^5.0.0-alpha.60",
     "antd": "^4.16.2",
     "aws-sdk": "^2.928.0",
     "axios": "^0.21.1",
