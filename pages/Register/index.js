@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import {
-  FormControl, FormLabel, FormGroup,
+ FormLabel, FormGroup,
 } from 'react-bootstrap';
 import Image from 'next/image';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
@@ -11,14 +11,15 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 import api from '../../src/utils/api';
-import { Body } from '../../src/components/BodyForms';
+import { BodyUser, ItemFormulary } from '../../src/components/BodyForms';
 import WindowDivider from '../../src/components/WindowDivider';
 import 'react-toastify/dist/ReactToastify.css';
 import {
-  WordFormGroup, MyFormGroup, Phone, Pass, Name, NumbersForms, DDD,
-  EmailFormControl, PhoneFormControl, DDDFormControl, Subtitle, Register,
+  WordFormGroup, MyFormGroup, Phone, Pass, NumbersForms, DDD,
+  Subtitle, Register,
   Buttons, FormRegister, Submit, ButtonLogin,
 } from './styles';
+import { TextBox2 } from '../../src/components/FormComponents';
 
 toast.configure();
 
@@ -99,29 +100,29 @@ export default function Signup() {
 
   return (
     <>
-      <Body>
-        <Body.Left>
+      <BodyUser>
+        <BodyUser.LeftUser>
 
-          <Image src="/images/doguinho.jpg" alt="" width="420" height="363" />
-        </Body.Left>
+          <Image src="/images/doguinho.jpg" alt="" width="450" height="483" />
+        </BodyUser.LeftUser>
         <WindowDivider />
-        <Body.Right>
+        <BodyUser.Right>
           <Register>
             <FormRegister>
 
               <Subtitle>Vamos Começar?</Subtitle>
-              <Name>
-                <MyFormGroup>
-                  <FormLabel>Nome</FormLabel>
-                  <EmailFormControl
+              <MyFormGroup>
+                <FormLabel>Nome</FormLabel>
+                <ItemFormulary>
+                  <TextBox2
                     type="text"
                     placeholder="Nome"
                     required
                     value={name}
                     onChange={handleNameChange}
                   />
-                </MyFormGroup>
-              </Name>
+                </ItemFormulary>
+              </MyFormGroup>
 
               <MyFormGroup>
                 <FormLabel>Data de Nascimento</FormLabel>
@@ -137,7 +138,7 @@ export default function Signup() {
               </MyFormGroup>
               <MyFormGroup>
                 <FormLabel>Email</FormLabel>
-                <EmailFormControl
+                <TextBox2
                   type="email"
                   placeholder="Email"
                   pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
@@ -150,7 +151,7 @@ export default function Signup() {
               <Pass>
                 <MyFormGroup>
                   <FormLabel>Senha</FormLabel>
-                  <FormControl
+                  <TextBox2
                     type="password"
                     placeholder="Senha"
                     required
@@ -162,7 +163,7 @@ export default function Signup() {
                 </MyFormGroup>
                 <WordFormGroup>
                   <FormLabel>Confirmar Senha</FormLabel>
-                  <FormControl
+                  <TextBox2
                     type="password"
                     placeholder="Senha"
                     required
@@ -175,8 +176,8 @@ export default function Signup() {
               <NumbersForms>
                 <MyFormGroup>
                   <FormLabel>CPF</FormLabel>
-                  <FormControl
-                    type="number"
+                  <TextBox2
+                    type="numbers"
                     placeholder="CPF"
                     pattern="[0-9]$"
                     required
@@ -189,7 +190,7 @@ export default function Signup() {
                   <DDD>
                     <MyFormGroup>
                       <FormLabel>DDD</FormLabel>
-                      <DDDFormControl
+                      <TextBox2
                         type="numbers"
                         placeholder="(00)"
                         pattern="[0-9]$"
@@ -201,8 +202,8 @@ export default function Signup() {
                   </DDD>
                   <MyFormGroup>
                     <FormLabel>Telefone</FormLabel>
-                    <PhoneFormControl
-                      type="number"
+                    <TextBox2
+                      type="numbers"
                       placeholder="00000-0000"
                       pattern="[0-9]$"
                       required
@@ -228,9 +229,9 @@ export default function Signup() {
             </FormRegister>
 
           </Register>
-        </Body.Right>
+        </BodyUser.Right>
 
-      </Body>
+      </BodyUser>
     </>
   );
 }

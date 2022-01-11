@@ -8,6 +8,10 @@ display : flex;
 flex-direction: column;
 align-items: flex-start;
 margin-left: 30px;
+
+@media (max-width: 300px) {
+  margin-left: 0;
+}
 `;
 
 export const MyFormGroup = styled(FormGroup)`
@@ -20,20 +24,32 @@ export const Phone = styled.div`
 display : flex;
 flex-direction:row ;
 margin-left:30px;
+
+@media (max-width: 300px) {
+  margin-left: 0;
+}
 `;
 
 export const Pass = styled.div`
 display : flex;
 flex-direction:row ;
+
+@media (max-width: 300px) {
+  flex-direction: column;
+}
 `;
 
 export const Name = styled.div`
 display:flex;
-width: 430px;
+width:-webkit-fill-available;
 `;
 export const NumbersForms = styled.div`
 flex-direction:row ;
 display: flex;
+
+@media (max-width: 300px) {
+  flex-direction: column;
+}
   
 `;
 export const DDD = styled.div`
@@ -43,16 +59,16 @@ margin-right: 10px;
 `;
 export const EmailFormControl = styled(FormControl)`
 display: flex;
-width: 430px;
+width: -webkit-fill-available;
 `;
 export const PhoneFormControl = styled(FormControl)`
 display: flex;
-width: 140px;
+width: -webkit-fill-available;
 
 `;
 export const DDDFormControl = styled(FormControl)`
 display: flex;
-width: 55px;
+width: -webkit-fill-available;
 font-size: 15px;
 flex-direction: row;
 `;
@@ -66,7 +82,6 @@ export const Subtitle = styled.p`
 `;
 
 export const Register = styled.div`
-margin-top: 250px;
   
 `;
 export const Buttons = styled.div`

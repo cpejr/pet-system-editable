@@ -40,6 +40,49 @@ Body.Right = styled.div`
     }
 `;
 
+export const BodyUser = styled.div`
+    height: -webkit-fill-available;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    @media screen and (max-width: 600px) {
+    height: -webkit-fill-available;
+     padding: 7px;
+    }
+`;
+
+BodyUser.LeftUser = styled.div`
+display: flex;
+justify-content: center;
+padding: 10px;
+align-items: center;
+height: 100%;
+width: 50%;
+margin: 10px;
+
+@media screen and (max-width: 800px) {
+    display: none !important;
+}
+`;
+
+BodyUser.Right = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 50%;
+
+    @media screen and (max-width: 900px) {
+      width: 75%;
+    }
+    @media screen and (max-width: 600px) {
+      width: 100% !important;
+      padding: 7px;
+    }
+`;
+
 export const StoreBodyWrapper = styled.div`
     //height: 110vh;
     // height: 1200px;

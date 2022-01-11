@@ -64,6 +64,16 @@ export const TextBox = styled.input`
   background: #F2F2F2;
 `;
 
+export const TextBox2 = styled.input`
+  width: 90%;
+  padding: 5px;
+  height: 25px;
+  border-radius: 5px;
+  border: 1px solid ${({ theme }) => theme.colors.baseGray};
+  background: #F2F2F2;
+`;
+
+
 export const Submit = styled.button`
     height: 40px;
     width: 150px;
