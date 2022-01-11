@@ -371,83 +371,77 @@ module.exports = {
     const { body } = req;
     const order = {};
     order.order_id = uuidv4();
-    const cart_id = uuidv4();
     try {
       const { user } = req.session.get('user');
       const address = await AddressModel.getUserMainAddressById(
         user.firebase_id,
       );
-      order.firebase_id_store = body.firebase_id_store;
-      order.delivery_method = body.delivery_method;
-
-      delete body.firebase_id_store;
-      delete body.delivery_method;
 
       // Setando modo de pagamento
-      body.paymentMode = 'default';
 
-      // Setando id de referencia da compra, mesmo do orderId
-      body.reference = order.order_id;
+      body['payment.mode'] = 'default';
+      body['payment.method'] = 'creditCard';
 
-      // Setando email do recebedor
-      body.receiverEmail = process.env.PAGSEGURO_MERCHANT_EMAIL;
+      // Setando Moeda
 
-      // Setando moeda
       body.currency = 'BRL';
 
-      // Setando dados do comprador
-      body.senderAreaCode = user.phone.substring(0, 2);
-      body.creditCardHolderAreaCode = user.phone.substring(0, 2);
-      body.senderCPF = user.cpf;
-      body.senderEmail = 'c35506161624506613573@sandbox.pagseguro.com.br'; // ESTÁTICO!
-      body.senderName = user.name;
-      body.creditCardHolderPhone = user.phone.substring(2);
-      body.senderPhone = user.phone.substring(2);
-
-      // Setando endereço de cobrança
-      body.billingAddressCity = address.city;
-      body.billingAddressComplement = address.complement;
-      body.billingAddressCountry = 'BRA';
-      body.billingAddressDistrict = address.district;
-      body.billingAddressNumber = address.address_num;
-      body.billingAddressPostalCode = address.zipcode;
-      body.billingAddressState = address.state;
-      body.billingAddressStreet = address.street;
-
-      // Endereço de entrega como False;
-      body.shippingAddressRequired = 'False';
-
-      // Setando items
+      // Setando itens
 
       const cart = await CartModel.getCartByFirebaseId(user.firebase_id);
+      items = await Cart_ProductsModel.getCart_ProductsByCartId(cart.cart_id);
 
-      // items = await Cart_ProductsModel.getCart_ProductsByCartId(cart.cart_id);
+      items.forEach((item, index) => {
+        Object.keys(item).forEach((key) => {
+          if (key === 'product_id') {
+            body[`item[${index + 1}].id`] = item[key];
+          }
+          if (key === 'product_name') {
+            body[`item[${index + 1}].description`] = item[key];
+          }
+          if (key === 'final_price') {
+            body[`item[${index + 1}].amount`] = item[key].toFixed(2).toString();
+          }
+          if (key === 'amount') {
+            body[`item[${index + 1}].quantity`] = item[key].toString();
+          }
+        });
+      });
 
-      // for (let i = 0; i < items.length; i++) {
-      //   items[i].itemId = items[i].product_id;
-      //   items[i].itemDescription = items[i].product_name;
-      //   items[i].itemQuantity = items[i].amount;
-      //   items[i].itemAmount = items[i].final_price.toFixed(2).toString();
-      //   delete items[i].cart_id;
-      //   delete items[i].final_price;
-      //   delete items[i].firebase_id_store;
-      //   delete items[i].category_id;
-      //   delete items[i].price;
-      //   delete items[i].discount;
-      //   delete items[i].description;
-      //   delete items[i].img;
-      //   delete items[i].created_at;
-      //   delete items[i].available;
-      //   delete items[i].product_name;
-      //   delete items[i].amount;
-      //   delete items[i].product_id;
-      // }
+      // Setando endereço url de notificação
 
-      // items.forEach((item, index) => {
-      //   Object.keys(item).forEach((key) => {
-      //     body[`${key}${index + 1}`] = item[key];
-      //   });
-      // });
+      body.notificationURL = 'https://yourstore.com.br/notification';
+
+      // Setando id de referencia da compra, mesmo do orderId
+
+      body.reference = order.order_id;
+
+      // Setando dados do comprador
+
+      body['sender.name'] = user.name;
+      body['sender.CPF'] = user.cpf;
+      body['sender.areaCode'] = user.phone.substring(0, 2);
+      body['sender.phone'] = user.phone.substring(2);
+      body['sender.email'] = 'c35506161624506613573@sandbox.pagseguro.com.br'; // ESTÁTICO!
+
+      // Setando endereço de cobrança
+      body['shipping.address.street'] = address.street;
+      body['shipping.address.number'] = address.address_num;
+      body['shipping.address.complement'] = address.complement;
+      body['shipping.address.district'] = address.district;
+      body['shipping.address.postalCode'] = address.zipcode;
+      body['shipping.address.city'] = address.city;
+      body['shipping.address.state'] = address.state;
+      body['shipping.address.country'] = 'BRA';
+
+      // Setando tipo de entrega e valor
+      body['shipping.type'] = '3';
+      body['shipping.cost'] = '0.00';
+
+      // Setando recebedor primario e secundarios
+
+      body['receiver[1].publicKey'] = 'PUBCE22C91B3A7949DD8D3551851198618A';
+      body['receiver[1].split.amount'] = '20.00';
 
       // Setando requisição
 
@@ -458,24 +452,28 @@ module.exports = {
         },
       };
 
-      // const url = `https://ws.sandbox.pagseguro.uol.com.br/v2/transactions?email=${process.env.PAGSEGURO_MERCHANT_EMAIL}&token=${process.env.PAGSEGURO_MERCHANT_ID}`;
       const url = `https://ws.sandbox.pagseguro.uol.com.br/transactions?appId=${process.env.PAGSEGURO_MERCHANT_APP_ID}&appKey=${process.env.PAGSEGURO_MERCHANT_KEY}`;
       const response = await axios.post(url, qs.stringify(body), options);
 
       const { transaction } = await parseStringPromise(response.data);
 
-      // Criando Order interno do sistema
+      // // Criando Order interno do sistema
+
       order.firebase_id = user.firebase_id;
+      order.firebase_id_store = items.firebase_id_store;
       order.address_id = address.address_id;
       order.cart_id = cart.cart_id;
-      order.total_price = body.installmentValue * body.installmentQuantity;
-      order.payment_type = body.paymentMethod;
+      order.total_price = body['installment.value'] * body['installment.quantity'];
+      order.payment_type = 'Cartão de crédito';
       order.status = 'Aguardando pagamento';
+      order.delivery_method = 'Próprio';
       order.Pagseguro_id = transaction.code[0];
 
       await OrderModel.createNewOrder(order);
 
-      // Criando novo carrinho
+      // // Criando novo carrinho
+
+      const cart_id = uuidv4();
 
       const newCart = {
         firebase_id: user.firebase_id,
