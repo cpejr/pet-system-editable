@@ -17,7 +17,6 @@ module.exports = {
     try {
       const store_aux = await connection('Store')
         .insert(store);
-      console.log(store_aux);
       return store_aux;
     } catch (error) {
       console.error(error);
@@ -38,7 +37,6 @@ module.exports = {
   },
 
   async updateStore(store, id) {
-    console.log('firebase', id);
     try {
       const response = await connection('Store')
         .where({ firebase_id_store: id })
@@ -52,15 +50,12 @@ module.exports = {
   },
 
   async updateStoreStatus(store, id) {
-    console.log('firebase', id);
     try {
-      console.log(store);
       const response = await connection('Store')
         .where({ firebase_id_store: id })
         .update(store)
         .returning('*');
-      
-      console.log(response);
+
       return response[0];
     } catch (error) {
       console.error(error);
@@ -71,6 +66,18 @@ module.exports = {
   async getAllStore() {
     try {
       const stores = await connection('Store')
+        .select('*');
+      return stores;
+    } catch (error) {
+      console.error(error);
+      throw new Error(error);
+    }
+  },
+
+  async getApprovedStore() {
+    try {
+      const stores = await connection('Store')
+        .where({ status: true })
         .select('*');
       return stores;
     } catch (error) {
