@@ -182,9 +182,8 @@ module.exports = {
       body['shipping.address.state'] = address.state;
       body['shipping.address.country'] = 'BRA';
 
-      // Setando tipo de entrega e valor
-      body['shipping.type'] = '3';
-      body['shipping.cost'] = '0.00';
+      // Setando tipo de entrega
+      body['shipping.type'] = '3'; // 3 = Tipo não definido
 
       // Setando recebedor primario e secundarios
 
@@ -205,13 +204,13 @@ module.exports = {
 
       const { transaction } = await parseStringPromise(response.data);
 
-      // // Criando Order interno do sistema
+      // Criando Order interno do sistema
 
       order.firebase_id = user.firebase_id;
       order.firebase_id_store = items.firebase_id_store;
       order.address_id = address.address_id;
       order.cart_id = cart.cart_id;
-      order.total_price = body['installment.value'] * body['installment.quantity'];
+      order.total_price = body['installment.value'];
       order.payment_type = 'Cartão de crédito';
       order.status = 'Aguardando pagamento';
       order.delivery_method = 'Próprio';
@@ -220,7 +219,7 @@ module.exports = {
 
       await OrderModel.createNewOrder(order);
 
-      // // Criando novo carrinho
+      // Criando novo carrinho
 
       const cart_id = uuidv4();
 

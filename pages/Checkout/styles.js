@@ -64,6 +64,7 @@ InputField.Line = styled.div`
   flex-direction: row;
   align-items: center;
   margin-bottom: 10px;
+  justify-content: center;
   width: 100%;
 `;
 InputField.LineField = styled.input`
