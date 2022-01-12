@@ -51,6 +51,8 @@ export default function Checkout() {
   const [paymentData, setPaymentData] = useState();
   const [paymentMethod, setPaymentMethod] = useState([]);
 
+  // Variável para identificar a passagem de página no pagamento
+  const [page, setPage] = useState();
   // Body passado para a API de pagamentos____________
   const body = {
     'installment.value': String((subTotal + parseFloat(products.shipping_tax)).toFixed(2)),
@@ -60,8 +62,8 @@ export default function Checkout() {
     'creditCard.holder.name': name,
     'creditCard.holder.CPF': cpf,
     'creditCard.holder.birthDate': birth,
-    'creditCard.holder.areaCode': user.phone.substring(0, 2),
-    'creditCard.holder.phone': user.phone.substring(2),
+    // 'creditCard.holder.areaCode': user.phone.substring(0, 2),
+    // 'creditCard.holder.phone': user.phone.substring(2),
     'billingAddress.street': street,
     'billingAddress.number': streetNumber,
     'billingAddress.complement': complement,
