@@ -1,5 +1,4 @@
 import api from '../../src/utils/api';
-import MobileHeader from '../../src/components/MobileHeader';
 import BannerCarousel from '../../src/components/Carousels/BannerCarousel';
 import CardsCarousel from '../../src/components/Carousels/CardsCarousel';
 import StoresCarousel from '../../src/components/Carousels/StoresCarousel';
@@ -12,7 +11,6 @@ import {
 export default function Home({ stores }) {
   return (
     <>
-      <MobileHeader />
       <BannerCarousel />
       <Container>
         <Cards>
@@ -62,7 +60,6 @@ export default function Home({ stores }) {
         <Text>Bichinhos mais procurados</Text>
         <AnimalsCarousel />
       </Container>
-
     </>
   );
 }

@@ -23,7 +23,19 @@ module.exports = {
     try {
       const store = await StoreModel.getAllStore();
       return response.status(200).json(store);
-    } catch (error) {
+    } catch (err) {
+      if (err.message) {
+        return response.status(400).json({ notification: err.message });
+      }
+      return response.status(500).json({ notification: 'Internal Server Error' });
+    }
+  },
+
+  async getApprovedStore(request, response) {
+    try {
+      const store = await StoreModel.getApprovedStore();
+      return response.status(200).json(store);
+    } catch (err) {
       if (err.message) {
         return response.status(400).json({ notification: err.message });
       }
@@ -59,7 +71,7 @@ module.exports = {
       }
       return response.status(500).json({ notification: 'Internal Server Error' });
     }
-    return response.status(200).json({ notification: 'Store created' });
+    return response.status(200).json({ notification: 'Store created', id: store.firebase_id_store });
   },
 
   async update(request, response) {
@@ -71,6 +83,22 @@ module.exports = {
         .updateStore(store, store.firebase_id_store);
       request.session.set('store', { store: updatedStore, accessToken });
       await request.session.save();
+    } catch (err) {
+      if (err.message) {
+        return response.status(400).json({ notification: err.message });
+      }
+      return response.status(500).json({ notification: 'Internal Server Error' });
+    }
+    return response.status(200).json({ notification: 'Store updated', store: updatedStore });
+  },
+
+  async updateStatus(request, response) {
+    const store = request.body;
+    const { id } = request.query;
+    let updatedStore;
+    try {
+      updatedStore = await StoreModel
+        .updateStoreStatus(store, id);
     } catch (err) {
       if (err.message) {
         return response.status(400).json({ notification: err.message });

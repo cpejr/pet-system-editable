@@ -1,5 +1,5 @@
 /* eslint-disable no-async-promise-executor */
-const connection = require('../database/connection');
+const { connection } = require('../database/connection');
 // const FirebaseModel = require('./FirebaseModel');
 
 module.exports = {
