@@ -51,6 +51,10 @@ export const BodyUser = styled.div`
     height: -webkit-fill-available;
      padding: 7px;
     }
+
+    @media screen and (min-height: 1024px) {
+        height: 83.3vh;
+    }
 `;
 
 BodyUser.LeftUser = styled.div`
