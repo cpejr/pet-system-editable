@@ -133,9 +133,6 @@ export default function Admin() {
           <Container.Col1.Row1>
             <FaRegUserCircle size={80} style={{ color: '#609694' }} />
           </Container.Col1.Row1>
-          {/**
-              <AdminCards />
-           */}
           <AdminCardsFix />
         </Container.Col1>
         <WindowDividerAdmin />
