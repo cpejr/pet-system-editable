@@ -2,11 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { FaRegUserCircle } from 'react-icons/fa';
 import HeaderAdmin from '../../../src/components/HeaderAdmin';
-// import AdminCards from '../../../src/components/AdminCards';
 import AdminCardsFix from '../../../src/components/AdminCardsFix';
 import WindowDividerAdmin from '../../../src/components/WindowDividerAdmin';
-import MySearchDateMonth from '../../../src/components/MySearchDateMonth';
-import MySearchDateYear from '../../../src/components/MySearchDateYear';
 import MonthResumeAdmin from '../../../src/components/MonthResumeAdmin';
 
 const Container = styled.div`
@@ -106,6 +103,20 @@ width:80%;
 }
 `;
 export default function Admin() {
+  const [revenue, setRevenue] = useState(0);
+  const [totalStores, setTotalStores] = useState(0);
+  const [value, setValue] = useState(new Date());
+  useEffect(() => {
+    api.get('/api/profileControl', {
+      params: {
+        month: moment(value).format('M'),
+        year: moment(value).format('Y'),
+      },
+    }).then((response) => {
+      setRevenue(response.data.revenue.sum);
+      setTotalStores(response.data.total_stores);
+    });
+  }, [value]);
   return (
     <div>
       <HeaderAdmin />
@@ -114,23 +125,21 @@ export default function Admin() {
           <Container.Col1.Row1>
             <FaRegUserCircle size={80} style={{ color: '#609694' }} />
           </Container.Col1.Row1>
-          {/**
-              <AdminCards />
-           */}
           <AdminCardsFix />
         </Container.Col1>
         <WindowDividerAdmin />
         <Container.Col2>
           <Container.Col2.Row1>
             <MonthReport>Relatório do mês</MonthReport>
-            <MonthAndYear>
-              <MonthAndYear.Col1>
-                <MySearchDateMonth />
-              </MonthAndYear.Col1>
-              <MonthAndYear.Col2>
-                <MySearchDateYear />
-              </MonthAndYear.Col2>
-            </MonthAndYear>
+            <MuiPickersUtilsProvider locale={ptBR} utils={DateFnsUtils}>
+              <KeyboardDatePicker
+                views={['month', 'year']}
+                value={value}
+                onChange={(newDate) => { setValue(newDate); }}
+                variant="inline"
+                label="Mês e Ano"
+              />
+            </MuiPickersUtilsProvider>
           </Container.Col2.Row1>
           <Container.Col2.Row2>
             <MonthResumeAdmin />
