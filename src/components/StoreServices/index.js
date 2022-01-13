@@ -1,7 +1,5 @@
 import styled from 'styled-components';
 import InputMask from 'react-input-mask';
-import moment from 'moment';
-import { useEffect, useState } from 'react';
 
 const ServiceContainer = styled.div`
   display: flex;
@@ -74,45 +72,6 @@ Services.Contact = styled.h4`
 `;
 
 export default function StoreServices({ store }) {
-  const openingTime = store.opening_time.split(',');
-  const closingTime = store.closing_time.split(',');
-  const situation = store.working_days.split(',');
-  const [today, setToday] = useState();
-  const data = new Date();
-  const day = moment(data).format('dddd');
-  useEffect(() => {
-    if (day) {
-      switch (day) {
-        case 'Monday':
-          setToday(0);
-          break;
-
-        case 'Tuesday':
-          setToday(1);
-          break;
-
-        case 'Wednesday':
-          setToday(2);
-          break;
-
-        case 'Thursday':
-          setToday(3);
-          break;
-
-        case 'Friday':
-          setToday(4);
-          break;
-
-        case 'Saturday':
-          setToday(5);
-          break;
-
-        default:
-          setToday(6);
-          break;
-      }
-    }
-  }, [day]);
   return (
     <div>
       <ServiceContainer>
@@ -158,10 +117,10 @@ export default function StoreServices({ store }) {
             </Services>
             <Services>
               <Services.Contact>• Horário de funcionamento:</Services.Contact>
-              {openingTime[today]}
+              {store.opening_time}
               h -
               {' '}
-              {closingTime[today]}
+              {store.closing_time}
               h
             </Services>
           </ServiceContainer.Col2>

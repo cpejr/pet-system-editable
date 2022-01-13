@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { FaArrowLeft, FaRegMinusSquare, FaRegPlusSquare } from 'react-icons/fa';
 import { notification } from 'antd';
 import Image from 'next/image';
 import Link from 'next/link';
-import moment from 'moment';
 import api from '../../src/utils/api';
+import { FooterMobile } from '../../src/components/index';
 import {
   Container, ProductContainer, ProductTitle, Price, Delivery,
   ButtonsContainer, Button, AddCarButton, Store, Description,
@@ -14,45 +14,6 @@ import {
 import StoreIsOpen from '../../src/components/StoreIsOpen';
 
 export default function Product({ product, store }) {
-  const openingTime = store.opening_time.split(',');
-  const closingTime = store.closing_time.split(',');
-  const situation = store.working_days.split(',');
-  const [today, setToday] = useState();
-  const data = new Date();
-  const day = moment(data).format('dddd');
-  useEffect(() => {
-    if (day) {
-      switch (day) {
-        case 'Monday':
-          setToday(0);
-          break;
-
-        case 'Tuesday':
-          setToday(1);
-          break;
-
-        case 'Wednesday':
-          setToday(2);
-          break;
-
-        case 'Thursday':
-          setToday(3);
-          break;
-
-        case 'Friday':
-          setToday(4);
-          break;
-
-        case 'Saturday':
-          setToday(5);
-          break;
-
-        default:
-          setToday(6);
-          break;
-      }
-    }
-  }, [day]);
   const [quantity, setQuantity] = useState(0);
 
   async function handleAddCart() {
@@ -155,7 +116,7 @@ export default function Product({ product, store }) {
               <CarrinhoCardText>{quantity}</CarrinhoCardText>
               <FaRegPlusSquare size="2x" onClick={() => handlePlus()} />
             </CarrinhoCardInfoQuantity>
-            {(StoreIsOpen(openingTime[today], closingTime[today])) ? (
+            {StoreIsOpen(store.opening_time, store.closing_time) ? (
               <ButtonsContainer>
                 <ButtonsContainer.Col>
                   <Button>
@@ -174,7 +135,7 @@ export default function Product({ product, store }) {
                   ESTABELECIMENTO FECHADO
                 </StoreStatusClosed>
                 <StoreOpenedTime>
-                  {`Funcionamento: ${openingTime[today]}h - ${closingTime[today]}h`}
+                  {`Funcionamento: ${store.opening_time}h - ${store.closing_time}h`}
                 </StoreOpenedTime>
               </StatusContainer>
             ) }
@@ -182,6 +143,7 @@ export default function Product({ product, store }) {
         </ProductContainer>
       </Container>
       )}
+      <FooterMobile />
     </div>
   );
 }

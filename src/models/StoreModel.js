@@ -1,4 +1,4 @@
-const { connection } = require('../database/connection');
+const connection = require('../database/connection');
 
 module.exports = {
   async getStoreById(firebase_id_store) {
@@ -37,6 +37,7 @@ module.exports = {
   },
 
   async updateStore(store, id) {
+    console.log('firebase', id);
     try {
       const response = await connection('Store')
         .where({ firebase_id_store: id })
@@ -48,37 +49,16 @@ module.exports = {
       throw new Error(error);
     }
   },
-
-  async updateStoreStatus(store, id) {
-    try {
-      const response = await connection('Store')
-        .where({ firebase_id_store: id })
-        .update(store)
-        .returning('*');
-
-      return response[0];
-    } catch (error) {
-      console.error(error);
-      throw new Error(error);
-    }
-  },
-
-  async getAllStore() {
+  async getAllStore(filter) {
     try {
       const stores = await connection('Store')
-        .select('*');
-      return stores;
-    } catch (error) {
-      console.error(error);
-      throw new Error(error);
-    }
-  },
-
-  async getApprovedStore() {
-    try {
-      const stores = await connection('Store')
-        .where({ status: true })
-        .select('*');
+        .select('*')
+        .where((builder) => {
+          if (filter) {
+            // eslint-disable-next-line quotes
+            builder.whereRaw(`EXTRACT(MONTH FROM created_at::date) = ? AND EXTRACT(YEAR FROM created_at::date) = ?`, [filter.month, filter.year]);
+          }
+        });
       return stores;
     } catch (error) {
       console.error(error);

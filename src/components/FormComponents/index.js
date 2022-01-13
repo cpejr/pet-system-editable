@@ -51,7 +51,7 @@ export const SubText = styled.p`
   margin-top: 3px;
   margin-left: 5px;
   font-size: 0.7rem;
-  margin-bottom: 5px;
+  margin-bottom: 0px;
 `;
 
 export const TextBox = styled.input`

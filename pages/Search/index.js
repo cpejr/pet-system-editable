@@ -11,6 +11,7 @@ import {
   SearchCards,
   SearchCardsStore,
   SearchCardsStoreClosed,
+  FooterMobile,
   SearchHeader,
 } from '../../src/components/index';
 
@@ -158,6 +159,7 @@ export default function Search({ keyword, id, categories }) {
             ))}
           </SearchContainer.Col2>
         </SearchContainer>
+        <FooterMobile />
       </div>
     );
   }
@@ -189,6 +191,7 @@ export default function Search({ keyword, id, categories }) {
             ))}
           </SearchContainer.Col>
         </SearchContainer>
+        <FooterMobile />
       </div>
     );
   }

@@ -151,18 +151,18 @@ font-size:16px;
 }
 `;
 
-export default function MonthResumeAdmin() {
+export default function MonthResumeAdmin({ revenue, totalStores }) {
   return (
     <div>
       <Container>
         <Container.Row1>Resumo do mês</Container.Row1>
         <Container.Row2>
           <Container.Row2.Col1>Número de lojas associadas:</Container.Row2.Col1>
-          <Container.Row2.Col2>10</Container.Row2.Col2>
+          <Container.Row2.Col2>{totalStores}</Container.Row2.Col2>
         </Container.Row2>
         <Container.Row3>
           <Container.Row3.Col1>Total de vendas:</Container.Row3.Col1>
-          <Container.Row3.Col2>R$ 10.050,87</Container.Row3.Col2>
+          <Container.Row3.Col2>{revenue.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</Container.Row3.Col2>
         </Container.Row3>
 
         <Container.Row4>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Paper, makeStyles } from '@material-ui/core';
 import api from '../../utils/api';
 import { useAuth } from '../../contexts/AuthContext';
@@ -6,7 +6,6 @@ import {
   BoxDatas, ContainerDatas, AddressData,
 } from './styles';
 import MyStoreDataEdit from '../MyStoreDataEdit/index';
-import moment from 'moment';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,45 +17,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function MyStoreData() {
-  const openingTime = store.opening_time.split(',');
-  const closingTime = store.closing_time.split(',');
-  const situation = store.working_days.split(',');
-  const [today, setToday] = useState();
-  const date = new Date();
-  const day = moment(date).format('dddd');
-  useEffect(() => {
-    if (day) {
-      switch (day) {
-        case 'Monday':
-          setToday(0);
-          break;
-
-        case 'Tuesday':
-          setToday(1);
-          break;
-
-        case 'Wednesday':
-          setToday(2);
-          break;
-
-        case 'Thursday':
-          setToday(3);
-          break;
-
-        case 'Friday':
-          setToday(4);
-          break;
-
-        case 'Saturday':
-          setToday(5);
-          break;
-
-        default:
-          setToday(6);
-          break;
-      }
-    }
-  }, [day]);
   const { store, setStore } = useAuth();
   const classes = useStyles();
 
@@ -118,13 +78,11 @@ export default function MyStoreData() {
             <AddressData>
               Horario de funcionamento:
               {' '}
-              {situation[today]}
-              {' '}
-              {openingTime[today]}
+              {store.opening_time}
               {' '}
               -
               {' '}
-              {closingTime[today]}
+              {store.closing_time}
             </AddressData>
             <AddressData>
               Taxa de entrega:

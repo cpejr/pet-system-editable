@@ -1,7 +1,5 @@
 import { Tabs } from 'antd';
 import 'antd/dist/antd.css';
-import moment from 'moment';
-import { useEffect, useState } from 'react';
 import { Container, SearchContainer } from './styles';
 import Title from '../Title';
 import {
@@ -21,45 +19,6 @@ function callback(key) {
 export default function StoreTabs({
   store, products, groups, myLoader,
 }) {
-  const openingTime = store.opening_time.split(',');
-  const closingTime = store.closing_time.split(',');
-  const situation = store.working_days.split(',');
-  const [today, setToday] = useState();
-  const data = new Date();
-  const day = moment(data).format('dddd');
-  useEffect(() => {
-    if (day) {
-      switch (day) {
-        case 'Monday':
-          setToday(0);
-          break;
-
-        case 'Tuesday':
-          setToday(1);
-          break;
-
-        case 'Wednesday':
-          setToday(2);
-          break;
-
-        case 'Thursday':
-          setToday(3);
-          break;
-
-        case 'Friday':
-          setToday(4);
-          break;
-
-        case 'Saturday':
-          setToday(5);
-          break;
-
-        default:
-          setToday(6);
-          break;
-      }
-    }
-  }, [day]);
   return (
     <Container>
       <Tabs defaultActiveKey="1" onChange={callback} centered size="large">
@@ -70,7 +29,7 @@ export default function StoreTabs({
               <SearchContainer.Row>
                 <Title>{group.name}</Title>
                 <SearchContainer.Col>
-                  {(StoreIsOpen(openingTime[today], closingTime[today]) && situation[today] === 'Aberto') ? (
+                  {StoreIsOpen(store.opening_time, store.closing_time) ? (
                     group.product_groups.map((product) => (
                       <SearchCards product={product} store={store} key={product.product_id} />
                     ))
