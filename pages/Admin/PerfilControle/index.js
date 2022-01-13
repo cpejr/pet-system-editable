@@ -56,10 +56,19 @@ display:flex;
 align-items:center;
 justify-content:center;
 margin-bottom:10%;
-width:80%;
+width:100%;
 @media(max-width:860px){
     width:100%;
     flex-direction:column;
+}
+
+`;
+
+Container.Col2.Row1.Col2 = styled.div`
+display:flex;
+margin-bottom: 3%;
+@media(max-width:860px){
+  margin-bottom: 0%
 }
 `;
 
@@ -99,12 +108,17 @@ width:100%;
 `;
 
 Container.Col2.Row2 = styled.div`
+align-items:center;
+justify-content:center;
 display:flex;
 width:80%;
 @media(max-width:860px){
     width:100%;
-    align-items:center;
-    justify-content:center;
+    margin-bottom: 10%;
+}
+@media(max-width:310px){
+  width:100%;
+  margin-bottom: 10%;
 }
 `;
 
@@ -122,7 +136,9 @@ export default function Admin() {
       },
     }).then((response) => {
       setRevenue(response.data.revenue.sum);
+      console.log(response.data.revenue.sum);
       setTotalStores(response.data.total_stores);
+      console.log(response.data.total_stores);
     });
   }, [value]);
   return (
@@ -139,15 +155,17 @@ export default function Admin() {
         <Container.Col2>
           <Container.Col2.Row1>
             <MonthReport>Relatório do mês</MonthReport>
-            <MuiPickersUtilsProvider locale={ptBR} utils={DateFnsUtils}>
-              <KeyboardDatePicker
-                views={['month', 'year']}
-                value={value}
-                onChange={(newDate) => { setValue(newDate); }}
-                variant="inline"
-                label="Mês e Ano"
-              />
-            </MuiPickersUtilsProvider>
+            <Container.Col2.Row1.Col2>
+              <MuiPickersUtilsProvider locale={ptBR} utils={DateFnsUtils}>
+                <KeyboardDatePicker
+                  views={['month', 'year']}
+                  value={value}
+                  onChange={(newDate) => { setValue(newDate); }}
+                  variant="inline"
+                  label="Mês e Ano"
+                />
+              </MuiPickersUtilsProvider>
+            </Container.Col2.Row1.Col2>
           </Container.Col2.Row1>
           <Container.Col2.Row2>
             <MonthResumeAdmin revenue={revenue} totalStores={totalStores} />

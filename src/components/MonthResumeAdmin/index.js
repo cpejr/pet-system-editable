@@ -13,6 +13,9 @@ border-color:${({ theme }) => theme.colors.borderBoxColor};
 @media(max-width:860px){
     width:300px;
 }
+@media(max-width:305px){
+  width:275px;
+}
 `;
 
 Container.Row1 = styled.p`
@@ -172,7 +175,7 @@ export default function MonthResumeAdmin({ revenue, totalStores }) {
 
         <Container.Row5>
           <Container.Row5.Col1>Faturamento:</Container.Row5.Col1>
-          <Container.Row5.Col2>R$ 1.005,087</Container.Row5.Col2>
+          <Container.Row5.Col2>{(revenue * 0.1).toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</Container.Row5.Col2>
         </Container.Row5>
 
       </Container>

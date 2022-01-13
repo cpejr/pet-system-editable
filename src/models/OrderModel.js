@@ -91,6 +91,7 @@ module.exports = {
   },
 
   async getOrderRevenue(filter) {
+    console.log(filter);
     try {
       const orders = await connection('Order')
         .sum('total_price')
@@ -101,6 +102,9 @@ module.exports = {
           }
         })
         .first();
+      if (orders.sum === null) {
+        orders.sum = 0;
+      }
       return orders;
     } catch (error) {
       console.error(error);

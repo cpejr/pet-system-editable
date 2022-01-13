@@ -66,13 +66,13 @@ module.exports = {
   async getAllStore(filter) {
     try {
       const stores = await connection('Store')
-      .select('*')
-      .where((builder) => {
-        if (filter) {
+        .select('*')
+        .where((builder) => {
+          if (filter) {
           // eslint-disable-next-line quotes
-          builder.whereRaw(`EXTRACT(MONTH FROM created_at::date) = ? AND EXTRACT(YEAR FROM created_at::date) = ?`, [filter.month, filter.year]);
-        }
-      });
+            builder.whereRaw(`EXTRACT(MONTH FROM created_at::date) = ? AND EXTRACT(YEAR FROM created_at::date) = ?`, [filter.month, filter.year]);
+          }
+        });
       return stores;
     } catch (error) {
       console.error(error);
