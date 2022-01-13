@@ -7,11 +7,8 @@ import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/picker
 import DateFnsUtils from '@date-io/date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
 import HeaderAdmin from '../../../src/components/HeaderAdmin';
-// import AdminCards from '../../../src/components/AdminCards';
 import AdminCardsFix from '../../../src/components/AdminCardsFix';
 import WindowDividerAdmin from '../../../src/components/WindowDividerAdmin';
-// import MySearchDateMonth from '../../../src/components/MySearchDateMonth';
-// import MySearchDateYear from '../../../src/components/MySearchDateYear';
 import MonthResumeAdmin from '../../../src/components/MonthResumeAdmin';
 
 const Container = styled.div`
@@ -114,9 +111,6 @@ width:80%;
 const api = axios.create({ baseURL: 'http://localhost:3000/' });
 
 export default function Admin() {
-  // const now = new Date();
-  // const [year, setYear] = useState(now.getYear());
-  // const [month, setMonth] = useState(now.getMonth());
   const [revenue, setRevenue] = useState(0);
   const [totalStores, setTotalStores] = useState(0);
   const [value, setValue] = useState(new Date());
@@ -148,14 +142,6 @@ export default function Admin() {
         <Container.Col2>
           <Container.Col2.Row1>
             <MonthReport>Relatório do mês</MonthReport>
-            {/* <MonthAndYear>
-              <MonthAndYear.Col1>
-                <MySearchDateMonth />
-              </MonthAndYear.Col1>
-              <MonthAndYear.Col2>
-                <MySearchDateYear />
-              </MonthAndYear.Col2>
-            </MonthAndYear> */}
             <MuiPickersUtilsProvider locale={ptBR} utils={DateFnsUtils}>
               <KeyboardDatePicker
                 views={['month', 'year']}
