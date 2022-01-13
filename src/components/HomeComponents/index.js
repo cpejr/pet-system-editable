@@ -5,7 +5,7 @@ export const Cards = styled.div`
   align-items: center;
   flex-direction: row;
   justify-content: space-between;
-  @media screen and (max-width: 1024px) {
+  @media screen and (max-width: 800px) {
     display: none;
   }
 `;
