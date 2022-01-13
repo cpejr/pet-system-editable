@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { FaRegUserCircle } from 'react-icons/fa';
-import axios from 'axios';
-import moment from 'moment';
-import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
-import DateFnsUtils from '@date-io/date-fns';
-import ptBR from 'date-fns/locale/pt-BR';
 import HeaderAdmin from '../../../src/components/HeaderAdmin';
+// import AdminCards from '../../../src/components/AdminCards';
 import AdminCardsFix from '../../../src/components/AdminCardsFix';
 import WindowDividerAdmin from '../../../src/components/WindowDividerAdmin';
+import MySearchDateMonth from '../../../src/components/MySearchDateMonth';
+import MySearchDateYear from '../../../src/components/MySearchDateYear';
 import MonthResumeAdmin from '../../../src/components/MonthResumeAdmin';
 
 const Container = styled.div`
@@ -107,24 +105,7 @@ width:80%;
     justify-content:center;
 }
 `;
-
-const api = axios.create({ baseURL: 'http://localhost:3000/' });
-
 export default function Admin() {
-  const [revenue, setRevenue] = useState(0);
-  const [totalStores, setTotalStores] = useState(0);
-  const [value, setValue] = useState(new Date());
-  useEffect(() => {
-    api.get('/api/profileControl', {
-      params: {
-        month: moment(value).format('M'),
-        year: moment(value).format('Y'),
-      },
-    }).then((response) => {
-      setRevenue(response.data.revenue.sum);
-      setTotalStores(response.data.total_stores);
-    });
-  }, [value]);
   return (
     <div>
       <HeaderAdmin />
@@ -142,18 +123,17 @@ export default function Admin() {
         <Container.Col2>
           <Container.Col2.Row1>
             <MonthReport>Relatório do mês</MonthReport>
-            <MuiPickersUtilsProvider locale={ptBR} utils={DateFnsUtils}>
-              <KeyboardDatePicker
-                views={['month', 'year']}
-                value={value}
-                onChange={(newDate) => { setValue(newDate); }}
-                variant="inline"
-                label="Mês e Ano"
-              />
-            </MuiPickersUtilsProvider>
+            <MonthAndYear>
+              <MonthAndYear.Col1>
+                <MySearchDateMonth />
+              </MonthAndYear.Col1>
+              <MonthAndYear.Col2>
+                <MySearchDateYear />
+              </MonthAndYear.Col2>
+            </MonthAndYear>
           </Container.Col2.Row1>
           <Container.Col2.Row2>
-            <MonthResumeAdmin revenue={revenue} totalStores={totalStores} />
+            <MonthResumeAdmin />
           </Container.Col2.Row2>
         </Container.Col2>
       </Container>

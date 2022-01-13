@@ -1,6 +1,4 @@
 const AdminModel = require('../models/AdminModel');
-const StoreModel = require('../models/StoreModel');
-const OrderModel = require('../models/OrderModel');
 
 module.exports = {
   async getShare(request, response) {
@@ -49,22 +47,5 @@ module.exports = {
       return response.status(500).json({ notification: 'Internal Server Error' });
     }
     return response.status(200).json({ notification: 'Share deleted' });
-  },
-
-  async profileControl(request, response) {
-    const { month, year } = request.query;
-    try {
-      const where = { month, year };
-      const stores = await StoreModel.getAllStore(where);
-      const revenue = await OrderModel.getOrderRevenue(where);
-      return response.status(200).json({
-        total_stores: stores.length, revenue,
-      });
-    } catch (err) {
-      if (err.message) {
-        return response.status(400).json({ notification: err.message });
-      }
-      return response.status(500).json({ notification: 'Internal Server Error' });
-    }
   },
 };

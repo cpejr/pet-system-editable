@@ -1,5 +1,5 @@
 /* eslint-disable no-await-in-loop */
-const connection = require('../database/connection');
+const { connection } = require('../database/connection');
 const Cart_ProductsModel = require('./Cart_ProductsModel');
 
 module.exports = {
@@ -83,24 +83,6 @@ module.exports = {
     try {
       const orders = await connection('Order')
         .select('*');
-      return orders;
-    } catch (error) {
-      console.error(error);
-      throw new Error(error);
-    }
-  },
-
-  async getOrderRevenue(filter) {
-    try {
-      const orders = await connection('Order')
-        .sum('total_price')
-        .where((builder) => {
-          if (filter) {
-            // eslint-disable-next-line quotes
-            builder.whereRaw(`EXTRACT(MONTH FROM created_at::date) = ? AND EXTRACT(YEAR FROM created_at::date) = ?`, [filter.month, filter.year]);
-          }
-        })
-        .first();
       return orders;
     } catch (error) {
       console.error(error);

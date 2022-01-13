@@ -1,19 +1,17 @@
 import React from 'react';
 import Image from 'next/image';
-import MobileHeader from '../src/components/MobileHeader';
 import BannerCarousel from '../src/components/Carousels/BannerCarousel';
 import CardsCarousel from '../src/components/Carousels/CardsCarousel';
 import StoresCarousel from '../src/components/Carousels/StoresCarousel';
 import AnimalsCarousel from '../src/components/Carousels/AnimalsCarousel';
 import MosaicCarousel from '../src/components/Carousels/MosaicCarousel';
 import {
-  Footer, Cards, CardItem, Container, Mosaic, Text, Divider,
+  Cards, CardItem, Container, Mosaic, Text, Divider,
 } from '../src/components/HomeComponents';
 
 export default function Home() {
   return (
     <>
-      <MobileHeader />
       <BannerCarousel />
       <Container>
         <Cards>
@@ -56,7 +54,6 @@ export default function Home() {
         <Text>Bichinhos mais procurados</Text>
         <AnimalsCarousel />
       </Container>
-      <Footer />
     </>
   );
 }

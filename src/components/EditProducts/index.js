@@ -1,274 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
 import { notification } from 'antd';
 import MenuItem from '@material-ui/core/MenuItem';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import { Select } from '@material-ui/core';
 import 'antd/dist/antd.css';
 import InputMask from 'react-input-mask';
-import CurrencyFormat from 'react-currency-format';
 import api from '../../utils/api';
-
-const EditProductsContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  flex-direction: row;
-  margin-bottom: 2%;
-  @media (max-width: 1190px) {
-    flex-direction: column;
-    overflow: auto;
-  }
-`;
-
-EditProductsContainer.Col1 = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 70%;
-  flex-direction: column;
-  @media (max-width: 1190px) {
-    width: 100%;
-  }
-`;
-
-const DivInput = styled.div`
-  display: flex;
-  width: 100%;
-  @media (max-width: 1190px) {
-    justify-content: center;
-  }
-`;
-const EditTitle = styled.h2`
-  display: flex;
-  align-items: center;
-  justify-content: initial;
-  width: 100%;
-  font-family: Roboto;
-  @media (max-width: 1190px) {
-    justify-content: center;
-  }
-`;
-
-const NameProduct = styled.p`
-  display: flex;
-  align-items: center;
-  justify-content: initial;
-  width: 100%;
-  margin: 0;
-  font-family: Roboto;
-  @media (max-width: 1190px) {
-    justify-content: center;
-  }
-`;
-const NameProductInput = styled.input`
-  display: flex;
-  align-items: center;
-  justify-content: initial;
-  width: 80%;
-  height: 40px;
-  border-radius: 5px;
-  border-color: ${({ theme }) => theme.colors.borderBoxColor};
-  border-width: 1px;
-  margin-bottom: 2%;
-  margin-top: 1%;
-  font-family: Roboto;
-`;
-
-const CategoryProduct = styled.p`
-  display: flex;
-  align-items: center;
-  justify-content: initial;
-  width: 100%;
-  margin: 0;
-  font-family: Roboto;
-  @media (max-width: 1190px) {
-    justify-content: center;
-  }
-`;
-const PriceAndDiscont = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: initial;
-  width: 100%;
-  flex-direction: row;
-  margin-bottom: 2%;
-`;
-PriceAndDiscont.Col1 = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 50%;
-  flex-direction: column;
-`;
-PriceAndDiscont.Col1.Row1 = styled.p`
-  display: flex;
-  align-items: center;
-  justify-content: initial;
-  width: 100%;
-  margin: 0;
-  font-family: Roboto;
-  @media (max-width: 1190px) {
-    justify-content: center;
-  }
-`;
-PriceAndDiscont.Col1.Row2 = styled(CurrencyFormat)`
-  display: flex;
-  align-items: center;
-  justify-content: initial;
-  width: 60%;
-  height: 40px;
-  border-radius: 5px;
-  border-color: ${({ theme }) => theme.colors.borderBoxColor};
-  border-width: 1px;
-  margin-top: 1%;
-  font-family: Roboto;
-`;
-
-PriceAndDiscont.Col2 = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 50%;
-  flex-direction: column;
-`;
-
-PriceAndDiscont.Col2.Row1 = styled.p`
-  display: flex;
-  align-items: center;
-  justify-content: initial;
-  width: 100%;
-  margin: 0;
-  font-family: Roboto;
-  @media (max-width: 1190px) {
-    justify-content: center;
-  }
-`;
-
-PriceAndDiscont.Col2.Row2 = styled.input`
-  display: flex;
-  align-items: center;
-  justify-content: initial;
-  width: 60%;
-  height: 40px;
-  border-radius: 5px;
-  border-color: ${({ theme }) => theme.colors.borderBoxColor};
-  border-width: 1px;
-  margin-top: 1%;
-  font-family: Roboto;
-`;
-
-const DescriptionProduct = styled.p`
-  display: flex;
-  align-items: center;
-  justify-content: initial;
-  width: 100%;
-  margin: 0;
-  font-family: Roboto;
-  @media (max-width: 1190px) {
-    justify-content: center;
-  }
-`;
-const DescriptionInput = styled.input`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 80%;
-  height: 250px;
-  border-radius: 5px;
-  border-color: ${({ theme }) => theme.colors.borderBoxColor};
-  border-width: 1px;
-  margin-top: 1%;
-  font-family: Roboto;
-`;
-
-EditProductsContainer.Col2 = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 30%;
-  flex-direction: column;
-  @media (max-width: 1190px) {
-    width: 100%;
-    justify-content: center;
-  }
-`;
-
-const SelectImage = styled.p`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  font-family: Roboto;
-  margin: 0;
-  @media (max-width: 1190px) {
-    justify-content: center;
-    margin-top: 5%;
-  }
-`;
-const ButtonCancel = styled.button`
-  height: 55px;
-  width: 200px;
-  font-family: Roboto;
-  font-size: 18px;
-  font-weight: 300;
-  background-color: ${({ theme }) => theme.colors.strongRed};
-  color: white;
-  border: 0;
-  border-radius: 5px;
-  transform: translate(0%, -50%);
-  margin-top: 15%;
-  cursor: pointer;
-`;
-const ButtonConfirm = styled.button`
-  display: flex;
-  margin-top: 50px;
-  height: 55px;
-  width: 200px;
-  font-family: Roboto;
-  font-size: 18px;
-  font-weight: 300;
-  background-color: ${({ theme }) => theme.colors.darkGreen};
-  color: white;
-  border: 0;
-  border-radius: 5px;
-  align-items: center;
-  text-align: center;
-  transform: translate(0%, -50%);
-  justify-content: center;
-  text-align: center;
-  margin-top: 10%;
-  cursor: pointer;
-`;
-
-const Img = styled.img`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 200px;
-  height: 200px;
-  margin-bottom: 5%;
-  margin-top: 5%;
-`;
-const UploadContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-`;
-
-const ImageSelected = styled.input``;
-
-const Label = styled.label`
-  background-color: ${({ theme }) => theme.colors.mediumGreen};
-  color: white;
-  padding: 0.5rem;
-  font-family: sans-serif;
-  border-radius: 0.3rem;
-  cursor: pointer;
-  margin-top: 1rem;
-`;
+import {
+  CategoryContainer, EditProductsContainer, DivInput, EditTitle, NameProduct,
+  NameProductInput, CategoryProduct, PriceAndDiscont, DescriptionProduct,
+  DescriptionInput, SelectImage, ButtonCancel, ButtonConfirm, Img,
+  UploadContainer, ImageSelected, Label,
+}
+  from './styles';
 
 export default function EditProducts({
   closeModal,
@@ -277,6 +21,8 @@ export default function EditProducts({
   att,
   setAtt,
 }) {
+  const [groups, setGroups] = useState([]);
+  const [currentGroups, setCurrentGroups] = useState([]);
   const [productName, setProductName] = useState(product.product_name);
   const [price, setPrice] = useState(product.price);
   const [discount, setDiscount] = useState(product.discount);
@@ -289,6 +35,12 @@ export default function EditProducts({
   const [categoryId, setCategoryId] = useState();
 
   useEffect(() => {
+    api.get('group').then((res) => {
+      setGroups(res.data);
+    });
+    api.get(`/product_group/${product.product_id}`).then((res) => {
+      setCurrentGroups(res.data);
+    });
     const FilteredCategory = categories.filter(
       (category) => category.category_id === product.category_id,
     );
@@ -315,6 +67,19 @@ export default function EditProducts({
   function handleDescriptionChange(event) {
     setDescription(event.target.value);
   }
+  function isChecked(group_id) {
+    let auxiliar = 0;
+    for (let i = 0; i < currentGroups.length; i++) {
+      if (currentGroups[i].group_id === group_id) {
+        auxiliar += 1;
+      }
+    }
+    if (auxiliar > 0) {
+      return true;
+    }
+    return false;
+  }
+
   async function handleSubmit() {
     const formData = new FormData();
 
@@ -337,6 +102,7 @@ export default function EditProducts({
           },
         },
       );
+      await api.put('/product_group', { currentGroups, productId: product.product_id });
       setAtt(!att);
       notification.open({
         message: 'Sucesso!',
@@ -427,6 +193,34 @@ export default function EditProducts({
               onChange={handleDescriptionChange}
             />
           </DivInput>
+          <DescriptionProduct>Grupos do produto:</DescriptionProduct>
+          {groups?.length > 0
+        && groups.map((group) => (
+          <DivInput>
+            <CategoryContainer.Row2.Col1>
+              <input
+                value={group.group_id}
+                onClick={(e) => {
+                  if (e.target.checked) {
+                    setCurrentGroups([...currentGroups, { group_id: e.target.value }]);
+                  } else {
+                    const aux = currentGroups;
+                    const index = aux.findIndex((x) => x.group_id === e.target.value);
+                    if (index !== -1) {
+                      aux.splice(index, 1);
+                      setCurrentGroups([...aux]);
+                    }
+                  }
+                }}
+                defaultChecked={isChecked(group.group_id)}
+                type="checkbox"
+              />
+            </CategoryContainer.Row2.Col1>
+            <CategoryContainer.Row2.Col2>
+              {group.name}
+            </CategoryContainer.Row2.Col2>
+          </DivInput>
+        ))}
         </EditProductsContainer.Col1>
 
         <EditProductsContainer.Col2>
