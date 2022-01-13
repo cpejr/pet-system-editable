@@ -1,12 +1,11 @@
-import { updateStatus } from '../../../src/controllers/StoreController';
-import { withAuthValidation } from '../../../src/utils/Auth';
+import { profileControl } from '../../../src/controllers/AdminController';
+import { isAdmin } from '../../../src/utils/Auth';
 
 export default function handler(req, res) {
   try {
     const { method } = req;
-    console.log(method);
-    if (method === 'PUT') {
-      return withAuthValidation(updateStatus)(req, res);
+    if (method === 'GET') {
+      return isAdmin(profileControl)(req, res);
     }
     return res.status(500).json({ message: 'Internal Server Error' });
   } catch (err) {

@@ -8,13 +8,10 @@ const Container = styled.div`
   display: flex;
   align-items: center;
 `;
-const CardTitle = styled.div`
-  margin: 5px;
+const Title = styled.div`
+  margin-top: 5px;
   font-family: Roboto;
   display: flex;
-  min-height: 100px;
-  height: 100%;
-  text-align: center;
 `;
 const Card = styled.div`
   display: flex;
@@ -24,8 +21,8 @@ const Card = styled.div`
   background-color: white;
   border-radius: 20px;
   border: 2px;
-  width: 200px;
-  height: fit-content;
+  width: 150px;
+  height: 220px;
   margin-top: 20px;
 `;
 const Price = styled.div`
@@ -61,7 +58,7 @@ export default function Cards({
           height="100px"
         />
       </Container>
-      <CardTitle>{product.product_name}</CardTitle>
+      <Title>{product.product_name}</Title>
       <Price>
         R$
         {' '}

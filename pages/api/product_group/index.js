@@ -1,5 +1,5 @@
 import { isSeller } from '../../../src/utils/Auth';
-import { getAll, create, update } from '../../../src/controllers/Product_GroupController';
+import { getAll,create } from '../../../src/controllers/Product_GroupController';
 
 export default function handleGroup(req, res) {
   try {
@@ -9,9 +9,6 @@ export default function handleGroup(req, res) {
     }
     if (method === 'GET') {
       return isSeller(getAll)(req, res);
-    }
-    if (method === 'PUT') {
-      return isSeller(update)(req, res);
     }
     return res.status(500).json({ message: 'Internal Server Error' });
   } catch (err) {

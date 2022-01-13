@@ -1,7 +1,7 @@
 import React from 'react';
 import { ContainerChangePassword, OutterContainer } from './styles';
 import {
-  Title, PerfilMenu, MyChangePassword,
+  Title, FooterMobile, PerfilMenu, MyChangePassword,
 } from '../../../../src/components';
 
 export default function Perfil() {
@@ -12,6 +12,7 @@ export default function Perfil() {
       <OutterContainer>
         <MyChangePassword />
       </OutterContainer>
+      <FooterMobile />
 
     </ContainerChangePassword>
   );
