@@ -53,9 +53,9 @@ module.exports = {
   async profileControl(request, response) {
     const { month, year } = request.query;
     try {
-      const where = { month, year };
-      const stores = await StoreModel.getAllStore(where);
-      const revenue = await OrderModel.getOrderRevenue(where);
+      const when = { month, year };
+      const stores = await StoreModel.getAllStore(when);
+      const revenue = await OrderModel.getOrderRevenue(when);
       return response.status(200).json({
         total_stores: stores.length, revenue,
       });

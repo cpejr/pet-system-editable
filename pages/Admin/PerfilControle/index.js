@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { FaRegUserCircle } from 'react-icons/fa';
-import axios from 'axios';
 import moment from 'moment';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
@@ -10,6 +9,7 @@ import HeaderAdmin from '../../../src/components/HeaderAdmin';
 import AdminCardsFix from '../../../src/components/AdminCardsFix';
 import WindowDividerAdmin from '../../../src/components/WindowDividerAdmin';
 import MonthResumeAdmin from '../../../src/components/MonthResumeAdmin';
+import api from '../../../src/utils/api';
 
 const Container = styled.div`
 display:flex;
@@ -122,23 +122,19 @@ width:80%;
 }
 `;
 
-const api = axios.create({ baseURL: 'http://localhost:3000/' });
-
 export default function Admin() {
   const [revenue, setRevenue] = useState(0);
   const [totalStores, setTotalStores] = useState(0);
   const [value, setValue] = useState(new Date());
   useEffect(() => {
-    api.get('/api/profileControl', {
+    api.get('/profileControl', {
       params: {
         month: moment(value).format('M'),
         year: moment(value).format('Y'),
       },
     }).then((response) => {
       setRevenue(response.data.revenue.sum);
-      console.log(response.data.revenue.sum);
       setTotalStores(response.data.total_stores);
-      console.log(response.data.total_stores);
     });
   }, [value]);
   return (

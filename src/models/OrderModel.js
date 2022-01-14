@@ -91,7 +91,6 @@ module.exports = {
   },
 
   async getOrderRevenue(filter) {
-    console.log(filter);
     try {
       const orders = await connection('Order')
         .sum('total_price')
