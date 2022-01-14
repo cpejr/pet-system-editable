@@ -9,6 +9,7 @@ import {
 } from '../../src/components/CarrinhoComponents';
 import CarrinhoCard from '../../src/components/CarrinhoComponents/CarrinhoCard';
 import { useAuth } from '../../src/contexts/AuthContext';
+import Title from '../../src/components/Title';
 import { ContainerDatas, BoxDatas } from '../../src/components/MyAdresses/styles';
 import api from '../../src/utils/api';
 
@@ -88,9 +89,7 @@ export default function Carrinho() {
   }
   return (
     <ContainerDatas>
-      <BoxDatas>
-        <p>Nenhum produto em seu carrinho</p>
-      </BoxDatas>
+      <Title>Nenhum produto em seu carrinho</Title>
     </ContainerDatas>
   );
 }
