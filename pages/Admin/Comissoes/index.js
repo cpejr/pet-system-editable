@@ -127,20 +127,26 @@ export default function Admin() {
   }, [])
 
   async function handleCommissionChange(event) {
-    setNewComission(event.target.value);
+      setNewComission(event.target.value);
   }
 
   async function handleSubmit(event) {
     event.preventDefault();
-    const body = {
-      share: newComission,
-    };
-    try {
-      await api.put('/admin', body);
-      toast('Comissão alterada com sucesso!', { position: toast.POSITION.BOTTOM_RIGHT });
-    } catch (error) {
-      toast('Erro ao alterar comissão.', { position: toast.POSITION.BOTTOM_RIGHT });
+    if(newComission < 0) {
+      toast('Valor inválido', { position: toast.POSITION.BOTTOM_RIGHT });
+    } else {
+      const body = {
+        share: newComission,
+      };
+      try {
+        await api.put('/admin', body);
+        toast('Comissão alterada com sucesso!', { position: toast.POSITION.BOTTOM_RIGHT });
+        getComission();
+      } catch (error) {
+        toast('Erro ao alterar comissão.', { position: toast.POSITION.BOTTOM_RIGHT });
+      }
     }
+    
   }
 
   return (
