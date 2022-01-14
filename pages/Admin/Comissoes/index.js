@@ -110,6 +110,7 @@ toast.configure();
 
 export default function Admin() {
   const [comission, setComission] = useState(0);
+  const [newComission, setNewComission] = useState(0);
 
 
   async function getComission () {
@@ -126,13 +127,13 @@ export default function Admin() {
   }, [])
 
   async function handleCommissionChange(event) {
-    setComission(event.target.value);
+    setNewComission(event.target.value);
   }
 
   async function handleSubmit(event) {
     event.preventDefault();
     const body = {
-      share: comission,
+      share: newComission,
     };
     try {
       await api.put('/admin', body);
