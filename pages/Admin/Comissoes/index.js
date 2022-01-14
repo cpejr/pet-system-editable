@@ -1,13 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { FaRegUserCircle } from 'react-icons/fa';
-import axios from 'axios';
-import HeaderAdmin from '../../../src/components/HeaderAdmin';
+import api from '../../../src/utils/api';
 // import AdminCards from '../../../src/components/AdminCards';
 import AdminCardsFix from '../../../src/components/AdminCardsFix';
 import WindowDividerAdmin from '../../../src/components/WindowDividerAdmin';
-
-const api = axios.create({ baseURL: 'http://localhost:3000/' });
+import { toast } from 'react-toastify';
 
 const Container = styled.div`
 display:flex;
@@ -23,6 +21,8 @@ width:100%;
 Container.Col1 = styled.div`
 display:flex;
 align-items:center;
+margin-top:5%;
+margin-bottom:5%;
 justify-content:center;
 flex-direction:column;
 width:40%;
@@ -61,48 +61,69 @@ const ContainerComission = styled.div`
 ContainerComission.Field = styled.div`
   display: flex;
   flex-direction: row;
-  margin-top: 5%;
-  margin-bottom: 5%;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1%;
+  margin-bottom: 1%;
 `;
 
 const Title = styled.h1`
   font-family: Roboto;
-  font-size: 45px;
+  font-size: 30px;
   font-weight: 400;
+  margin-bottom: 4%;
 `;
 
 const Text = styled.p`
   font-family: Roboto;
-  font-size: 35px;
-  font-weight: 400;
+  font-size: 25px;
+  font-weight: 300;
   margin: 0;
 
 `;
 
 const Input = styled.input`
-  width: 60%;
-  height: 35px;
-  font-size: 30px;
-  margin-left: 5%;
+  height: 25px;
+  font-size: 20px;
+  margin-left: 2%;
+  display: flex;
+  justify-content: center;
+  width: 25%;
   border-radius: 10px;
   border-color:${({ theme }) => theme.colors.borderBoxColor};
 `;
 
 const Button = styled.button`
   cursor: pointer;
-  height: 60px;
-  width: 200px;
+  height: 45px;
+  width: 150px;
   border-radius: 10px;
   font-family: Roboto;
   font-size: 25px;
-  font-weight: 600;
+  font-weight: 400;
   background-color: ${({ theme }) => theme.colors.darkGreen};
   color: white;
-
+  margin-top:5%;
 `;
 
+toast.configure();
+
 export default function Admin() {
-  const [comission, setComission] = useState('');
+  const [comission, setComission] = useState(0);
+
+
+  async function getComission () {
+    try {
+      const response = await api.get('api/admin');
+      setComission(response.data.share);
+    } catch (error) {
+      alert("Erro ao tentar obter comissão atual");
+    }
+  }
+
+  useEffect(() => {
+    getComission()
+  }, [])
 
   async function handleCommissionChange(event) {
     setComission(event.target.value);
@@ -114,17 +135,16 @@ export default function Admin() {
       share: comission,
     };
     try {
-      if (comission != null) {
-        await api.put('/api/admin', body);
-      }
+      await api.put('api/admin', body);
+      toast('Comissão alterada com sucesso!', { position: toast.POSITION.BOTTOM_RIGHT });
     } catch (error) {
       console.log(error);
+      toast('Erro ao alterar comissão.', { position: toast.POSITION.BOTTOM_RIGHT });
     }
   }
 
   return (
     <div>
-      <HeaderAdmin />
       <Container>
         <Container.Col1>
           <Container.Col1.Row1>
@@ -137,9 +157,12 @@ export default function Admin() {
           <ContainerComission>
             <Title>Ajustar comissão:</Title>
             <ContainerComission.Field>
-              <Text>Porcentagem: </Text>
-              <Input type="text" placeholder="00,00 %" value={comission} onChange={handleCommissionChange} />
+              <Text>Comissão atual: {comission}%</Text>
             </ContainerComission.Field>
+            <ContainerComission.Field>
+              <Text>Alterar para: </Text>
+              <Input type="text" placeholder="00.00" onChange={handleCommissionChange} />
+            </ContainerComission.Field>  
             <Button onClick={handleSubmit}>Confirmar</Button>
           </ContainerComission>
         </Container.Col2>
