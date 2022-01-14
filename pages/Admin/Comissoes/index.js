@@ -7,6 +7,7 @@ import AdminCardsFix from '../../../src/components/AdminCardsFix';
 import WindowDividerAdmin from '../../../src/components/WindowDividerAdmin';
 import { toast } from 'react-toastify';
 
+
 const Container = styled.div`
 display:flex;
 align-items:center;
@@ -114,7 +115,7 @@ export default function Admin() {
 
   async function getComission () {
     try {
-      const response = await api.get('api/admin');
+      const response = await api.get('/admin');
       setComission(response.data.share);
     } catch (error) {
       alert("Erro ao tentar obter comissão atual");
@@ -135,10 +136,9 @@ export default function Admin() {
       share: comission,
     };
     try {
-      await api.put('api/admin', body);
+      await api.put('/admin', body);
       toast('Comissão alterada com sucesso!', { position: toast.POSITION.BOTTOM_RIGHT });
     } catch (error) {
-      console.log(error);
       toast('Erro ao alterar comissão.', { position: toast.POSITION.BOTTOM_RIGHT });
     }
   }
