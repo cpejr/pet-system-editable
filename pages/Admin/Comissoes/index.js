@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { FaRegUserCircle } from 'react-icons/fa';
 import api from '../../../src/utils/api';
-// import AdminCards from '../../../src/components/AdminCards';
 import AdminCardsFix from '../../../src/components/AdminCardsFix';
 import WindowDividerAdmin from '../../../src/components/WindowDividerAdmin';
 import { toast } from 'react-toastify';
