@@ -159,6 +159,7 @@ export default function Admin() {
                   onChange={(newDate) => { setValue(newDate); }}
                   variant="inline"
                   label="Mês e Ano"
+                  InputProps={{ readOnly: true }}
                 />
               </MuiPickersUtilsProvider>
             </Container.Col2.Row1.Col2>
