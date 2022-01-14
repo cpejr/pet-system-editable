@@ -58,7 +58,6 @@ export default function Header({ categories }) {
   const handleSubmit = () => router.push({ pathname: '/Search', query: { keyword: searchText } });
 
   const handleKeypress = (e) => {
-    // it triggers by pressing the enter key
     if (e.key === 'Enter') {
       handleSubmit();
     }
