@@ -90,7 +90,6 @@ const Input = styled.input`
   justify-content: center;
   width: 25%;
   border-radius: 10px;
-  border-color:${({ theme }) => theme.colors.borderBoxColor};
 `;
 
 const Button = styled.button`
@@ -111,6 +110,7 @@ toast.configure();
 export default function Admin() {
   const [comission, setComission] = useState(0);
   const [newComission, setNewComission] = useState(0);
+  const [error, setError] = useState('gray');
 
 
   async function getComission () {
@@ -127,12 +127,14 @@ export default function Admin() {
   }, [])
 
   async function handleCommissionChange(event) {
-      setNewComission(event.target.value);
+    setError('gray');
+    setNewComission(event.target.value);
   }
 
   async function handleSubmit(event) {
     event.preventDefault();
     if(newComission < 0) {
+      setError('red');
       toast('Valor inválido', { position: toast.POSITION.BOTTOM_RIGHT });
     } else {
       const body = {
@@ -167,7 +169,7 @@ export default function Admin() {
             </ContainerComission.Field>
             <ContainerComission.Field>
               <Text>Alterar para: </Text>
-              <Input type="text" placeholder="00.00" onChange={handleCommissionChange} />
+              <Input type="text" placeholder="00.00" onChange={handleCommissionChange} style={{ borderColor: error }} />
             </ContainerComission.Field>  
             <Button onClick={handleSubmit}>Confirmar</Button>
           </ContainerComission>
