@@ -105,7 +105,7 @@ module.exports = {
 
   async createSession(req, res) {
     try {
-      const url = `https://ws.sandbox.pagseguro.uol.com.br/sessions?appId=${process.env.PAGSEGURO_MERCHANT_APP_ID}&appKey=${process.env.PAGSEGURO_MERCHANT_KEY}`;
+      const url = `https://ws.sandbox.pagseguro.uol.com.br/sessions?appId=${process.env.PAGSEGURO_MERCHANT_APP_ID}&appKey=${process.env.PAGSEGURO_MERCHANT_KEY}`; // SANDBOX
       const response = await axios.post(url);
       const { session } = await parseStringPromise(response.data);
       return res.status(200).json(session.id[0]);
@@ -158,7 +158,7 @@ module.exports = {
 
       // Setando endereço url de notificação
 
-      body.notificationURL = 'https://yourstore.com.br/notification';
+      body.notificationURL = 'https://yourstore.com.br/notification'; // ESTÁTICO!
 
       // Setando id de referencia da compra, mesmo do orderId
 
@@ -187,8 +187,8 @@ module.exports = {
 
       // Setando recebedor primario e secundarios
 
-      body['receiver[1].publicKey'] = 'PUBCE22C91B3A7949DD8D3551851198618A';
-      body['receiver[1].split.amount'] = '20.00';
+      body['receiver[1].publicKey'] = 'PUBCE22C91B3A7949DD8D3551851198618A'; // ESTÁTICO!
+      body['receiver[1].split.amount'] = '20.00'; // ESTÁTICO!
 
       // Setando requisição
 
@@ -199,7 +199,7 @@ module.exports = {
         },
       };
 
-      const url = `https://ws.sandbox.pagseguro.uol.com.br/transactions?appId=${process.env.PAGSEGURO_MERCHANT_APP_ID}&appKey=${process.env.PAGSEGURO_MERCHANT_KEY}`;
+      const url = `https://ws.sandbox.pagseguro.uol.com.br/transactions?appId=${process.env.PAGSEGURO_MERCHANT_APP_ID}&appKey=${process.env.PAGSEGURO_MERCHANT_KEY}`; // SANDBOX
       const response = await axios.post(url, qs.stringify(body), options);
 
       const { transaction } = await parseStringPromise(response.data);
@@ -207,7 +207,7 @@ module.exports = {
       // Criando Order interno do sistema
 
       order.firebase_id = user.firebase_id;
-      order.firebase_id_store = items.firebase_id_store;
+      order.firebase_id_store = items[0].firebase_id_store;
       order.address_id = address.address_id;
       order.cart_id = cart.cart_id;
       order.total_price = body['installment.value'];

@@ -3,6 +3,9 @@ import Image from 'next/image';
 import 'date-fns';
 import DateFnsUtils from '@date-io/date-fns';
 import { toast } from 'react-toastify';
+import { Select } from '@material-ui/core';
+import MenuItem from '@material-ui/core/MenuItem';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
 import Head from 'next/head';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import api from '../../src/utils/api';
@@ -59,7 +62,6 @@ export default function Checkout() {
   const body = {
     'installment.value': String((subTotal + parseFloat(products.shipping_tax)).toFixed(2)),
     'installment.quantity': '1',
-    // 'installment.noInterestInstallmentQuantity': '1',
     'creditCard.token': cardToken,
     'creditCard.holder.name': name,
     'creditCard.holder.CPF': cpf,
@@ -77,6 +79,36 @@ export default function Checkout() {
     paymentMethod: cardBrand,
     'shipping.cost': products.shipping_tax,
   };
+
+  // Lista de Estados_________________________________
+  const states = [
+    { AC: 'AC' },
+    { AL: 'AL' },
+    { AM: 'AM' },
+    { BA: 'BA' },
+    { CE: 'CE' },
+    { DF: 'DF' },
+    { ES: 'ES' },
+    { GO: 'GO' },
+    { MA: 'MA' },
+    { MT: 'MT' },
+    { MS: 'MS' },
+    { MG: 'MG' },
+    { PA: 'PA' },
+    { PB: 'PB' },
+    { PR: 'PR' },
+    { PE: 'PE' },
+    { PI: 'PI' },
+    { RJ: 'RJ' },
+    { RN: 'RN' },
+    { RS: 'RS' },
+    { RO: 'RO' },
+    { RR: 'RR' },
+    { SC: 'SC' },
+    { SP: 'SP' },
+    { SE: 'SE' },
+    { TO: 'TO' },
+  ];
 
   // Carregar a imagem da bandeira do cartão__________
   const myLoader = ({ src }) => `https://stc.pagseguro.uol.com.br/${src}`;
@@ -149,7 +181,21 @@ export default function Checkout() {
       toast('Número do cartão inválido', { position: toast.POSITION.BOTTOM_RIGHT });
       return;
     }
-    api.post('/payCheckout/CreditCard', body);
+    if (name?.length === 0) {
+      toast('Por favor insira um nome válido', { position: toast.POSITION.BOTTOM_RIGHT });
+      return;
+    }
+    // if (birth === isToday) {
+    //   toast('Selecione uma data de nascimento válida', { position: toast.POSITION.BOTTOM_RIGHT });
+    //   return;
+    // }
+    if (expires?.length === 0) {
+      toast('Por favor insira uma data de validade válida!', { position: toast.POSITION.BOTTOM_RIGHT });
+      return;
+    }
+
+    console.log('🚀 ~ file: index.js ~ line 168 ~ handleFinish ~ body', body);
+    // api.post('/payCheckout/CreditCard', body);
   }
 
   function loadHash() {
@@ -349,12 +395,22 @@ export default function Checkout() {
                   <FieldSpace />
                   <InputField.InsideLine>
                     <InputName.Inp2>Estado</InputName.Inp2>
-                    <InputField
-                      type="text"
-                      placeholder="Estado"
-                      onChange={handleState}
+                    <Select
+                      labelId="label"
+                      id="select"
                       value={state}
-                    />
+                      onChange={(e) => setState(e.target.value)}
+                      input={<OutlinedInput />}
+                      style={{ width: '80%', height: '40px' }}
+                    >
+                      {states.map((s) => (
+                        <MenuItem
+                          value={s}
+                        >
+                          {s}
+                        </MenuItem>
+                      ))}
+                    </Select>
                   </InputField.InsideLine>
 
                 </InputField.Line>
