@@ -82,32 +82,32 @@ export default function Checkout() {
 
   // Lista de Estados_________________________________
   const states = [
-    { AC: 'AC' },
-    { AL: 'AL' },
-    { AM: 'AM' },
-    { BA: 'BA' },
-    { CE: 'CE' },
-    { DF: 'DF' },
-    { ES: 'ES' },
-    { GO: 'GO' },
-    { MA: 'MA' },
-    { MT: 'MT' },
-    { MS: 'MS' },
-    { MG: 'MG' },
-    { PA: 'PA' },
-    { PB: 'PB' },
-    { PR: 'PR' },
-    { PE: 'PE' },
-    { PI: 'PI' },
-    { RJ: 'RJ' },
-    { RN: 'RN' },
-    { RS: 'RS' },
-    { RO: 'RO' },
-    { RR: 'RR' },
-    { SC: 'SC' },
-    { SP: 'SP' },
-    { SE: 'SE' },
-    { TO: 'TO' },
+    'AC',
+    'AL',
+    'AM',
+    'BA',
+    'CE',
+    'DF',
+    'ES',
+    'GO',
+    'MA',
+    'MT',
+    'MS',
+    'MG',
+    'PA',
+    'PB',
+    'PR',
+    'PE',
+    'PI',
+    'RJ',
+    'RN',
+    'RS',
+    'RO',
+    'RR',
+    'SC',
+    'SP',
+    'SE',
+    'TO',
   ];
 
   // Carregar a imagem da bandeira do cartão__________
@@ -185,17 +185,11 @@ export default function Checkout() {
       toast('Por favor insira um nome válido', { position: toast.POSITION.BOTTOM_RIGHT });
       return;
     }
-    // if (birth === isToday) {
-    //   toast('Selecione uma data de nascimento válida', { position: toast.POSITION.BOTTOM_RIGHT });
-    //   return;
-    // }
     if (expires?.length === 0) {
       toast('Por favor insira uma data de validade válida!', { position: toast.POSITION.BOTTOM_RIGHT });
       return;
     }
-
-    console.log('🚀 ~ file: index.js ~ line 168 ~ handleFinish ~ body', body);
-    // api.post('/payCheckout/CreditCard', body);
+    api.post('/payCheckout/CreditCard', body);
   }
 
   function loadHash() {
