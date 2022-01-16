@@ -90,6 +90,8 @@ const Input = styled.input`
   justify-content: center;
   width: 25%;
   border-radius: 10px;
+  border: solid;
+  border-width: thin;
 `;
 
 const Button = styled.button`
@@ -134,7 +136,7 @@ export default function Admin() {
   async function handleSubmit(event) {
     event.preventDefault();
     if(newComission < 0) {
-      setError('red');
+      setError('#990F02');
       toast('Valor inválido', { position: toast.POSITION.BOTTOM_RIGHT });
     } else {
       const body = {
