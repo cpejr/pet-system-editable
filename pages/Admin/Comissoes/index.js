@@ -135,7 +135,7 @@ export default function Admin() {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    if(newComission < 0) {
+    if(newComission < 0 || newComission > 100 || typeof newComission === "string") {
       setError('#990F02');
       toast('Valor inválido', { position: toast.POSITION.BOTTOM_RIGHT });
     } else {
