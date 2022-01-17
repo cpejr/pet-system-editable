@@ -33,11 +33,20 @@ const Login = () => {
     if (!isLoading && user || store) {
       router.push('/Home');
     }
+    if(!isLoading && !user && !store){
+      router.push('/login');
+    }
   }, [isLoading, user, store]);
 
   if(isLoading || user || store) {
     return <FullPageLoader />;
-  }
+  } 
+
+  
+
+  
+
+  
 
   function handleEmailChange(event) {
     setEmail(event.target.value);
