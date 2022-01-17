@@ -99,7 +99,7 @@ export default function Header({ categories }) {
         <TextBox>
           <TextBox.LocationContainer>
             <GrLocation size="20" />
-            <TextBox.Location type="" placeholder="Localização" />
+            <TextBox.Location type="" placeholder="Belo Horizonte" />
           </TextBox.LocationContainer>
           <TextBox.SearchContainer>
             <Link href={{ pathname: '/Search' }}>
