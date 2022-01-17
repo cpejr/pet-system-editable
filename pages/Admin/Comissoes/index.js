@@ -114,7 +114,6 @@ export default function Admin() {
   const [newComission, setNewComission] = useState(0);
   const [error, setError] = useState('gray');
 
-
   async function getComission () {
     try {
       const response = await api.get('/admin');
@@ -131,11 +130,13 @@ export default function Admin() {
   async function handleCommissionChange(event) {
     setError('gray');
     setNewComission(event.target.value);
+
   }
 
   async function handleSubmit(event) {
     event.preventDefault();
-    if(newComission < 0 || newComission > 100 || typeof newComission === "string") {
+    const typeComission = parseFloat(newComission);
+    if(newComission < 0 || newComission > 100 || isNaN(typeComission)) {
       setError('#990F02');
       toast('Valor inválido', { position: toast.POSITION.BOTTOM_RIGHT });
     } else {
