@@ -77,7 +77,7 @@ function AuthProvider({ children }) {
 
   useEffect(() => {
     validateSession();
-    if(!user && !user) {
+    if(!user && !store) {
       setIsLoading(false);
     }
   }, []);
