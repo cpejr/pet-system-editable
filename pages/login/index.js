@@ -19,43 +19,25 @@ import {
   Divider,
 } from '../../src/components/FormComponents';
 import { useAuth } from '../../src/contexts/AuthContext';
-import { Route, Redirect } from 'react-router-dom';
+import FullPageLoader from '../../src/components/FullPageLoader';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const { login, user, store } = useAuth();
+  const { login, user, store, isLoading } = useAuth();
   /*eslint-disable*/
   const router = useRouter();
 
-  // useEffect(() => {
-  //   if (user || store) {
-  //     router.push('/Home');
-  //   }
-  // });
-  
+  useEffect(() => {
+    if (!isLoading && user || store) {
+      router.push('/Home');
+    }
+  }, [isLoading, user, store]);
 
-  // class protectedComponent extends React.Component {
-  //   render () {
-  //     const { user, store } = useAuth();
-
-  //     if (user || store) {
-  //       return (
-  //         <Redirect to='/Home' />
-  //       );
-  //     }
-  //   }
-  // }
-
-
-
-  // function protectedComponent() {
-  //   if (user || store) {
-  //     router.push('/Home');
-  //   }
-  // }
-
+  if(isLoading || user || store) {
+    return <FullPageLoader />;
+  }
 
   function handleEmailChange(event) {
     setEmail(event.target.value);
@@ -73,6 +55,7 @@ const Login = () => {
       }
     }
   }
+
 
   return (
     <>

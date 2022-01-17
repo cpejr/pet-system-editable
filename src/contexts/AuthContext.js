@@ -13,6 +13,7 @@ const emptyContextInfo = {
   logout: async () => null,
   forgottenPassword: async () => null,
   validateSession: async () => null,
+  isLoading: true,
 };
 
 const AuthContext = React.createContext(emptyContextInfo);
@@ -21,6 +22,11 @@ function AuthProvider({ children }) {
   const [user, setUser] = useState(undefined);
   const [store, setStore] = useState(undefined);
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    setIsLoading(false);
+  }, []);
 
   async function login(email, password) {
     try {
@@ -77,7 +83,7 @@ function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider value={{
-      user, store, login, setUser, logout, forgottenPassword, setStore,
+      user, store, login, setUser, logout, forgottenPassword, setStore, isLoading,
     }}
     >
       {children}
