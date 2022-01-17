@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -19,14 +19,28 @@ import {
   Divider,
 } from '../../src/components/FormComponents';
 import { useAuth } from '../../src/contexts/AuthContext';
+import FullPageLoader from '../../src/components/FullPageLoader';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const { login } = useAuth();
+  const { login, user, store, isLoading } = useAuth();
   /*eslint-disable*/
   const router = useRouter();
+
+  useEffect(() => {
+    if (!isLoading && user || store) {
+      router.push('/Home');
+    }
+    if (!isLoading && !user && !store) {
+      router.push('/login');
+    }
+  }, [isLoading, user, store]);
+
+  if(isLoading || user || store) {
+    return <FullPageLoader />;
+  } 
 
   function handleEmailChange(event) {
     setEmail(event.target.value);
@@ -36,12 +50,15 @@ const Login = () => {
   }
   async function handleSubmit(event) {
     event.preventDefault();
-    try {
-      await login(email, password);
-    } catch (error) {
-      console.log(error); //eslint-disable-line
+    if(!user && !store){
+      try {
+        await login(email, password);
+      } catch (error) {
+        console.log(error); //eslint-disable-line
+      }
     }
   }
+
 
   return (
     <>
