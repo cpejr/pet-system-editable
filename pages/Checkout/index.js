@@ -189,6 +189,26 @@ export default function Checkout() {
       toast('Por favor insira uma data de validade válida!', { position: toast.POSITION.BOTTOM_RIGHT });
       return;
     }
+    if (street?.length === 0) {
+      toast('Por favor insira uma endereço válido!', { position: toast.POSITION.BOTTOM_RIGHT });
+      return;
+    }
+    if (streetNumber?.length === 0) {
+      toast('Por favor insira um número de residência válido!', { position: toast.POSITION.BOTTOM_RIGHT });
+      return;
+    }
+    if (district?.length === 0) {
+      toast('Por favor insira um bairro válido!', { position: toast.POSITION.BOTTOM_RIGHT });
+      return;
+    }
+    if (city?.length === 0) {
+      toast('Por favor insira uma cidade válida!', { position: toast.POSITION.BOTTOM_RIGHT });
+      return;
+    }
+    if (state?.length === 0) {
+      toast('Por favor selecione um estado!', { position: toast.POSITION.BOTTOM_RIGHT });
+      return;
+    }
     api.post('/payCheckout/CreditCard', body);
   }
 
