@@ -1,4 +1,3 @@
-import { ImSpinner5 } from 'react-icons/im';
 import styled from 'styled-components';
 
 const IsLoading = styled.div`
