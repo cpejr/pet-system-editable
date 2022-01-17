@@ -24,10 +24,6 @@ function AuthProvider({ children }) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    setIsLoading(false);
-  }, []);
-
   async function login(email, password) {
     try {
       const response = await api.post('login', { email, password });
@@ -69,8 +65,10 @@ function AuthProvider({ children }) {
       const response = await api.get('session');
       if (response.data.user !== undefined) {
         setUser(response.data.user);
+        setIsLoading(false);
       } else {
         setStore(response.data.store);
+        setIsLoading(false);
       }
     } catch (error) {
       console.error(error); //eslint-disable-line
