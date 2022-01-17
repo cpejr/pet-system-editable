@@ -6,6 +6,7 @@ import { AiOutlineSearch } from 'react-icons/ai';
 import { MobileHeaderContainer, MobileHeaderSpace } from './styles';
 import Link from 'next/link';
 import { useAuth } from '../../../contexts/AuthContext';
+import { MdShoppingCart } from 'react-icons/md';
 
 export default function MobileHeader() {
   const {user, store} = useAuth();
@@ -21,16 +22,22 @@ export default function MobileHeader() {
 
   const HomeButton = () => router.push('/Home');
 
-  const handleSubmit = () => router.push({ pathname: '/Search', query: { keyword: searchText } });
+  const SearchButton = () => router.push({ pathname: '/Search', query: { keyword: searchText } });
 
-  const handleFilterSearchText = (e) => setSearchText(e.target.value);
+  const PersonalButton = () => {
+    if(store){
 
-  const handleKeypress = (e) => {
-    // it triggers by pressing the enter key
-    if (e.key === 'Enter') {
-      handleSubmit();
     }
-  };
+    if(user && user.type != 'Admin') {
+      return(
+      <MobileHeaderContainer.Col3>
+        <MdReceiptMdShoppingCart size="40" />
+        Carrinho
+      </MobileHeaderContainer.Col3>
+      ) 
+      
+    }
+  }
 
   return (
     <div>
@@ -41,13 +48,10 @@ export default function MobileHeader() {
           Início
         </MobileHeaderContainer.Col1>
         <MobileHeaderContainer.Col2>
-          <AiOutlineSearch size="40" />
+          <AiOutlineSearch size="40" onClick={SearchButton}/>
           Busca
         </MobileHeaderContainer.Col2>
-        <MobileHeaderContainer.Col3>
-          <MdReceipt size="40" />
-          Pedidos
-        </MobileHeaderContainer.Col3>
+        <PersonalButton/>
         <MobileHeaderContainer.Col4 onClick={ProfileButton}>
           <BsFillPersonFill size="40" />
           Perfil
