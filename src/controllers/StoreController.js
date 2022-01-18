@@ -23,7 +23,19 @@ module.exports = {
     try {
       const store = await StoreModel.getAllStore();
       return response.status(200).json(store);
-    } catch (error) {
+    } catch (err) {
+      if (err.message) {
+        return response.status(400).json({ notification: err.message });
+      }
+      return response.status(500).json({ notification: 'Internal Server Error' });
+    }
+  },
+
+  async getApprovedStore(request, response) {
+    try {
+      const store = await StoreModel.getApprovedStore();
+      return response.status(200).json(store);
+    } catch (err) {
       if (err.message) {
         return response.status(400).json({ notification: err.message });
       }

@@ -58,7 +58,6 @@ export default function Header({ categories }) {
   const handleSubmit = () => router.push({ pathname: '/Search', query: { keyword: searchText } });
 
   const handleKeypress = (e) => {
-    // it triggers by pressing the enter key
     if (e.key === 'Enter') {
       handleSubmit();
     }
@@ -72,13 +71,6 @@ export default function Header({ categories }) {
         </Link>
       );
     }
-    if (user) {
-      return (
-        <Link href="/User/Perfil/MyRequests">
-          <YourSpace.Word>{user.name}</YourSpace.Word>
-        </Link>
-      );
-    }
     if (store) {
       return (
         <Link href="/Seller/Perfil/Products">
@@ -86,6 +78,21 @@ export default function Header({ categories }) {
         </Link>
       );
     }
+    if (user && user.type != 'admin') {
+      return (
+        <Link href="/User/Perfil/MyRequests">
+          <YourSpace.Word>{user.name}</YourSpace.Word>
+        </Link>
+      );
+    }
+    if (user.type === 'admin') {
+      return (
+        <Link href="/Admin">
+          <YourSpace.Word>{user.name}</YourSpace.Word>
+        </Link>
+      );
+    }
+    
   };
 
   return (
