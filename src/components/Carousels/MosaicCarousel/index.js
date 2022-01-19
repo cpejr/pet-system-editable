@@ -16,11 +16,11 @@ const Item = styled.div`
 export default function MosaicCarousel() {
   const responsive = {
     others: {
-      breakpoint: { max: 5000, min: 801 },
+      breakpoint: { max: 1060, min: 913 },
       items: 0,
     },
     tablet: {
-      breakpoint: { max: 800, min: 465 },
+      breakpoint: { max: 912, min: 465 },
       items: 3,
     },
     mobile: {
