@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Title, PerfilMenu, FooterMobile, MyListFinalizedOrders, MyListOrders,
+  Title, PerfilMenu, MyListFinalizedOrders, MyListOrders,
 } from '../../../../src/components';
 
 export default function Perfil() {
@@ -12,7 +12,6 @@ export default function Perfil() {
       <MyListOrders />
       <Title>Pedidos Anteriores</Title>
       <MyListFinalizedOrders />
-      <FooterMobile />
     </div>
   );
 }

@@ -5,7 +5,8 @@ import Head from "next/head";
 import Header from "../src/components/Header";
 import { AuthProvider } from "../src/contexts/AuthContext";
 import "antd/dist/antd.css";
-import { CartProvider } from "../src/components/CardContext/CardContext"
+import Footer from "../src/components/Footer";
+import MobileHeader from "../src/components/Mobile/MobileHeader";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -58,10 +59,10 @@ function MyApp({ Component, pageProps }) {
       <GlobalStyle />
       <ThemeProvider theme={theme}>
         <AuthProvider>
-          <CartProvider>
-            <Header categories={categories}/>
-            <Component {...pageProps} />
-          </CartProvider>
+          <MobileHeader />
+          <Header categories={categories} />
+          <Component {...pageProps} />
+          <Footer />
         </AuthProvider>
       </ThemeProvider>
     </>

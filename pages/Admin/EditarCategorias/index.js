@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import { FaRegUserCircle } from 'react-icons/fa';
-import HeaderAdmin from '../../../src/components/HeaderAdmin';
 import AdminCardsFix from '../../../src/components/AdminCardsFix';
 import WindowDividerAdmin from '../../../src/components/WindowDividerAdmin';
 import Categories from '../../../src/components/Categories';
 
 const Container = styled.div`
 display:flex;
+margin-top: 4%;
 align-items:center;
 justify-content:center;
 flex-direction:row;
@@ -49,7 +49,7 @@ width:60%;
 export default function Admin() {
   return (
     <div>
-      <HeaderAdmin />
+     
       <Container>
         <Container.Col1>
           <Container.Col1.Row1>

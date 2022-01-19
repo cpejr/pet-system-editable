@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -13,6 +13,7 @@ const emptyContextInfo = {
   logout: async () => null,
   forgottenPassword: async () => null,
   validateSession: async () => null,
+  isLoading: true,
 };
 
 const AuthContext = React.createContext(emptyContextInfo);
@@ -21,6 +22,7 @@ function AuthProvider({ children }) {
   const [user, setUser] = useState(undefined);
   const [store, setStore] = useState(undefined);
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(true);
 
   async function login(email, password) {
     try {
@@ -63,8 +65,10 @@ function AuthProvider({ children }) {
       const response = await api.get('session');
       if (response.data.user !== undefined) {
         setUser(response.data.user);
+        setIsLoading(false);
       } else {
         setStore(response.data.store);
+        setIsLoading(false);
       }
     } catch (error) {
       console.error(error); //eslint-disable-line
@@ -73,11 +77,14 @@ function AuthProvider({ children }) {
 
   useEffect(() => {
     validateSession();
+    if(!user && !store) {
+      setIsLoading(false);
+    }
   }, []);
 
   return (
     <AuthContext.Provider value={{
-      user, store, login, setUser, logout, forgottenPassword, setStore,
+      user, store, login, setUser, logout, forgottenPassword, setStore, isLoading,
     }}
     >
       {children}

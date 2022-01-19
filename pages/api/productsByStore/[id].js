@@ -1,4 +1,4 @@
-import {getAllByStoreId,} from '../../../src/controllers/ProductController';
+import { getAllByStoreId } from '../../../src/controllers/ProductController';
 
 export default function handler(req, res) {
   try {
