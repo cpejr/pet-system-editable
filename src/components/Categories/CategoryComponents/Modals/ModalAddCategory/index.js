@@ -7,11 +7,11 @@ const Box = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  margin-top: 2%;
   margin-bottom: 0;
 `;
 
 const Fields = styled.div`
+  
   align-items: left;
 `;
 
@@ -32,7 +32,7 @@ const Text = styled.p`
 `;
 
 const Input = styled.input`
-  margin-top: 2%;
+  margin-top: 3%;
   width: 100%;
   height: 30px;
   font-size: 20px;
@@ -45,6 +45,7 @@ const Button = styled.button`
   height: 40px;
   width: 150px;
   border-radius: 8px;
+  margin-top: 10px;
   font-size: 20px;
   align-items: center;
   background-color: ${({ theme }) => theme.colors.darkGreen};
@@ -56,6 +57,7 @@ Button.Cancel = styled.button`
   height: 40px;
   width: 150px;
   border-radius: 8px;
+  margin-top: 10px;
   font-size: 20px;
   align-items: center;
   background-color: ${({ theme }) => theme.colors.darkRed};
