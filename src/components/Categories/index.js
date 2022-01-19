@@ -108,7 +108,8 @@ export default function Categories() {
         <Title>Edição de Categorias</Title>
         <AddCategory addCategory={createCategory} />
       </ContainerCategories.Top>
-      <Table>
+      <h2>lista</h2>
+      <Table> 
         <Collapse>
           {categoriesData.map((category, catIndex) => (
             <Panel key={category.id} header={category.name}>
