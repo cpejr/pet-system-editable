@@ -63,6 +63,7 @@ outline:none;
 font-family: Roboto;
 color:${({ theme }) => theme.colors.mediumGreen};
 background-color:#F6C8CA;
+height:98%;
 `;
 MobileHeaderContainer.Col4 = styled.button`
 display:flex;
