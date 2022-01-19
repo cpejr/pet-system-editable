@@ -1,6 +1,8 @@
+/* eslint-disable react/jsx-no-bind */
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import 'date-fns';
+import { useRouter } from 'next/router';
 import DateFnsUtils from '@date-io/date-fns';
 import { toast } from 'react-toastify';
 import { Select } from '@material-ui/core';
@@ -22,9 +24,6 @@ export default function Checkout() {
   // Dados do usuário que está logado_________________
   const { user } = useAuth();
 
-  // Dados da loja responsável pelos produtos_________
-  const [store, setStore] = useState({});
-
   // Variáveis do endereço para cobrança _____________
   const [street, setStreet] = useState();
   const [streetNumber, setStreetNumber] = useState();
@@ -33,14 +32,17 @@ export default function Checkout() {
   const [postalCode, setPostalCode] = useState();
   const [city, setCity] = useState();
   const [state, setState] = useState();
-  const country = useState('BR');
+
+  const router = useRouter();
+
+  // Variável de hash do sender ( A requisição funciona mesmo sem isso ).
+  const [hash, setHash] = useState();
 
   // Variáveis do cartão para a cobrança _____________
   const [cardNumber, setCardNumber] = useState('');
   const [cardBrand, setBrand] = useState();
   const [expires, setExpires] = useState();
   const [CVV, setCVV] = useState('');
-  const [hash, setHash] = useState();
   const [cardToken, setCardToken] = useState();
 
   // Variaveis do titular do cartão___________________
@@ -53,7 +55,6 @@ export default function Checkout() {
   const [products, setProducts] = useState([]);
   const [subTotal, setSubTotal] = useState(0);
   const [paymentData, setPaymentData] = useState();
-  const [paymentMethod, setPaymentMethod] = useState([]);
 
   // Variável para identificar a passagem de página no pagamento
   const [page, setPage] = useState(0);
@@ -78,6 +79,7 @@ export default function Checkout() {
     'billingAddress.country': 'BRA',
     paymentMethod: cardBrand,
     'shipping.cost': products.shipping_tax,
+    'sender.hash': hash,
   };
 
   // Lista de Estados_________________________________
@@ -126,7 +128,7 @@ export default function Checkout() {
           setPaymentData(response);
           setBrand(response.brand.name);
         },
-        error(response) {
+        error() {
         },
       });
     } else if (cardNumber.length <= 6) setBrand(undefined);
@@ -160,15 +162,12 @@ export default function Checkout() {
   function handleCity(event) {
     setCity(event.target.value);
   }
-  function handleState(event) {
-    setState(event.target.value);
-  }
   function handlePhone(event) {
     setPhone(event.target.value);
   }
 
   // Função para finalizar o pagamento_____________
-  function handleFinish() {
+  async function handleFinish() {
     if (cpf?.length !== 11) {
       toast('CPF inválido', { position: toast.POSITION.BOTTOM_RIGHT });
       return;
@@ -209,7 +208,14 @@ export default function Checkout() {
       toast('Por favor selecione um estado!', { position: toast.POSITION.BOTTOM_RIGHT });
       return;
     }
-    api.post('/payCheckout/CreditCard', body);
+    try {
+      await api.post('/payCheckout/CreditCard', body);
+      toast('Sucesso', { position: toast.POSITION.BOTTOM_RIGHT });
+      router.push('/Home');
+    } catch (error) {
+      console.error(error);
+      toast('Erro', { position: toast.POSITION.BOTTOM_RIGHT });
+    }
   }
 
   function loadHash() {
@@ -218,6 +224,7 @@ export default function Checkout() {
         return false;
       }
       setHash(response.senderHash);
+      return true;
     });
   }
 
@@ -243,7 +250,7 @@ export default function Checkout() {
       success(response) {
         setCardToken(response.card.token);
       },
-      error(response) {
+      error() {
         toast('Informações Inválidas, por favor tente novamente!', { position: toast.POSITION.BOTTOM_RIGHT });// Callback para chamadas que falharam.
       },
     });
@@ -260,8 +267,7 @@ export default function Checkout() {
         PagSeguroDirectPayment.setSessionId(res.data);
         PagSeguroDirectPayment.getPaymentMethods({
           amount: subTotal,
-          success(response) {
-            setPaymentMethod(response); // Retorna os meios de pagamento disponíveis.
+          success() {
           },
           error(response) {
             console.log(response); // Callback para chamadas que falharam.
@@ -279,7 +285,6 @@ export default function Checkout() {
             somaPrecos += product.price * product.amount;
           });
           setSubTotal(parseFloat(somaPrecos.toFixed(2)));
-          setStore(res.data[0].firebase_id_store);
           api.get(`/store/${res.data[0].firebase_id_store}`).then((store) => {
             res.data.shipping_tax = store.data.shipping_tax;
             setProducts(res.data);
