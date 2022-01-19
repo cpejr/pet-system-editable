@@ -33,6 +33,21 @@ module.exports = {
     }
   },
 
+  async getAddressOrderAssociated(id) {
+    try {
+      const order = await connection('Order')
+        .where('address_id', id)
+        .first();
+
+      if(order) return true;
+      
+      return false;
+    } catch (error) {
+      console.error(error);
+      throw new Error(error);
+    }
+  },
+
   async getUserMainAddressById(id) {
     try {
       const addressRelation = await connection('User_Address')
@@ -163,7 +178,7 @@ module.exports = {
     }
   },
 
-  async removeAddress(id, user, isMainAddress) {
+  async removeAddress(id, user, isMainAddress, orderAssociated) {
     try {
       if (user) {
         await connection('User_Address')
@@ -191,7 +206,7 @@ module.exports = {
           .delete();
       }
 
-      const response = await connection('Address')
+      const response = orderAssociated ? 'Order associated' : await connection('Address') 
         .where({ address_id: id })
         .delete();
 

@@ -95,8 +95,9 @@ module.exports = {
 
     const mainAddress = user ? await AddressModel.getUserMainAddressById(user.firebase_id) : null;
 
+    const orderAssociated = await AddressModel. getAddressOrderAssociated(id) ;
     try {
-      await AddressModel.removeAddress(id, user, (id === mainAddress.address_id));
+      await AddressModel.removeAddress(id, user, (id === mainAddress.address_id), orderAssociated);
     } catch (err) {
       if (err.message) {
         return response.status(400).json({ notification: err.message });
