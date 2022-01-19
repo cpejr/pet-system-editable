@@ -163,13 +163,26 @@ module.exports = {
     }
   },
 
-  async removeAddress(id, user) {
+  async removeAddress(id, user, isMainAddress) {
     try {
-
       if (user) {
         await connection('User_Address')
           .where({ address_id: id })
           .delete();
+
+        if(isMainAddress){
+          const nextAddress =  await connection('User_Address')
+            .where({ firebase_id: user.firebase_id })
+            .select('*')
+            .first();
+           
+          if(nextAddress){
+            nextAddress.main_address = true;
+            await connection('User_Address')
+              .where({ address_id: nextAddress.address_id })
+              .update(nextAddress);
+          }
+        }
       }
 
       if (!user) {
@@ -181,6 +194,7 @@ module.exports = {
       const response = await connection('Address')
         .where({ address_id: id })
         .delete();
+
       return response;
     } catch (error) {
       console.error(error);
