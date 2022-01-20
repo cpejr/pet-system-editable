@@ -88,6 +88,7 @@ const Icon = styled.div`
 
 export default function MyIndividualOrder(req) {
   const [order, setOrder] = useState(req.order);
+  console.log(order);
   const [store, setStore] = useState('');
   const [order_products, setOrderProducts] = useState('');
   const [address, setAddress,] = useState('');
@@ -137,9 +138,9 @@ export default function MyIndividualOrder(req) {
       <ContainerDatas>
           <BoxDatas>
           <Title>Seu pedido em: {order.product_name}</Title>
-          {order.orderProducts.map((p) => (
+          {order.cart_product.map((p) => (
               <div>
-                 <p>{p.quantify}x {p.product_name} R${valorTotal(p.quantify,p.unit_price)}</p>
+                 <p>{p.amount}x {p.product_name} R${valorTotal(p.amount,p.final_price)}</p>
             </div>
             ))}
             <p>Entrega em: {address.street} - {address.number} - {address.neighbourhood} - {address.city}/{address.state}</p>

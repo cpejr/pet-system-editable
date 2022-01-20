@@ -13,6 +13,7 @@ import {
 } from './styles';
 import StoreIsOpen from '../../src/components/StoreIsOpen';
 
+
 export default function Product({ product, store }) {
   const openingTime = store.opening_time.split(',');
   const closingTime = store.closing_time.split(',');
@@ -20,6 +21,8 @@ export default function Product({ product, store }) {
   const [today, setToday] = useState();
   const data = new Date();
   const day = moment(data).format('dddd');
+  const [quantity, setQuantity] = useState(0);
+
   useEffect(() => {
     if (day) {
       switch (day) {
@@ -53,7 +56,6 @@ export default function Product({ product, store }) {
       }
     }
   }, [day]);
-  const [quantity, setQuantity] = useState(0);
 
   async function handleAddCart() {
     const body = {
@@ -61,24 +63,37 @@ export default function Product({ product, store }) {
       amount: quantity,
       final_price: quantity * product.price,
     };
-    try {
-      await api.post('/CartProducts', body);
-      notification.open({
-        message: 'Sucesso!',
-        description:
-          'O produto foi adicionado ao seu carrinho.',
-        className: 'ant-notification',
-        top: '100px',
-        style: {
-          width: 600,
-        },
-      });
-    } catch (error) {
-      console.error(error);
+    if (quantity > 0) {
+      try {
+        await api.post('/CartProducts', body);
+        notification.open({
+          message: 'Sucesso!',
+          description:
+            'O produto foi adicionado ao seu carrinho.',
+          className: 'ant-notification',
+          top: '100px',
+          style: {
+            width: 600,
+          },
+        });
+      } catch (error) {
+        console.error(error);
+        notification.open({
+          message: 'Falha :(',
+          description:
+            'Erro ao adicionar produto ao carrinho',
+          className: 'ant-notification',
+          top: '100px',
+          style: {
+            width: 600,
+          },
+        });
+      }
+    } else {
       notification.open({
         message: 'Falha :(',
         description:
-          'Erro ao adicionar produto ao carrinho',
+          'A quantidade do produto deve ser maior que zero',
         className: 'ant-notification',
         top: '100px',
         style: {
@@ -86,6 +101,7 @@ export default function Product({ product, store }) {
         },
       });
     }
+    
   }
 
   function handlePlus() {

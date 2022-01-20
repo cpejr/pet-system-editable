@@ -20,16 +20,34 @@ import {
 } from '../../src/components/FormComponents';
 import { useAuth } from '../../src/contexts/AuthContext';
 import FullPageLoader from '../../src/components/FullPageLoader';
+import { toast } from 'react-toastify';
+import api from '../../src/utils/api';
+
+toast.configure();
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [stores, setStores] = useState([]);
+  const [existingStore, setExistingStore] = useState('');
 
   const { login, user, store, isLoading } = useAuth();
   /*eslint-disable*/
   const router = useRouter();
 
+  async function getStores() {
+    try {
+      const response = await api.get('store');
+      console.log(response.data);
+      setStores([...response.data]);
+    } catch (error) {
+      console.warn(error);
+      alert('Erro ao obter lojas');
+    }
+  }
+
   useEffect(() => {
+    getStores();
     if (!isLoading && user || store) {
       router.push('/Home');
     }
@@ -42,20 +60,35 @@ const Login = () => {
     return <FullPageLoader />;
   } 
 
+  function checkStore() {
+    for(var i = 0; i < stores.length; i++){
+      if (stores[i].email === email) {
+        setExistingStore(stores[i]);
+      }
+    }
+  }
+
   function handleEmailChange(event) {
     setEmail(event.target.value);
   }
+
   function handlePasswordChange(event) {
     setPassword(event.target.value);
   }
+
   async function handleSubmit(event) {
     event.preventDefault();
-    if(!user && !store){
+
+    if(!user && !store && existingStore != " " && existingStore.status === true){
       try {
         await login(email, password);
       } catch (error) {
         console.log(error); //eslint-disable-line
       }
+    } else if (existingStore != " " && existingStore.status === false) {
+      toast('Sua solicitação para se tornar um parceiro ainda não foi avaliada', { position: toast.POSITION.BOTTOM_RIGHT });
+    } else {
+      toast('Você não possui cadastro ou sua solicitação para lojista não foi aprovada', { position: toast.POSITION.BOTTOM_RIGHT });
     }
   }
 
@@ -102,7 +135,7 @@ const Login = () => {
               </Link>
             </ItemFormulary>
             <BottomFormulary>
-              <Submit type="submit">Entrar</Submit>
+              <Submit type="submit" onClick={checkStore}>Entrar</Submit>
             </BottomFormulary>
             <BottomFormulary>
               <CreateAccount>Não tem uma conta?</CreateAccount>

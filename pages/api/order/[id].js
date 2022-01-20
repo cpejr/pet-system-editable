@@ -1,4 +1,4 @@
-import { getOne, del } from '../../../src/controllers/OrderController';
+import { getOneOrderAndCartProducts, del } from '../../../src/controllers/OrderController';
 import { isAdmin } from '../../../src/utils/Auth';
 
 export default function handler(req, res) {
@@ -6,7 +6,7 @@ export default function handler(req, res) {
     const { method } = req;
     console.log(method);
     if (method === 'GET') {
-      return getOne(req, res);
+      return getOneOrderAndCartProducts(req, res);
     }
     if (method === 'DELETE') {
       return isAdmin(del)(req, res);

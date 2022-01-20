@@ -27,6 +27,7 @@ function AuthProvider({ children }) {
   async function login(email, password) {
     try {
       const response = await api.post('login', { email, password });
+      console.log(response.data);
       if (response.data.user !== undefined) {
         setUser(response.data.user);
       } else {
