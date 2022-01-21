@@ -20,20 +20,94 @@ import {
   Space,
 } from './styles';
 
+// Lista de Estados_________________________________
+const states = [
+  'AC',
+  'AL',
+  'AM',
+  'BA',
+  'CE',
+  'DF',
+  'ES',
+  'GO',
+  'MA',
+  'MT',
+  'MS',
+  'MG',
+  'PA',
+  'PB',
+  'PR',
+  'PE',
+  'PI',
+  'RJ',
+  'RN',
+  'RS',
+  'RO',
+  'RR',
+  'SC',
+  'SP',
+  'SE',
+  'TO',
+];
+
+const initialState = {
+  street: "",
+  streetNumber: "",
+  district: "",
+  complement: "",
+  postalCode: "",
+  city: "",
+  expires: "",
+  CVV: "",
+  name: "",
+  cpf: "",
+  birth: new Date(),
+  phone: "",
+  candidate_zone_title: "",
+  candidate_section_title: "",
+  candidate_street: "",
+  candidate_district: "",
+  candidate_adress_num: "",
+  candidate_city: "",
+  candidate_state: "",
+  candidate_country: "",
+  candidate_cep: "",
+  candidate_email: "",
+  candidate_phone_number: "",
+  candidate_university: "",
+  candidate_graduation: "",
+  candidate_grade_date_begin: "",
+  candidate_grade_date_end: "",
+  candidate_pGraduate_university: "",
+  candidate_pGraduation_course: "",
+  candidate_ufmg_active_serv: "",
+  candidate_ufmg_retired_serv: "",
+  first_discipline_isolated: "",
+  second_discipline_isolated: "",
+  third_discipline_isolated: "",
+  fourth_discipline_isolated: "",
+  candidate_justify: "",
+};
+
 export default function Checkout() {
+  const router = useRouter();
+
+  const [dados, setDados] = useState(initialState);
+  const handleChange = (event, field) => {
+    setDados({ ...dados, [field]: event.target.value });
+  };
+
   // Dados do usuário que está logado_________________
   const { user } = useAuth();
 
   // Variáveis do endereço para cobrança _____________
-  const [street, setStreet] = useState();
-  const [streetNumber, setStreetNumber] = useState();
-  const [district, setDistrict] = useState();
-  const [complement, setComplement] = useState();
-  const [postalCode, setPostalCode] = useState();
-  const [city, setCity] = useState();
+  // const [street, setStreet] = useState();
+  // const [streetNumber, setStreetNumber] = useState();
+  // const [district, setDistrict] = useState();
+  // const [complement, setComplement] = useState();
+  // const [postalCode, setPostalCode] = useState();
+  // const [city, setCity] = useState();
   const [state, setState] = useState();
-
-  const router = useRouter();
 
   // Variável de hash do sender ( A requisição funciona mesmo sem isso ).
   const [hash, setHash] = useState();
@@ -41,15 +115,15 @@ export default function Checkout() {
   // Variáveis do cartão para a cobrança _____________
   const [cardNumber, setCardNumber] = useState('');
   const [cardBrand, setBrand] = useState();
-  const [expires, setExpires] = useState();
-  const [CVV, setCVV] = useState('');
+  // const [expires, setExpires] = useState();
+  // const [CVV, setCVV] = useState('');
   const [cardToken, setCardToken] = useState();
 
   // Variaveis do titular do cartão___________________
-  const [name, setName] = useState();
-  const [cpf, setCpf] = useState('');
-  const [birth, setBirth] = useState(new Date());
-  const [phone, setPhone] = useState('');
+  // const [name, setName] = useState();
+  // const [cpf, setCpf] = useState('');
+  // const [birth, setBirth] = useState(new Date());
+  // const [phone, setPhone] = useState('');
 
   // Variáveis do Pedido______________________________
   const [products, setProducts] = useState([]);
@@ -64,17 +138,17 @@ export default function Checkout() {
     'installment.value': String((subTotal + parseFloat(products.shipping_tax)).toFixed(2)),
     'installment.quantity': '1',
     'creditCard.token': cardToken,
-    'creditCard.holder.name': name,
-    'creditCard.holder.CPF': cpf,
-    'creditCard.holder.birthDate': dataNascimentoFormatada(birth),
-    'creditCard.holder.areaCode': phone.substring(0, 2),
-    'creditCard.holder.phone': phone.substring(2, 11),
-    'billingAddress.street': street,
-    'billingAddress.number': streetNumber,
-    'billingAddress.complement': complement,
-    'billingAddress.district': district,
-    'billingAddress.postalCode': postalCode,
-    'billingAddress.city': city,
+    'creditCard.holder.name': dados.name,
+    'creditCard.holder.CPF': dados.cpf,
+    'creditCard.holder.birthDate': dataNascimentoFormatada(dados.birth),
+    'creditCard.holder.areaCode': dados.phone?.substring(0, 2),
+    'creditCard.holder.phone': dados.phone?.substring(2, 11),
+    'billingAddress.street': dados.street,
+    'billingAddress.number': dados.streetNumber,
+    'billingAddress.complement': dados.complement,
+    'billingAddress.district': dados.district,
+    'billingAddress.postalCode': dados.postalCode,
+    'billingAddress.city': dados.city,
     'billingAddress.state': state,
     'billingAddress.country': 'BRA',
     paymentMethod: cardBrand,
@@ -82,43 +156,10 @@ export default function Checkout() {
     'sender.hash': hash,
   };
 
-  // Lista de Estados_________________________________
-  const states = [
-    'AC',
-    'AL',
-    'AM',
-    'BA',
-    'CE',
-    'DF',
-    'ES',
-    'GO',
-    'MA',
-    'MT',
-    'MS',
-    'MG',
-    'PA',
-    'PB',
-    'PR',
-    'PE',
-    'PI',
-    'RJ',
-    'RN',
-    'RS',
-    'RO',
-    'RR',
-    'SC',
-    'SP',
-    'SE',
-    'TO',
-  ];
-
   // Carregar a imagem da bandeira do cartão__________
   const myLoader = ({ src }) => `https://stc.pagseguro.uol.com.br/${src}`;
 
   // Funções para setar as variáveis__________________
-  function handleChangeName(event) {
-    setName(event.target.value);
-  }
   function handleChangeCardNumber(event) {
     setCardNumber(event.target.value);
     if (cardNumber.length >= 6 && cardNumber.length <= 7) {
@@ -133,38 +174,41 @@ export default function Checkout() {
       });
     } else if (cardNumber.length <= 6) setBrand(undefined);
   }
-  function handleChangeExpires(event) {
-    setExpires(event.target.value);
-  }
-  function handleChangeCVV(event) {
-    if (event.target.value.length === 3) {
-      setCVV(event.target.value, handleFinish);
-    } else setCVV(event.target.value);
-  }
-  function handleCpfChange(event) {
-    setCpf(event.target.value);
-  }
-  function handleStreet(event) {
-    setStreet(event.target.value);
-  }
-  function handleStreetNumber(event) {
-    setStreetNumber(event.target.value);
-  }
-  function handleDistrict(event) {
-    setDistrict(event.target.value);
-  }
-  function handleComplement(event) {
-    setComplement(event.target.value);
-  }
-  function handlePostalCode(event) {
-    setPostalCode(event.target.value);
-  }
-  function handleCity(event) {
-    setCity(event.target.value);
-  }
-  function handlePhone(event) {
-    setPhone(event.target.value);
-  }
+  // function handleChangeName(event) {
+  //   setName(event.target.value);
+  // }
+  // function handleChangeExpires(event) {
+  //   setExpires(event.target.value);
+  // }
+  // function handleChangeCVV(event) {
+  //   if (event.target.value.length === 3) {
+  //     setCVV(event.target.value, handleFinish);
+  //   } else setCVV(event.target.value);
+  // }
+  // function handleCpfChange(event) {
+  //   setCpf(event.target.value);
+  // }
+  // function handleStreet(event) {
+  //   setStreet(event.target.value);
+  // }
+  // function handleStreetNumber(event) {
+  //   setStreetNumber(event.target.value);
+  // }
+  // function handleDistrict(event) {
+  //   setDistrict(event.target.value);
+  // }
+  // function handleComplement(event) {
+  //   setComplement(event.target.value);
+  // }
+  // function handlePostalCode(event) {
+  //   setPostalCode(event.target.value);
+  // }
+  // function handleCity(event) {
+  //   setCity(event.target.value);
+  // }
+  // function handlePhone(event) {
+  //   setPhone(event.target.value);
+  // }
 
   // Função para finalizar o pagamento_____________
   async function handleFinish() {
@@ -372,9 +416,9 @@ export default function Checkout() {
                     <InputField
                       type="text"
                       placeholder="Endereço"
-                      onChange={handleStreet}
+                      onChange={(e) => handleChange(e, 'name')}
+                      value={dados.name}
                       onClick={loadHash}
-                      value={street}
                     />
                   </InputField.InsideLine>
                 </InputField.Line>
@@ -384,8 +428,8 @@ export default function Checkout() {
                     <InputField
                       type="text"
                       placeholder="Número"
-                      onChange={handleStreetNumber}
-                      value={streetNumber}
+                      onChange={handleChange}
+                      value={dados}
                     />
                   </InputField.InsideLine>
                   <FieldSpace />
@@ -395,8 +439,8 @@ export default function Checkout() {
                       <InputField
                         type="text"
                         placeholder="Bairro"
-                        onChange={handleDistrict}
-                        value={district}
+                        onChange={handleChange}
+                        value={dados}
                       />
                     </MuiPickersUtilsProvider>
                   </InputField.InsideLine>
@@ -407,8 +451,8 @@ export default function Checkout() {
                     <InputField
                       type="text"
                       placeholder="Cidade"
-                      onChange={handleCity}
-                      value={city}
+                      onChange={handleChange}
+                      value={dados}
                     />
                   </InputField.InsideLine>
                   <FieldSpace />
@@ -436,7 +480,7 @@ export default function Checkout() {
                 <InputField.Line>
                   <InputField.InsideLine>
                     <InputName.Inp2>CEP</InputName.Inp2>
-                    <MaskedInput name="postalCode" id="postalCode" mask="99999-999" onChange={handlePostalCode} />
+                    <MaskedInput name="postalCode" id="postalCode" mask="99999-999" onChange={handleChange} />
                   </InputField.InsideLine>
                   <FieldSpace />
                   <InputField.InsideLine>
@@ -444,8 +488,8 @@ export default function Checkout() {
                     <InputField
                       type="text"
                       placeholder="Complemento"
-                      onChange={handleComplement}
-                      value={complement}
+                      onChange={handleChange}
+                      value={dados}
                     />
                   </InputField.InsideLine>
                 </InputField.Line>
@@ -463,24 +507,25 @@ export default function Checkout() {
                     <InputField
                       type="text"
                       placeholder="Seu Nome Aqui"
-                      onChange={handleChangeName}
+                      onChange={(e) => handleChange(e, 'name')}
+                      value={dados.name}
                       onClick={loadHash}
-                      value={name}
                     />
                   </InputField.InsideLine>
                 </InputField.Line>
                 <InputField.Line>
                   <InputField.InsideLine>
                     <InputName.Inp2>CPF</InputName.Inp2>
-                    <MaskedInput name="cpf" id="cpf" mask="999.999.999-99" onChange={handleCpfChange} />
+                    <MaskedInput name="cpf" id="cpf" mask="999.999.999-99" value={dados.cpf} onChange={handleChange} />
                   </InputField.InsideLine>
                   <FieldSpace />
                   <InputField.InsideLine>
                     <InputName.Inp2>Nascimento</InputName.Inp2>
                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
                       <KeyboardDatePicker
-                        value={birth}
-                        onChange={(newDate) => { setBirth(newDate); }}
+                        value={dados.birth}
+                        field="birth"
+                        onChange={(newDate) => { handleChange(newDate); }}
                         variant="inline"
                         format="dd/MM/yyyy"
                       />
@@ -493,8 +538,8 @@ export default function Checkout() {
                     <InputField
                       type="text"
                       placeholder="0000 0000 0000 0000"
-                      onChange={handleChangeCardNumber}
-                      value={cardNumber}
+                      onChange={handleChange}
+                      value={dados}
                     />
                   </InputField.InsideLine>
                   <InputField.InsideLineBrand>
@@ -514,7 +559,7 @@ export default function Checkout() {
                 <InputField.Line>
                   <InputField.InsideLine>
                     <InputName.Inp2>Validade:</InputName.Inp2>
-                    <MaskedInput name="expires" id="expires" mask="99/9999" onChange={handleChangeExpires} />
+                    <MaskedInput name="expires" id="expires" mask="99/9999" onChange={handleChange} />
                   </InputField.InsideLine>
                   <FieldSpace />
                   <InputField.InsideLine>
@@ -522,14 +567,14 @@ export default function Checkout() {
                     <InputField.LineField
                       type="text"
                       placeholder="000"
-                      onChange={handleChangeCVV}
+                      onChange={handleChange}
                       maxlength="4"
-                      value={CVV}
+                      value={dados}
                     />
                   </InputField.InsideLine>
                   <InputField.InsideLine>
                     <InputName.Inp2>Telefone:</InputName.Inp2>
-                    <MaskedInput name="expires" id="expires" mask="(99)99999-9999" onChange={handlePhone} />
+                    <MaskedInput name="expires" id="expires" mask="(99)99999-9999" onChange={handleChange} />
                   </InputField.InsideLine>
                 </InputField.Line>
                 <InputField.Line>
