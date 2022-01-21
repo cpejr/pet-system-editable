@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import api from '../utils/api';
+import email from '../../pages/login';
 
 toast.configure();
 
@@ -21,24 +22,50 @@ const AuthContext = React.createContext(emptyContextInfo);
 function AuthProvider({ children }) {
   const [user, setUser] = useState(undefined);
   const [store, setStore] = useState(undefined);
+  const [storeStatus, setStoreStatus] = useState(undefined);
+  const [existingStore, setExistingStore] = useState(' ');
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
 
-  async function login(email, password) {
+
+  async function getStoreStatus(email) {
     try {
-      const response = await api.post('login', { email, password });
-      console.log(response.data);
-      if (response.data.user !== undefined) {
-        setUser(response.data.user);
-      } else {
-        setStore(response.data.store);
-      }
-      router.push('/Home');
-      toast('Login efetuado com sucesso', { position: toast.POSITION.BOTTOM_RIGHT });
+      const response = await api.getStoreByEmail(`store_status/${email}`);
+      setStoreStatus(response.data);
     } catch (error) {
-      console.error(error); //eslint-disable-line
-      toast('E-mail ou senha incorretos!', { position: toast.POSITION.BOTTOM_RIGHT });
+      alert("Erro ao tentar obter status da loja");
     }
+  }
+
+  useEffect(() => {
+    getStoreStatus(email);
+  })
+
+  
+
+  async function login(email, password) {
+    getStoreStatus(email);
+    if(storeStatus === true) {
+      try {
+        const response = await api.post('login', { email, password });
+        console.log(response.data);
+        if (response.data.user !== undefined) {
+          setUser(response.data.user);
+        } else {
+          setStore(response.data.store);
+        }
+        router.push('/Home');
+        toast('Login efetuado com sucesso', { position: toast.POSITION.BOTTOM_RIGHT });
+      } catch (error) {
+        console.error(error); //eslint-disable-line
+        toast('E-mail ou senha incorretos!', { position: toast.POSITION.BOTTOM_RIGHT });
+      }
+    } else if(storeStatus === false) {
+      toast('Sua solicitação para se tornar um parceiro ainda não foi avaliada', { position: toast.POSITION.BOTTOM_RIGHT });
+    } else {
+      toast('nem um nem outro', { position: toast.POSITION.BOTTOM_RIGHT });
+    }
+    
   }
 
   async function forgottenPassword(email) {

@@ -43,6 +43,19 @@ module.exports = {
     }
   },
 
+  async getStatusByEmail(request, response) {
+    const email = request.body;
+    try {
+      const store = await StoreModel.getStoreStatusByEmail(email);
+      return response.status(200).json(store);
+    } catch (err) {
+      if (err.message) {
+        return response.status(400).json({ notification: err.message });
+      }
+      return response.status(500).json({ notification: 'Internal Server Error' });
+    }
+  },
+
   async create(request, response) {
     const store = request.body;
     const { cover_img, logo_img } = request.files;

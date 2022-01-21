@@ -29,25 +29,14 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [stores, setStores] = useState([]);
-  const [existingStore, setExistingStore] = useState('');
 
   const { login, user, store, isLoading } = useAuth();
   /*eslint-disable*/
   const router = useRouter();
 
-  async function getStores() {
-    try {
-      const response = await api.get('store');
-      console.log(response.data);
-      setStores([...response.data]);
-    } catch (error) {
-      console.warn(error);
-      alert('Erro ao obter lojas');
-    }
-  }
+  
 
   useEffect(() => {
-    getStores();
     if (!isLoading && user || store) {
       router.push('/Home');
     }
@@ -77,18 +66,11 @@ const Login = () => {
   }
 
   async function handleSubmit(event) {
-    event.preventDefault();
-
-    if(!user && !store && existingStore != " " && existingStore.status === true){
-      try {
-        await login(email, password);
-      } catch (error) {
-        console.log(error); //eslint-disable-line
-      }
-    } else if (existingStore != " " && existingStore.status === false) {
-      toast('Sua solicitação para se tornar um parceiro ainda não foi avaliada', { position: toast.POSITION.BOTTOM_RIGHT });
-    } else {
-      toast('Você não possui cadastro ou sua solicitação para lojista não foi aprovada', { position: toast.POSITION.BOTTOM_RIGHT });
+    event.preventDefault()
+    try {
+      await login(email, password);
+    } catch (error) {
+      console.log(error); //eslint-disable-line
     }
   }
 
@@ -135,7 +117,7 @@ const Login = () => {
               </Link>
             </ItemFormulary>
             <BottomFormulary>
-              <Submit type="submit" onClick={checkStore}>Entrar</Submit>
+              <Submit type="submit">Entrar</Submit>
             </BottomFormulary>
             <BottomFormulary>
               <CreateAccount>Não tem uma conta?</CreateAccount>
