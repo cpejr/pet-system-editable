@@ -15,6 +15,10 @@ import StoreIsOpen from '../../src/components/StoreIsOpen';
 import { useCart } from '../../src/components/CardContext/CardContext';
 
 export default function Product({ product, store }) {
+  const cart = useCart();
+  function add(product){
+    cart.addToCart(product);
+  }
   const openingTime = store.opening_time.split(',');
   const closingTime = store.closing_time.split(',');
   const situation = store.working_days.split(',');

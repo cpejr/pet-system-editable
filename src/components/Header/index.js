@@ -108,7 +108,6 @@ export default function Header({ categories }) {
         </Link>
       );
     }
-    
   };
 
   return (
@@ -161,9 +160,13 @@ export default function Header({ categories }) {
               color="#AA4545"
               style={{ cursor: 'pointer' }}
             />
-            <Header.Carrinho>
-              {itemsCount > 0 && <span>{itemsCount}</span>}
-            </Header.Carrinho>
+            {(itemsCount > 0) ? (
+              <Header.Carrinho>
+                {itemsCount > 0 && <span>{itemsCount}</span>}
+              </Header.Carrinho>
+            ) : (
+              <div />
+            )}
           </div>
         </Link>
         <LogOut onClick={logout}>

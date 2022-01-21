@@ -12,14 +12,6 @@ export const CartProvider = ({ children }) => {
   }, [])
 
   const addToCart = (product) => {
-        // setCart((old) => ({ 
-        //   ...old,
-        //   [product.product_id]: product,
-        //   }
-        // //   window.localStorage.setItem('cart', JSON.stringify(cart))
-        // //   return cart
-        //   ))
-        // }
     setCart((old) => {
         const newCart = {
             ...old,

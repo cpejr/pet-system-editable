@@ -19,9 +19,6 @@ export default function CarrinhoCard({
   product, subTotal, setSubTotal, setAtt, att,
 }) {
   const cart = useCart();
-  // const remove = (id) => () => {
-  //   cart.removeFromCart(id);
-  // };
   function remove(id) {
     cart.removeFromCart(id);
   }
@@ -114,7 +111,6 @@ export default function CarrinhoCard({
             handleDelete(product.product_id);
             remove(product.product_id);
           }}
-          // onClick={remove(product.product_id)}
         />
       </CarrinhoCardIcon>
     </CarrinhoCardWrapper>
