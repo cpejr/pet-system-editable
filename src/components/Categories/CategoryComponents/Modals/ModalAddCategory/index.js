@@ -11,7 +11,6 @@ const Box = styled.div`
 `;
 
 const Fields = styled.div`
-  
   align-items: left;
 `;
 
@@ -64,8 +63,58 @@ Button.Cancel = styled.button`
   color: white;
 `;
 
+const ImageSelected = styled.input`
+`;
+
+const UploadContainer = styled.div`
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+`;
+
+const SelectImage = styled.p`
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+  font-family: Roboto;
+  margin: 0;
+  @media(max-width:1190px){
+  justify-content:center;
+}
+`;
+
+const Img = styled.img` 
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width: 200px;
+  height: 200px;
+  margin-bottom:5%;
+  margin-top:5%;
+  `;
+
+const Label = styled.label`
+  background-color:  ${({ theme }) => theme.colors.mediumGreen};;
+  color: white;
+  padding: 0.5rem;
+  font-family: sans-serif;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  margin-top: 1rem;
+`;  
+
 export default function ModalAddCategory({ addCategory, closeModal }) {
   const [categoryName, setCategoryName] = useState('');
+  const [photo, setPhoto] = useState({ file: null, url: null });
+
+  function handleChange(event) {
+    setPhoto({
+      file: event.target.files[0],
+      url: URL.createObjectURL(event.target.files[0]),
+    });
+  }
 
   async function handleCategoryChange(event) {
     setCategoryName(event.target.value);
@@ -74,12 +123,15 @@ export default function ModalAddCategory({ addCategory, closeModal }) {
   async function handleSubmit(event) {
     event.preventDefault();
 
-    const body = {
-      name: categoryName,
-    };
+    const formData = new FormData();
+
+    formData.append('name', categoryName);
+    if (photo.file) {
+      formData.append('img', photo.file);
+    }
     try {
       if (categoryName) {
-        const { data } = await api.post('/category/', body);
+        const { data } = await api.post('/category/', formData);
         data.id = data.category_id;
         delete data.category_id;
         closeModal();
@@ -96,6 +148,12 @@ export default function ModalAddCategory({ addCategory, closeModal }) {
         <Text>Digite o nome da Categoria a ser criada: </Text>
         <Input type="text" value={categoryName} onChange={handleCategoryChange} />
       </Fields>
+      <SelectImage>Selecionar imagem</SelectImage>
+          <UploadContainer>
+            <ImageSelected type="file" id="upload" hidden onChange={handleChange} />
+            <Label for="upload">Escolha a imagem</Label>
+            <Img alt="" src={photo.url} />
+          </UploadContainer>
       <Buttons>
         <Button onClick={handleSubmit}>
           Confirmar

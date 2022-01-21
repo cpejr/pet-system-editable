@@ -60,13 +60,14 @@ export default function ModalDeleteCategory({
     event.preventDefault();
 
     try {
-      await api.delete(`/category/${category.id}`);
+      await api.delete(`/category/${category.category_id}`);
       deleteCategory(catIndex);
       closeModal();
     } catch (error) {
       console.log(error); // eslint-disable-line
     }
   }
+  console.log(catIndex)
 
   return (
     <Box>

@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { Collapse } from 'antd';
 import api from '../../utils/api';
 import CategoryButtons from './CategoryComponents/CategoryButtons';
-import SubcategoryButtons from './CategoryComponents/SubcategoryButtons';
 import AddCategory from './CategoryComponents/Buttons/AddCategory';
 
 const { Panel } = Collapse;
@@ -54,52 +53,33 @@ const Title = styled.h1`
   margin-bottom: 0;
 `;
 
+
 export default function Categories() {
   const [categoriesData, setCategoriesData] = useState([]);
+  const [categories, setCategories] = useState([]);
+
   useEffect(() => {
-    async function fetchData() {
-      const response = await api.get('/category/all');
-      const { data } = response;
-      setCategoriesData(data);
-    }
-    fetchData();
-  }, []);
+    api.get('category').then((response) => {
+      setCategories(response.data)
+    })
+  },[]) 
+  console.log(categories)
 
   // CATEGORIES:
   function createCategory(category) {
-    category.subcategories = [];
-    setCategoriesData([...categoriesData, category]);
+    setCategories([...categories, category]);
   }
 
   function editCategory(category, categoryIndex) {
-    const editedCategories = [...categoriesData];
+    const editedCategories = [...categories];
     editedCategories[categoryIndex] = category;
-    setCategoriesData(editedCategories);
+    setCategories(editedCategories);
   }
 
   function deleteCategory(categoryIndex) {
-    const editedCategories = [...categoriesData];
+    const editedCategories = [...categories];
     editedCategories.splice(categoryIndex, 1);
-    setCategoriesData(editedCategories);
-  }
-
-  // SUBCATEGORIES:
-  function addSubcategory(subcategory, categoryIndex) {
-    const editedCategories = [...categoriesData];
-    editedCategories[categoryIndex].subcategories.push(subcategory);
-    setCategoriesData([...editedCategories]);
-  }
-
-  function editSubcategory(subcategory, categoryIndex, subcategoryIndex) {
-    const editedCategories = [...categoriesData];
-    editedCategories[categoryIndex].subcategories[subcategoryIndex] = subcategory;
-    setCategoriesData(editedCategories);
-  }
-
-  function deleteSubcategory(categoryIndex, subcategoryIndex) {
-    const editedCategories = [...categoriesData];
-    editedCategories[categoryIndex].subcategories.splice(subcategoryIndex, 1);
-    setCategoriesData(editedCategories);
+    setCategories(editedCategories);
   }
 
   return (
@@ -108,32 +88,20 @@ export default function Categories() {
         <Title>Edição de Categorias</Title>
         <AddCategory addCategory={createCategory} />
       </ContainerCategories.Top>
+
       <Table>
         <Collapse>
-          {categoriesData.map((category, catIndex) => (
+          {categories.map((category, catIndex) => (
             <Panel key={category.id} header={category.name}>
               <CategoryButtons
-                key={category.id}
+                key={category.category_id}
                 category={category}
                 catIndex={catIndex}
-                addSubcategory={addSubcategory}
                 editCategory={editCategory}
                 deleteCategory={deleteCategory}
               />
               <Ul>
-                {category.subcategories.map((subcategory, subcatIndex) => (
-                  <ListItem key={subcategory.id}>
-                    {subcategory.name}
-                    <SubcategoryButtons
-                      key={subcategory.id}
-                      subcategory={subcategory}
-                      catIndex={catIndex}
-                      subcatIndex={subcatIndex}
-                      editSubcategory={editSubcategory}
-                      deleteSubcategory={deleteSubcategory}
-                    />
-                  </ListItem>
-                ))}
+               
               </Ul>
             </Panel>
           ))}

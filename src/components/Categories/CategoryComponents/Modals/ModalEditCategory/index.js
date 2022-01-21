@@ -80,11 +80,10 @@ export default function ModalEditCategory({
 
     try {
       if (categoryName) {
-        await api.put(`/category/${category.id}`, body);
+        await api.put(`/category/${category.category_id}`, body);
         const editedCategory = {
-          id: category.id,
+          id: category.category_id,
           name: categoryName,
-          subcategories: category.subcategories,
         };
 
         editCategory(editedCategory, catIndex);
