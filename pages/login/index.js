@@ -55,13 +55,19 @@ const Login = () => {
     setPassword(event.target.value);
   }
 
-  async function handleSubmit(event) {
+  function handleSubmit(event) {
     event.preventDefault()
     try {
-      await login(email, password);
+      login(email, password).then((response) => {
+        if (response === 'Loja em espera') {
+          toast('Loja em espera', { position: toast.POSITION.BOTTOM_RIGHT });
+        }
+        if (response === 'Loja sem cadastro') {
+          toast('Loja sem cadastro', { position: toast.POSITION.BOTTOM_RIGHT });
+        }
+      });
     } catch (error) {
-      toast('Oi Matheus', { position: toast.POSITION.BOTTOM_RIGHT });
-      console.log(error.message); //eslint-disable-line
+      console.error(error); //eslint-disable-line
     }
   }
 

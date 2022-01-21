@@ -29,7 +29,9 @@ function AuthProvider({ children }) {
   async function login(email, password) {
     try {
       const response = await api.post('login', { email, password });
-      console.log(response.data);
+      if (response.data === 'Loja sem cadastro' || response.data === 'Loja em espera') {
+        return response.data;
+      }
       if (response.data.user !== undefined) {
         setUser(response.data.user);
       } else {
@@ -38,10 +40,9 @@ function AuthProvider({ children }) {
       router.push('/Home');
       toast('Login efetuado com sucesso', { position: toast.POSITION.BOTTOM_RIGHT });
     } catch (error) {
-      console.log(error.response.message)
-      console.error(error.message); //eslint-disable-line
+      console.error(error); //eslint-disable-line
       toast('E-mail ou senha incorretos!', { position: toast.POSITION.BOTTOM_RIGHT });
-    } 
+    }
   }
 
   async function forgottenPassword(email) {
