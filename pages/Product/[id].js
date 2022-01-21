@@ -16,8 +16,10 @@ import { useCart } from '../../src/components/CardContext/CardContext';
 
 export default function Product({ product, store }) {
   const cart = useCart();
-  function add(product){
-    cart.addToCart(product);
+  function add(product) {
+    if (quantity > 0) {
+      cart.addToCart(product);
+    }
   }
   const openingTime = store.opening_time.split(',');
   const closingTime = store.closing_time.split(',');

@@ -15,7 +15,7 @@ export const CartProvider = ({ children }) => {
     setCart((old) => {
         const newCart = {
             ...old,
-            [product.product_id]: product,
+            [product.product_id]: product.product_id,
         }
         window.localStorage.setItem('cart', JSON.stringify(newCart))
         return newCart
