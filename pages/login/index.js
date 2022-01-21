@@ -34,8 +34,6 @@ const Login = () => {
   /*eslint-disable*/
   const router = useRouter();
 
-  
-
   useEffect(() => {
     if (!isLoading && user || store) {
       router.push('/Home');
@@ -70,7 +68,8 @@ const Login = () => {
     try {
       await login(email, password);
     } catch (error) {
-      console.log(error); //eslint-disable-line
+      toast('Oi Matheus', { position: toast.POSITION.BOTTOM_RIGHT });
+      console.log(error.message); //eslint-disable-line
     }
   }
 

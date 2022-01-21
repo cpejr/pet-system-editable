@@ -27,25 +27,7 @@ function AuthProvider({ children }) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
 
-
-  async function getStoreStatus(email) {
-    try {
-      const response = await api.getStoreByEmail(`store_status/${email}`);
-      setStoreStatus(response.data);
-    } catch (error) {
-      alert("Erro ao tentar obter status da loja");
-    }
-  }
-
-  useEffect(() => {
-    getStoreStatus(email);
-  })
-
-  
-
   async function login(email, password) {
-    getStoreStatus(email);
-    if(storeStatus === true) {
       try {
         const response = await api.post('login', { email, password });
         console.log(response.data);
@@ -57,15 +39,10 @@ function AuthProvider({ children }) {
         router.push('/Home');
         toast('Login efetuado com sucesso', { position: toast.POSITION.BOTTOM_RIGHT });
       } catch (error) {
-        console.error(error); //eslint-disable-line
+        console.log(error.response.message)
+        console.error(error.message); //eslint-disable-line
         toast('E-mail ou senha incorretos!', { position: toast.POSITION.BOTTOM_RIGHT });
-      }
-    } else if(storeStatus === false) {
-      toast('Sua solicitação para se tornar um parceiro ainda não foi avaliada', { position: toast.POSITION.BOTTOM_RIGHT });
-    } else {
-      toast('nem um nem outro', { position: toast.POSITION.BOTTOM_RIGHT });
-    }
-    
+      } 
   }
 
   async function forgottenPassword(email) {

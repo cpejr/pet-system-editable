@@ -2,6 +2,9 @@ import jwt from "jsonwebtoken";
 import UserModel from "../models/UserModel";
 import StoreModel from "../models/StoreModel";
 import FirebaseModel from "../models/FirebaseModel";
+import { toast } from 'react-toastify';
+
+toast.configure();
 
 export async function signIn(req, res) {
   try {
@@ -9,8 +12,17 @@ export async function signIn(req, res) {
     let firebase_id;
 
     try {
+      const storeStatus = await StoreModel.getStatusByEmail(email);
+      if(storeStatus === undefined) {
+        return res.status(400).json({ message: "Sem cadastro" });
+      } else if (storeStatus.status === false) {
+        return res.status(400).json({ message: "Loja em espera" });
+      }
+      
+      console.log(storeStatus);
       firebase_id = await FirebaseModel.login(email, password);
       const user = await UserModel.getUserById(firebase_id);
+      
 
       if (user) {
         const accessToken = jwt.sign(

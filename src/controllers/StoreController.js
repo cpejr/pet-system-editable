@@ -46,8 +46,8 @@ module.exports = {
   async getStatusByEmail(request, response) {
     const email = request.body;
     try {
-      const store = await StoreModel.getStoreStatusByEmail(email);
-      return response.status(200).json(store);
+      const storeStatus = await StoreModel.getStoreStatusByEmail(email);
+      return response.status(200).json(storeStatus);
     } catch (err) {
       if (err.message) {
         return response.status(400).json({ notification: err.message });

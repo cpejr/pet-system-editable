@@ -94,11 +94,11 @@ module.exports = {
 
   async getStatusByEmail(email) {
     try {
-      const store = await connection('Store')
+      const storeStatus = await connection('Store')
         .where({ email: email })
-        .select('store.status');
-      console.log(store);
-      return store;
+        .select('status')
+        .first();
+      return storeStatus;
     } catch (error) {
       console.error(error);
       throw new Error(error);
