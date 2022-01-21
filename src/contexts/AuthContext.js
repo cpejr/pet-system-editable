@@ -2,8 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import api from '../utils/api';
-import email from '../../pages/login';
+import api from '../utils/api'
 
 toast.configure();
 
@@ -28,21 +27,21 @@ function AuthProvider({ children }) {
   const [isLoading, setIsLoading] = useState(true);
 
   async function login(email, password) {
-      try {
-        const response = await api.post('login', { email, password });
-        console.log(response.data);
-        if (response.data.user !== undefined) {
-          setUser(response.data.user);
-        } else {
-          setStore(response.data.store);
-        }
-        router.push('/Home');
-        toast('Login efetuado com sucesso', { position: toast.POSITION.BOTTOM_RIGHT });
-      } catch (error) {
-        console.log(error.response.message)
-        console.error(error.message); //eslint-disable-line
-        toast('E-mail ou senha incorretos!', { position: toast.POSITION.BOTTOM_RIGHT });
-      } 
+    try {
+      const response = await api.post('login', { email, password });
+      console.log(response.data);
+      if (response.data.user !== undefined) {
+        setUser(response.data.user);
+      } else {
+        setStore(response.data.store);
+      }
+      router.push('/Home');
+      toast('Login efetuado com sucesso', { position: toast.POSITION.BOTTOM_RIGHT });
+    } catch (error) {
+      console.log(error.response.message)
+      console.error(error.message); //eslint-disable-line
+      toast('E-mail ou senha incorretos!', { position: toast.POSITION.BOTTOM_RIGHT });
+    } 
   }
 
   async function forgottenPassword(email) {

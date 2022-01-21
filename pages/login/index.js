@@ -47,14 +47,6 @@ const Login = () => {
     return <FullPageLoader />;
   } 
 
-  function checkStore() {
-    for(var i = 0; i < stores.length; i++){
-      if (stores[i].email === email) {
-        setExistingStore(stores[i]);
-      }
-    }
-  }
-
   function handleEmailChange(event) {
     setEmail(event.target.value);
   }
