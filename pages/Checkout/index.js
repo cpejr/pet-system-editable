@@ -5,9 +5,6 @@ import 'date-fns';
 import { useRouter } from 'next/router';
 import DateFnsUtils from '@date-io/date-fns';
 import { toast } from 'react-toastify';
-import { Select } from '@material-ui/core';
-import MenuItem from '@material-ui/core/MenuItem';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
 import Head from 'next/head';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import api from '../../src/utils/api';
@@ -19,69 +16,22 @@ import {
   RightContainer, Button, Subtitle, Qnt, Product, Price, Data, Subtotal,
   Space,
 } from './styles';
+import SelectState from '../../src/components/SelectState';
+import initialState from '../../src/components/checkoutInitialState';
 import { useCart } from '../../src/components/CardContext/CardContext';
-
-// Lista de Estados_________________________________
-const states = [
-  'AC',
-  'AL',
-  'AM',
-  'BA',
-  'CE',
-  'DF',
-  'ES',
-  'GO',
-  'MA',
-  'MT',
-  'MS',
-  'MG',
-  'PA',
-  'PB',
-  'PR',
-  'PE',
-  'PI',
-  'RJ',
-  'RN',
-  'RS',
-  'RO',
-  'RR',
-  'SC',
-  'SP',
-  'SE',
-  'TO',
-];
-
-const initialState = {
-  street: '',
-  streetNumber: '',
-  district: '',
-  complement: '',
-  postalCode: '',
-  city: '',
-  expires: '',
-  CVV: '',
-  name: '',
-  cpf: '',
-  birth: new Date(),
-  phone: '',
-  cardNumber: '',
-  paymentData: '',
-  hash: '',
-  page: 0,
-  cardToken: '',
-  cardBrand: '',
-  products: [],
-  subTotal: 0,
-};
 
 export default function Checkout() {
   const cart = useCart();
-  function remove() {
-    cart.removeAllFromCart();
-  }
+
   const router = useRouter();
 
   const [dados, setDados] = useState(initialState);
+
+  // Carregar a imagem da bandeira do cartão__________
+  const myLoader = ({ src }) => `https://stc.pagseguro.uol.com.br/${src}`;
+
+  // Dados do usuário que está logado_________________
+  const { user } = useAuth();
 
   const handleChange = (event, field) => {
     if (dados.page === 1 && dados.cardToken === '') {
@@ -108,13 +58,7 @@ export default function Checkout() {
         return true;
       });
     }
-    if (field === 'page') {
-      setDados({ ...dados, [field]: event });
-    }
-    if (field === 'cardToken') {
-      setDados({ ...dados, [field]: event });
-    }
-    if (field === 'birth') {
+    if (field === 'page' || field === 'cardToken' || field === 'birth') {
       setDados({ ...dados, [field]: event });
     }
     if (dados.cardNumber.length >= 6 && dados.cardNumber.length <= 7 && field === 'cardNumber' && dados.cardBrand === '') {
@@ -128,6 +72,7 @@ export default function Checkout() {
           });
         },
         error() {
+          setDados({ ...dados, [field]: event.target.value });
         },
       });
     } else if (dados.cardNumber.length < 6 && field === 'cardNumber' && dados.cardBrand !== '') {
@@ -140,13 +85,10 @@ export default function Checkout() {
     }
   };
 
-  // Carregar a imagem da bandeira do cartão__________
-  const myLoader = ({ src }) => `https://stc.pagseguro.uol.com.br/${src}`;
-
-  // Dados do usuário que está logado_________________
-  const { user } = useAuth();
-
-  const [state, setState] = useState();
+  // Função para remover carrinho
+  function remove() {
+    cart.removeAllFromCart();
+  }
 
   // Função para finalizar o pagamento_____________
   async function handleFinish() {
@@ -395,22 +337,11 @@ export default function Checkout() {
                   <FieldSpace />
                   <InputField.InsideLine>
                     <InputName.Inp2>Estado</InputName.Inp2>
-                    <Select
-                      labelId="label"
-                      id="select"
-                      value={state}
-                      onChange={(e) => setState(e.target.value)}
-                      input={<OutlinedInput />}
-                      style={{ width: '80%', height: '40px' }}
-                    >
-                      {states.map((s) => (
-                        <MenuItem
-                          value={s}
-                        >
-                          {s}
-                        </MenuItem>
-                      ))}
-                    </Select>
+                    <SelectState
+                      name="Estado"
+                      onChange={(e) => handleChange(e, 'state')}
+                      value={dados.state}
+                    />
                   </InputField.InsideLine>
 
                 </InputField.Line>
@@ -432,7 +363,7 @@ export default function Checkout() {
                 </InputField.Line>
                 <InputField.Line>
                   <Button type="submit" onClick={handleReturn}>Retornar</Button>
-                  <Button type="submit" onClick={handleFinish()}>Finalizar</Button>
+                  <Button type="submit" onClick={handleFinish}>Finalizar</Button>
                 </InputField.Line>
               </>
               )}
