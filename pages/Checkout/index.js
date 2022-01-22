@@ -108,7 +108,7 @@ export default function Checkout() {
       'billingAddress.district': dados.district,
       'billingAddress.postalCode': dados.postalCode,
       'billingAddress.city': dados.city,
-      'billingAddress.state': state,
+      'billingAddress.state': dados.state,
       'billingAddress.country': 'BRA',
       paymentMethod: dados.cardBrand,
       'shipping.cost': dados.products.shipping_tax,
