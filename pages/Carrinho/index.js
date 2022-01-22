@@ -3,12 +3,10 @@ import { MdShoppingCart } from 'react-icons/md';
 import {
   CarrinhoBody, CarrinhoFinalButton, CarrinhoIcon, CarrinhoText,
   CarrinhoTitle, CarrinhoTotal, CarrinhoValor, CarrinhoValorText,
-  // CarrinhoValorTitle,
 } from '../../src/components/CarrinhoComponents';
-// import CarrinhoFrete from '../../src/components/CarrinhoComponents/CarrinhoFrete';
 import CarrinhoCard from '../../src/components/CarrinhoComponents/CarrinhoCard';
 import { useAuth } from '../../src/contexts/AuthContext';
-import { ContainerDatas, BoxDatas } from '../../src/components/MyAdresses/styles';
+import { ContainerDatas, BoxDatasCart } from '../../src/components/MyAdresses/styles';
 import api from '../../src/utils/api';
 
 export default function Carrinho() {
@@ -45,43 +43,43 @@ export default function Carrinho() {
             <MdShoppingCart size="100%" color="#609694" />
           </CarrinhoIcon>
         </CarrinhoTitle>
-        <CarrinhoBody>
-          <div>
-            {products.map((p) => (
-              <CarrinhoCard product={p} key={p.product_id} setSubTotal={setSubTotal} subTotal={subTotal} att={att} setAtt={setAtt} />
-            ))}
-          </div>
-          <CarrinhoValor>
-            {/* <CarrinhoValorTitle>Digite o seu CEP</CarrinhoValorTitle>
-            <CarrinhoFrete /> */}
-            <CarrinhoTotal>
-              <CarrinhoValorText>SubTotal</CarrinhoValorText>
-              <CarrinhoValorText>
-                R$
-                {subTotal}
-              </CarrinhoValorText>
-              <CarrinhoValorText>Frete:</CarrinhoValorText>
-              <CarrinhoValorText>
-                R$
-                {products.shipping_tax}
-              </CarrinhoValorText>
-              <CarrinhoValorText>Total</CarrinhoValorText>
-              <CarrinhoValorText>
-                R$
-                {subTotal + parseFloat(products.shipping_tax)}
-              </CarrinhoValorText>
-            </CarrinhoTotal>
-            <CarrinhoFinalButton>Continuar</CarrinhoFinalButton>
-          </CarrinhoValor>
-        </CarrinhoBody>
+        <ContainerDatas>
+          <CarrinhoBody>
+            <div>
+              {products.map((p) => (
+                <CarrinhoCard product={p} key={p.product_id} setSubTotal={setSubTotal} subTotal={subTotal} att={att} setAtt={setAtt} />
+              ))}
+            </div>
+            <CarrinhoValor>
+              <CarrinhoTotal>
+                <CarrinhoValorText>SubTotal</CarrinhoValorText>
+                <CarrinhoValorText>
+                  R$
+                  {subTotal}
+                </CarrinhoValorText>
+                <CarrinhoValorText>Frete:</CarrinhoValorText>
+                <CarrinhoValorText>
+                  R$
+                  {products.shipping_tax}
+                </CarrinhoValorText>
+                <CarrinhoValorText>Total</CarrinhoValorText>
+                <CarrinhoValorText>
+                  R$
+                  {subTotal + parseFloat(products.shipping_tax)}
+                </CarrinhoValorText>
+              </CarrinhoTotal>
+              <CarrinhoFinalButton>Continuar</CarrinhoFinalButton>
+            </CarrinhoValor>
+          </CarrinhoBody>
+        </ContainerDatas>
       </>
     );
   }
   return (
     <ContainerDatas>
-      <BoxDatas>
+      <BoxDatasCart>
         <p>Nenhum produto em seu carrinho</p>
-      </BoxDatas>
+      </BoxDatasCart>
     </ContainerDatas>
   );
 }

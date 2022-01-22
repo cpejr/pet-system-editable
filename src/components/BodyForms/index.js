@@ -88,13 +88,15 @@ BodyUser.Right = styled.div`
 `;
 
 export const StoreBodyWrapper = styled.div`
-    //height: 110vh;
-    // height: 1200px;
-    //background-color: green;
+    min-height: 65vh;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
+
+    @media screen and (min-height: 1024px) {
+      height: 83.3vh;
+  }
 `;
 
 export const StoreBody = styled.div`
@@ -107,8 +109,8 @@ export const StoreBody = styled.div`
     width: 50%;
     // background-color: yellow;
 
-    @media screen and (max-width: 900px) {
-      width: 75%;
+    @media screen and (max-width: 913px) {
+      width: 80%;
     }
     @media screen and (max-width: 600px) {
       width: 90%;
@@ -183,6 +185,11 @@ export const BottomFormulary = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: row;
+  margin-bottom: 5px;
+
+  @media screen and (max-width: 400px) {
+    padding: 5px;
+  }
 `;
 
 export const UnderFields = styled.div`

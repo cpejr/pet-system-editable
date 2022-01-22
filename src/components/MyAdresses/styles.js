@@ -68,10 +68,16 @@ export const Geral = styled.div`
 export const ContainerDatas = styled.div`
   display: flex;
   width: 100%;
+  min-height: 65vh;
   align-items: center;
   flex-direction: row;
   justify-content: center;
   margin-top: 5%;
+
+  @media screen and (max-height: 1024px) {
+    height: 65vh;
+}
+
   @media (max-width: 560px) {
     flex-direction: column;
   }
@@ -96,6 +102,27 @@ export const BoxDatas = styled.div`
   @media (max-width: 560px) {
     width: 80%;
     font-size: 87.5%;
+  }
+`;
+export const BoxDatasCart = styled.div`
+  display: flex;
+  font: 1.5rem Roboto;
+  flex-direction: column;
+  width: 45%;
+  border-color: black;
+  border-radius: 5px;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  line-height: 100%;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 5px;
+  @media (max-width: 560px) {
+    font-size: 1rem;
+  }
+  @media (max-width: 320px) {
+    font-size: 0.8rem;
   }
 `;
 export const GarbageIcon = styled.button`
