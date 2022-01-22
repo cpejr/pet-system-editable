@@ -41,7 +41,6 @@ export default function Checkout() {
   const router = useRouter();
 
   const [dados, setDados] = useState(initialState);
-  console.log('🚀 ~ file: index.js ~ line 29 ~ Checkout ~ dados', dados);
 
   // Carregar a imagem da bandeira do cartão__________
   const myLoader = ({ src }) => `https://stc.pagseguro.uol.com.br/${src}`;
