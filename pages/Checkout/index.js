@@ -19,6 +19,7 @@ import {
   RightContainer, Button, Subtitle, Qnt, Product, Price, Data, Subtotal,
   Space,
 } from './styles';
+import { useCart } from '../../src/components/CardContext/CardContext';
 
 // Lista de Estados_________________________________
 const states = [
@@ -74,6 +75,10 @@ const initialState = {
 };
 
 export default function Checkout() {
+  const cart = useCart();
+  function remove() {
+    cart.removeAllFromCart();
+  }
   const router = useRouter();
 
   const [dados, setDados] = useState(initialState);
@@ -210,6 +215,7 @@ export default function Checkout() {
     try {
       await api.post('/payCheckout/CreditCard', body);
       toast('Sucesso', { position: toast.POSITION.BOTTOM_RIGHT });
+      remove();
       router.push('/Home');
     } catch (error) {
       console.error(error);
@@ -426,7 +432,7 @@ export default function Checkout() {
                 </InputField.Line>
                 <InputField.Line>
                   <Button type="submit" onClick={handleReturn}>Retornar</Button>
-                  <Button type="submit" onClick={handleFinish}>Finalizar</Button>
+                  <Button type="submit" onClick={handleFinish()}>Finalizar</Button>
                 </InputField.Line>
               </>
               )}

@@ -33,8 +33,15 @@ const removeFromCart = (productId) => {
         return newCart
     })
 }
+const removeAllFromCart = () => {
+    setCart(old => {
+        const newCart = {}
+        window.localStorage.setItem('cart', JSON.stringify(newCart))
+        return newCart
+    })
+}
     return(
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart }}>
+    <CartContext.Provider value={{ cart, addToCart, removeFromCart, removeAllFromCart }}>
         {children}
     </CartContext.Provider>
     )
