@@ -65,7 +65,7 @@ export default function Categories() {
       setCategories(response.data)
     })
   },[]) 
-  console.log(categories)
+  
 
   // CATEGORIES:
   function createCategory(category) {

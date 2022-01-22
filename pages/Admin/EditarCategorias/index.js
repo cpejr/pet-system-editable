@@ -12,8 +12,13 @@ align-items:center;
 justify-content:center;
 flex-direction:row;
 width:100%;
+
 @media(max-width:860px){
     flex-direction:column;
+    margin-left: 6%;
+}
+@media(max-width:300px){
+  margin-left: 20%;
 }
 `;
 

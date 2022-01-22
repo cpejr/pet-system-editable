@@ -126,7 +126,7 @@ export default function ModalEditCategory({
   async function handleSubmit(event) {
     event.preventDefault();
     
-    "window.location.reload();"
+   
 
     const body = {
       name: categoryName,

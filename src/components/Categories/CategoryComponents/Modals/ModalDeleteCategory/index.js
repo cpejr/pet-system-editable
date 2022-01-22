@@ -60,11 +60,6 @@ export default function ModalDeleteCategory({
   async function handleSubmit(event) {
     event.preventDefault();
     
-    const refreshButton = document.querySelector('.refresh-button');
-
-const refreshPage = () => {
-  location.reload();
-}
 
     try {
       await api.delete(`/category/${category.category_id}`);
@@ -74,7 +69,6 @@ const refreshPage = () => {
       console.log(error); // eslint-disable-line
     }
   }
-  console.log(catIndex)
 
   return (
     <Box>

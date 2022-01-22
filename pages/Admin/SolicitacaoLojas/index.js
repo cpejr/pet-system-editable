@@ -100,7 +100,6 @@ export default function Admin({ }) {
     try {
       const response = await api.get('store');
       setStores([...response.data].filter((store) => store.status === false));
-      console.log(stores);
     } catch (error) {
       console.warn(error);
       alert('Algo deu errado');

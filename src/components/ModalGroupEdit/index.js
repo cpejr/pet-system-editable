@@ -52,7 +52,6 @@ export default function ModalGroup({ group, setAtt, att }) {
     setGroupName(event.target.value);
   }
   function isChecked(product_id) {
-    console.log('🚀 ~ file: index.js ~ line 48 ~ ModalGroup ~ currentProducts', currentProducts);
     let auxiliar = 0;
     for (let i = 0; i < currentProducts.length; i++) {
       if (currentProducts[i].product_id === product_id) {
@@ -104,12 +103,10 @@ export default function ModalGroup({ group, setAtt, att }) {
     api.get(`/api/productsByStore/${store.firebase_id_store}`).then((res) => {
       setProducts(res.data);
     });
-    console.log('🚀 ~ file: index.js ~ line 109 ~ api.get ~ group.group_id', group.group_id);
     api.get(`/api/productsOfGroup/${group.group_id}`).then((res) => {
       setCurrentProducts(res.data);
     });
   }, []);
-  console.log(currentProducts);
   const body = (
     <div style={modalStyle} className={classes.paper}>
       <ContainerModal>
