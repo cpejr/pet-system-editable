@@ -16,6 +16,7 @@ const ButtonAdd = styled(Button)`
   width: 150px;
   cursor:pointer;
   border: none;
+  margin-left: 20%;
 `;
 
 const nameButton = styled.p`
@@ -41,8 +42,6 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     position: 'absolute',
-    width: '35vw',
-    height: '22vh',
     backgroundColor: theme.palette.background.paper,
     border: '2px solid #609694',
     boxShadow: theme.shadows[5],

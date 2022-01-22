@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import api from '../../../../../utils/api';
 
+
 const Box = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
   margin-bottom: 0;
+
 `;
 
 const Fields = styled.div`
@@ -79,7 +81,7 @@ const SelectImage = styled.p`
   justify-content:center;
   width:100%;
   font-family: Roboto;
-  margin: 0;
+  margin-top: 15px;
   @media(max-width:1190px){
   justify-content:center;
 }
@@ -92,7 +94,7 @@ const Img = styled.img`
   width: 200px;
   height: 200px;
   margin-bottom:5%;
-  margin-top:5%;
+  margin-top:8%;
   `;
 
 const Label = styled.label`
@@ -102,7 +104,7 @@ const Label = styled.label`
   font-family: sans-serif;
   border-radius: 0.3rem;
   cursor: pointer;
-  margin-top: 1rem;
+  margin-top: 1px;
 `;  
 
 export default function ModalAddCategory({ addCategory, closeModal }) {
@@ -122,6 +124,13 @@ export default function ModalAddCategory({ addCategory, closeModal }) {
 
   async function handleSubmit(event) {
     event.preventDefault();
+
+    const refreshButton = document.querySelector('.refresh-button');
+
+const refreshPage = () => {
+  location.reload();
+}
+
 
     const formData = new FormData();
 

@@ -32,7 +32,6 @@ const ContainerCategories = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  width:80%;
   margin-bottom: 5%;
 `;
 
@@ -51,6 +50,9 @@ const Title = styled.h1`
   font-weight: 400; 
   margin-top: 0;
   margin-bottom: 0;
+  @media(min-width: 800px){
+    justify-content:center;
+  }
 `;
 
 

@@ -51,6 +51,7 @@ Button.Cancel = styled.button`
   align-items: center;
   background-color: ${({ theme }) => theme.colors.darkRed};
   color: white;
+  margin-left: 10px;
 `;
 
 export default function ModalDeleteCategory({
@@ -58,6 +59,12 @@ export default function ModalDeleteCategory({
 }) {
   async function handleSubmit(event) {
     event.preventDefault();
+    
+    const refreshButton = document.querySelector('.refresh-button');
+
+const refreshPage = () => {
+  location.reload();
+}
 
     try {
       await api.delete(`/category/${category.category_id}`);
