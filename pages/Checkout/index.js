@@ -6,14 +6,29 @@ import { useRouter } from 'next/router';
 import DateFnsUtils from '@date-io/date-fns';
 import { toast } from 'react-toastify';
 import Head from 'next/head';
-import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import {
+  KeyboardDatePicker,
+  MuiPickersUtilsProvider,
+} from '@material-ui/pickers';
 import api from '../../src/utils/api';
 import { useAuth } from '../../src/contexts/AuthContext';
 import { Title, WindowDivider } from '../../src/components/index';
 import MaskedInput from '../../src/components/MasketInput';
 import {
-  MainContainer, Forms, InputField, InputName, FieldSpace, LeftContainer,
-  RightContainer, Button, Subtitle, Qnt, Product, Price, Data, Subtotal,
+  MainContainer,
+  Forms,
+  InputField,
+  InputName,
+  FieldSpace,
+  LeftContainer,
+  RightContainer,
+  Button,
+  Subtitle,
+  Qnt,
+  Product,
+  Price,
+  Data,
+  Subtotal,
   Space,
 } from './styles';
 import SelectState from '../../src/components/SelectState';
@@ -26,6 +41,7 @@ export default function Checkout() {
   const router = useRouter();
 
   const [dados, setDados] = useState(initialState);
+  console.log('🚀 ~ file: index.js ~ line 29 ~ Checkout ~ dados', dados);
 
   // Carregar a imagem da bandeira do cartão__________
   const myLoader = ({ src }) => `https://stc.pagseguro.uol.com.br/${src}`;
@@ -35,33 +51,35 @@ export default function Checkout() {
 
   const handleChange = (event, field) => {
     if (dados.page === 1 && dados.cardToken === '') {
-      PagSeguroDirectPayment.createCardToken({
+      PagSeguroDirectPayment?.createCardToken({
         cardNumber: dados.cardNumber,
         brand: dados.cardBrand,
         cvv: dados.CVV,
         expirationMonth: dados.expires.substring(0, 2),
         expirationYear: dados.expires.substring(2, 7),
         success(response) {
-          setDados({ ...dados, cardToken: response.card.token });
+          setDados({
+            ...dados,
+            [field]: event.target.value,
+            cardToken: response.card.token,
+          });
         },
         error() {
-          toast('Informações Inválidas, por favor tente novamente!', { position: toast.POSITION.BOTTOM_RIGHT });// Callback para chamadas que falharam.
+          toast('Informações Inválidas, por favor tente novamente!', {
+            position: toast.POSITION.BOTTOM_RIGHT,
+          }); // Callback para chamadas que falharam.
         },
-      });
-    }
-    if (dados.hash === '') {
-      PagSeguroDirectPayment.onSenderHashReady((response) => {
-        if (response.status === 'error') {
-          return false;
-        }
-        setDados({ ...dados, hash: response.senderHash });
-        return true;
       });
     }
     if (field === 'page' || field === 'cardToken' || field === 'birth') {
       setDados({ ...dados, [field]: event });
     }
-    if (dados.cardNumber.length >= 6 && dados.cardNumber.length <= 7 && field === 'cardNumber' && dados.cardBrand === '') {
+    if (
+      dados.cardNumber.length >= 6
+      && dados.cardNumber.length <= 7
+      && field === 'cardNumber'
+      && dados.cardBrand === ''
+    ) {
       PagSeguroDirectPayment.getBrand({
         cardBin: Number(dados.cardNumber),
         success(response) {
@@ -75,7 +93,11 @@ export default function Checkout() {
           setDados({ ...dados, [field]: event.target.value });
         },
       });
-    } else if (dados.cardNumber.length < 6 && field === 'cardNumber' && dados.cardBrand !== '') {
+    } else if (
+      dados.cardNumber.length < 6
+      && field === 'cardNumber'
+      && dados.cardBrand !== ''
+    ) {
       setDados({ ...dados, [field]: event.target.value, cardBrand: '' });
     } else if (event.target !== undefined && field === 'cardNumber') {
       setDados({ ...dados, [field]: event.target.value });
@@ -92,9 +114,11 @@ export default function Checkout() {
 
   // Função para finalizar o pagamento_____________
   async function handleFinish() {
-  // Body passado para a API de pagamentos____________
+    // Body passado para a API de pagamentos____________
     const body = {
-      'installment.value': String((dados.subTotal + parseFloat(dados.products.shipping_tax)).toFixed(2)),
+      'installment.value': String(
+        (dados.subTotal + parseFloat(dados.products.shipping_tax)).toFixed(2),
+      ),
       'installment.quantity': '1',
       'creditCard.token': dados.cardToken,
       'creditCard.holder.name': dados.name,
@@ -114,51 +138,73 @@ export default function Checkout() {
       'shipping.cost': dados.products.shipping_tax,
       'sender.hash': dados.hash,
     };
+    if (dados.phone?.length !== 11) {
+      toast('CPF inválido', { position: toast.POSITION.BOTTOM_RIGHT });
+      return;
+    }
     if (dados.cpf?.length !== 11) {
       toast('CPF inválido', { position: toast.POSITION.BOTTOM_RIGHT });
       return;
     }
     if (dados.cardNumber?.length < 13 || dados.cardNumber?.length > 16) {
-      toast('Número do cartão inválido', { position: toast.POSITION.BOTTOM_RIGHT });
+      toast('Número do cartão inválido', {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
       return;
     }
     if (dados.CVV?.length !== dados.paymentData.brand.cvvSize) {
-      toast('Número do cartão inválido', { position: toast.POSITION.BOTTOM_RIGHT });
+      toast('Número do cartão inválido', {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
       return;
     }
     if (dados.name?.length === 0) {
-      toast('Por favor insira um nome válido', { position: toast.POSITION.BOTTOM_RIGHT });
+      toast('Por favor insira um nome válido', {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
       return;
     }
     if (dados.expires?.length === 0) {
-      toast('Por favor insira uma data de validade válida!', { position: toast.POSITION.BOTTOM_RIGHT });
+      toast('Por favor insira uma data de validade válida!', {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
       return;
     }
     if (dados.street?.length === 0) {
-      toast('Por favor insira uma endereço válido!', { position: toast.POSITION.BOTTOM_RIGHT });
+      toast('Por favor insira uma endereço válido!', {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
       return;
     }
     if (dados.streetNumber?.length === 0) {
-      toast('Por favor insira um número de residência válido!', { position: toast.POSITION.BOTTOM_RIGHT });
+      toast('Por favor insira um número de residência válido!', {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
       return;
     }
     if (dados.district?.length === 0) {
-      toast('Por favor insira um bairro válido!', { position: toast.POSITION.BOTTOM_RIGHT });
+      toast('Por favor insira um bairro válido!', {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
       return;
     }
     if (dados.city?.length === 0) {
-      toast('Por favor insira uma cidade válida!', { position: toast.POSITION.BOTTOM_RIGHT });
+      toast('Por favor insira uma cidade válida!', {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
       return;
     }
     if (dados.state?.length === 0) {
-      toast('Por favor selecione um estado!', { position: toast.POSITION.BOTTOM_RIGHT });
+      toast('Por favor selecione um estado!', {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
       return;
     }
     try {
       await api.post('/payCheckout/CreditCard', body);
       toast('Sucesso', { position: toast.POSITION.BOTTOM_RIGHT });
       remove();
-      router.push('/Home');
+      router.push('/User/Perfil/MyRequests');
     } catch (error) {
       console.error(error);
       toast('Erro', { position: toast.POSITION.BOTTOM_RIGHT });
@@ -191,11 +237,16 @@ export default function Checkout() {
         PagSeguroDirectPayment.setSessionId(res.data);
         PagSeguroDirectPayment.getPaymentMethods({
           amount: dados.subTotal,
-          success() {
-          },
-          error() {
-          },
+          success() {},
+          error() {},
         });
+      });
+      PagSeguroDirectPayment?.onSenderHashReady((response) => {
+        if (response.status === 'error') {
+          return false;
+        }
+        setDados({ ...dados, hash: response.senderHash });
+        return true;
       });
     } catch (error) {
       console.error(error);
@@ -207,7 +258,7 @@ export default function Checkout() {
           res.data.forEach((product) => {
             somaPrecos += product.price * product.amount;
           });
-          setDados({ ...dados, subTotal: (parseFloat(somaPrecos.toFixed(2))) });
+          setDados({ ...dados, subTotal: parseFloat(somaPrecos.toFixed(2)) });
           api.get(`/store/${res.data[0].firebase_id_store}`).then((store) => {
             res.data.shipping_tax = store.data.shipping_tax;
             setDados({ ...dados, products: res.data, subTotal: somaPrecos });
@@ -251,7 +302,7 @@ export default function Checkout() {
                   <Data>
                     R$
                     {' '}
-                    {(p.price.toFixed(2))}
+                    {p.price.toFixed(2)}
                   </Data>
                 ))}
               </Price>
@@ -278,8 +329,9 @@ export default function Checkout() {
                 <Data>
                   R$
                   {' '}
-                  {(dados.subTotal + parseFloat(dados.products.shipping_tax))
-                    .toFixed(2)}
+                  {(
+                    dados.subTotal + parseFloat(dados.products.shipping_tax)
+                  ).toFixed(2)}
                 </Data>
               </Subtotal>
             </Subtitle>
@@ -289,165 +341,196 @@ export default function Checkout() {
             <Title>Dados de Pagamento</Title>
             <Forms>
               {dados.page === 1 && (
-              <>
-                <InputField.Line>
-                  <InputField.InsideLine>
-                    <InputName.Inp2>Endereço da cobrança:</InputName.Inp2>
-                    <InputField
-                      type="text"
-                      placeholder="Endereço"
-                      onChange={(e) => handleChange(e, 'street')}
-                      value={dados.street}
-                    />
-                  </InputField.InsideLine>
-                </InputField.Line>
-                <InputField.Line>
-                  <InputField.InsideLine>
-                    <InputName.Inp2>Número</InputName.Inp2>
-                    <InputField
-                      type="text"
-                      placeholder="Número"
-                      onChange={(e) => handleChange(e, 'streetNumber')}
-                      value={dados.streetNumber}
-                    />
-                  </InputField.InsideLine>
-                  <FieldSpace />
-                  <InputField.InsideLine>
-                    <InputName.Inp2>Bairro: </InputName.Inp2>
-                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <>
+                  <InputField.Line>
+                    <InputField.InsideLine>
+                      <InputName.Inp2>Endereço da cobrança:</InputName.Inp2>
                       <InputField
                         type="text"
-                        placeholder="Bairro"
-                        onChange={(e) => handleChange(e, 'district')}
-                        value={dados.district}
+                        placeholder="Endereço"
+                        onChange={(e) => handleChange(e, 'street')}
+                        value={dados.street}
                       />
-                    </MuiPickersUtilsProvider>
-                  </InputField.InsideLine>
-                </InputField.Line>
-                <InputField.Line>
-                  <InputField.InsideLine>
-                    <InputName.Inp2>Cidade</InputName.Inp2>
-                    <InputField
-                      type="text"
-                      placeholder="Cidade"
-                      onChange={(e) => handleChange(e, 'city')}
-                      value={dados.city}
-                    />
-                  </InputField.InsideLine>
-                  <FieldSpace />
-                  <InputField.InsideLine>
-                    <InputName.Inp2>Estado</InputName.Inp2>
-                    <SelectState
-                      name="Estado"
-                      onChange={(e) => handleChange(e, 'state')}
-                      value={dados.state}
-                    />
-                  </InputField.InsideLine>
-
-                </InputField.Line>
-                <InputField.Line>
-                  <InputField.InsideLine>
-                    <InputName.Inp2>CEP</InputName.Inp2>
-                    <MaskedInput name="postalCode" id="postalCode" mask="99999-999" value={dados.postalCode} onChange={(e) => handleChange(e, 'postalCode')} />
-                  </InputField.InsideLine>
-                  <FieldSpace />
-                  <InputField.InsideLine>
-                    <InputName.Inp2>Complemento</InputName.Inp2>
-                    <InputField
-                      type="text"
-                      placeholder="Complemento"
-                      onChange={(e) => handleChange(e, 'complement')}
-                      value={dados.complement}
-                    />
-                  </InputField.InsideLine>
-                </InputField.Line>
-                <InputField.Line>
-                  <Button type="submit" onClick={handleReturn}>Retornar</Button>
-                  <Button type="submit" onClick={handleFinish}>Finalizar</Button>
-                </InputField.Line>
-              </>
+                    </InputField.InsideLine>
+                  </InputField.Line>
+                  <InputField.Line>
+                    <InputField.InsideLine>
+                      <InputName.Inp2>Número</InputName.Inp2>
+                      <InputField
+                        type="text"
+                        placeholder="Número"
+                        onChange={(e) => handleChange(e, 'streetNumber')}
+                        value={dados.streetNumber}
+                      />
+                    </InputField.InsideLine>
+                    <FieldSpace />
+                    <InputField.InsideLine>
+                      <InputName.Inp2>Bairro: </InputName.Inp2>
+                      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                        <InputField
+                          type="text"
+                          placeholder="Bairro"
+                          onChange={(e) => handleChange(e, 'district')}
+                          value={dados.district}
+                        />
+                      </MuiPickersUtilsProvider>
+                    </InputField.InsideLine>
+                  </InputField.Line>
+                  <InputField.Line>
+                    <InputField.InsideLine>
+                      <InputName.Inp2>Cidade</InputName.Inp2>
+                      <InputField
+                        type="text"
+                        placeholder="Cidade"
+                        onChange={(e) => handleChange(e, 'city')}
+                        value={dados.city}
+                      />
+                    </InputField.InsideLine>
+                    <FieldSpace />
+                    <InputField.InsideLine>
+                      <InputName.Inp2>Estado</InputName.Inp2>
+                      <SelectState
+                        name="Estado"
+                        onChange={(e) => handleChange(e, 'state')}
+                        value={dados.state}
+                      />
+                    </InputField.InsideLine>
+                  </InputField.Line>
+                  <InputField.Line>
+                    <InputField.InsideLine>
+                      <InputName.Inp2>CEP</InputName.Inp2>
+                      <MaskedInput
+                        name="postalCode"
+                        id="postalCode"
+                        mask="99999-999"
+                        value={dados.postalCode}
+                        onChange={(e) => handleChange(e, 'postalCode')}
+                      />
+                    </InputField.InsideLine>
+                    <FieldSpace />
+                    <InputField.InsideLine>
+                      <InputName.Inp2>Complemento</InputName.Inp2>
+                      <InputField
+                        type="text"
+                        placeholder="Complemento"
+                        onChange={(e) => handleChange(e, 'complement')}
+                        value={dados.complement}
+                      />
+                    </InputField.InsideLine>
+                  </InputField.Line>
+                  <InputField.Line>
+                    <Button type="submit" onClick={handleReturn}>
+                      Retornar
+                    </Button>
+                    <Button type="submit" onClick={handleFinish}>
+                      Finalizar
+                    </Button>
+                  </InputField.Line>
+                </>
               )}
               {dados.page === 0 && (
-              <>
-                <InputField.Line>
-                  <InputField.InsideLine>
-                    <InputName.Inp2>Nome no Cartão:</InputName.Inp2>
-                    <InputField
-                      type="text"
-                      placeholder="Seu Nome Aqui"
-                      onChange={(e) => handleChange(e, 'name')}
-                      value={dados.name}
-                    />
-                  </InputField.InsideLine>
-                </InputField.Line>
-                <InputField.Line>
-                  <InputField.InsideLine>
-                    <InputName.Inp2>CPF</InputName.Inp2>
-                    <MaskedInput name="cpf" id="cpf" mask="999.999.999-99" value={dados.cpf} onChange={(e) => handleChange(e, 'cpf')} />
-                  </InputField.InsideLine>
-                  <FieldSpace />
-                  <InputField.InsideLine>
-                    <InputName.Inp2>Nascimento</InputName.Inp2>
-                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                      <KeyboardDatePicker
-                        value={dados.birth}
-                        field="birth"
-                        onChange={(e) => { handleChange(e, 'birth'); }}
-                        variant="inline"
-                        format="dd/MM/yyyy"
+                <>
+                  <InputField.Line>
+                    <InputField.InsideLine>
+                      <InputName.Inp2>Nome no Cartão:</InputName.Inp2>
+                      <InputField
+                        type="text"
+                        placeholder="Seu Nome Aqui"
+                        onChange={(e) => handleChange(e, 'name')}
+                        value={dados.name}
                       />
-                    </MuiPickersUtilsProvider>
-                  </InputField.InsideLine>
-                </InputField.Line>
-                <InputField.Line>
-                  <InputField.InsideLine>
-                    <InputName.Inp2>Número do Cartão:</InputName.Inp2>
-                    <InputField
-                      type="text"
-                      placeholder="0000 0000 0000 0000"
-                      onChange={(e) => handleChange(e, 'cardNumber')}
-                      value={dados.cardNumber}
-                    />
-                  </InputField.InsideLine>
-                  <InputField.InsideLineBrand>
-                    {dados.cardBrand !== undefined ? (
-                      <Image
-                        loader={myLoader}
-                        src={`public/img/payment-methods-flags/68x30/${dados.cardBrand}.png`}
-                        alt=""
-                        width="68"
-                        height="30"
+                    </InputField.InsideLine>
+                  </InputField.Line>
+                  <InputField.Line>
+                    <InputField.InsideLine>
+                      <InputName.Inp2>CPF</InputName.Inp2>
+                      <MaskedInput
+                        name="cpf"
+                        id="cpf"
+                        mask="999.999.999-99"
+                        value={dados.cpf}
+                        onChange={(e) => handleChange(e, 'cpf')}
                       />
-                    ) : (
-                      <div />
-                    )}
-                  </InputField.InsideLineBrand>
-                </InputField.Line>
-                <InputField.Line>
-                  <InputField.InsideLine>
-                    <InputName.Inp2>Validade:</InputName.Inp2>
-                    <MaskedInput name="expires" id="expires" mask="99/9999" value={dados.expires} onChange={(e) => handleChange(e, 'expires')} />
-                  </InputField.InsideLine>
-                  <FieldSpace />
-                  <InputField.InsideLine>
-                    <InputName.Inp2>CVV:</InputName.Inp2>
-                    <InputField.LineField
-                      type="text"
-                      placeholder="000"
-                      onChange={(e) => handleChange(e, 'CVV')}
-                      value={dados.CVV}
-                      maxlength="4"
-                    />
-                  </InputField.InsideLine>
-                  <InputField.InsideLine>
-                    <InputName.Inp2>Telefone:</InputName.Inp2>
-                    <MaskedInput name="phone" id="phone" mask="(99)99999-9999" value={dados.phone} onChange={(e) => handleChange(e, 'phone')} />
-                  </InputField.InsideLine>
-                </InputField.Line>
-                <InputField.Line>
-                  <Button type="submit" onClick={handleProsseguir}>Prosseguir</Button>
-                </InputField.Line>
-              </>
+                    </InputField.InsideLine>
+                    <FieldSpace />
+                    <InputField.InsideLine>
+                      <InputName.Inp2>Nascimento</InputName.Inp2>
+                      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                        <KeyboardDatePicker
+                          value={dados.birth}
+                          field="birth"
+                          onChange={(e) => {
+                            handleChange(e, 'birth');
+                          }}
+                          variant="inline"
+                          format="dd/MM/yyyy"
+                        />
+                      </MuiPickersUtilsProvider>
+                    </InputField.InsideLine>
+                  </InputField.Line>
+                  <InputField.Line>
+                    <InputField.InsideLine>
+                      <InputName.Inp2>Número do Cartão:</InputName.Inp2>
+                      <InputField
+                        type="text"
+                        placeholder="0000 0000 0000 0000"
+                        onChange={(e) => handleChange(e, 'cardNumber')}
+                        value={dados.cardNumber}
+                      />
+                    </InputField.InsideLine>
+                    <InputField.InsideLineBrand>
+                      {dados.cardBrand !== undefined ? (
+                        <Image
+                          loader={myLoader}
+                          src={`public/img/payment-methods-flags/68x30/${dados.cardBrand}.png`}
+                          alt=""
+                          width="68"
+                          height="30"
+                        />
+                      ) : (
+                        <div />
+                      )}
+                    </InputField.InsideLineBrand>
+                  </InputField.Line>
+                  <InputField.Line>
+                    <InputField.InsideLine>
+                      <InputName.Inp2>Validade:</InputName.Inp2>
+                      <MaskedInput
+                        name="expires"
+                        id="expires"
+                        mask="99/9999"
+                        value={dados.expires}
+                        onChange={(e) => handleChange(e, 'expires')}
+                      />
+                    </InputField.InsideLine>
+                    <FieldSpace />
+                    <InputField.InsideLine>
+                      <InputName.Inp2>CVV:</InputName.Inp2>
+                      <InputField.LineField
+                        type="text"
+                        placeholder="000"
+                        onChange={(e) => handleChange(e, 'CVV')}
+                        value={dados.CVV}
+                        maxlength="4"
+                      />
+                    </InputField.InsideLine>
+                    <InputField.InsideLine>
+                      <InputName.Inp2>Telefone:</InputName.Inp2>
+                      <MaskedInput
+                        name="phone"
+                        id="phone"
+                        mask="(99)99999-9999"
+                        value={dados.phone}
+                        onChange={(e) => handleChange(e, 'phone')}
+                      />
+                    </InputField.InsideLine>
+                  </InputField.Line>
+                  <InputField.Line>
+                    <Button type="submit" onClick={handleProsseguir}>
+                      Prosseguir
+                    </Button>
+                  </InputField.Line>
+                </>
               )}
             </Forms>
           </RightContainer>

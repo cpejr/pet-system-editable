@@ -147,7 +147,7 @@ module.exports = {
           if (key === 'product_name') {
             body[`item[${index + 1}].description`] = item[key];
           }
-          if (key === 'final_price') {
+          if (key === 'price') {
             body[`item[${index + 1}].amount`] = item[key].toFixed(2).toString();
           }
           if (key === 'amount') {
