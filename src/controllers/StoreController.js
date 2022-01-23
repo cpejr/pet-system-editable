@@ -2,7 +2,6 @@ const { v4: uuidv4 } = require('uuid');
 const StoreModel = require('../models/StoreModel');
 const FirebaseModel = require('../models/FirebaseModel');
 const AwsModel = require('../models/AwsModel');
-// const ProductModel = require('../models/ProductModel');
 
 module.exports = {
   async getOne(request, response) {
@@ -35,19 +34,6 @@ module.exports = {
     try {
       const store = await StoreModel.getApprovedStore();
       return response.status(200).json(store);
-    } catch (err) {
-      if (err.message) {
-        return response.status(400).json({ notification: err.message });
-      }
-      return response.status(500).json({ notification: 'Internal Server Error' });
-    }
-  },
-
-  async getStatusByEmail(request, response) {
-    const email = request.body;
-    try {
-      const storeStatus = await StoreModel.getStoreStatusByEmail(email);
-      return response.status(200).json(storeStatus);
     } catch (err) {
       if (err.message) {
         return response.status(400).json({ notification: err.message });

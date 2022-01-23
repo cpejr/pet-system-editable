@@ -19,7 +19,6 @@ export async function signIn(req, res) {
         return res.status(200).json('Loja em espera');
       }
 
-      console.log(storeStatus);
       firebase_id = await FirebaseModel.login(email, password);
       const user = await UserModel.getUserById(firebase_id);
 

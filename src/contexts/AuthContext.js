@@ -21,8 +21,6 @@ const AuthContext = React.createContext(emptyContextInfo);
 function AuthProvider({ children }) {
   const [user, setUser] = useState(undefined);
   const [store, setStore] = useState(undefined);
-  const [storeStatus, setStoreStatus] = useState(undefined);
-  const [existingStore, setExistingStore] = useState(' ');
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
 
@@ -30,11 +28,13 @@ function AuthProvider({ children }) {
     try {
       const response = await api.post('login', { email, password });
       if (response.data === 'Loja sem cadastro' || response.data === 'Loja em espera') {
+        console.log(response.data);
         return response.data;
       }
       if (response.data.user !== undefined) {
         setUser(response.data.user);
       } else {
+        console.log(response.data);
         setStore(response.data.store);
       }
       router.push('/Home');

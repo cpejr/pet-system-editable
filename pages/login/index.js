@@ -21,14 +21,12 @@ import {
 import { useAuth } from '../../src/contexts/AuthContext';
 import FullPageLoader from '../../src/components/FullPageLoader';
 import { toast } from 'react-toastify';
-import api from '../../src/utils/api';
 
 toast.configure();
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [stores, setStores] = useState([]);
 
   const { login, user, store, isLoading } = useAuth();
   /*eslint-disable*/
@@ -60,10 +58,10 @@ const Login = () => {
     try {
       login(email, password).then((response) => {
         if (response === 'Loja em espera') {
-          toast('Loja em espera', { position: toast.POSITION.BOTTOM_RIGHT });
+          toast('Sua solicitação para se tornar um parceiro ainda não foi avaliada', { position: toast.POSITION.BOTTOM_RIGHT });
         }
         if (response === 'Loja sem cadastro') {
-          toast('Loja sem cadastro', { position: toast.POSITION.BOTTOM_RIGHT });
+          toast('Você não possui cadastro', { position: toast.POSITION.BOTTOM_RIGHT });
         }
       });
     } catch (error) {
