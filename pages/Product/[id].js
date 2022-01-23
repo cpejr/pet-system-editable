@@ -12,9 +12,16 @@ import {
   CarrinhoCardText, StoreStatusClosed, StatusContainer, StoreOpenedTime,
 } from './styles';
 import StoreIsOpen from '../../src/components/StoreIsOpen';
+import { useCart } from '../../src/components/CardContext/CardContext';
 
 
 export default function Product({ product, store }) {
+  const cart = useCart();
+  function add(product) {
+    if (quantity > 0) {
+      cart.addToCart(product);
+    }
+  }
   const openingTime = store.opening_time.split(',');
   const closingTime = store.closing_time.split(',');
   const situation = store.working_days.split(',');
@@ -179,7 +186,11 @@ export default function Product({ product, store }) {
                   </Button>
                 </ButtonsContainer.Col>
                 <ButtonsContainer.Col>
-                  <AddCarButton onClick={handleAddCart}>
+                  <AddCarButton onClick={() => {
+                    handleAddCart();
+                    add(product);
+                  }}
+                  >
                     Adicionar ao carrinho
                   </AddCarButton>
                 </ButtonsContainer.Col>
