@@ -44,7 +44,7 @@ export default function Store() {
       toast('Email inválido!', { position: toast.POSITION.BOTTOM_RIGHT });
       return;
     }
-    if (phone?.length !== 10) {
+    if ((phone?.length !== 10) && (phone?.length !== 0)) {
       toast('Telefone inválido', { position: toast.POSITION.BOTTOM_RIGHT });
       return;
     }
