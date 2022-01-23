@@ -17,6 +17,7 @@ import {
   ItemBottomHeader,
   LogOut,
 } from './styles';
+import { useCart } from '../CardContext/CardContext';
 
 Header.Wrapper = styled.div`
   display: flex;
@@ -37,6 +38,19 @@ Header.Top = styled.div`
   background-color: ${({ theme }) => theme.colors.rose};
 `;
 
+Header.Carrinho = styled.span`
+  font-size: 12px;
+  background: #ff0000;
+  color: #fff;
+  padding: 0 5px;
+  vertical-align: top;
+  margin-left: -10px;
+  margin-bottom: 25px;
+  margin-top: -10px;
+  font-weight: 600;
+  border-radius: 9px; 
+`;
+
 Header.Bottom = styled.div`
   display: flex;
   width: 100%;
@@ -47,6 +61,8 @@ Header.Bottom = styled.div`
 `;
 
 export default function Header({ categories }) {
+  const cart = useCart();
+  const itemsCount = Object.keys(cart.cart).length;
   const { user, store, logout } = useAuth();
 
   const [searchText, setSearchText] = useState('');
@@ -92,7 +108,6 @@ export default function Header({ categories }) {
         </Link>
       );
     }
-    
   };
 
   return (
@@ -139,11 +154,20 @@ export default function Header({ categories }) {
           </YourSpace>
         </YourSpaceContainer>
         <Link href="/Carrinho">
-          <MdShoppingCart
-            size="30"
-            color="#AA4545"
-            style={{ cursor: 'pointer' }}
-          />
+          <div>
+            <MdShoppingCart
+              size="30"
+              color="#AA4545"
+              style={{ cursor: 'pointer' }}
+            />
+            {(itemsCount > 0) ? (
+              <Header.Carrinho>
+                {itemsCount > 0 && <span>{itemsCount}</span>}
+              </Header.Carrinho>
+            ) : (
+              <div />
+            )}
+          </div>
         </Link>
         <LogOut onClick={logout}>
           <Link href="/login">
