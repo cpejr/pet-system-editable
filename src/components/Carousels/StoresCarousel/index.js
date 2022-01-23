@@ -134,11 +134,11 @@ export default function StoresCarousel(props) {
 
   const responsive = {
     desktop: {
-      breakpoint: { max: 3000, min: 1500 },
+      breakpoint: { max: 3000, min: 1800 },
       items: 4,
     },
     midDesktop: {
-      breakpoint: { max: 1500, min: 1198 },
+      breakpoint: { max: 1799, min: 1198 },
       items: 3,
     },
     tablet: {

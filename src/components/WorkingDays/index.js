@@ -412,11 +412,9 @@ export default function StoreCreate(props) {
               <ItemFormulary>
                 <MaskedInput name="closing_time" id="closing_time" mask="99:99" value={closingTimeTer} onChange={handleClosingTimeChangeTer} />
               </ItemFormulary>
-
             </DividedItemFormulary>
 
             <DividedItemFormulary>
-
               <ItemFormulary>
                 <TextBox type="text" value="Quarta" />
               </ItemFormulary>

@@ -157,7 +157,7 @@ export const ItemFormulary = styled.div`
   display: flex;
   flex-direction: column;
   align-items: left;
-  //background-color:green;
+  margin-right: 5px;
 `;
 
 // Div exclusiva para componente IE:
@@ -175,7 +175,7 @@ export const DividedItemFormulary = styled.div`
   flex-direction: row;
   //background-color: blue; 
 
-  @media screen and (max-width: 400px) {
+  @media screen and (max-width: 500px) {
       width: 100%;
       flex-direction: column;
     }

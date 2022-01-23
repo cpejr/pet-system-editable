@@ -27,6 +27,10 @@ export const Section = styled.button`
   margin-right: 1%;
   padding-right: 1%;
 
+  @media (max-width: 560px) {
+    font-size: small;
+  }
+
 `;
 
 export const StyledSpan = styled.span`
