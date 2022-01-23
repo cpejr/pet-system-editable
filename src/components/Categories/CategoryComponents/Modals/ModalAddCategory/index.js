@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import api from '../../../../../utils/api';
 
@@ -124,13 +124,6 @@ export default function ModalAddCategory({ addCategory, closeModal }) {
 
   async function handleSubmit(event) {
     event.preventDefault();
-
-    const refreshButton = document.querySelector('.refresh-button');
-
-const refreshPage = () => {
-  location.reload();
-}
-
 
     const formData = new FormData();
 

@@ -64,7 +64,7 @@ export default function Categories() {
     api.get('category').then((response) => {
       setCategories(response.data)
     })
-  },[]) 
+  },[categories]) 
   
 
   // CATEGORIES:

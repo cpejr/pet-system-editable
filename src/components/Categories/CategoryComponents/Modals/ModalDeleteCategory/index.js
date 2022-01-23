@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import styled from 'styled-components';
 import api from '../../../../../utils/api';
 
@@ -59,7 +59,6 @@ export default function ModalDeleteCategory({
 }) {
   async function handleSubmit(event) {
     event.preventDefault();
-    
 
     try {
       await api.delete(`/category/${category.category_id}`);

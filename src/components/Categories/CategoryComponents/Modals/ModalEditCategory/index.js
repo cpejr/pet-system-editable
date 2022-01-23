@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import api from '../../../../../utils/api';
 
@@ -125,8 +125,6 @@ export default function ModalEditCategory({
 
   async function handleSubmit(event) {
     event.preventDefault();
-    
-   
 
     const body = {
       name: categoryName,
