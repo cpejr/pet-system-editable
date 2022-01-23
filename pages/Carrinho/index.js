@@ -62,8 +62,6 @@ export default function Carrinho() {
             ))}
           </div>
           <CarrinhoValor>
-            {/* <CarrinhoValorTitle>Digite o seu CEP</CarrinhoValorTitle>
-            <CarrinhoFrete /> */}
             <CarrinhoTotal>
               <CarrinhoValorText>SubTotal</CarrinhoValorText>
               <CarrinhoValorText>

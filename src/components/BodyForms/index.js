@@ -30,7 +30,6 @@ Body.Right = styled.div`
     justify-content: center;
     height: 100%;
     width: 50%;
-    // background-color: yellow;
 
     @media screen and (max-width: 900px) {
       width: 75%;
@@ -41,9 +40,6 @@ Body.Right = styled.div`
 `;
 
 export const StoreBodyWrapper = styled.div`
-    //height: 110vh;
-    // height: 1200px;
-    //background-color: green;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -58,7 +54,6 @@ export const StoreBody = styled.div`
 
     height: 100%;
     width: 50%;
-    // background-color: yellow;
 
     @media screen and (max-width: 900px) {
       width: 75%;
@@ -73,8 +68,7 @@ export const Formulary = styled.form`
   justify-content: center;
   width: 50%;
   border: 1px;
-  margin: 10px;
-  // background-color: yellow;    
+  margin: 10px;   
   @media screen and (max-width: 1200px) {
     width: 80%;
   }
@@ -89,7 +83,6 @@ export const StoreFormulary = styled.div`
   width: 100%;
   border: 1px;
   margin: 10px;
-  // background-color: yellow;
     @media screen and (max-width: 560px) {
         // completar
     }

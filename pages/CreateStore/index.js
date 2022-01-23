@@ -341,13 +341,10 @@ export default function Store() {
                           {' '}
                         </SubtitleStore>
                       </TopFormulary>
-                      {/* Rua: */}
                       <ItemFormulary>
                         <Text>Rua: *</Text>
                         <TextBox type="text" id="street" onChange={handleStreetChange} value={street} />
                       </ItemFormulary>
-
-                      {/* Número: Complemento: */}
                       <DividedItemFormulary>
                         <ItemFormulary>
                           <Text>Número: *</Text>
@@ -359,7 +356,6 @@ export default function Store() {
                           <TextBox type="text" id="complement" value={complement} onChange={handleComplementChange} />
                         </ItemFormulary>
                       </DividedItemFormulary>
-                      {/* Bairro: CEP: */}
                       <DividedItemFormulary>
                         <ItemFormulary>
                           <Text>Bairro: *</Text>
@@ -371,7 +367,6 @@ export default function Store() {
                           <MaskedInput name="cep" id="cep" mask="99999-999" value={zipcode} onChange={handleZipcodeChange} />
                         </ItemFormulary>
                       </DividedItemFormulary>
-                      {/* Cidade: Estado: */}
                       <DividedItemFormulary>
                         <ItemFormulary>
                           <Text>Cidade: *</Text>

@@ -2,7 +2,6 @@ const { v4: uuidv4 } = require('uuid');
 const StoreModel = require('../models/StoreModel');
 const FirebaseModel = require('../models/FirebaseModel');
 const AwsModel = require('../models/AwsModel');
-// const ProductModel = require('../models/ProductModel');
 
 module.exports = {
   async getOne(request, response) {
@@ -61,7 +60,6 @@ module.exports = {
       delete store.password;
       const cover = await AwsModel.uploadAWS(cover_img);
       const logo = await AwsModel.uploadAWS(logo_img);
-      // await unlinkFile(file.img.path);
       store.cover_img = cover.key;
       store.logo_img = logo.key;
       await StoreModel.createNewStore(store);
