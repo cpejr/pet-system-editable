@@ -91,4 +91,17 @@ module.exports = {
       throw new Error(error);
     }
   },
+
+  async getStatusByEmail(email) {
+    try {
+      const storeStatus = await connection('Store')
+        .where({ email: email })
+        .select('status')
+        .first();
+      return storeStatus;
+    } catch (error) {
+      console.error(error);
+      throw new Error(error);
+    }
+  },
 };

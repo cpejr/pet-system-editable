@@ -2,7 +2,6 @@ const { v4: uuidv4 } = require('uuid');
 const StoreModel = require('../models/StoreModel');
 const FirebaseModel = require('../models/FirebaseModel');
 const AwsModel = require('../models/AwsModel');
-// const ProductModel = require('../models/ProductModel');
 
 module.exports = {
   async getOne(request, response) {

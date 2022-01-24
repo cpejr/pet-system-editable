@@ -20,6 +20,9 @@ import {
 } from '../../src/components/FormComponents';
 import { useAuth } from '../../src/contexts/AuthContext';
 import FullPageLoader from '../../src/components/FullPageLoader';
+import { toast } from 'react-toastify';
+
+toast.configure();
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -45,17 +48,21 @@ const Login = () => {
   function handleEmailChange(event) {
     setEmail(event.target.value);
   }
+
   function handlePasswordChange(event) {
     setPassword(event.target.value);
   }
-  async function handleSubmit(event) {
-    event.preventDefault();
-    if(!user && !store){
-      try {
-        await login(email, password);
-      } catch (error) {
-        console.log(error); //eslint-disable-line
-      }
+
+  function handleSubmit(event) {
+    event.preventDefault()
+    try {
+      login(email, password).then((response) => {
+        if (response === 'Loja em espera') {
+          toast('Sua solicitação para se tornar um parceiro ainda não foi avaliada', { position: toast.POSITION.BOTTOM_RIGHT });
+        }
+      });
+    } catch (error) {
+      console.error(error); //eslint-disable-line
     }
   }
 
