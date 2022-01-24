@@ -4,6 +4,7 @@ import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepButton from '@material-ui/core/StepButton';
 import Typography from '@material-ui/core/Typography';
+import { useMediaQuery } from '@material-ui/core';
 import 'antd/dist/antd.css';
 import axios from 'axios';
 import { toast } from 'react-toastify';
@@ -29,6 +30,18 @@ export default function Store() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [completedOne, setCompletedOne] = React.useState(false);
   const [completedTwo, setCompletedTwo] = React.useState(false);
+
+  const matches = useMediaQuery('(max-width:400px)');
+
+  const stepperProps = {
+    orientation: matches ? 'vertical' : 'horizontal',
+    style: matches ? {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: '#0000',
+    } : { backgroundColor: '#0000' },
+  };
 
   const handleNext = () => {
     if (companyName?.length < 1) {
@@ -233,7 +246,7 @@ export default function Store() {
   return (
     <>
       <Box>
-        <Stepper nonLinear activeStep={activeStep} style={{ backgroundColor: '#0000' }}>
+        <Stepper {...stepperProps} nonLinear activeStep={activeStep}>
           {steps.map((label, index) => (
             <Step key={label}>
               <StepButton color="inherit" onClick={handleStep(index)}>
