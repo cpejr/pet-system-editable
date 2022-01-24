@@ -14,6 +14,7 @@ export async function signIn(req, res) {
     try {
       firebase_id = await FirebaseModel.login(email, password);
       const user = await UserModel.getUserById(firebase_id);
+      const storeStatus = await StoreModel.getStatusByEmail(email);
 
       if (user) {
         const accessToken = jwt.sign(
@@ -31,7 +32,7 @@ export async function signIn(req, res) {
         return res.status(200).json({ accessToken, user });
       }
 
-      const storeStatus = await StoreModel.getStatusByEmail(email);
+      
       if (storeStatus.status === false) {
         return res.status(200).json('Loja em espera');
       }
