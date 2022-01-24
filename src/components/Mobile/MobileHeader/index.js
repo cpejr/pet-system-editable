@@ -7,6 +7,7 @@ import { MobileHeaderContainer, MobileHeaderSpace } from './styles';
 import Link from 'next/link';
 import { useAuth } from '../../../contexts/AuthContext';
 import { IoMdNotificationsOutline } from 'react-icons/io';
+import { CgDollar } from 'react-icons/cg';
 
 
 
@@ -44,7 +45,7 @@ export default function MobileHeader() {
 
   const HomeButton = () => router.push("/Home");
 
-  const SearchButton = () => router.push({ pathname: '/Search', query: { keyword: searchText } });
+  const SearchButton = () => router.push({ pathname: '/Search', query: { keyword: searchText }});
 
   const PersonalButton = () => {
     if(!user && !store){
@@ -62,23 +63,24 @@ export default function MobileHeader() {
         </MobileHeaderContainer.Col3>
       );
     }
-    if(user.type != 'Admin') {
+    if(user.type != 'admin') {
       return(  
         <Link href="/Carrinho">
            <MobileHeaderContainer.Col3>
             <MdShoppingCart size="40"/>
+            Carrinho
         </MobileHeaderContainer.Col3> 
         </Link> 
       );   
     }
     if(user.type === 'admin') {
       return(
-        <MobileHeaderContainer.Col3>
-          <Link href="/Admin">
-            <IoMdNotificationsOutline size="40"/>
-            Notificações
+          <Link href="/Admin/Comissoes">
+            <MobileHeaderContainer.Col3>
+              <CgDollar size="40"/>
+              Comissões
+            </MobileHeaderContainer.Col3>
           </Link>
-        </MobileHeaderContainer.Col3>
       );
     }
   }
