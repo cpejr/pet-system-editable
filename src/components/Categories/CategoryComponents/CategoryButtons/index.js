@@ -8,8 +8,7 @@ const Line = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-evenly;
-  width: 400px;
-  margin-left: 10px;
+  width: 100%;
 `;
 
 export default function CategoryButtons({

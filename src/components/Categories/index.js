@@ -12,6 +12,10 @@ const Table = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+
+  @media(max-width: 500px){
+    justify-content:center;
+  }
 `;
 
 const Ul = styled.ul`
@@ -42,6 +46,12 @@ ContainerCategories.Top = styled.div`
   align-items: center;
   width: 100%;
   margin-bottom: 5%;
+  padding: 10px;
+
+  @media screen and (max-width: 400px) {
+    width: 100%;
+    flex-direction: column;
+  }
 `;
 
 const Title = styled.h1`
@@ -50,8 +60,8 @@ const Title = styled.h1`
   font-weight: 400; 
   margin-top: 0;
   margin-bottom: 0;
-  @media(min-width: 800px){
-    justify-content:center;
+  @media screen and (max-width: 420px) {
+    font-size: 25px;
   }
 `;
 

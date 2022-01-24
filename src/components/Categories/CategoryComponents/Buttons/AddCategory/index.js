@@ -13,7 +13,6 @@ const ButtonAdd = styled(Button)`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  width: 150px;
   cursor:pointer;
   border: none;
   margin-left: 20%;
