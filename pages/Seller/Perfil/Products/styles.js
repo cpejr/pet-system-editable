@@ -47,6 +47,12 @@ export const ProductContainer = styled.div`
   width: 100%;
   flex-direction: row;
   margin-top: 1%;
+  min-height: 65vh;
+
+  @media screen and (min-height: 1024px) {
+    min-height: 83.3vh;
+  }
+
   @media (max-width: 1065px) {
     display: flex;
     align-items: flex-start;
@@ -61,6 +67,11 @@ ProductContainer.Col1 = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
+
+  @media screen and (min-height: 1024px) {
+    min-height: 83.3vh;
+  }
+
   @media (max-width: 1065px) {
     display: flex;
     align-items: center;

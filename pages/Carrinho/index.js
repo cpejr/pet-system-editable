@@ -89,7 +89,9 @@ export default function Carrinho() {
   }
   return (
     <ContainerDatas>
-      <Title>Nenhum produto em seu carrinho</Title>
+      <BoxDatasCart>
+        <p>Nenhum produto em seu carrinho</p>
+      </BoxDatasCart>
     </ContainerDatas>
   );
 }
