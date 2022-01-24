@@ -11,6 +11,8 @@ import styled from 'styled-components';
 import { useAuth } from '../../contexts/AuthContext';
 import {
   ImageBox,
+  Location,
+  LocationContainer,
   TextBox,
   YourSpace,
   YourSpaceContainer,
@@ -119,10 +121,10 @@ export default function Header({ categories }) {
           </Link>
         </ImageBox>
         <TextBox>
-          <TextBox.LocationContainer>
+          <LocationContainer>
             <GrLocation size="20" />
-            <TextBox.Location type="" placeholder="Belo Horizonte" />
-          </TextBox.LocationContainer>
+            <Location>Belo Horizonte</Location>
+          </LocationContainer>
           <TextBox.SearchContainer>
             <Link href={{ pathname: '/Search' }}>
               <CgCloseO onClick={() => setSearchText('')} />

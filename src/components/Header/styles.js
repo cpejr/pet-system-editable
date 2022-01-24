@@ -17,7 +17,7 @@ export const TextBox = styled.div`
     border-radius: 5px;
 `;
 
-TextBox.LocationContainer = styled.div`
+export const LocationContainer = styled.div`
   display:flex;
   flex-direction:row;
   align-items:center;
@@ -30,8 +30,9 @@ TextBox.LocationContainer = styled.div`
   padding-left:0.5%;  
 `;
 
-TextBox.Location = styled.input`
-display:flex;
+export const Location = styled.div`
+  display:flex;
+  align-items: center;
   height: 90%;
   width: 90%;
   margin-left:1%;
@@ -39,7 +40,6 @@ display:flex;
   border: 0px;
   background: #FFF1F1;
   outline:none;
-  
 `;
 
 TextBox.SearchContainer = styled.div`
