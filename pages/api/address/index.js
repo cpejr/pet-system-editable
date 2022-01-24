@@ -7,7 +7,7 @@ export default function handler(req, res) {
   try {
     const { method } = req;
     if (method === 'POST') {
-      return create(req, res);
+      return withAuthValidation(create)(req, res);
     }
     if (method === 'PUT') {
       return withAuthValidation(update)(req, res);
