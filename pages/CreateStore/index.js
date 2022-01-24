@@ -278,7 +278,7 @@ export default function Store() {
 
                       <DividedItemFormulary>
                         <ItemFormulary>
-                          <Text>DDD + telefone: *</Text>
+                          <Text>DDD + telefone: </Text>
                           <MaskedInput name="phone" id="phone" mask="(99)9999-9999" value={phone} onChange={handlePhoneChange} />
                         </ItemFormulary>
 

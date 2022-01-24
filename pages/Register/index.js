@@ -133,6 +133,8 @@ export default function Signup() {
                     onChange={handleNameChange}
                   />
                 </MyFormGroup>
+                </Name>
+
                 <MyFormGroup>
                   <FormLabel>Sobrenome</FormLabel>
                   <EmailFormControl
@@ -143,7 +145,6 @@ export default function Signup() {
                     onChange={handleLastNameChange}
                   />
                 </MyFormGroup>
-              </Name>
 
               <MyFormGroup>
                 <FormLabel>Data de Nascimento</FormLabel>
