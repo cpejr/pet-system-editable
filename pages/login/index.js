@@ -60,9 +60,6 @@ const Login = () => {
         if (response === 'Loja em espera') {
           toast('Sua solicitação para se tornar um parceiro ainda não foi avaliada', { position: toast.POSITION.BOTTOM_RIGHT });
         }
-        if (response === 'Loja sem cadastro') {
-          toast('Você não possui cadastro', { position: toast.POSITION.BOTTOM_RIGHT });
-        }
       });
     } catch (error) {
       console.error(error); //eslint-disable-line
