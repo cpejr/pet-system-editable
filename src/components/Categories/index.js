@@ -22,15 +22,6 @@ const Ul = styled.ul`
   margin-top: 5%;
 `;
 
-const ListItem = styled.li`
-  margin-top: 1%;
-  margin-bottom: 1%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-`;
-
 const ContainerCategories = styled.div`
   display: flex;
   align-items: center;
@@ -67,7 +58,6 @@ const Title = styled.h1`
 
 
 export default function Categories() {
-  const [categoriesData, setCategoriesData] = useState([]);
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
