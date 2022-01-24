@@ -145,7 +145,7 @@ export default function Header({ categories }) {
         </LogOut>
       </Header.Top>
       <Header.Bottom>
-        {categories.map((categoria) => (
+        {categories.slice(0, 7).map((categoria) => (
           <Link
             key={categoria.category_id}
             href={{ pathname: '/Search', query: { id: categoria.category_id } }}
