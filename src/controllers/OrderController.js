@@ -12,13 +12,7 @@ module.exports = {
   async getOneOrderAndCartProducts(req, res) {
     const order_id = req.query.id;
     const order = await OrderModel.getOrderById(order_id);
-    const url = `${process.env.PAGSEGURO_ENDPOINT_API}/${order.Pagseguro_id}`;
-    const headers = {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${process.env.PAGSEGURO_MERCHANT_ID}`,
-    };
-    const response = await axios.get(url, { headers });
-    return res.status(200).json(response.data);
+    return res.status(200).json(order);
   },
 
   // Pegar todas as orders com os order products

@@ -93,7 +93,7 @@ export default function MyIndividualOrder(req) {
   const [order_products, setOrderProducts] = useState('');
   const [address, setAddress,] = useState('');
   const [product, setProduct] = useState('');
-  
+  console.log(req)
   async function loadAddress() {
     try {
       const response = await api.get('/address/d8acc954-f49e-4d87-ac41-f2e76c690551');

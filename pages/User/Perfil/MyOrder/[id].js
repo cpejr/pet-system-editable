@@ -59,6 +59,7 @@ export default function Perfil(props) {
 
 export async function getServerSideProps(context) {
   const { id } = context.query;
+  console.log(id)
   const response = await api.get(`order/${id}`);
   const order = response.data;
   return { props: { order } };
