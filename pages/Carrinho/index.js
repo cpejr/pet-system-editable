@@ -1,21 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { MdShoppingCart } from 'react-icons/md';
+import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {
   CarrinhoBody, CarrinhoFinalButton, CarrinhoIcon, CarrinhoText,
   CarrinhoTitle, CarrinhoTotal, CarrinhoValor, CarrinhoValorText,
-  // CarrinhoValorTitle,
 } from '../../src/components/CarrinhoComponents';
-// import CarrinhoFrete from '../../src/components/CarrinhoComponents/CarrinhoFrete';
 import CarrinhoCard from '../../src/components/CarrinhoComponents/CarrinhoCard';
 import { useAuth } from '../../src/contexts/AuthContext';
+import Title from '../../src/components/Title';
 import { ContainerDatas, BoxDatas } from '../../src/components/MyAdresses/styles';
 import api from '../../src/utils/api';
+
+toast.configure();
 
 export default function Carrinho() {
   const [products, setProducts] = useState([]);
   const [att, setAtt] = useState(false);
   const [subTotal, setSubTotal] = useState(0);
   const { user } = useAuth();
+  const router = useRouter();
 
   useEffect(() => {
     let somaPrecos = 0;
@@ -36,6 +41,11 @@ export default function Carrinho() {
       });
     }
   }, [user, att]);
+
+  async function handleSubmit() {
+    router.push('/Checkout');
+  }
+
   if (products.length > 0) {
     return (
       <>
@@ -71,7 +81,7 @@ export default function Carrinho() {
                 {subTotal + parseFloat(products.shipping_tax)}
               </CarrinhoValorText>
             </CarrinhoTotal>
-            <CarrinhoFinalButton>Continuar</CarrinhoFinalButton>
+            <CarrinhoFinalButton onClick={handleSubmit}>Continuar</CarrinhoFinalButton>
           </CarrinhoValor>
         </CarrinhoBody>
       </>
@@ -79,9 +89,7 @@ export default function Carrinho() {
   }
   return (
     <ContainerDatas>
-      <BoxDatas>
-        <p>Nenhum produto em seu carrinho</p>
-      </BoxDatas>
+      <Title>Nenhum produto em seu carrinho</Title>
     </ContainerDatas>
   );
 }
