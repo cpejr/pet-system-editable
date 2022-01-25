@@ -12,7 +12,7 @@ const Line = styled.div`
 `;
 
 export default function CategoryButtons({
-  category, catIndex, editCategory, deleteCategory,
+  category, catIndex, editCategory, deleteCategory, att, setAtt
 }) {
   return (
     <div>
@@ -21,11 +21,15 @@ export default function CategoryButtons({
           category={category}
           catIndex={catIndex}
           editCategory={editCategory}
+          att={att}
+          setAtt={setAtt}
         />
         <DeleteCategory
           category={category}
           catIndex={catIndex}
           deleteCategory={deleteCategory}
+          att={att}
+          setAtt={setAtt}
         />
       </Line>
     </div>

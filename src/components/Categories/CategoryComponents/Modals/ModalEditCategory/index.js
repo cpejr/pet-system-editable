@@ -109,7 +109,7 @@ const Label = styled.label`
 `; 
 
 export default function ModalEditCategory({
-  category, catIndex, editCategory, closeModal,
+  category, catIndex, editCategory, closeModal, att, setAtt
 }) {
   const [categoryName, setCategoryName] = useState('');
   const [photo, setPhoto] = useState({ file: null, url: null });
@@ -153,6 +153,7 @@ export default function ModalEditCategory({
         };
 
         editCategory(editedCategory, catIndex);
+        setAtt(!att);
         closeModal();
         notification.open({
           message: 'Sucesso!',

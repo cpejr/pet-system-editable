@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function DeleteCategory({ category, catIndex, deleteCategory }) {
+export default function DeleteCategory({ category, catIndex, deleteCategory, att, setAtt }) {
   const classes = useStyles();
   const [modalStyle] = useState(getModalStyle);
   const [open, setOpen] = useState(false);
@@ -69,6 +69,8 @@ export default function DeleteCategory({ category, catIndex, deleteCategory }) {
         category={category}
         catIndex={catIndex}
         deleteCategory={deleteCategory}
+        att={att}
+        setAtt={setAtt}
       />
     </div>
   );

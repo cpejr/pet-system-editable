@@ -108,7 +108,7 @@ const Label = styled.label`
   margin-top: 1px;
 `;
 
-export default function ModalAddCategory({ addCategory, closeModal }) {
+export default function ModalAddCategory({ addCategory, closeModal, att, setAtt }) {
   const [categoryName, setCategoryName] = useState('');
   const [photo, setPhoto] = useState({ file: null, url: null });
 
@@ -147,6 +147,7 @@ export default function ModalAddCategory({ addCategory, closeModal }) {
         data.id = data.category_id;
         delete data.category_id;
         closeModal();
+        setAtt(!att);
         addCategory(data);
         notification.open({
           message: 'Sucesso!',

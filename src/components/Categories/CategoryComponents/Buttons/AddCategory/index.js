@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function AddCategory({ addCategory }) {
+export default function AddCategory({ addCategory, att, setAtt }) {
   const classes = useStyles();
   const [modalStyle] = useState(getModalStyle);
   const [open, setOpen] = useState(false);
@@ -68,7 +68,7 @@ export default function AddCategory({ addCategory }) {
 
   const body = (
     <div style={modalStyle} className={classes.paper}>
-      <ModalAddCategory addCategory={addCategory} closeModal={handleState} />
+      <ModalAddCategory addCategory={addCategory} closeModal={handleState} att={att} setAtt={setAtt}/>
     </div>
   );
 

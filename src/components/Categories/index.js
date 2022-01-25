@@ -59,12 +59,13 @@ const Title = styled.h1`
 
 export default function Categories() {
   const [categories, setCategories] = useState([]);
+  const [att, setAtt] = useState(false);
 
   useEffect(() => {
     api.get('category').then((response) => {
       setCategories(response.data)
     })
-  },[categories]) 
+  },[att]) 
   
 
   // CATEGORIES:
@@ -88,12 +89,12 @@ export default function Categories() {
     <ContainerCategories>
       <ContainerCategories.Top>
         <Title>Edição de Categorias</Title>
-        <AddCategory addCategory={createCategory} />
+        <AddCategory addCategory={createCategory} att={att} setAtt={setAtt} />
       </ContainerCategories.Top>
 
       <Table>
         <Collapse>
-          {categories.map((category, catIndex) => (
+          {categories?.map((category, catIndex) => (
             <Panel key={category.id} header={category.name}>
               <CategoryButtons
                 key={category.category_id}
@@ -101,6 +102,8 @@ export default function Categories() {
                 catIndex={catIndex}
                 editCategory={editCategory}
                 deleteCategory={deleteCategory}
+                att={att}
+                setAtt={setAtt}
               />
               <Ul>
                

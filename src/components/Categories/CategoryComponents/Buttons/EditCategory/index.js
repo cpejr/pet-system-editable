@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function EditCategory({ category, catIndex, editCategory }) {
+export default function EditCategory({ category, catIndex, editCategory, att, setAtt }) {
   const classes = useStyles();
   const [modalStyle] = useState(getModalStyle);
   const [open, setOpen] = useState(false);
@@ -69,6 +69,8 @@ export default function EditCategory({ category, catIndex, editCategory }) {
         category={category}
         catIndex={catIndex}
         editCategory={editCategory}
+        att={att}
+        setAtt={setAtt}
       />
     </div>
   );

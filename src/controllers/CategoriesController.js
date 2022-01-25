@@ -67,7 +67,18 @@ module.exports = {
   async update(request, response) {
     const category = request.body;
     const { id } = request.query;
+    const file = request.files;
     try {
+      if (Object.keys(file).length > 0) {
+        file.img.name = uuidv4();
+      }
+
+      const image_id = Object.keys(file).length > 0
+        ? await AwsModel.uploadAWS(file.img) : null;
+
+      if (image_id) {
+        category.img = image_id.key;
+      }
       await CategoryModel.updateCategory(category, id);
     } catch (error) {
       if (error.message) {
