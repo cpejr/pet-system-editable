@@ -132,13 +132,13 @@ export default function Signup() {
                     required
                     value={name}
                     onChange={handleNameChange}
-                  />
-               </MyFormGroup>
-                </Name>
+                  /> 
+                </ItemFormulary>
+              </MyFormGroup>
 
                 <MyFormGroup>
                   <FormLabel>Sobrenome</FormLabel>
-                  <EmailFormControl
+                  <TextBox2
                     type="text"
                     placeholder="Sobrenome"
                     required
@@ -146,10 +146,6 @@ export default function Signup() {
                     onChange={handleLastNameChange}
                   />
                 </MyFormGroup>
-
-                </ItemFormulary>
-              </MyFormGroup>
-
 
               <MyFormGroup>
                 <FormLabel>Data de Nascimento</FormLabel>
