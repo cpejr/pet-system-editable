@@ -22,10 +22,13 @@ flex-direction:column;
 
 export const Row = styled.div`
 display:flex;
+flex-direction: row;
 align-items:center;
-justify-content:center;
+justify-content: space-around;
 width: 100%;
-margin-left: 10px;
+@media(max-width:960px){
+flex-direction: column;
+}
 `;
 
 export const TitleModal = styled.div`

@@ -6,7 +6,7 @@ import { notification } from 'antd';
 import { BsTrash } from 'react-icons/bs';
 import {
   ContainerModal, Row, TitleModal, Ajust, ButtonConfirm,
-  ButtonCancel, GarbageIcon, 
+  ButtonCancel, GarbageIcon,
 } from './styles';
 
 const api = axios.create({ baseURL: 'http://localhost:3000/' });
@@ -88,7 +88,8 @@ export default function ModalDeleteAddress({ address_id, loadAddresses }) {
         </Row>
         <Ajust>
           <Row>
-          <ButtonConfirm
+            <ButtonCancel onClick={handleClose}>Cancelar</ButtonCancel>
+            <ButtonConfirm
               onClick={(e) => {
                 e.preventDefault();
                 handleSubmit();
@@ -97,8 +98,6 @@ export default function ModalDeleteAddress({ address_id, loadAddresses }) {
             >
               Confirmar
             </ButtonConfirm>
-
-            <ButtonCancel onClick={handleClose}>Cancelar</ButtonCancel>
           </Row>
         </Ajust>
       </ContainerModal>
