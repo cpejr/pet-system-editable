@@ -48,9 +48,14 @@ export default function MobileHeader() {
   const SearchButton = () => router.push({ pathname: '/Search', query: { keyword: searchText }});
 
   const PersonalButton = () => {
-    if(!user && !store){
-      return(
-        <MobileHeaderContainer.Col3 />
+    if(!user && !store || user.type != 'admin'){
+      return(  
+        <Link href="/Carrinho">
+          <MobileHeaderContainer.Col3>
+            <MdShoppingCart size="40"/>
+            Carrinho
+          </MobileHeaderContainer.Col3> 
+        </Link> 
       ); 
     }
     if(store){
@@ -63,24 +68,14 @@ export default function MobileHeader() {
         </MobileHeaderContainer.Col3>
       );
     }
-    if(user.type != 'admin') {
-      return(  
-        <Link href="/Carrinho">
-           <MobileHeaderContainer.Col3>
-            <MdShoppingCart size="40"/>
-            Carrinho
-        </MobileHeaderContainer.Col3> 
-        </Link> 
-      );   
-    }
     if(user.type === 'admin') {
       return(
-          <Link href="/Admin/Comissoes">
-            <MobileHeaderContainer.Col3>
-              <CgDollar size="40"/>
-              Comissões
-            </MobileHeaderContainer.Col3>
-          </Link>
+        <Link href="/Admin/Comissoes">
+          <MobileHeaderContainer.Col3>
+            <CgDollar size="40"/>
+            Comissões
+          </MobileHeaderContainer.Col3>
+        </Link>
       );
     }
   }
