@@ -6,15 +6,29 @@ import { AiOutlineSearch } from 'react-icons/ai';
 import { MobileHeaderContainer, MobileHeaderSpace } from './styles';
 import Link from 'next/link';
 import { useAuth } from '../../../contexts/AuthContext';
-import { IoMdNotificationsOutline } from 'react-icons/io';
 import { CgDollar } from 'react-icons/cg';
+import { useCart } from '../../CardContext/CardContext';
+import styled from 'styled-components';
 
-
+MobileHeader.Carrinho = styled.span`
+  font-size: 12px;
+  background: #ff0000;
+  color: #fff;
+  padding: 0 5px;
+  vertical-align: top;
+  margin-right: -38px;
+  margin-top: 1px;
+  margin-bottom:-15px;
+  font-weight: 600;
+  border-radius: 9px; 
+`;
 
 export default function MobileHeader() {
   const {user, store} = useAuth();
   const router = useRouter();
   const [searchText, setSearchText] = useState('');
+  const cart = useCart();
+  const itemsCount = Object.keys(cart.cart).length;
 
   const HandleProfileButton = () => {
     if (!user && !store) return router.push("/login");
@@ -52,6 +66,13 @@ export default function MobileHeader() {
       return(  
         <Link href="/Carrinho">
           <MobileHeaderContainer.Col3>
+            {(itemsCount > 0) ? (
+              <MobileHeader.Carrinho>
+                {itemsCount > 0 && <span>{itemsCount}</span>}
+              </MobileHeader.Carrinho>
+            ) : (
+              <div />
+            )}
             <MdShoppingCart size="40"/>
             Carrinho
           </MobileHeaderContainer.Col3> 
