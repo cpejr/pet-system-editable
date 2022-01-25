@@ -54,7 +54,7 @@ export default function Price({ setPrice }) {
           <Slider
             value={val}
             min={0}
-            max={5000}
+            max={1000}
             onChange={updateVal}
             onChangeCommitted={handleRange}
             valueLabelDisplay="auto"

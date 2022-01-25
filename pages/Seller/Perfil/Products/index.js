@@ -3,7 +3,6 @@ import Order from '../../../../src/components/Filter/Order';
 import Category from '../../../../src/components/Filter/Category';
 import Products from '../../../../src/components/Products';
 import ModalAddProducts from '../../../../src/components/ModalAddProducts';
-import LocationAndFilter from '../../../../src/components/Mobile/LocationAndFilter';
 import EditAddRemoveSection from '../../../../src/components/Mobile/EditAddRemoveSection';
 import ModalGroup from '../../../../src/components/ModalGroup';
 import ModalGroupEdit from '../../../../src/components/ModalGroupEdit';
@@ -66,7 +65,6 @@ export default function Perfil({ categories }) {
     <div>
       <Title>Perfil da loja:</Title>
       <PerfilStoreMenu selectedItem="Meus produtos" />
-      <LocationAndFilter />
       <EditAddRemoveSection categories={categories} setAtt={setAtt} att={att} />
       <MarketContainer />
       <ProductContainer>

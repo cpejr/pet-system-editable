@@ -12,6 +12,11 @@ export const CarrinhoCardWrapper = styled.div`
   border-radius: 4px;
   height: 100px;
   padding: 5px 5px 5px 50px;
+
+  @media screen and (max-width: 600px) {
+    padding: 2px;
+    width: 100%;
+  }
 `;
 
 export const CarrinhoCardInfo = styled.div`
@@ -36,7 +41,7 @@ export const CarrinhoCardText = styled.p`
     font-size: 1em;
   }
   @media screen and (max-width: 600px) {
-    font-size: 0.6em;
+    font-size: 0.9em;
   }
 `;
 export const CarrinhoCardInfoQuantity = styled.div`
@@ -49,6 +54,15 @@ export const CarrinhoCardInfoQuantity = styled.div`
 
 export const CarrinhoCardIcon = styled.div`
   display: flex;
+  font-size: x-large;
   justify-content: flex-start;
   height: 100%;
+
+  @media screen and (max-width: 660px) {
+    font-size: large;
+}
+
+  @media (max-width: 490px) {
+    font-size: medium;
+  }
 `;

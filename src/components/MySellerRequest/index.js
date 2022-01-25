@@ -14,6 +14,7 @@ width:100%;
 height:100%;
 margin-top:2%;
 margin-bottom:2%;
+min-height: 65vh;
 
 `;
 const RequestContainer = styled.div`

@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import api from '../utils/api';
+import api from '../utils/api'
 
 toast.configure();
 
@@ -27,6 +27,9 @@ function AuthProvider({ children }) {
   async function login(email, password) {
     try {
       const response = await api.post('login', { email, password });
+      if (response.data === 'Loja sem cadastro' || response.data === 'Loja em espera') {
+        return response.data;
+      }
       if (response.data.user !== undefined) {
         setUser(response.data.user);
       } else {

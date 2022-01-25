@@ -5,7 +5,7 @@ export const Cards = styled.div`
   align-items: center;
   flex-direction: row;
   justify-content: space-between;
-  @media screen and (max-width: 1024px) {
+  @media screen and (max-width: 1025px) {
     display: none;
   }
 `;
@@ -58,6 +58,14 @@ export const Container = styled.div`
   margin-left: 10%;
   margin-top: 2%;
   margin-bottom: 4%;
+
+  @media screen and (max-width: 1070px) {
+    margin-left: 6%;
+  }
+  @media screen and (max-width: 1024px) {
+    margin-left: 10%;
+  }
+
 `;
 
 export const Mosaic = styled.div`
@@ -65,8 +73,9 @@ export const Mosaic = styled.div`
   flex-direction: row;
   margin-left: 5%;
   margin-right: 5%;
+  flex-wrap: wrap;
 
-  @media screen and (max-width: 800px) {
+  @media screen and (max-width: 912px) {
     display: none;
   }
 `;

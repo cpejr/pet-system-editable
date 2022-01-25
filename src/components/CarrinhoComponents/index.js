@@ -37,6 +37,9 @@ height: 2em;
 export const CarrinhoBody = styled.div`
 display: flex;
 flex-direction: row;
+@media screen and (max-width: 600px) {
+  flex-direction: column;
+}
 `;
 
 export const CarrinhoValor = styled.div`
@@ -45,6 +48,11 @@ flex-direction: column;
 align-items: center;
 margin-left: 5em;
 width: 100%;
+
+@media screen and (max-width: 600px) {
+  margin-left: 0;
+  margin-top: 5em;
+}
 `;
 
 export const CarrinhoValorTitle = styled.div`
