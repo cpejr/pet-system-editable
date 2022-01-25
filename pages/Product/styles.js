@@ -51,6 +51,10 @@ export const CarrinhoCardInfoQuantity = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 80px;
+
+  @media screen and (max-width: 660px) {
+    font-size: xxx-large;
+  }
 `;
 
 export const Container = styled.div`
@@ -69,6 +73,12 @@ export const ProductContainer = styled.div`
   justify-content: center;
   width: 100%;
   flex-direction: row;
+  margin-bottom: 15px;
+
+  @media screen and (min-height: 1024px) {
+    min-height: 83.3vh;
+  }
+
   @media (max-width: 880px) {
     flex-direction: column;
     align-items: center;
@@ -83,6 +93,11 @@ ProductContainer.Col1 = styled.div`
   width: 40%;
   margin: 0;
   margin-right: 131px;
+
+  @media screen and (min-height: 1024px) {
+    min-height: 83.3vh;
+  }
+  
   @media (max-width: 880px) {
     width: 70%;
     margin-right: 0px;
@@ -95,6 +110,11 @@ ProductContainer.Col2 = styled.div`
   justify-content: center;
   width: 40%;
   flex-direction: column;
+
+  @media screen and (min-height: 1024px) {
+    min-height: 83.3vh;
+  }
+
   @media (max-width: 880px) {
     width: 70%;
   }
@@ -106,7 +126,7 @@ export const ProductTitle = styled.h2`
   justify-content: flex-start;
   width: 100%;
   margin: 0;
-  text-align: justify;
+  text-align: -webkit-match-parent;;
   text-justify: inter-word;
   font-family: Roboto;
   font-style: normal;
@@ -115,6 +135,10 @@ export const ProductTitle = styled.h2`
   margin-bottom: 33px;
   @media (max-width: 880px) {
     margin-top: 5%;
+  }
+  @media (max-width: 560px) {
+    font-size: 35px;
+    text-align: -webkit-match-parent;
   }
 `;
 
@@ -282,7 +306,7 @@ Description.Text = styled.p`
   font-size: 24px;
   text-align: justify;
   text-justify: inter-word;
-  color: ${({ theme }) => theme.colors.mediumGray};
+  color: ${({ theme }) => theme.colors.baseGray};
 `;
 
 export const BackPage = styled.div`

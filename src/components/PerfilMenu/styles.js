@@ -5,11 +5,14 @@ export const SubTitle = styled.div`
   align-items: center;
   font-family: Quicksand;
   justify-content: center;
+
+
   @media (max-width: 560px) {
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 0;
+    font-size: 10px;
   }
 `;
 export const Section = styled.button`
@@ -33,4 +36,8 @@ export const StyledSpan = styled.span`
   padding: 3px 6px;
   background-color: ${({ theme, selected }) => (selected ? theme.colors.hoverBackground : theme.colors.background)};
   border-radius: ${({ selected }) => (selected ? '5%' : null)};
+
+  @media (max-width: 560px) {
+   font-size: 10px;
+  }
 `;

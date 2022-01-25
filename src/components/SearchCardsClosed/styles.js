@@ -70,6 +70,7 @@ export const CardDescriptionTitle = styled.h3`
   margin-top: 1%;
   margin-bottom: 1%;
   font-size: 26px;
+  text-align: -webkit-left;
 `;
 
 export const CardDescriptionValues = styled.p`

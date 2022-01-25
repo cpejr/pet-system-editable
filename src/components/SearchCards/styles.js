@@ -18,7 +18,7 @@ export const CardWrapper = styled.button`
     box-shadow: 0 16px 40px 0px rgba(112, 144, 176, 0.2);
     transform: scale(1.02);
   }
-  @media (max-width: 1000px) {
+  @media (max-width: 1200px) {
     flex-direction: column;
   }
 `;
@@ -59,6 +59,7 @@ export const CardDescriptionTitle = styled.h3`
   margin-top: 1%;
   margin-bottom: 1%;
   font-size: 26px;
+  text-align: -webkit-left;
 `;
 
 export const CardDescriptionValues = styled.p`
