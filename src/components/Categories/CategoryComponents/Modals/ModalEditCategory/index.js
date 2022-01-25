@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import api from '../../../../../utils/api';
+import { notification } from 'antd';
+import { toast } from 'react-toastify';
 
 const Box = styled.div`
   display: flex;
@@ -126,9 +128,14 @@ export default function ModalEditCategory({
   async function handleSubmit(event) {
     event.preventDefault();
 
-    const body = {
-      name: categoryName,
-    };
+    if (categoryName.length === 0) {
+      toast('Insira um nome para a categoria!', { position: toast.POSITION.BOTTOM_RIGHT });
+      return;
+    }
+    if (!photo.file) {
+      toast('Insira uma imagem!', { position: toast.POSITION.BOTTOM_RIGHT });
+      return;
+    }
 
     const formData = new FormData();
 
@@ -139,7 +146,7 @@ export default function ModalEditCategory({
 
     try {
       if (categoryName) {
-        await api.put(`/category/${category.category_id}`, body);
+        await api.put(`/category/${category.category_id}`, formData);
         const editedCategory = {
           id: category.category_id,
           name: categoryName,
@@ -147,9 +154,27 @@ export default function ModalEditCategory({
 
         editCategory(editedCategory, catIndex);
         closeModal();
+        notification.open({
+          message: 'Sucesso!',
+          description: 'Categoria editada com sucesso!',
+          className: 'ant-notification',
+          top: '100px',
+          style: {
+            width: 600,
+          },
+        });
       }
     } catch (error) {
       console.log(error); // eslint-disable-line
+      notification.open({
+        message: 'Erro!',
+        description: 'Erro ao editar categoria.',
+        className: 'ant-notification',
+        top: '100px',
+        style: {
+          width: 600,
+        },
+      });
     }
   }
 

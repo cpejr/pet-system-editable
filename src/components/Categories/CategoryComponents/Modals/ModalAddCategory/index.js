@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import { notification } from 'antd';
+import { toast } from 'react-toastify';
 import api from '../../../../../utils/api';
-
 
 const Box = styled.div`
   display: flex;
@@ -105,7 +106,7 @@ const Label = styled.label`
   border-radius: 0.3rem;
   cursor: pointer;
   margin-top: 1px;
-`;  
+`;
 
 export default function ModalAddCategory({ addCategory, closeModal }) {
   const [categoryName, setCategoryName] = useState('');
@@ -124,7 +125,16 @@ export default function ModalAddCategory({ addCategory, closeModal }) {
 
   async function handleSubmit(event) {
     event.preventDefault();
-
+    
+    if (categoryName.length === 0) {
+      toast('Insira um nome para a categoria!', { position: toast.POSITION.BOTTOM_RIGHT });
+      return;
+    }
+    if (!photo.file) {
+      toast('Insira uma imagem!', { position: toast.POSITION.BOTTOM_RIGHT });
+      return;
+    }
+    
     const formData = new FormData();
 
     formData.append('name', categoryName);
@@ -138,9 +148,27 @@ export default function ModalAddCategory({ addCategory, closeModal }) {
         delete data.category_id;
         closeModal();
         addCategory(data);
+        notification.open({
+          message: 'Sucesso!',
+          description: 'Categoria criada com sucesso!',
+          className: 'ant-notification',
+          top: '100px',
+          style: {
+            width: 600,
+          },
+        });
       }
     } catch (error) {
       console.log(error); // eslint-disable-line
+      notification.open({
+        message: 'Erro!',
+        description: 'Erro ao criar categoria.',
+        className: 'ant-notification',
+        top: '100px',
+        style: {
+          width: 600,
+        },
+      });
     }
   }
 
@@ -151,11 +179,11 @@ export default function ModalAddCategory({ addCategory, closeModal }) {
         <Input type="text" value={categoryName} onChange={handleCategoryChange} />
       </Fields>
       <SelectImage>Selecionar imagem</SelectImage>
-          <UploadContainer>
-            <ImageSelected type="file" id="upload" hidden onChange={handleChange} />
-            <Label for="upload">Escolha a imagem</Label>
-            <Img alt="" src={photo.url} />
-          </UploadContainer>
+      <UploadContainer>
+        <ImageSelected type="file" id="upload" hidden onChange={handleChange} />
+        <Label for="upload">Escolha a imagem</Label>
+        <Img alt="" src={photo.url} />
+      </UploadContainer>
       <Buttons>
         <Button onClick={handleSubmit}>
           Confirmar
