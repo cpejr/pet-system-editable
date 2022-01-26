@@ -23,6 +23,7 @@ export const BoxAdress = styled.div`
   margin-bottom: 2%;
   padding: 1%;
 
+
   @media (max-width: 1050px) {
     display: flex;
     align-items: center;
@@ -44,6 +45,7 @@ export const Espaçamento = styled.div`
   width: 100%;
   margin-top: 2%;
   margin-bottom: 2%;
+  line-height: 1.1;
   @media (max-width: 860px) {
     flex-direction: column;
   }

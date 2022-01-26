@@ -93,7 +93,7 @@ export default function Signup() {
     }
     const body = {
       type: 'buyer',
-      name: name + '' + lastName,
+      name: name + ' ' + lastName,
       birth_date: date,
       email,
       password,

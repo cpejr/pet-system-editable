@@ -25,7 +25,7 @@ display:flex;
 flex-direction: row;
 align-items:center;
 justify-content: space-around;
-width: 100%;
+width: 70%;
 @media(max-width:960px){
 flex-direction: column;
 }
@@ -80,6 +80,9 @@ export const ButtonConfirm = styled.button`
     @media(max-width:860px){
         width:150px;
     } 
+    @media(max-width:401px){
+        width:120px;
+    }
 `;
 
 export const ButtonCancel = styled.button`
@@ -110,5 +113,12 @@ export const ButtonCancel = styled.button`
     }
     @media(max-width:860px){
         width:150px;
+    } 
+    @media(max-width:401px){
+        margin-top: 30px;
+        width:120px;
+    }
+    @media(max-width:960px){
+        margin-top: 30px;
     } 
 `;
