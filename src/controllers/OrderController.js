@@ -111,7 +111,12 @@ module.exports = {
       return res.status(200).json(session.id[0]);
     } catch (err) {
       console.error(err);
-      return res.status(err.response.status).json(err.response.data);
+      if (err.message) {
+        return res.status(400).json({ notification: err.message });
+      }
+      if (err.response.status) {
+        return res.status(err.response.status).json(err.response.data);
+      }
     }
   },
 
