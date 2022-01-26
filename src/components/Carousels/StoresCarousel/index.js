@@ -10,6 +10,10 @@ const Item = styled.div`
   align-items: center;
   justify-content: center;
   margin: 1%;
+
+  @media screen and (max-width: 281px) {
+    width: 50%;
+  }
 `;
 
 const Container = styled.div`
@@ -130,19 +134,19 @@ export default function StoresCarousel(props) {
 
   const responsive = {
     desktop: {
-      breakpoint: { max: 3000, min: 1500 },
+      breakpoint: { max: 3000, min: 1800 },
       items: 4,
     },
     midDesktop: {
-      breakpoint: { max: 1500, min: 1025 },
+      breakpoint: { max: 1799, min: 1198 },
       items: 3,
     },
     tablet: {
-      breakpoint: { max: 1024, min: 601 },
+      breakpoint: { max: 1197, min: 782 },
       items: 2,
     },
     mobile: {
-      breakpoint: { max: 600, min: 0 },
+      breakpoint: { max: 781, min: 0 },
       items: 1,
     },
   };

@@ -13,7 +13,8 @@ export async function signIn(req, res) {
     
     try {
       firebase_id = await FirebaseModel.login(email, password);
-      const user = await UserModel.getUserById(firebase_id);  
+      const user = await UserModel.getUserById(firebase_id);
+      const storeStatus = await StoreModel.getStatusByEmail(email);
 
       if (user) {
         const accessToken = jwt.sign(
@@ -27,14 +28,12 @@ export async function signIn(req, res) {
         });
 
         await req.session.save();
-
+      
         return res.status(200).json({ accessToken, user });
       }
 
-      const storeStatus = await StoreModel.getStatusByEmail(email);
-      if (storeStatus === undefined) {
-        return res.status(200).json('Loja sem cadastro');
-      } if (storeStatus.status === false) {
+      
+      if (storeStatus.status === false) {
         return res.status(200).json('Loja em espera');
       }
 

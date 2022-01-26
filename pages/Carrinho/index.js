@@ -10,7 +10,7 @@ import {
 import CarrinhoCard from '../../src/components/CarrinhoComponents/CarrinhoCard';
 import { useAuth } from '../../src/contexts/AuthContext';
 import Title from '../../src/components/Title';
-import { ContainerDatas, BoxDatas } from '../../src/components/MyAdresses/styles';
+import { ContainerDatas, BoxDatas, BoxDatasCart } from '../../src/components/MyAdresses/styles';
 import api from '../../src/utils/api';
 
 toast.configure();
@@ -89,7 +89,9 @@ export default function Carrinho() {
   }
   return (
     <ContainerDatas>
-      <Title>Nenhum produto em seu carrinho</Title>
+      <BoxDatasCart>
+        <p>Nenhum produto em seu carrinho</p>
+      </BoxDatasCart>
     </ContainerDatas>
   );
 }
