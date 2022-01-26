@@ -79,7 +79,7 @@ export default function EditCategory({ category, catIndex, editCategory, att, se
 
     <div>
       <ButtonEdit onClick={handleOpen}>
-        <EditOutlined />
+        <EditOutlined style={{marginRight: '5px' }}/>
         <nameButton>Editar Categoria</nameButton>
       </ButtonEdit>
       <Modal

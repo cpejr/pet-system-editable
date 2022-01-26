@@ -78,7 +78,7 @@ export default function DeleteCategory({ category, catIndex, deleteCategory, att
   return (
     <div>
       <ButtonDelete onClick={handleOpen}>
-        <CloseOutlined />
+        <CloseOutlined style={{marginRight: '5px' }}/>
         <nameButton>Apagar Categoria</nameButton>
       </ButtonDelete>
       <Modal

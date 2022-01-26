@@ -9,6 +9,8 @@ const Line = styled.div`
   align-items: center;
   justify-content: space-evenly;
   width: 100%;
+  margin-top: 5px;
+  margin-bottom: -15px;
 `;
 
 export default function CategoryButtons({
