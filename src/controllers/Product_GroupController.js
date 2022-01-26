@@ -35,7 +35,6 @@ module.exports = {
   },
   async updateGroup(req, res) {
     const { currentProducts, groupId } = req.body;
-    console.log('entrei');
     try {
       await Product_GroupModel.DeleteProductsGroupById(groupId);
       currentProducts.forEach((product) => {
@@ -109,7 +108,6 @@ module.exports = {
     const group_id = req.query.id;
     try {
       const products = await Product_GroupModel.getProductsByGroup_Id(group_id);
-      console.log('🚀 ~ file: Product_GroupController.js ~ line 96 ~ getProductsById ~ products', products);
       return res.status(200).json(products);
     } catch (error) {
       if (error.message) {

@@ -14,10 +14,6 @@ import StoreIsOpen from '../StoreIsOpen';
 
 const { TabPane } = Tabs;
 
-function callback(key) {
-  console.log(key);
-}
-
 export default function StoreTabs({
   store, products, groups, myLoader,
 }) {
@@ -62,8 +58,6 @@ export default function StoreTabs({
   }, [day]);
   return (
     <Container>
-      <Tabs defaultActiveKey="1" onChange={callback} centered size="large">
-        <TabPane tab="Produtos" key="1">
           <ProductsCarousel products={products} myLoader={myLoader} />
           {groups.map((group) => (
             <SearchContainer>
@@ -83,11 +77,9 @@ export default function StoreTabs({
               </SearchContainer.Row>
             </SearchContainer>
           ))}
-        </TabPane>
         <TabPane tab="Serviços" key="2">
           <StoreServices store={store} />
         </TabPane>
-      </Tabs>
     </Container>
   );
 }

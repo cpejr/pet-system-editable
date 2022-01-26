@@ -12,8 +12,11 @@ align-items:center;
 justify-content:center;
 flex-direction:row;
 width:100%;
+min-height: 65vh;
+
 @media(max-width:860px){
     flex-direction:column;
+    align-items: flex-start;
 }
 `;
 

@@ -18,10 +18,6 @@ const ButtonDelete = styled(Button)`
   background:none;
 `;
 
-const nameButton = styled.p`
-  align-items: center;
-`;
-
 function getModalStyle() {
   const top = 50;
   const left = 50;
@@ -41,8 +37,6 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     position: 'absolute',
-    width: '35vw',
-    height: '18vh',
     backgroundColor: theme.palette.background.paper,
     border: '2px solid #609694',
     boxShadow: theme.shadows[5],
@@ -53,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function DeleteCategory({ category, catIndex, deleteCategory }) {
+export default function DeleteCategory({ category, catIndex, deleteCategory, att, setAtt }) {
   const classes = useStyles();
   const [modalStyle] = useState(getModalStyle);
   const [open, setOpen] = useState(false);
@@ -75,6 +69,8 @@ export default function DeleteCategory({ category, catIndex, deleteCategory }) {
         category={category}
         catIndex={catIndex}
         deleteCategory={deleteCategory}
+        att={att}
+        setAtt={setAtt}
       />
     </div>
   );
@@ -82,7 +78,7 @@ export default function DeleteCategory({ category, catIndex, deleteCategory }) {
   return (
     <div>
       <ButtonDelete onClick={handleOpen}>
-        <CloseOutlined />
+        <CloseOutlined style={{marginRight: '5px' }}/>
         <nameButton>Apagar Categoria</nameButton>
       </ButtonDelete>
       <Modal

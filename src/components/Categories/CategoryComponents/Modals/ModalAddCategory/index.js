@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { notification } from 'antd';
+import { toast } from 'react-toastify';
 import api from '../../../../../utils/api';
 
 const Box = styled.div`
@@ -8,10 +10,10 @@ const Box = styled.div`
   align-items: center;
   width: 100%;
   margin-bottom: 0;
+
 `;
 
 const Fields = styled.div`
-  
   align-items: left;
 `;
 
@@ -64,8 +66,58 @@ Button.Cancel = styled.button`
   color: white;
 `;
 
-export default function ModalAddCategory({ addCategory, closeModal }) {
+const ImageSelected = styled.input`
+`;
+
+const UploadContainer = styled.div`
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+`;
+
+const SelectImage = styled.p`
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+  font-family: Roboto;
+  margin-top: 15px;
+  @media(max-width:1190px){
+  justify-content:center;
+}
+`;
+
+const Img = styled.img` 
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width: 200px;
+  height: 200px;
+  margin-bottom:5%;
+  margin-top:8%;
+  `;
+
+const Label = styled.label`
+  background-color:  ${({ theme }) => theme.colors.mediumGreen};;
+  color: white;
+  padding: 0.5rem;
+  font-family: sans-serif;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  margin-top: 1px;
+`;
+
+export default function ModalAddCategory({ addCategory, closeModal, att, setAtt }) {
   const [categoryName, setCategoryName] = useState('');
+  const [photo, setPhoto] = useState({ file: null, url: null });
+
+  function handleChange(event) {
+    setPhoto({
+      file: event.target.files[0],
+      url: URL.createObjectURL(event.target.files[0]),
+    });
+  }
 
   async function handleCategoryChange(event) {
     setCategoryName(event.target.value);
@@ -73,20 +125,51 @@ export default function ModalAddCategory({ addCategory, closeModal }) {
 
   async function handleSubmit(event) {
     event.preventDefault();
+    
+    if (categoryName.length === 0) {
+      toast('Insira um nome para a categoria!', { position: toast.POSITION.BOTTOM_RIGHT });
+      return;
+    }
+    if (!photo.file) {
+      toast('Insira uma imagem!', { position: toast.POSITION.BOTTOM_RIGHT });
+      return;
+    }
+    
+    const formData = new FormData();
 
-    const body = {
-      name: categoryName,
-    };
+    formData.append('name', categoryName);
+    if (photo.file) {
+      formData.append('img', photo.file);
+    }
     try {
       if (categoryName) {
-        const { data } = await api.post('/category/', body);
+        const { data } = await api.post('/category/', formData);
         data.id = data.category_id;
         delete data.category_id;
         closeModal();
+        setAtt(!att);
         addCategory(data);
+        notification.open({
+          message: 'Sucesso!',
+          description: 'Categoria criada com sucesso!',
+          className: 'ant-notification',
+          top: '100px',
+          style: {
+            width: 600,
+          },
+        });
       }
     } catch (error) {
       console.log(error); // eslint-disable-line
+      notification.open({
+        message: 'Erro!',
+        description: 'Erro ao criar categoria.',
+        className: 'ant-notification',
+        top: '100px',
+        style: {
+          width: 600,
+        },
+      });
     }
   }
 
@@ -96,6 +179,12 @@ export default function ModalAddCategory({ addCategory, closeModal }) {
         <Text>Digite o nome da Categoria a ser criada: </Text>
         <Input type="text" value={categoryName} onChange={handleCategoryChange} />
       </Fields>
+      <SelectImage>Selecionar imagem</SelectImage>
+      <UploadContainer>
+        <ImageSelected type="file" id="upload" hidden onChange={handleChange} />
+        <Label for="upload">Escolha a imagem</Label>
+        <Img alt="" src={photo.url} />
+      </UploadContainer>
       <Buttons>
         <Button onClick={handleSubmit}>
           Confirmar

@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { Collapse } from 'antd';
 import api from '../../utils/api';
 import CategoryButtons from './CategoryComponents/CategoryButtons';
-import SubcategoryButtons from './CategoryComponents/SubcategoryButtons';
 import AddCategory from './CategoryComponents/Buttons/AddCategory';
 
 const { Panel } = Collapse;
@@ -13,19 +12,14 @@ const Table = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+
+  @media(max-width: 500px){
+    justify-content:center;
+  }
 `;
 
 const Ul = styled.ul`
   margin-top: 5%;
-`;
-
-const ListItem = styled.li`
-  margin-top: 1%;
-  margin-bottom: 1%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
 `;
 
 const ContainerCategories = styled.div`
@@ -33,7 +27,6 @@ const ContainerCategories = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  width:80%;
   margin-bottom: 5%;
 `;
 
@@ -44,6 +37,12 @@ ContainerCategories.Top = styled.div`
   align-items: center;
   width: 100%;
   margin-bottom: 5%;
+  padding: 10px;
+
+  @media screen and (max-width: 400px) {
+    width: 100%;
+    flex-direction: column;
+  }
 `;
 
 const Title = styled.h1`
@@ -52,88 +51,62 @@ const Title = styled.h1`
   font-weight: 400; 
   margin-top: 0;
   margin-bottom: 0;
+  @media screen and (max-width: 420px) {
+    font-size: 25px;
+  }
 `;
 
+
 export default function Categories() {
-  const [categoriesData, setCategoriesData] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [att, setAtt] = useState(false);
+
   useEffect(() => {
-    async function fetchData() {
-      const response = await api.get('/category/all');
-      const { data } = response;
-      setCategoriesData(data);
-    }
-    fetchData();
-  }, []);
+    api.get('category').then((response) => {
+      setCategories(response.data)
+    })
+  },[att]) 
+  
 
   // CATEGORIES:
   function createCategory(category) {
-    category.subcategories = [];
-    setCategoriesData([...categoriesData, category]);
+    setCategories([...categories, category]);
   }
 
   function editCategory(category, categoryIndex) {
-    const editedCategories = [...categoriesData];
+    const editedCategories = [...categories];
     editedCategories[categoryIndex] = category;
-    setCategoriesData(editedCategories);
+    setCategories(editedCategories);
   }
 
   function deleteCategory(categoryIndex) {
-    const editedCategories = [...categoriesData];
+    const editedCategories = [...categories];
     editedCategories.splice(categoryIndex, 1);
-    setCategoriesData(editedCategories);
-  }
-
-  // SUBCATEGORIES:
-  function addSubcategory(subcategory, categoryIndex) {
-    const editedCategories = [...categoriesData];
-    editedCategories[categoryIndex].subcategories.push(subcategory);
-    setCategoriesData([...editedCategories]);
-  }
-
-  function editSubcategory(subcategory, categoryIndex, subcategoryIndex) {
-    const editedCategories = [...categoriesData];
-    editedCategories[categoryIndex].subcategories[subcategoryIndex] = subcategory;
-    setCategoriesData(editedCategories);
-  }
-
-  function deleteSubcategory(categoryIndex, subcategoryIndex) {
-    const editedCategories = [...categoriesData];
-    editedCategories[categoryIndex].subcategories.splice(subcategoryIndex, 1);
-    setCategoriesData(editedCategories);
+    setCategories(editedCategories);
   }
 
   return (
     <ContainerCategories>
       <ContainerCategories.Top>
         <Title>Edição de Categorias</Title>
-        <AddCategory addCategory={createCategory} />
+        <AddCategory addCategory={createCategory} att={att} setAtt={setAtt} />
       </ContainerCategories.Top>
+
       <Table>
         <Collapse>
-          {categoriesData.map((category, catIndex) => (
+          {categories?.map((category, catIndex) => (
             <Panel key={category.id} header={category.name}>
               <CategoryButtons
-                key={category.id}
+                key={category.category_id}
                 category={category}
                 catIndex={catIndex}
-                addSubcategory={addSubcategory}
                 editCategory={editCategory}
                 deleteCategory={deleteCategory}
+                att={att}
+                setAtt={setAtt}
               />
               <Ul>
-                {category.subcategories.map((subcategory, subcatIndex) => (
-                  <ListItem key={subcategory.id}>
-                    {subcategory.name}
-                    <SubcategoryButtons
-                      key={subcategory.id}
-                      subcategory={subcategory}
-                      catIndex={catIndex}
-                      subcatIndex={subcatIndex}
-                      editSubcategory={editSubcategory}
-                      deleteSubcategory={deleteSubcategory}
-                    />
-                  </ListItem>
-                ))}
+               
               </Ul>
             </Panel>
           ))}

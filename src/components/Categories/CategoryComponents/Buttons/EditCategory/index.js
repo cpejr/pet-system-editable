@@ -18,10 +18,6 @@ const ButtonEdit = styled(Button)`
   background:none;
 `;
 
-const nameButton = styled.p`
-  align-items: center;
-`;
-
 function getModalStyle() {
   const top = 50;
   const left = 50;
@@ -41,8 +37,6 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     position: 'absolute',
-    width: '35vw',
-    height: '22vh',
     backgroundColor: theme.palette.background.paper,
     border: '2px solid #609694',
     boxShadow: theme.shadows[5],
@@ -53,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function EditCategory({ category, catIndex, editCategory }) {
+export default function EditCategory({ category, catIndex, editCategory, att, setAtt }) {
   const classes = useStyles();
   const [modalStyle] = useState(getModalStyle);
   const [open, setOpen] = useState(false);
@@ -75,6 +69,8 @@ export default function EditCategory({ category, catIndex, editCategory }) {
         category={category}
         catIndex={catIndex}
         editCategory={editCategory}
+        att={att}
+        setAtt={setAtt}
       />
     </div>
   );
@@ -83,7 +79,7 @@ export default function EditCategory({ category, catIndex, editCategory }) {
 
     <div>
       <ButtonEdit onClick={handleOpen}>
-        <EditOutlined />
+        <EditOutlined style={{marginRight: '5px' }}/>
         <nameButton>Editar Categoria</nameButton>
       </ButtonEdit>
       <Modal

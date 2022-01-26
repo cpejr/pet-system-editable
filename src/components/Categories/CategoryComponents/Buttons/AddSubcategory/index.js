@@ -18,10 +18,6 @@ const ButtonAdd = styled(Button)`
   background:none;
 `;
 
-const nameButton = styled.p`
-  align-items: center;
-`;
-
 function getModalStyle() {
   const top = 50;
   const left = 50;
