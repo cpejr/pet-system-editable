@@ -17,6 +17,7 @@ import SelectRegion from '../SelectRegion';
 import {
   AddressModal, ButtonAdd, Buttons, CancelSubmit,
   FormRegister, MyFormGroup, Name, Register, SobreFormGroup, Submit, Body,
+  Espaço,
 } from './styles';
 
 export default function ModalAddProducts({ loadAddresses }) {
@@ -48,6 +49,7 @@ export default function ModalAddProducts({ loadAddresses }) {
       zipcode,
       state,
       complement,
+      region,
     };
     try {
       await api.post('/address/', body);
@@ -84,7 +86,7 @@ export default function ModalAddProducts({ loadAddresses }) {
             <Title>Cadastrar endereço</Title>
             <Name>
               <MyFormGroup>
-                <FormLabel>Rua:</FormLabel>
+                <FormLabel>Rua</FormLabel>
                 <FormControl
                   type="text"
                   placeholder="Rua"
@@ -94,7 +96,7 @@ export default function ModalAddProducts({ loadAddresses }) {
                 />
               </MyFormGroup>
               <SobreFormGroup>
-                <FormLabel>Numero:</FormLabel>
+                <FormLabel>Numero</FormLabel>
                 <FormControl
                   type="text"
                   placeholder="Numero"
@@ -106,7 +108,7 @@ export default function ModalAddProducts({ loadAddresses }) {
             </Name>
             <Name>
               <MyFormGroup>
-                <FormLabel>Bairro:</FormLabel>
+                <FormLabel>Bairro</FormLabel>
                 <FormControl
                   type="text"
                   placeholder="Bairro"
@@ -116,7 +118,7 @@ export default function ModalAddProducts({ loadAddresses }) {
                 />
               </MyFormGroup>
               <SobreFormGroup>
-                <FormLabel>Cep:</FormLabel>
+                <FormLabel>Cep</FormLabel>
                 <FormControl
                   type="text"
                   placeholder="Cep"
@@ -138,6 +140,16 @@ export default function ModalAddProducts({ loadAddresses }) {
                 />
               </MyFormGroup>
               <SobreFormGroup>
+                <FormLabel>Região da cidade</FormLabel>
+                <SelectRegion
+                  name="Região"
+                  onChange={(e) => setRegion(e.target.value)}
+                  value={region}
+                />
+              </SobreFormGroup>
+            </Name>
+            <Name>
+              <MyFormGroup>
                 <FormLabel>Estado:</FormLabel>
                 <FormControl
                   type="text"
@@ -146,28 +158,19 @@ export default function ModalAddProducts({ loadAddresses }) {
                   value={state}
                   onChange={(e) => setState(e.target.value)}
                 />
-              </SobreFormGroup>
-            </Name>
-            <Name>
+              </MyFormGroup>
+              <Espaço />
               <MyFormGroup>
-                <FormLabel>Região</FormLabel>
-                <SelectRegion
-                  name="Região"
-                  onChange={(e) => setRegion(e.target.value)}
-                  value={region}
+                <FormLabel>Complemento</FormLabel>
+                <FormControl
+                  type="text"
+                  placeholder="Complement"
+                  required
+                  value={complement}
+                  onChange={(e) => setComplement(e.target.value)}
                 />
               </MyFormGroup>
             </Name>
-            <MyFormGroup>
-              <FormLabel>Complemento</FormLabel>
-              <FormControl
-                type="text"
-                placeholder="Complement"
-                required
-                value={complement}
-                onChange={(e) => setComplement(e.target.value)}
-              />
-            </MyFormGroup>
             <Buttons>
               <CancelSubmit onClick={handleClose}>Cancelar</CancelSubmit>
               <Submit onClick={handleSubmit}>Adicionar</Submit>

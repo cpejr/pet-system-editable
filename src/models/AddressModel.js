@@ -119,6 +119,7 @@ module.exports = {
       city: data.city,
       state: data.state,
       address_id: data.address_id,
+      region: data.region,
     };
     try {
       const address_aux = await connection('Address')
@@ -141,8 +142,8 @@ module.exports = {
         const user_address = {
           firebase_id: firebase_user,
           address_id: address.address_id,
-          main_address: true
-        }
+          main_address: true,
+        };
 
         await connection('User_Address')
           .insert(user_address);
@@ -151,7 +152,7 @@ module.exports = {
         const store_address = {
           firebase_id_store,
           address_id: address.address_id,
-        }
+        };
         await connection('Store_Address')
           .insert(store_address);
       }
@@ -165,7 +166,6 @@ module.exports = {
 
   async removeAddress(id, user) {
     try {
-
       if (user) {
         await connection('User_Address')
           .where({ address_id: id })

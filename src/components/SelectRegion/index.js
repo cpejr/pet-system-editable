@@ -2,14 +2,21 @@ import React from 'react';
 import styled from 'styled-components';
 
 export const Select = styled.select`
-  width: 90%;
-  font-family: Roboto;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  height: 30px;
-  border-radius: 5px;
-  border: 1px solid ${({ theme }) => theme.colors.baseGray};
-  background: #F2F2F2;
+display: block;
+width: 100%;
+height: -webkit-calc(1.5em + 0.75rem + 2px);
+height: calc(1.5em + 0.75rem + 2px);
+padding: 0.375rem 0.75rem;
+font-size: 1rem;
+font-weight: 400;
+line-height: 1.5;
+color: #495057;
+background-color: #fff;
+background-clip: padding-box;
+border: 1px solid #ced4da;
+border-radius: 0.25rem;
+-webkit-transition: border-color .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
+transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
 `;
 
 export default function SelectState({
@@ -23,33 +30,15 @@ export default function SelectState({
       value={value}
     >
       <option value="">Selecione</option>
-      <option value="AC">AC</option>
-      <option value="AL">AL</option>
-      <option value="AP">AP</option>
-      <option value="AM">AM</option>
-      <option value="BA">BA</option>
-      <option value="CE">CE</option>
-      <option value="DF">DF</option>
-      <option value="ES">ES</option>
-      <option value="GO">GO</option>
-      <option value="MA">MA</option>
-      <option value="MT">MT</option>
-      <option value="MS">MS</option>
-      <option value="MG">MG</option>
-      <option value="PA">PA</option>
-      <option value="PB">PB</option>
-      <option value="PR">PR</option>
-      <option value="PE">PE</option>
-      <option value="PI">PI</option>
-      <option value="RJ">RJ</option>
-      <option value="RN">RN</option>
-      <option value="RS">RS</option>
-      <option value="RO">RO</option>
-      <option value="RR">RR</option>
-      <option value="SC">SC</option>
-      <option value="SP">SP</option>
-      <option value="SE">SE</option>
-      <option value="TO">TO</option>
+      <option value="Barreiro">Barreiro</option>
+      <option value="Centro-Sul">Centro-Sul</option>
+      <option value="Leste">Leste</option>
+      <option value="Nordeste">Nordeste</option>
+      <option value="Noroeste">Noroeste</option>
+      <option value="Norte">Norte</option>
+      <option value="Oeste">Oeste</option>
+      <option value="Pampulha">Pampulha</option>
+      <option value="Venda Nova">Venda Nova</option>
     </Select>
   );
 }
