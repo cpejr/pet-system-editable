@@ -117,6 +117,7 @@ module.exports = {
       if (err.response.status) {
         return res.status(err.response.status).json(err.response.data);
       }
+      return res.status(500).json({ notification: 'Internal Server Error' });
     }
   },
 
