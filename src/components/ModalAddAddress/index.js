@@ -13,6 +13,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'antd/dist/antd.css';
 
 import WindowDivider from '../WindowDivider';
+import SelectRegion from '../SelectRegion';
 import {
   AddressModal, ButtonAdd, Buttons, CancelSubmit,
   FormRegister, MyFormGroup, Name, Register, SobreFormGroup, Submit, Body,
@@ -30,6 +31,7 @@ export default function ModalAddProducts({ loadAddresses }) {
   };
 
   const [street, setStreet] = useState('');
+  const [region, setRegion] = useState('');
   const [address_num, setNumber] = useState('');
   const [district, setDistrict] = useState('');
   const [city, setCity] = useState('');
@@ -145,6 +147,16 @@ export default function ModalAddProducts({ loadAddresses }) {
                   onChange={(e) => setState(e.target.value)}
                 />
               </SobreFormGroup>
+            </Name>
+            <Name>
+              <MyFormGroup>
+                <FormLabel>Região</FormLabel>
+                <SelectRegion
+                  name="Região"
+                  onChange={(e) => setRegion(e.target.value)}
+                  value={region}
+                />
+              </MyFormGroup>
             </Name>
             <MyFormGroup>
               <FormLabel>Complemento</FormLabel>
