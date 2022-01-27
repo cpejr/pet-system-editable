@@ -125,6 +125,7 @@ export default function Admin() {
   const [revenue, setRevenue] = useState(0);
   const [totalStores, setTotalStores] = useState(0);
   const [averageShare, setAverageShare] = useState(0);
+  const [profit, setProfit] = useState(0);
   const [value, setValue] = useState(new Date());
   
   useEffect(() => {
@@ -138,11 +139,11 @@ export default function Admin() {
       setRevenue(response.data.revenue.sum);
       setTotalStores(response.data.total_stores);
       setAverageShare(response.data.averageShare);
+      setProfit(response.data.profit.sum);
     });
-  }, [value]);
+  }, []);
   return (
     <div>
-      <HeaderAdmin />
       <Container>
         <Container.Col1>
           <Container.Col1.Row1>
@@ -168,7 +169,7 @@ export default function Admin() {
             </Container.Col2.Row1.Col2>
           </Container.Col2.Row1>
           <Container.Col2.Row2>
-            <MonthResumeAdmin revenue={revenue} totalStores={totalStores} averageShare={averageShare} />
+            <MonthResumeAdmin revenue={revenue} totalStores={totalStores} averageShare={averageShare} profit={profit} />
           </Container.Col2.Row2>
         </Container.Col2>
       </Container>

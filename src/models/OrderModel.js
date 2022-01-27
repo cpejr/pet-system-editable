@@ -111,17 +111,18 @@ module.exports = {
     }
   },
 
-  async getOrderShare(filter) {
+  async getOrderProfit(filter) {
     try {
-      const orders = await connection('Order')
-        .sum('share')
+      const orders = await connection('Order')  
+        .sum('admin_profit')
         .where((builder) => {
           if (filter) {
             // eslint-disable-next-line quotes
             builder.whereRaw(`EXTRACT(MONTH FROM created_at::date) = ? AND EXTRACT(YEAR FROM created_at::date) = ?`, [filter.month, filter.year]);
           }
         })
-        .first();
+        .first()
+      console.log(orders);
       if (orders.sum === null) {
         orders.sum = 0;
       }
@@ -135,11 +136,11 @@ module.exports = {
 
   async createNewOrder(order) {
     try {
+      const response = await connection('Admin_share')
+        .select('*').first();
+      order.admin_profit = (response.share * order.final_price/100);
       const order_aux = await connection('Order')
         .insert(order);
-      const share = await connection('Admin_share')
-        .select('*').first();
-      order_aux.share = share;
       return order_aux;
     } catch (error) {
       console.error(error);

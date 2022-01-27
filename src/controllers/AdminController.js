@@ -56,10 +56,10 @@ module.exports = {
       const when = { month, year };
       const stores = await StoreModel.getAllStore(when);
       const revenue = await OrderModel.getOrderRevenue(when);
-      const share = await OrderModel.getOrderShare(when);
-      const averageShare = share.sum/share.length;
+      const profit = await OrderModel.getOrderProfit(when);
+      const averageShare = (profit.sum * 100/revenue.sum);
       return response.status(200).json({
-        total_stores: stores.length, revenue, averageShare,
+        total_stores: stores.length, revenue, averageShare, profit,
       });
     } catch (err) {
       if (err.message) {

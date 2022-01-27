@@ -9,12 +9,13 @@ exports.up = function (knex) {
     table.foreign('address_id').references('address_id').inTable('Address');
     table.uuid('cart_id').notNullable();
     table.foreign('cart_id').references('cart_id').inTable('Cart').onDelete('cascade');
+    table.string('Pagseguro_id').notNullable().defaultTo('');
     table.float('total_price').notNullable();
     table.string('payment_type').notNullable();
     table.string('status').notNullable();
     table.string('delivery_method').notNullable();
+    table.float('admin_profit').notNullable();
     table.timestamp('created_at').notNullable().defaultTo(knex.fn.now());
-    table.float('share').notNullable();
   });
 };
 exports.down = function (knex) {
