@@ -1,7 +1,6 @@
 /*eslint-disable*/
 const S3 = require('aws-sdk/clients/s3');
 const fs = require('fs');
-// const connection = require('../database/connection');
 const multer = require('multer');
 
 const region = 'sa-east-1';

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { notification } from 'antd';
-import { BsTrash } from 'react-icons/bs';
 import ModalEditAddresses from '../ModalEditAddresses';
 import ModalAddAddress from '../ModalAddAddress';
+import ModalDeleteAddress from '../ModalDeleteAddress';
 import api from '../../utils/api';
 import { useAuth } from '../../contexts/AuthContext';
 import {
@@ -31,32 +31,6 @@ export default function MyAdresses() {
     } catch (error) {
       console.error(error); //eslint-disable-line
     }
-  }
-  async function deleteAddress(address_id) {
-    try {
-      await api.delete(`/address/${address_id}`);
-      notification.open({
-        message: 'Sucesso!',
-        description: 'Endereço deletado com sucesso.',
-        className: 'ant-notification',
-        top: '100px',
-        style: {
-          width: 600,
-        },
-      });
-    } catch (error) {
-      console.error(error); //eslint-disable-line
-      notification.open({
-        message: 'Erro!',
-        description: 'Tivemos um problema ao apagar o endereço que você deseja!',
-        className: 'ant-notification',
-        top: '100px',
-        style: {
-          width: 600,
-        },
-      });
-    }
-    loadAddresses();
   }
 
   useEffect(() => {
@@ -95,12 +69,7 @@ export default function MyAdresses() {
                   <ModalEditAddresses address_id={endereco.address_id} />
                 </Espaçamento>
               </EspaçamentosWrapper>
-              <GarbageIcon onClick={() => {
-                deleteAddress(endereco.address_id);
-              }}
-              >
-                <BsTrash />
-              </GarbageIcon>
+              <ModalDeleteAddress address_id={endereco.address_id} loadAddresses={loadAddresses}/>
             </BoxAdress>
           ))}
         </ContainerAdresses>

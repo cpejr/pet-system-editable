@@ -9,7 +9,6 @@ handler.post(async (req, res) => {
   try {
     const { files } = req;
 
-    // do stuff with files and body
     res.status(200).json({ files });
   } catch (err) {
     res.status(400).json({ error: err.message });
