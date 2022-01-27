@@ -60,7 +60,6 @@ module.exports = {
       delete store.password;
       const cover = await AwsModel.uploadAWS(cover_img);
       const logo = await AwsModel.uploadAWS(logo_img);
-      // await unlinkFile(file.img.path);
       store.cover_img = cover.key;
       store.logo_img = logo.key;
       await StoreModel.createNewStore(store);

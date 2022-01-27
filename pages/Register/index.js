@@ -25,6 +25,7 @@ toast.configure();
 
 export default function Signup() {
   const [name, setName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -35,6 +36,9 @@ export default function Signup() {
   const router = useRouter();
   function handleNameChange(event) {
     setName(event.target.value);
+  }
+  function handleLastNameChange(event) {
+    setLastName(event.target.value);
   }
   function handleEmailChange(event) {
     setEmail(event.target.value);
@@ -59,6 +63,14 @@ export default function Signup() {
     event.preventDefault();
 
     const regex = new RegExp('.+@.+..+');
+    if (name?.length === 0) {
+      toast('Nome inválido!', { position: toast.POSITION.BOTTOM_RIGHT });
+      return;
+    }
+    if (lastName?.length === 0) {
+      toast('Sobrenome inválido!', { position: toast.POSITION.BOTTOM_RIGHT });
+      return;
+    }
     if (!regex.test(email)) {
       toast('Email inválido!', { position: toast.POSITION.BOTTOM_RIGHT });
       return;
@@ -81,7 +93,7 @@ export default function Signup() {
     }
     const body = {
       type: 'buyer',
-      name,
+      name: name + ' ' + lastName,
       birth_date: date,
       email,
       password,
@@ -120,9 +132,20 @@ export default function Signup() {
                     required
                     value={name}
                     onChange={handleNameChange}
-                  />
+                  /> 
                 </ItemFormulary>
               </MyFormGroup>
+
+                <MyFormGroup>
+                  <FormLabel>Sobrenome</FormLabel>
+                  <TextBox2
+                    type="text"
+                    placeholder="Sobrenome"
+                    required
+                    value={lastName}
+                    onChange={handleLastNameChange}
+                  />
+                </MyFormGroup>
 
               <MyFormGroup>
                 <FormLabel>Data de Nascimento</FormLabel>

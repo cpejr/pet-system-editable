@@ -57,7 +57,7 @@ Header.Bottom = styled.div`
   display: flex;
   width: 100%;
   flex-direction: row;
-  justify-content: space-around; // space evenly
+  justify-content: space-around;
   height: 35%;
   background-color: ${({ theme }) => theme.colors.mediumGreen};
 `;
