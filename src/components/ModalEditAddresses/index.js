@@ -6,12 +6,14 @@ import {
 } from 'react-bootstrap';
 import Button from '@material-ui/core/Button';
 import { useRouter } from 'next/router';
+import SelectRegion from '../SelectRegion';
 import WindowDivider from '../WindowDivider';
 import api from '../../utils/api';
 import Title from '../Title';
 import {
   AddressModal, Buttons, CancelSubmit,
   FormRegister, MyFormGroup, Name, Register, SobreFormGroup, Submit, Body,
+  Espaço,
 } from './styles';
 
 export default function ModalEditAddresses(addressId) {
@@ -43,6 +45,7 @@ export default function ModalEditAddresses(addressId) {
       city,
       zipcode,
       state,
+      region,
     };
     try {
       api.put('/address/', body);
@@ -77,6 +80,7 @@ export default function ModalEditAddresses(addressId) {
   const [zipcode, setZipcode] = useState();
   const [state, setState] = useState();
   const [complement, setComplement] = useState();
+  const [region, setRegion] = useState('');
 
   async function loadAddress() {
     try {
@@ -160,6 +164,16 @@ export default function ModalEditAddresses(addressId) {
                 />
               </MyFormGroup>
               <SobreFormGroup>
+                <FormLabel>Região da cidade</FormLabel>
+                <SelectRegion
+                  name="Região"
+                  onChange={(e) => setRegion(e.target.value)}
+                  value={region}
+                />
+              </SobreFormGroup>
+            </Name>
+            <Name>
+              <MyFormGroup>
                 <FormLabel>Estado:</FormLabel>
                 <FormControl
                   type="text"
@@ -168,18 +182,19 @@ export default function ModalEditAddresses(addressId) {
                   value={state}
                   onChange={(e) => setState(e.target.value)}
                 />
-              </SobreFormGroup>
+              </MyFormGroup>
+              <Espaço />
+              <MyFormGroup>
+                <FormLabel>Complemento</FormLabel>
+                <FormControl
+                  type="text"
+                  placeholder="Complement"
+                  required
+                  value={complement}
+                  onChange={(e) => setComplement(e.target.value)}
+                />
+              </MyFormGroup>
             </Name>
-            <MyFormGroup>
-              <FormLabel>Complemento</FormLabel>
-              <FormControl
-                type="text"
-                placeholder="Complemento"
-                required
-                value={complement}
-                onChange={(e) => setCity(e.target.value)}
-              />
-            </MyFormGroup>
             <Buttons>
               <CancelSubmit onClick={handleClose}>Cancelar</CancelSubmit>
               <Submit onClick={handleSubmit}>Atualizar</Submit>
