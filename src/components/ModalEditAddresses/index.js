@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Modal from '@material-ui/core/Modal';
 import { notification } from 'antd';
+import { toast } from 'react-toastify';
 import {
   FormControl, FormLabel,
 } from 'react-bootstrap';
@@ -29,12 +30,12 @@ export default function ModalEditAddresses(addressId) {
   };
 
   async function handleSubmit() {
-    if (zipcode?.length !== 8) {
-      alert('CEP inválido');
+    if (zipcode?.length !== 8 || (zipcode.substring(0, 2) !== '31' && zipcode.substring(0, 2) !== '30')) {
+      toast('CEP invalido!', { position: toast.POSITION.BOTTOM_RIGHT });
       return;
     }
     if (address_num?.length > 4 || address_num?.length <= 0) {
-      alert('Número inválido');
+      toast('Número invalido!', { position: toast.POSITION.BOTTOM_RIGHT });
       return;
     }
     const body = {

@@ -105,7 +105,7 @@ export default function Store() {
       toast('Bairro inválido', { position: toast.POSITION.BOTTOM_RIGHT });
       return;
     }
-    if (zipcode?.length !== 8) {
+    if (zipcode?.length !== 8 || (zipcode.substring(0, 2) !== '31' && zipcode.substring(0, 2) !== '30')) {
       toast('CEP inválido', { position: toast.POSITION.BOTTOM_RIGHT });
       return;
     }
