@@ -139,7 +139,7 @@ module.exports = {
         .insert(order);
       const share = await connection('Admin_share')
         .select('*').first();
-      ordex_aux.share = share;
+      order_aux.share = share;
       return order_aux;
     } catch (error) {
       console.error(error);

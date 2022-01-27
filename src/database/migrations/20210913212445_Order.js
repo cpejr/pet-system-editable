@@ -14,6 +14,7 @@ exports.up = function (knex) {
     table.string('status').notNullable();
     table.string('delivery_method').notNullable();
     table.timestamp('created_at').notNullable().defaultTo(knex.fn.now());
+    table.float('share').notNullable();
   });
 };
 exports.down = function (knex) {
