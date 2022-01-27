@@ -113,6 +113,8 @@ export default function Admin() {
   const [comission, setComission] = useState(0);
   const [newComission, setNewComission] = useState(0);
   const [error, setError] = useState('gray');
+  const [value, setValue] = useState(new Date());
+
 
   async function getComission () {
     try {
@@ -124,8 +126,18 @@ export default function Admin() {
   }
 
   useEffect(() => {
-    getComission()
-  }, [])
+    api.get('/admin').then((response) => {
+      setComission(response.data.share);
+    })
+    api.get('/profileControl', {
+      params: {
+        month: moment(value).format('M'),
+        year: moment(value).format('Y'),
+      },
+    }).then((response) => {
+      setAverageShare(response.data.averageShare);
+    });
+  }, [value])
 
   async function handleCommissionChange(event) {
     setError('gray');

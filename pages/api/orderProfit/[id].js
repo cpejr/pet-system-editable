@@ -1,4 +1,4 @@
-import { getOneOrderAndCartProducts, del } from '../../../src/controllers/OrderController';
+import { getProfitById } from '../../../src/models/OrderModel';
 import { isAdmin } from '../../../src/utils/Auth';
 
 export default function handler(req, res) {
@@ -6,11 +6,7 @@ export default function handler(req, res) {
     const { method } = req;
     console.log(method);
     if (method === 'GET') {
-      return getOneOrderAndCartProducts(req, res);
-    }
-    if(method === 'GET')
-    if (method === 'DELETE') {
-      return isAdmin(del)(req, res);
+        return isAdmin(getProfitById)(req, res);
     }
     return res.status(500).json({ message: 'Internal Server Error' });
   } catch (err) {

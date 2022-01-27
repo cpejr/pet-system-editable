@@ -125,7 +125,8 @@ width:80%;
 export default function Admin() {
   const [revenue, setRevenue] = useState(0);
   const [totalStores, setTotalStores] = useState(0);
-  const [value, setValue] = useState(new Date());
+  const [averageShare, setAverageShare] = useState(0);
+  
   useEffect(() => {
     api.get('/profileControl', {
       params: {
@@ -133,8 +134,10 @@ export default function Admin() {
         year: moment(value).format('Y'),
       },
     }).then((response) => {
+      console.log(response);
       setRevenue(response.data.revenue.sum);
       setTotalStores(response.data.total_stores);
+      setAverageShare(response.data.averageShare);
     });
   }, [value]);
   return (
@@ -165,7 +168,7 @@ export default function Admin() {
             </Container.Col2.Row1.Col2>
           </Container.Col2.Row1>
           <Container.Col2.Row2>
-            <MonthResumeAdmin revenue={revenue} totalStores={totalStores} />
+            <MonthResumeAdmin revenue={revenue} totalStores={totalStores} averageShare={averageShare} />
           </Container.Col2.Row2>
         </Container.Col2>
       </Container>
