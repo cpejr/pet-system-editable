@@ -37,6 +37,12 @@ height: 2em;
 export const CarrinhoBody = styled.div`
 display: flex;
 flex-direction: row;
+min-height: 60vh;
+
+@media screen and (max-height: 1024px) {
+  min-height: 73.2vh;
+}
+
 @media screen and (max-width: 600px) {
   flex-direction: column;
 }

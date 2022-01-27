@@ -162,7 +162,7 @@ export default function Header({ keyword }) {
         </Link>
       );
     }
-    switch (user.type) {
+    switch (user?.type) {
       case "admin":
         return (
           <Link href="/admin">
