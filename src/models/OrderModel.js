@@ -122,7 +122,7 @@ module.exports = {
           }
         })
         .first()
-      console.log(orders);
+        console.log(orders);
       if (orders.sum === null) {
         orders.sum = 0;
       }
@@ -138,7 +138,8 @@ module.exports = {
     try {
       const response = await connection('Admin_share')
         .select('*').first();
-      order.admin_profit = (response.share * order.final_price/100);
+      const profit = (response.share * order.total_price/100);
+      console.log(profit);
       const order_aux = await connection('Order')
         .insert(order);
       return order_aux;

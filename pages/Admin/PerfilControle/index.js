@@ -135,7 +135,6 @@ export default function Admin() {
         year: moment(value).format('Y'),
       },
     }).then((response) => {
-      console.log(response);
       setRevenue(response.data.revenue.sum);
       setTotalStores(response.data.total_stores);
       setAverageShare(response.data.averageShare);

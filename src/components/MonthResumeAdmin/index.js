@@ -170,12 +170,12 @@ export default function MonthResumeAdmin({ revenue, totalStores, averageShare, p
 
         <Container.Row4>
           <Container.Row4.Col1>Ganhos com comissão:</Container.Row4.Col1>
-          <Container.Row4.Col2>{averageShare}%</Container.Row4.Col2>
+          <Container.Row4.Col2>{averageShare.toFixed(2)}%</Container.Row4.Col2>
         </Container.Row4>
 
         <Container.Row5>
           <Container.Row5.Col1>Faturamento:</Container.Row5.Col1>
-          <Container.Row5.Col2>{(profit).toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</Container.Row5.Col2>
+          <Container.Row5.Col2>{profit.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</Container.Row5.Col2>
         </Container.Row5>
 
       </Container>
