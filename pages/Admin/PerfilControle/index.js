@@ -125,7 +125,8 @@ width:80%;
 export default function Admin() {
   const [revenue, setRevenue] = useState(0);
   const [totalStores, setTotalStores] = useState(0);
-  const [averageShare, setAverageShare] = useState(0);
+  const [AverageShare, setAverageShare] = useState(0);
+  const [value, setValue] = useState(new Date());
   
   useEffect(() => {
     api.get('/profileControl', {
