@@ -1,130 +1,27 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import {
-  Form, FormControl, FormLabel, FormGroup,
+ FormLabel, FormGroup,
 } from 'react-bootstrap';
-import styled from 'styled-components';
 import Image from 'next/image';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import 'date-fns';
 import DateFnsUtils from '@date-io/date-fns';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { notification } from 'antd';
-import 'antd/dist/antd.css';
-import axios from 'axios';
 import { useRouter } from 'next/router';
-import Header from '../../src/components/Header';
-import { Body } from '../../src/components/BodyForms';
+import { toast } from 'react-toastify';
+import api from '../../src/utils/api';
+import { BodyUser, ItemFormulary } from '../../src/components/BodyForms';
 import WindowDivider from '../../src/components/WindowDivider';
+import 'react-toastify/dist/ReactToastify.css';
+import {
+  WordFormGroup, MyFormGroup, Phone, Pass, NumbersForms, DDD,
+  Subtitle, Register,
+  Buttons, FormRegister, Submit, ButtonLogin,
+} from './styles';
+import { TextBox2 } from '../../src/components/FormComponents';
 
-const api = axios.create({ baseURL: 'http://localhost:3000/' });
-
-const WordFormGroup = styled(FormGroup)`
-display : flex;
-flex-direction: column;
-align-items: flex-start;
-margin-left: 30px;
-`;
-const SobreFormGroup = styled(FormGroup)`
-display : flex;
-flex-direction: column;
-align-items: flex-start;
-margin-left: 30px;
-`;
-
-const MyFormGroup = styled(FormGroup)`
-display : flex;
-flex-direction: column;
-align-items: flex-start;
-`;
-
-const Phone = styled.div`
-display : flex;
-flex-direction:row ;
-margin-left:30px;
-`;
-
-const Pass = styled.div`
-display : flex;
-flex-direction:row ;
-`;
-
-const Name = styled.div`
-display:flex;
-flex-direction:row;
-`;
-const NumbersForms = styled.div`
-flex-direction:row ;
-display: flex;
-  
-`;
-const DDD = styled.div`
-flex-direction:row ;
-display: flex;
-margin-right: 10px;
-`;
-const EmailFormControl = styled(FormControl)`
-display: flex;
-width: 430px;
-`;
-const PhoneFormControl = styled(FormControl)`
-display: flex;
-width: 140px;
-
-`;
-const DDDFormControl = styled(FormControl)`
-display: flex;
-width: 55px;
-font-size: 15px;
-flex-direction: row;
-`;
-
-const Subtitle = styled.p`
-  margin-top: 40px;
-  display: flex;
-  font-family: Roboto;
-  font-size: 40px;
-  font-weight: 500;
-`;
-
-const Register = styled.div`
-margin-top: 250px;
-  
-`;
-const Buttons = styled.div`
-display: flex;
-align-items: center;
-flex-direction: column;
-  
-`;
-const FormRegister = styled(Form)`
-
-`;
-
-const Submit = styled.button`
-    margin-top: 30px;
-    height: 40px;
-    width: 150px;
-    font-family: Roboto;
-    font-size: 20px;
-    font-weight: 500;
-    background-color: ${({ theme }) => theme.colors.mediumGreen};
-    color: white;
-    border: 0;
-    border-radius: 5px;
-    cursor: pointer;
-`;
-
-const ButtonLogin = styled.button`
-display: flex;
-align-items: center;
-justify-content: center;
-width: 100%;
-outline: none;
-border:0;
-background-color: ${({ theme }) => theme.colors.background};
-cursor: pointer;
-`;
+toast.configure();
 
 export default function Signup() {
   const [name, setName] = useState('');
@@ -164,97 +61,91 @@ export default function Signup() {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    if (cpf?.length !== 11) {
-      alert('CPF inválido');
+
+    const regex = new RegExp('.+@.+..+');
+    if (name?.length === 0) {
+      toast('Nome inválido!', { position: toast.POSITION.BOTTOM_RIGHT });
       return;
     }
-    if (telephone?.length !== 9) {
-      alert('Número inválido');
+    if (lastName?.length === 0) {
+      toast('Sobrenome inválido!', { position: toast.POSITION.BOTTOM_RIGHT });
       return;
     }
-    if (ddd?.length !== 2) {
-      alert('Número inválido');
+    if (!regex.test(email)) {
+      toast('Email inválido!', { position: toast.POSITION.BOTTOM_RIGHT });
       return;
     }
     if (password !== confirmPassword) {
-      alert('A senha inserida deve ser a mesma');
+      toast('A senha inserida deve ser a mesma', { position: toast.POSITION.BOTTOM_RIGHT });
+      return;
+    }
+    if (cpf?.length !== 11) {
+      toast('CPF inválido', { position: toast.POSITION.BOTTOM_RIGHT });
+      return;
+    }
+    if (telephone?.length !== 9) {
+      toast('Número inválido', { position: toast.POSITION.BOTTOM_RIGHT });
+      return;
+    }
+    if (ddd?.length !== 2) {
+      toast('DDD inválido', { position: toast.POSITION.BOTTOM_RIGHT });
       return;
     }
     const body = {
       type: 'buyer',
-      first_name: name,
-      last_name: lastName,
+      name: name + ' ' + lastName,
       birth_date: date,
       email,
       password,
       cpf,
-      telephone: ddd + telephone,
+      phone: ddd + telephone,
     };
     try {
-      const Validate = await api.post('/api/user', body);
-      console.log(Validate.data);
-      notification.open({
-        message: 'Sucesso!',
-        description:
-            'Cadastro realizado com sucesso.',
-        className: 'ant-notification',
-        top: '100px',
-        style: {
-          width: 600,
-        },
-      });
+      await api.post('/user', body);
+      toast('Sucesso', { position: toast.POSITION.BOTTOM_RIGHT });
       router.push('/login');
     } catch (error) {
       console.error(error);
-      notification.open({
-        message: 'Erro!',
-        description:
-            'Erro ao cadastrar usuário.',
-        className: 'ant-notification',
-        top: '100px',
-        style: {
-          width: 600,
-        },
-      });
+      toast('Erro', { position: toast.POSITION.BOTTOM_RIGHT });
     }
   }
 
   return (
     <>
-      <Header />
-      <Body>
-        <Body.Left>
+      <BodyUser>
+        <BodyUser.LeftUser>
 
-          <Image src="/images/doguinho.jpg" alt="" width="420" height="363" />
-        </Body.Left>
+          <Image src="/images/doguinho.jpg" alt="" width="450" height="483" />
+        </BodyUser.LeftUser>
         <WindowDivider />
-        <Body.Right>
+        <BodyUser.Right>
           <Register>
             <FormRegister>
 
               <Subtitle>Vamos Começar?</Subtitle>
-              <Name>
-                <MyFormGroup>
-                  <FormLabel>Nome</FormLabel>
-                  <FormControl
+              <MyFormGroup>
+                <FormLabel>Nome</FormLabel>
+                <ItemFormulary>
+                  <TextBox2
                     type="text"
                     placeholder="Nome"
                     required
                     value={name}
                     onChange={handleNameChange}
-                  />
-                </MyFormGroup>
-                <SobreFormGroup>
+                  /> 
+                </ItemFormulary>
+              </MyFormGroup>
+
+                <MyFormGroup>
                   <FormLabel>Sobrenome</FormLabel>
-                  <FormControl
+                  <TextBox2
                     type="text"
                     placeholder="Sobrenome"
                     required
                     value={lastName}
                     onChange={handleLastNameChange}
                   />
-                </SobreFormGroup>
-              </Name>
+                </MyFormGroup>
 
               <MyFormGroup>
                 <FormLabel>Data de Nascimento</FormLabel>
@@ -270,7 +161,7 @@ export default function Signup() {
               </MyFormGroup>
               <MyFormGroup>
                 <FormLabel>Email</FormLabel>
-                <EmailFormControl
+                <TextBox2
                   type="email"
                   placeholder="Email"
                   pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
@@ -283,7 +174,7 @@ export default function Signup() {
               <Pass>
                 <MyFormGroup>
                   <FormLabel>Senha</FormLabel>
-                  <FormControl
+                  <TextBox2
                     type="password"
                     placeholder="Senha"
                     required
@@ -295,7 +186,7 @@ export default function Signup() {
                 </MyFormGroup>
                 <WordFormGroup>
                   <FormLabel>Confirmar Senha</FormLabel>
-                  <FormControl
+                  <TextBox2
                     type="password"
                     placeholder="Senha"
                     required
@@ -308,8 +199,8 @@ export default function Signup() {
               <NumbersForms>
                 <MyFormGroup>
                   <FormLabel>CPF</FormLabel>
-                  <FormControl
-                    type="number"
+                  <TextBox2
+                    type="numbers"
                     placeholder="CPF"
                     pattern="[0-9]$"
                     required
@@ -322,7 +213,7 @@ export default function Signup() {
                   <DDD>
                     <MyFormGroup>
                       <FormLabel>DDD</FormLabel>
-                      <DDDFormControl
+                      <TextBox2
                         type="numbers"
                         placeholder="(00)"
                         pattern="[0-9]$"
@@ -334,8 +225,8 @@ export default function Signup() {
                   </DDD>
                   <MyFormGroup>
                     <FormLabel>Telefone</FormLabel>
-                    <PhoneFormControl
-                      type="number"
+                    <TextBox2
+                      type="numbers"
                       placeholder="00000-0000"
                       pattern="[0-9]$"
                       required
@@ -346,7 +237,7 @@ export default function Signup() {
                 </Phone>
               </NumbersForms>
               <Buttons>
-                <Submit onClick={handleSubmit}>Finalizar</Submit>
+                <Submit onClick={handleSubmit}>Cadastrar</Submit>
 
                 <br />
                 <FormGroup>
@@ -361,9 +252,9 @@ export default function Signup() {
             </FormRegister>
 
           </Register>
-        </Body.Right>
+        </BodyUser.Right>
 
-      </Body>
+      </BodyUser>
     </>
   );
 }

@@ -2,7 +2,6 @@ const { v4: uuidv4 } = require('uuid');
 const StoreModel = require('../models/StoreModel');
 const FirebaseModel = require('../models/FirebaseModel');
 const AwsModel = require('../models/AwsModel');
-// const ProductModel = require('../models/ProductModel');
 
 module.exports = {
   async getOne(request, response) {
@@ -23,7 +22,19 @@ module.exports = {
     try {
       const store = await StoreModel.getAllStore();
       return response.status(200).json(store);
-    } catch (error) {
+    } catch (err) {
+      if (err.message) {
+        return response.status(400).json({ notification: err.message });
+      }
+      return response.status(500).json({ notification: 'Internal Server Error' });
+    }
+  },
+
+  async getApprovedStore(request, response) {
+    try {
+      const store = await StoreModel.getApprovedStore();
+      return response.status(200).json(store);
+    } catch (err) {
       if (err.message) {
         return response.status(400).json({ notification: err.message });
       }
@@ -38,18 +49,19 @@ module.exports = {
     logo_img.name = uuidv4();
 
     let firebase_id;
-
     // Criacao da Loja
     try {
+      const regex = new RegExp('.+@.+\..+');
+      if (!regex.test(request.body.email)) {
+        throw new Error('Formato de email inválido');
+      }
       firebase_id = await FirebaseModel.createNewUser(store.email, store.password);
       store.firebase_id_store = firebase_id;
       delete store.password;
       const cover = await AwsModel.uploadAWS(cover_img);
       const logo = await AwsModel.uploadAWS(logo_img);
-      // await unlinkFile(file.img.path);
       store.cover_img = cover.key;
       store.logo_img = logo.key;
-
       await StoreModel.createNewStore(store);
     } catch (err) {
       if (err.message) {
@@ -57,21 +69,41 @@ module.exports = {
       }
       return response.status(500).json({ notification: 'Internal Server Error' });
     }
-    return response.status(200).json({ notification: 'Store created' });
+    return response.status(200).json({ notification: 'Store created', id: store.firebase_id_store });
   },
 
   async update(request, response) {
     const store = request.body;
-
+    const { accessToken } = await request.session.get('store');
+    let updatedStore;
     try {
-      await StoreModel.updateStore(store, store.firebase_id_store);
+      updatedStore = await StoreModel
+        .updateStore(store, store.firebase_id_store);
+      request.session.set('store', { store: updatedStore, accessToken });
+      await request.session.save();
     } catch (err) {
       if (err.message) {
         return response.status(400).json({ notification: err.message });
       }
       return response.status(500).json({ notification: 'Internal Server Error' });
     }
-    return response.status(200).json({ notification: 'Store updated' });
+    return response.status(200).json({ notification: 'Store updated', store: updatedStore });
+  },
+
+  async updateStatus(request, response) {
+    const store = request.body;
+    const { id } = request.query;
+    let updatedStore;
+    try {
+      updatedStore = await StoreModel
+        .updateStoreStatus(store, id);
+    } catch (err) {
+      if (err.message) {
+        return response.status(400).json({ notification: err.message });
+      }
+      return response.status(500).json({ notification: 'Internal Server Error' });
+    }
+    return response.status(200).json({ notification: 'Store updated', store: updatedStore });
   },
 
   async deleteBoth(request, response) {

@@ -1,4 +1,4 @@
-const connection = require('../database/connection');
+const { connection } = require('../database/connection');
 
 module.exports = {
   async getStoreById(firebase_id_store) {
@@ -40,16 +40,50 @@ module.exports = {
     try {
       const response = await connection('Store')
         .where({ firebase_id_store: id })
-        .update(store);
-      return response;
+        .update(store)
+        .returning('*');
+      return response[0];
     } catch (error) {
       console.error(error);
       throw new Error(error);
     }
   },
-  async getAllStore() {
+
+  async updateStoreStatus(store, id) {
+    try {
+      const response = await connection('Store')
+        .where({ firebase_id_store: id })
+        .update(store)
+        .returning('*');
+
+      return response[0];
+    } catch (error) {
+      console.error(error);
+      throw new Error(error);
+    }
+  },
+
+  async getAllStore(filter) {
     try {
       const stores = await connection('Store')
+        .select('*')
+        .where((builder) => {
+          if (filter) {
+          // eslint-disable-next-line quotes
+            builder.whereRaw(`EXTRACT(MONTH FROM created_at::date) = ? AND EXTRACT(YEAR FROM created_at::date) = ?`, [filter.month, filter.year]);
+          }
+        });
+      return stores;
+    } catch (error) {
+      console.error(error);
+      throw new Error(error);
+    }
+  },
+
+  async getApprovedStore() {
+    try {
+      const stores = await connection('Store')
+        .where({ status: true })
         .select('*');
       return stores;
     } catch (error) {
@@ -57,5 +91,17 @@ module.exports = {
       throw new Error(error);
     }
   },
-  
+
+  async getStatusByEmail(email) {
+    try {
+      const storeStatus = await connection('Store')
+        .where({ email: email })
+        .select('status')
+        .first();
+      return storeStatus;
+    } catch (error) {
+      console.error(error);
+      throw new Error(error);
+    }
+  },
 };

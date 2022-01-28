@@ -1,7 +1,6 @@
 /*eslint-disable*/
 const S3 = require('aws-sdk/clients/s3');
 const fs = require('fs');
-// const connection = require('../database/connection');
 const multer = require('multer');
 
 const region = 'sa-east-1';
@@ -67,7 +66,6 @@ module.exports = {
         };
 
         const awsRes =  await s3.upload(uploadParams).promise();
-        console.log(awsRes);
 
         resolve(awsRes);
       } catch (error) {

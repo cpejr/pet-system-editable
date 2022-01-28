@@ -1,62 +1,85 @@
-import React from 'react';
-import styled from 'styled-components';
 import { Tabs } from 'antd';
 import 'antd/dist/antd.css';
-import ProductsCarousel from '../Carousels/ProductsCarousel';
+import moment from 'moment';
+import { useEffect, useState } from 'react';
+import { Container, SearchContainer } from './styles';
+import Title from '../Title';
+import {
+  SearchCardsClosed,
+  SearchCards,
+} from '../index';
 import StoreServices from '../StoreServices';
+import ProductsCarousel from '../Carousels/ProductsCarousel';
+import StoreIsOpen from '../StoreIsOpen';
 
 const { TabPane } = Tabs;
 
-function callback(key) {
-  console.log(key);
-}
+export default function StoreTabs({
+  store, products, groups, myLoader,
+}) {
+  const openingTime = store.opening_time.split(',');
+  const closingTime = store.closing_time.split(',');
+  const situation = store.working_days.split(',');
+  const [today, setToday] = useState();
+  const data = new Date();
+  const day = moment(data).format('dddd');
+  useEffect(() => {
+    if (day) {
+      switch (day) {
+        case 'Monday':
+          setToday(0);
+          break;
 
-const Container = styled.div`
-.ant-tabs-tab {
-color: #363636 !important;
-  font-family:Roboto;
-}
-.ant-tabs-tab-active {
-        color: #609694 !important;   
-}
-.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
-   color: #609694 !important; 
-   font-weight: 500;
-}
-.ant-tabs-ink-bar {
-   position: absolute;
-   background: #609694;
-   pointer-events: none;
-}
-`;
+        case 'Tuesday':
+          setToday(1);
+          break;
 
-const ServiceContainer = styled.div`
-display: flex;
-align-items: center;
-justify-content: center;
-width: 100%;
-flex-direction: row;
-`;
+        case 'Wednesday':
+          setToday(2);
+          break;
 
-ServiceContainer.Col = styled.div`
-display: flex;
-align-items: center;
-justify-content: center;
-width: 50%;
-flex-direction: column;
-`;
+        case 'Thursday':
+          setToday(3);
+          break;
 
-export default function StoreTabs({ store }) {
+        case 'Friday':
+          setToday(4);
+          break;
+
+        case 'Saturday':
+          setToday(5);
+          break;
+
+        default:
+          setToday(6);
+          break;
+      }
+    }
+  }, [day]);
   return (
     <Container>
-      <Tabs defaultActiveKey="1" onChange={callback} centered size="large">
-        <TabPane tab="Produtos" key="1">
-          <ProductsCarousel />
-        </TabPane>
+          <ProductsCarousel products={products} myLoader={myLoader} />
+          {groups.map((group) => (
+            <SearchContainer>
+              <SearchContainer.Row>
+                <Title>{group.name}</Title>
+                <SearchContainer.Col>
+                  {(StoreIsOpen(openingTime[today], closingTime[today]) && situation[today] === 'Aberto') ? (
+                    group.product_groups.map((product) => (
+                      <SearchCards product={product} store={store} key={product.product_id} />
+                    ))
+                  ) : (
+                    group.product_groups.map((product) => (
+                      <SearchCardsClosed product={product} store={store} key={product.product_id} />
+                    ))
+                  )}
+                </SearchContainer.Col>
+              </SearchContainer.Row>
+            </SearchContainer>
+          ))}
         <TabPane tab="Serviços" key="2">
           <StoreServices store={store} />
         </TabPane>
-      </Tabs>
     </Container>
   );
 }

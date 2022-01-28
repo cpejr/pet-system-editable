@@ -1,158 +1,84 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
+/* eslint-disable no-nested-ternary */
+import Link from 'next/link';
 import Image from 'next/image';
-import { AiFillHeart, AiFillStar } from 'react-icons/ai';
+import moment from 'moment';
+import { useEffect, useState } from 'react';
+import {
+  CardWrapper, CardInfo, CardDescription, CardDescriptionTitle,
+  CardDescriptionValues, CardDescriptionDeliveryPrice,
+  CardDescriptionProductPrice,
+} from './styles';
+import StoreIsOpen from '../StoreIsOpen';
 
-const CardWrapper = styled.div`
-display: flex;
-flex-direction: column;
-align-items: center;
-width: 100%;
-padding: 1vw;
-height: auto;
-font-family:Roboto;
-`;
+export default function SearchCards({ product, store }) {
+  const openingTime = store?.opening_time.split(',');
+  const closingTime = store?.closing_time.split(',');
+  const openingTimeProduct = product.opening_time.split(',');
+  const closingTimeProduct = product.closing_time.split(',');
+  const [today, setToday] = useState();
+  const data = new Date();
+  const day = moment(data).format('dddd');
+  useEffect(() => {
+    if (day) {
+      switch (day) {
+        case 'Monday':
+          setToday(0);
+          break;
 
-const CardInfo = styled.div`
-display:flex;
-align-items:center;
-justify-content:space-around;
-padding: 3%;
-width:100%;
-font-size:16px;
-flex-direction:row;
-`;
+        case 'Tuesday':
+          setToday(1);
+          break;
 
-const CardDescription = styled.div`
-display:flex;
-align-items:center;
-justify-content:center;
-width: 50%;
-flex-direction:column;
-`;
+        case 'Wednesday':
+          setToday(2);
+          break;
 
-const CardDescriptionTitle = styled.h3`
-display:flex;
-align-items:center;
-justify-content:flex-start;
-width:100%;
-margin-top:1%;
-margin-bottom:1%;
-`;
+        case 'Thursday':
+          setToday(3);
+          break;
 
-const CardDescriptionValues = styled.p`
-display:flex;
-align-items:center;
-justify-content:flex-start;
-width:100%;
-margin:0;
-flex-direction:row;
-@media(max-width:880px){
-    flex-direction:column;
-    align-items:initial;
-}
-`;
-const CardDescriptionDeliveryPrice = styled.div`
-display:flex;
-align-items:center;
-justify-content:flex-start;
-width:60%;
-font-size:14px;
-@media(max-width:560px){
-    width:100%;
-    color:${({ theme }) => theme.colors.baseGray};
-}
-`;
+        case 'Friday':
+          setToday(4);
+          break;
 
-const CardButtons = styled.div`
-display:flex;
-align-items:center;
-justify-content:center;
-width:15%;
-@media(max-width:560px){
-width:30%;
-}
-`;
+        case 'Saturday':
+          setToday(5);
+          break;
 
-const FavButton = styled.button`
-display:none;
-@media(max-width:560px){
-display:flex;
-align-items:center;
-justify-content:center;
-border:none;
-background-color:${({ theme }) => theme.colors.background};
-}
-`;
-
-const Button = styled.button`
-display:flex;
-align-items:center;
-justify-content:center;
-border-radius:50%;
-width:35px;
-height:35px;
-background-color:${({ theme }) => theme.colors.mediumGray};
-border:none;
-@media(max-width:560px){
-display:none;
-}
-
-`;
-
-const Star = styled.div`
-display:none;
-@media(max-width:560px){
-    display:flex;
-    color:${({ theme }) => theme.colors.starYellow};
-    margin-left:5%;
-}
-`;
-
-export default function SearchCards(props) {
-  const { product } = props;
-  const [checkedFav1, setCheckedFav1] = useState('#C4C4C4');
-  const handleClickFav1 = () => {
-    if (checkedFav1 === '#C4C4C4') {
-      setCheckedFav1('#F6C8CA');
-    } else {
-      setCheckedFav1('#C4C4C4');
+        default:
+          setToday(6);
+          break;
+      }
     }
-  };
-
-  const myLoader = ({src}) => {
-    return `https://s3-sa-east-1.amazonaws.com/petsystembucket/${src}`;
+  }, [day]);
+  const myLoader = ({ src }) => `https://s3-sa-east-1.amazonaws.com/petsystembucket/${src}`;
+  if (store ? StoreIsOpen(openingTime[today], closingTime[today]) : StoreIsOpen(openingTimeProduct[today], closingTimeProduct[today])) {
+    return (
+      <Link href={`/Product/${product.product_id}`}>
+        <CardWrapper>
+          <Image loader={myLoader} src={product.img} alt="" width="200" height="200" />
+          <CardInfo>
+            <CardDescription>
+              <CardDescriptionTitle>
+                {product.product_name}
+              </CardDescriptionTitle>
+              <CardDescriptionValues>
+                <CardDescriptionProductPrice>
+                  R$
+                  {' '}
+                  {product.price}
+                </CardDescriptionProductPrice>
+                <CardDescriptionDeliveryPrice>
+                  Frete:
+                  {' '}
+                  {store ? (store?.shipping_tax === 0 ? 'Gratis' : `R$${store?.shipping_tax}`) : (product?.shipping_tax === 0 ? 'Gratis' : `R$${product?.shipping_tax}`) }
+                </CardDescriptionDeliveryPrice>
+              </CardDescriptionValues>
+            </CardDescription>
+          </CardInfo>
+        </CardWrapper>
+      </Link>
+    );
   }
-
-  return (
-    <CardWrapper>
-      <Image loader={myLoader} src={product.img} alt="" width="100%" height="100%" />
-      <CardInfo>
-        <CardDescription>
-          <CardDescriptionTitle>
-            {product.product_name}
-          </CardDescriptionTitle>
-          <CardDescriptionValues>
-            <CardDescriptionDeliveryPrice>
-              •Valor:{product.price}
-            </CardDescriptionDeliveryPrice>
-            <Star>
-              <AiFillStar />
-              5.0
-            </Star>
-          </CardDescriptionValues>
-        </CardDescription>
-        <CardButtons>
-          <Button>5.0</Button>
-          <FavButton>
-            <AiFillHeart
-              size={24}
-              onClick={handleClickFav1}
-              style={{ color: checkedFav1 }}
-            />
-          </FavButton>
-        </CardButtons>
-      </CardInfo>
-    </CardWrapper>
-  );
+  return null;
 }

@@ -1,4 +1,4 @@
-const connection = require('../database/connection');
+const { connection } = require('../database/connection');
 
 module.exports = {
   async getCategoryById(id) {
@@ -55,5 +55,4 @@ module.exports = {
       throw new Error(error);
     }
   },
-
 };

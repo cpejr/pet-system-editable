@@ -1,18 +1,23 @@
-import { create, getAll, deleteAllProductsCart } from '../../../src/controllers/Cart_ProductsController';
-import { isAdmin,withAuthValidation } from '../../../src/utils/Auth';
+import {
+  create, getAll, deleteAllProductsCart, updateProductAmount,
+} from '../../../src/controllers/Cart_ProductsController';
+import { withAuthValidation } from '../../../src/utils/Auth';
 
 export default function handler(req, res) {
   try {
     const { method } = req;
     console.log(method);
     if (method === 'GET') {
-      return isAdmin(getAll)(req, res);
+      return withAuthValidation(getAll)(req, res);
     }
     if (method === 'POST') {
       return withAuthValidation(create)(req, res);
     }
     if (method === 'DELETE') {
       return withAuthValidation(deleteAllProductsCart)(req, res);
+    }
+    if (method === 'PUT') {
+      return withAuthValidation(updateProductAmount)(req, res);
     }
     return res.status(500).json({ message: 'Internal Server Error' });
   } catch (error) {

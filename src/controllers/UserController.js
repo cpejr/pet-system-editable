@@ -1,5 +1,8 @@
 import FirebaseModel from '../models/FirebaseModel';
 import UserModel from '../models/UserModel';
+import CartModel from '../models/CartModel';
+
+const { v4: uuidv4 } = require('uuid');
 
 export async function getOne(request, response) {
   const { id } = request.query;
@@ -16,7 +19,6 @@ export async function getOne(request, response) {
 }
 
 export async function getAll(request, response) {
-
   try {
     const users = await UserModel.getAllUsers();
     return response.status(200).json(users);
@@ -30,15 +32,25 @@ export async function getAll(request, response) {
 
 export async function create(request, response) {
   const user = request.body;
+  const cart_id = uuidv4();
   let firebase_id;
 
   try {
+    const regex = new RegExp('.+@.+\..+');
+    if (!regex.test(request.body.email)) {
+      throw new Error('Formato de email inválido');
+    }
     firebase_id = await FirebaseModel
       .createNewUser(user.email, user.password);
 
     user.firebase_id = firebase_id;
     delete user.password;
+    const newCart = {
+      firebase_id,
+      cart_id,
+    };
     await UserModel.createNewUser(user);
+    const createNewCart = await CartModel.createNewCart(newCart);
   } catch (err) {
     if (firebase_id) {
       await FirebaseModel.deleteUser(firebase_id);
@@ -53,7 +65,7 @@ export async function create(request, response) {
 
 export async function deleteBoth(request, response) {
   try {
-    const id = request.query.id;
+    const { id } = request.query;
 
     await FirebaseModel.deleteUser(id);
     await UserModel.deleteUser(id);
@@ -74,7 +86,6 @@ export async function update(request, response) {
     if (password) {
       const user = await UserModel.getUserById(id);
       const firebaseId = user.firebase_id;
-      console.log(firebaseId);
       await FirebaseModel.changeUserPassword(firebaseId, password);
       delete newUser.password;
       return response.status(200).json({ message: 'Sucesso!' });
@@ -89,7 +100,7 @@ export async function update(request, response) {
     await UserModel.updateUser(newUser, id);
 
     const updatedUser = await UserModel.getUserById(id);
-    return response.status(200).json(updatedUser , { message: 'Sucesso!' });
+    return response.status(200).json(updatedUser, { message: 'Sucesso!' });
   } catch (error) {
       console.error(error); //eslint-disable-line
     return response.status(500).json({ notification: 'Internal Server Error' });

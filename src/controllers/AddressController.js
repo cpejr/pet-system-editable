@@ -6,8 +6,22 @@ module.exports = {
     const { id } = request.query;
 
     try {
-    const address = await AddressModel.getAddressById(id);
-    return response.status(200).json(address);
+      const address = await AddressModel.getAddressById(id);
+      return response.status(200).json(address);
+    } catch (err) {
+      if (err.message) {
+        return response.status(400).json({ notification: err.message });
+      }
+      return response.status(500).json({ notification: 'Internal Server Error' });
+    }
+  },
+
+  async getOneByStoreId(request, response) {
+    const { id } = request.query;
+
+    try {
+      const address = await AddressModel.getStoreAddressById(id);
+      return response.status(200).json(address);
     } catch (err) {
       if (err.message) {
         return response.status(400).json({ notification: err.message });
@@ -19,7 +33,7 @@ module.exports = {
   async getAllByUser(req, res) {
     const firebase_id = req.query.id;
 
-    const user = await req.session.get("user");
+    const user = await req.session.get('user');
 
     try {
       const addresses = await AddressModel.getAddressesByFirebaseId(firebase_id, user);
@@ -47,9 +61,7 @@ module.exports = {
   async create(request, response) {
     const address = request.body;
     address.address_id = uuidv4();
-
     try {
-
       await AddressModel.createNewAddress(address, request);
     } catch (err) {
       if (err.message) {
@@ -74,14 +86,17 @@ module.exports = {
     }
     return response.status(200).json({ notification: 'Address updated' });
   },
-  
+
   async remove(request, response) {
-    const id = request.query.id;
+    const { id } = request.query;
 
-    const user = await request.session.get("user");
+    const { user } = await request.session.get('user');
 
+    const mainAddress = user ? await AddressModel.getUserMainAddressById(user.firebase_id) : null;
+
+    const orderAssociated = await AddressModel. getAddressOrderAssociated(id) ;
     try {
-      await AddressModel.removeAddress(id,user);
+      await AddressModel.removeAddress(id, user, (id === mainAddress.address_id), orderAssociated);
     } catch (err) {
       if (err.message) {
         return response.status(400).json({ notification: err.message });

@@ -36,7 +36,7 @@ Header.Bottom = styled.div`
     display: flex;
     width:100%;
     flex-direction: row;
-    justify-content: space-around;  // space evenly
+    justify-content: space-around;
     height: 35%;
     background-color: ${({ theme }) => theme.colors.mediumGreen};
     @media(max-width:560px){
@@ -176,7 +176,7 @@ export default function Header() {
         </Link>
       );
     }
-    switch (user.type) {
+    switch (user?.type) {
       case 'admin':
         return (
           <Link href="/admin">

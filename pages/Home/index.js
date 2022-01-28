@@ -1,7 +1,4 @@
-import React from 'react';
 import api from '../../src/utils/api';
-import Header from '../../src/components/Header';
-import MobileHeader from '../../src/components/MobileHeader';
 import BannerCarousel from '../../src/components/Carousels/BannerCarousel';
 import CardsCarousel from '../../src/components/Carousels/CardsCarousel';
 import StoresCarousel from '../../src/components/Carousels/StoresCarousel';
@@ -14,8 +11,6 @@ import {
 export default function Home({ stores }) {
   return (
     <>
-      <Header />
-      <MobileHeader />
       <BannerCarousel />
       <Container>
         <Cards>
@@ -65,13 +60,14 @@ export default function Home({ stores }) {
         <Text>Bichinhos mais procurados</Text>
         <AnimalsCarousel />
       </Container>
-
     </>
   );
 }
 
-export async function getServerSideProps() {
-  const response = await api.get('store');
-  const stores = response.data;
-  return { props: { stores } };
+export async function getStaticProps() {
+  const { data: stores } = await api.get('store');
+  return {
+    props: { stores },
+    revalidate: 60 * 10, // 10 minutos
+  };
 }

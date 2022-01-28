@@ -1,173 +1,207 @@
-import React, { useEffect, useState } from 'react';
-import api from "../../src/utils/api"
-import styled from 'styled-components';
+/* eslint-disable react/jsx-pascal-case */
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import HeaderSearch from '../../src/components/HeaderSearch';
-import OrderSearch from '../../src/components/Filter/OrderSearch';
-import Brands from '../../src/components/Filter/Brands';
-import Price from '../../src/components/Filter/Price';
-import SearchCards from '../../src/components/SearchCards';
-import FooterMobile from '../../src/components/Mobile/FooterMobile';
-import SearchHeader from '../../src/components/Mobile/SearchHeader';
+import api from '../../src/utils/api';
+import { ContainerCategory, SearchContainer, TypeContainer } from './styles';
+import {
+  OrderSearch,
+  Brands,
+  Price,
+  SearchCardsClosed,
+  SearchCards,
+  SearchCardsStore,
+  SearchCardsStoreClosed,
+  SearchHeader,
+} from '../../src/components/index';
 
-const ContainerCategory = styled.div`
-display:flex;
-align-items:center;
-justify-content:center;
-width:100%;
-flex-direction:row;
-font-family:Roboto;
-@media(max-width:700px){
-display:none;
-}
-`;
-
-ContainerCategory.Col = styled.div`
-display:flex;
-align-items:center;
-justify-content:center;
-flex-direction:column;
-width:8%;
-margin: 0 1% 0 1%;
-cursor: pointer;
-border-radius: 10px;
-&:hover {
-  box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.2);
-}
-`;
-
-
-
-const SearchContainer = styled.div`
-display:flex;
-align-items:flex-start;
-justify-content:center;
-width:100%;
-flex-direction:row;
-margin-top:2%;
-margin-bottom:2%;
-`;
-
-SearchContainer.Col1 = styled.div`
-display:flex;
-align-items:center;
-justify-content:center;
-width:25%;
-min-width: 300px;
-flex-direction:column;
-@media(max-width:880px){
-width:40%;
-}
-@media(max-width:560px){
-display:none;
-}
-`;
-SearchContainer.Col2 = styled.div`
-display: grid;
-grid-template-columns: 1fr 1fr 1fr;
-align-items:center;
-justify-content:center;
-width:75%;
-flex-direction:column;
-@media(max-width:560px){
-width:100%;
-}
-`;
-const Submit = styled.button`
-height: 40px;
-width: 50%;
-font-family: Roboto;
-font-size: 100%;
-font-weight: 500;
-background-color: ${({ theme }) => theme.colors.mediumGreen};
-color: white;
-border: 0;
-border-radius: 5px;
-cursor:pointer;
-outline:none;
-@media(max-width:560px){
-display:none;
-}
-`;
-
-export default function Search() {
+export default function Search({ keyword, id, categories }) {
   const [products, setProducts] = useState([]);
-  const [price, setPrice] = useState(0);
+  const [allStores, setAllStores] = useState([]);
+  const [stores, setStores] = useState([]);
+  const [price, setPrice] = useState([0, 5000]);
+  const [categoria, setCategoria] = useState(id);
+  const [checkedStore, setCheckedStore] = useState('#AAABB0');
+  const [checkedProducts, setCheckedProducts] = useState('#609694');
+
+  const handleClickStore = () => {
+    setCheckedStore('#609694');
+    setCheckedProducts('#AAABB0');
+  };
+
+  const handleClickProducts = () => {
+    setCheckedProducts('#609694');
+    setCheckedStore('#AAABB0');
+  };
+
+  const defineBackgroundColor = (category_id) => (categoria === category_id
+    ? { backgroundColor: '#A6DAD8' }
+    : { backgroundColor: '#F8F8F8' });
+
+  const myLoader = ({ src }) => `https://s3-sa-east-1.amazonaws.com/petsystembucket/${src}`;
 
   useEffect(() => {
-    api.get('products').then((res) => {
-      setProducts(res.data);
-      
-    })
-    console.log(products);
-  }, []);
+    if (Object.keys(allStores).length > 0) {
+      api
+        .get('products', { params: { price, category_id: categoria } })
+        .then((res) => {
+          if (keyword) {
+            const FilteredProducts = res.data.filter((item) => item.product_name
+              .toLowerCase()
+              .includes(keyword.toLowerCase()));
+            allStores.forEach((store) => {
+              FilteredProducts.forEach((product) => {
+                if (product.firebase_id_store === store.firebase_id_store) {
+                  product.shipping_tax = store.shipping_tax;
+                  product.opening_time = store.opening_time;
+                  product.closing_time = store.closing_time;
+                }
+              });
+            });
+            setProducts(FilteredProducts);
+          } else {
+            allStores.forEach((store) => {
+              res.data.forEach((product) => {
+                if (product.firebase_id_store === store.firebase_id_store) {
+                  product.shipping_tax = store.shipping_tax;
+                  product.opening_time = store.opening_time;
+                  product.closing_time = store.closing_time;
+                }
+              });
+            });
+            setProducts(res.data);
+          }
+        });
+    }
+  }, [categoria, price, keyword, allStores]);
 
-  const handleClick = () => {
-    api.get('products', { params: { price: price } }).then((res) => {
-      setProducts(res.data);
+  useEffect(() => {
+    api.get('store').then((res) => {
+      if (Object.keys(res.data).length !== Object.keys(allStores).length
+      && Object.keys(res.data).length !== 0) {
+        setAllStores(res.data);
+      }
+      if (keyword) {
+        const FilteredStores = res.data.filter((item) => item.company_name
+          .toLowerCase()
+          .includes(keyword.toLowerCase()));
+        setStores(FilteredStores);
+      } else {
+        setStores(res.data);
+      }
     });
-  }
+  }, [keyword]);
 
-  return (
-    <div>
-      <HeaderSearch />
-      <SearchHeader />
-      <ContainerCategory>
-        <ContainerCategory.Col>
-          <Image src="/images/racaopote.png" alt="" width="50" height="50"/>
-          Ração
-        </ContainerCategory.Col>
-        <ContainerCategory.Col>
-          <Image src="/images/brinquedos.png" alt="" width="50" height="50" />
-          Brinquedos
-        </ContainerCategory.Col>
-        <ContainerCategory.Col>
-          <Image src="/images/vasilhas.png" alt="" width="50" height="50" />
-          Vasilhas
-        </ContainerCategory.Col>
-        <ContainerCategory.Col>
-          <Image src="/images/casinhas.png" alt="" width="50" height="50" />
-          Casinhas
-        </ContainerCategory.Col>
-        <ContainerCategory.Col>
-          <Image src="/images/petiscos.png" alt="" width="50" height="50" />
-          Petiscos
-        </ContainerCategory.Col>
-        <ContainerCategory.Col>
-          <Image src="/images/shampoo.png" alt="" width="50" height="50" />
-          Shampoo
-        </ContainerCategory.Col>
-        <ContainerCategory.Col>
-          <Image src="/images/perfumes.png" alt="" width="50" height="50" />
-          Perfumes
-        </ContainerCategory.Col>
-        <ContainerCategory.Col>
-          <Image src="/images/banho.png" alt="" width="50" height="50" />
-          Banho
-        </ContainerCategory.Col>
-        <ContainerCategory.Col>
-          <Image src="/images/tosa.png" alt="" width="50" height="50" />
-          Tosa
-        </ContainerCategory.Col>
-        <ContainerCategory.Col>
-          <Image src="/images/outrosservicos.png" alt="" width="50" height="50" />
-          Serviços
-        </ContainerCategory.Col>
-      </ContainerCategory>
-      <SearchContainer>
-        <SearchContainer.Col1>
-          <OrderSearch />
-          <Brands />
-          <Price setPrice={setPrice} />
-          <Submit onClick={handleClick}>Aplicar</Submit>
-        </SearchContainer.Col1>
-        <SearchContainer.Col2>
-          {products.map((p) => (
-            <SearchCards product={p} key={p.product_id} />
+  if (checkedProducts === '#609694') {
+    return (
+      <div>
+        <SearchHeader />
+        <TypeContainer>
+          <TypeContainer.Cols
+            onClick={handleClickProducts}
+            style={{ color: checkedProducts }}
+          >
+            Produtos
+          </TypeContainer.Cols>
+          <TypeContainer.Cols2
+            onClick={handleClickStore}
+            style={{ color: checkedStore }}
+          >
+            Lojas
+          </TypeContainer.Cols2>
+        </TypeContainer>
+        <ContainerCategory>
+          {categories.map((c) => (
+            <ContainerCategory.Col>
+              <ContainerCategory.submitImg
+                style={defineBackgroundColor(c.category_id)}
+                onClick={() => setCategoria(c.category_id)}
+              >
+                <Image
+                  loader={myLoader}
+                  src={c.img}
+                  alt=""
+                  width="50"
+                  height="50"
+                />
+                <ContainerCategory.CategoryName>
+                  {c.name}
+                </ContainerCategory.CategoryName>
+              </ContainerCategory.submitImg>
+            </ContainerCategory.Col>
           ))}
-        </SearchContainer.Col2>
-      </SearchContainer>
-      <FooterMobile />
-    </div>
-  );
+          <ContainerCategory.Col>
+            <ContainerCategory.submitImg onClick={() => setCategoria()}>
+              <Image
+                src="/images/Xvermelho.png"
+                alt=""
+                width="50"
+                height="50"
+              />
+              <ContainerCategory.CategoryName>
+                Limpar categoria
+              </ContainerCategory.CategoryName>
+            </ContainerCategory.submitImg>
+          </ContainerCategory.Col>
+        </ContainerCategory>
+        <SearchContainer>
+          <SearchContainer.Col1>
+            <OrderSearch />
+            <Price setPrice={setPrice} />
+            <Brands categories={categories} key={categories.category_id} />
+          </SearchContainer.Col1>
+          <SearchContainer.Col2>
+            {products.map((p) => (
+              <SearchCards product={p} key={p.product_id} />
+            ))}
+            {products.map((p) => (
+              <SearchCardsClosed product={p} key={p.product_id} />
+            ))}
+          </SearchContainer.Col2>
+        </SearchContainer>
+      </div>
+    );
+  }
+  if (checkedProducts === '#AAABB0') {
+    return (
+      <div>
+        <SearchHeader />
+        <TypeContainer>
+          <TypeContainer.Cols
+            onClick={handleClickProducts}
+            style={{ color: checkedProducts }}
+          >
+            Produtos
+          </TypeContainer.Cols>
+          <TypeContainer.Cols2
+            onClick={handleClickStore}
+            style={{ color: checkedStore }}
+          >
+            Lojas
+          </TypeContainer.Cols2>
+        </TypeContainer>
+        <SearchContainer>
+          <SearchContainer.Col>
+            {stores.map((store) => (
+              <SearchCardsStore store={store} key={store.firebase_id_store} />
+            ))}
+            {stores.map((store) => (
+              <SearchCardsStoreClosed store={store} key={store.firebase_id_store} />
+            ))}
+          </SearchContainer.Col>
+        </SearchContainer>
+      </div>
+    );
+  }
+}
+
+export async function getServerSideProps({ query }) {
+  const { data: categories } = await api.get('category');
+  let { keyword, id } = query;
+  if (keyword === undefined) {
+    keyword = null;
+  }
+  if (id === undefined) {
+    id = null;
+  }
+  return { props: { keyword, id, categories } };
 }

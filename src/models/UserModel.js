@@ -1,6 +1,5 @@
 /* eslint-disable no-async-promise-executor */
-const connection = require('../database/connection');
-// const FirebaseModel = require('./FirebaseModel');
+const { connection } = require('../database/connection');
 
 module.exports = {
 
@@ -20,7 +19,7 @@ module.exports = {
   async getAllUsers() {
     try {
       const users = await connection('User')
-        .select('*')
+        .select('*');
       return users;
     } catch (error) {
       console.error(error);

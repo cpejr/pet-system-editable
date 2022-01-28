@@ -6,7 +6,22 @@ module.exports = {
   async getById(req, res) {
     const cart_id = req.query.id;
     try {
-      const cart_products = await Cart_ProductsModel.getCart_ProductsByCartId(cart_id);
+      const cart_products = await Cart_ProductsModel
+        .getCart_ProductsByCartId(cart_id);
+      return res.status(200).json(cart_products);
+    } catch (error) {
+      if (error.message) {
+        return res.status(400).json({ notification: error.message });
+      }
+      return res.status(500).json({ notification: 'Internal Server Error' });
+    }
+  },
+  async getCart(req, res) {
+    const { firebase_id } = req.session.get('user').user;
+    try {
+      const { cart_id } = await CartModel.getCartByFirebaseId(firebase_id);
+      const cart_products = await Cart_ProductsModel
+        .getCart_ProductsByCartId(cart_id);
       return res.status(200).json(cart_products);
     } catch (error) {
       if (error.message) {
@@ -57,8 +72,22 @@ module.exports = {
     const { firebase_id } = req.session.get('user').user;
     try {
       const cart = await CartModel.getCartByFirebaseId(firebase_id);
-      const cart_id = cart.cart_id;
+      const { cart_id } = cart;
       const result = await Cart_ProductsModel.deleteAllProductsCart(cart_id);
+      return res.status(200).json({ notification: 'Cart Products Deleted Successfully!' });
+    } catch (error) {
+      if (error.message) {
+        return res.status(400).json({ notification: error.message });
+      }
+      return res.status(500).json({ notification: 'Internal Server Error' });
+    }
+  },
+  async updateProductAmount(req, res) {
+    const amount = req.body;
+    const { firebase_id } = req.session.get('user').user;
+    try {
+      const cart = await CartModel.getCartByFirebaseId(firebase_id);
+      await Cart_ProductsModel.updateProductAmount(amount, cart.cart_id);
       return res.status(200).json({ notification: 'Cart Products Deleted Successfully!' });
     } catch (error) {
       if (error.message) {

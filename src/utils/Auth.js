@@ -11,13 +11,12 @@ const sessionObject = {
 function withAuth(handler) {
   return async (req, res) => {
     try {
-
       const session = await req.session.get('user');
 
-      if (!session){
+      if (!session) {
         const store = await req.session.get('store');
 
-        if(!store) throw new Error('No session corresponding to this token');
+        if (!store) throw new Error('No session corresponding to this token');
       }
     } catch (error) {
       console.error(error); // eslint-disable-line
@@ -71,6 +70,22 @@ export function isAdminOrSelf(handler) {
     const { id } = req.query;
 
     if (type === 'admin' || id === requester_id) {
+      return handler(req, res);
+    }
+    return res.status(403).json({ message: 'Unauthorized' });
+  });
+}
+
+export function isAdminOrSeller(handler) {
+  return withAuthValidation((req, res) => {
+    const store = req.session.get('store');
+
+    if (store) {
+      return handler(req, res);
+    }
+
+    const { user: { type } } = req.session.get('user');
+    if (type === 'admin') {
       return handler(req, res);
     }
     return res.status(403).json({ message: 'Unauthorized' });

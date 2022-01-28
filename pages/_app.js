@@ -1,10 +1,13 @@
-import React from 'react';
+import App from 'next/app';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import Head from 'next/head';
+import api from '../src/utils/api';
+import Header from '../src/components/Header';
 import { AuthProvider } from '../src/contexts/AuthContext';
 import 'antd/dist/antd.css';
-// import 'bootstrap/dist/css/bootstrap.min.css';
-// import useSWR from 'swr';
+import Footer from '../src/components/Footer';
+import MobileHeader from '../src/components/Mobile/MobileHeader';
+import { CartProvider } from '../src/components/CardContext/CardContext';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -38,20 +41,42 @@ const theme = {
   },
 };
 
-export default function App({ Component, pageProps }) {
+function MyApp({ Component, pageProps }) {
+  const { categories } = pageProps;
+
   return (
     <>
       <Head>
         <link rel="preconnect" href="https://fonts.gstatic.com" />
-        <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-        <link href="https://fonts.googleapis.com/css2?family=Poiret+One&family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Poiret+One&family=Roboto:wght@100;300;400;500;700;900&display=swap"
+          rel="stylesheet"
+        />
       </Head>
       <GlobalStyle />
       <ThemeProvider theme={theme}>
         <AuthProvider>
-          <Component {...pageProps} />
+          <CartProvider>
+            <MobileHeader />
+            <Header categories={categories} />
+            <Component {...pageProps} />
+            <Footer />
+          </CartProvider>
         </AuthProvider>
       </ThemeProvider>
     </>
   );
 }
+
+MyApp.getInitialProps = async (ctx) => {
+  const appProps = await App.getInitialProps(ctx);
+  const { data: categories } = await api.get('category');
+
+  return { ...appProps, pageProps: { categories } };
+};
+
+export default MyApp;

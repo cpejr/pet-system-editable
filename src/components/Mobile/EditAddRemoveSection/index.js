@@ -43,7 +43,7 @@ font-family:Roboto;
 font-size:12px;
 `;
 
-export default function LocationAndFilter() {
+export default function LocationAndFilter({ categories, att, setAtt }) {
   return (
     <div>
       <Container>
@@ -51,7 +51,7 @@ export default function LocationAndFilter() {
           Editar categorias
         </Container.Col1>
         <Container.Col2>
-          <ModalAddProductsMobile />
+          <ModalAddProductsMobile categories={categories} setAtt={setAtt} att={att} />
         </Container.Col2>
         <Container.Col3>
           Remover categorias

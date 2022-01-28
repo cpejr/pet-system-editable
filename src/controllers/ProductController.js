@@ -1,6 +1,5 @@
 const { v4: uuidv4 } = require('uuid');
 const ProductModel = require('../models/ProductModel');
-const StoreModel = require('../models/StoreModel');
 const AwsModel = require('../models/AwsModel');
 
 module.exports = {
@@ -8,11 +7,7 @@ module.exports = {
     const { id } = request.query;
     try {
       const product = await ProductModel.getProductById(id);
-      const readImage = await AwsModel.getAWS(product.img);
-      // readImage.pipe(response);
-      product.img = readImage;
-      const stringfedProduct = JSON.stringify(product);
-      return response.status(200).send(stringfedProduct);
+      return response.status(200).json(product);
     } catch (err) {
       if (err.message) {
         return response.status(400).json({ notification: err.message });
@@ -29,8 +24,7 @@ module.exports = {
     try {
       const image_id = await AwsModel.uploadAWS(file.img);
       product.img = image_id.key;
-      // eslint-disable-next-line prefer-destructuring
-      const firebase_id_store = request.session.get('store').store.firebase_id_store; // ver se a sintaxe está correta
+      const { firebase_id_store } = request.session.get('store').store;
       product.firebase_id_store = firebase_id_store;
 
       await ProductModel.createNewProduct(product);
@@ -46,8 +40,18 @@ module.exports = {
   async update(request, response) {
     const product = request.body;
     const { id } = request.query;
-
+    const file = request.files;
     try {
+      if (Object.keys(file).length > 0) {
+        file.img.name = uuidv4();
+      }
+
+      const image_id = Object.keys(file).length > 0
+        ? await AwsModel.uploadAWS(file.img) : null;
+
+      if (image_id) {
+        product.img = image_id.key;
+      }
       await ProductModel.updateProduct(product, id);
     } catch (err) {
       if (err.message) {
@@ -72,9 +76,35 @@ module.exports = {
   },
   async getAll(request, response) {
     try {
-      const filter = request.query;
-      const products = await ProductModel.getAllProducts(filter);
+      const { category_id } = request.query;
+      const price = request.query['price[]'];
+
+      const products = await ProductModel.getAllProducts(price, category_id);
       return response.status(200).json(products);
+    } catch (err) {
+      if (err.message) {
+        return response.status(400).json({ notification: err.message });
+      }
+      return response.status(500).json({ notification: 'Internal Server Error' });
+    }
+  },
+  async getAllByStoreId(request, response) {
+    const { id } = request.query;
+    try {
+      const product = await ProductModel.getAllByStore(id);
+      return response.status(200).json(product);
+    } catch (err) {
+      if (err.message) {
+        return response.status(400).json({ notification: err.message });
+      }
+      return response.status(500).json({ notification: 'Internal Server Error' });
+    }
+  },
+  async getAllByStoreSession(req, response) {
+    const { firebase_id_store } = req.session.get('store').store;
+    try {
+      const product = await ProductModel.getAllByStore(firebase_id_store);
+      return response.status(200).json(product);
     } catch (err) {
       if (err.message) {
         return response.status(400).json({ notification: err.message });

@@ -37,6 +37,15 @@ height: 2em;
 export const CarrinhoBody = styled.div`
 display: flex;
 flex-direction: row;
+min-height: 60vh;
+
+@media screen and (max-height: 1024px) {
+  min-height: 73.2vh;
+}
+
+@media screen and (max-width: 600px) {
+  flex-direction: column;
+}
 `;
 
 export const CarrinhoValor = styled.div`
@@ -44,6 +53,12 @@ display: flex;
 flex-direction: column;
 align-items: center;
 margin-left: 5em;
+width: 100%;
+
+@media screen and (max-width: 600px) {
+  margin-left: 0;
+  margin-top: 5em;
+}
 `;
 
 export const CarrinhoValorTitle = styled.div`
@@ -63,6 +78,7 @@ margin: 0;
 export const CarrinhoTotal = styled.div`
 display: grid;
 grid-template-columns: 1fr 1fr;
+justify-items: center;
 width: 100%;
 margin-bottom: 2em;
 padding: 0em 1em;

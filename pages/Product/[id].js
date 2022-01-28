@@ -1,223 +1,131 @@
-import React from 'react';
-import styled from 'styled-components';
-import { FaArrowLeft } from 'react-icons/fa';
+import { useEffect, useState } from 'react';
+import { FaArrowLeft, FaRegMinusSquare, FaRegPlusSquare } from 'react-icons/fa';
+import { notification } from 'antd';
+import Image from 'next/image';
+import Link from 'next/link';
+import moment from 'moment';
 import api from '../../src/utils/api';
-import Header from '../../src/components/Header';
-import FooterMobile from '../../src/components/Mobile/FooterMobile';
+import {
+  Container, ProductContainer, ProductTitle, Price, Delivery,
+  ButtonsContainer, Button, AddCarButton, Store, Description,
+  BackPage, BackButton, CarrinhoCardInfoQuantity,
+  CarrinhoCardText, StoreStatusClosed, StatusContainer, StoreOpenedTime,
+} from './styles';
+import StoreIsOpen from '../../src/components/StoreIsOpen';
+import { useCart } from '../../src/components/CardContext/CardContext';
 
-const Container = styled.div`
-display: flex;
-align-items: center;
-justify-content: center;
-width: 100%;
-font-family: Roboto;
-flex-direction: column;
-margin-top: 2%;
-`;
 
-const ProductContainer = styled.div`
-display: flex;
-align-items: flex-start;
-justify-content: center;
-width: 100%;
-flex-direction: row;
-@media(max-width:880px){
-    flex-direction: column;
-    align-items: center;
-}
-`;
+export default function Product({ product, store }) {
+  const cart = useCart();
+  function add(product) {
+    if (quantity > 0) {
+      cart.addToCart(product);
+    }
+  }
+  const openingTime = store.opening_time.split(',');
+  const closingTime = store.closing_time.split(',');
+  const situation = store.working_days.split(',');
+  const [today, setToday] = useState();
+  const data = new Date();
+  const day = moment(data).format('dddd');
+  const [quantity, setQuantity] = useState(0);
 
-ProductContainer.Col1 = styled.div`
-display: flex;
-align-items: center;
-justify-content: center;
-width: 40%;
-margin: 0;
-`;
+  useEffect(() => {
+    if (day) {
+      switch (day) {
+        case 'Monday':
+          setToday(0);
+          break;
 
-ProductContainer.Col2 = styled.div`
-display: flex;
-align-items: initial;
-justify-content: center;
-width: 40%;
-flex-direction: column;
-@media(max-width:880px){
-    width: 70%;
-}
-`;
+        case 'Tuesday':
+          setToday(1);
+          break;
 
-const ProductTitle = styled.h2`
-display: flex;
-align-items: center;
-justify-content: flex-start;
-width: 100%;
-margin: 0;
-@media(max-width:880px){
-    margin-top: 5%;
-}
-`;
+        case 'Wednesday':
+          setToday(2);
+          break;
 
-const Price = styled.h3`
-display: flex;
-align-items: center;
-justify-content: flex-start;
-width: 100%;
-margin-bottom: 0;
-`;
+        case 'Thursday':
+          setToday(3);
+          break;
 
-const Delivery = styled.p`
-display: flex;
-align-items: center;
-justify-content: flex-start;
-width: 100%;
-margin-bottom: 0;
-`;
+        case 'Friday':
+          setToday(4);
+          break;
 
-const ButtonsContainer = styled.div`
-display: flex;
-align-items: center;
-justify-content: center;
-width: 100%;
-flex-direction: row;
-margin-top: 10%;
-@media(max-width:880px){
-    flex-direction: column;
-}
-`;
+        case 'Saturday':
+          setToday(5);
+          break;
 
-ButtonsContainer.Col = styled.div`
-display: flex;
-align-items: center;
-justify-content: center;
-width: 50%;
-flex-direction: column;
-@media(max-width:880px){
-   width: 100%;
-   margin-bottom: 2%;
-}
-`;
+        default:
+          setToday(6);
+          break;
+      }
+    }
+  }, [day]);
 
-const Button = styled.button`
-height: 50px;
-width: 80%;
-font-family: Roboto;
-font-size: 100%;
-font-weight: 500;
-background-color: ${({ theme }) => theme.colors.mediumGreen};
-color: white;
-border: 0;
-border-radius: 5px;
-cursor:pointer;
-outline:none;
-`;
+  async function handleAddCart() {
+    const body = {
+      product_id: product.product_id,
+      amount: quantity,
+      final_price: quantity * product.price,
+    };
+    if (quantity > 0) {
+      try {
+        await api.post('/CartProducts', body);
+        notification.open({
+          message: 'Sucesso!',
+          description:
+            'O produto foi adicionado ao seu carrinho.',
+          className: 'ant-notification',
+          top: '100px',
+          style: {
+            width: 600,
+          },
+        });
+      } catch (error) {
+        console.error(error);
+        notification.open({
+          message: 'Falha :(',
+          description:
+            'Erro ao adicionar produto ao carrinho',
+          className: 'ant-notification',
+          top: '100px',
+          style: {
+            width: 600,
+          },
+        });
+      }
+    } else {
+      notification.open({
+        message: 'Falha :(',
+        description:
+          'A quantidade do produto deve ser maior que zero',
+        className: 'ant-notification',
+        top: '100px',
+        style: {
+          width: 600,
+        },
+      });
+    }
+    
+  }
 
-const AddCarButton = styled.button`
-height: 50px;
-width: 80%;
-font-family: Roboto;
-font-size: 100%;
-font-weight: 500;
-background-color: ${({ theme }) => theme.colors.background};
-color: ${({ theme }) => theme.colors.mediumGreen};
-border: solid;
-border-width: 1px;
-border-color: ${({ theme }) => theme.colors.mediumGreen};
-border-radius: 5px;
-cursor:pointer;
-outline:none;
-`;
+  function handlePlus() {
+    setQuantity(quantity + 1);
+  }
+  function handleMinus() {
+    if (quantity > 0) {
+      setQuantity(quantity - 1);
+    } else {
+      setQuantity(0);
+    }
+  }
 
-const Store = styled.div`
-display: flex;
-align-items: center;
-justify-content: flex-start;
-flex-direction:column;
-width: 100%;
-`;
+  const myLoader = ({ src }) => `https://s3-sa-east-1.amazonaws.com/petsystembucket/${src}`;
 
-Store.Title = styled.h3`
-display: flex;
-align-items: center;
-justify-content: flex-start;
-width: 100%;
-`;
-
-Store.Text = styled.button`
-display: flex;
-align-items: center;
-justify-content: flex-start;
-width: 100%;
-color:${({ theme }) => theme.colors.mediumGray} ;
-border:none;
-background-color: ${({ theme }) => theme.colors.background};
-cursor:pointer;
-margin: 0;
-font-size: 16px;
-font-family:Roboto;
-padding: 0;
-`;
-
-const Description = styled.div`
-display: flex;
-align-items: center;
-justify-content: flex-start;
-width: 62%;
-flex-direction:column;
-@media(max-width:880px){
-    width: 70%;
-    margin-bottom: 15%;
-}
-`;
-
-Description.Title = styled.h3`
-display: flex;
-align-items: center;
-justify-content: flex-start;
-width: 100%;
-margin-bottom: 0;
-`;
-
-Description.Text = styled.p`
-display: flex;
-align-items: center;
-justify-content: flex-start;
-width: 100%;
-color:${({ theme }) => theme.colors.mediumGray} ;
-`;
-
-const BackPage = styled.div`
-display:none;
-@media(max-width:800px){
-display: flex;
-align-items: center;
-justify-content: center;
-width: 40%;
-flex-direction: row;
-margin-top: 5%;
-}
-`;
-
-const BackButton = styled.button`
-display: flex;
-align-items: center;
-justify-content: space-evenly;
-width: 100%;
-color:black ;
-border:none;
-background-color: ${({ theme }) => theme.colors.background};
-cursor:pointer;
-margin: 0;
-font-size: 24px;
-font-family:Roboto;
-font-weight:bold;
-padding: 0;
-`;
-
-export default function Product(props) {
-  const { product } = props;
   return (
     <div>
-      <Header />
       <BackPage>
         <BackButton>
           <FaArrowLeft size={24} />
@@ -225,27 +133,52 @@ export default function Product(props) {
         </BackButton>
       </BackPage>
       { product && (
-        <Container>
-          <ProductContainer>
-            <ProductContainer.Col1>
-              <img src={`https://s3-sa-east-1.amazonaws.com/petsystembucket/${product.img}`} width="300" height="350" alt="" />
-            </ProductContainer.Col1>
+      <Container>
+        <ProductContainer>
+          <ProductContainer.Col1>
+            <Image loader={myLoader} src={product.img} alt="" width="751" height="689" />
+            <Description>
+              <Description.Title>
+                Descrição do produto:
+              </Description.Title>
+              <Description.Text>
+                {product.description}
+              </Description.Text>
+            </Description>
+          </ProductContainer.Col1>
 
-            <ProductContainer.Col2>
-              <ProductTitle>
-                {product.product_name}
-              </ProductTitle>
-              <Price>
-                R$
-                {' '}
-                {product.price}
-              </Price>
-              <Delivery>
-                Frete: R$ 4,99
-              </Delivery>
-              <Delivery>
-                Tempo de entrega: 15 - 20 min
-              </Delivery>
+          <ProductContainer.Col2>
+            <ProductTitle>
+              {product.product_name}
+            </ProductTitle>
+            <Store>
+              <Store.Title>
+                Vendido e entregue por:
+              </Store.Title>
+              <Link href={`/Store/${store.firebase_id_store}`}>
+                <Store.Text>
+                  {store.company_name}
+                </Store.Text>
+              </Link>
+            </Store>
+            <Price>
+              R$
+              {' '}
+              {product.price}
+            </Price>
+            <Delivery>
+              Frete:
+              {' '}
+              R$
+              {' '}
+              {store.shipping_tax}
+            </Delivery>
+            <CarrinhoCardInfoQuantity>
+              <FaRegMinusSquare size="2x" onClick={() => handleMinus()} />
+              <CarrinhoCardText>{quantity}</CarrinhoCardText>
+              <FaRegPlusSquare size="2x" onClick={() => handlePlus()} />
+            </CarrinhoCardInfoQuantity>
+            {(StoreIsOpen(openingTime[today], closingTime[today])) ? (
               <ButtonsContainer>
                 <ButtonsContainer.Col>
                   <Button>
@@ -253,42 +186,49 @@ export default function Product(props) {
                   </Button>
                 </ButtonsContainer.Col>
                 <ButtonsContainer.Col>
-                  <AddCarButton>
+                  <AddCarButton onClick={() => {
+                    handleAddCart();
+                    add(product);
+                  }}
+                  >
                     Adicionar ao carrinho
                   </AddCarButton>
                 </ButtonsContainer.Col>
               </ButtonsContainer>
-              <Store>
-                <Store.Title>
-                  Loja
-                </Store.Title>
-                <Store.Text>
-                  {product.store.company_name}
-                </Store.Text>
-              </Store>
-            </ProductContainer.Col2>
-          </ProductContainer>
-          <Description>
-
-            <Description.Title>
-              Descrição do produto:
-            </Description.Title>
-            <Description.Text>
-              {product.description}
-            </Description.Text>
-
-          </Description>
-
-        </Container>
+            ) : (
+              <StatusContainer>
+                <StoreStatusClosed>
+                  ESTABELECIMENTO FECHADO
+                </StoreStatusClosed>
+                <StoreOpenedTime>
+                  {`Funcionamento: ${openingTime[today]}h - ${closingTime[today]}h`}
+                </StoreOpenedTime>
+              </StatusContainer>
+            ) }
+          </ProductContainer.Col2>
+        </ProductContainer>
+      </Container>
       )}
-      <FooterMobile />
     </div>
   );
 }
-export async function getServerSideProps(context) {
-  const { id } = context.query;
-  const response = await api.get(`product/${id}`);
-  const product = response.data;
-  console.log(product);
-  return { props: { product } };
+
+export async function getStaticPaths() {
+  const { data: products } = await api.get('products');
+
+  return {
+    paths: products.map((product) => ({
+      params: { id: product.product_id },
+    })),
+    fallback: 'blocking',
+  };
+}
+
+export async function getStaticProps({ params }) {
+  const { data: product } = await api.get(`product/${params.id}`);
+  const { data: store } = await api.get(`store/${product.firebase_id_store}`);
+  return {
+    props: { store, product },
+    revalidate: 60, // 1 minuto
+  };
 }

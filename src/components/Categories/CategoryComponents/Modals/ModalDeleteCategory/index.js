@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import styled from 'styled-components';
 import api from '../../../../../utils/api';
+import { notification } from 'antd';
 
 const Box = styled.div`
   display: flex;
@@ -51,20 +52,40 @@ Button.Cancel = styled.button`
   align-items: center;
   background-color: ${({ theme }) => theme.colors.darkRed};
   color: white;
+  margin-left: 10px;
 `;
 
 export default function ModalDeleteCategory({
-  category, catIndex, deleteCategory, closeModal,
+  category, catIndex, deleteCategory, closeModal, att, setAtt,
 }) {
   async function handleSubmit(event) {
     event.preventDefault();
 
     try {
-      await api.delete(`/category/${category.id}`);
+      await api.delete(`/category/${category.category_id}`);
       deleteCategory(catIndex);
       closeModal();
+      setAtt(!att);
+      notification.open({
+        message: 'Sucesso!',
+        description: 'Categoria excluida com sucesso!',
+        className: 'ant-notification',
+        top: '100px',
+        style: {
+          width: 600,
+        },
+      });
     } catch (error) {
       console.log(error); // eslint-disable-line
+      notification.open({
+        message: 'Erro!',
+        description: 'Erro ao excluir categoria.',
+        className: 'ant-notification',
+        top: '100px',
+        style: {
+          width: 600,
+        },
+      });
     }
   }
 

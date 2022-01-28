@@ -49,35 +49,24 @@ justify-content:center;
 vertical-align:bottom;
 width:15%;
 `;
-export default function MyProductRequest() {
+export default function MyProductRequest({ order_products }) {
+  const myLoader = ({ src }) => `https://s3-sa-east-1.amazonaws.com/petsystembucket/${src}`;
   return (
     <div>
-      <ProductContainer>
-        <ProductContainer.Col1>
-          <Image src="/images/shampoo.jpg" width="250" height="200" />
-        </ProductContainer.Col1>
-        <ProductContainer.Col2>
-          <h4>Shampoo para Cachorro Filhote Sanol 500ml</h4>
-          <p>R$ 17,00</p>
-        </ProductContainer.Col2>
-        <ProductContainer.Col3>
-          <h2>1</h2>
-        </ProductContainer.Col3>
-      </ProductContainer>
-      <ProductContainer>
-        <ProductContainer.Col1>
-          <Image src="/images/racao.jpg" width="250" height="200" />
-        </ProductContainer.Col1>
-        <ProductContainer.Col2>
-          <h4>
-            Golden Power Training Filhote para Cães Sabor Frango e Arroz - 15kg
-          </h4>
-          <p>R$ 170,00</p>
-        </ProductContainer.Col2>
-        <ProductContainer.Col3>
-          <h2>1</h2>
-        </ProductContainer.Col3>
-      </ProductContainer>
+      { order_products.map((product) => (
+        <ProductContainer>
+          <ProductContainer.Col1>
+            <Image loader={myLoader} src={product.img} alt="" width="250" height="200" />
+          </ProductContainer.Col1>
+          <ProductContainer.Col2>
+            <h4>{product.product_name}</h4>
+            <p>{`R$${product.price}`}</p>
+          </ProductContainer.Col2>
+          <ProductContainer.Col3>
+            <h2>{product.amount}</h2>
+          </ProductContainer.Col3>
+        </ProductContainer>
+      ))}
     </div>
   );
 }

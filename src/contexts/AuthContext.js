@@ -1,29 +1,45 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import api from '../utils/api';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import api from '../utils/api'
+
+toast.configure();
 
 const emptyContextInfo = {
   user: undefined,
+  store: undefined,
   login: async () => null,
   logout: async () => null,
   forgottenPassword: async () => null,
   validateSession: async () => null,
+  isLoading: true,
 };
 
 const AuthContext = React.createContext(emptyContextInfo);
 
 function AuthProvider({ children }) {
   const [user, setUser] = useState(undefined);
-
+  const [store, setStore] = useState(undefined);
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(true);
 
   async function login(email, password) {
     try {
       const response = await api.post('login', { email, password });
-      setUser(response.data.user);
-      router.push('/');
+      if (response.data === 'Loja sem cadastro' || response.data === 'Loja em espera') {
+        return response.data;
+      }
+      if (response.data.user !== undefined) {
+        setUser(response.data.user);
+      } else {
+        setStore(response.data.store);
+      }
+      router.push('/Home');
+      toast('Login efetuado com sucesso', { position: toast.POSITION.BOTTOM_RIGHT });
     } catch (error) {
       console.error(error); //eslint-disable-line
+      toast('E-mail ou senha incorretos!', { position: toast.POSITION.BOTTOM_RIGHT });
     }
   }
 
@@ -40,7 +56,8 @@ function AuthProvider({ children }) {
     try {
       await api.get('logout');
       setUser(undefined);
-      router.push('/');
+      setStore(undefined);
+      router.push('/login');
     } catch (error) {
       console.error(error); //eslint-disable-line
     }
@@ -49,7 +66,13 @@ function AuthProvider({ children }) {
   async function validateSession() {
     try {
       const response = await api.get('session');
-      setUser(response.data.user);
+      if (response.data.user !== undefined) {
+        setUser(response.data.user);
+        setIsLoading(false);
+      } else {
+        setStore(response.data.store);
+        setIsLoading(false);
+      }
     } catch (error) {
       console.error(error); //eslint-disable-line
     }
@@ -57,10 +80,16 @@ function AuthProvider({ children }) {
 
   useEffect(() => {
     validateSession();
+    if(!user && !store) {
+      setIsLoading(false);
+    }
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, login, setUser, logout, forgottenPassword }}>
+    <AuthContext.Provider value={{
+      user, store, login, setUser, logout, forgottenPassword, setStore, isLoading,
+    }}
+    >
       {children}
     </AuthContext.Provider>
   );

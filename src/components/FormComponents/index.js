@@ -51,7 +51,7 @@ export const SubText = styled.p`
   margin-top: 3px;
   margin-left: 5px;
   font-size: 0.7rem;
-  margin-bottom: 0px;
+  margin-bottom: 5px;
 `;
 
 export const TextBox = styled.input`
@@ -63,6 +63,16 @@ export const TextBox = styled.input`
   border: 1px solid ${({ theme }) => theme.colors.baseGray};
   background: #F2F2F2;
 `;
+
+export const TextBox2 = styled.input`
+  width: 90%;
+  padding: 5px;
+  height: 25px;
+  border-radius: 5px;
+  border: 1px solid ${({ theme }) => theme.colors.baseGray};
+  background: #F2F2F2;
+`;
+
 
 export const Submit = styled.button`
     height: 40px;

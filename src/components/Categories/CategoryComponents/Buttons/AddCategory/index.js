@@ -13,9 +13,9 @@ const ButtonAdd = styled(Button)`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  width: 150px;
   cursor:pointer;
   border: none;
+  margin-left: 20%;
 `;
 
 const nameButton = styled.p`
@@ -41,8 +41,6 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     position: 'absolute',
-    width: '35vw',
-    height: '22vh',
     backgroundColor: theme.palette.background.paper,
     border: '2px solid #609694',
     boxShadow: theme.shadows[5],
@@ -53,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function AddCategory({ addCategory }) {
+export default function AddCategory({ addCategory, att, setAtt }) {
   const classes = useStyles();
   const [modalStyle] = useState(getModalStyle);
   const [open, setOpen] = useState(false);
@@ -70,7 +68,7 @@ export default function AddCategory({ addCategory }) {
 
   const body = (
     <div style={modalStyle} className={classes.paper}>
-      <ModalAddCategory addCategory={addCategory} closeModal={handleState} />
+      <ModalAddCategory addCategory={addCategory} closeModal={handleState} att={att} setAtt={setAtt}/>
     </div>
   );
 

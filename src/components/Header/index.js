@@ -1,5 +1,5 @@
-import React from 'react';
-import styled from 'styled-components';
+import { useState } from 'react';
+import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { GrLocation } from 'react-icons/gr';
 import { BsSearch, BsFillPersonFill } from 'react-icons/bs';
@@ -7,193 +7,108 @@ import { MdShoppingCart } from 'react-icons/md';
 import { FiLogIn } from 'react-icons/fi';
 import { CgCloseO } from 'react-icons/cg';
 import Link from 'next/link';
+import styled from 'styled-components';
 import { useAuth } from '../../contexts/AuthContext';
+import {
+  ImageBox,
+  Location,
+  LocationContainer,
+  TextBox,
+  YourSpace,
+  YourSpaceContainer,
+  ItemBottomHeader,
+  LogOut,
+} from './styles';
+import { useCart } from '../CardContext/CardContext';
 
 Header.Wrapper = styled.div`
-    display:flex;
-    width: 100%;
-    height: 25vh;
-    flex-direction: column;
-    @media(max-width:800px){
-    display:none;
-    }
+  display: flex;
+  width: 100%;
+  height: 25vh;
+  flex-direction: column;
+  @media (max-width: 800px) {
+    display: none;
+  }
 `;
 
 Header.Top = styled.div`
-    display: flex;
-    width:100%;
-    align-items: center;
-    justify-content: space-around;
-    height: 75%;
-    background-color: ${({ theme }) => theme.colors.rose};
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-around;
+  height: 75%;
+  background-color: ${({ theme }) => theme.colors.rose};
+`;
+
+Header.Carrinho = styled.span`
+  font-size: 12px;
+  background: #ff0000;
+  color: #fff;
+  padding: 0 5px;
+  vertical-align: top;
+  margin-left: -10px;
+  margin-bottom: 25px;
+  margin-top: -10px;
+  font-weight: 600;
+  border-radius: 9px; 
 `;
 
 Header.Bottom = styled.div`
-    display: flex;
-    width:100%;
-    flex-direction: row;
-    justify-content: space-around;  // space evenly
-    height: 35%;
-    background-color: ${({ theme }) => theme.colors.mediumGreen};
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-around;
+  height: 35%;
+  background-color: ${({ theme }) => theme.colors.mediumGreen};
 `;
 
-const ImageBox = styled.div`
-display:flex;
-align-items:center;
-justify-content:center;
-width:20%;
-cursor:pointer;
-`;
+export default function Header({ categories }) {
+  const cart = useCart();
+  const itemsCount = Object.keys(cart.cart).length;
+  const { user, store, logout } = useAuth();
 
-const TextBox = styled.div`
-    display:flex;
-    align-items:center;
-    justify-content: space-around;
-    height: 100%;
-    width: 55%;
-    border-radius: 5px;
-`;
+  const [searchText, setSearchText] = useState('');
 
-TextBox.LocationContainer = styled.div`
-  display:flex;
-  flex-direction:row;
-  align-items:center;
-  justify-content:center;
-  height:45%;
-  width: 30%;
-  border-radius: 5px;
-  border: 0px;
-  background: #FFF1F1;
-  padding-left:0.5%;  
-`;
+  const router = useRouter();
 
-TextBox.Location = styled.input`
-display:flex;
-  height: 90%;
-  width: 90%;
-  margin-left:1%;
-  border-radius: 5px;
-  border: 0px;
-  background: #FFF1F1;
-  outline:none;
-  
-`;
+  const handleFilterSearchText = (e) => setSearchText(e.target.value);
 
-TextBox.SearchContainer = styled.div`
-  display:flex;
-  flex-direction:row;
-  align-items:center;
-  justify-content:center;
-  width: 60%;
-  height:45%;
-  border-radius: 5px;
-  border: 0px;
-  padding-left:0.5%;
-  padding-right:0.5%;
-  background: #FFF1F1;
-`;
+  const handleSubmit = () => router.push({ pathname: '/Search', query: { keyword: searchText } });
 
-TextBox.Search = styled.input`
-  display:flex;
-  height: 90%;
-  width: 90%;
-  margin-left:1%;
-  border-radius: 5px;
-  border: 0px;
-  background: #FFF1F1;
-  outline:none;
-`;
+  const handleKeypress = (e) => {
+    if (e.key === 'Enter') {
+      handleSubmit();
+    }
+  };
 
-const YourSpaceContainer = styled.div`
-display:flex;
-align-items:center;
-justify-content:center;
-width:10%;
-height:100%;
-`;
-
-const YourSpace = styled.button`
-    display:flex;
-    flex-direction:row;
-    align-items:center;
-    justify-content:space-around;
-    width: 100%;
-    height:45%;
-    font-family: Roboto;
-    font-size: 20px;
-    font-weight: 300;
-    background-color: ${({ theme }) => theme.colors.mediumGreen};
-    color: white;
-    border: 0;
-    border-radius: 5px;
-    cursor:pointer;
-`;
-
-YourSpace.Word = styled.p`
-display:flex;
-align-items:center;
-justify-content:center;
-font-size: 100%;
-margin: 0;
-`;
-
-const ItemBottomHeader = styled.p`
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-family: Poiret One;
-  font-size: 100%;
-  color: white;
-  cursor: pointer;
-  margin: 0;
-
-`;
-const LogOut = styled.button`
-display: flex;
-align-items: center;
-justify-content: center;
-border: 0;
-outline: none;
-background-color:${({ theme }) => theme.colors.rose} ;
-`;
-
-export default function Header() {
-  const { user, logout } = useAuth();
   const PersonalButton = () => {
-    if (!user) {
+    if (!user && !store) {
       return (
         <Link href="/login">
-          <YourSpace.Word>
-            Login
-          </YourSpace.Word>
+          <YourSpace.Word>Login</YourSpace.Word>
         </Link>
       );
     }
-    switch (user.type) {
-      case 'admin':
-        return (
-          <Link href="/admin">
-            <YourSpace.Word>
-              {user.name}
-            </YourSpace.Word>
-          </Link>
-        );
-      case 'seller':
-        return (
-          <Link href="/Seller/Perfil/Products">
-            <YourSpace.Word>
-              {user.name}
-            </YourSpace.Word>
-          </Link>
-        );
-      default:
-        return (
-          <Link href="/User/Perfil/MyRequests">
-            <YourSpace.Word>
-              {user.name}
-            </YourSpace.Word>
-          </Link>
-        );
+    if (store) {
+      return (
+        <Link href="/Seller/Perfil/Products">
+          <YourSpace.Word>{store.company_name}</YourSpace.Word>
+        </Link>
+      );
+    }
+    if (user && user?.type != 'admin') {
+      return (
+        <Link href="/User/Perfil/MyRequests">
+          <YourSpace.Word>{user.name}</YourSpace.Word>
+        </Link>
+      );
+    }
+    if (user?.type === 'admin') {
+      return (
+        <Link href="/Admin">
+          <YourSpace.Word>{user.name}</YourSpace.Word>
+        </Link>
+      );
     }
   };
 
@@ -206,14 +121,32 @@ export default function Header() {
           </Link>
         </ImageBox>
         <TextBox>
-          <TextBox.LocationContainer>
+          <LocationContainer>
             <GrLocation size="20" />
-            <TextBox.Location type="" placeholder="Localização" />
-          </TextBox.LocationContainer>
+            <Location>Belo Horizonte</Location>
+          </LocationContainer>
           <TextBox.SearchContainer>
-            <BsSearch size="15" />
-            <TextBox.Search type="text" placeholder="Busque por uma loja, produto, serviço" />
-            <CgCloseO />
+            <Link href={{ pathname: '/Search' }}>
+              <CgCloseO onClick={() => setSearchText('')} />
+            </Link>
+            <TextBox.Search
+              value={searchText}
+              type="text"
+              placeholder="Busque por uma loja, produto, serviço"
+              onChange={handleFilterSearchText}
+              onKeyPress={handleKeypress}
+            />
+            <Link
+              onKeyPress={handleKeypress}
+              href={{ pathname: '/Search', query: { keyword: searchText } }}
+            >
+              <BsSearch
+                size="15"
+                type="submit"
+                onSubmit={handleSubmit}
+                style={{ cursor: 'pointer' }}
+              />
+            </Link>
           </TextBox.SearchContainer>
         </TextBox>
         <YourSpaceContainer>
@@ -222,7 +155,22 @@ export default function Header() {
             <PersonalButton />
           </YourSpace>
         </YourSpaceContainer>
-        <MdShoppingCart size="30" color="#AA4545" style={{ cursor: 'pointer' }} />
+        <Link href="/Carrinho">
+          <div>
+            <MdShoppingCart
+              size="30"
+              color="#AA4545"
+              style={{ cursor: 'pointer' }}
+            />
+            {(itemsCount > 0) ? (
+              <Header.Carrinho>
+                {itemsCount > 0 && <span>{itemsCount}</span>}
+              </Header.Carrinho>
+            ) : (
+              <div />
+            )}
+          </div>
+        </Link>
         <LogOut onClick={logout}>
           <Link href="/login">
             <FiLogIn size="30" color="#AA4545" style={{ cursor: 'pointer' }} />
@@ -230,16 +178,14 @@ export default function Header() {
         </LogOut>
       </Header.Top>
       <Header.Bottom>
-        <ItemBottomHeader>Rações</ItemBottomHeader>
-        <ItemBottomHeader>Petiscos</ItemBottomHeader>
-        <ItemBottomHeader>Brinquedos</ItemBottomHeader>
-        <ItemBottomHeader>Banhos</ItemBottomHeader>
-        <ItemBottomHeader>Tosa</ItemBottomHeader>
-        <ItemBottomHeader>Shampoos</ItemBottomHeader>
-        <ItemBottomHeader>Perfumes</ItemBottomHeader>
-        <ItemBottomHeader>Vasilhas</ItemBottomHeader>
-        <ItemBottomHeader>Casinhas</ItemBottomHeader>
-        <ItemBottomHeader>Outros serviços</ItemBottomHeader>
+        {categories.slice(0, 7).map((categoria) => (
+          <Link
+            key={categoria.category_id}
+            href={{ pathname: '/Search', query: { id: categoria.category_id } }}
+          >
+            <ItemBottomHeader>{categoria.name}</ItemBottomHeader>
+          </Link>
+        ))}
       </Header.Bottom>
     </Header.Wrapper>
   );

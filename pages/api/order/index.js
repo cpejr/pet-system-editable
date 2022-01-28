@@ -1,14 +1,11 @@
-import { create, update, getAll} from '../../../src/controllers/OrderController';
-import { withAuthValidation, isAdmin } from '../../../src/utils/Auth';
+import { update, getAll } from '../../../src/controllers/OrderController';
+import { isAdmin, isAdminOrSeller } from '../../../src/utils/Auth';
 
 export default function handler(req, res) {
   try {
     const { method } = req;
-    if (method === 'POST') {
-      return withAuthValidation(create)(req, res);
-    }
     if (method === 'PUT') {
-      return isAdmin(update)(req, res);
+      return isAdminOrSeller(update)(req, res);
     }
     if (method === 'GET') {
       return isAdmin(getAll)(req, res);
