@@ -16,6 +16,20 @@ module.exports = {
     }
   },
 
+  async getUserMainAddressById(request, response) {
+    const userSession = await request.session.get('user');
+    if (!userSession) { return response.status(200).json('Usuário não está logado'); }
+    try {
+      const address = await AddressModel.getUserMainAddressById(userSession.user.firebase_id);
+      return response.status(200).json(address);
+    } catch (err) {
+      if (err.message) {
+        return response.status(400).json({ notification: err.message });
+      }
+      return response.status(500).json({ notification: 'Internal Server Error' });
+    }
+  },
+
   async getOneByStoreId(request, response) {
     const { id } = request.query;
 

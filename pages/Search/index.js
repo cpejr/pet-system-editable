@@ -16,6 +16,7 @@ import {
 
 export default function Search({ keyword, id, categories }) {
   const [products, setProducts] = useState([]);
+  const [address, setAddress] = useState('Usuário não está logado');
   const [allStores, setAllStores] = useState([]);
   const [stores, setStores] = useState([]);
   const [price, setPrice] = useState([0, 5000]);
@@ -38,6 +39,12 @@ export default function Search({ keyword, id, categories }) {
     : { backgroundColor: '#F8F8F8' });
 
   const myLoader = ({ src }) => `https://s3-sa-east-1.amazonaws.com/petsystembucket/${src}`;
+
+  useEffect(() => {
+    api.get('address/userMain').then((response) => {
+      setAddress(response.data);
+    });
+  }, []);
 
   useEffect(() => {
     if (Object.keys(allStores).length > 0) {
@@ -151,7 +158,7 @@ export default function Search({ keyword, id, categories }) {
           </SearchContainer.Col1>
           <SearchContainer.Col2>
             {products.map((p) => (
-              <SearchCards product={p} key={p.product_id} />
+              <SearchCards address={address} product={p} key={p.product_id} />
             ))}
             {products.map((p) => (
               <SearchCardsClosed product={p} key={p.product_id} />
@@ -182,10 +189,10 @@ export default function Search({ keyword, id, categories }) {
         <SearchContainer>
           <SearchContainer.Col>
             {stores.map((store) => (
-              <SearchCardsStore store={store} key={store.firebase_id_store} />
+              <SearchCardsStore address={address} store={store} key={store.firebase_id_store} />
             ))}
             {stores.map((store) => (
-              <SearchCardsStoreClosed store={store} key={store.firebase_id_store} />
+              <SearchCardsStoreClosed address={address} store={store} key={store.firebase_id_store} />
             ))}
           </SearchContainer.Col>
         </SearchContainer>

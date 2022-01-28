@@ -15,17 +15,14 @@ function withAuth(handler) {
 
       if (!session) {
         const store = await req.session.get('store');
-
-        if (!store) throw new Error('No session corresponding to this token');
       }
+      return handler(req, res);
     } catch (error) {
       console.error(error); // eslint-disable-line
       await req.session.destroy();
       res.setHeader('cache-control', 'no-store, max-age=0');
       return res.status(400).json({ message: 'No valid session provided', errorMessage: error.message });
     }
-
-    return handler(req, res);
   };
 }
 

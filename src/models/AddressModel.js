@@ -37,13 +37,11 @@ module.exports = {
     try {
       const addressRelation = await connection('User_Address')
         .where('firebase_id', id)
-        .select('*');
-
-      const addressFilter = addressRelation.filter((address) => address.main_address === true);
+        .where('main_address', true)
+        .first();
 
       const address = await connection('Address')
-        .where('address_id', addressFilter[0].address_id)
-        .select('*')
+        .where('address_id', addressRelation.address_id)
         .first();
 
       return address;
