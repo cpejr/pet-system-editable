@@ -8,6 +8,7 @@ import { useMediaQuery } from '@material-ui/core';
 import 'antd/dist/antd.css';
 import { toast } from 'react-toastify';
 import WorkingDays from '../../src/components/WorkingDays';
+import RegionsDelivery from '../../src/components/RegionsDelivery';
 import {
   StoreBodyWrapper, StoreBody, StoreFormulary, TopFormulary, ItemFormulary,
   DividedItemFormulary, BottomFormulary,
@@ -24,7 +25,7 @@ import 'react-toastify/dist/ReactToastify.css';
 toast.configure();
 
 export default function Store() {
-  const steps = ['Dados da loja', 'Endereço e Entrega', 'Horário de funcionamento'];
+  const steps = ['Dados da loja', 'Endereço', 'Entrega', 'Horário de funcionamento'];
   const [activeStep, setActiveStep] = useState(0);
   const [completedOne, setCompletedOne] = useState(false);
   const [completedTwo, setCompletedTwo] = useState(false);
@@ -41,82 +42,82 @@ export default function Store() {
   };
 
   const handleNext = () => {
-    if (companyName?.length < 1) {
-      toast('Nome da Empresa vazio!', { position: toast.POSITION.BOTTOM_RIGHT });
-      return;
-    }
-    if (email?.length < 1) {
-      toast('Email vazio!', { position: toast.POSITION.BOTTOM_RIGHT });
-      return;
-    }
-    const regex = new RegExp('.+@.+\..+');
-    if (!regex.test(email)) {
-      toast('Email inválido!', { position: toast.POSITION.BOTTOM_RIGHT });
-      return;
-    }
-    if (phone?.length !== 10) {
-      toast('Telefone inválido', { position: toast.POSITION.BOTTOM_RIGHT });
-      return;
-    }
-    if (cellphone?.length !== 11) {
-      toast('Telefone inválido', { position: toast.POSITION.BOTTOM_RIGHT });
-      return;
-    }
-    if (cnpj?.length !== 14) {
-      toast('CNPJ inválido', { position: toast.POSITION.BOTTOM_RIGHT });
-      return;
-    }
-    if (password !== confPassword) {
-      toast('As senhas precisam ser iguais!', { position: toast.POSITION.BOTTOM_RIGHT });
-      return;
-    }
-    if (!cover_img.file) {
-      toast('Insira uma capa!', { position: toast.POSITION.BOTTOM_RIGHT });
-      return;
-    }
-    if (!logo_img.file) {
-      toast('Insira uma logo!', { position: toast.POSITION.BOTTOM_RIGHT });
-      return;
-    }
+    // if (companyName?.length < 1) {
+    //   toast('Nome da Empresa vazio!', { position: toast.POSITION.BOTTOM_RIGHT });
+    //   return;
+    // }
+    // if (email?.length < 1) {
+    //   toast('Email vazio!', { position: toast.POSITION.BOTTOM_RIGHT });
+    //   return;
+    // }
+    // const regex = new RegExp('.+@.+\..+');
+    // if (!regex.test(email)) {
+    //   toast('Email inválido!', { position: toast.POSITION.BOTTOM_RIGHT });
+    //   return;
+    // }
+    // if (phone?.length !== 10) {
+    //   toast('Telefone inválido', { position: toast.POSITION.BOTTOM_RIGHT });
+    //   return;
+    // }
+    // if (cellphone?.length !== 11) {
+    //   toast('Telefone inválido', { position: toast.POSITION.BOTTOM_RIGHT });
+    //   return;
+    // }
+    // if (cnpj?.length !== 14) {
+    //   toast('CNPJ inválido', { position: toast.POSITION.BOTTOM_RIGHT });
+    //   return;
+    // }
+    // if (password !== confPassword) {
+    //   toast('As senhas precisam ser iguais!', { position: toast.POSITION.BOTTOM_RIGHT });
+    //   return;
+    // }
+    // if (!cover_img.file) {
+    //   toast('Insira uma capa!', { position: toast.POSITION.BOTTOM_RIGHT });
+    //   return;
+    // }
+    // if (!logo_img.file) {
+    //   toast('Insira uma logo!', { position: toast.POSITION.BOTTOM_RIGHT });
+    //   return;
+    // }
     const newActiveStep = activeStep + 1;
     setActiveStep(newActiveStep);
     setCompletedOne(true);
   };
 
   const handleNextTwo = () => {
-    const shippingTaxRegex = new RegExp('([0-9])+');
-    if (!shippingTaxRegex.test(shippingTax)) {
-      toast('Insira uma taxa válida!', { position: toast.POSITION.BOTTOM_RIGHT });
-      return;
-    }
-    if (deliveryTime?.length < 1) {
-      toast('Insira um tempo de entrega!', { position: toast.POSITION.BOTTOM_RIGHT });
-      return;
-    }
-    if (street?.length < 1) {
-      toast('Rua inválida', { position: toast.POSITION.BOTTOM_RIGHT });
-      return;
-    }
-    if (addressNum?.length < 1) {
-      toast('Número inválido', { position: toast.POSITION.BOTTOM_RIGHT });
-      return;
-    }
-    if (district?.length < 1) {
-      toast('Bairro inválido', { position: toast.POSITION.BOTTOM_RIGHT });
-      return;
-    }
-    if (zipcode?.length !== 8 || (zipcode.substring(0, 2) !== '31' && zipcode.substring(0, 2) !== '30')) {
-      toast('CEP inválido', { position: toast.POSITION.BOTTOM_RIGHT });
-      return;
-    }
-    if (city?.length < 1) {
-      toast('Cidade inválida', { position: toast.POSITION.BOTTOM_RIGHT });
-      return;
-    }
-    if (state?.length < 1) {
-      toast('Estado inválido', { position: toast.POSITION.BOTTOM_RIGHT });
-      return;
-    }
+    // const shippingTaxRegex = new RegExp('([0-9])+');
+    // if (!shippingTaxRegex.test(shippingTax)) {
+    //   toast('Insira uma taxa válida!', { position: toast.POSITION.BOTTOM_RIGHT });
+    //   return;
+    // }
+    // if (deliveryTime?.length < 1) {
+    //   toast('Insira um tempo de entrega!', { position: toast.POSITION.BOTTOM_RIGHT });
+    //   return;
+    // }
+    // if (street?.length < 1) {
+    //   toast('Rua inválida', { position: toast.POSITION.BOTTOM_RIGHT });
+    //   return;
+    // }
+    // if (addressNum?.length < 1) {
+    //   toast('Número inválido', { position: toast.POSITION.BOTTOM_RIGHT });
+    //   return;
+    // }
+    // if (district?.length < 1) {
+    //   toast('Bairro inválido', { position: toast.POSITION.BOTTOM_RIGHT });
+    //   return;
+    // }
+    // if (zipcode?.length !== 8 || (zipcode.substring(0, 2) !== '31' && zipcode.substring(0, 2) !== '30')) {
+    //   toast('CEP inválido', { position: toast.POSITION.BOTTOM_RIGHT });
+    //   return;
+    // }
+    // if (city?.length < 1) {
+    //   toast('Cidade inválida', { position: toast.POSITION.BOTTOM_RIGHT });
+    //   return;
+    // }
+    // if (state?.length < 1) {
+    //   toast('Estado inválido', { position: toast.POSITION.BOTTOM_RIGHT });
+    //   return;
+    // }
     const newActiveStep = activeStep + 1;
     setActiveStep(newActiveStep);
     setCompletedTwo(true);
@@ -344,10 +345,10 @@ export default function Store() {
                   <StoreBody>
                     <StoreFormulary>
                       <TopFormulary>
-                        <TitleStore>Endereço e Entrega</TitleStore>
+                        <TitleStore>Endereço</TitleStore>
                         <SubtitleStore>
                           Por favor, preencha as informações referentes ao
-                          endereço e à entrega da loja:
+                          endereço da loja:
                           {' '}
                         </SubtitleStore>
                       </TopFormulary>
@@ -394,18 +395,6 @@ export default function Store() {
                         </ItemFormulary>
                       </DividedItemFormulary>
 
-                      <DividedItemFormulary>
-                        <ItemFormulary>
-                          <Text>Taxa de envio: *</Text>
-                          <CurrencyInput name="shippingTax" decimalSeparator="," decimalScale="2" allowNegative={false} prefix="R$" value={shippingTax} onChange={handleShippingTaxChange} />
-                        </ItemFormulary>
-
-                        <ItemFormulary>
-                          <Text>Tempo de entrega em minutos: *</Text>
-                          <MaskedInput name="delivery_time" id="delivery_time" value={deliveryTime} onChange={handleDeliveryTimeChange} />
-                        </ItemFormulary>
-                      </DividedItemFormulary>
-
                       <ItemFormulary>
                         <SubText>*Os campos com asterisco são obrigatórios</SubText>
                       </ItemFormulary>
@@ -427,6 +416,14 @@ export default function Store() {
                 </StoreBodyWrapper>
               )}
               {activeStep === 2 && (
+              <>
+                <RegionsDelivery form={inform} add={address} />
+                <BottomFormulary>
+                  <Submit value="submit" onClick={handleBack} sx={{ mr: 1 }}>Voltar</Submit>
+                </BottomFormulary>
+              </>
+              )}
+              {activeStep === 3 && (
                 <>
                   <WorkingDays form={inform} add={address} />
                   <BottomFormulary>
