@@ -129,14 +129,6 @@ export default function Admin() {
     api.get('/admin').then((response) => {
       setComission(response.data.share);
     })
-    api.get('/profileControl', {
-      params: {
-        month: moment(value).format('M'),
-        year: moment(value).format('Y'),
-      },
-    }).then((response) => {
-      setAverageShare(response.data.averageShare);
-    });
   }, [value])
 
   async function handleCommissionChange(event) {
