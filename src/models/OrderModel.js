@@ -122,7 +122,6 @@ module.exports = {
           }
         })
         .first()
-        console.log(orders);
       if (orders.sum === null) {
         orders.sum = 0;
       }

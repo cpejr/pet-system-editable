@@ -42,7 +42,6 @@ export default function MyListFinalizedOrders() {
   }, []);
 
   if (orders) {
-    console.log(orders);
     return (
       <div>
         {orders.map((order) => {

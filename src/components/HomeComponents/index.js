@@ -116,4 +116,9 @@ export const Button = styled.button`
     justify-content: center;
     text-align: center;
     cursor: pointer;
+    @media screen and (max-width: 600px) {
+      height: 28px;
+      width: 104;
+      font-size: 11px
+    }
 `;

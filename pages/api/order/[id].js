@@ -8,7 +8,6 @@ export default function handler(req, res) {
     if (method === 'GET') {
       return getOneOrderAndCartProducts(req, res);
     }
-    if(method === 'GET')
     if (method === 'DELETE') {
       return isAdmin(del)(req, res);
     }

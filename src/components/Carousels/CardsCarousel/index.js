@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Carousel from 'react-multi-carousel';
 import Image from 'next/image';
 import 'react-multi-carousel/lib/styles.css';
+import Button from '../../../../src/components/HomeComponents';
 
 const Item = styled.div`
   display: flex;
@@ -40,12 +41,15 @@ export default function CardsCarousel() {
     >
       <Item>
         <Image src="/images/Card1.png" alt="" width="400" height="500" />
+        <Button>Acessórios</Button>
       </Item>
       <Item>
         <Image src="/images/Card2.png" alt="" width="400" height="500" />
+        <Button>Banho e tosa</Button>
       </Item>
       <Item>
         <Image src="/images/Card3.png" alt="" width="400" height="500" />
+        <Button>Serviços</Button>
       </Item>
     </Carousel>
 
