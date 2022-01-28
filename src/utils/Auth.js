@@ -14,7 +14,7 @@ function withAuth(handler) {
       const session = await req.session.get('user');
 
       if (!session) {
-        const store = await req.session.get('store');
+        await req.session.get('store');
       }
       return handler(req, res);
     } catch (error) {
