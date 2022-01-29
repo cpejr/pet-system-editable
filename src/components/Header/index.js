@@ -64,7 +64,7 @@ Header.Bottom = styled.div`
 
 export default function Header({ categories }) {
   const cart = useCart();
-  const itemsCount = Object.keys(cart.cart).length;
+  const itemsCount = cart ? Object?.keys(cart?.cart).length : undefined;
   const { user, store, logout } = useAuth();
 
   const [searchText, setSearchText] = useState('');
@@ -96,7 +96,7 @@ export default function Header({ categories }) {
         </Link>
       );
     }
-    if (user && user?.type != 'admin') {
+    if (user && user?.type !== 'admin') {
       return (
         <Link href="/User/Perfil/MyRequests">
           <YourSpace.Word>{user.name}</YourSpace.Word>
@@ -178,7 +178,7 @@ export default function Header({ categories }) {
         </LogOut>
       </Header.Top>
       <Header.Bottom>
-        {categories.slice(0, 7).map((categoria) => (
+        {categories?.slice(0, 7).map((categoria) => (
           <Link
             key={categoria.category_id}
             href={{ pathname: '/Search', query: { id: categoria.category_id } }}
