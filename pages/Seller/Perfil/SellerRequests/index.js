@@ -1,14 +1,15 @@
 import React from 'react';
 import MySellerRequest from '../../../../src/components/MySellerRequest';
 import { Title, PerfilStoreMenu } from '../../../../src/components/index';
+import withAuthStore from '../../../../src/components/WithAuth/WithAuthStore';
 
-export default function Perfil() {
-  return (
-    <div>
-      <Title>Perfil da loja</Title>
-      <PerfilStoreMenu selectedItem="Pedidos" />
-      <MySellerRequest />
+const Perfil = () => (
+  <div>
+    <Title>Perfil da loja</Title>
+    <PerfilStoreMenu selectedItem="Pedidos" />
+    <MySellerRequest />
 
-    </div>
-  );
-}
+  </div>
+);
+
+export default withAuthStore(Perfil);
