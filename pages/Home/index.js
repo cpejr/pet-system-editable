@@ -19,14 +19,12 @@ export default function Home({ stores, categories }) {
     categories.forEach((category) => {
       if(category.name === 'Acessórios'){
         setAccessoryId(category.category_id);
-        console.log(accessoryId)
       }
-      if(category.name === 'Serviço'){
+      if(category.name === 'Serviços'){
         setServiceId(category.category_id);
-        console.log(serviceId)
       }
-      if(category.name === "Banho e tosa"){
-        setShowerId(category.category_id);
+      if(category.name === 'Banho e tosa'){
+        setShowerId(category.category_id); 
       }
     })
   }, [])
