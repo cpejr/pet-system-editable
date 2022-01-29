@@ -7,8 +7,30 @@ import MosaicCarousel from '../../src/components/Carousels/MosaicCarousel';
 import {
   Cards, CardItem, CardImage1, CardImage2, CardImage3, Container, Mosaic, Text, Divider, Button,
 } from '../../src/components/HomeComponents';
+import { useEffect, useState } from "react";
+import Link from 'next/link';
 
-export default function Home({ stores }) {
+export default function Home({ stores, categories }) {
+  const [serviceId, setServiceId] = useState('');
+  const [accessoryId, setAccessoryId] = useState('');
+  const [showerId, setShowerId] = useState('');
+
+  useEffect(() => {
+    categories.forEach((category) => {
+      if(category.name === 'Acessórios'){
+        setAccessoryId(category.category_id);
+        console.log(accessoryId)
+      }
+      if(category.name === 'Serviço'){
+        setServiceId(category.category_id);
+        console.log(serviceId)
+      }
+      if(category.name === "Banho e tosa"){
+        setShowerId(category.category_id);
+      }
+    })
+  }, [])
+    
   return (
     <>
       <BannerCarousel />
@@ -16,17 +38,32 @@ export default function Home({ stores }) {
         <Cards>
           <CardItem>
             <CardImage1>
-              <Button>Acessórios</Button>
+              <Link
+                key={accessoryId}
+                href={{ pathname: '/Search', query: { id: accessoryId } }}
+              >
+                <Button>Acessórios</Button>
+              </Link>
             </CardImage1>
           </CardItem>
           <CardItem>
             <CardImage2>
-              <Button>Banho e tosa</Button>
+              <Link
+                key={showerId}
+                href={{ pathname: '/Search', query: { id: showerId } }}
+              >
+                <Button>Banho e tosa</Button>
+              </Link>
             </CardImage2>
           </CardItem>
           <CardItem>
             <CardImage3>
-              <Button>Serviços</Button>
+              <Link
+                key={serviceId}
+                href={{ pathname: '/Search', query: { id: serviceId } }}
+              >
+                <Button>Serviços</Button>
+              </Link>
             </CardImage3>
           </CardItem>
         </Cards>
@@ -68,6 +105,14 @@ export async function getStaticProps() {
   const { data: stores } = await api.get('store');
   return {
     props: { stores },
+    revalidate: 60 * 10, // 10 minutos
+  };
+}
+
+export async function getCategoryProps() {
+  const { data: categories } = await api.get('category');
+  return {
+    props: { categories },
     revalidate: 60 * 10, // 10 minutos
   };
 }
