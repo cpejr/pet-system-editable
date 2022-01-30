@@ -13,9 +13,8 @@ import {
   TitleMarket, EditGroup, RemoveGroup, Group, Groups, Botoes,
 } from './styles';
 import api from '../../../../src/utils/api';
-import withAuthStore from '../../../../src/components/WithAuth/WithAuthStore';
 
-const Perfil = ({ categories }) => {
+export default function Perfil({ categories }) {
   const [groups, setGroups] = useState([]);
   const [products, setProducts] = useState([]);
   const [att, setAtt] = useState(false);
@@ -86,9 +85,7 @@ const Perfil = ({ categories }) => {
       </ProductContainer>
     </div>
   );
-};
-
-export default withAuthStore(Perfil);
+}
 
 export async function getStaticProps() {
   const { data: categories } = await api.get('category');

@@ -34,9 +34,8 @@ import {
 import SelectState from '../../src/components/SelectState';
 import initialState from '../../src/components/checkoutInitialState';
 import { useCart } from '../../src/components/CardContext/CardContext';
-import withAuthUser from '../../src/components/WithAuth/WithAuthUser';
 
-const Checkout = () => {
+export default function Checkout() {
   const cart = useCart();
 
   const router = useRouter();
@@ -237,8 +236,8 @@ const Checkout = () => {
         PagSeguroDirectPayment.setSessionId(res.data);
         PagSeguroDirectPayment.getPaymentMethods({
           amount: dados.subTotal,
-          success() { },
-          error() { },
+          success() {},
+          error() {},
         });
       });
       PagSeguroDirectPayment?.onSenderHashReady((response) => {
@@ -538,6 +537,4 @@ const Checkout = () => {
       </MainContainer>
     </>
   );
-};
-
-export default withAuthUser(Checkout);
+}
