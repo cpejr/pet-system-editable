@@ -10,6 +10,7 @@ import AdminCardsFix from '../../../src/components/AdminCardsFix';
 import WindowDividerAdmin from '../../../src/components/WindowDividerAdmin';
 import MonthResumeAdmin from '../../../src/components/MonthResumeAdmin';
 import api from '../../../src/utils/api';
+import withAuthAdmin from '../../../src/components/WithAuth/WithAuthAdmin';
 
 const Container = styled.div`
 display:flex;
@@ -122,7 +123,7 @@ width:80%;
 }
 `;
 
-export default function Admin() {
+const Admin = () => {
   const [revenue, setRevenue] = useState(0);
   const [totalStores, setTotalStores] = useState(0);
   const [value, setValue] = useState(new Date());
@@ -135,7 +136,7 @@ export default function Admin() {
     }).then((response) => {
       setRevenue(response.data.revenue.sum);
       setTotalStores(response.data.total_stores);
-    });
+    }).catch((error));
   }, [value]);
   return (
     <div>
@@ -171,4 +172,5 @@ export default function Admin() {
       </Container>
     </div>
   );
-}
+};
+export default withAuthAdmin(Admin);
