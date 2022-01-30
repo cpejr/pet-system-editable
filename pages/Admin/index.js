@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { FaRegUserCircle } from 'react-icons/fa';
 import AdminCardsFix from '../../src/components/AdminCardsFix';
 import WindowDividerAdmin from '../../src/components/WindowDividerAdmin';
+import withAuthAdmin from '../../src/components/WithAuth/WithAuthAdmin';
 
 const Container = styled.div`
 display:flex;
@@ -46,21 +47,21 @@ width:60%;
 }
 `;
 
-export default function Admin() {
-  return (
-    <div>
-      <Container>
-        <Container.Col1>
-          <Container.Col1.Row1>
-            <FaRegUserCircle size={80} style={{ color: '#609694', cursor: 'pointer' }} />
-          </Container.Col1.Row1>
-          <AdminCardsFix />
-        </Container.Col1>
-        <WindowDividerAdmin />
-        <Container.Col2>
-          <p>Selecione uma das categorias ao lado!</p>
-        </Container.Col2>
-      </Container>
-    </div>
-  );
-}
+const Admin = () => (
+  <div>
+    <Container>
+      <Container.Col1>
+        <Container.Col1.Row1>
+          <FaRegUserCircle size={80} style={{ color: '#609694', cursor: 'pointer' }} />
+        </Container.Col1.Row1>
+        <AdminCardsFix />
+      </Container.Col1>
+      <WindowDividerAdmin />
+      <Container.Col2>
+        <p>Selecione uma das categorias ao lado!</p>
+      </Container.Col2>
+    </Container>
+  </div>
+);
+
+export default withAuthAdmin(Admin);

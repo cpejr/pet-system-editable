@@ -3,16 +3,17 @@ import { ContainerChangePassword, OutterContainer } from './styles';
 import {
   Title, PerfilMenu, MyChangePassword,
 } from '../../../../src/components';
+import withAuthUser from '../../../../src/components/WithAuth/WithAuthUser';
 
-export default function Perfil() {
-  return (
-    <ContainerChangePassword>
-      <Title>Meu Perfil</Title>
-      <PerfilMenu selectedItem="Alterar Senha" />
-      <OutterContainer>
-        <MyChangePassword />
-      </OutterContainer>
+const Perfil = () => (
+  <ContainerChangePassword>
+    <Title>Meu Perfil</Title>
+    <PerfilMenu selectedItem="Alterar Senha" />
+    <OutterContainer>
+      <MyChangePassword />
+    </OutterContainer>
 
-    </ContainerChangePassword>
-  );
-}
+  </ContainerChangePassword>
+);
+
+export default withAuthUser(Perfil);
