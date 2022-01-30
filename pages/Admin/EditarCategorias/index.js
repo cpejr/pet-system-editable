@@ -4,7 +4,6 @@ import { FaRegUserCircle } from 'react-icons/fa';
 import AdminCardsFix from '../../../src/components/AdminCardsFix';
 import WindowDividerAdmin from '../../../src/components/WindowDividerAdmin';
 import Categories from '../../../src/components/Categories';
-import withAuthAdmin from '../../../src/components/WithAuth/WithAuthAdmin';
 
 const Container = styled.div`
 display:flex;
@@ -50,20 +49,22 @@ width:60%;
 }
 `;
 
-const Admin = () => (
-  <div>
-    <Container>
-      <Container.Col1>
-        <Container.Col1.Row1>
-          <FaRegUserCircle size={80} style={{ color: '#609694' }} />
-        </Container.Col1.Row1>
-        <AdminCardsFix />
-      </Container.Col1>
-      <WindowDividerAdmin />
-      <Container.Col2>
-        <Categories />
-      </Container.Col2>
-    </Container>
-  </div>
-);
-export default withAuthAdmin(Admin);
+export default function Admin() {
+  return (
+    <div>
+     
+      <Container>
+        <Container.Col1>
+          <Container.Col1.Row1>
+            <FaRegUserCircle size={80} style={{ color: '#609694' }} />
+          </Container.Col1.Row1>
+          <AdminCardsFix />
+        </Container.Col1>
+        <WindowDividerAdmin />
+        <Container.Col2>
+          <Categories />
+        </Container.Col2>
+      </Container>
+    </div>
+  );
+}

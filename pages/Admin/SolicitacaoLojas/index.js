@@ -6,7 +6,6 @@ import AdminCardsFix from '../../../src/components/AdminCardsFix';
 import WindowDividerAdmin from '../../../src/components/WindowDividerAdmin';
 import api from '../../../src/utils/api';
 import ModalAdmin from '../../../src/components/ModalAdmin';
-import withAuthAdmin from '../../../src/components/WithAuth/WithAuthAdmin';
 
 const Container = styled.div` 
 display:flex;
@@ -93,7 +92,7 @@ const Img = styled.div`
 padding:10px 15px 10px;
 `;
 
-const Admin = ({ }) => {
+export default function Admin({ }) {
   const [stores, setStores] = useState([]);
   const myLoader = ({ src }) => `https://s3-sa-east-1.amazonaws.com/petsystembucket/${src}`;
 
@@ -141,5 +140,4 @@ const Admin = ({ }) => {
     </div>
 
   );
-};
-export default withAuthAdmin(Admin);
+}

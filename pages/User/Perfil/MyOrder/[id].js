@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import MyIndividualOrder from '../../../../src/components/MyIndividualOrder';
 import api from '../../../../src/utils/api';
-import withAuthUser from '../../../../src/components/WithAuth/WithAuthUser';
 
 const Title = styled.h1`
   align-items: initial;
@@ -46,17 +45,17 @@ Section.Select = styled.button`
   font-family: Roboto;
 `;
 
-const Perfil = (props) => {
+export default function Perfil(props) {
   const { order } = props;
   return (
     <div>
+
       <Title>Editar meus dados:</Title>
+
       <MyIndividualOrder order={order} />
     </div>
   );
-};
-
-export default withAuthUser(Perfil);
+}
 
 export async function getServerSideProps(context) {
   const { id } = context.query;
