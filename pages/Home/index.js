@@ -8,10 +8,12 @@ import {
   Cards, CardItem, CardImage1, CardImage2, CardImage3, Container, Mosaic, Text, Divider, Button,
 } from '../../src/components/HomeComponents';
 
-export default function Home({ stores }) {
+export default function Home({ stores, image }) {
   return (
     <>
-      <BannerCarousel />
+      <BannerCarousel
+        value="Banner"
+        image={image} />
       <Container>
         <Cards>
           <CardItem>
@@ -66,8 +68,9 @@ export default function Home({ stores }) {
 
 export async function getStaticProps() {
   const { data: stores } = await api.get('store');
+  const { data: image } = await api.get('image');
   return {
-    props: { stores },
+    props: { stores, image },
     revalidate: 60 * 10, // 10 minutos
   };
 }

@@ -31,6 +31,16 @@ module.exports = {
       throw new Error(error);
     }
   },
+  async getAllImage() {
+    try {
+      const image = await connection('Image')
+        .select('*');
+
+      return image;
+    } catch (error) {
+      throw new Error(error);
+    }
+  },
   async updateImage(image, id) {
     try {
       const response = await connection('Image')
