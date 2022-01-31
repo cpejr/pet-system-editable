@@ -113,7 +113,6 @@ export default function Admin() {
   const [comission, setComission] = useState(0);
   const [newComission, setNewComission] = useState(0);
   const [error, setError] = useState('gray');
-  const [value, setValue] = useState(new Date());
 
 
   async function getComission () {
@@ -126,15 +125,12 @@ export default function Admin() {
   }
 
   useEffect(() => {
-    api.get('/admin').then((response) => {
-      setComission(response.data.share);
-    })
-  }, [value])
+    getComission();
+  }, [])
 
   async function handleCommissionChange(event) {
     setError('gray');
     setNewComission(event.target.value);
-
   }
 
   async function handleSubmit(event) {

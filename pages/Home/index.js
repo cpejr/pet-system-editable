@@ -9,7 +9,7 @@ import {
 } from '../../src/components/HomeComponents';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-
+import Link from 'next/link'
 export default function Home({ stores, categories }) {
   const [accessoryId, setAccessoryId] = useState('');
   const [serviceId, setServiceId] = useState('');

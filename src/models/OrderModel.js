@@ -138,7 +138,7 @@ module.exports = {
       const response = await connection('Admin_share')
         .select('*').first();
       const profit = (response.share * order.total_price/100);
-      console.log(profit);
+    
       const order_aux = await connection('Order')
         .insert(order);
       return order_aux;
