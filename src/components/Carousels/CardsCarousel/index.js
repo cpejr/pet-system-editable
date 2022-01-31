@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import { Button, CardImage1, CardImage2, CardImage3 } from '../../../../src/components/HomeComponents';
+import api from '../../../../src/utils/api';
 
 const Item = styled.div`
   display: flex;
@@ -18,7 +19,7 @@ const Item = styled.div`
   }
 `;
 
-export default function CardsCarousel({ categories }) {
+export default function CardsCarousel() {
   const [serviceId, setServiceId] = useState('');
   const [accessoryId, setAccessoryId] = useState('');
   const [showerId, setShowerId] = useState('');
@@ -38,17 +39,20 @@ export default function CardsCarousel({ categories }) {
   };
 
   useEffect(() => {
-    categories.array.forEach(category => {
-      if(category.name === 'Acessórios'){
-        setAccessoryId(category.category_id);
-      }
-      if(category.name === 'Serviços'){
-        setServiceId(category.category_id);
-      }
-      if(category.name === 'Banho e tosa'){
-        setShowerId(category.category_id); 
-      }
-    });
+    api.get('category').then((response) => {
+      response.data.forEach(category => {
+        if(category.name === 'Acessórios'){
+          setAccessoryId(category.category_id);
+        }
+        if(category.name === 'Serviços'){
+          setServiceId(category.category_id);
+        }
+        if(category.name === 'Banho e tosa'){
+          setShowerId(category.category_id); 
+        }
+      });
+    })
+  
   }, [])
 
   return (
@@ -88,12 +92,4 @@ export default function CardsCarousel({ categories }) {
       </Item>
     </Carousel>
   );
-}
-
-export async function getStaticProps() {
-  const { data: categories } = await api.get('category');
-  return {
-    props: { categories },
-    revalidate: 60 * 10, // 10 minutos
-  };
 }
