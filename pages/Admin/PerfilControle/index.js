@@ -137,10 +137,10 @@ export default function Admin() {
     }).then((response) => {
       setRevenue(response.data.revenue.sum);
       setTotalStores(response.data.total_stores);
-      setAverageShare(response.data.averageShare);
       setProfit(response.data.profit.sum);
+      setAverageShare(response.data.averageShare);
     });
-  }, []);
+  }, [value]);
   return (
     <div>
       <Container>
