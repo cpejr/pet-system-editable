@@ -174,9 +174,9 @@ export default function Admin() {
             </ContainerComission.Field>
             <ContainerComission.Field>
               <Text>Alterar para: </Text>
-              <Input type="text" placeholder="00.00" onChange={() => handleCommissionChange} style={{ borderColor: error }} />
+              <Input type="text" placeholder="00.00" onChange={handleCommissionChange} style={{ borderColor: error }} />
             </ContainerComission.Field>
-            <Button onClick={() => handleSubmit}>Confirmar</Button>
+            <Button onClick={handleSubmit}>Confirmar</Button>
           </ContainerComission>
         </Container.Col2>
       </Container>
