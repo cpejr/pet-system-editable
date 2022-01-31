@@ -257,13 +257,53 @@ export default function Checkout() {
           res.data.forEach((product) => {
             somaPrecos += product.price * product.amount;
           });
-          setDados({ ...dados, subTotal: parseFloat(somaPrecos.toFixed(2)) });
           api.get(`/store/${res.data[0].firebase_id_store}`).then((store) => {
-            res.data.shipping_tax = store.data.shipping_tax;
-            setDados({ ...dados, products: res.data, subTotal: somaPrecos });
+            const regionShippingTax = store?.data?.shipping_tax.split(',');
+            api.get('address/userMain').then((responseMainAddress) => {
+              if (regionShippingTax && responseMainAddress?.data !== 'Usuário não está logado') {
+                switch (responseMainAddress?.data?.region) {
+                  case 'Barreiro':
+                    res.data.shipping_tax = regionShippingTax[0];
+                    break;
+
+                  case 'Centro Sul':
+                    res.data.shipping_tax = regionShippingTax[1];
+                    break;
+
+                  case 'Leste':
+                    res.data.shipping_tax = regionShippingTax[2];
+                    break;
+
+                  case 'Nordeste':
+                    res.data.shipping_tax = regionShippingTax[3];
+                    break;
+
+                  case 'Noroeste':
+                    res.data.shipping_tax = regionShippingTax[4];
+                    break;
+
+                  case 'Norte':
+                    res.data.shipping_tax = regionShippingTax[5];
+                    break;
+
+                  case 'Oeste':
+                    res.data.shipping_tax = regionShippingTax[6];
+                    break;
+
+                  case 'Pampulha':
+                    res.data.shipping_tax = regionShippingTax[7];
+                    break;
+
+                  default:
+                    res.data.shipping_tax = regionShippingTax[8]; // Venda Nova
+                    break;
+                }
+                setDados({ ...dados, products: res.data, subTotal: parseFloat(somaPrecos.toFixed(2)) });
+              }
+            });
           });
         } else {
-          setDados({ ...dados, products: res.data });
+          setDados({ ...dados, products: res.data, subTotal: parseFloat(somaPrecos.toFixed(2)) });
         }
       });
     }
