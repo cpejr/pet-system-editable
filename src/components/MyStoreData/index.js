@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Paper, makeStyles } from '@material-ui/core';
+import moment from 'moment';
 import api from '../../utils/api';
 import { useAuth } from '../../contexts/AuthContext';
 import {
   BoxDatas, ContainerDatas, AddressData,
 } from './styles';
 import MyStoreDataEdit from '../MyStoreDataEdit/index';
-import moment from 'moment';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,9 +18,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function MyStoreData() {
-  const openingTime = store.opening_time.split(',');
-  const closingTime = store.closing_time.split(',');
-  const situation = store.working_days.split(',');
+  const { store, setStore } = useAuth();
+  const openingTime = store?.opening_time.split(',');
+  const closingTime = store?.closing_time.split(',');
+  const situation = store?.working_days.split(',');
   const [today, setToday] = useState();
   const date = new Date();
   const day = moment(date).format('dddd');
@@ -57,7 +58,6 @@ export default function MyStoreData() {
       }
     }
   }, [day]);
-  const { store, setStore } = useAuth();
   const classes = useStyles();
 
   async function loadStore() {
@@ -66,7 +66,7 @@ export default function MyStoreData() {
         const response = await api.get(`/store/${store.firebase_id_store}`);
         setStore(response.data);
       } catch (error) {
-      console.error(error); //eslint-disable-line
+        console.error(error); //eslint-disable-line
       }
     }
   }
