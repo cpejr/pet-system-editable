@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { FaRegUserCircle } from 'react-icons/fa';
+import Image from 'next/image';
 import api from '../../../src/utils/api'
 import AdminCardsFix from '../../../src/components/AdminCardsFix';
 import WindowDividerAdmin from '../../../src/components/WindowDividerAdmin';
 import { toast } from 'react-toastify';
-
 // const api = axios.create({ baseURL: 'http://localhost:3000/' });
 
 export const Img = styled.img` 
@@ -122,6 +122,34 @@ const Input = styled.input`
   border: solid;
   border-width: thin;
 `;
+const ButtonDelete = styled.button`
+    display:flex;
+    height: 30px;
+    width: 100px;
+    font-family: Roboto;
+    font-size: 13px;
+    font-weight: 500;
+    background-color: ${({ theme }) => theme.colors.background};
+    color: #773344;
+    border: solid;
+    border-width: 1px;
+    border-color: #773344;
+    border-radius: 5px;
+    align-items: center;
+    transform: translate(0%,-50%);
+    justify-content: center;
+    text-align: center;
+    cursor: pointer;
+    :hover{
+    background-color: #773344;
+    color: ${({ theme }) => theme.colors.background};
+    border: solid;
+    border-color: #773344;
+    }
+    @media(max-width:860px){
+        width:150px;
+    } 
+`;
 
 const Button = styled.button`
   cursor: pointer;
@@ -145,6 +173,12 @@ const Select = styled.select`
   border: 1px solid ${({ theme }) => theme.colors.baseGray};
   background: #F2F2F2;
 `;
+const Item = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+`;
 
 toast.configure();
 
@@ -152,7 +186,10 @@ export default function HomeEdit() {
 
   const [image_img, setImage_img] = useState({ file: null, url: null });
   const [type, setType] = useState('Principais Marcas');
-  const [imageId, setImageId] = useState();
+  const [allImages, setAllImages] = useState([]);
+  const myLoader = ({ src }) => {
+    return `https://s3-sa-east-1.amazonaws.com/petsystembucket/${src}`;
+  };
 
   function handleChange(event) {
     setImage_img({
@@ -163,6 +200,28 @@ export default function HomeEdit() {
 
   function handleType(e) {
     setType(e.target.value);
+  }
+  async function getAllImages() {
+    try {
+      const response = await api.get('image');
+      setAllImages(...response.data);
+    } catch (error) {
+      console.warn(error);
+    }
+  }
+  useEffect(() => {
+    getAllImages();
+  }, [allImages])
+  console.log(allImages);
+  async function deleteImage(id) {
+    try {
+      await api.delete(`image/${id}`);
+      toast('Imagem deletada com sucesso!', { position: toast.POSITION.BOTTOM_RIGHT });
+      getAllImages();
+    } catch (error) {
+      console.warn(error);
+      toast('Erro ao deletar a imagem.', { position: toast.POSITION.BOTTOM_RIGHT });
+    }
   }
 
   async function handleSubmit(event) {
@@ -209,11 +268,9 @@ export default function HomeEdit() {
               value={type}
               onChange={(e) => handleType(e)}>
               <option
-                // key={image.image_id}
                 value="Principais Marcas"
               >Principais Marcas</option>
               <option
-                // key={image.image_id}
                 value="Banner"
               >Banner</option></Select>
 
@@ -223,6 +280,24 @@ export default function HomeEdit() {
               <Img alt="" src={image_img.url} />
             </UploadContainer>
             <Button onClick={handleSubmit} >Confirmar</Button>
+            {allImages?.map((img) => (
+              <Item>
+                <Image
+                  loader={myLoader}
+                  src={img.image_id}
+                  alt=""
+                  width="400"
+                  height="390"
+                />
+                <ButtonDelete onClick={() => {
+                  deleteImage(img.image_id);
+                }}
+                >
+                  Deletar Imagem
+
+                </ButtonDelete>
+              </Item>
+            ))}
           </ContainerComission>
         </Container.Col2>
       </Container>

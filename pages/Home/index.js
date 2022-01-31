@@ -44,7 +44,7 @@ export default function Home({ stores, image }) {
       <Divider />
       <Container>
         <Text>Principais marcas:</Text>
-        <Mosaic>
+        {/* <Mosaic>
           <img className="pedigree" src="/images/brands/pedigree.png" alt="" width="250" height="" />
           <img className="adimax" src="/images/brands/adimax.png" alt="" width="250" height="150" />
           <img className="royal" src="/images/brands/royal.png" alt="" width="250" height="150" />
@@ -55,7 +55,7 @@ export default function Home({ stores, image }) {
           <img className="whiskas" src="/images/brands/whiskas.png" alt="" width="250" height="150" />
           <img className="bayer" src="/images/brands/bayer.png" alt="" width="250" height="150" />
           <img className="premier" src="/images/brands/premier.png" alt="" width="250" height="150" />
-        </Mosaic>
+        </Mosaic> */}
         <MosaicCarousel
           value="Principais Marcas"
           image={image} />
