@@ -12,7 +12,7 @@ const Item = styled.div`
 `;
 
 export default function MainCarousel({ image }) {
-  const [imagesFiltered, setImagesFiltered] = useState('');
+  const [imagesFiltered, setImagesFiltered] = useState([]);
   const myLoader = ({ src }) => {
     return `https://s3-sa-east-1.amazonaws.com/petsystembucket/${src}`;
   };

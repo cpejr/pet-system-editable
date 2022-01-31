@@ -1,4 +1,5 @@
 import api from '../../src/utils/api';
+import Image from 'next/image';
 import BannerCarousel from '../../src/components/Carousels/BannerCarousel';
 import CardsCarousel from '../../src/components/Carousels/CardsCarousel';
 import StoresCarousel from '../../src/components/Carousels/StoresCarousel';
@@ -55,7 +56,9 @@ export default function Home({ stores, image }) {
           <img className="bayer" src="/images/brands/bayer.png" alt="" width="250" height="150" />
           <img className="premier" src="/images/brands/premier.png" alt="" width="250" height="150" />
         </Mosaic>
-        <MosaicCarousel />
+        <MosaicCarousel
+          value="Principais Marcas"
+          image={image} />
       </Container>
       <Divider />
       <Container>
