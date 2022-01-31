@@ -12,9 +12,14 @@ const Item = styled.div`
 `;
 
 export default function MainCarousel({ image }) {
+  const [imagesFiltered, setImagesFiltered] = useState('');
   const myLoader = ({ src }) => {
     return `https://s3-sa-east-1.amazonaws.com/petsystembucket/${src}`;
   };
+
+  useEffect(() => {
+    setImagesFiltered(image?.filter((item) => item.type === "Banner"));
+  }, [image])
 
   const responsive = {
     desktop: {
@@ -30,16 +35,14 @@ export default function MainCarousel({ image }) {
       items: 1,
     },
   };
-  console.log(image);
-  const [images, setImage] = useState('');
-  // setImage([...image].filter(image => image.type === "Banner"));
+
 
   return (
     <Carousel
       responsive={responsive}
       infinite
     >
-      {image?.map((img) => (
+      {imagesFiltered?.map((img) => (
         <Item>
           <Image
             loader={myLoader}
