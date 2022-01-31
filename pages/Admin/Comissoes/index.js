@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { FaRegUserCircle } from 'react-icons/fa';
+import { toast } from 'react-toastify';
 import api from '../../../src/utils/api';
 import AdminCardsFix from '../../../src/components/AdminCardsFix';
 import WindowDividerAdmin from '../../../src/components/WindowDividerAdmin';
-import { toast } from 'react-toastify';
-
 
 const Container = styled.div`
 display:flex;
@@ -114,19 +113,18 @@ export default function Admin() {
   const [newComission, setNewComission] = useState(0);
   const [error, setError] = useState('gray');
 
-
-  async function getComission () {
+  async function getComission() {
     try {
       const response = await api.get('/admin');
       setComission(response.data.share);
     } catch (error) {
-      alert("Erro ao tentar obter comissão atual");
+      alert('Erro ao tentar obter comissão atual');
     }
   }
 
   useEffect(() => {
     getComission();
-  }, [])
+  }, []);
 
   async function handleCommissionChange(event) {
     setError('gray');
@@ -136,7 +134,7 @@ export default function Admin() {
   async function handleSubmit(event) {
     event.preventDefault();
     const typeComission = parseFloat(newComission);
-    if(newComission < 0 || newComission > 100 || isNaN(typeComission)) {
+    if (newComission < 0 || newComission > 100 || isNaN(typeComission)) {
       setError('#990F02');
       toast('Valor inválido', { position: toast.POSITION.BOTTOM_RIGHT });
     } else {
@@ -151,7 +149,6 @@ export default function Admin() {
         toast('Erro ao alterar comissão.', { position: toast.POSITION.BOTTOM_RIGHT });
       }
     }
-    
   }
 
   return (
@@ -168,13 +165,18 @@ export default function Admin() {
           <ContainerComission>
             <Title>Ajustar comissão:</Title>
             <ContainerComission.Field>
-              <Text>Comissão atual: {comission}%</Text>
+              <Text>
+                Comissão atual:
+                {' '}
+                {comission}
+                %
+              </Text>
             </ContainerComission.Field>
             <ContainerComission.Field>
               <Text>Alterar para: </Text>
-              <Input type="text" placeholder="00.00" onChange={handleCommissionChange} style={{ borderColor: error }} />
-            </ContainerComission.Field>  
-            <Button onClick={handleSubmit}>Confirmar</Button>
+              <Input type="text" placeholder="00.00" onChange={() => handleCommissionChange} style={{ borderColor: error }} />
+            </ContainerComission.Field>
+            <Button onClick={() => handleSubmit}>Confirmar</Button>
           </ContainerComission>
         </Container.Col2>
       </Container>
