@@ -6,7 +6,6 @@ import api from '../../../src/utils/api'
 import AdminCardsFix from '../../../src/components/AdminCardsFix';
 import WindowDividerAdmin from '../../../src/components/WindowDividerAdmin';
 import { toast } from 'react-toastify';
-// const api = axios.create({ baseURL: 'http://localhost:3000/' });
 
 export const Img = styled.img` 
   display:flex;
@@ -38,7 +37,7 @@ export const ImageSelected = styled.input`
 
 const Container = styled.div`
 display:flex;
-align-items:center;
+align-items:start;
 justify-content:center;
 flex-direction:row;
 width:100%;
@@ -78,7 +77,7 @@ width:60%;
 }
 `;
 
-const ContainerComission = styled.div`
+const ContainerEditHome = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -87,13 +86,14 @@ const ContainerComission = styled.div`
   margin-bottom: 5%;
 `;
 
-ContainerComission.Field = styled.div`
+const AlignItem = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  margin-top: 1%;
-  margin-bottom: 1%;
+  margin-top: 5%;
+  margin-bottom: 3%;
+  padding: 10px;
 `;
 
 const Title = styled.h1`
@@ -101,6 +101,8 @@ const Title = styled.h1`
   font-size: 30px;
   font-weight: 400;
   margin-bottom: 4%;
+   margin-top:50px;
+   text-align:center;
 `;
 
 const Text = styled.p`
@@ -110,41 +112,37 @@ const Text = styled.p`
   margin: 0;
 
 `;
+const Text2 = styled.p`
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: bold;
 
-const Input = styled.input`
-  height: 25px;
-  font-size: 20px;
-  margin-left: 2%;
-  display: flex;
-  justify-content: center;
-  width: 25%;
-  border-radius: 10px;
-  border: solid;
-  border-width: thin;
 `;
+
 const ButtonDelete = styled.button`
     display:flex;
     height: 30px;
-    width: 100px;
+    width: 200px;
+    margin-top:19px
     font-family: Roboto;
     font-size: 13px;
     font-weight: 500;
-    background-color: ${({ theme }) => theme.colors.background};
-    color: #773344;
+    background-color: ${({ theme }) => theme.colors.mediumGreen};
+    color: white;
     border: solid;
     border-width: 1px;
-    border-color: #773344;
-    border-radius: 5px;
+    border-color: ${({ theme }) => theme.colors.darkGreen};
+    border-radius: 0 0 5px 5px;
     align-items: center;
-    transform: translate(0%,-50%);
+    // transform: translate(0%,-50%);
     justify-content: center;
     text-align: center;
     cursor: pointer;
     :hover{
-    background-color: #773344;
-    color: ${({ theme }) => theme.colors.background};
+    background-color: ${({ theme }) => theme.colors.darkGreen};
+    color: ${({ theme }) => theme.colors.mediumGreen};
     border: solid;
-    border-color: #773344;
+    border-color:${({ theme }) => theme.colors.darkGreen};
     }
     @media(max-width:860px){
         width:150px;
@@ -161,7 +159,8 @@ const Button = styled.button`
   font-weight: 400;
   background-color: ${({ theme }) => theme.colors.darkGreen};
   color: white;
-  margin-top:5%;
+  margin-top:3%;
+  margin-bottom:5%;
 `;
 const Select = styled.select`
   width: 30%;
@@ -172,21 +171,28 @@ const Select = styled.select`
   border-radius: 5px;
   border: 1px solid ${({ theme }) => theme.colors.baseGray};
   background: #F2F2F2;
+  @media(max-width:580px){
+    width:150px;
+} 
 `;
 const Item = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  
+  flex-direction:column;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  flex-basis: 33.333333%
 `;
 
 toast.configure();
 
 export default function HomeEdit() {
-
   const [image_img, setImage_img] = useState({ file: null, url: null });
   const [type, setType] = useState('Principais Marcas');
+  const [filtros, setFiltros] = useState('Principais Marcas');
   const [allImages, setAllImages] = useState([]);
+  const [resolution, setResolution] = useState('Resolução mínima de (300x200)px');
   const myLoader = ({ src }) => {
     return `https://s3-sa-east-1.amazonaws.com/petsystembucket/${src}`;
   };
@@ -200,19 +206,25 @@ export default function HomeEdit() {
 
   function handleType(e) {
     setType(e.target.value);
+    setFiltros(e.target.value);
+    if (e.target.value === "Banner") {
+      setResolution("Resolução mínima de (1000x300)px");
+    } else {
+      setResolution("Resolução mínima de (300x200)px");
+    }
   }
   async function getAllImages() {
     try {
       const response = await api.get('image');
-      setAllImages(...response.data);
+      setAllImages(response.data?.filter(image => image.type === filtros));
     } catch (error) {
       console.warn(error);
     }
   }
   useEffect(() => {
     getAllImages();
-  }, [allImages])
-  console.log(allImages);
+  }, [filtros, handleSubmit])
+
   async function deleteImage(id) {
     try {
       await api.delete(`image/${id}`);
@@ -233,16 +245,7 @@ export default function HomeEdit() {
 
     try {
       await api.post('/image', formData);
-      notification.open({
-        message: 'Sucesso!',
-        description:
-          'Imagem alterada com sucesso',
-        className: 'ant-notification',
-        top: '100px',
-        style: {
-          width: 600,
-        },
-      });
+      toast('Imagem adicionada com sucesso!', { position: toast.POSITION.BOTTOM_RIGHT });
     } catch (error) {
       console.error(error);
     }
@@ -259,9 +262,9 @@ export default function HomeEdit() {
         </Container.Col1>
         <WindowDividerAdmin />
         <Container.Col2>
-          <ContainerComission>
-            <Title>Editar imagens da home:</Title>
-            <Text>Selecione o tipo de imagem que você irá editar: </Text>
+          <ContainerEditHome>
+            <Title>Editar imagens da Home</Title>
+            <Text>Qual bloco da home você irá editar: </Text>
             <Select
               id="select"
               required
@@ -273,32 +276,32 @@ export default function HomeEdit() {
               <option
                 value="Banner"
               >Banner</option></Select>
-
             <UploadContainer>
-              <ImageSelected type="file" required id="image" hidden onChange={handleChange} />
+              <ImageSelected type="file" required id="image" hidden placeholder='1200x80' onChange={handleChange} />
               <Label for="image">Escolha a imagem</Label>
               <Img alt="" src={image_img.url} />
             </UploadContainer>
+            <Text2> {resolution} </Text2>
             <Button onClick={handleSubmit} >Confirmar</Button>
-            {allImages?.map((img) => (
-              <Item>
-                <Image
-                  loader={myLoader}
-                  src={img.image_id}
-                  alt=""
-                  width="400"
-                  height="390"
-                />
-                <ButtonDelete onClick={() => {
-                  deleteImage(img.image_id);
-                }}
-                >
-                  Deletar Imagem
-
-                </ButtonDelete>
-              </Item>
-            ))}
-          </ContainerComission>
+            <Text> Selecione a imagem a ser excluída: </Text>
+            <AlignItem>
+              {allImages?.map((img) => (
+                <Item>
+                  <Image
+                    loader={myLoader}
+                    src={img.image_id}
+                    alt=""
+                    width="200"
+                    height="100"
+                  />
+                  <ButtonDelete onClick={() => {
+                    deleteImage(img.image_id);
+                  }}
+                  > Deletar Imagem </ButtonDelete>
+                </Item>
+              ))}
+            </AlignItem>
+          </ContainerEditHome>
         </Container.Col2>
       </Container>
     </div>

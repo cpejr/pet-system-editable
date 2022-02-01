@@ -8,14 +8,14 @@ const Item = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  @media screen and (max-width: 500px) {
-      margin: 8%;
-  }
+   margin: 8%;
+   @media screen and (max-width: 500px) {
+    margin: 8%;
+   }
 `;
 
 export default function MosaicCarousel({ image }) {
   const [imagesFiltered, setImagesFiltered] = useState([]);
-  console.log(imagesFiltered);
   const myLoader = ({ src }) => {
     return `https://s3-sa-east-1.amazonaws.com/petsystembucket/${src}`;
   };
@@ -25,8 +25,8 @@ export default function MosaicCarousel({ image }) {
 
   const responsive = {
     others: {
-      breakpoint: { max: 1060, min: 913 },
-      items: 0,
+      breakpoint: { max: 5000, min: 913 },
+      items: 4,
     },
     tablet: {
       breakpoint: { max: 912, min: 465 },

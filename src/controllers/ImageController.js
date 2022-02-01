@@ -49,6 +49,7 @@ module.exports = {
     const { id } = request.query;
     try {
       await ImageModel.deleteImage(id);
+      await AwsModel.deleteAWS(id);
     } catch (error) {
       if (error.message) {
         return response.status(400).json({ notification: error.message });
