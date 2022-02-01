@@ -8,7 +8,10 @@ import {
   Cards, CardItem, CardImage1, CardImage2, CardImage3, Container, Mosaic, Text, Divider, Button,
 } from '../../src/components/HomeComponents';
 import { useEffect, useState } from "react";
+import { toast } from 'react-toastify';
 import Link from 'next/link';
+
+toast.configure();
 
 export default function Home({ stores }) {
   const [serviceId, setServiceId] = useState('');
@@ -29,7 +32,7 @@ export default function Home({ stores }) {
         }
       });
     }).catch((error) => {
-      alert('Erro ao tentar obter categorias')
+      toast('Erro ao obter categorias.', { position: toast.POSITION.BOTTOM_RIGHT });
     });
   }, [])
 

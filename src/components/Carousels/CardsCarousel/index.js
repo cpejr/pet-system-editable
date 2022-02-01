@@ -5,6 +5,7 @@ import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import { Button, CardImage1, CardImage2, CardImage3 } from '../../../../src/components/HomeComponents';
 import api from '../../../../src/utils/api';
+import { toast } from 'react-toastify';
 
 const Item = styled.div`
   display: flex;
@@ -18,6 +19,8 @@ const Item = styled.div`
       margin: 8%;
   }
 `;
+
+toast.configure();
 
 export default function CardsCarousel() {
   const [serviceId, setServiceId] = useState('');
@@ -52,7 +55,7 @@ export default function CardsCarousel() {
         }
       });
     }).catch((error) => {
-      alert('Erro ao tentar obter categorias');
+      toast('Erro ao obter categorias.', { position: toast.POSITION.BOTTOM_RIGHT });
     });
   }, [])
 
