@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { toast } from 'react-toastify';
 
 const SalesMonthContainer = styled.div`
 display:flex;
@@ -69,7 +70,29 @@ width:35%;
 }
 `;
 
+toast.configure();
+
 export default function MySalesMonth() {
+  const [revenue, setRevenue] = useState(0);
+  const [quantity, setQuantity] = useState(0);
+  const [share, setShare] = useState(0);
+  const [storeProfit, setStoreProfit] = useState(0);
+  const [value, setValue] = useState(new Date());
+  useEffect(() => {
+    api.get('/sales', {
+      params: {
+        month: moment(value).format('M'),
+        year: moment(value).format('Y'),
+      },
+    }).then((response) => {
+      setRevenue(response.data.revenue.sum);
+      setShare(response.data.share);
+      setQuantity(response.data.quantity);
+      setStoreProfit(response.data.store_profit);
+    }).catch((error) => {
+      toast('Erro ao obter dados sobre as vendas.', { position: toast.POSITION.BOTTOM_RIGHT });
+    });
+  }, [value]);
   return (
     <div>
       <SalesMonthContainer>
@@ -87,10 +110,10 @@ export default function MySalesMonth() {
             <p>Total de ganhos:</p>
           </SalesMonthContainer.Description.Col1>
           <SalesMonthContainer.Description.Col2>
-            <p>R$ 187,00</p>
-            <p>2</p>
-            <p>10%</p>
-            <p>R$ 168,30</p>
+            <p>{revenue}</p>
+            <p>{quantity}</p>
+            <p>{share}%</p>
+            <p>{storeProfit}</p>
           </SalesMonthContainer.Description.Col2>
         </SalesMonthContainer.Description>
       </SalesMonthContainer>

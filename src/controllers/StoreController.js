@@ -1,7 +1,9 @@
 const { v4: uuidv4 } = require('uuid');
 const StoreModel = require('../models/StoreModel');
 const FirebaseModel = require('../models/FirebaseModel');
-const AwsModel = require('../models/AwsModel');
+const OrderModel = require('../models/OrderModel');
+const AdminModel = require('../models/AdminModel');
+
 
 module.exports = {
   async getOne(request, response) {
@@ -121,4 +123,23 @@ module.exports = {
     }
     return response.status(200).json({ notification: 'Store deleted' });
   },
+
+  async getSailsInfo(id) {
+    const { month, year } = request.query;
+    try{
+      const when = { month, year };
+      const revenue = await OrderModel.getOrderRevenueByStoreId(when, id);
+      const share = await AdminModel.getAll();
+      const quantity = await OrderModel.getQuantityByStoreId(when, id);
+      const store_profit = revenue.sum * (1 - share/100);
+      return response.status(200).json({
+        share, revenue, quantity, store_profit,
+      }); 
+    } catch (err) {
+      if (err.message) {
+        return response.status(400).json({ notification: err.message });
+      }
+      return response.status(500).json({ notification: 'Internal Server Error' });
+    }
+  }
 };

@@ -111,6 +111,53 @@ module.exports = {
     }
   },
 
+  async getOrderRevenueByStoreId(filter, id) {
+    try {
+      const orders = await connection('Order')
+        .where('firebase_id_store', id)
+        .sum('total_price')
+        .where((builder) => {
+          if (filter) {
+            // eslint-disable-next-line quotes
+            builder.whereRaw(`EXTRACT(MONTH FROM created_at::date) = ? AND EXTRACT(YEAR FROM created_at::date) = ?`, [filter.month, filter.year]);
+          }
+        })
+        .first();
+      if (orders.sum === null) {
+        orders.sum = 0;
+      }
+      return orders;
+    } catch (error) {
+      console.error(error);
+      throw new Error(error);
+    }
+  },
+
+  async getQuantityByStoreId(filter, id) {
+    try {
+      const orders = await connection('Order')
+        .where('firebase_id_store', id)
+        .where((builder) => {
+          if (filter) {
+            // eslint-disable-next-line quotes
+            builder.whereRaw(`EXTRACT(MONTH FROM created_at::date) = ? AND EXTRACT(YEAR FROM created_at::date) = ?`, [filter.month, filter.year]);
+          }
+        })
+        .first();
+
+        const storeQuantity = 0;
+        orders?.forEach((order) => {
+          const orderQuantity = await Cart_ProductsModel.getCart_ProductsByCartId(order.cart_id);
+          storeQuantity += orderQuantity;
+        });
+      
+      return storeQuantity;
+    } catch (error) {
+      console.error(error);
+      throw new Error(error);
+    }
+  },
+
   async createNewOrder(order) {
     try {
       const order_aux = await connection('Order')
