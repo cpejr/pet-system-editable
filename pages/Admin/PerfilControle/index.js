@@ -128,24 +128,6 @@ const Admin = () => {
   const [averageShare, setAverageShare] = useState(0);
   const [profit, setProfit] = useState(0);
   const [value, setValue] = useState(new Date());
-
-  function getProfileData() {
-    try {
-      api.get('/profileControl', {
-        params: {
-          month: moment(value).format('M'),
-          year: moment(value).format('Y'),
-        },
-      }).then((response) => {
-        setRevenue(response.data.revenue.sum);
-        setTotalStores(response.data.total_stores);
-        setProfit(response.data.profit.sum);
-        setAverageShare(response.data.averageShare);
-      });
-    } catch (error) {
-      alert("Erro ao tentar obter dados do perfil");
-    }
-  }
   
   useEffect(() => {
     api.get('/profileControl', {
