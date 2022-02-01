@@ -176,7 +176,7 @@ export default function Header() {
         </Link>
       );
     }
-    switch (user.type) {
+    switch (user?.type) {
       case 'admin':
         return (
           <Link href="/admin">
