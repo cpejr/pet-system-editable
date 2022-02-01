@@ -16,7 +16,7 @@ export default function Home({ stores }) {
   const [showerId, setShowerId] = useState('');
 
   useEffect(() => {
-    api.get('category')?.then((response) => {
+    api.get('category').then((response) => {
       response.data?.forEach(category => {
         if(category.name === 'Acessórios'){
           setAccessoryId(category.category_id);
@@ -28,7 +28,10 @@ export default function Home({ stores }) {
           setShowerId(category.category_id); 
         }
       });
-    }).catch((error));
+    }).catch((error) => {
+      alert('Erro ao tentar obter categorias')
+    });
+  }, [])
 
   return (
     <>
@@ -98,7 +101,7 @@ export default function Home({ stores }) {
       </Container>
     </>
   );
-},
+}
 
 export async function getStaticProps() {
   const { data: stores } = await api.get('store');

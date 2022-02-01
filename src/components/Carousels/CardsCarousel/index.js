@@ -51,8 +51,9 @@ export default function CardsCarousel() {
           setShowerId(category.category_id); 
         }
       });
-    }).catch((error));
-  
+    }).catch((error) => {
+      alert('Erro ao tentar obter categorias');
+    });
   }, [])
 
   return (
