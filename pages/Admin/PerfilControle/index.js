@@ -10,6 +10,7 @@ import WindowDividerAdmin from '../../../src/components/WindowDividerAdmin';
 import MonthResumeAdmin from '../../../src/components/MonthResumeAdmin';
 import api from '../../../src/utils/api';
 import withAuthAdmin from '../../../src/components/WithAuth/WithAuthAdmin';
+import { toast } from 'react-toastify';
 
 const Container = styled.div`
 display:flex;
@@ -122,6 +123,8 @@ width:80%;
 }
 `;
 
+toast.configure();
+
 const Admin = () => {
   const [revenue, setRevenue] = useState(0);
   const [totalStores, setTotalStores] = useState(0);
@@ -141,7 +144,7 @@ const Admin = () => {
       setProfit(response.data.profit.sum);
       setAverageShare(response.data.averageShare);
     }).catch((error) => {
-      alert('Erro ao tentar obter dados do perfil de controle');
+      toast('Erro ao obter dados do perfil de controle.', { position: toast.POSITION.BOTTOM_RIGHT });
     });
   }, [value]);
 
