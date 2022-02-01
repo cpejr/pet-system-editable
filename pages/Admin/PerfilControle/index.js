@@ -156,7 +156,11 @@ const Admin = () => {
     }).then((response) => {
       setRevenue(response.data.revenue.sum);
       setTotalStores(response.data.total_stores);
-    }).catch((error));
+      setProfit(response.data.profit.sum);
+      setAverageShare(response.data.averageShare);
+    }).catch((error) => {
+      alert('Erro ao tentar obter dados do perfil de controle');
+    });
   }, [value]);
 
   return (
