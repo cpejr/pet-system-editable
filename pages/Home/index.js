@@ -10,25 +10,26 @@ import {
 import { useEffect, useState } from "react";
 import Link from 'next/link';
 
-export default function Home({ stores, categories }) {
+export default function Home({ stores }) {
   const [serviceId, setServiceId] = useState('');
   const [accessoryId, setAccessoryId] = useState('');
   const [showerId, setShowerId] = useState('');
 
   useEffect(() => {
-    categories.forEach((category) => {
-      if(category.name === 'Acessórios'){
-        setAccessoryId(category.category_id);
-      }
-      if(category.name === 'Serviços'){
-        setServiceId(category.category_id);
-      }
-      if(category.name === 'Banho e tosa'){
-        setShowerId(category.category_id); 
-      }
-    })
-  }, [])
-    
+    api.get('category')?.then((response) => {
+      response.data?.forEach(category => {
+        if(category.name === 'Acessórios'){
+          setAccessoryId(category.category_id);
+        }
+        if(category.name === 'Serviços'){
+          setServiceId(category.category_id);
+        }
+        if(category.name === 'Banho e tosa'){
+          setShowerId(category.category_id); 
+        }
+      });
+    }).catch((error));
+
   return (
     <>
       <BannerCarousel />
@@ -43,7 +44,7 @@ export default function Home({ stores, categories }) {
                 <Button>Acessórios</Button>
               </Link>
             </CardImage1>
-          </CardItem>
+          </CardItem>  
           <CardItem>
             <CardImage2>
               <Link
@@ -97,20 +98,12 @@ export default function Home({ stores, categories }) {
       </Container>
     </>
   );
-}
+},
 
 export async function getStaticProps() {
   const { data: stores } = await api.get('store');
   return {
     props: { stores },
-    revalidate: 60 * 10, // 10 minutos
-  };
-}
-
-export async function getCategoryProps() {
-  const { data: categories } = await api.get('category');
-  return {
-    props: { categories },
     revalidate: 60 * 10, // 10 minutos
   };
 }

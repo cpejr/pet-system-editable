@@ -39,8 +39,8 @@ export default function CardsCarousel() {
   };
 
   useEffect(() => {
-    api.get('category').then((response) => {
-      response.data.forEach(category => {
+    api.get('category')?.then((response) => {
+      response.data?.forEach(category => {
         if(category.name === 'Acessórios'){
           setAccessoryId(category.category_id);
         }
@@ -51,7 +51,7 @@ export default function CardsCarousel() {
           setShowerId(category.category_id); 
         }
       });
-    })
+    }).catch((error));
   
   }, [])
 
