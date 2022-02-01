@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import api from '../../../src/utils/api';
 import AdminCardsFix from '../../../src/components/AdminCardsFix';
 import WindowDividerAdmin from '../../../src/components/WindowDividerAdmin';
+import withAuthAdmin from '../../../src/components/WithAuth/WithAuthAdmin';
 
 const Container = styled.div`
 display:flex;
@@ -108,7 +109,7 @@ const Button = styled.button`
 
 toast.configure();
 
-export default function Admin() {
+const Admin = () => {
   const [comission, setComission] = useState(0);
   const [newComission, setNewComission] = useState(0);
   const [error, setError] = useState('gray');
@@ -182,4 +183,5 @@ export default function Admin() {
       </Container>
     </div>
   );
-}
+};
+export default withAuthAdmin(Admin);

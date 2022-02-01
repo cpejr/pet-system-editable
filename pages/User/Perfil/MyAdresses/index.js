@@ -2,15 +2,15 @@ import React from 'react';
 import {
   MyAdresses, PerfilMenu, Title,
 } from '../../../../src/components';
+import withAuthUser from '../../../../src/components/WithAuth/WithAuthUser';
 
-export default function Perfil() {
-  return (
-    <div>
-      <Title>Meu Perfil</Title>
-      <PerfilMenu selectedItem="Meus Endereços" />
-      <Title>Endereços</Title>
-      <MyAdresses />
+const Perfil = () => (
+  <div>
+    <Title>Meu Perfil</Title>
+    <PerfilMenu selectedItem="Meus Endereços" />
+    <Title>Endereços</Title>
+    <MyAdresses />
+  </div>
+);
 
-    </div>
-  );
-}
+export default withAuthUser(Perfil);
