@@ -118,7 +118,7 @@ export default function MyStoreData() {
               {store.phone}
             </AddressData>
             <AddressData>
-              Horario de funcionamento:
+              Situação:
               {' '}
               {situation[today]}
               {' '}
@@ -128,6 +128,39 @@ export default function MyStoreData() {
               {' '}
               {closingTime[today]}
             </AddressData>
+            <AddressDataRow>
+              <Column>
+                Dia:
+                <DeliveryText>Segunda-feira:</DeliveryText>
+                <DeliveryText>Terça:</DeliveryText>
+                <DeliveryText>Quarta:</DeliveryText>
+                <DeliveryText>Quinta:</DeliveryText>
+                <DeliveryText>Sexta:</DeliveryText>
+                <DeliveryText>Sábado:</DeliveryText>
+                <DeliveryText>Domingo:</DeliveryText>
+              </Column>
+              <Column>
+                Abre às:
+                <DeliveryText>{openingTime[0]}</DeliveryText>
+                <DeliveryText>{openingTime[1]}</DeliveryText>
+                <DeliveryText>{openingTime[2]}</DeliveryText>
+                <DeliveryText>{openingTime[3]}</DeliveryText>
+                <DeliveryText>{openingTime[4]}</DeliveryText>
+                <DeliveryText>{openingTime[5]}</DeliveryText>
+                <DeliveryText>{openingTime[6]}</DeliveryText>
+              </Column>
+              <Column>
+                Fecha às:
+                <DeliveryText>{closingTime[0]}</DeliveryText>
+                <DeliveryText>{closingTime[1]}</DeliveryText>
+                <DeliveryText>{closingTime[2]}</DeliveryText>
+                <DeliveryText>{closingTime[3]}</DeliveryText>
+                <DeliveryText>{closingTime[4]}</DeliveryText>
+                <DeliveryText>{closingTime[5]}</DeliveryText>
+                <DeliveryText>{closingTime[6]}</DeliveryText>
+              </Column>
+
+            </AddressDataRow>
             <AddressDataRow>
               <Column>
                 Região de entrega:
@@ -155,15 +188,51 @@ export default function MyStoreData() {
               </Column>
               <Column>
                 Tempo de entrega:
-                <DeliveryText>{regionShippingTime[0]}</DeliveryText>
-                <DeliveryText>{regionShippingTime[1]}</DeliveryText>
-                <DeliveryText>{regionShippingTime[2]}</DeliveryText>
-                <DeliveryText>{regionShippingTime[3]}</DeliveryText>
-                <DeliveryText>{regionShippingTime[4]}</DeliveryText>
-                <DeliveryText>{regionShippingTime[5]}</DeliveryText>
-                <DeliveryText>{regionShippingTime[6]}</DeliveryText>
-                <DeliveryText>{regionShippingTime[7]}</DeliveryText>
-                <DeliveryText>{regionShippingTime[8]}</DeliveryText>
+                <DeliveryText>
+                  {regionShippingTime[0]}
+                  {' '}
+                  min
+                </DeliveryText>
+                <DeliveryText>
+                  {regionShippingTime[1]}
+                  {' '}
+                  min
+                </DeliveryText>
+                <DeliveryText>
+                  {regionShippingTime[2]}
+                  {' '}
+                  min
+                </DeliveryText>
+                <DeliveryText>
+                  {regionShippingTime[3]}
+                  {' '}
+                  min
+                </DeliveryText>
+                <DeliveryText>
+                  {regionShippingTime[4]}
+                  {' '}
+                  min
+                </DeliveryText>
+                <DeliveryText>
+                  {regionShippingTime[5]}
+                  {' '}
+                  min
+                </DeliveryText>
+                <DeliveryText>
+                  {regionShippingTime[6]}
+                  {' '}
+                  min
+                </DeliveryText>
+                <DeliveryText>
+                  {regionShippingTime[7]}
+                  {' '}
+                  min
+                </DeliveryText>
+                <DeliveryText>
+                  {regionShippingTime[8]}
+                  {' '}
+                  min
+                </DeliveryText>
               </Column>
 
             </AddressDataRow>

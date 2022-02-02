@@ -70,7 +70,11 @@ export const Column = styled.p`
   text-justify: center;
   display: flex;
   flex-direction: column;
+  align-content: center;
+  align-items: center;
   margin: 2%;
+  text-align: center;
+  width: 100%;
 `;
 export const ContainerDatas = styled.div`
   display: flex;
