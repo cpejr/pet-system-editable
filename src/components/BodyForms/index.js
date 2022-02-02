@@ -95,7 +95,7 @@ export const StoreBodyWrapper = styled.div`
     justify-content: center;
 
     @media screen and (min-height: 1024px) {
-      height: 83.3vh;
+      height: fit-content;
   }
 `;
 
@@ -106,7 +106,7 @@ export const StoreBody = styled.div`
     justify-content: center;
 
     height: 100%;
-    width: 50%;
+    width: 70%;
     // background-color: yellow;
 
     @media screen and (max-width: 913px) {

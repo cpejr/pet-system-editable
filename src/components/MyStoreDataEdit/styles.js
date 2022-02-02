@@ -12,7 +12,7 @@ export const MyFormGroup = styled(FormGroup)`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 1%;
+  margin: 5px;
 `;
 
 export const Phone = styled.div`
@@ -43,8 +43,6 @@ export const PhoneFormControl = styled(FormControl)`
 export const DDDFormControl = styled(FormControl)`
   display: flex;
   width: 55px;
-  font-size: 15px;
-  flex-direction: row;
 `;
 
 export const TimeFormControl = styled(FormControl)`
