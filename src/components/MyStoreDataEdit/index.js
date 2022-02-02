@@ -12,7 +12,6 @@ import WindowDivider from '../WindowDivider';
 import api from '../../utils/api';
 import Title from '../Title';
 import RegionsDelivery from '../RegionsDelivery';
-import initialRegionsState from '../RegionDeliveryInitialState';
 import {
   Edit, MyFormGroup, Name, NumbersForms, DDD, PhoneFormControl,
   DDDFormControl, TimeFormControl, Register, Buttons, FormRegister,
@@ -29,11 +28,8 @@ export default function MyStoreDataEdit() {
   const [phone, setPhone] = useState(store.phone.substring(2));
   const [opening_time, setOpenTime] = useState(store.opening_time);
   const [closing_time, setCloseTime] = useState(store.closing_time);
-  const [shipping_tax, setShippingTax] = useState(store.shipping_tax);
-  const [delivery_time, setDeliveryTime] = useState(store.delivery_time);
   const [page, setPage] = useState(0);
   const router = useRouter();
-  const [deliveryData, setDeliveryData] = useState(initialRegionsState);
 
   const RegionsState = {
     barreiroTax: regionShippingTax[0],
@@ -56,6 +52,30 @@ export default function MyStoreDataEdit() {
     vendaNovaTime: regionShippingTime[8],
   };
   const [dados, setDados] = useState(RegionsState);
+
+  const deliveryTax = [
+    dados?.barreiroTax,
+    dados?.centroSulTax,
+    dados?.lesteTax,
+    dados?.nordesteTax,
+    dados?.noroesteTax,
+    dados?.norteTax,
+    dados?.oesteTax,
+    dados?.pampulhaTax,
+    dados?.vendaNovaTax,
+  ];
+
+  const deliveryTime = [
+    dados?.barreiroTime,
+    dados?.centroSulTime,
+    dados?.lesteTime,
+    dados?.nordesteTime,
+    dados?.noroesteTime,
+    dados?.norteTime,
+    dados?.oesteTime,
+    dados?.pampulhaTime,
+    dados?.vendaNovaTime,
+  ];
 
   function addStr(str, index, stringToAdd) {
     return str.substring(0, index) + stringToAdd + str.substring(index, str.length);
@@ -103,8 +123,8 @@ export default function MyStoreDataEdit() {
       phone: ddd + phone,
       opening_time,
       closing_time,
-      shipping_tax,
-      delivery_time,
+      shipping_tax: String(deliveryTax),
+      delivery_time: String(deliveryTime),
     };
     try {
       api.put(`/store/${store.firebase_id_store}`, body).then((response) => {
@@ -121,7 +141,6 @@ export default function MyStoreDataEdit() {
       });
       router.push('/Seller/Perfil/Store');
     } catch (error) {
-      console.error('erro aqui', error);
       notification.open({
         message: 'Erro!',
         description: 'Erro ao atualizar dados.',

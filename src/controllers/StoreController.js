@@ -44,7 +44,6 @@ module.exports = {
 
   async create(request, response) {
     const store = request.body;
-    console.log('🚀 ~ file: StoreController.js ~ line 47 ~ create ~ store', store);
     const { cover_img, logo_img } = request.files;
     cover_img.name = uuidv4();
     logo_img.name = uuidv4();
