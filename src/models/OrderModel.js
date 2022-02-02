@@ -79,6 +79,46 @@ module.exports = {
     }
   },
 
+
+  async getOrdersByStoreIdByMonth(filter, id) {
+    try {
+      const orders = await connection('Order')
+        .where('firebase_id_store', id)
+        .select('*')
+        .innerJoin(
+          'User',
+          'Order.firebase_id',
+          'User.firebase_id',
+        )
+        .innerJoin(
+          'Address',
+          'Order.address_id',
+          'Address.address_id',
+        )
+        .where((builder) => {
+          if (filter) {
+            // eslint-disable-next-line quotes
+            builder.whereRaw(`EXTRACT(MONTH FROM created_at::date) = ? AND EXTRACT(YEAR FROM created_at::date) = ?`, [filter.month, filter.year]);
+          }
+        })
+        .first();
+
+      for (const order of orders) {
+        delete order.type;
+        delete order.birth_date;
+        delete order.cpf;
+
+        order.order_products = await Cart_ProductsModel
+          .getCart_ProductsByCartId(order.cart_id);
+      }
+
+      return orders;
+    } catch (error) {
+      console.error(error);
+      throw new Error(error);
+    }
+  },
+
   async getAllOrders() {
     try {
       const orders = await connection('Order')
@@ -127,31 +167,6 @@ module.exports = {
         orders.sum = 0;
       }
       return orders;
-    } catch (error) {
-      console.error(error);
-      throw new Error(error);
-    }
-  },
-
-  async getQuantityByStoreId(filter, id) {
-    try {
-      const orders = await connection('Order')
-        .where('firebase_id_store', id)
-        .where((builder) => {
-          if (filter) {
-            // eslint-disable-next-line quotes
-            builder.whereRaw(`EXTRACT(MONTH FROM created_at::date) = ? AND EXTRACT(YEAR FROM created_at::date) = ?`, [filter.month, filter.year]);
-          }
-        })
-        .first();
-
-        const storeQuantity = 0;
-        orders?.forEach((order) => {
-          const orderQuantity = await Cart_ProductsModel.getCart_ProductsByCartId(order.cart_id);
-          storeQuantity += orderQuantity;
-        });
-      
-      return storeQuantity;
     } catch (error) {
       console.error(error);
       throw new Error(error);

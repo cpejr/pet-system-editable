@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { toast } from 'react-toastify';
+i
 
 const SalesMonthContainer = styled.div`
 display:flex;
@@ -78,20 +79,26 @@ export default function MySalesMonth() {
   const [share, setShare] = useState(0);
   const [storeProfit, setStoreProfit] = useState(0);
   const [value, setValue] = useState(new Date());
-  useEffect(() => {
-    api.get('/sales', {
+
+  async function getSalesInfo() {
+    try{
+      const response = await api.get('/sales', {
       params: {
         month: moment(value).format('M'),
         year: moment(value).format('Y'),
       },
-    }).then((response) => {
+    })
       setRevenue(response.data.revenue.sum);
       setShare(response.data.share);
       setQuantity(response.data.quantity);
       setStoreProfit(response.data.store_profit);
-    }).catch((error) => {
+    } catch (error) {
       toast('Erro ao obter dados sobre as vendas.', { position: toast.POSITION.BOTTOM_RIGHT });
-    });
+    } 
+  }
+
+  useEffect(() => {
+    getSalesInfo;
   }, [value]);
   return (
     <div>

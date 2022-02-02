@@ -124,16 +124,21 @@ module.exports = {
     return response.status(200).json({ notification: 'Store deleted' });
   },
 
-  async getSailsInfo(id) {
+  async getSalesInfo() {
+    const { id } = req.session.get('store').store;
     const { month, year } = request.query;
     try{
       const when = { month, year };
-      const revenue = await OrderModel.getOrderRevenueByStoreId(when, id);
+      const orders = await OrderModel.getOrdersByStoreIdByMonth(when, id);
+      console.log(orders);
+      const revenue = await OrderModel.getOrdersByStoreId(when, id);
+      console.log(revenue);
       const share = await AdminModel.getAll();
-      const quantity = await OrderModel.getQuantityByStoreId(when, id);
+      console.log(share);
       const store_profit = revenue.sum * (1 - share/100);
+      console.log(store_profit);
       return response.status(200).json({
-        share, revenue, quantity, store_profit,
+        total_orders: orders.lentgh, share, revenue, store_profit,
       }); 
     } catch (err) {
       if (err.message) {
