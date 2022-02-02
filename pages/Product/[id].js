@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { FaArrowLeft, FaRegMinusSquare, FaRegPlusSquare } from 'react-icons/fa';
 import { notification } from 'antd';
+import { toast } from 'react-toastify';
 import Image from 'next/image';
 import Link from 'next/link';
 import moment from 'moment';
@@ -13,6 +14,8 @@ import {
 } from './styles';
 import StoreIsOpen from '../../src/components/StoreIsOpen';
 import { useCart } from '../../src/components/CardContext/CardContext';
+
+toast.configure();
 
 export default function Product({ product, store }) {
   const cart = useCart();
@@ -34,50 +37,55 @@ export default function Product({ product, store }) {
   const [quantity, setQuantity] = useState(0);
 
   useEffect(() => {
-    api.get('address/userMain').then((response) => {
-      if (regionShippingTax && response?.data !== 'Usuário não está logado') {
-        switch (response?.data?.region) {
-          case 'Barreiro':
-            setShippingValue(regionShippingTax[0]);
-            break;
+    try {
+      api.get('address/userMain').then((response) => {
+        if (regionShippingTax && response?.data !== 'Usuário não está logado') {
+          switch (response?.data?.region) {
+            case 'Barreiro':
+              setShippingValue(regionShippingTax[0]);
+              break;
 
-          case 'Centro Sul':
-            setShippingValue(regionShippingTax[1]);
-            break;
+            case 'Centro Sul':
+              setShippingValue(regionShippingTax[1]);
+              break;
 
-          case 'Leste':
-            setShippingValue(regionShippingTax[2]);
-            break;
+            case 'Leste':
+              setShippingValue(regionShippingTax[2]);
+              break;
 
-          case 'Nordeste':
-            setShippingValue(regionShippingTax[3]);
-            break;
+            case 'Nordeste':
+              setShippingValue(regionShippingTax[3]);
+              break;
 
-          case 'Noroeste':
-            setShippingValue(regionShippingTax[4]);
-            break;
+            case 'Noroeste':
+              setShippingValue(regionShippingTax[4]);
+              break;
 
-          case 'Norte':
-            setShippingValue(regionShippingTax[5]);
-            break;
+            case 'Norte':
+              setShippingValue(regionShippingTax[5]);
+              break;
 
-          case 'Oeste':
-            setShippingValue(regionShippingTax[6]);
-            break;
+            case 'Oeste':
+              setShippingValue(regionShippingTax[6]);
+              break;
 
-          case 'Pampulha':
-            setShippingValue(regionShippingTax[7]);
-            break;
+            case 'Pampulha':
+              setShippingValue(regionShippingTax[7]);
+              break;
 
-          default:
-            setShippingValue(regionShippingTax[8]); // Venda Nova
-            break;
+            default:
+              setShippingValue(regionShippingTax[8]); // Venda Nova
+              break;
+          }
+        } else {
+          setShippingMinValue(Math.min(...regionShippingTax));
+          setShippingMaxValue(Math.max(...regionShippingTax));
         }
-      } else {
-        setShippingMinValue(Math.min(...regionShippingTax));
-        setShippingMaxValue(Math.max(...regionShippingTax));
-      }
-    });
+      });
+    } catch (err) {
+      console.error(err);
+      toast('Erro', { position: toast.POSITION.BOTTOM_RIGHT });
+    }
   }, [regionShippingTax]);
 
   useEffect(() => {

@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import axios from 'axios';
 import moment from 'moment';
+import { toast } from 'react-toastify';
 import { useEffect, useState } from 'react';
 import {
   ContainerDoContainer,
@@ -13,8 +14,10 @@ import {
   LittleBanner,
 } from './styles';
 import api from '../../src/utils/api';
-import {  StoreTabs } from '../../src/components';
+import { StoreTabs } from '../../src/components';
 import StoreIsOpen from '../../src/components/StoreIsOpen';
+
+toast.configure();
 
 export default function Store({
   store, address, products, groups,
@@ -33,9 +36,14 @@ export default function Store({
   const day = moment(data).format('dddd');
 
   useEffect(() => {
-    api.get('address/userMain').then((response) => {
-      setMainAddress(response.data);
-    });
+    try {
+      api.get('address/userMain').then((response) => {
+        setMainAddress(response.data);
+      });
+    } catch (err) {
+      console.error(err);
+      toast('Erro', { position: toast.POSITION.BOTTOM_RIGHT });
+    }
   }, []);
 
   useEffect(() => {

@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-pascal-case */
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { toast } from 'react-toastify';
 import api from '../../src/utils/api';
 import { ContainerCategory, SearchContainer, TypeContainer } from './styles';
 import {
@@ -13,6 +14,8 @@ import {
   SearchCardsStoreClosed,
   SearchHeader,
 } from '../../src/components/index';
+
+toast.configure();
 
 export default function Search({ keyword, id, categories }) {
   const [products, setProducts] = useState([]);
@@ -48,54 +51,64 @@ export default function Search({ keyword, id, categories }) {
 
   useEffect(() => {
     if (Object.keys(allStores).length > 0) {
-      api
-        .get('products', { params: { price, category_id: categoria } })
-        .then((res) => {
-          if (keyword) {
-            const FilteredProducts = res.data.filter((item) => item.product_name
-              .toLowerCase()
-              .includes(keyword.toLowerCase()));
-            allStores.forEach((store) => {
-              FilteredProducts.forEach((product) => {
-                if (product.firebase_id_store === store.firebase_id_store) {
-                  product.shipping_tax = store.shipping_tax;
-                  product.opening_time = store.opening_time;
-                  product.closing_time = store.closing_time;
-                }
+      try {
+        api
+          .get('products', { params: { price, category_id: categoria } })
+          .then((res) => {
+            if (keyword) {
+              const FilteredProducts = res.data.filter((item) => item.product_name
+                .toLowerCase()
+                .includes(keyword.toLowerCase()));
+              allStores.forEach((store) => {
+                FilteredProducts.forEach((product) => {
+                  if (product.firebase_id_store === store.firebase_id_store) {
+                    product.shipping_tax = store.shipping_tax;
+                    product.opening_time = store.opening_time;
+                    product.closing_time = store.closing_time;
+                  }
+                });
               });
-            });
-            setProducts(FilteredProducts);
-          } else {
-            allStores.forEach((store) => {
-              res.data.forEach((product) => {
-                if (product.firebase_id_store === store.firebase_id_store) {
-                  product.shipping_tax = store.shipping_tax;
-                  product.opening_time = store.opening_time;
-                  product.closing_time = store.closing_time;
-                }
+              setProducts(FilteredProducts);
+            } else {
+              allStores.forEach((store) => {
+                res.data.forEach((product) => {
+                  if (product.firebase_id_store === store.firebase_id_store) {
+                    product.shipping_tax = store.shipping_tax;
+                    product.opening_time = store.opening_time;
+                    product.closing_time = store.closing_time;
+                  }
+                });
               });
-            });
-            setProducts(res.data);
-          }
-        });
+              setProducts(res.data);
+            }
+          });
+      } catch (err) {
+        console.error(err);
+        toast('Erro', { position: toast.POSITION.BOTTOM_RIGHT });
+      }
     }
   }, [categoria, price, keyword, allStores]);
 
   useEffect(() => {
-    api.get('store').then((res) => {
-      if (Object.keys(res.data).length !== Object.keys(allStores).length
-      && Object.keys(res.data).length !== 0) {
-        setAllStores(res.data);
-      }
-      if (keyword) {
-        const FilteredStores = res.data.filter((item) => item.company_name
-          .toLowerCase()
-          .includes(keyword.toLowerCase()));
-        setStores(FilteredStores);
-      } else {
-        setStores(res.data);
-      }
-    });
+    try {
+      api.get('store').then((res) => {
+        if (Object.keys(res.data).length !== Object.keys(allStores).length
+        && Object.keys(res.data).length !== 0) {
+          setAllStores(res.data);
+        }
+        if (keyword) {
+          const FilteredStores = res.data.filter((item) => item.company_name
+            .toLowerCase()
+            .includes(keyword.toLowerCase()));
+          setStores(FilteredStores);
+        } else {
+          setStores(res.data);
+        }
+      });
+    } catch (err) {
+      console.error(err);
+      toast('Erro', { position: toast.POSITION.BOTTOM_RIGHT });
+    }
   }, [keyword]);
 
   if (checkedProducts === '#609694') {
