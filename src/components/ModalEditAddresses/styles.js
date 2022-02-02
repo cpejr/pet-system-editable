@@ -203,3 +203,7 @@ cursor: pointer;
         width: 150px;
     } 
 `;
+
+export const Espaço = styled.div`
+width: 5%;
+`;
