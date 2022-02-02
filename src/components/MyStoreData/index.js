@@ -4,7 +4,7 @@ import moment from 'moment';
 import api from '../../utils/api';
 import { useAuth } from '../../contexts/AuthContext';
 import {
-  BoxDatas, ContainerDatas, AddressData,
+  BoxDatas, ContainerDatas, AddressData, AddressDataRow, Column, DeliveryText,
 } from './styles';
 import MyStoreDataEdit from '../MyStoreDataEdit/index';
 
@@ -19,6 +19,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function MyStoreData() {
   const { store, setStore } = useAuth();
+  const regionShippingTax = store?.shipping_tax.split(',');
+  const regionShippingTime = store?.delivery_time.split(',');
   const openingTime = store?.opening_time.split(',');
   const closingTime = store?.closing_time.split(',');
   const situation = store?.working_days.split(',');
@@ -126,10 +128,45 @@ export default function MyStoreData() {
               {' '}
               {closingTime[today]}
             </AddressData>
-            <AddressData>
-              Taxa de entrega:
-              {` R$${store.shipping_tax}`}
-            </AddressData>
+            <AddressDataRow>
+              <Column>
+                Região de entrega:
+                <DeliveryText>Barreiro:</DeliveryText>
+                <DeliveryText>Centro-Sul:</DeliveryText>
+                <DeliveryText>Leste:</DeliveryText>
+                <DeliveryText>Nordeste:</DeliveryText>
+                <DeliveryText>Noroeste:</DeliveryText>
+                <DeliveryText>Norte:</DeliveryText>
+                <DeliveryText>Oeste:</DeliveryText>
+                <DeliveryText>Pampulha:</DeliveryText>
+                <DeliveryText>Venda Nova:</DeliveryText>
+              </Column>
+              <Column>
+                Taxa de entrega:
+                <DeliveryText>{regionShippingTax[0]}</DeliveryText>
+                <DeliveryText>{regionShippingTax[1]}</DeliveryText>
+                <DeliveryText>{regionShippingTax[2]}</DeliveryText>
+                <DeliveryText>{regionShippingTax[3]}</DeliveryText>
+                <DeliveryText>{regionShippingTax[4]}</DeliveryText>
+                <DeliveryText>{regionShippingTax[5]}</DeliveryText>
+                <DeliveryText>{regionShippingTax[6]}</DeliveryText>
+                <DeliveryText>{regionShippingTax[7]}</DeliveryText>
+                <DeliveryText>{regionShippingTax[8]}</DeliveryText>
+              </Column>
+              <Column>
+                Tempo de entrega:
+                <DeliveryText>{regionShippingTime[0]}</DeliveryText>
+                <DeliveryText>{regionShippingTime[1]}</DeliveryText>
+                <DeliveryText>{regionShippingTime[2]}</DeliveryText>
+                <DeliveryText>{regionShippingTime[3]}</DeliveryText>
+                <DeliveryText>{regionShippingTime[4]}</DeliveryText>
+                <DeliveryText>{regionShippingTime[5]}</DeliveryText>
+                <DeliveryText>{regionShippingTime[6]}</DeliveryText>
+                <DeliveryText>{regionShippingTime[7]}</DeliveryText>
+                <DeliveryText>{regionShippingTime[8]}</DeliveryText>
+              </Column>
+
+            </AddressDataRow>
             <MyStoreDataEdit />
           </Paper>
         </div>
