@@ -86,7 +86,10 @@ export default function MyStoreDataEdit() {
   }
 
   function handleChange(event, field) {
-    setDados({ ...dados, [field]: event.target.value });
+    const re = /^[0-9\b]+$/;
+    if (event.target.value === '' || re.test(event.target.value)) {
+      setDados({ ...dados, [field]: event.target.value });
+    }
   }
   function handleChangeMoney(event, field) {
     const aux = `${event.target.value}`;
