@@ -118,7 +118,6 @@ export default function Store() {
   };
 
   const handleNextThree = () => {
-    console.log(deliveryData);
     const newActiveStep = activeStep + 1;
     setActiveStep(newActiveStep);
     setCompletedThree(true);
