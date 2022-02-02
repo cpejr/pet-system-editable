@@ -92,9 +92,14 @@ export default function MyStoreDataEdit() {
     }
   }
   function handleChangeMoney(event, field) {
-    const aux = `${event.target.value}`;
-    const aux2 = addStr(aux, 2, '.');
-    setDados({ ...dados, [field]: aux2 });
+    let aux = `${event.target.value}`;
+    if (aux.length >= 2) {
+      const aux2 = addStr(aux, 2, '.');
+      setDados({ ...dados, [field]: aux2 });
+    } else {
+      if (aux === '') aux = '0';
+      setDados({ ...dados, [field]: aux });
+    }
   }
 
   const handleOpen = () => {
