@@ -137,20 +137,7 @@ module.exports = {
     try {
       const response = await connection('Admin_share')
         .select('*').first();
-      let somaPrecos = 0;
-      if (user) {
-        api.get('/cart/firebase').then((res) => {
-          if (res.data.length > 0) {
-            res.data.forEach((product) => {
-              somaPrecos += product.price * product.amount;
-            });
-          }
-        })
-      }
-      console.log(somaPrecos);
-      const profit = (response.share * somaPrecos/100);
-      console.log(profit);
-      order.admin_profit = profit;
+      const profit = (response.share * order.total_price/100);
       const order_aux = await connection('Order')
         .insert(order);
       return order_aux;
