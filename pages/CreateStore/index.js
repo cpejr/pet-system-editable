@@ -8,18 +8,20 @@ import { useMediaQuery } from '@material-ui/core';
 import 'antd/dist/antd.css';
 import { toast } from 'react-toastify';
 import WorkingDays from '../../src/components/WorkingDays';
+import SelectRegion from '../../src/components/SelectRegion';
 import RegionsDelivery from '../../src/components/RegionsDelivery';
 import {
   StoreBodyWrapper, StoreBody, StoreFormulary, TopFormulary, ItemFormulary,
   DividedItemFormulary, BottomFormulary,
 } from '../../src/components/BodyForms';
 import {
-  Img, UploadContainer, ImageSelected, Label, CurrencyInput,
+  Img, UploadContainer, ImageSelected, Label,
 } from './styles';
 import {
   TitleStore, SubtitleStore, Text, SubText, TextBox, Submit,
 } from '../../src/components/FormComponents';
 import MaskedInput from '../../src/components/MasketInput';
+import initialRegionsState from '../../src/components/RegionDeliveryInitialState';
 import 'react-toastify/dist/ReactToastify.css';
 
 toast.configure();
@@ -29,6 +31,7 @@ export default function Store() {
   const [activeStep, setActiveStep] = useState(0);
   const [completedOne, setCompletedOne] = useState(false);
   const [completedTwo, setCompletedTwo] = useState(false);
+  const [completedThree, setCompletedThree] = useState(false);
 
   const matches = useMediaQuery('(max-width:400px)');
 
@@ -42,85 +45,83 @@ export default function Store() {
   };
 
   const handleNext = () => {
-    // if (companyName?.length < 1) {
-    //   toast('Nome da Empresa vazio!', { position: toast.POSITION.BOTTOM_RIGHT });
-    //   return;
-    // }
-    // if (email?.length < 1) {
-    //   toast('Email vazio!', { position: toast.POSITION.BOTTOM_RIGHT });
-    //   return;
-    // }
-    // const regex = new RegExp('.+@.+\..+');
-    // if (!regex.test(email)) {
-    //   toast('Email inválido!', { position: toast.POSITION.BOTTOM_RIGHT });
-    //   return;
-    // }
-    // if (phone?.length !== 10) {
-    //   toast('Telefone inválido', { position: toast.POSITION.BOTTOM_RIGHT });
-    //   return;
-    // }
-    // if (cellphone?.length !== 11) {
-    //   toast('Telefone inválido', { position: toast.POSITION.BOTTOM_RIGHT });
-    //   return;
-    // }
-    // if (cnpj?.length !== 14) {
-    //   toast('CNPJ inválido', { position: toast.POSITION.BOTTOM_RIGHT });
-    //   return;
-    // }
-    // if (password !== confPassword) {
-    //   toast('As senhas precisam ser iguais!', { position: toast.POSITION.BOTTOM_RIGHT });
-    //   return;
-    // }
-    // if (!cover_img.file) {
-    //   toast('Insira uma capa!', { position: toast.POSITION.BOTTOM_RIGHT });
-    //   return;
-    // }
-    // if (!logo_img.file) {
-    //   toast('Insira uma logo!', { position: toast.POSITION.BOTTOM_RIGHT });
-    //   return;
-    // }
+    if (companyName?.length < 1) {
+      toast('Nome da Empresa vazio!', { position: toast.POSITION.BOTTOM_RIGHT });
+      return;
+    }
+    if (email?.length < 1) {
+      toast('Email vazio!', { position: toast.POSITION.BOTTOM_RIGHT });
+      return;
+    }
+    const regex = new RegExp('.+@.+\..+');
+    if (!regex.test(email)) {
+      toast('Email inválido!', { position: toast.POSITION.BOTTOM_RIGHT });
+      return;
+    }
+    if (phone?.length !== 10) {
+      toast('Telefone inválido', { position: toast.POSITION.BOTTOM_RIGHT });
+      return;
+    }
+    if (cellphone?.length !== 11) {
+      toast('Telefone inválido', { position: toast.POSITION.BOTTOM_RIGHT });
+      return;
+    }
+    if (cnpj?.length !== 14) {
+      toast('CNPJ inválido', { position: toast.POSITION.BOTTOM_RIGHT });
+      return;
+    }
+    if (password !== confPassword) {
+      toast('As senhas precisam ser iguais!', { position: toast.POSITION.BOTTOM_RIGHT });
+      return;
+    }
+    if (!cover_img.file) {
+      toast('Insira uma capa!', { position: toast.POSITION.BOTTOM_RIGHT });
+      return;
+    }
+    if (!logo_img.file) {
+      toast('Insira uma logo!', { position: toast.POSITION.BOTTOM_RIGHT });
+      return;
+    }
     const newActiveStep = activeStep + 1;
     setActiveStep(newActiveStep);
     setCompletedOne(true);
   };
 
   const handleNextTwo = () => {
-    // const shippingTaxRegex = new RegExp('([0-9])+');
-    // if (!shippingTaxRegex.test(shippingTax)) {
-    //   toast('Insira uma taxa válida!', { position: toast.POSITION.BOTTOM_RIGHT });
-    //   return;
-    // }
-    // if (deliveryTime?.length < 1) {
-    //   toast('Insira um tempo de entrega!', { position: toast.POSITION.BOTTOM_RIGHT });
-    //   return;
-    // }
-    // if (street?.length < 1) {
-    //   toast('Rua inválida', { position: toast.POSITION.BOTTOM_RIGHT });
-    //   return;
-    // }
-    // if (addressNum?.length < 1) {
-    //   toast('Número inválido', { position: toast.POSITION.BOTTOM_RIGHT });
-    //   return;
-    // }
-    // if (district?.length < 1) {
-    //   toast('Bairro inválido', { position: toast.POSITION.BOTTOM_RIGHT });
-    //   return;
-    // }
-    // if (zipcode?.length !== 8 || (zipcode.substring(0, 2) !== '31' && zipcode.substring(0, 2) !== '30')) {
-    //   toast('CEP inválido', { position: toast.POSITION.BOTTOM_RIGHT });
-    //   return;
-    // }
-    // if (city?.length < 1) {
-    //   toast('Cidade inválida', { position: toast.POSITION.BOTTOM_RIGHT });
-    //   return;
-    // }
-    // if (state?.length < 1) {
-    //   toast('Estado inválido', { position: toast.POSITION.BOTTOM_RIGHT });
-    //   return;
-    // }
+    if (street?.length < 1) {
+      toast('Rua inválida', { position: toast.POSITION.BOTTOM_RIGHT });
+      return;
+    }
+    if (addressNum?.length < 1) {
+      toast('Número inválido', { position: toast.POSITION.BOTTOM_RIGHT });
+      return;
+    }
+    if (district?.length < 1) {
+      toast('Bairro inválido', { position: toast.POSITION.BOTTOM_RIGHT });
+      return;
+    }
+    if (zipcode?.length !== 8 || (zipcode.substring(0, 2) !== '31' && zipcode.substring(0, 2) !== '30')) {
+      toast('CEP inválido', { position: toast.POSITION.BOTTOM_RIGHT });
+      return;
+    }
+    if (city?.length < 1) {
+      toast('Cidade inválida', { position: toast.POSITION.BOTTOM_RIGHT });
+      return;
+    }
+    if (state?.length < 1) {
+      toast('Estado inválido', { position: toast.POSITION.BOTTOM_RIGHT });
+      return;
+    }
     const newActiveStep = activeStep + 1;
     setActiveStep(newActiveStep);
     setCompletedTwo(true);
+  };
+
+  const handleNextThree = () => {
+    console.log(deliveryData);
+    const newActiveStep = activeStep + 1;
+    setActiveStep(newActiveStep);
+    setCompletedThree(true);
   };
 
   const handleBack = () => {
@@ -148,6 +149,7 @@ export default function Store() {
   const [addressNum, setAddressNum] = useState('');
   const [complement, setComplement] = useState('');
   const [district, setDistrict] = useState('');
+  const [region, setRegion] = useState('');
   const [zipcode, setZipcode] = useState('');
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
@@ -158,6 +160,20 @@ export default function Store() {
   const [deliveryTime, setDeliveryTime] = useState('');
   const [cover_img, setCover_img] = useState({ file: null, url: null });
   const [logo_img, setLogo_img] = useState({ file: null, url: null });
+  const [deliveryData, setDeliveryData] = useState(initialRegionsState);
+
+  function addStr(str, index, stringToAdd) {
+    return str.substring(0, index) + stringToAdd + str.substring(index, str.length);
+  }
+
+  function handleChange(event, field) {
+    setDeliveryData({ ...deliveryData, [field]: event.target.value });
+  }
+  function handleChangeMoney(event, field) {
+    const aux = `${event.target.value}`;
+    const aux2 = addStr(aux, 2, '.');
+    setDeliveryData({ ...deliveryData, [field]: aux2 });
+  }
 
   function handleCompanyNameChange(event) {
     setCompanyName(event.target.value);
@@ -239,6 +255,7 @@ export default function Store() {
     district,
     addressNum,
     complement,
+    region,
   ];
 
   return (
@@ -376,6 +393,15 @@ export default function Store() {
                           <Text>Bairro: *</Text>
                           <TextBox type="text" id="district" value={district} onChange={handleDistrictChange} />
                         </ItemFormulary>
+                        <ItemFormulary>
+                          <Text>Região da cidade:</Text>
+                          <SelectRegion
+                            name="Região"
+                            onChange={(e) => setRegion(e.target.value)}
+                            value={region}
+                            page="storeCreate"
+                          />
+                        </ItemFormulary>
 
                         <ItemFormulary>
                           <Text>CEP: *</Text>
@@ -417,7 +443,14 @@ export default function Store() {
               )}
               {activeStep === 2 && (
               <>
-                <RegionsDelivery form={inform} add={address} />
+                <RegionsDelivery
+                  dados={deliveryData}
+                  handleChange={handleChange}
+                  handleChangeMoney={handleChangeMoney}
+                />
+                <BottomFormulary>
+                  <Submit value="submit" onClick={handleNextThree} sx={{ mr: 1 }}>Continuar</Submit>
+                </BottomFormulary>
                 <BottomFormulary>
                   <Submit value="submit" onClick={handleBack} sx={{ mr: 1 }}>Voltar</Submit>
                 </BottomFormulary>
@@ -425,7 +458,7 @@ export default function Store() {
               )}
               {activeStep === 3 && (
                 <>
-                  <WorkingDays form={inform} add={address} />
+                  <WorkingDays form={inform} add={address} deliveryData={deliveryData} />
                   <BottomFormulary>
                     <Submit value="submit" onClick={handleBack} sx={{ mr: 1 }}>Voltar</Submit>
                   </BottomFormulary>

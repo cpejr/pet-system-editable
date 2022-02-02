@@ -223,6 +223,28 @@ export default function StoreCreate(props) {
     situationSab,
     situationDom,
   ];
+  const deliveryTax = [
+    dados?.props.deliveryData?.barreiroTax,
+    dados?.props.deliveryData?.centroSulTax,
+    dados?.props.deliveryData?.lesteTax,
+    dados?.props.deliveryData?.nordesteTax,
+    dados?.props.deliveryData?.noroesteTax,
+    dados?.props.deliveryData?.norteTax,
+    dados?.props.deliveryData?.oesteTax,
+    dados?.props.deliveryData?.pampulhaTax,
+    dados?.props.deliveryData?.vendaNovaTax,
+  ];
+  const deliveryTime = [
+    dados?.props.deliveryData?.barreiroTime,
+    dados?.props.deliveryData?.centroSulTime,
+    dados?.props.deliveryData?.lesteTime,
+    dados?.props.deliveryData?.nordesteTime,
+    dados?.props.deliveryData?.noroesteTime,
+    dados?.props.deliveryData?.norteTime,
+    dados?.props.deliveryData?.oesteTime,
+    dados?.props.deliveryData?.pampulhaTime,
+    dados?.props.deliveryData?.vendaNovaTime,
+  ];
   const options = [
     'Aberto',
     'Fechado',
@@ -275,8 +297,8 @@ export default function StoreCreate(props) {
     formData.append('status', '0');
     formData.append('cover_img', dados.props.form[6]);
     formData.append('logo_img', dados.props.form[7]);
-    formData.append('shipping_tax', (formatShippingTax)); // a variável armazena como inteiro. a divisão é pra separar os centavos
-    formData.append('delivery_time', dados.props.form[9]);
+    formData.append('shipping_tax', deliveryTax); // a variável armazena como inteiro. a divisão é pra separar os centavos
+    formData.append('delivery_time', deliveryTime);
     formData.append('opening_time', opening);
     formData.append('closing_time', closing);
     formData.append('working_days', situation);
@@ -297,6 +319,7 @@ export default function StoreCreate(props) {
         district: dados.props.add[4],
         address_num: dados.props.add[5],
         complement: dados.props.add[6],
+        region: dados.props.add[7],
       };
 
       try {
