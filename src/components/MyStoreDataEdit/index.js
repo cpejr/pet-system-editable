@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FormControl, FormLabel } from 'react-bootstrap';
 import 'date-fns';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -52,6 +52,10 @@ export default function MyStoreDataEdit() {
     vendaNovaTime: regionShippingTime[8],
   };
   const [dados, setDados] = useState(RegionsState);
+
+  useEffect(() => {
+    setDados(RegionsState);
+  }, []);
 
   const deliveryTax = [
     dados?.barreiroTax,

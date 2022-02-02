@@ -17,6 +17,28 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const weekDays = [
+  'segunda',
+  'terça',
+  'quarta',
+  'quinta',
+  'sexta',
+  'sabado',
+  'domingo',
+];
+
+const deliveryRegions = [
+  'Barreiro',
+  'Centro-Sul',
+  'Leste',
+  'Nordeste',
+  'Noroeste',
+  'Norte',
+  'Oeste',
+  'Pampulha',
+  'Venda Nova',
+];
+
 export default function MyStoreData() {
   const { store, setStore } = useAuth();
   const regionShippingTax = store?.shipping_tax.split(',');
@@ -131,108 +153,42 @@ export default function MyStoreData() {
             <AddressDataRow>
               <Column>
                 Dia:
-                <DeliveryText>Segunda-feira:</DeliveryText>
-                <DeliveryText>Terça:</DeliveryText>
-                <DeliveryText>Quarta:</DeliveryText>
-                <DeliveryText>Quinta:</DeliveryText>
-                <DeliveryText>Sexta:</DeliveryText>
-                <DeliveryText>Sábado:</DeliveryText>
-                <DeliveryText>Domingo:</DeliveryText>
+                {weekDays.map((weekDay) => (
+                  <DeliveryText>{`${weekDay}:`}</DeliveryText>
+                ))}
               </Column>
               <Column>
                 Abre às:
-                <DeliveryText>{openingTime[0]}</DeliveryText>
-                <DeliveryText>{openingTime[1]}</DeliveryText>
-                <DeliveryText>{openingTime[2]}</DeliveryText>
-                <DeliveryText>{openingTime[3]}</DeliveryText>
-                <DeliveryText>{openingTime[4]}</DeliveryText>
-                <DeliveryText>{openingTime[5]}</DeliveryText>
-                <DeliveryText>{openingTime[6]}</DeliveryText>
+                {openingTime.map((opTime) => (
+                  <DeliveryText>{`${opTime}`}</DeliveryText>
+                ))}
               </Column>
               <Column>
                 Fecha às:
-                <DeliveryText>{closingTime[0]}</DeliveryText>
-                <DeliveryText>{closingTime[1]}</DeliveryText>
-                <DeliveryText>{closingTime[2]}</DeliveryText>
-                <DeliveryText>{closingTime[3]}</DeliveryText>
-                <DeliveryText>{closingTime[4]}</DeliveryText>
-                <DeliveryText>{closingTime[5]}</DeliveryText>
-                <DeliveryText>{closingTime[6]}</DeliveryText>
+                {closingTime.map((clTime) => (
+                  <DeliveryText>{`${clTime}`}</DeliveryText>
+                ))}
               </Column>
 
             </AddressDataRow>
             <AddressDataRow>
               <Column>
                 Região de entrega:
-                <DeliveryText>Barreiro:</DeliveryText>
-                <DeliveryText>Centro-Sul:</DeliveryText>
-                <DeliveryText>Leste:</DeliveryText>
-                <DeliveryText>Nordeste:</DeliveryText>
-                <DeliveryText>Noroeste:</DeliveryText>
-                <DeliveryText>Norte:</DeliveryText>
-                <DeliveryText>Oeste:</DeliveryText>
-                <DeliveryText>Pampulha:</DeliveryText>
-                <DeliveryText>Venda Nova:</DeliveryText>
+                {deliveryRegions.map((deliveryRegion) => (
+                  <DeliveryText>{`${deliveryRegion}:`}</DeliveryText>
+                ))}
               </Column>
               <Column>
                 Taxa de entrega:
-                <DeliveryText>{regionShippingTax[0]}</DeliveryText>
-                <DeliveryText>{regionShippingTax[1]}</DeliveryText>
-                <DeliveryText>{regionShippingTax[2]}</DeliveryText>
-                <DeliveryText>{regionShippingTax[3]}</DeliveryText>
-                <DeliveryText>{regionShippingTax[4]}</DeliveryText>
-                <DeliveryText>{regionShippingTax[5]}</DeliveryText>
-                <DeliveryText>{regionShippingTax[6]}</DeliveryText>
-                <DeliveryText>{regionShippingTax[7]}</DeliveryText>
-                <DeliveryText>{regionShippingTax[8]}</DeliveryText>
+                {regionShippingTax.map((regionShippingTaxRender) => (
+                  <DeliveryText>{Number(regionShippingTaxRender) === 0 ? 'Gratis' : `R$${regionShippingTaxRender}`}</DeliveryText>
+                ))}
               </Column>
               <Column>
                 Tempo de entrega:
-                <DeliveryText>
-                  {regionShippingTime[0]}
-                  {' '}
-                  min
-                </DeliveryText>
-                <DeliveryText>
-                  {regionShippingTime[1]}
-                  {' '}
-                  min
-                </DeliveryText>
-                <DeliveryText>
-                  {regionShippingTime[2]}
-                  {' '}
-                  min
-                </DeliveryText>
-                <DeliveryText>
-                  {regionShippingTime[3]}
-                  {' '}
-                  min
-                </DeliveryText>
-                <DeliveryText>
-                  {regionShippingTime[4]}
-                  {' '}
-                  min
-                </DeliveryText>
-                <DeliveryText>
-                  {regionShippingTime[5]}
-                  {' '}
-                  min
-                </DeliveryText>
-                <DeliveryText>
-                  {regionShippingTime[6]}
-                  {' '}
-                  min
-                </DeliveryText>
-                <DeliveryText>
-                  {regionShippingTime[7]}
-                  {' '}
-                  min
-                </DeliveryText>
-                <DeliveryText>
-                  {regionShippingTime[8]}
-                  {' '}
-                  min
-                </DeliveryText>
+                {regionShippingTime.map((regionShippingTimeRender) => (
+                  <DeliveryText>{`${regionShippingTimeRender} min`}</DeliveryText>
+                ))}
               </Column>
 
             </AddressDataRow>
