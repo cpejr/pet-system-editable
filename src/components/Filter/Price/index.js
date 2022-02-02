@@ -28,8 +28,6 @@ width:100%;
 margin-top:10%;
 `;
 
-// #609694 ativo
-// #c4c4c4 inativo
 export default function Price({ setPrice }) {
   const [localPrice, setLocalPrice] = useState();
   const [val, setVal] = useState([0, 5000]);

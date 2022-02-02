@@ -68,7 +68,7 @@ export default function MyStoreData() {
         const response = await api.get(`/store/${store.firebase_id_store}`);
         setStore(response.data);
       } catch (error) {
-      console.error(error); //eslint-disable-line
+        console.error(error); //eslint-disable-line
       }
     }
   }

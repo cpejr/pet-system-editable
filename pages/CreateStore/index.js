@@ -58,7 +58,7 @@ export default function Store() {
       toast('Email inválido!', { position: toast.POSITION.BOTTOM_RIGHT });
       return;
     }
-    if (phone?.length !== 10) {
+    if ((phone?.length !== 10) && (phone?.length !== 0)) {
       toast('Telefone inválido', { position: toast.POSITION.BOTTOM_RIGHT });
       return;
     }
@@ -306,7 +306,7 @@ export default function Store() {
 
                       <DividedItemFormulary>
                         <ItemFormulary>
-                          <Text>DDD + telefone: *</Text>
+                          <Text>DDD + telefone: </Text>
                           <MaskedInput name="phone" id="phone" mask="(99)9999-9999" value={phone} onChange={handlePhoneChange} />
                         </ItemFormulary>
 
@@ -369,13 +369,10 @@ export default function Store() {
                           {' '}
                         </SubtitleStore>
                       </TopFormulary>
-                      {/* Rua: */}
                       <ItemFormulary>
                         <Text>Rua: *</Text>
                         <TextBox type="text" id="street" onChange={handleStreetChange} value={street} />
                       </ItemFormulary>
-
-                      {/* Número: Complemento: */}
                       <DividedItemFormulary>
                         <ItemFormulary>
                           <Text>Número: *</Text>
@@ -387,7 +384,6 @@ export default function Store() {
                           <TextBox type="text" id="complement" value={complement} onChange={handleComplementChange} />
                         </ItemFormulary>
                       </DividedItemFormulary>
-                      {/* Bairro: CEP: */}
                       <DividedItemFormulary>
                         <ItemFormulary>
                           <Text>Bairro: *</Text>
@@ -408,7 +404,6 @@ export default function Store() {
                           <MaskedInput name="cep" id="cep" mask="99999-999" value={zipcode} onChange={handleZipcodeChange} />
                         </ItemFormulary>
                       </DividedItemFormulary>
-                      {/* Cidade: Estado: */}
                       <DividedItemFormulary>
                         <ItemFormulary>
                           <Text>Cidade: *</Text>

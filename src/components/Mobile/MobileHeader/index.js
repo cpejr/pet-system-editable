@@ -35,8 +35,8 @@ export default function MobileHeader() {
   const HandleProfileButton = () => {
     if (!user && !store) return router.push('/login');
     if (store) return router.push('/Seller/Perfil/Products');
-    if (user.type != 'admin') return router.push('/User/Perfil/MyRequests');
-    if (user.type === 'admin') return router.push('/Admin');
+    if (user?.type != 'admin') return router.push('/User/Perfil/MyRequests');
+    if (user?.type === 'admin') return router.push('/Admin');
   };
 
   const ProfileButton = () => {
@@ -90,7 +90,7 @@ export default function MobileHeader() {
         </MobileHeaderContainer.Col3>
       );
     }
-    if (user.type === 'admin') {
+    if (user?.type === 'admin') {
       return (
         <Link href="/Admin/Comissoes">
           <MobileHeaderContainer.Col3>

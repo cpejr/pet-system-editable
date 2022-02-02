@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import Link from 'next/link';
 import Carousel from 'react-multi-carousel';
-import Image from 'next/image';
 import 'react-multi-carousel/lib/styles.css';
+import { Button, CardImage1, CardImage2, CardImage3 } from '../../../../src/components/HomeComponents';
+import api from '../../../../src/utils/api';
+import { toast } from 'react-toastify';
 
 const Item = styled.div`
   display: flex;
@@ -17,7 +20,12 @@ const Item = styled.div`
   }
 `;
 
+toast.configure();
+
 export default function CardsCarousel() {
+  const [serviceId, setServiceId] = useState('');
+  const [accessoryId, setAccessoryId] = useState('');
+  const [showerId, setShowerId] = useState('');
   const responsive = {
     desktop: {
       breakpoint: { max: 5000, min: 1025 },
@@ -33,21 +41,59 @@ export default function CardsCarousel() {
     },
   };
 
+  useEffect(() => {
+    api.get('category')?.then((response) => {
+      response.data?.forEach(category => {
+        if(category.name === 'Acessórios'){
+          setAccessoryId(category.category_id);
+        }
+        if(category.name === 'Serviços'){
+          setServiceId(category.category_id);
+        }
+        if(category.name === 'Banho e tosa'){
+          setShowerId(category.category_id); 
+        }
+      });
+    }).catch((error) => {
+      toast('Erro ao obter categorias.', { position: toast.POSITION.BOTTOM_RIGHT });
+    });
+  }, [])
+
   return (
     <Carousel
       responsive={responsive}
       infinite
     >
       <Item>
-        <Image src="/images/Card1.png" alt="" width="400" height="500" />
+        <CardImage1>
+          <Link
+            key={accessoryId}
+            href={{ pathname: '/Search', query: { id: accessoryId } }}
+          >
+            <Button>Acessórios</Button>
+          </Link>
+        </CardImage1>
       </Item>
       <Item>
-        <Image src="/images/Card2.png" alt="" width="400" height="500" />
+        <CardImage2>
+          <Link
+            key={showerId}
+            href={{ pathname: '/Search', query: { id: showerId } }}
+          >
+            <Button>Banho e tosa</Button>
+          </Link>
+        </CardImage2>
       </Item>
       <Item>
-        <Image src="/images/Card3.png" alt="" width="400" height="500" />
+        <CardImage3>
+          <Link
+            key={serviceId}
+            href={{ pathname: '/Search', query: { id: serviceId } }}
+          >
+            <Button>Serviços</Button>
+          </Link>
+        </CardImage3>
       </Item>
     </Carousel>
-
   );
 }
