@@ -27,8 +27,8 @@ export default function Carrinho() {
     if (user) {
       try {
         api.get('/cart/firebase').then((res) => {
-          if (res.data.length > 0) {
-            res.data.forEach((product) => {
+          if (res?.data?.length > 0) {
+            res?.data?.forEach((product) => {
               somaPrecos += product.price * product.amount;
             });
             setSubTotal(parseFloat(somaPrecos.toFixed(2)));

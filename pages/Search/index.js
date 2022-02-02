@@ -44,9 +44,14 @@ export default function Search({ keyword, id, categories }) {
   const myLoader = ({ src }) => `https://s3-sa-east-1.amazonaws.com/petsystembucket/${src}`;
 
   useEffect(() => {
-    api.get('address/userMain').then((response) => {
-      setAddress(response.data);
-    });
+    try {
+      api.get('address/userMain').then((response) => {
+        setAddress(response.data);
+      });
+    } catch (err) {
+      console.error(err);
+      toast('Erro', { position: toast.POSITION.BOTTOM_RIGHT });
+    }
   }, []);
 
   useEffect(() => {

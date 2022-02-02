@@ -153,19 +153,19 @@ export default function MyStoreData() {
             <AddressDataRow>
               <Column>
                 Dia:
-                {weekDays.map((weekDay) => (
+                {weekDays?.map((weekDay) => (
                   <DeliveryText>{`${weekDay}:`}</DeliveryText>
                 ))}
               </Column>
               <Column>
                 Abre às:
-                {openingTime.map((opTime) => (
+                {openingTime?.map((opTime) => (
                   <DeliveryText>{`${opTime}`}</DeliveryText>
                 ))}
               </Column>
               <Column>
                 Fecha às:
-                {closingTime.map((clTime) => (
+                {closingTime?.map((clTime) => (
                   <DeliveryText>{`${clTime}`}</DeliveryText>
                 ))}
               </Column>
@@ -174,19 +174,19 @@ export default function MyStoreData() {
             <AddressDataRow>
               <Column>
                 Região de entrega:
-                {deliveryRegions.map((deliveryRegion) => (
+                {deliveryRegions?.map((deliveryRegion) => (
                   <DeliveryText>{`${deliveryRegion}:`}</DeliveryText>
                 ))}
               </Column>
               <Column>
                 Taxa de entrega:
-                {regionShippingTax.map((regionShippingTaxRender) => (
+                {regionShippingTax?.map((regionShippingTaxRender) => (
                   <DeliveryText>{Number(regionShippingTaxRender) === 0 ? 'Gratis' : `R$${regionShippingTaxRender}`}</DeliveryText>
                 ))}
               </Column>
               <Column>
                 Tempo de entrega:
-                {regionShippingTime.map((regionShippingTimeRender) => (
+                {regionShippingTime?.map((regionShippingTimeRender) => (
                   <DeliveryText>{`${regionShippingTimeRender} min`}</DeliveryText>
                 ))}
               </Column>
