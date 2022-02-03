@@ -196,14 +196,14 @@ export default function HomeEdit() {
     return `https://s3-sa-east-1.amazonaws.com/petsystembucket/${src}`;
   };
 
-  async function handleChange(event) {
+  function handleChange(event) {
     setImage_img({
       file: event.target.files[0],
       url: URL.createObjectURL(event.target.files[0]),
     });
   }
 
-  async function handleType(e) {
+  function handleType(e) {
     setType(e.target.value);
     setFiltros(e.target.value);
     if (e.target.value === "Banner") {
