@@ -6,6 +6,7 @@ import api from '../../../src/utils/api'
 import AdminCardsFix from '../../../src/components/AdminCardsFix';
 import WindowDividerAdmin from '../../../src/components/WindowDividerAdmin';
 import { toast } from 'react-toastify';
+import ModalDeleteImage from '../../../src/components/ModalDeleteImage';
 
 export const Img = styled.img` 
   display:flex;
@@ -187,6 +188,7 @@ const Item = styled.div`
 toast.configure();
 
 export default function HomeEdit() {
+  const [open, setOpen] = useState(false);
   const [image_img, setImage_img] = useState({ file: null, url: null });
   const [type, setType] = useState('Principais Marcas');
   const [filtros, setFiltros] = useState('Principais Marcas');
@@ -294,10 +296,8 @@ export default function HomeEdit() {
                     width="200"
                     height="100"
                   />
-                  <ButtonDelete onClick={() => {
-                    deleteImage(img.image_id);
-                  }}
-                  > Deletar Imagem </ButtonDelete>
+                  <ButtonDelete>
+                    <ModalDeleteImage image_id={img.image_id} getAllImages={getAllImages} /></ButtonDelete>
                 </Item>
               ))}
             </AlignItem>
