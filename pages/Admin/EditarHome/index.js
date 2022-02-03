@@ -134,7 +134,6 @@ const ButtonDelete = styled.button`
     border-color: ${({ theme }) => theme.colors.darkGreen};
     border-radius: 0 0 5px 5px;
     align-items: center;
-    // transform: translate(0%,-50%);
     justify-content: center;
     text-align: center;
     cursor: pointer;
@@ -197,14 +196,14 @@ export default function HomeEdit() {
     return `https://s3-sa-east-1.amazonaws.com/petsystembucket/${src}`;
   };
 
-  function handleChange(event) {
+  async function handleChange(event) {
     setImage_img({
       file: event.target.files[0],
       url: URL.createObjectURL(event.target.files[0]),
     });
   }
 
-  function handleType(e) {
+  async function handleType(e) {
     setType(e.target.value);
     setFiltros(e.target.value);
     if (e.target.value === "Banner") {
@@ -214,8 +213,8 @@ export default function HomeEdit() {
     }
   }
   async function getAllImages() {
+    const response = await api.get('image');
     try {
-      const response = await api.get('image');
       setAllImages(response.data?.filter(image => image.type === filtros));
     } catch (error) {
       console.warn(error);
@@ -223,7 +222,7 @@ export default function HomeEdit() {
   }
   useEffect(() => {
     getAllImages();
-  }, [filtros, handleSubmit])
+  }, [filtros])
 
   async function deleteImage(id) {
     try {
@@ -246,6 +245,7 @@ export default function HomeEdit() {
     try {
       await api.post('/image', formData);
       toast('Imagem adicionada com sucesso!', { position: toast.POSITION.BOTTOM_RIGHT });
+      getAllImages();
     } catch (error) {
       console.error(error);
     }

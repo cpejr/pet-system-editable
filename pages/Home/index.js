@@ -58,10 +58,15 @@ export default function Home({ stores, image }) {
 }
 
 export async function getStaticProps() {
-  const { data: stores } = await api.get('store');
-  const { data: image } = await api.get('image');
-  return {
-    props: { stores, image },
-    revalidate: 60 * 10, // 10 minutos
-  };
+  try {
+    const { data: stores } = await api.get('store');
+    const { data: image } = await api.get('image');
+    return {
+      props: { stores, image },
+      revalidate: 60 * 10, // 10 minutos
+    };
+  } catch (error) {
+    console.warn(error);
+    alert('Algo deu errado');
+  }
 }
