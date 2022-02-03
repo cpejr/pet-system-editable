@@ -111,8 +111,33 @@ module.exports = {
     }
   },
 
+  async getOrderProfit(filter) {
+    try {
+      const orders = await connection('Order')  
+        .sum('admin_profit')
+        .where((builder) => {
+          if (filter) {
+            // eslint-disable-next-line quotes
+            builder.whereRaw(`EXTRACT(MONTH FROM created_at::date) = ? AND EXTRACT(YEAR FROM created_at::date) = ?`, [filter.month, filter.year]);
+          }
+        })
+        .first()
+      if (orders.sum === null) {
+        orders.sum = 0;
+      }
+      return orders;
+    } catch (error) {
+      console.error(error);
+      throw new Error(error);
+    }
+  },
+
+
   async createNewOrder(order) {
     try {
+      const response = await connection('Admin_share')
+        .select('*').first();
+      const profit = (response.share * order.total_price/100);
       const order_aux = await connection('Order')
         .insert(order);
       return order_aux;
