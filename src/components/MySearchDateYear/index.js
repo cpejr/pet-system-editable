@@ -36,16 +36,16 @@ const MenuProps = {
 };
 
 const years = [
+  '2030',
+  '2029',
+  '2028',
+  '2027',
+  '2026',
+  '2025',
+  '2024',
+  '2023',
+  '2022',
   '2021',
-  '2020',
-  '2019',
-  '2018',
-  '2017',
-  '2016',
-  '2015',
-  '2014',
-  '2013',
-  '2012',
 ];
 
 function getStyles(year, personYear, theme) {
@@ -57,13 +57,14 @@ function getStyles(year, personYear, theme) {
   };
 }
 
-export default function MultipleSelect() {
+export default function MultipleSelect({ setDateYear }) {
   const classes = useStyles();
   const theme = useTheme();
   const [personYear, setPersonName] = React.useState([]);
 
   const handleChange = (event) => {
     setPersonName(event.target.value);
+    setDateYear(event.target.value);
   };
 
   return (

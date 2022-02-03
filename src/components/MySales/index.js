@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import MyProductRequestSmall from '../MyProductRequestSmall';
 import MySalesMonth from '../MySalesMonth';
+import api from '../../../src/utils/api';
 
 const DividerContainer = styled.div`
 display:flex;

@@ -59,13 +59,14 @@ function getStyles(month, personMonth, theme) {
   };
 }
 
-export default function MultipleSelect() {
+export default function MultipleSelect({ setDateMonth }) {
   const classes = useStyles();
   const theme = useTheme();
   const [personMonth, setPersonName] = React.useState([]);
 
   const handleChange = (event) => {
     setPersonName(event.target.value);
+    setDateMonth(event.target.value);
   };
 
   return (
