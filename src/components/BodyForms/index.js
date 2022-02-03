@@ -17,7 +17,6 @@ Body.Left = styled.div`
     height: 100%;
     width: 50%;
     margin: 10px;
-    //background-color: red;
 
     @media screen and (max-width: 1200px) {
         display: none !important;
@@ -94,7 +93,7 @@ export const StoreBodyWrapper = styled.div`
     justify-content: center;
 
     @media screen and (min-height: 1024px) {
-      height: 83.3vh;
+      height: fit-content;
   }
 `;
 
@@ -105,7 +104,7 @@ export const StoreBody = styled.div`
     justify-content: center;
 
     height: 100%;
-    width: 50%;
+    width: 70%;
 
     @media screen and (max-width: 913px) {
       width: 80%;
@@ -135,9 +134,6 @@ export const StoreFormulary = styled.div`
   width: 100%;
   border: 1px;
   margin: 10px;
-    @media screen and (max-width: 560px) {
-        // completar
-    }
 `;
 
 export const TopFormulary = styled.div`
@@ -145,7 +141,6 @@ export const TopFormulary = styled.div`
   flex-direction: column;
   align-items: left;
   justify-content: center;
-  //background-color: red;
 `;
 
 export const ItemFormulary = styled.div`
@@ -169,7 +164,6 @@ export const DividedItemFormulary = styled.div`
   width: 95%;
   display: flex;
   flex-direction: row;
-  //background-color: blue; 
 
   @media screen and (max-width: 500px) {
       width: 100%;

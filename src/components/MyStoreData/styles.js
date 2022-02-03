@@ -1,5 +1,13 @@
 import styled from 'styled-components';
 
+export const DeliveryText = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-items: center;
+  font-size: 1rem;
+`;
+
 export const BoxDatas = styled.div`
   display: flex;
   flex-direction: column;
@@ -47,6 +55,26 @@ export const AddressData = styled.p`
   justify-content: center;
   color: white;
   text-justify: center;
+`;
+export const AddressDataRow = styled.p`
+  justify-content: center;
+  color: white;
+  text-justify: center;
+  display: flex;
+  flex-direction: row;
+`;
+export const Column = styled.p`
+  font-size: 1.1rem;
+  justify-content: center;
+  color: white;
+  text-justify: center;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+  margin: 2%;
+  text-align: center;
+  width: 100%;
 `;
 export const ContainerDatas = styled.div`
   display: flex;

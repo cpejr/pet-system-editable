@@ -8,26 +8,30 @@ import { useMediaQuery } from '@material-ui/core';
 import 'antd/dist/antd.css';
 import { toast } from 'react-toastify';
 import WorkingDays from '../../src/components/WorkingDays';
+import SelectRegion from '../../src/components/SelectRegion';
+import RegionsDelivery from '../../src/components/RegionsDelivery';
 import {
   StoreBodyWrapper, StoreBody, StoreFormulary, TopFormulary, ItemFormulary,
   DividedItemFormulary, BottomFormulary,
 } from '../../src/components/BodyForms';
 import {
-  Img, UploadContainer, ImageSelected, Label, CurrencyInput,
+  Img, UploadContainer, ImageSelected, Label,
 } from './styles';
 import {
   TitleStore, SubtitleStore, Text, SubText, TextBox, Submit,
 } from '../../src/components/FormComponents';
 import MaskedInput from '../../src/components/MasketInput';
+import initialRegionsState from '../../src/components/RegionDeliveryInitialState';
 import 'react-toastify/dist/ReactToastify.css';
 
 toast.configure();
 
 export default function Store() {
-  const steps = ['Dados da loja', 'Endereço e Entrega', 'Horário de funcionamento'];
+  const steps = ['Dados da loja', 'Endereço', 'Entrega', 'Horário de funcionamento'];
   const [activeStep, setActiveStep] = useState(0);
   const [completedOne, setCompletedOne] = useState(false);
   const [completedTwo, setCompletedTwo] = useState(false);
+  const [completedThree, setCompletedThree] = useState(false);
 
   const matches = useMediaQuery('(max-width:400px)');
 
@@ -84,15 +88,6 @@ export default function Store() {
   };
 
   const handleNextTwo = () => {
-    const shippingTaxRegex = new RegExp('([0-9])+');
-    if (!shippingTaxRegex.test(shippingTax)) {
-      toast('Insira uma taxa válida!', { position: toast.POSITION.BOTTOM_RIGHT });
-      return;
-    }
-    if (deliveryTime?.length < 1) {
-      toast('Insira um tempo de entrega!', { position: toast.POSITION.BOTTOM_RIGHT });
-      return;
-    }
     if (street?.length < 1) {
       toast('Rua inválida', { position: toast.POSITION.BOTTOM_RIGHT });
       return;
@@ -105,7 +100,7 @@ export default function Store() {
       toast('Bairro inválido', { position: toast.POSITION.BOTTOM_RIGHT });
       return;
     }
-    if (zipcode?.length !== 8) {
+    if (zipcode?.length !== 8 || (zipcode.substring(0, 2) !== '31' && zipcode.substring(0, 2) !== '30')) {
       toast('CEP inválido', { position: toast.POSITION.BOTTOM_RIGHT });
       return;
     }
@@ -120,6 +115,12 @@ export default function Store() {
     const newActiveStep = activeStep + 1;
     setActiveStep(newActiveStep);
     setCompletedTwo(true);
+  };
+
+  const handleNextThree = () => {
+    const newActiveStep = activeStep + 1;
+    setActiveStep(newActiveStep);
+    setCompletedThree(true);
   };
 
   const handleBack = () => {
@@ -147,6 +148,7 @@ export default function Store() {
   const [addressNum, setAddressNum] = useState('');
   const [complement, setComplement] = useState('');
   const [district, setDistrict] = useState('');
+  const [region, setRegion] = useState('');
   const [zipcode, setZipcode] = useState('');
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
@@ -157,6 +159,20 @@ export default function Store() {
   const [deliveryTime, setDeliveryTime] = useState('');
   const [cover_img, setCover_img] = useState({ file: null, url: null });
   const [logo_img, setLogo_img] = useState({ file: null, url: null });
+  const [deliveryData, setDeliveryData] = useState(initialRegionsState);
+
+  function addStr(str, index, stringToAdd) {
+    return str.substring(0, index) + stringToAdd + str.substring(index, str.length);
+  }
+
+  function handleChange(event, field) {
+    setDeliveryData({ ...deliveryData, [field]: event.target.value });
+  }
+  function handleChangeMoney(event, field) {
+    const aux = `${event.target.value}`;
+    const aux2 = addStr(aux, 2, '.');
+    setDeliveryData({ ...deliveryData, [field]: aux2 });
+  }
 
   function handleCompanyNameChange(event) {
     setCompanyName(event.target.value);
@@ -238,6 +254,7 @@ export default function Store() {
     district,
     addressNum,
     complement,
+    region,
   ];
 
   return (
@@ -344,10 +361,10 @@ export default function Store() {
                   <StoreBody>
                     <StoreFormulary>
                       <TopFormulary>
-                        <TitleStore>Endereço e Entrega</TitleStore>
+                        <TitleStore>Endereço</TitleStore>
                         <SubtitleStore>
                           Por favor, preencha as informações referentes ao
-                          endereço e à entrega da loja:
+                          endereço da loja:
                           {' '}
                         </SubtitleStore>
                       </TopFormulary>
@@ -371,6 +388,15 @@ export default function Store() {
                           <Text>Bairro: *</Text>
                           <TextBox type="text" id="district" value={district} onChange={handleDistrictChange} />
                         </ItemFormulary>
+                        <ItemFormulary>
+                          <Text>Região da cidade:</Text>
+                          <SelectRegion
+                            name="Região"
+                            onChange={(e) => setRegion(e.target.value)}
+                            value={region}
+                            page="storeCreate"
+                          />
+                        </ItemFormulary>
 
                         <ItemFormulary>
                           <Text>CEP: *</Text>
@@ -386,18 +412,6 @@ export default function Store() {
                         <ItemFormulary>
                           <Text>Estado: *</Text>
                           <TextBox type="text" id="state" value={state} onChange={handleStateChange} />
-                        </ItemFormulary>
-                      </DividedItemFormulary>
-
-                      <DividedItemFormulary>
-                        <ItemFormulary>
-                          <Text>Taxa de envio: *</Text>
-                          <CurrencyInput name="shippingTax" decimalSeparator="," decimalScale="2" allowNegative={false} prefix="R$" value={shippingTax} onChange={handleShippingTaxChange} />
-                        </ItemFormulary>
-
-                        <ItemFormulary>
-                          <Text>Tempo de entrega em minutos: *</Text>
-                          <MaskedInput name="delivery_time" id="delivery_time" value={deliveryTime} onChange={handleDeliveryTimeChange} />
                         </ItemFormulary>
                       </DividedItemFormulary>
 
@@ -422,8 +436,23 @@ export default function Store() {
                 </StoreBodyWrapper>
               )}
               {activeStep === 2 && (
+              <>
+                <RegionsDelivery
+                  dados={deliveryData}
+                  handleChange={handleChange}
+                  handleChangeMoney={handleChangeMoney}
+                />
+                <BottomFormulary>
+                  <Submit value="submit" onClick={handleNextThree} sx={{ mr: 1 }}>Continuar</Submit>
+                </BottomFormulary>
+                <BottomFormulary>
+                  <Submit value="submit" onClick={handleBack} sx={{ mr: 1 }}>Voltar</Submit>
+                </BottomFormulary>
+              </>
+              )}
+              {activeStep === 3 && (
                 <>
-                  <WorkingDays form={inform} add={address} />
+                  <WorkingDays form={inform} add={address} deliveryData={deliveryData} />
                   <BottomFormulary>
                     <Submit value="submit" onClick={handleBack} sx={{ mr: 1 }}>Voltar</Submit>
                   </BottomFormulary>

@@ -119,7 +119,7 @@ const Admin = () => {
       const response = await api.get('/admin');
       setComission(response.data.share);
     } catch (error) {
-      alert('Erro ao tentar obter comissão atual');
+      toast('Erro ao obter comissão atual', { position: toast.POSITION.BOTTOM_RIGHT });
     }
   }
 

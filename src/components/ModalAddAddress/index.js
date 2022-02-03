@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Modal from '@material-ui/core/Modal';
 import { notification } from 'antd';
-
+import { toast } from 'react-toastify';
 import {
   FormControl, FormLabel,
 } from 'react-bootstrap';
@@ -13,9 +13,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'antd/dist/antd.css';
 
 import WindowDivider from '../WindowDivider';
+import SelectRegion from '../SelectRegion';
 import {
   AddressModal, ButtonAdd, Buttons, CancelSubmit,
   FormRegister, MyFormGroup, Name, Register, SobreFormGroup, Submit, Body,
+  Espaço,
 } from './styles';
 
 export default function ModalAddProducts({ loadAddresses }) {
@@ -30,6 +32,7 @@ export default function ModalAddProducts({ loadAddresses }) {
   };
 
   const [street, setStreet] = useState('');
+  const [region, setRegion] = useState('');
   const [address_num, setNumber] = useState('');
   const [district, setDistrict] = useState('');
   const [city, setCity] = useState('');
@@ -46,7 +49,16 @@ export default function ModalAddProducts({ loadAddresses }) {
       zipcode,
       state,
       complement,
+      region,
     };
+    if (zipcode?.length !== 8 || (zipcode.substring(0, 2) !== '31' && zipcode.substring(0, 2) !== '30')) {
+      toast('CEP invalido!', { position: toast.POSITION.BOTTOM_RIGHT });
+      return;
+    }
+    if (address_num?.length > 4 || address_num?.length <= 0) {
+      toast('Número invalido!', { position: toast.POSITION.BOTTOM_RIGHT });
+      return;
+    }
     try {
       await api.post('/address/', body);
       setOpen(false);
@@ -82,7 +94,7 @@ export default function ModalAddProducts({ loadAddresses }) {
             <Title>Cadastrar endereço</Title>
             <Name>
               <MyFormGroup>
-                <FormLabel>Rua:</FormLabel>
+                <FormLabel>Rua</FormLabel>
                 <FormControl
                   type="text"
                   placeholder="Rua"
@@ -92,7 +104,7 @@ export default function ModalAddProducts({ loadAddresses }) {
                 />
               </MyFormGroup>
               <SobreFormGroup>
-                <FormLabel>Numero:</FormLabel>
+                <FormLabel>Numero</FormLabel>
                 <FormControl
                   type="text"
                   placeholder="Numero"
@@ -104,7 +116,7 @@ export default function ModalAddProducts({ loadAddresses }) {
             </Name>
             <Name>
               <MyFormGroup>
-                <FormLabel>Bairro:</FormLabel>
+                <FormLabel>Bairro</FormLabel>
                 <FormControl
                   type="text"
                   placeholder="Bairro"
@@ -114,7 +126,7 @@ export default function ModalAddProducts({ loadAddresses }) {
                 />
               </MyFormGroup>
               <SobreFormGroup>
-                <FormLabel>Cep:</FormLabel>
+                <FormLabel>Cep</FormLabel>
                 <FormControl
                   type="text"
                   placeholder="Cep"
@@ -136,6 +148,16 @@ export default function ModalAddProducts({ loadAddresses }) {
                 />
               </MyFormGroup>
               <SobreFormGroup>
+                <FormLabel>Região da cidade</FormLabel>
+                <SelectRegion
+                  name="Região"
+                  onChange={(e) => setRegion(e.target.value)}
+                  value={region}
+                />
+              </SobreFormGroup>
+            </Name>
+            <Name>
+              <MyFormGroup>
                 <FormLabel>Estado:</FormLabel>
                 <FormControl
                   type="text"
@@ -144,18 +166,19 @@ export default function ModalAddProducts({ loadAddresses }) {
                   value={state}
                   onChange={(e) => setState(e.target.value)}
                 />
-              </SobreFormGroup>
+              </MyFormGroup>
+              <Espaço />
+              <MyFormGroup>
+                <FormLabel>Complemento</FormLabel>
+                <FormControl
+                  type="text"
+                  placeholder="Complement"
+                  required
+                  value={complement}
+                  onChange={(e) => setComplement(e.target.value)}
+                />
+              </MyFormGroup>
             </Name>
-            <MyFormGroup>
-              <FormLabel>Complemento</FormLabel>
-              <FormControl
-                type="text"
-                placeholder="Complement"
-                required
-                value={complement}
-                onChange={(e) => setComplement(e.target.value)}
-              />
-            </MyFormGroup>
             <Buttons>
               <CancelSubmit onClick={handleClose}>Cancelar</CancelSubmit>
               <Submit onClick={handleSubmit}>Adicionar</Submit>
