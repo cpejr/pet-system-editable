@@ -47,10 +47,16 @@ module.exports = {
     }
   },
 
-  async getOrdersByStoreId(id) {
+  async getOrdersByStoreId(filter, id) {
     try {
       const orders = await connection('Order')
         .where('firebase_id_store', id)
+        .where((builder) => {
+          if (filter) {
+            // eslint-disable-next-line quotes
+            builder.whereRaw(`EXTRACT(MONTH FROM created_at::date) = ? AND EXTRACT(YEAR FROM created_at::date) = ?`, [filter.month, filter.year]);
+          }
+        })
         .select('*')
         .innerJoin(
           'User',
@@ -70,6 +76,7 @@ module.exports = {
 
         order.order_products = await Cart_ProductsModel
           .getCart_ProductsByCartId(order.cart_id);
+        console.log(order.order_products);
       }
 
       return orders;
@@ -79,45 +86,39 @@ module.exports = {
     }
   },
 
+  async getOrderProductsAmount(filter, id) {
+    try {
+      const orders = await connection('Order')
+        .where('firebase_id_store', id)
+        .where((builder) => {
+          if (filter) {
+            // eslint-disable-next-line quotes
+            builder.whereRaw(`EXTRACT(MONTH FROM created_at::date) = ? AND EXTRACT(YEAR FROM created_at::date) = ?`, [filter.month, filter.year]);
+          }
+        })
+        .select('*')
 
-  // async getOrdersByStoreIdByMonth(filter, id) {
-  //   try {
-  //     const orders = await connection('Order')
-  //       .where('firebase_id_store', id)
-  //       .select('*')
-  //       .innerJoin(
-  //         'User',
-  //         'Order.firebase_id',
-  //         'User.firebase_id',
-  //       )
-  //       .innerJoin(
-  //         'Address',
-  //         'Order.address_id',
-  //         'Address.address_id',
-  //       )
-  //       .where((builder) => {
-  //         if (filter) {
-  //           // eslint-disable-next-line quotes
-  //           builder.whereRaw(`EXTRACT(MONTH FROM created_at::date) = ? AND EXTRACT(YEAR FROM created_at::date) = ?`, [filter.month, filter.year]);
-  //         }
-  //       })
-  //       .first();
+      let amount;
 
-  //     for (const order of orders) {
-  //       delete order.type;
-  //       delete order.birth_date;
-  //       delete order.cpf;
+      for (const order of orders) {
+        delete order.type;
+        delete order.birth_date;
+        delete order.cpf;
 
-  //       order.order_products = await Cart_ProductsModel
-  //         .getCart_ProductsByCartId(order.cart_id);
-  //     }
+        const amount = await Cart_ProductsModel
+          .getCart_ProductsByCartId(order.cart_id)
+          .sum('amount');
+        
+        console.log(amount);
+      }
 
-  //     return orders;
-  //   } catch (error) {
-  //     console.error(error);
-  //     throw new Error(error);
-  //   }
-  // },
+      return amount;
+    } catch (error) {
+      console.error(error);
+      throw new Error(error);
+    }
+  },
+
 
   async getAllOrders() {
     try {
@@ -151,11 +152,17 @@ module.exports = {
     }
   },
 
-  async getOrderRevenueByStoreId(id) {
+  async getOrderRevenueByStoreId(filter, id) {
     try {
       const orders = await connection('Order')
         .where('firebase_id_store', id)
         .sum('total_price')
+        .where((builder) => {
+          if (filter) {
+            // eslint-disable-next-line quotes
+            builder.whereRaw(`EXTRACT(MONTH FROM created_at::date) = ? AND EXTRACT(YEAR FROM created_at::date) = ?`, [filter.month, filter.year]);
+          }
+        })
         .first();
       if (orders.sum === null) {
         orders.sum = 0;
@@ -189,11 +196,17 @@ module.exports = {
   },
 
 
-  async getOrderProfitById(id) {
+  async getOrderProfitById(filter, id) {
     try {
       const orders = await connection('Order')  
         .where('firebase_id_store', id)
         .sum('admin_profit')
+        .where((builder) => {
+          if (filter) {
+            // eslint-disable-next-line quotes
+            builder.whereRaw(`EXTRACT(MONTH FROM created_at::date) = ? AND EXTRACT(YEAR FROM created_at::date) = ?`, [filter.month, filter.year]);
+          }
+        })
         .first()
       if (orders.sum === null) {
         orders.sum = 0;

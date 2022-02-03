@@ -3,6 +3,7 @@ const StoreModel = require('../models/StoreModel');
 const FirebaseModel = require('../models/FirebaseModel');
 const OrderModel = require('../models/OrderModel');
 const AdminModel = require('../models/AdminModel');
+const axios = require('axios');
 
 
 module.exports = {
@@ -124,23 +125,25 @@ module.exports = {
     return response.status(200).json({ notification: 'Store deleted' });
   },
 
-  async getSalesInfo() {
-    const { id } = req.session.get('store').store;
-    // const { month, year } = request.query;
+  async getSalesInfo(request, response) {
+    const { month, year } = request.query;
     try{
-      // const when = { month, year };
-      const orders = await OrderModel.getOrdersByStoreId(id);
-      console.log(orders);
-      const revenue = await OrderModel.getOrderRevenueByStoreId(id);
-      console.log(revenue);
-      const adminProfit = await OrderModel.getOrderProfitById(id);
-      console.log(adminProfit);
-      const averageComission = adminProfit.sum*100/revenue.sum;
-      console.log(averageComission);
+      const id = request.session.get('store').store.firebase_id_store;
+      const when = { month, year };
+      const orders = await OrderModel.getOrdersByStoreId(when, id);
+      console.log(orders.order_products);
+      const revenue = await OrderModel.getOrderRevenueByStoreId(when, id);
+      const adminProfit = await OrderModel.getOrderProfitById(when, id);
+      const amount = await OrderModel.getOrderProductsAmount(when, id);
+      let averageShare; 
+      if(revenue.sum === 0){
+        averageShare = 0;
+      } else {
+        averageComission = adminProfit.sum*100/revenue.sum;
+      }
       const storeProfit = revenue.sum - adminProfit.sum;
-      console.log(storeProfit);
       return response.status(200).json({
-        totalOrders: orders.lentgh, averageComission, revenue, storeProfit,
+        totalOrders: orders.length, averageComission, revenue, storeProfit, amount,
       }); 
     } catch (err) {
       if (err.message) {

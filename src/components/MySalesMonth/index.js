@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { toast } from 'react-toastify';
+import { useAuth } from '../../../src/contexts/AuthContext';
+import api from '../../../src/utils/api';
 
 const SalesMonthContainer = styled.div`
 display:flex;
@@ -72,30 +74,8 @@ width:35%;
 
 toast.configure();
 
-export default function MySalesMonth() {
-  const [revenue, setRevenue] = useState(0);
-  const [orders, setOrders] = useState(0);
-  const [share, setShare] = useState(0);
-  const [storeProfit, setStoreProfit] = useState(0);
-  const [value, setValue] = useState(new Date());
+export default function MySalesMonth({ value, orders, revenue, share, storeProfit, amount}) {
 
-  console.log(new Date());
-
-  async function getSalesInfo() {
-    try{
-      const response = await api.get('/sales');
-      setRevenue(response.data.revenue.sum);
-      setShare(response.data.averageShare);
-      setOrders(response.data.totalOrders);
-      setStoreProfit(response.data.storeProfit);
-    } catch (error) {
-      toast('Erro ao obter dados sobre as vendas.', { position: toast.POSITION.BOTTOM_RIGHT });
-    } 
-  }
-
-  useEffect(() => {
-    getSalesInfo;
-  }, []);
   return (
     <div>
       <SalesMonthContainer>
@@ -111,12 +91,14 @@ export default function MySalesMonth() {
             </p>
             <p>Comissão:</p>
             <p>Total de ganhos:</p>
+            <p>Número de pedidos:</p>
           </SalesMonthContainer.Description.Col1>
           <SalesMonthContainer.Description.Col2>
-            <p>{revenue}</p>
+            <p>{revenue.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</p>
+            <p>{amount}</p>
+            <p>{share.toFixed(2)}%</p>
+            <p>{storeProfit.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</p>
             <p>{orders}</p>
-            <p>{share}%</p>
-            <p>{storeProfit}</p>
           </SalesMonthContainer.Description.Col2>
         </SalesMonthContainer.Description>
       </SalesMonthContainer>

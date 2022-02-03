@@ -1,5 +1,5 @@
 import { applySession } from 'next-iron-session';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import MyProductRequestSmall from '../MyProductRequestSmall';
 import MySalesMonth from '../MySalesMonth';
@@ -106,30 +106,42 @@ width:30%;
 
 toast.configure();
 
-export default function MySellerRequest() {
-  const [orders, setOrders] = useStated([]);
-  const [value, setValue] = useState(new Date());
-// async function getOrders() {
-//     try {
-  
-//       const response = await api.get('/ordersByStore', {
-//         params: {
-//           month: moment(value).format('M'),
-//           year: moment(value).format('Y'),
-//         },
-//       });
-//       console.log(response.data);
-//       setOrders(response.data);
-//     } catch(error) {
-//       toast('Erro ao obter pedidos.', { position: toast.POSITION.BOTTOM_RIGHT });
-//     }
-//   }
+export default function MySellerRequest({ value }) {
+  const [revenue, setRevenue] = useState(0);
+  const [orders, setOrders] = useState(0);
+  const [share, setShare] = useState(0);
+  const [storeProfit, setStoreProfit] = useState(0);
+  const [amount, setAmount] = useState(0);
+
+  async function getSalesInfo() {
+      try{
+        const response = await api.get('/mySales',{
+          params: {
+            month: moment(value).format('M'),
+            year: moment(value).format('Y'),
+          },
+        });
+        setRevenue(response.data.revenue.sum);
+        setShare(response.data.averageComission);
+        setOrders(response.data.totalOrders);
+        setStoreProfit(response.data.storeProfit);
+        setAmount(response.data.amount);
+      } catch (error) {
+        console.log(error);
+        toast('Erro ao obter dados sobre as vendas.', { position: toast.POSITION.BOTTOM_RIGHT });
+      }  
+  }
+
+  useEffect(() => {
+    getSalesInfo();
+  }, []);
+
   return (
     <div>
       <DividerContainer>
         <DividerContainer.Col1 />
         <DividerContainer.Col2>
-          <MySalesMonth />
+          <MySalesMonth value={value} orders={orders} revenue={revenue} amount={amount} share={share} storeProfit={storeProfit} />
         </DividerContainer.Col2>
 
         <DividerContainer.Col3>
