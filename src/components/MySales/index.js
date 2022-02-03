@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import { applySession } from 'next-iron-session';
+import React from 'react';
 import styled from 'styled-components';
 import MyProductRequestSmall from '../MyProductRequestSmall';
 import MySalesMonth from '../MySalesMonth';
-import api from '../../../src/utils/api';
+import { toast } from 'react-toastify';
 
 const DividerContainer = styled.div`
 display:flex;
@@ -102,7 +103,27 @@ align-items:center;
 justify-content:center;
 width:30%;
 `;
+
+toast.configure();
+
 export default function MySellerRequest() {
+  const [orders, setOrders] = useStated([]);
+  const [value, setValue] = useState(new Date());
+// async function getOrders() {
+//     try {
+  
+//       const response = await api.get('/ordersByStore', {
+//         params: {
+//           month: moment(value).format('M'),
+//           year: moment(value).format('Y'),
+//         },
+//       });
+//       console.log(response.data);
+//       setOrders(response.data);
+//     } catch(error) {
+//       toast('Erro ao obter pedidos.', { position: toast.POSITION.BOTTOM_RIGHT });
+//     }
+//   }
   return (
     <div>
       <DividerContainer>
