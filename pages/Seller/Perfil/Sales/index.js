@@ -8,27 +8,29 @@ import withAuthStore from '../../../../src/components/WithAuth/WithAuthStore';
 
 const Perfil = () => {
   const [dateMonth, setDateMonth] = useState();
-  const [dateYear, setYear] = useState();
+  const [dateYear, setDateYear] = useState();
 
-  <div>
-    <Title>Perfil da loja:</Title>
-    <PerfilStoreMenu selectedItem="Minhas vendas" />
-    <ContainerDate>
-      <ContainerDate.Col1>
-        <MySearchDateMonth setDateMonth={setDateMonth} />
-      </ContainerDate.Col1>
+  return(
+    <div>
+      <Title>Perfil da loja:</Title>
+      <PerfilStoreMenu selectedItem="Minhas vendas" />
+      <ContainerDate>
+        <ContainerDate.Col1>
+          <MySearchDateMonth setDateMonth={setDateMonth} />
+        </ContainerDate.Col1>
 
-      <ContainerDate.Col2 />
+        <ContainerDate.Col2 />
 
-      <ContainerDate.Col3>
-        <MySearchDateYear setDateYear={setDateYear}/>
-      </ContainerDate.Col3>
+        <ContainerDate.Col3>
+          <MySearchDateYear setDateYear={setDateYear}/>
+        </ContainerDate.Col3>
 
-    </ContainerDate>
+      </ContainerDate>
 
-    <MySales month={dateMonth} year={dateYear} />
+      <MySales month={dateMonth} year={dateYear} />
 
-  </div>
+    </div>
+  )
 };
 
 export default withAuthStore(Perfil);

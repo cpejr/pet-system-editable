@@ -126,19 +126,21 @@ module.exports = {
 
   async getSalesInfo() {
     const { id } = req.session.get('store').store;
-    const { month, year } = request.query;
+    // const { month, year } = request.query;
     try{
-      const when = { month, year };
-      const orders = await OrderModel.getOrdersByStoreIdByMonth(when, id);
+      // const when = { month, year };
+      const orders = await OrderModel.getOrdersByStoreId(id);
       console.log(orders);
-      const revenue = await OrderModel.getOrdersByStoreId(when, id);
+      const revenue = await OrderModel.getOrderRevenueByStoreId(id);
       console.log(revenue);
-      const share = await AdminModel.getAll();
-      console.log(share);
-      const store_profit = revenue.sum * (1 - share/100);
-      console.log(store_profit);
+      const adminProfit = await OrderModel.getOrderProfitById(id);
+      console.log(adminProfit);
+      const averageComission = adminProfit.sum*100/revenue.sum;
+      console.log(averageComission);
+      const storeProfit = revenue.sum - adminProfit.sum;
+      console.log(storeProfit);
       return response.status(200).json({
-        total_orders: orders.lentgh, share, revenue, store_profit,
+        totalOrders: orders.lentgh, averageComission, revenue, storeProfit,
       }); 
     } catch (err) {
       if (err.message) {

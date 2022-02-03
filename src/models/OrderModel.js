@@ -80,44 +80,44 @@ module.exports = {
   },
 
 
-  async getOrdersByStoreIdByMonth(filter, id) {
-    try {
-      const orders = await connection('Order')
-        .where('firebase_id_store', id)
-        .select('*')
-        .innerJoin(
-          'User',
-          'Order.firebase_id',
-          'User.firebase_id',
-        )
-        .innerJoin(
-          'Address',
-          'Order.address_id',
-          'Address.address_id',
-        )
-        .where((builder) => {
-          if (filter) {
-            // eslint-disable-next-line quotes
-            builder.whereRaw(`EXTRACT(MONTH FROM created_at::date) = ? AND EXTRACT(YEAR FROM created_at::date) = ?`, [filter.month, filter.year]);
-          }
-        })
-        .first();
+  // async getOrdersByStoreIdByMonth(filter, id) {
+  //   try {
+  //     const orders = await connection('Order')
+  //       .where('firebase_id_store', id)
+  //       .select('*')
+  //       .innerJoin(
+  //         'User',
+  //         'Order.firebase_id',
+  //         'User.firebase_id',
+  //       )
+  //       .innerJoin(
+  //         'Address',
+  //         'Order.address_id',
+  //         'Address.address_id',
+  //       )
+  //       .where((builder) => {
+  //         if (filter) {
+  //           // eslint-disable-next-line quotes
+  //           builder.whereRaw(`EXTRACT(MONTH FROM created_at::date) = ? AND EXTRACT(YEAR FROM created_at::date) = ?`, [filter.month, filter.year]);
+  //         }
+  //       })
+  //       .first();
 
-      for (const order of orders) {
-        delete order.type;
-        delete order.birth_date;
-        delete order.cpf;
+  //     for (const order of orders) {
+  //       delete order.type;
+  //       delete order.birth_date;
+  //       delete order.cpf;
 
-        order.order_products = await Cart_ProductsModel
-          .getCart_ProductsByCartId(order.cart_id);
-      }
+  //       order.order_products = await Cart_ProductsModel
+  //         .getCart_ProductsByCartId(order.cart_id);
+  //     }
 
-      return orders;
-    } catch (error) {
-      console.error(error);
-      throw new Error(error);
-    }
-  },
+  //     return orders;
+  //   } catch (error) {
+  //     console.error(error);
+  //     throw new Error(error);
+  //   }
+  // },
 
   async getAllOrders() {
     try {
@@ -151,17 +151,11 @@ module.exports = {
     }
   },
 
-  async getOrderRevenueByStoreId(filter, id) {
+  async getOrderRevenueByStoreId(id) {
     try {
       const orders = await connection('Order')
         .where('firebase_id_store', id)
         .sum('total_price')
-        .where((builder) => {
-          if (filter) {
-            // eslint-disable-next-line quotes
-            builder.whereRaw(`EXTRACT(MONTH FROM created_at::date) = ? AND EXTRACT(YEAR FROM created_at::date) = ?`, [filter.month, filter.year]);
-          }
-        })
         .first();
       if (orders.sum === null) {
         orders.sum = 0;
@@ -183,6 +177,23 @@ module.exports = {
             builder.whereRaw(`EXTRACT(MONTH FROM created_at::date) = ? AND EXTRACT(YEAR FROM created_at::date) = ?`, [filter.month, filter.year]);
           }
         })
+        .first()
+      if (orders.sum === null) {
+        orders.sum = 0;
+      }
+      return orders;
+    } catch (error) {
+      console.error(error);
+      throw new Error(error);
+    }
+  },
+
+
+  async getOrderProfitById(id) {
+    try {
+      const orders = await connection('Order')  
+        .where('firebase_id_store', id)
+        .sum('admin_profit')
         .first()
       if (orders.sum === null) {
         orders.sum = 0;
