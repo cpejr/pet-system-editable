@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { toast } from 'react-toastify';
-i
 
 const SalesMonthContainer = styled.div`
 display:flex;
@@ -80,26 +79,23 @@ export default function MySalesMonth() {
   const [storeProfit, setStoreProfit] = useState(0);
   const [value, setValue] = useState(new Date());
 
-  async function getSalesInfo() {
-    try{
-      const response = await api.get('/sales', {
-      params: {
-        month: moment(value).format('M'),
-        year: moment(value).format('Y'),
-      },
-    })
-      setRevenue(response.data.revenue.sum);
-      setShare(response.data.share);
-      setQuantity(response.data.quantity);
-      setStoreProfit(response.data.store_profit);
-    } catch (error) {
-      toast('Erro ao obter dados sobre as vendas.', { position: toast.POSITION.BOTTOM_RIGHT });
-    } 
-  }
+  // async function getSalesInfo() {
+  //   try{
+  //     const response = await api.get('/sales', {
+  //     params: {
+  //       month: janeiro,
+  //       year: 2022,
+  //     },
+  //   })
+  //     setRevenue(response.data.revenue.sum);
+  //     setShare(response.data.share);
+  //     setQuantity(response.data.quantity);
+  //     setStoreProfit(response.data.store_profit);
+  //   } catch (error) {
+  //     toast('Erro ao obter dados sobre as vendas.', { position: toast.POSITION.BOTTOM_RIGHT });
+  //   } 
+  // }
 
-  useEffect(() => {
-    getSalesInfo;
-  }, [value]);
   return (
     <div>
       <SalesMonthContainer>

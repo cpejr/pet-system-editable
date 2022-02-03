@@ -47,7 +47,7 @@ module.exports = {
     }
   },
 
-  async getOrdersByStoreId(id) {
+  async getOrdersByStoreId(filter, id) {
     try {
       const orders = await connection('Order')
         .where('firebase_id_store', id)
@@ -61,41 +61,7 @@ module.exports = {
           'Address',
           'Order.address_id',
           'Address.address_id',
-        );
-
-      for (const order of orders) {
-        delete order.type;
-        delete order.birth_date;
-        delete order.cpf;
-
-        order.order_products = await Cart_ProductsModel
-          .getCart_ProductsByCartId(order.cart_id);
-      }
-
-      return orders;
-    } catch (error) {
-      console.error(error);
-      throw new Error(error);
-    }
-  },
-
-
-  async getOrdersByStoreIdByMonth(filter, id) {
-    try {
-      const orders = await connection('Order')
-        .where('firebase_id_store', id)
-        .select('*')
-        .innerJoin(
-          'User',
-          'Order.firebase_id',
-          'User.firebase_id',
-        )
-        .innerJoin(
-          'Address',
-          'Order.address_id',
-          'Address.address_id',
-        )
-        .where((builder) => {
+        ).where((builder) => {
           if (filter) {
             // eslint-disable-next-line quotes
             builder.whereRaw(`EXTRACT(MONTH FROM created_at::date) = ? AND EXTRACT(YEAR FROM created_at::date) = ?`, [filter.month, filter.year]);
@@ -118,6 +84,7 @@ module.exports = {
       throw new Error(error);
     }
   },
+
 
   async getAllOrders() {
     try {

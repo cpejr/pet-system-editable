@@ -61,9 +61,11 @@ module.exports = {
   },
 
   async getAllOrdersByStore(req, res) {
+    const { month, year } = request.query;
     try {
+      const when = { month, year };
       const { firebase_id_store } = req.session.get('store').store;
-      const orders = await OrderModel.getOrdersByStoreId(firebase_id_store);
+      const orders = await OrderModel.getOrdersByStoreId(when, firebase_id_store);
       return res.status(200).json(orders);
     } catch (error) {
       if (error.message) {
@@ -205,6 +207,7 @@ module.exports = {
         },
       };
 
+      console.log(body);
       const url = `https://ws.sandbox.pagseguro.uol.com.br/transactions?appId=${process.env.PAGSEGURO_MERCHANT_APP_ID}&appKey=${process.env.PAGSEGURO_MERCHANT_KEY}`; // SANDBOX
       const response = await axios.post(url, qs.stringify(body), options);
 

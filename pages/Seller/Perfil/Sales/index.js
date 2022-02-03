@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import MySales from '../../../../src/components/MySales';
 import MySearchDateMonth from '../../../../src/components/MySearchDateMonth';
 import MySearchDateYear from '../../../../src/components/MySearchDateYear';
@@ -6,7 +6,8 @@ import { Title, PerfilStoreMenu } from '../../../../src/components/index';
 import { ContainerDate } from './styles';
 import withAuthStore from '../../../../src/components/WithAuth/WithAuthStore';
 
-const Perfil = () => (
+const Perfil = () => {
+  
   <div>
     <Title>Perfil da loja:</Title>
     <PerfilStoreMenu selectedItem="Minhas vendas" />
@@ -26,6 +27,6 @@ const Perfil = () => (
     <MySales />
 
   </div>
-);
+};
 
 export default withAuthStore(Perfil);
