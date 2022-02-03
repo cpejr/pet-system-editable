@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import MySales from '../../../../src/components/MySales';
 import MySearchDateMonth from '../../../../src/components/MySearchDateMonth';
+import DateFnsUtils from '@date-io/date-fns';
+import ptBR from 'date-fns/locale/pt-BR';
 import MySearchDateYear from '../../../../src/components/MySearchDateYear';
 import { Title, PerfilStoreMenu } from '../../../../src/components/index';
 import { ContainerDate } from './styles';
