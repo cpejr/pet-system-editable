@@ -39,6 +39,7 @@ width:100%;
 font-family:Roboto;
 font-weight: bold;
 font-size:24px;
+text-align: center;
 @media(max-width:860px){
         width:100%;
         font-size:18px;
