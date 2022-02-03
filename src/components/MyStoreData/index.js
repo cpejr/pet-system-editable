@@ -4,7 +4,7 @@ import moment from 'moment';
 import api from '../../utils/api';
 import { useAuth } from '../../contexts/AuthContext';
 import {
-  BoxDatas, ContainerDatas, AddressData,
+  BoxDatas, ContainerDatas, AddressData, AddressDataRow, Column, DeliveryText,
 } from './styles';
 import MyStoreDataEdit from '../MyStoreDataEdit/index';
 
@@ -17,8 +17,32 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const weekDays = [
+  'segunda',
+  'terça',
+  'quarta',
+  'quinta',
+  'sexta',
+  'sabado',
+  'domingo',
+];
+
+const deliveryRegions = [
+  'Barreiro',
+  'Centro-Sul',
+  'Leste',
+  'Nordeste',
+  'Noroeste',
+  'Norte',
+  'Oeste',
+  'Pampulha',
+  'Venda Nova',
+];
+
 export default function MyStoreData() {
   const { store, setStore } = useAuth();
+  const regionShippingTax = store?.shipping_tax.split(',');
+  const regionShippingTime = store?.delivery_time.split(',');
   const openingTime = store?.opening_time.split(',');
   const closingTime = store?.closing_time.split(',');
   const situation = store?.working_days.split(',');
@@ -116,7 +140,7 @@ export default function MyStoreData() {
               {store.phone}
             </AddressData>
             <AddressData>
-              Horario de funcionamento:
+              Situação:
               {' '}
               {situation[today]}
               {' '}
@@ -126,10 +150,48 @@ export default function MyStoreData() {
               {' '}
               {closingTime[today]}
             </AddressData>
-            <AddressData>
-              Taxa de entrega:
-              {` R$${store.shipping_tax}`}
-            </AddressData>
+            <AddressDataRow>
+              <Column>
+                Dia:
+                {weekDays?.map((weekDay) => (
+                  <DeliveryText>{`${weekDay}:`}</DeliveryText>
+                ))}
+              </Column>
+              <Column>
+                Abre às:
+                {openingTime?.map((opTime) => (
+                  <DeliveryText>{`${opTime}`}</DeliveryText>
+                ))}
+              </Column>
+              <Column>
+                Fecha às:
+                {closingTime?.map((clTime) => (
+                  <DeliveryText>{`${clTime}`}</DeliveryText>
+                ))}
+              </Column>
+
+            </AddressDataRow>
+            <AddressDataRow>
+              <Column>
+                Região de entrega:
+                {deliveryRegions?.map((deliveryRegion) => (
+                  <DeliveryText>{`${deliveryRegion}:`}</DeliveryText>
+                ))}
+              </Column>
+              <Column>
+                Taxa de entrega:
+                {regionShippingTax?.map((regionShippingTaxRender) => (
+                  <DeliveryText>{Number(regionShippingTaxRender) === 0 ? 'Gratis' : `R$${regionShippingTaxRender}`}</DeliveryText>
+                ))}
+              </Column>
+              <Column>
+                Tempo de entrega:
+                {regionShippingTime?.map((regionShippingTimeRender) => (
+                  <DeliveryText>{`${regionShippingTimeRender} min`}</DeliveryText>
+                ))}
+              </Column>
+
+            </AddressDataRow>
             <MyStoreDataEdit />
           </Paper>
         </div>

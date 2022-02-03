@@ -1,0 +1,21 @@
+const initialRegionsState = {
+  barreiroTax: '',
+  barreiroTime: '',
+  centroSulTax: '',
+  centroSulTime: '',
+  lesteTax: '',
+  lesteTime: '',
+  nordesteTax: '',
+  nordesteTime: '',
+  noroesteTax: '',
+  noroesteTime: '',
+  norteTax: '',
+  norteTime: '',
+  oesteTax: '',
+  oesteTime: '',
+  pampulhaTax: '',
+  pampulhaTime: '',
+  vendaNovaTax: '',
+  vendaNovaTime: '',
+};
+export default initialRegionsState;

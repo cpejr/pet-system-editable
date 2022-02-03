@@ -105,6 +105,7 @@ export const Pass = styled.div`
 export const Name = styled.div`
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
 `;
 export const NumbersForms = styled.div`
   flex-direction: row;
@@ -202,4 +203,7 @@ cursor: pointer;
     @media(max-width:860px){
         width: 150px;
     } 
+`;
+export const Espaço = styled.div`
+width: 5%;
 `;

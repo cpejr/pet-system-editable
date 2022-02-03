@@ -7,27 +7,68 @@ import MosaicCarousel from '../../src/components/Carousels/MosaicCarousel';
 import {
   Cards, CardItem, CardImage1, CardImage2, CardImage3, Container, Mosaic, Text, Divider, Button,
 } from '../../src/components/HomeComponents';
+import { useEffect, useState } from "react";
+import { toast } from 'react-toastify';
+import Link from 'next/link';
 
+toast.configure();
 
 export default function Home({ stores }) {
+  const [serviceId, setServiceId] = useState('');
+  const [accessoryId, setAccessoryId] = useState('');
+  const [showerId, setShowerId] = useState('');
+
+  useEffect(() => {
+    api.get('category').then((response) => {
+      response.data?.forEach(category => {
+        if(category.name === 'Acessórios'){
+          setAccessoryId(category.category_id);
+        }
+        if(category.name === 'Serviços'){
+          setServiceId(category.category_id);
+        }
+        if(category.name === 'Banho e tosa'){
+          setShowerId(category.category_id); 
+        }
+      });
+    }).catch((error) => {
+      toast('Erro ao obter categorias.', { position: toast.POSITION.BOTTOM_RIGHT });
+    });
+  }, [])
+
   return (
     <>
       <BannerCarousel />
       <Container>
         <Cards>
           <CardItem>
-            <CardImage1 >
-              <Button>Acessórios</Button>
+            <CardImage1>
+              <Link
+                key={accessoryId}
+                href={{ pathname: '/Search', query: { id: accessoryId } }}
+              >
+                <Button>Acessórios</Button>
+              </Link>
             </CardImage1>
           </CardItem>  
           <CardItem>
             <CardImage2>
-              <Button>Banho e tosa</Button>
+              <Link
+                key={showerId}
+                href={{ pathname: '/Search', query: { id: showerId } }}
+              >
+                <Button>Banho e tosa</Button>
+              </Link>
             </CardImage2>
           </CardItem>
           <CardItem>
             <CardImage3>
-              <Button>Serviços  </Button>
+              <Link
+                key={serviceId}
+                href={{ pathname: '/Search', query: { id: serviceId } }}
+              >
+                <Button>Serviços</Button>
+              </Link>
             </CardImage3>
           </CardItem>
         </Cards>

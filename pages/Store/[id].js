@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import axios from 'axios';
 import moment from 'moment';
+import { toast } from 'react-toastify';
 import { useEffect, useState } from 'react';
 import {
   ContainerDoContainer,
@@ -13,8 +14,10 @@ import {
   LittleBanner,
 } from './styles';
 import api from '../../src/utils/api';
-import {  StoreTabs } from '../../src/components';
+import { StoreTabs } from '../../src/components';
 import StoreIsOpen from '../../src/components/StoreIsOpen';
+
+toast.configure();
 
 export default function Store({
   store, address, products, groups,
@@ -23,9 +26,71 @@ export default function Store({
   const openingTime = store.opening_time.split(',');
   const closingTime = store.closing_time.split(',');
   const situation = store.working_days.split(',');
+  const [mainAddress, setMainAddress] = useState('Usuário não está logado');
+  const regionShippingTax = store ? store?.shipping_tax.split(',') : null;
+  const [shippingValue, setShippingValue] = useState();
+  const [shippingMinValue, setShippingMinValue] = useState(0);
+  const [shippingMaxValue, setShippingMaxValue] = useState(0);
   const [today, setToday] = useState();
   const data = new Date();
   const day = moment(data).format('dddd');
+
+  useEffect(() => {
+    try {
+      api.get('address/userMain').then((response) => {
+        setMainAddress(response.data);
+      });
+    } catch (err) {
+      console.error(err);
+      toast('Erro', { position: toast.POSITION.BOTTOM_RIGHT });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (regionShippingTax && mainAddress !== 'Usuário não está logado') {
+      switch (mainAddress.region) {
+        case 'Barreiro':
+          setShippingValue(regionShippingTax[0]);
+          break;
+
+        case 'Centro Sul':
+          setShippingValue(regionShippingTax[1]);
+          break;
+
+        case 'Leste':
+          setShippingValue(regionShippingTax[2]);
+          break;
+
+        case 'Nordeste':
+          setShippingValue(regionShippingTax[3]);
+          break;
+
+        case 'Noroeste':
+          setShippingValue(regionShippingTax[4]);
+          break;
+
+        case 'Norte':
+          setShippingValue(regionShippingTax[5]);
+          break;
+
+        case 'Oeste':
+          setShippingValue(regionShippingTax[6]);
+          break;
+
+        case 'Pampulha':
+          setShippingValue(regionShippingTax[7]);
+          break;
+
+        default:
+          setShippingValue(regionShippingTax[8]); // Venda Nova
+          break;
+      }
+    } else {
+      setShippingMinValue(Math.min(...regionShippingTax));
+      setShippingMaxValue(Math.max(...regionShippingTax));
+    }
+  }, [regionShippingTax, mainAddress]);
+
   useEffect(() => {
     if (day) {
       switch (day) {
@@ -95,9 +160,9 @@ export default function Store({
           <StoreContainer.Col2>
             <StoreName>{store.company_name}</StoreName>
             <StoreDatas>
-              Taxa de entrega: R$
+              Taxa de entrega: 
               {' '}
-              {store.shipping_tax}
+              {shippingValue ? (parseFloat(shippingValue) === 0 ? 'Gratis' : `R$${shippingValue}`) : (shippingMinValue === 0 ? `Gratis ~ R$${shippingMaxValue.toFixed(2)}` : `R$${shippingMinValue.toFixed(2)} ~ R$${shippingMaxValue.toFixed(2)}`) }
             </StoreDatas>
             <StoreDatas>
               {address.street}
