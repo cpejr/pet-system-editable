@@ -5,7 +5,7 @@ import DateFnsUtils from '@date-io/date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
 import MySearchDateYear from '../../../../src/components/MySearchDateYear';
 import { Title, PerfilStoreMenu } from '../../../../src/components/index';
-import { ContainerDate } from './styles';
+import { ContainerDate1, ContainerDate2} from './styles';
 import withAuthStore from '../../../../src/components/WithAuth/WithAuthStore';
 import moment from 'moment';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
@@ -17,8 +17,7 @@ const Perfil = () => {
     <div>
       <Title>Perfil da loja:</Title>
       <PerfilStoreMenu selectedItem="Minhas vendas" />
-      <ContainerDate>
-        <ContainerDate.Col1>
+      <ContainerDate1>
           <MuiPickersUtilsProvider locale={ptBR} utils={DateFnsUtils}>
             <KeyboardDatePicker
               views={['month', 'year']}
@@ -29,15 +28,8 @@ const Perfil = () => {
               InputProps={{ readOnly: true }}
             />
           </MuiPickersUtilsProvider>
-        </ContainerDate.Col1>
-
-        <ContainerDate.Col2 />
-
-        <ContainerDate.Col3>
-          <MySearchDateYear setDateYear={setDateYear}/>
-        </ContainerDate.Col3>
-
-      </ContainerDate>
+      </ContainerDate1>
+      <ContainerDate2/>
 
       <MySales value={value} />
 

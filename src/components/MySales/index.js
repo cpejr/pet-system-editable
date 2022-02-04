@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import MyProductRequestSmall from '../MyProductRequestSmall';
 import MySalesMonth from '../MySalesMonth';
 import { toast } from 'react-toastify';
+import moment from 'moment';
 
 const DividerContainer = styled.div`
 display:flex;
@@ -134,7 +135,7 @@ export default function MySellerRequest({ value }) {
 
   useEffect(() => {
     getSalesInfo();
-  }, []);
+  }, [value]);
 
   return (
     <div>
