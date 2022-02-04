@@ -5,6 +5,7 @@ import MyProductRequestSmall from '../MyProductRequestSmall';
 import MySalesMonth from '../MySalesMonth';
 import { toast } from 'react-toastify';
 import moment from 'moment';
+import api from '../../utils/api';
 
 const DividerContainer = styled.div`
 display:flex;
@@ -123,7 +124,7 @@ export default function MySellerRequest({ value }) {
           },
         });
         setRevenue(response.data.revenue.sum);
-        setShare(response.data.averageComission);
+        setShare(response.data.averageShare);
         setOrders(response.data.totalOrders);
         setStoreProfit(response.data.storeProfit);
         setAmount(response.data.amount);

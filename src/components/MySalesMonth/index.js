@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { toast } from 'react-toastify';
 import { useAuth } from '../../../src/contexts/AuthContext';
-import api from '../../../src/utils/api';
+
 
 const SalesMonthContainer = styled.div`
 display:flex;

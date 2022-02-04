@@ -51,12 +51,8 @@ module.exports = {
     try {
       const orders = await connection('Order')
         .where('firebase_id_store', id)
-        .where((builder) => {
-          if (filter) {
-            // eslint-disable-next-line quotes
-            builder.whereRaw(`EXTRACT(MONTH FROM created_at::date) = ? AND EXTRACT(YEAR FROM created_at::date) = ?`, [filter.month, filter.year]);
-          }
-        })
+        .andWhere('Order.created_at', '>=', new Date(filter.year, filter.month, 1))
+        .andWhere('Order.created_at', '<=', new Date(filter.year, filter.month+1, 0))
         .select('*')
         .innerJoin(
           'User',
@@ -76,8 +72,14 @@ module.exports = {
 
         order.order_products = await Cart_ProductsModel
           .getCart_ProductsByCartId(order.cart_id);
-        console.log(order.order_products);
+
+          console.log(order.order_products);
+
+          for (const product of order.order_products) {
+            console.log(product.amount);
+          }
       }
+      
 
       return orders;
     } catch (error) {
@@ -90,26 +92,26 @@ module.exports = {
     try {
       const orders = await connection('Order')
         .where('firebase_id_store', id)
-        .where((builder) => {
-          if (filter) {
-            // eslint-disable-next-line quotes
-            builder.whereRaw(`EXTRACT(MONTH FROM created_at::date) = ? AND EXTRACT(YEAR FROM created_at::date) = ?`, [filter.month, filter.year]);
-          }
-        })
+        .andWhere('created_at', '>=', new Date(filter.year, filter.month, 1))
+        .andWhere('created_at', '<=', new Date(filter.year, filter.month+1, 0))
         .select('*')
 
-      let amount;
+      var amount = 0;
 
       for (const order of orders) {
         delete order.type;
         delete order.birth_date;
         delete order.cpf;
 
-        const amount = await Cart_ProductsModel
-          .getCart_ProductsByCartId(order.cart_id)
-          .sum('amount');
-        
-        console.log(amount);
+        order.order_products = await Cart_ProductsModel
+          .getCart_ProductsByCartId(order.cart_id);
+
+          console.log(order.order_products);
+
+          for (const product of order.order_products) {
+            amount += product.amount;
+            console.log(amount);
+          }
       }
 
       return amount;
@@ -156,13 +158,9 @@ module.exports = {
     try {
       const orders = await connection('Order')
         .where('firebase_id_store', id)
+        .andWhere('created_at', '>=', new Date(filter.year, filter.month, 1))
+        .andWhere('created_at', '<=', new Date(filter.year, filter.month+1, 0))
         .sum('total_price')
-        .where((builder) => {
-          if (filter) {
-            // eslint-disable-next-line quotes
-            builder.whereRaw(`EXTRACT(MONTH FROM created_at::date) = ? AND EXTRACT(YEAR FROM created_at::date) = ?`, [filter.month, filter.year]);
-          }
-        })
         .first();
       if (orders.sum === null) {
         orders.sum = 0;
@@ -200,13 +198,9 @@ module.exports = {
     try {
       const orders = await connection('Order')  
         .where('firebase_id_store', id)
+        .andWhere('created_at', '>=', new Date(filter.year, filter.month, 1))
+        .andWhere('created_at', '<=', new Date(filter.year, filter.month+1, 0))
         .sum('admin_profit')
-        .where((builder) => {
-          if (filter) {
-            // eslint-disable-next-line quotes
-            builder.whereRaw(`EXTRACT(MONTH FROM created_at::date) = ? AND EXTRACT(YEAR FROM created_at::date) = ?`, [filter.month, filter.year]);
-          }
-        })
         .first()
       if (orders.sum === null) {
         orders.sum = 0;

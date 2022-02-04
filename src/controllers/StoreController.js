@@ -131,19 +131,19 @@ module.exports = {
       const id = request.session.get('store').store.firebase_id_store;
       const when = { month, year };
       const orders = await OrderModel.getOrdersByStoreId(when, id);
-      console.log(orders.order_products);
       const revenue = await OrderModel.getOrderRevenueByStoreId(when, id);
+      console.log(revenue.sum);
       const adminProfit = await OrderModel.getOrderProfitById(when, id);
       const amount = await OrderModel.getOrderProductsAmount(when, id);
-      let averageShare; 
+      let averageShare;
       if(revenue.sum === 0){
         averageShare = 0;
       } else {
-        averageComission = adminProfit.sum*100/revenue.sum;
+        averageShare = adminProfit.sum*100/revenue.sum;
       }
       const storeProfit = revenue.sum - adminProfit.sum;
       return response.status(200).json({
-        totalOrders: orders.length, averageComission, revenue, storeProfit, amount,
+        totalOrders: orders.length, averageShare, revenue, storeProfit, amount,
       }); 
     } catch (err) {
       if (err.message) {
