@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import api from '../utils/api'
 
+
 toast.configure();
 
 const emptyContextInfo = {
@@ -38,7 +39,7 @@ function AuthProvider({ children }) {
       router.push('/Home');
       toast('Login efetuado com sucesso', { position: toast.POSITION.BOTTOM_RIGHT });
     } catch (error) {
-      console.error(error); //eslint-disable-line
+      console.error(error); //eslint-disable-
       toast('E-mail ou senha incorretos!', { position: toast.POSITION.BOTTOM_RIGHT });
     }
   }
@@ -80,7 +81,7 @@ function AuthProvider({ children }) {
 
   useEffect(() => {
     validateSession();
-    if(!user && !store) {
+    if (!user && !store) {
       setIsLoading(false);
     }
   }, []);

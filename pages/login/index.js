@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import moment from 'moment';
 import {
   Body,
   Formulary,
@@ -21,12 +22,16 @@ import {
 import { useAuth } from '../../src/contexts/AuthContext';
 import FullPageLoader from '../../src/components/FullPageLoader';
 import { toast } from 'react-toastify';
+import ModalFailedLogin from '../../src/components/ModalFailedLogin';
+import api from '../../src/utils/api';
 
 toast.configure();
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showModal, setShowModal] = useState(false);
+  const [content, setContent] = useState('');
 
   const { login, user, store, isLoading } = useAuth();
   /*eslint-disable*/
@@ -41,9 +46,9 @@ const Login = () => {
     }
   }, [isLoading, user, store]);
 
-  if(isLoading || user || store) {
+  if (isLoading || user || store) {
     return <FullPageLoader />;
-  } 
+  }
 
   function handleEmailChange(event) {
     setEmail(event.target.value);
@@ -52,10 +57,49 @@ const Login = () => {
   function handlePasswordChange(event) {
     setPassword(event.target.value);
   }
+  const handleClickClose = () => {
+    setShowModal(false);
+  };
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault()
     try {
+      console.log('rogerin');
+      const res = await api.get('attempts/' + email);
+      console.log(res.data.attempts);
+      console.log(res.data);
+      if (res.data.attempts === 0) {
+        console.log('paulin');
+        const body = {
+          lock_time: moment().add(15, 'minutes'),
+          attempts: res.data.attempts + 1,
+        };
+        await api.put('attempts/' + email, body);
+        console.log(body);
+      } else {
+        console.log('niki');
+        switch (res.data.attempts) {
+          case 2: {
+            const body = {
+              email: user.email,
+              attempts: res.data.attempts + 1,
+            };
+            await api.put('attempts/' + email, body)
+          }
+        }
+      }
+      if (res.data.attempts === 3 && moment() <= moment(res.data.lock_time)) {
+        setShowModal(true);
+        const time = moment(res.data.lock_time).fromNow();
+        setContent(time);
+      }
+      if (res.data.attempts === 3 && moment() > moment(res.data.lock_time)) {
+        const body = {
+          lock_time: moment().add(15, 'minutes'),
+          attempts: 0,
+        };
+        await api.put('attempts/' + email, body);
+      }
       login(email, password).then((response) => {
         if (response === 'Loja em espera') {
           toast('Sua solicitação para se tornar um parceiro ainda não foi avaliada', { position: toast.POSITION.BOTTOM_RIGHT });
@@ -124,6 +168,12 @@ const Login = () => {
               </Link>
             </BottomFormulary>
           </Formulary>
+          {showModal && (
+            <ModalFailedLogin
+              content={content}
+              close={handleClickClose}
+            />
+          )}
         </Body.Right>
       </Body>
     </>

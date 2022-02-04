@@ -1,4 +1,6 @@
 import React from 'react';
+import styled from 'styled-components';
+import Modal from '@material-ui/core/Modal';
 
 const Container = styled.div`
   position: fixed;

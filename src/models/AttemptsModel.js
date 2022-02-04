@@ -1,0 +1,55 @@
+const { connection } = require('../database/connection');
+
+module.exports = {
+  async createAttempt(attempt) {
+    try {
+      await connection('Login_attempts')
+        .insert(attempt);
+      return attempt;
+    } catch (error) {
+      throw new Error(error);
+    }
+  },
+  async deleteAttempt(email) {
+    try {
+      const response = await connection('Login_attempts')
+        .where({ email: email })
+        .delete();
+      return response;
+    } catch (error) {
+      throw new Error(error);
+    }
+  },
+  async getAttemptByEmail(email) {
+    try {
+      const attempt = await connection('Login_attempts')
+        .where({ email: email })
+        .first();
+      return attempt;
+    } catch (error) {
+      throw new Error(error);
+    }
+  },
+  async getAllAttempt() {
+    try {
+      const attempt = await connection('Login_attempts')
+        .select('*');
+      return attempt;
+    } catch (error) {
+      throw new Error(error);
+    }
+  },
+  async updateAttempt(attempt, email) {
+    console.log("🚀 ~ file: AttemptsModel.js ~ line 43 ~ updateAttempt ~ attempt", attempt)
+    attempt.email = email;
+    try {
+      const response = await connection('Login_attempts')
+        .where({ email: email })
+        .update({ attempts: attempt.attempts });
+      return response;
+    } catch (error) {
+      throw new Error(error);
+    }
+  },
+
+};
