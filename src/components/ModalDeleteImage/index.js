@@ -67,7 +67,7 @@ export default function ModalDeleteImage({ image_id, getAllImages }) {
     <div style={modalStyle} className={classes.paper}>
       <ContainerModal>
         <Row>
-          <TitleModal>Apagar Imagem</TitleModal>
+          <TitleModal>Apagar Imagem?</TitleModal>
         </Row>
         <Ajust>
           <Row>

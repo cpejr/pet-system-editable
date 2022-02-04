@@ -38,8 +38,8 @@ justify-content:center;
 width:100%;
 font-family:Roboto;
 font-weight: bold;
-font-size:24px;
-text-align: center;
+font-size:1.5em;
+text-align:center;
 @media(max-width:860px){
         width:100%;
         font-size:18px;
@@ -59,7 +59,7 @@ export const ButtonConfirm = styled.button`
     height: 55px;
     width: 200px;
     font-family: Roboto;
-    font-size: 18px;
+    font-size: 1em;
     font-weight: 500;
     background-color: ${({ theme }) => theme.colors.background};
     color: ${({ theme }) => theme.colors.darkGreen};
@@ -79,10 +79,12 @@ export const ButtonConfirm = styled.button`
     border-color: ${({ theme }) => theme.colors.darkGreen};
     }
     @media(max-width:860px){
+        height: 40px;
         width:150px;
     } 
     @media(max-width:401px){
-        width:120px;
+        height: 30px;
+        width:90px;
     }
 `;
 
@@ -91,7 +93,7 @@ export const ButtonCancel = styled.button`
     height: 55px;
     width: 200px;
     font-family: Roboto;
-    font-size: 18px;
+    font-size: 1em;
     font-weight: 500;
     background-color: ${({ theme }) => theme.colors.background};
     color: ${({ theme }) => theme.colors.darkRed};
@@ -113,11 +115,13 @@ export const ButtonCancel = styled.button`
     border-color: ${({ theme }) => theme.colors.darkRed};
     }
     @media(max-width:860px){
+        height: 40px;
         width:150px;
     } 
     @media(max-width:401px){
+        height: 30px;
         margin-top: 30px;
-        width:120px;
+        width:90px;
     }
     @media(max-width:960px){
         margin-top: 30px;
