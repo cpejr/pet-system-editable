@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { FaRegUserCircle } from 'react-icons/fa';
 import Image from 'next/image';
-import api from '../../../src/utils/api'
+import { toast } from 'react-toastify';
+import api from '../../../src/utils/api';
 import AdminCardsFix from '../../../src/components/AdminCardsFix';
 import WindowDividerAdmin from '../../../src/components/WindowDividerAdmin';
-import { toast } from 'react-toastify';
 import ModalDeleteImage from '../../../src/components/ModalDeleteImage';
 
 export const Img = styled.img` 
@@ -34,7 +34,6 @@ export const UploadContainer = styled.div`
 `;
 export const ImageSelected = styled.input`
 `;
-
 
 const Container = styled.div`
 display:flex;
@@ -111,13 +110,11 @@ const Text = styled.p`
   font-size: 16px;
   font-weight: 300;
   margin: 0;
-
 `;
 const Text2 = styled.p`
   font-family: Roboto;
   font-size: 14px;
   font-weight: bold;
-
 `;
 
 const ButtonDelete = styled.button`
@@ -188,16 +185,12 @@ const Item = styled.div`
 toast.configure();
 
 export default function HomeEdit() {
-  const [open, setOpen] = useState(false);
   const [image_img, setImage_img] = useState({ file: null, url: null });
   const [type, setType] = useState('Principais Marcas');
   const [filtros, setFiltros] = useState('Principais Marcas');
   const [allImages, setAllImages] = useState([]);
   const [resolution, setResolution] = useState('Resolução mínima de (300x200)px');
-  const myLoader = ({ src }) => {
-    return `https://s3-sa-east-1.amazonaws.com/petsystembucket/${src}`;
-  };
-
+  const myLoader = ({ src }) => `https://s3-sa-east-1.amazonaws.com/petsystembucket/${src}`;
   function handleChange(event) {
     setImage_img({
       file: event.target.files[0],
@@ -208,34 +201,24 @@ export default function HomeEdit() {
   function handleType(e) {
     setType(e.target.value);
     setFiltros(e.target.value);
-    if (e.target.value === "Banner") {
-      setResolution("Resolução mínima de (1000x300)px");
+    if (e.target.value === 'Banner') {
+      setResolution('Resolução mínima de (1000x300)px');
     } else {
-      setResolution("Resolução mínima de (300x200)px");
+      setResolution('Resolução mínima de (300x200)px');
     }
   }
   async function getAllImages() {
     const response = await api.get('image');
     try {
-      setAllImages(response.data?.filter(image => image.type === filtros));
+      setAllImages(response.data?.filter((image) => image.type === filtros));
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.warn(error);
     }
   }
   useEffect(() => {
     getAllImages();
-  }, [filtros])
-
-  async function deleteImage(id) {
-    try {
-      await api.delete(`image/${id}`);
-      toast('Imagem deletada com sucesso!', { position: toast.POSITION.BOTTOM_RIGHT });
-      getAllImages();
-    } catch (error) {
-      console.warn(error);
-      toast('Erro ao deletar a imagem.', { position: toast.POSITION.BOTTOM_RIGHT });
-    }
-  }
+  }, [type]);
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -249,6 +232,7 @@ export default function HomeEdit() {
       toast('Imagem adicionada com sucesso!', { position: toast.POSITION.BOTTOM_RIGHT });
       getAllImages();
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error);
     }
   }
@@ -271,20 +255,40 @@ export default function HomeEdit() {
               id="select"
               required
               value={type}
-              onChange={(e) => handleType(e)}>
+              onChange={(e) => handleType(e)}
+            >
               <option
                 value="Principais Marcas"
-              >Principais Marcas</option>
+              >
+                Principais Marcas
+              </option>
               <option
                 value="Banner"
-              >Banner</option></Select>
+              >
+                Banner
+              </option>
+            </Select>
             <UploadContainer>
-              <ImageSelected type="file" required id="image" hidden placeholder='1200x80' onChange={handleChange} />
+              <ImageSelected
+                type="file"
+                required
+                id="image"
+                hidden
+                // eslint-disable-next-line react/jsx-no-bind
+                onChange={handleChange}
+              />
               <Label for="image">Escolha a imagem</Label>
               <Img alt="" src={image_img.url} />
             </UploadContainer>
-            <Text2> {resolution} </Text2>
-            <Button onClick={handleSubmit} >Confirmar</Button>
+            <Text2>
+              {resolution}
+            </Text2>
+            <Button
+              // eslint-disable-next-line react/jsx-no-bind
+              onClick={handleSubmit}
+            >
+              Confirmar
+            </Button>
             <Text> Selecione a imagem a ser excluída: </Text>
             <AlignItem>
               {allImages?.map((img) => (
@@ -297,7 +301,12 @@ export default function HomeEdit() {
                     height="100"
                   />
                   <ButtonDelete>
-                    <ModalDeleteImage image_id={img.image_id} getAllImages={getAllImages} /></ButtonDelete>
+                    <ModalDeleteImage
+                      image_id={img.image_id}
+                      // eslint-disable-next-line react/jsx-no-bind
+                      getAllImages={getAllImages}
+                    />
+                  </ButtonDelete>
                 </Item>
               ))}
             </AlignItem>

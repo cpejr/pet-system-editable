@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
-import api from '../../utils/api';
 import { toast } from 'react-toastify';
 import { BsTrash } from 'react-icons/bs';
+import api from '../../utils/api';
 import {
   ContainerModal, Row, TitleModal, Ajust, ButtonConfirm,
   ButtonCancel, GarbageIcon,
@@ -44,8 +44,8 @@ export default function ModalDeleteImage({ image_id, getAllImages }) {
     try {
       await api.delete(`/image/${image_id}`);
       toast('Imagem deletada com sucesso!', { position: toast.POSITION.BOTTOM_RIGHT });
-
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.warn(error);
       toast('Erro ao deletar a imagem.', { position: toast.POSITION.BOTTOM_RIGHT });
     }
