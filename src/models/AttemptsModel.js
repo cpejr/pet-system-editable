@@ -41,11 +41,10 @@ module.exports = {
   },
   async updateAttempt(attempt, email) {
     console.log("🚀 ~ file: AttemptsModel.js ~ line 43 ~ updateAttempt ~ attempt", attempt)
-    attempt.email = email;
     try {
       const response = await connection('Login_attempts')
         .where({ email: email })
-        .update({ attempts: attempt.attempts });
+        .update(attempt);
       return response;
     } catch (error) {
       throw new Error(error);

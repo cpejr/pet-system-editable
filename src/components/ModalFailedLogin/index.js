@@ -74,7 +74,7 @@ export default function ModalFailedLogin({ close, content }) {
           <Title>Aviso</Title>
           <Text>
             <b>Devido a sucessivas tentativas de login falhas essa conta foi bloqueada temporariamente,
-              tente novamente em ${content}</b>
+              tente novamente {content}</b>
           </Text>
           <ButtonAlign>
             <Button onClick={close}>Entendi</Button >

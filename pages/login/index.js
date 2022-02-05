@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+moment.locale('pt-br')
 import { useRouter } from 'next/router';
 import moment from 'moment';
 import {
@@ -32,6 +33,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [content, setContent] = useState('');
+  const [counter, setCounter] = useState('0');
 
   const { login, user, store, isLoading } = useAuth();
   /*eslint-disable*/
@@ -64,38 +66,47 @@ const Login = () => {
   async function handleSubmit(event) {
     event.preventDefault()
     try {
-      console.log('rogerin');
       const res = await api.get('attempts/' + email);
-      console.log(res.data.attempts);
-      console.log(res.data);
       if (res.data.attempts === 0) {
-        console.log('paulin');
         const body = {
-          lock_time: moment().add(15, 'minutes'),
+          lock_time: moment().add(5, 'minutes'),
           attempts: res.data.attempts + 1,
         };
         await api.put('attempts/' + email, body);
         console.log(body);
       } else {
-        console.log('niki');
         switch (res.data.attempts) {
-          case 2: {
+          case 1: {
             const body = {
-              email: user.email,
               attempts: res.data.attempts + 1,
             };
             await api.put('attempts/' + email, body)
           }
+          case 2: {
+            const body = {
+              attempts: res.data.attempts + 1,
+            };
+            await api.put('attempts/' + email, body)
+          }
+          default: {
+            const body = {
+              attempts: res.data.attempts + 1,
+            };
+          }
         }
       }
       if (res.data.attempts === 3 && moment() <= moment(res.data.lock_time)) {
+        const body = {
+          lock_time: moment().add((5), 'minutes'),
+        };
+        await api.put('attempts/' + email, body);
         setShowModal(true);
         const time = moment(res.data.lock_time).fromNow();
         setContent(time);
       }
       if (res.data.attempts === 3 && moment() > moment(res.data.lock_time)) {
         const body = {
-          lock_time: moment().add(15, 'minutes'),
+          lock_time: moment().add(5, 'minutes'),
           attempts: 0,
         };
         await api.put('attempts/' + email, body);
