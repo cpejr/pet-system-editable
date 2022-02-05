@@ -7,6 +7,13 @@ display: flex;
 flex-direction: row;
 align-items: center;
 justify-content: center;
+@media (max-width: 600px) {
+    flex-direction:column;
+  }
+@media (max-width: 200px) {
+    margin-top: 10%;
+    margin-bottom: 10%;
+  }
 `;
 
 const Title = styled.div`
@@ -14,12 +21,18 @@ color: black;
 font-weight: 600;
 font-size: 3em;
 margin-bottom: 5%;
+@media (max-width: 600px) {
+    font-size: 2em;
+  }
 `;
 
 const Text = styled.div`
 flex-direction: column;
 justify-content: center;
-
+margin-right:3%;
+@media (max-width: 600px) {
+    margin-left: 3%;
+  }
 `;
 
 const Content = styled.div`
@@ -27,12 +40,20 @@ margin-bottom:2%;
 color: black;
 font-weight: 300;
 font-size: 1.5em;
+@media (max-width: 600px) {
+    font-size: 1.5em;
+  }
+
 `;
 
 const lottiePlayer = styled.div`
 width: 300px;
 height: 300px;
 backgrount: transparent;
+@media (max-width: 600px) {
+    width: 150px;
+    height: 150px;
+  }
 `;
 
 
