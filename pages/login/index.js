@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-moment.locale('pt-br')
 import { useRouter } from 'next/router';
 import moment from 'moment';
+import { toast } from 'react-toastify';
 import {
   Body,
   Formulary,
@@ -22,9 +22,10 @@ import {
 } from '../../src/components/FormComponents';
 import { useAuth } from '../../src/contexts/AuthContext';
 import FullPageLoader from '../../src/components/FullPageLoader';
-import { toast } from 'react-toastify';
 import ModalFailedLogin from '../../src/components/ModalFailedLogin';
 import api from '../../src/utils/api';
+
+moment.locale('pt-br');
 
 toast.configure();
 
@@ -34,7 +35,9 @@ const Login = () => {
   const [showModal, setShowModal] = useState(false);
   const [content, setContent] = useState('');
 
-  const { login, user, store, isLoading } = useAuth();
+  const {
+    login, user, store, isLoading,
+  } = useAuth();
   /*eslint-disable*/
   const router = useRouter();
 
