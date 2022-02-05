@@ -36,7 +36,7 @@ backgrount: transparent;
 `;
 
 
-export default function FullPageLoader() {
+export default function NonExistingPage() {
   return (
     <IsntFound>
       <div>
