@@ -72,12 +72,6 @@ module.exports = {
 
         order.order_products = await Cart_ProductsModel
           .getCart_ProductsByCartId(order.cart_id);
-
-          console.log(order.order_products);
-
-          for (const product of order.order_products) {
-            console.log(product.amount);
-          }
       }
       
 
@@ -106,11 +100,8 @@ module.exports = {
         order.order_products = await Cart_ProductsModel
           .getCart_ProductsByCartId(order.cart_id);
 
-          console.log(order.order_products);
-
           for (const product of order.order_products) {
             amount += product.amount;
-            console.log(amount);
           }
       }
 

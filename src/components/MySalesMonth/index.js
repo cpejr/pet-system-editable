@@ -74,7 +74,7 @@ width:35%;
 
 toast.configure();
 
-export default function MySalesMonth({ value, orders, revenue, share, storeProfit, amount}) {
+export default function MySalesMonth({ value, totalOrders, revenue, share, storeProfit, amount}) {
 
   return (
     <div>
@@ -98,7 +98,7 @@ export default function MySalesMonth({ value, orders, revenue, share, storeProfi
             <p>{amount}</p>
             <p>{share.toFixed(2)}%</p>
             <p>{storeProfit.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</p>
-            <p>{orders}</p>
+            <p>{totalOrders}</p>
           </SalesMonthContainer.Description.Col2>
         </SalesMonthContainer.Description>
       </SalesMonthContainer>

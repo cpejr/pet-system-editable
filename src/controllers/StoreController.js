@@ -132,9 +132,9 @@ module.exports = {
       const when = { month, year };
       const orders = await OrderModel.getOrdersByStoreId(when, id);
       const revenue = await OrderModel.getOrderRevenueByStoreId(when, id);
-      console.log(revenue.sum);
       const adminProfit = await OrderModel.getOrderProfitById(when, id);
       const amount = await OrderModel.getOrderProductsAmount(when, id);
+      console.log(orders);
       let averageShare;
       if(revenue.sum === 0){
         averageShare = 0;
@@ -143,7 +143,7 @@ module.exports = {
       }
       const storeProfit = revenue.sum - adminProfit.sum;
       return response.status(200).json({
-        totalOrders: orders.length, averageShare, revenue, storeProfit, amount,
+        totalOrders: orders.length, averageShare, revenue, storeProfit, amount, orders,
       }); 
     } catch (err) {
       if (err.message) {
