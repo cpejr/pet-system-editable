@@ -3,6 +3,8 @@ import { toast } from 'react-toastify';
 import UserModel from '../models/UserModel';
 import StoreModel from '../models/StoreModel';
 import FirebaseModel from '../models/FirebaseModel';
+import AttemptsModel from '../models/AttemptsModel';
+import moment from 'moment';
 
 toast.configure();
 
@@ -11,12 +13,57 @@ export async function signIn(req, res) {
     const { email, password } = req.body;
     let firebase_id;
 
+    const attempt = await AttemptsModel.getAttemptByEmail(email);
+
+    if (attempt.attempts === 0) {
+      const body = {
+        lock_time: moment().add(5, 'minutes'),
+        attempts: attempt.attempts + 1,
+      };
+      await AttemptsModel.updateAttempt(body, email);
+    } else {
+      switch (attempt.attempts) {
+        case 1: {
+          const body = {
+            attempts: attempt.attempts + 1,
+          };
+          await AttemptsModel.updateAttempt(body, email);
+        }
+        case 2: {
+          const body = {
+            attempts: attempt.attempts + 1,
+          };
+          await AttemptsModel.updateAttempt(body, email);
+        }
+        default: {
+          const body = {
+            attempts: attempt.attempts + 1,
+          };
+        }
+      }
+    }
+    if (attempt.attempts === 3 && moment() <= moment(attempt.lock_time)) {
+      const body = {
+        lock_time: moment().add(5, 'minutes'),
+      };
+      await AttemptsModel.updateAttempt(body, attempt.email);
+      return res.status(200).json('Bloqueado');
+    }
+    if (attempt.attempts === 3 && moment() > moment(attempt.lock_time)) {
+      const body = {
+        lock_time: moment().add(5, 'minutes'),
+        attempts: 0,
+      };
+      await AttemptsModel.updateAttempt(body, email);
+
+    }
+
     try {
       firebase_id = await FirebaseModel.login(email, password);
       const user = await UserModel.getUserById(firebase_id);
       const storeStatus = await StoreModel.getStatusByEmail(email);
 
-      if (user) {
+      if (user && attempt.attempts !== 3 && moment() > moment(attempt.lock_time)) {
         const accessToken = jwt.sign(
           { user },
           process.env.NEXT_PUBLIC_JWT_SECRET,
@@ -28,11 +75,11 @@ export async function signIn(req, res) {
         });
 
         await req.session.save();
-      
+
         return res.status(200).json({ accessToken, user });
       }
 
-      
+
       if (storeStatus.status === false) {
         return res.status(200).json('Loja em espera');
       }

@@ -33,7 +33,6 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [content, setContent] = useState('');
-  const [counter, setCounter] = useState('0');
 
   const { login, user, store, isLoading } = useAuth();
   /*eslint-disable*/
@@ -97,7 +96,7 @@ const Login = () => {
       }
       if (res.data.attempts === 3 && moment() <= moment(res.data.lock_time)) {
         const body = {
-          lock_time: moment().add((5), 'minutes'),
+          lock_time: moment().add(5, 'minutes'),
         };
         await api.put('attempts/' + email, body);
         setShowModal(true);
