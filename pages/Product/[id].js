@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import Image from 'next/image';
 import Link from 'next/link';
 import moment from 'moment';
+import { useRouter } from 'next/router';
 import api from '../../src/utils/api';
 import {
   Container, ProductContainer, ProductTitle, Price, Delivery,
@@ -35,6 +36,7 @@ export default function Product({ product, store }) {
   const data = new Date();
   const day = moment(data).format('dddd');
   const [quantity, setQuantity] = useState(0);
+  const router = useRouter();
 
   useEffect(() => {
     try {
@@ -168,6 +170,53 @@ export default function Product({ product, store }) {
     }
   }
 
+  async function handleAddCartAndBuy() {
+    const body = {
+      product_id: product.product_id,
+      amount: quantity,
+      final_price: quantity * product.price,
+    };
+    if (quantity > 0) {
+      try {
+        await api.post('/CartProducts', body);
+        notification.open({
+          message: 'Sucesso!',
+          description:
+            'O produto foi adicionado ao seu carrinho.',
+          className: 'ant-notification',
+          top: '100px',
+          style: {
+            width: 600,
+          },
+        });
+        router.push('/Checkout');
+      } catch (error) {
+        console.error(error);
+        notification.open({
+          message: 'Falha :(',
+          description:
+            'Erro ao adicionar produto ao carrinho',
+          className: 'ant-notification',
+          top: '100px',
+          style: {
+            width: 600,
+          },
+        });
+      }
+    } else {
+      notification.open({
+        message: 'Falha :(',
+        description:
+          'A quantidade do produto deve ser maior que zero',
+        className: 'ant-notification',
+        top: '100px',
+        style: {
+          width: 600,
+        },
+      });
+    }
+  }
+
   function handlePlus() {
     setQuantity(quantity + 1);
   }
@@ -236,7 +285,11 @@ export default function Product({ product, store }) {
             {(StoreIsOpen(openingTime[today], closingTime[today])) ? (
               <ButtonsContainer>
                 <ButtonsContainer.Col>
-                  <Button>
+                  <Button onClick={() => {
+                    handleAddCartAndBuy();
+                    add(product);
+                  }}
+                  >
                     Comprar
                   </Button>
                 </ButtonsContainer.Col>
