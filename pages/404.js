@@ -39,7 +39,6 @@ const Text = styled.div`
 flex-direction: column;
 justify-content: center;
 margin-right:3%;
-width:75%;
 @media (max-width: 600px) {
     margin-left: 3%;
   }
