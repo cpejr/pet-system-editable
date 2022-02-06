@@ -1,20 +1,26 @@
 import React from 'react';
 import styled from 'styled-components';
 import MyProductRequestSmall from '../MyProductRequestSmall';
+import moment from 'moment';
 
 const RequestContainer = styled.div`
 display:flex;
 align-items:center;
 justify-content:center;
 flex-direction:column;
-width:70%;
 height:100%;
+padding:0;
 border-style:solid;
 border-width:1px;   
 border-color:${({ theme }) => theme.colors.borderBoxColor};
 @media(max-width:560px){
     width:90%;
     }
+`;
+
+const OrderText = styled.ul`
+padding:0;
+margin: 0 3%;
 `;
 
 const UserBox = styled.li`
@@ -56,7 +62,6 @@ width:30%;
 `;
 
 export default function MySalesInfo({ orders }) {
-  console.log(orders);
 
   if (orders.length === 0) {
     return (
@@ -67,15 +72,18 @@ export default function MySalesInfo({ orders }) {
   }
   return (
     <RequestContainer>
-      <ul className='list-orders'>
-        {orders.map((order) => {
-          <UserBox key={order.order_id}>
-            <UserBox.col1>{order.name}</UserBox.col1>
-            <UserBox.col2>{order.email}</UserBox.col2>
-            <UserBox.col3>{order.created_at}</UserBox.col3>
-          </UserBox>
-        })}
-      </ul>
+      <OrderText>
+        {orders.map((order) => (
+          <>
+            <UserBox key={order.order_id}>
+              <UserBox.Col1>{order.name}</UserBox.Col1>
+              <UserBox.Col2>{order.email}</UserBox.Col2>
+              <UserBox.Col3>{order.created_at}</UserBox.Col3>
+            </UserBox>
+            <MyProductRequestSmall products={order.order_products} />
+          </>
+        ))} 
+      </OrderText>
     </RequestContainer>
   );
 }

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { toast } from 'react-toastify';
 import moment from 'moment';
-import MyProductRequestSmall from '../MyProductRequestSmall';
 import MySalesMonth from '../MySalesMonth';
 import api from '../../utils/api';
 import MySalesInfo from '../OrdersPagination';
@@ -63,6 +62,7 @@ export default function MySellerRequest({ value }) {
   const [share, setShare] = useState(0);
   const [storeProfit, setStoreProfit] = useState(0);
   const [amount, setAmount] = useState(0);
+  const [product, setProduct] = useState({});
   const [totalOrders, setTotalOrders] = useState(0);
   const [ordersPerPage] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
@@ -86,6 +86,7 @@ export default function MySellerRequest({ value }) {
       setStoreProfit(response.data.storeProfit);
       setAmount(response.data.amount);
       setOrders(response.data.orders);
+
     } catch (error) {
       console.log(error);
       toast('Erro ao obter dados sobre as vendas.', { position: toast.POSITION.BOTTOM_RIGHT });

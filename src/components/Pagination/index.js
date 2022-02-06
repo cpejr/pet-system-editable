@@ -10,13 +10,13 @@ const Pagination = ({ ordersPerPage, totalOrders, paginate }) => {
   return(
     <div>
       <ul>
-        {pageNumbers.map(number => {
+        {pageNumbers.map((number) => (
           <li key={number}>
             <a onClick={() => paginate(number)} href='!#'>
               {number}
             </a>
           </li>
-        })}
+        ))}
       </ul>    
     </div>
   )
