@@ -1,7 +1,8 @@
+/* eslint-disable */ 
 import React from 'react';
 import styled from 'styled-components';
 
-const IsntFound= styled.div`
+const IsntFound = styled.div`
 height: 100vh;
 display: flex;
 flex-direction: row;
@@ -46,27 +47,16 @@ font-size: 1.5em;
 
 `;
 
-const lottiePlayer = styled.div`
-width: 300px;
-height: 300px;
-backgrount: transparent;
-@media (max-width: 600px) {
-    width: 150px;
-    height: 150px;
-  }
-`;
-
-
 export default function NonExistingPage() {
   return (
     <IsntFound>
       <div>
-        <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
-        <lottie-player src="https://assets6.lottiefiles.com/private_files/lf30_uqcbmc4h.json" speed="1" autoplay></lottie-player>
+        <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js" />
+        <lottie-player src="https://assets6.lottiefiles.com/private_files/lf30_uqcbmc4h.json" speed="1" autoPlay background="transparent" />
       </div>
       <Text>
         <Title>Pagina não encontrada</Title>
-        <Content>Não foi possível encontrar a página que você está procurando, isso ocorre porque:</Content>
+        <Content>Não foi possível encontrar a página que você está procurando, isso ocorre porque:</Content> 
         <Content>- Há um erro no URL em seu navegador da wev. Verifique o URL e tente novamente.</Content>
         <Content>- A página que você está procurando foi movida ou excluída.</Content>
       </Text>
