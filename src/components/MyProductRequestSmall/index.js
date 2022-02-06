@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
-import api from '../../utils/api';
 import { toast } from 'react-toastify';
 
 const ProductContainer = styled.div`
@@ -71,7 +70,7 @@ export default function MyProductRequest({ products }) {
               <p>{product.price}</p>
             </ProductContainer.Col2>
             <ProductContainer.Col3>
-              <h2>[{product.amount}</h2>
+              <h2>{product.amount}</h2>
             </ProductContainer.Col3>
           </ProductContainer>
         </>
