@@ -42,6 +42,7 @@ const Checkout = () => {
   const router = useRouter();
 
   const [dados, setDados] = useState(initialState);
+  const [cardBrand, setCardBrand] = useState(initialState);
 
   // Carregar a imagem da bandeira do cartão__________
   const myLoader = ({ src }) => `https://stc.pagseguro.uol.com.br/${src}`;
@@ -50,57 +51,8 @@ const Checkout = () => {
   const { user } = useAuth();
 
   const handleChange = (event, field) => {
-    if (dados.page === 1 && dados.cardToken === '') {
-      PagSeguroDirectPayment?.createCardToken({
-        cardNumber: dados.cardNumber,
-        brand: dados.cardBrand,
-        cvv: dados.CVV,
-        expirationMonth: dados.expires.substring(0, 2),
-        expirationYear: dados.expires.substring(2, 7),
-        success(response) {
-          setDados({
-            ...dados,
-            [field]: event.target.value,
-            cardToken: response.card.token,
-          });
-        },
-        error() {
-          toast('Informações Inválidas, por favor tente novamente!', {
-            position: toast.POSITION.BOTTOM_RIGHT,
-          }); // Callback para chamadas que falharam.
-        },
-      });
-    }
     if (field === 'page' || field === 'cardToken' || field === 'birth') {
       setDados({ ...dados, [field]: event });
-    }
-    if (
-      dados.cardNumber.length >= 6
-      && dados.cardNumber.length <= 7
-      && field === 'cardNumber'
-      && dados.cardBrand === ''
-    ) {
-      PagSeguroDirectPayment.getBrand({
-        cardBin: Number(dados.cardNumber),
-        success(response) {
-          setDados({
-            ...dados,
-            paymentData: response,
-            cardBrand: response.brand.name,
-          });
-        },
-        error() {
-          setDados({ ...dados, [field]: event.target.value });
-        },
-      });
-    } else if (
-      dados.cardNumber.length < 6
-      && field === 'cardNumber'
-      && dados.cardBrand !== ''
-    ) {
-      setDados({ ...dados, [field]: event.target.value, cardBrand: '' });
-    } else if (event.target !== undefined && field === 'cardNumber') {
-      setDados({ ...dados, [field]: event.target.value });
     }
     if (event.target !== undefined && field !== 'cardNumber') {
       setDados({ ...dados, [field]: event.target.value });
@@ -134,7 +86,7 @@ const Checkout = () => {
       'billingAddress.city': dados.city,
       'billingAddress.state': dados.state,
       'billingAddress.country': 'BRA',
-      paymentMethod: dados.cardBrand,
+      paymentMethod: cardBrand,
       'shipping.cost': dados.products.shipping_tax,
       'sender.hash': dados.hash,
     };
@@ -224,6 +176,48 @@ const Checkout = () => {
 
   // Controle da páginas dentro do Checkout________
   function handleProsseguir() {
+    if (dados.name.length !== 0) {
+      toast('Por favor insira um nome!', {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
+      return;
+    }
+    if (dados.cpf.length !== 0) {
+      toast('Por favor insira um cpf válido!', {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
+      return;
+    }
+    if (dados.birth.length !== 0) {
+      toast('Por favor insira uma data válida!', {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
+      return;
+    }
+    if (dados.cardNumber.length >= 14) {
+      toast('Por favor insira um numero válido para o cartão!', {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
+      return;
+    }
+    if (dados.expires.length !== 0) {
+      toast('Por favor insira um bairro válido!', {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
+      return;
+    }
+    if (dados.CVV.length !== 0) {
+      toast('Por favor insira um bairro válido!', {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
+      return;
+    }
+    if (dados.phone.length !== 0) {
+      toast('Por favor insira um bairro válido!', {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
+      return;
+    }
     handleChange(1, 'page');
   }
   function handleReturn() {
@@ -231,6 +225,53 @@ const Checkout = () => {
   }
 
   // useEffect para carregar os dados da página________
+
+  useEffect(() => {
+    if (dados.page === 1 && dados.cardToken === '') {
+      PagSeguroDirectPayment?.createCardToken({
+        cardNumber: dados.cardNumber,
+        brand: cardBrand,
+        cvv: dados.CVV,
+        expirationMonth: dados.expires.substring(0, 2),
+        expirationYear: dados.expires.substring(2, 7),
+        success(response) {
+          setDados({
+            ...dados,
+            cardToken: response.card.token,
+          });
+        },
+        error() {
+          toast('Informações Do cartão Inválidas!', {
+            position: toast.POSITION.BOTTOM_RIGHT,
+          }); // Callback para chamadas que falharam.
+        },
+      });
+    }
+  }, [dados.page]);
+
+  useEffect(() => {
+    if (
+      dados.cardNumber.length === 6
+      && cardBrand === ''
+    ) {
+      try {
+        PagSeguroDirectPayment.getBrand({
+          cardBin: Number(dados.cardNumber),
+          success(response) {
+            setCardBrand(response.brand.name);
+          },
+          error(error) {
+            console.error(error);
+          },
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      setCardBrand('');
+    }
+  }, [dados.cardNumber]);
+
   useEffect(() => {
     try {
       api.post('/payCheckout/Session').then((res) => {
@@ -523,10 +564,10 @@ const Checkout = () => {
                       />
                     </InputField.InsideLine>
                     <InputField.InsideLineBrand>
-                      {dados.cardBrand !== undefined ? (
+                      {cardBrand !== undefined ? (
                         <Image
                           loader={myLoader}
-                          src={`public/img/payment-methods-flags/68x30/${dados.cardBrand}.png`}
+                          src={`public/img/payment-methods-flags/68x30/${cardBrand}.png`}
                           alt=""
                           width="68"
                           height="30"
