@@ -52,7 +52,7 @@ export default function NonExistingPage() {
     <IsntFound>
       <div>
         <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js" />
-        <lottie-player src="https://assets6.lottiefiles.com/private_files/lf30_uqcbmc4h.json" speed="1" autoPlay background="transparent" />
+        <lottie-player src="https://assets6.lottiefiles.com/private_files/lf30_uqcbmc4h.json" speed="1" background="transparent" />
       </div>
       <Text>
         <Title>Pagina não encontrada</Title>
