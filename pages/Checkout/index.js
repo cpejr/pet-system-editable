@@ -5,7 +5,7 @@ import 'date-fns';
 import { useRouter } from 'next/router';
 import DateFnsUtils from '@date-io/date-fns';
 import { toast } from 'react-toastify';
-import Head from 'next/head';
+import { CircularProgress } from '@material-ui/core';
 import {
   KeyboardDatePicker,
   MuiPickersUtilsProvider,
@@ -43,6 +43,7 @@ const Checkout = () => {
 
   const [dados, setDados] = useState(initialState);
   const [paymentData, setPaymentData] = useState('');
+  const [loading, setLoading] = useState(false);
 
   // Carregar a imagem da bandeira do cartão__________
   const myLoader = ({ src }) => `https://stc.pagseguro.uol.com.br/${src}`;
@@ -54,6 +55,7 @@ const Checkout = () => {
     setDados({ ...dados, [field]: value });
   };
 
+  // __________________________FUNCTIONS__________________________
   // Função para remover carrinho
   function remove() {
     cart.removeAllFromCart();
@@ -62,6 +64,8 @@ const Checkout = () => {
   // Função para finalizar o pagamento_____________
   async function handleFinish() {
     // Body passado para a API de pagamentos____________
+    if (loading === true) return;
+    setLoading(true);
     const body = {
       'installment.value': String(
         (dados.subTotal + parseFloat(dados.products.shipping_tax)).toFixed(2),
@@ -87,64 +91,75 @@ const Checkout = () => {
     };
     if (dados.phone?.length !== 11) {
       toast('CPF inválido', { position: toast.POSITION.BOTTOM_RIGHT });
+      setLoading(false);
       return;
     }
     if (dados.cpf?.length !== 11) {
       toast('CPF inválido', { position: toast.POSITION.BOTTOM_RIGHT });
+      setLoading(false);
       return;
     }
     if (dados.cardNumber?.length < 13 || dados.cardNumber?.length > 16) {
       toast('Número do cartão inválido', {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
+      setLoading(false);
       return;
     }
     if (!paymentData || (dados.CVV?.length !== paymentData.brand.cvvSize)) {
       toast('cvv do cartão inválido', {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
+      setLoading(false);
       return;
     }
     if (dados.name?.length === 0) {
       toast('Por favor insira um nome válido', {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
+      setLoading(false);
       return;
     }
     if (dados.expires?.length === 0) {
       toast('Por favor insira uma data de validade válida!', {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
+      setLoading(false);
       return;
     }
     if (dados.street?.length === 0) {
       toast('Por favor insira uma endereço válido!', {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
+      setLoading(false);
       return;
     }
     if (dados.streetNumber?.length === 0) {
       toast('Por favor insira um número de residência válido!', {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
+      setLoading(false);
       return;
     }
     if (dados.district?.length === 0) {
       toast('Por favor insira um bairro válido!', {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
+      setLoading(false);
       return;
     }
     if (dados.city?.length === 0) {
       toast('Por favor insira uma cidade válida!', {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
+      setLoading(false);
       return;
     }
     if (dados.state?.length === 0) {
       toast('Por favor selecione um estado!', {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
+      setLoading(false);
       return;
     }
     try {
@@ -155,6 +170,7 @@ const Checkout = () => {
     } catch (error) {
       console.error(error);
       toast('Erro', { position: toast.POSITION.BOTTOM_RIGHT });
+      setLoading(false);
     }
   }
 
@@ -219,6 +235,7 @@ const Checkout = () => {
     handleChange(0, 'page');
   }
 
+  // __________________________USE EFFECTS__________________________
   // useEffect para carregar os dados da página________
 
   useEffect(() => {
@@ -498,7 +515,8 @@ const Checkout = () => {
                       Retornar
                     </Button>
                     <Button type="submit" onClick={handleFinish}>
-                      Finalizar
+                      {loading && <CircularProgress size={24} />}
+                      {!loading && 'Finalizar'}
                     </Button>
                   </InputField.Line>
                 </>
