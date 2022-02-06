@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-/* eslint-disable max-len */
 import jwt from 'jsonwebtoken';
 import { toast } from 'react-toastify';
 import moment from 'moment';
@@ -140,6 +138,7 @@ export async function forgottenPassword(request, response) {
     const res = await FirebaseModel.firebaseChangeUserPassword(email);
     return response.status(200).json({ res });
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error(error);
     return response.status(500).json({
       notification: 'Error while trying to send reset password email',

@@ -1,5 +1,3 @@
-/* eslint-disable max-len */
-/* eslint-disable react/jsx-one-expression-per-line */
 import React from 'react';
 import styled from 'styled-components';
 
@@ -89,8 +87,11 @@ export default function ModalFailedLogin({ close, content }) {
         <ContainerFailedLogin>
           <Title>Aviso</Title>
           <Text>
-            Devido a sucessivas tentativas de login falhas essa conta foi bloqueada temporariamente,
-            tente novamente {content}
+            Devido a sucessivas tentativas de login falhas essa conta
+            foi bloqueada temporariamente,
+            tente novamente
+            {' '}
+            {content}
           </Text>
           <ButtonAlign>
             <Button onClick={close}>Entendi</Button>

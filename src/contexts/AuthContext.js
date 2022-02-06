@@ -48,7 +48,8 @@ function AuthProvider({ children }) {
         toast('Login efetuado com sucesso', { position: toast.POSITION.BOTTOM_RIGHT });
       }
     } catch (error) {
-      console.error(error); // eslint-disable-
+      // eslint-disable-next-line no-console
+      console.error(error);
       toast('E-mail ou senha incorretos!', { position: toast.POSITION.BOTTOM_RIGHT });
     }
   }
