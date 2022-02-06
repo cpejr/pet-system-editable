@@ -39,12 +39,15 @@ function AuthProvider({ children }) {
       } else {
         setStore(response.data.store);
       }
-      if (res.data.attempts !== 3) {
+      if (res.data.attempts !== 3 && response.data.user !== undefined) {
+        const body = {
+          attempts: 0,
+        };
+        await api.put(`attempts/${email}`, body);
         router.push('/Home');
         toast('Login efetuado com sucesso', { position: toast.POSITION.BOTTOM_RIGHT });
       }
     } catch (error) {
-      // eslint-disable-next-line no-console
       console.error(error); // eslint-disable-
       toast('E-mail ou senha incorretos!', { position: toast.POSITION.BOTTOM_RIGHT });
     }

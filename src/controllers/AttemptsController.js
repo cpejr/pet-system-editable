@@ -15,7 +15,6 @@ module.exports = {
   },
   async getOne(request, response) {
     const email = request.query.id;
-    console.log(email);
     try {
       const attempt = await AttemptsModel.getAttemptByEmail(email);
       return response.status(200).json(attempt);

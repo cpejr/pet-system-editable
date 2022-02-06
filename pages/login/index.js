@@ -66,11 +66,15 @@ const Login = () => {
   };
 
   async function verify() {
-    const res = await api.get('attempts/' + email);
-    if (email === res.data.email) {
-      return true
-    } else {
-      return false
+    try {
+      const res = await api.get('attempts/' + email);
+      if (email === res.data.email) {
+        return true
+      } else {
+        return false
+      }
+    } catch (error) {
+      console.error(error);
     }
   }
 
@@ -116,6 +120,7 @@ const Login = () => {
           setShowModal(true);
           const time = moment(res.data.lock_time).fromNow();
           setContent(time);
+          toast('Usuário bloqueado', { position: toast.POSITION.BOTTOM_RIGHT });
         }
         if (res.data.attempts === 3 && moment() > moment(res.data.lock_time)) {
           const body = {
@@ -124,12 +129,14 @@ const Login = () => {
           };
           await api.put('attempts/' + email, body);
         }
-
-          login(email, password).then((response) => {
-            if (response === 'Loja em espera') {
-              toast('Sua solicitação para se tornar um parceiro ainda não foi avaliada', { position: toast.POSITION.BOTTOM_RIGHT });
-            }
-          });
+      }
+      const res = await api.get('attempts/' + email);
+      if (res.data.attempts !== 3) {
+        login(email, password).then((response) => {
+          if (response === 'Loja em espera') {
+            toast('Sua solicitação para se tornar um parceiro ainda não foi avaliada', { position: toast.POSITION.BOTTOM_RIGHT });
+          }
+        });
       }
     } catch (error) {
       console.error(error); //eslint-disable-line
