@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable react/jsx-no-bind */
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
@@ -263,7 +265,9 @@ cursor: pointer;
 margin-top: 1rem;
 `;
 
-export default function AddProducts({ closeModal, categories, att, setAtt }) {
+export default function AddProducts({
+  closeModal, categories, att, setAtt,
+}) {
   const [productName, setProductName] = useState('');
   const [price, setPrice] = useState('');
   const [discount, setDiscount] = useState('');
@@ -319,6 +323,16 @@ export default function AddProducts({ closeModal, categories, att, setAtt }) {
       });
     } catch (error) {
       console.error(error);
+      notification.open({
+        message: 'Sucesso!',
+        description:
+          'Erro ao cadastrar o produto',
+        className: 'ant-notification',
+        top: '100px',
+        style: {
+          width: 600,
+        },
+      });
     }
   }
   return (
@@ -381,7 +395,6 @@ export default function AddProducts({ closeModal, categories, att, setAtt }) {
                   as={InputMask}
                   placeholder="% 00.00"
                   mask="99.99"
-                  required
                   value={discount}
                   onChange={handleDiscountChange}
                 />
