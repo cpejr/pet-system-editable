@@ -56,6 +56,10 @@ function MyApp({ Component, pageProps }) {
           href="https://fonts.googleapis.com/css2?family=Poiret+One&family=Roboto:wght@100;300;400;500;700;900&display=swap"
           rel="stylesheet"
         />
+        <script
+          type="text/javascript"
+          src="https://stc.sandbox.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.directpayment.js"
+        />
       </Head>
       <GlobalStyle />
       <ThemeProvider theme={theme}>
