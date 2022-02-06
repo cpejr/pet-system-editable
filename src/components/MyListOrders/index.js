@@ -49,7 +49,7 @@ export default function MyListOrders() {
     return (
       <div>
         {orders.map((order) => {
-          if (order.status === 'enviado' || order.status === 'em andamento') {
+          if (order.status === 'enviado' || order.status === 'em andamento' || order.status === 'Aguardando pagamento') {
             return (
               <FullRequest>
                 <FullRequest.Col1>

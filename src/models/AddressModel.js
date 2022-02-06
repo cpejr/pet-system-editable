@@ -52,13 +52,11 @@ module.exports = {
     try {
       const addressRelation = await connection('User_Address')
         .where('firebase_id', id)
-        .select('*');
-
-      const addressFilter = addressRelation.filter((address) => address.main_address === true);
+        .where('main_address', true)
+        .first();
 
       const address = await connection('Address')
-        .where('address_id', addressFilter[0].address_id)
-        .select('*')
+        .where('address_id', addressRelation.address_id)
         .first();
 
       return address;
@@ -134,6 +132,7 @@ module.exports = {
       city: data.city,
       state: data.state,
       address_id: data.address_id,
+      region: data.region,
     };
     try {
       const address_aux = await connection('Address')
@@ -156,8 +155,8 @@ module.exports = {
         const user_address = {
           firebase_id: firebase_user,
           address_id: address.address_id,
-          main_address: true
-        }
+          main_address: true,
+        };
 
         await connection('User_Address')
           .insert(user_address);
@@ -166,7 +165,7 @@ module.exports = {
         const store_address = {
           firebase_id_store,
           address_id: address.address_id,
-        }
+        };
         await connection('Store_Address')
           .insert(store_address);
       }

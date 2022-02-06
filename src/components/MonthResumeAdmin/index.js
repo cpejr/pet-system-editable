@@ -154,7 +154,7 @@ font-size:16px;
 }
 `;
 
-export default function MonthResumeAdmin({ revenue, totalStores }) {
+export default function MonthResumeAdmin({ revenue, totalStores, averageShare, profit }) {
   return (
     <div>
       <Container>
@@ -170,12 +170,12 @@ export default function MonthResumeAdmin({ revenue, totalStores }) {
 
         <Container.Row4>
           <Container.Row4.Col1>Ganhos com comissão:</Container.Row4.Col1>
-          <Container.Row4.Col2>10%</Container.Row4.Col2>
+          <Container.Row4.Col2>{averageShare.toFixed(2)}%</Container.Row4.Col2>
         </Container.Row4>
 
         <Container.Row5>
           <Container.Row5.Col1>Faturamento:</Container.Row5.Col1>
-          <Container.Row5.Col2>{(revenue * 0.1).toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</Container.Row5.Col2>
+          <Container.Row5.Col2>{profit.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</Container.Row5.Col2>
         </Container.Row5>
 
       </Container>

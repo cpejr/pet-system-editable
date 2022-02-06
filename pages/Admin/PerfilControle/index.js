@@ -5,12 +5,12 @@ import moment from 'moment';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
-import HeaderAdmin from '../../../src/components/HeaderAdmin';
 import AdminCardsFix from '../../../src/components/AdminCardsFix';
 import WindowDividerAdmin from '../../../src/components/WindowDividerAdmin';
 import MonthResumeAdmin from '../../../src/components/MonthResumeAdmin';
 import api from '../../../src/utils/api';
 import withAuthAdmin from '../../../src/components/WithAuth/WithAuthAdmin';
+import { toast } from 'react-toastify';
 
 const Container = styled.div`
 display:flex;
@@ -123,10 +123,15 @@ width:80%;
 }
 `;
 
+toast.configure();
+
 const Admin = () => {
   const [revenue, setRevenue] = useState(0);
   const [totalStores, setTotalStores] = useState(0);
+  const [averageShare, setAverageShare] = useState(0);
+  const [profit, setProfit] = useState(0);
   const [value, setValue] = useState(new Date());
+  
   useEffect(() => {
     api.get('/profileControl', {
       params: {
@@ -136,11 +141,15 @@ const Admin = () => {
     }).then((response) => {
       setRevenue(response.data.revenue.sum);
       setTotalStores(response.data.total_stores);
-    }).catch((error));
+      setProfit(response.data.profit.sum);
+      setAverageShare(response.data.averageShare);
+    }).catch((error) => {
+      toast('Erro ao obter dados do perfil de controle.', { position: toast.POSITION.BOTTOM_RIGHT });
+    });
   }, [value]);
+
   return (
     <div>
-      <HeaderAdmin />
       <Container>
         <Container.Col1>
           <Container.Col1.Row1>
@@ -166,7 +175,7 @@ const Admin = () => {
             </Container.Col2.Row1.Col2>
           </Container.Col2.Row1>
           <Container.Col2.Row2>
-            <MonthResumeAdmin revenue={revenue} totalStores={totalStores} />
+            <MonthResumeAdmin revenue={revenue} totalStores={totalStores} averageShare={averageShare} profit={profit} />
           </Container.Col2.Row2>
         </Container.Col2>
       </Container>
