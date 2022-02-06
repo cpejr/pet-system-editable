@@ -1,10 +1,9 @@
-import { applySession } from 'next-iron-session';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import MyProductRequestSmall from '../MyProductRequestSmall';
-import MySalesMonth from '../MySalesMonth';
 import { toast } from 'react-toastify';
 import moment from 'moment';
+import MyProductRequestSmall from '../MyProductRequestSmall';
+import MySalesMonth from '../MySalesMonth';
 import api from '../../utils/api';
 import MySalesInfo from '../OrdersPagination';
 import Pagination from '../Pagination';
@@ -56,7 +55,6 @@ margin-top:2%;
 margin-bottom:2%;
 `;
 
-
 toast.configure();
 
 export default function MySellerRequest({ value }) {
@@ -68,32 +66,30 @@ export default function MySellerRequest({ value }) {
   const [totalOrders, setTotalOrders] = useState(0);
   const [ordersPerPage] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
-
-
   const indexOfLastOrder = currentPage * ordersPerPage;
   const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
   const currentOrders = orders.slice(indexOfFirstOrder, indexOfLastOrder);
 
-  const paginate = pageNumber => setCurrentPage(pageNumber)
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   async function getSalesInfo() {
-      try{
-        const response = await api.get('/mySales',{
-          params: {
-            month: moment(value).format('M'),
-            year: moment(value).format('Y'),
-          },
-        });
-        setRevenue(response.data.revenue.sum);
-        setShare(response.data.averageShare);
-        setTotalOrders(response.data.totalOrders);
-        setStoreProfit(response.data.storeProfit);
-        setAmount(response.data.amount);
-        setOrders(response.data.orders);
-      } catch (error) {
-        console.log(error);
-        toast('Erro ao obter dados sobre as vendas.', { position: toast.POSITION.BOTTOM_RIGHT });
-      }  
+    try {
+      const response = await api.get('/mySales', {
+        params: {
+          month: moment(value).format('M'),
+          year: moment(value).format('Y'),
+        },
+      });
+      setRevenue(response.data.revenue.sum);
+      setShare(response.data.averageShare);
+      setTotalOrders(response.data.totalOrders);
+      setStoreProfit(response.data.storeProfit);
+      setAmount(response.data.amount);
+      setOrders(response.data.orders);
+    } catch (error) {
+      console.log(error);
+      toast('Erro ao obter dados sobre as vendas.', { position: toast.POSITION.BOTTOM_RIGHT });
+    }
   }
 
   useEffect(() => {
@@ -105,13 +101,24 @@ export default function MySellerRequest({ value }) {
       <DividerContainer>
         <DividerContainer.Col1 />
         <DividerContainer.Col2>
-          <MySalesMonth value={value} totalOrders={totalOrders} revenue={revenue} amount={amount} share={share} storeProfit={storeProfit} />
+          <MySalesMonth
+            value={value}
+            totalOrders={totalOrders}
+            revenue={revenue}
+            amount={amount}
+            share={share}
+            storeProfit={storeProfit}
+          />
         </DividerContainer.Col2>
 
         <DividerContainer.Col3>
           <BodyContainer>
-              <MySalesInfo orders={currentOrders} />
-              <Pagination ordersPerPage={ordersPerPage} totalOrders={totalOrders} paginate={paginate} />
+            <MySalesInfo orders={currentOrders} />
+            <Pagination
+              ordersPerPage={ordersPerPage}
+              totalOrders={totalOrders}
+              paginate={paginate}
+            />
           </BodyContainer>
         </DividerContainer.Col3>
       </DividerContainer>

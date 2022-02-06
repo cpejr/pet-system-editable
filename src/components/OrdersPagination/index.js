@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import MyProductRequestSmall from '../MyProductRequestSmall';
 
@@ -57,26 +57,25 @@ width:30%;
 
 export default function MySalesInfo({ orders }) {
   console.log(orders);
-  
-  if( orders.length === 0) {
-    return(
-     <RequestContainer>
-         Não existem pedidos nessa data.
-     </RequestContainer>
-    );
-  } else {
+
+  if (orders.length === 0) {
     return (
       <RequestContainer>
-        <ul className='list-orders'>
-          {orders.map(order => {
-            <UserBox key={order.order_id}> 
-              <UserBox.col1>{order.name}</UserBox.col1>
-              <UserBox.col2>{order.email}</UserBox.col2>
-              <UserBox.col3>{order.created_at}</UserBox.col3>
-            </UserBox>
-          })}
-        </ul>
+        Não existem pedidos nessa data.
       </RequestContainer>
     );
   }
+  return (
+    <RequestContainer>
+      <ul className='list-orders'>
+        {orders.map((order) => {
+          <UserBox key={order.order_id}>
+            <UserBox.col1>{order.name}</UserBox.col1>
+            <UserBox.col2>{order.email}</UserBox.col2>
+            <UserBox.col3>{order.created_at}</UserBox.col3>
+          </UserBox>
+        })}
+      </ul>
+    </RequestContainer>
+  );
 }
