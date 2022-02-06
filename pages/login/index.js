@@ -65,59 +65,72 @@ const Login = () => {
     setShowModal(false);
   };
 
+  async function verify() {
+    const res = await api.get('attempts/' + email);
+    if (email === res.data.email) {
+      return true
+    } else {
+      return false
+    }
+  }
+
   async function handleSubmit(event) {
     event.preventDefault()
     try {
-      const res = await api.get('attempts/' + email);
-      if (res.data.attempts === 0) {
-        const body = {
-          lock_time: moment().add(5, 'minutes'),
-          attempts: res.data.attempts + 1,
-        };
-        await api.put('attempts/' + email, body);
-        console.log(body);
-      } else {
-        switch (res.data.attempts) {
-          case 1: {
-            const body = {
-              attempts: res.data.attempts + 1,
-            };
-            await api.put('attempts/' + email, body)
-          }
-          case 2: {
-            const body = {
-              attempts: res.data.attempts + 1,
-            };
-            await api.put('attempts/' + email, body)
-          }
-          default: {
-            const body = {
-              attempts: res.data.attempts + 1,
-            };
+      if (await verify() === true) {
+        const res = await api.get('attempts/' + email);
+        if (res.data.attempts === 0) {
+          const body = {
+            lock_time: moment().add(5, 'minutes'),
+            attempts: res.data.attempts + 1,
+          };
+          await api.put('attempts/' + email, body);
+        } else {
+          switch (res.data.attempts) {
+            case 1: {
+              const body = {
+                attempts: res.data.attempts + 1,
+              };
+              await api.put('attempts/' + email, body)
+              break;
+            }
+            case 2: {
+              const body = {
+                attempts: res.data.attempts + 1,
+              };
+              await api.put('attempts/' + email, body)
+              break;
+            }
+            default: {
+              const body = {
+                attempts: res.data.attempts + 1,
+              };
+            }
           }
         }
-      }
-      if (res.data.attempts === 3 && moment() <= moment(res.data.lock_time)) {
-        const body = {
-          lock_time: moment().add(5, 'minutes'),
-        };
-        await api.put('attempts/' + email, body);
-        setShowModal(true);
-        const time = moment(res.data.lock_time).fromNow();
-        setContent(time);
-      }
-      if (res.data.attempts === 3 && moment() > moment(res.data.lock_time)) {
-        const body = {
-          lock_time: moment().add(5, 'minutes'),
-          attempts: 0,
-        };
-        await api.put('attempts/' + email, body);
-      }
-      login(email, password).then((response) => {
-        if (response === 'Loja em espera') {
-          toast('Sua solicitação para se tornar um parceiro ainda não foi avaliada', { position: toast.POSITION.BOTTOM_RIGHT });
+        if (res.data.attempts === 3 && moment() <= moment(res.data.lock_time)) {
+          const body = {
+            lock_time: moment().add(5, 'minutes'),
+          };
+          await api.put('attempts/' + email, body);
+          setShowModal(true);
+          const time = moment(res.data.lock_time).fromNow();
+          setContent(time);
         }
-      });
+        if (res.data.attempts === 3 && moment() > moment(res.data.lock_time)) {
+          const body = {
+            lock_time: moment().add(5, 'minutes'),
+            attempts: 0,
+          };
+          await api.put('attempts/' + email, body);
+        }
+
+          login(email, password).then((response) => {
+            if (response === 'Loja em espera') {
+              toast('Sua solicitação para se tornar um parceiro ainda não foi avaliada', { position: toast.POSITION.BOTTOM_RIGHT });
+            }
+          });
+      }
     } catch (error) {
       console.error(error); //eslint-disable-line
     }

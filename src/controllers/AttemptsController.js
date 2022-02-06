@@ -53,8 +53,7 @@ module.exports = {
   },
   async update(request, response) {
     const attempt = request.body;
-    console.log('trem');
-    console.log(attempt)
+
     const email = request.query.id;
     try {
       await AttemptsModel.updateAttempt(attempt, email);

@@ -1,6 +1,7 @@
+/* eslint-disable max-len */
+/* eslint-disable react/jsx-one-expression-per-line */
 import React from 'react';
 import styled from 'styled-components';
-import Modal from '@material-ui/core/Modal';
 
 const Container = styled.div`
   position: fixed;
@@ -29,7 +30,9 @@ const ContainerAlign = styled.div`
 const Title = styled.p`
       margin-top: 1.2em;
       margin-bottom: 1.5em;
+      font-family: Roboto;
       font-size: 1.8em;
+      text-align: center;
       color: #121212;
       font-weight: bold;
       text-decoration: underline;
@@ -43,10 +46,13 @@ const ContainerFailedLogin = styled.div`
 
 const Text = styled.div`
     font-size: 1.2em;
+    font-weight: bold;
+    font-family: Roboto;
     margin-bottom: 1em;
-    text-align: justify;
+    text-align: center;
     @media (max-width: 420px){
-      font-size: 0.8em;
+      font-size: 0.9em;
+    }
       `;
 
 const ButtonAlign = styled.div`
@@ -58,26 +64,36 @@ const ButtonAlign = styled.div`
 
 const Button = styled.button`
     display: flex;
-    background: black;
+    background: ${({ theme }) => theme.colors.darkGreen};
+    width: 24vh;
+    font-family: Roboto;
+    font-size: 1em;
+    font-weight: 300;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
     color:white;
     border: none;
     border-radius: 5px;
     padding: 15px;
+    @media (max-width: 500px){
+      width: 17vh;
+      font-size: 0.9em;
+    }
     `;
 
 export default function ModalFailedLogin({ close, content }) {
-
   return (
     <Container>
       <ContainerAlign>
         <ContainerFailedLogin>
           <Title>Aviso</Title>
           <Text>
-            <b>Devido a sucessivas tentativas de login falhas essa conta foi bloqueada temporariamente,
-              tente novamente {content}</b>
+            Devido a sucessivas tentativas de login falhas essa conta foi bloqueada temporariamente,
+            tente novamente {content}
           </Text>
           <ButtonAlign>
-            <Button onClick={close}>Entendi</Button >
+            <Button onClick={close}>Entendi</Button>
           </ButtonAlign>
         </ContainerFailedLogin>
       </ContainerAlign>

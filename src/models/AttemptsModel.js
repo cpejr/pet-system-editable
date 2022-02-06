@@ -1,3 +1,4 @@
+/* eslint-disable object-shorthand */
 const { connection } = require('../database/connection');
 
 module.exports = {
@@ -40,7 +41,6 @@ module.exports = {
     }
   },
   async updateAttempt(attempt, email) {
-    console.log("🚀 ~ file: AttemptsModel.js ~ line 43 ~ updateAttempt ~ attempt", attempt)
     try {
       const response = await connection('Login_attempts')
         .where({ email: email })

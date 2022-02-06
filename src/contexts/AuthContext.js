@@ -1,9 +1,9 @@
+/* eslint-disable max-len */
 import React, { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import api from '../utils/api'
-
+import api from '../utils/api';
 
 toast.configure();
 
@@ -25,21 +25,27 @@ function AuthProvider({ children }) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
 
+  // eslint-disable-next-line consistent-return
   async function login(email, password) {
     try {
+      const res = await api.get(`attempts/${email}`);
       const response = await api.post('login', { email, password });
       if (response.data === 'Loja sem cadastro' || response.data === 'Loja em espera') {
         return response.data;
       }
+
       if (response.data.user !== undefined) {
         setUser(response.data.user);
       } else {
         setStore(response.data.store);
       }
-      router.push('/Home');
-      toast('Login efetuado com sucesso', { position: toast.POSITION.BOTTOM_RIGHT });
+      if (res.data.attempts !== 3) {
+        router.push('/Home');
+        toast('Login efetuado com sucesso', { position: toast.POSITION.BOTTOM_RIGHT });
+      }
     } catch (error) {
-      console.error(error); //eslint-disable-
+      // eslint-disable-next-line no-console
+      console.error(error); // eslint-disable-
       toast('E-mail ou senha incorretos!', { position: toast.POSITION.BOTTOM_RIGHT });
     }
   }
