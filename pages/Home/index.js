@@ -1,4 +1,5 @@
 import api from '../../src/utils/api';
+import Image from 'next/image';
 import BannerCarousel from '../../src/components/Carousels/BannerCarousel';
 import CardsCarousel from '../../src/components/Carousels/CardsCarousel';
 import StoresCarousel from '../../src/components/Carousels/StoresCarousel';
@@ -13,7 +14,7 @@ import Link from 'next/link';
 
 toast.configure();
 
-export default function Home({ stores }) {
+export default function Home({ stores, image }) {
   const [serviceId, setServiceId] = useState('');
   const [accessoryId, setAccessoryId] = useState('');
   const [showerId, setShowerId] = useState('');
@@ -38,7 +39,9 @@ export default function Home({ stores }) {
 
   return (
     <>
-      <BannerCarousel />
+      <BannerCarousel
+        value="Banner"
+        image={image} />
       <Container>
         <Cards>
           <CardItem>
@@ -83,19 +86,9 @@ export default function Home({ stores }) {
       <Divider />
       <Container>
         <Text>Principais marcas:</Text>
-        <Mosaic>
-          <img className="pedigree" src="/images/brands/pedigree.png" alt="" width="250" height="" />
-          <img className="adimax" src="/images/brands/adimax.png" alt="" width="250" height="150" />
-          <img className="royal" src="/images/brands/royal.png" alt="" width="250" height="150" />
-          <img className="ferplast" src="/images/brands/ferplast.png" alt="" width="250" height="150" />
-        </Mosaic>
-        <Mosaic>
-          <img className="frontline" src="/images/brands/frontline.png" alt="" width="250" height="150" />
-          <img className="whiskas" src="/images/brands/whiskas.png" alt="" width="250" height="150" />
-          <img className="bayer" src="/images/brands/bayer.png" alt="" width="250" height="150" />
-          <img className="premier" src="/images/brands/premier.png" alt="" width="250" height="150" />
-        </Mosaic>
-        <MosaicCarousel />
+        <MosaicCarousel
+          value="Principais Marcas"
+          image={image} />
       </Container>
       <Divider />
       <Container>
@@ -107,9 +100,15 @@ export default function Home({ stores }) {
 }
 
 export async function getStaticProps() {
-  const { data: stores } = await api.get('store');
-  return {
-    props: { stores },
-    revalidate: 60 * 10, // 10 minutos
-  };
+  try {
+    const { data: stores } = await api.get('store');
+    const { data: image } = await api.get('image');
+    return {
+      props: { stores, image },
+      revalidate: 60 * 10, // 10 minutos
+    };
+  } catch (error) {
+    console.warn(error);
+    alert('Algo deu errado');
+  }
 }

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Link from 'next/link';
+import { BiImageAdd } from 'react-icons/bi';
 import { CgTikcode, CgShoppingCart, CgDollar } from 'react-icons/cg';
 import { notification } from 'antd';
 import { HiOutlineHome } from 'react-icons/hi';
-import { IoMdNotificationsOutline } from 'react-icons/io';
 import { FiUserPlus } from 'react-icons/fi';
 import { MdBuild } from 'react-icons/md';
 import JsonToCSV from '../JsonToCSV';
@@ -104,30 +104,22 @@ export default function Cards() {
           </Link>
         </Container.Line>
         <Container.Line>
-          <Link href="http://localhost:3000/Admin">
+          <Link href="http://localhost:3000/Admin/EditarHome">
             <Card>
-              <IoMdNotificationsOutline size={50} style={{ color: '#609694' }} />
-              <Card.Title>Notificações</Card.Title>
+              <BiImageAdd size={50} style={{ color: '#609694' }} />
+              <Card.Title>Editar Home</Card.Title>
             </Card>
           </Link>
-          <Link href="http://localhost:3000/Admin/">
+          <Link href="http://localhost:3000/Admin/EditarCategorias">
             <Card>
-              <CgShoppingCart size={50} style={{ color: '#609694' }} />
-              <Card.Title>Vendas</Card.Title>
+              <MdBuild size={50} style={{ color: '#609694' }} />
+              <Card.Title>Editar Categorias</Card.Title>
             </Card>
           </Link>
           <Link href="http://localhost:3000/Admin/SolicitacaoLojas">
             <Card>
               <FiUserPlus size={50} style={{ color: '#609694' }} />
               <Card.Title>Solicitação de Lojas</Card.Title>
-            </Card>
-          </Link>
-        </Container.Line>
-        <Container.Line>
-          <Link href="http://localhost:3000/Admin/EditarCategorias">
-            <Card>
-              <MdBuild size={50} style={{ color: '#609694' }} />
-              <Card.Title>Editar Categorias</Card.Title>
             </Card>
           </Link>
         </Container.Line>

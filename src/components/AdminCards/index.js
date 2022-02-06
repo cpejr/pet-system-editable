@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { BiImageAdd } from 'react-icons/bi';
 import { CgTikcode, CgShoppingCart, CgDollar } from 'react-icons/cg';
 import { HiOutlineHome } from 'react-icons/hi';
-import { IoMdNotificationsOutline } from 'react-icons/io';
 import { FiUserPlus } from 'react-icons/fi';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
@@ -284,23 +284,13 @@ export default function AdminCards() {
           <Row2>
             <Card>
               <Card.Row1>
-                <IoMdNotificationsOutline size={50} style={{ color: '#609694' }} />
+                <BiImageAdd size={50} style={{ color: '#609694' }} />
               </Card.Row1>
               <Card.Row2>
-                Notificações
+                Editar Home
               </Card.Row2>
             </Card>
           </Row2>
-          <Row3>
-            <Card>
-              <Card.Row1>
-                <IoMdNotificationsOutline size={50} style={{ color: '#609694' }} />
-              </Card.Row1>
-              <Card.Row2>
-                Edição de Categorias
-              </Card.Row2>
-            </Card>
-          </Row3>
         </Container.Col1>
         <Container.Col2>
           <Row1>
@@ -319,7 +309,7 @@ export default function AdminCards() {
                 <CgShoppingCart size={50} style={{ color: '#609694' }} />
               </Card.Row1>
               <Card.Row2>
-                Vendas
+                Edição de Categorias
               </Card.Row2>
             </Card>
           </Row2>
