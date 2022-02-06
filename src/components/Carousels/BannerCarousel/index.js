@@ -1,5 +1,5 @@
-import React from 'react';
 import styled from 'styled-components';
+import React, { useState, useEffect } from 'react';
 import Carousel from 'react-multi-carousel';
 import Image from 'next/image';
 import 'react-multi-carousel/lib/styles.css';
@@ -11,7 +11,16 @@ const Item = styled.div`
   
 `;
 
-export default function MainCarousel() {
+export default function MainCarousel({ image }) {
+  const [imagesFiltered, setImagesFiltered] = useState([]);
+  const myLoader = ({ src }) => {
+    return `https://s3-sa-east-1.amazonaws.com/petsystembucket/${src}`;
+  };
+
+  useEffect(() => {
+    setImagesFiltered(image?.filter((item) => item.type === "Banner"));
+  }, [image])
+
   const responsive = {
     desktop: {
       breakpoint: { max: 5000, min: 1024 },
@@ -26,20 +35,24 @@ export default function MainCarousel() {
       items: 1,
     },
   };
+
+
   return (
     <Carousel
       responsive={responsive}
       infinite
     >
-      <Item>
-        <Image src="/images/banners/Banner1.png" alt="" width="1920" height="390" />
-      </Item>
-      <Item>
-        <Image src="/images/banners/Banner2.jpg" alt="" width="1920" height="390" />
-      </Item>
-      <Item>
-        <Image src="/images/banners/Banner3.jpg" alt="" width="1920" height="390" />
-      </Item>
+      {imagesFiltered?.map((img) => (
+        <Item>
+          <Image
+            loader={myLoader}
+            src={img.image_id}
+            alt=""
+            width="1920"
+            height="390"
+          />
+        </Item>
+      ))}
     </Carousel>
   );
 }
