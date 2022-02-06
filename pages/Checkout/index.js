@@ -44,6 +44,7 @@ const Checkout = () => {
   const [dados, setDados] = useState(initialState);
   const [paymentData, setPaymentData] = useState('');
   const [loading, setLoading] = useState(false);
+  const [hash, setHash] = useState('');
 
   // Carregar a imagem da bandeira do cartão__________
   const myLoader = ({ src }) => `https://stc.pagseguro.uol.com.br/${src}`;
@@ -87,7 +88,7 @@ const Checkout = () => {
       'billingAddress.country': 'BRA',
       paymentMethod: paymentData?.brand?.name,
       'shipping.cost': dados.products.shipping_tax,
-      'sender.hash': dados.hash,
+      'sender.hash': hash,
     };
     if (dados.phone?.length !== 11) {
       toast('CPF inválido', { position: toast.POSITION.BOTTOM_RIGHT });
@@ -296,10 +297,11 @@ const Checkout = () => {
         });
       });
       PagSeguroDirectPayment?.onSenderHashReady((response) => {
-        if (response.status === 'error') {
+        if (!response) {
+          toast('Ocorreu um erro na sessão', { position: toast.POSITION.BOTTOM_RIGHT });
           return false;
         }
-        setDados({ ...dados, hash: response.senderHash });
+        setHash(response.senderHash);
         return true;
       });
     } catch (error) {
@@ -432,96 +434,10 @@ const Checkout = () => {
           <RightContainer>
             <Title>Dados de Pagamento</Title>
             <Forms>
-              {dados.page === 1 && (
-                <>
-                  <InputField.Line>
-                    <InputField.InsideLine>
-                      <InputName.Inp2>Endereço da cobrança:</InputName.Inp2>
-                      <InputField
-                        type="text"
-                        placeholder="Endereço"
-                        onChange={(e) => handleChange(e.target.value, 'street')}
-                        value={dados.street}
-                      />
-                    </InputField.InsideLine>
-                  </InputField.Line>
-                  <InputField.Line>
-                    <InputField.InsideLine>
-                      <InputName.Inp2>Número</InputName.Inp2>
-                      <InputField
-                        type="text"
-                        placeholder="Número"
-                        onChange={(e) => handleChange(e.target.value, 'streetNumber')}
-                        value={dados.streetNumber}
-                      />
-                    </InputField.InsideLine>
-                    <FieldSpace />
-                    <InputField.InsideLine>
-                      <InputName.Inp2>Bairro: </InputName.Inp2>
-                      <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                        <InputField
-                          type="text"
-                          placeholder="Bairro"
-                          onChange={(e) => handleChange(e.target.value, 'district')}
-                          value={dados.district}
-                        />
-                      </MuiPickersUtilsProvider>
-                    </InputField.InsideLine>
-                  </InputField.Line>
-                  <InputField.Line>
-                    <InputField.InsideLine>
-                      <InputName.Inp2>Cidade</InputName.Inp2>
-                      <InputField
-                        type="text"
-                        placeholder="Cidade"
-                        onChange={(e) => handleChange(e.target.value, 'city')}
-                        value={dados.city}
-                      />
-                    </InputField.InsideLine>
-                    <FieldSpace />
-                    <InputField.InsideLine>
-                      <InputName.Inp2>Estado</InputName.Inp2>
-                      <SelectState
-                        name="Estado"
-                        onChange={(e) => handleChange(e.target.value, 'state')}
-                        value={dados.state}
-                      />
-                    </InputField.InsideLine>
-                  </InputField.Line>
-                  <InputField.Line>
-                    <InputField.InsideLine>
-                      <InputName.Inp2>CEP</InputName.Inp2>
-                      <MaskedInput
-                        name="postalCode"
-                        id="postalCode"
-                        mask="99999-999"
-                        value={dados.postalCode}
-                        onChange={(e) => handleChange(e.target.value, 'postalCode')}
-                      />
-                    </InputField.InsideLine>
-                    <FieldSpace />
-                    <InputField.InsideLine>
-                      <InputName.Inp2>Complemento</InputName.Inp2>
-                      <InputField
-                        type="text"
-                        placeholder="Complemento"
-                        onChange={(e) => handleChange(e.target.value, 'complement')}
-                        value={dados.complement}
-                      />
-                    </InputField.InsideLine>
-                  </InputField.Line>
-                  <InputField.Line>
-                    <Button type="submit" onClick={handleReturn}>
-                      Retornar
-                    </Button>
-                    <Button type="submit" onClick={handleFinish}>
-                      {loading && <CircularProgress size={24} />}
-                      {!loading && 'Finalizar'}
-                    </Button>
-                  </InputField.Line>
-                </>
+              {dados.page === 0 && dados.subTotal === 0 && (
+                <CircularProgress size={24} />
               )}
-              {dados.page === 0 && (
+              {dados.page === 0 && dados.subTotal !== 0 && (
                 <>
                   <InputField.Line>
                     <InputField.InsideLine>
@@ -622,6 +538,95 @@ const Checkout = () => {
                   <InputField.Line>
                     <Button type="submit" onClick={handleProsseguir}>
                       Prosseguir
+                    </Button>
+                  </InputField.Line>
+                </>
+              )}
+              {dados.page === 1 && (
+                <>
+                  <InputField.Line>
+                    <InputField.InsideLine>
+                      <InputName.Inp2>Endereço da cobrança:</InputName.Inp2>
+                      <InputField
+                        type="text"
+                        placeholder="Endereço"
+                        onChange={(e) => handleChange(e.target.value, 'street')}
+                        value={dados.street}
+                      />
+                    </InputField.InsideLine>
+                  </InputField.Line>
+                  <InputField.Line>
+                    <InputField.InsideLine>
+                      <InputName.Inp2>Número</InputName.Inp2>
+                      <InputField
+                        type="text"
+                        placeholder="Número"
+                        onChange={(e) => handleChange(e.target.value, 'streetNumber')}
+                        value={dados.streetNumber}
+                      />
+                    </InputField.InsideLine>
+                    <FieldSpace />
+                    <InputField.InsideLine>
+                      <InputName.Inp2>Bairro: </InputName.Inp2>
+                      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                        <InputField
+                          type="text"
+                          placeholder="Bairro"
+                          onChange={(e) => handleChange(e.target.value, 'district')}
+                          value={dados.district}
+                        />
+                      </MuiPickersUtilsProvider>
+                    </InputField.InsideLine>
+                  </InputField.Line>
+                  <InputField.Line>
+                    <InputField.InsideLine>
+                      <InputName.Inp2>Cidade</InputName.Inp2>
+                      <InputField
+                        type="text"
+                        placeholder="Cidade"
+                        onChange={(e) => handleChange(e.target.value, 'city')}
+                        value={dados.city}
+                      />
+                    </InputField.InsideLine>
+                    <FieldSpace />
+                    <InputField.InsideLine>
+                      <InputName.Inp2>Estado</InputName.Inp2>
+                      <SelectState
+                        name="Estado"
+                        onChange={(e) => handleChange(e.target.value, 'state')}
+                        value={dados.state}
+                      />
+                    </InputField.InsideLine>
+                  </InputField.Line>
+                  <InputField.Line>
+                    <InputField.InsideLine>
+                      <InputName.Inp2>CEP</InputName.Inp2>
+                      <MaskedInput
+                        name="postalCode"
+                        id="postalCode"
+                        mask="99999-999"
+                        value={dados.postalCode}
+                        onChange={(e) => handleChange(e.target.value, 'postalCode')}
+                      />
+                    </InputField.InsideLine>
+                    <FieldSpace />
+                    <InputField.InsideLine>
+                      <InputName.Inp2>Complemento</InputName.Inp2>
+                      <InputField
+                        type="text"
+                        placeholder="Complemento"
+                        onChange={(e) => handleChange(e.target.value, 'complement')}
+                        value={dados.complement}
+                      />
+                    </InputField.InsideLine>
+                  </InputField.Line>
+                  <InputField.Line>
+                    <Button type="submit" onClick={handleReturn}>
+                      Retornar
+                    </Button>
+                    <Button type="submit" onClick={handleFinish}>
+                      {loading && <CircularProgress size={24} />}
+                      {!loading && 'Finalizar'}
                     </Button>
                   </InputField.Line>
                 </>

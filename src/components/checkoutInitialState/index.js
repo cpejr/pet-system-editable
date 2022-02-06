@@ -13,11 +13,9 @@ const initialState = {
   birth: new Date(),
   phone: '',
   cardNumber: '',
-  paymentData: '',
   hash: '',
   page: 0,
   cardToken: '',
-  cardBrand: '',
   products: [],
   subTotal: 0,
 };
