@@ -131,9 +131,6 @@ const Admin = () => {
   const [averageShare, setAverageShare] = useState(0);
   const [profit, setProfit] = useState(0);
   const [value, setValue] = useState(new Date());
-
-  console.log(moment(value).format('M'));
-  console.log(moment(value).format('Y'));
   
   useEffect(() => {
     api.get('/profileControl', {

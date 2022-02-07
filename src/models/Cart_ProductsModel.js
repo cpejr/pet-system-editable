@@ -10,6 +10,7 @@ module.exports = {
           'Cart_Products.product_id',
           'Product.product_id',
         );
+      console.log(order_products);
       return order_products;
     } catch (error) {
       console.error(error);

@@ -25,7 +25,9 @@ module.exports = {
         .select('*');
       const orderProducts = await Cart_ProductsModel.getAllCart_Products(orders.cart_id);
       orders.forEach((order) => {
-        const CartProductsFilter = orderProducts.filter((CartProducts) => CartProducts.cart_id === order.cart_id);
+        const CartProductsFilter = orderProducts.filter(
+          (CartProducts) => CartProducts.cart_id === order.cart_id,
+        );
         order.CartProducts = CartProductsFilter;
       });
       return orders;
@@ -52,7 +54,7 @@ module.exports = {
       const orders = await connection('Order')
         .where('firebase_id_store', id)
         .andWhere('Order.created_at', '>=', new Date(filter.year, filter.month, 1))
-        .andWhere('Order.created_at', '<=', new Date(filter.year, filter.month+1, 0))
+        .andWhere('Order.created_at', '<=', new Date(filter.year, filter.month + 1, 0))
         .select('*')
         .innerJoin(
           'User',
@@ -73,7 +75,6 @@ module.exports = {
         order.order_products = await Cart_ProductsModel
           .getCart_ProductsByCartId(order.cart_id);
       }
-      
 
       return orders;
     } catch (error) {
@@ -87,10 +88,10 @@ module.exports = {
       const orders = await connection('Order')
         .where('firebase_id_store', id)
         .andWhere('created_at', '>=', new Date(filter.year, filter.month, 1))
-        .andWhere('created_at', '<=', new Date(filter.year, filter.month+1, 0))
-        .select('*')
+        .andWhere('created_at', '<=', new Date(filter.year, filter.month + 1, 0))
+        .select('*');
 
-      var amount = 0;
+      let amount = 0;
 
       for (const order of orders) {
         delete order.type;
@@ -99,10 +100,11 @@ module.exports = {
 
         order.order_products = await Cart_ProductsModel
           .getCart_ProductsByCartId(order.cart_id);
+        console.log(order.cart_id);
 
-          for (const product of order.order_products) {
-            amount += product.amount;
-          }
+        for (const product of order.order_products) {
+          amount += product.amount;
+        }
       }
 
       return amount;
@@ -111,7 +113,6 @@ module.exports = {
       throw new Error(error);
     }
   },
-
 
   async getAllOrders() {
     try {
@@ -150,7 +151,7 @@ module.exports = {
       const orders = await connection('Order')
         .where('firebase_id_store', id)
         .andWhere('created_at', '>=', new Date(filter.year, filter.month, 1))
-        .andWhere('created_at', '<=', new Date(filter.year, filter.month+1, 0))
+        .andWhere('created_at', '<=', new Date(filter.year, filter.month + 1, 0))
         .sum('total_price')
         .first();
       if (orders.sum === null) {
@@ -165,7 +166,7 @@ module.exports = {
 
   async getOrderProfit(filter) {
     try {
-      const orders = await connection('Order')  
+      const orders = await connection('Order')
         .sum('admin_profit')
         .where((builder) => {
           if (filter) {
@@ -173,7 +174,7 @@ module.exports = {
             builder.whereRaw(`EXTRACT(MONTH FROM created_at::date) = ? AND EXTRACT(YEAR FROM created_at::date) = ?`, [filter.month, filter.year]);
           }
         })
-        .first()
+        .first();
       if (orders.sum === null) {
         orders.sum = 0;
       }
@@ -183,16 +184,15 @@ module.exports = {
       throw new Error(error);
     }
   },
-
 
   async getOrderProfitById(filter, id) {
     try {
-      const orders = await connection('Order')  
+      const orders = await connection('Order')
         .where('firebase_id_store', id)
         .andWhere('created_at', '>=', new Date(filter.year, filter.month, 1))
-        .andWhere('created_at', '<=', new Date(filter.year, filter.month+1, 0))
+        .andWhere('created_at', '<=', new Date(filter.year, filter.month + 1, 0))
         .sum('admin_profit')
-        .first()
+        .first();
       if (orders.sum === null) {
         orders.sum = 0;
       }
@@ -202,13 +202,13 @@ module.exports = {
       throw new Error(error);
     }
   },
-
 
   async createNewOrder(order) {
     try {
       const response = await connection('Admin_share')
         .select('*').first();
-      const profit = (response.share * order.total_price/100);
+      const profit = (response.share * order.total_price) / 100;
+      order.admin_profit = profit;
       const order_aux = await connection('Order')
         .insert(order);
       return order_aux;

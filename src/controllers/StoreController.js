@@ -2,9 +2,6 @@ const { v4: uuidv4 } = require('uuid');
 const StoreModel = require('../models/StoreModel');
 const FirebaseModel = require('../models/FirebaseModel');
 const OrderModel = require('../models/OrderModel');
-const AdminModel = require('../models/AdminModel');
-const axios = require('axios');
-
 
 module.exports = {
   async getOne(request, response) {
@@ -127,7 +124,7 @@ module.exports = {
 
   async getSalesInfo(request, response) {
     const { month, year } = request.query;
-    try{
+    try {
       const id = request.session.get('store').store.firebase_id_store;
       const when = { month, year };
       const orders = await OrderModel.getOrdersByStoreId(when, id);
@@ -136,20 +133,20 @@ module.exports = {
       const amount = await OrderModel.getOrderProductsAmount(when, id);
       console.log(orders);
       let averageShare;
-      if(revenue.sum === 0){
+      if (revenue.sum === 0) {
         averageShare = 0;
       } else {
-        averageShare = adminProfit.sum*100/revenue.sum;
+        averageShare = (adminProfit.sum * 100) / revenue.sum;
       }
       const storeProfit = revenue.sum - adminProfit.sum;
       return response.status(200).json({
         totalOrders: orders.length, averageShare, revenue, storeProfit, amount, orders,
-      }); 
+      });
     } catch (err) {
       if (err.message) {
         return response.status(400).json({ notification: err.message });
       }
       return response.status(500).json({ notification: 'Internal Server Error' });
     }
-  }
+  },
 };

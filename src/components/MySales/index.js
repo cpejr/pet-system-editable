@@ -46,6 +46,7 @@ width:60%;
 
 const BodyContainer = styled.div`
 display:flex;
+flex-direction:column;
 align-items:center;
 justify-content:center;
 width:100%;
@@ -67,7 +68,9 @@ export default function MySellerRequest({ value }) {
   const [currentPage, setCurrentPage] = useState(1);
   const indexOfLastOrder = currentPage * ordersPerPage;
   const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
-  const currentOrders = orders.slice(indexOfFirstOrder, indexOfLastOrder);
+  const [currentOrders, setCurrentOrders] = useState(0);
+
+  setCurrentOrders(orders.slice(indexOfFirstOrder, indexOfLastOrder));
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -117,6 +120,7 @@ export default function MySellerRequest({ value }) {
               ordersPerPage={ordersPerPage}
               totalOrders={totalOrders}
               paginate={paginate}
+              setCurrentOrders={setCurrentOrders}
             />
           </BodyContainer>
         </DividerContainer.Col3>
