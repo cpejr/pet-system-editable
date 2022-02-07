@@ -62,7 +62,7 @@ const ButtonAlign = styled.div`
 
 const Button = styled.button`
     display: flex;
-    background: ${({ theme }) => theme.colors.darkGreen};
+    background: ${({ theme }) => theme.colors.mediumGreen};
     width: 24vh;
     font-family: Roboto;
     font-size: 1em;
@@ -74,6 +74,12 @@ const Button = styled.button`
     border: none;
     border-radius: 5px;
     padding: 15px;
+    cursor:pointer;
+    :hover{
+      background-color: ${({ theme }) => theme.colors.darkGreen};
+      color: ${({ theme }) => theme.colors.mediumGreen};
+      border-color:${({ theme }) => theme.colors.darkGreen};
+      }
     @media (max-width: 500px){
       width: 17vh;
       font-size: 0.9em;

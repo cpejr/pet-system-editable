@@ -114,7 +114,7 @@ const Login = () => {
         }
         if (res.data.attempts === 3 && moment() <= moment(res.data.lock_time)) {
           const body = {
-            lock_time: moment().add(5, 'minutes'),
+            lock_time: moment(res.data.lock_time).add(5, 'minutes'),
           };
           await api.put('attempts/' + email, body);
           setShowModal(true);
