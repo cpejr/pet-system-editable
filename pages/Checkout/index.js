@@ -5,7 +5,7 @@ import 'date-fns';
 import { useRouter } from 'next/router';
 import DateFnsUtils from '@date-io/date-fns';
 import { toast } from 'react-toastify';
-import Head from 'next/head';
+import { CircularProgress } from '@material-ui/core';
 import {
   KeyboardDatePicker,
   MuiPickersUtilsProvider,
@@ -42,6 +42,9 @@ const Checkout = () => {
   const router = useRouter();
 
   const [dados, setDados] = useState(initialState);
+  const [paymentData, setPaymentData] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [hash, setHash] = useState('');
 
   // Carregar a imagem da bandeira do cartão__________
   const myLoader = ({ src }) => `https://stc.pagseguro.uol.com.br/${src}`;
@@ -49,64 +52,11 @@ const Checkout = () => {
   // Dados do usuário que está logado_________________
   const { user } = useAuth();
 
-  const handleChange = (event, field) => {
-    if (dados.page === 1 && dados.cardToken === '') {
-      PagSeguroDirectPayment?.createCardToken({
-        cardNumber: dados.cardNumber,
-        brand: dados.cardBrand,
-        cvv: dados.CVV,
-        expirationMonth: dados.expires.substring(0, 2),
-        expirationYear: dados.expires.substring(2, 7),
-        success(response) {
-          setDados({
-            ...dados,
-            [field]: event.target.value,
-            cardToken: response.card.token,
-          });
-        },
-        error() {
-          toast('Informações Inválidas, por favor tente novamente!', {
-            position: toast.POSITION.BOTTOM_RIGHT,
-          }); // Callback para chamadas que falharam.
-        },
-      });
-    }
-    if (field === 'page' || field === 'cardToken' || field === 'birth') {
-      setDados({ ...dados, [field]: event });
-    }
-    if (
-      dados.cardNumber.length >= 6
-      && dados.cardNumber.length <= 7
-      && field === 'cardNumber'
-      && dados.cardBrand === ''
-    ) {
-      PagSeguroDirectPayment.getBrand({
-        cardBin: Number(dados.cardNumber),
-        success(response) {
-          setDados({
-            ...dados,
-            paymentData: response,
-            cardBrand: response.brand.name,
-          });
-        },
-        error() {
-          setDados({ ...dados, [field]: event.target.value });
-        },
-      });
-    } else if (
-      dados.cardNumber.length < 6
-      && field === 'cardNumber'
-      && dados.cardBrand !== ''
-    ) {
-      setDados({ ...dados, [field]: event.target.value, cardBrand: '' });
-    } else if (event.target !== undefined && field === 'cardNumber') {
-      setDados({ ...dados, [field]: event.target.value });
-    }
-    if (event.target !== undefined && field !== 'cardNumber') {
-      setDados({ ...dados, [field]: event.target.value });
-    }
+  const handleChange = (value, field) => {
+    setDados({ ...dados, [field]: value });
   };
 
+  // __________________________FUNCTIONS__________________________
   // Função para remover carrinho
   function remove() {
     cart.removeAllFromCart();
@@ -115,6 +65,8 @@ const Checkout = () => {
   // Função para finalizar o pagamento_____________
   async function handleFinish() {
     // Body passado para a API de pagamentos____________
+    if (loading === true) return;
+    setLoading(true);
     const body = {
       'installment.value': String(
         (dados.subTotal + parseFloat(dados.products.shipping_tax)).toFixed(2),
@@ -134,70 +86,81 @@ const Checkout = () => {
       'billingAddress.city': dados.city,
       'billingAddress.state': dados.state,
       'billingAddress.country': 'BRA',
-      paymentMethod: dados.cardBrand,
+      paymentMethod: paymentData?.brand?.name,
       'shipping.cost': dados.products.shipping_tax,
-      'sender.hash': dados.hash,
+      'sender.hash': hash,
     };
     if (dados.phone?.length !== 11) {
       toast('CPF inválido', { position: toast.POSITION.BOTTOM_RIGHT });
+      setLoading(false);
       return;
     }
     if (dados.cpf?.length !== 11) {
       toast('CPF inválido', { position: toast.POSITION.BOTTOM_RIGHT });
+      setLoading(false);
       return;
     }
     if (dados.cardNumber?.length < 13 || dados.cardNumber?.length > 16) {
       toast('Número do cartão inválido', {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
+      setLoading(false);
       return;
     }
-    if (dados.CVV?.length !== dados.paymentData.brand.cvvSize) {
-      toast('Número do cartão inválido', {
+    if (!paymentData || (dados.CVV?.length !== paymentData.brand.cvvSize)) {
+      toast('cvv do cartão inválido', {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
+      setLoading(false);
       return;
     }
     if (dados.name?.length === 0) {
       toast('Por favor insira um nome válido', {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
+      setLoading(false);
       return;
     }
     if (dados.expires?.length === 0) {
       toast('Por favor insira uma data de validade válida!', {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
+      setLoading(false);
       return;
     }
     if (dados.street?.length === 0) {
       toast('Por favor insira uma endereço válido!', {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
+      setLoading(false);
       return;
     }
     if (dados.streetNumber?.length === 0) {
       toast('Por favor insira um número de residência válido!', {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
+      setLoading(false);
       return;
     }
     if (dados.district?.length === 0) {
       toast('Por favor insira um bairro válido!', {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
+      setLoading(false);
       return;
     }
     if (dados.city?.length === 0) {
       toast('Por favor insira uma cidade válida!', {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
+      setLoading(false);
       return;
     }
     if (dados.state?.length === 0) {
       toast('Por favor selecione um estado!', {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
+      setLoading(false);
       return;
     }
     try {
@@ -208,6 +171,7 @@ const Checkout = () => {
     } catch (error) {
       console.error(error);
       toast('Erro', { position: toast.POSITION.BOTTOM_RIGHT });
+      setLoading(false);
     }
   }
 
@@ -224,13 +188,104 @@ const Checkout = () => {
 
   // Controle da páginas dentro do Checkout________
   function handleProsseguir() {
+    if (dados.name?.length === 0) {
+      toast('Por favor insira um nome!', {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
+      return;
+    }
+    if (dados.cpf.length === 0) {
+      toast('Por favor insira um cpf válido!', {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
+      return;
+    }
+    if (dados.birth.length === 0) {
+      toast('Por favor insira uma data válida!', {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
+      return;
+    }
+    if (dados.cardNumber.length <= 14) {
+      toast('Por favor insira um numero válido para o cartão!', {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
+      return;
+    }
+    if (dados.expires.length === 0) {
+      toast('Por favor insira um bairro válido!', {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
+      return;
+    }
+    if (dados.CVV.length === 0) {
+      toast('Por favor insira um bairro válido!', {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
+      return;
+    }
+    if (dados.phone.length === 0) {
+      toast('Por favor insira um bairro válido!', {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
+      return;
+    }
     handleChange(1, 'page');
   }
   function handleReturn() {
     handleChange(0, 'page');
   }
 
+  // __________________________USE EFFECTS__________________________
   // useEffect para carregar os dados da página________
+
+  useEffect(() => {
+    if (dados.page === 1 && dados.cardToken === '') {
+      PagSeguroDirectPayment?.createCardToken({
+        cardNumber: dados.cardNumber,
+        brand: paymentData?.brand?.name,
+        cvv: dados.CVV,
+        expirationMonth: dados.expires.substring(0, 2),
+        expirationYear: dados.expires.substring(2, 7),
+        success(response) {
+          setDados({
+            ...dados,
+            cardToken: response.card.token,
+          });
+        },
+        error() {
+          toast('Informações Do cartão Inválidas!', {
+            position: toast.POSITION.BOTTOM_RIGHT,
+          }); // Callback para chamadas que falharam.
+        },
+      });
+    }
+  }, [dados.page]);
+
+  useEffect(() => {
+    if (
+      dados.cardNumber.length === 6
+      && paymentData === ''
+    ) {
+      try {
+        PagSeguroDirectPayment.getBrand({
+          cardBin: Number(dados.cardNumber),
+          success(response) {
+            setPaymentData(response);
+          },
+          error(error) {
+            console.error(error);
+          },
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    } else if (dados.cardNumber.length < 6
+      && paymentData?.brand?.name !== '') {
+      setPaymentData('');
+    }
+  }, [dados.cardNumber]);
+
   useEffect(() => {
     try {
       api.post('/payCheckout/Session').then((res) => {
@@ -242,10 +297,11 @@ const Checkout = () => {
         });
       });
       PagSeguroDirectPayment?.onSenderHashReady((response) => {
-        if (response.status === 'error') {
+        if (!response) {
+          toast('Ocorreu um erro na sessão', { position: toast.POSITION.BOTTOM_RIGHT });
           return false;
         }
-        setDados({ ...dados, hash: response.senderHash });
+        setHash(response.senderHash);
         return true;
       });
     } catch (error) {
@@ -316,12 +372,6 @@ const Checkout = () => {
 
   return (
     <>
-      <Head>
-        <script
-          type="text/javascript"
-          src="https://stc.sandbox.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.directpayment.js"
-        />
-      </Head>
       <MainContainer>
         <Title>Finalizar Compra</Title>
         <MainContainer.Data>
@@ -384,95 +434,10 @@ const Checkout = () => {
           <RightContainer>
             <Title>Dados de Pagamento</Title>
             <Forms>
-              {dados.page === 1 && (
-                <>
-                  <InputField.Line>
-                    <InputField.InsideLine>
-                      <InputName.Inp2>Endereço da cobrança:</InputName.Inp2>
-                      <InputField
-                        type="text"
-                        placeholder="Endereço"
-                        onChange={(e) => handleChange(e, 'street')}
-                        value={dados.street}
-                      />
-                    </InputField.InsideLine>
-                  </InputField.Line>
-                  <InputField.Line>
-                    <InputField.InsideLine>
-                      <InputName.Inp2>Número</InputName.Inp2>
-                      <InputField
-                        type="text"
-                        placeholder="Número"
-                        onChange={(e) => handleChange(e, 'streetNumber')}
-                        value={dados.streetNumber}
-                      />
-                    </InputField.InsideLine>
-                    <FieldSpace />
-                    <InputField.InsideLine>
-                      <InputName.Inp2>Bairro: </InputName.Inp2>
-                      <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                        <InputField
-                          type="text"
-                          placeholder="Bairro"
-                          onChange={(e) => handleChange(e, 'district')}
-                          value={dados.district}
-                        />
-                      </MuiPickersUtilsProvider>
-                    </InputField.InsideLine>
-                  </InputField.Line>
-                  <InputField.Line>
-                    <InputField.InsideLine>
-                      <InputName.Inp2>Cidade</InputName.Inp2>
-                      <InputField
-                        type="text"
-                        placeholder="Cidade"
-                        onChange={(e) => handleChange(e, 'city')}
-                        value={dados.city}
-                      />
-                    </InputField.InsideLine>
-                    <FieldSpace />
-                    <InputField.InsideLine>
-                      <InputName.Inp2>Estado</InputName.Inp2>
-                      <SelectState
-                        name="Estado"
-                        onChange={(e) => handleChange(e, 'state')}
-                        value={dados.state}
-                      />
-                    </InputField.InsideLine>
-                  </InputField.Line>
-                  <InputField.Line>
-                    <InputField.InsideLine>
-                      <InputName.Inp2>CEP</InputName.Inp2>
-                      <MaskedInput
-                        name="postalCode"
-                        id="postalCode"
-                        mask="99999-999"
-                        value={dados.postalCode}
-                        onChange={(e) => handleChange(e, 'postalCode')}
-                      />
-                    </InputField.InsideLine>
-                    <FieldSpace />
-                    <InputField.InsideLine>
-                      <InputName.Inp2>Complemento</InputName.Inp2>
-                      <InputField
-                        type="text"
-                        placeholder="Complemento"
-                        onChange={(e) => handleChange(e, 'complement')}
-                        value={dados.complement}
-                      />
-                    </InputField.InsideLine>
-                  </InputField.Line>
-                  <InputField.Line>
-                    <Button type="submit" onClick={handleReturn}>
-                      Retornar
-                    </Button>
-                    <Button type="submit" onClick={handleFinish}>
-                      Finalizar
-                    </Button>
-                  </InputField.Line>
-                </>
+              {dados.page === 0 && dados.subTotal === 0 && (
+                <CircularProgress size={24} />
               )}
-              {dados.page === 0 && (
+              {dados.page === 0 && dados.subTotal !== 0 && (
                 <>
                   <InputField.Line>
                     <InputField.InsideLine>
@@ -480,7 +445,7 @@ const Checkout = () => {
                       <InputField
                         type="text"
                         placeholder="Seu Nome Aqui"
-                        onChange={(e) => handleChange(e, 'name')}
+                        onChange={(e) => handleChange(e.target.value, 'name')}
                         value={dados.name}
                       />
                     </InputField.InsideLine>
@@ -493,7 +458,7 @@ const Checkout = () => {
                         id="cpf"
                         mask="999.999.999-99"
                         value={dados.cpf}
-                        onChange={(e) => handleChange(e, 'cpf')}
+                        onChange={(e) => handleChange(e.target.value, 'cpf')}
                       />
                     </InputField.InsideLine>
                     <FieldSpace />
@@ -515,18 +480,19 @@ const Checkout = () => {
                   <InputField.Line>
                     <InputField.InsideLine>
                       <InputName.Inp2>Número do Cartão:</InputName.Inp2>
-                      <InputField
-                        type="text"
-                        placeholder="0000 0000 0000 0000"
-                        onChange={(e) => handleChange(e, 'cardNumber')}
+                      <MaskedInput
+                        name="cardNumber"
+                        id="cardNumber"
+                        mask="9999 9999 9999 9999 9999"
                         value={dados.cardNumber}
+                        onChange={(e) => handleChange(e.target.value, 'cardNumber')}
                       />
                     </InputField.InsideLine>
                     <InputField.InsideLineBrand>
-                      {dados.cardBrand !== undefined ? (
+                      {paymentData?.brand?.name !== undefined ? (
                         <Image
                           loader={myLoader}
-                          src={`public/img/payment-methods-flags/68x30/${dados.cardBrand}.png`}
+                          src={`public/img/payment-methods-flags/68x30/${paymentData?.brand?.name}.png`}
                           alt=""
                           width="68"
                           height="30"
@@ -544,7 +510,7 @@ const Checkout = () => {
                         id="expires"
                         mask="99/9999"
                         value={dados.expires}
-                        onChange={(e) => handleChange(e, 'expires')}
+                        onChange={(e) => handleChange(e.target.value, 'expires')}
                       />
                     </InputField.InsideLine>
                     <FieldSpace />
@@ -553,7 +519,7 @@ const Checkout = () => {
                       <InputField.LineField
                         type="text"
                         placeholder="000"
-                        onChange={(e) => handleChange(e, 'CVV')}
+                        onChange={(e) => handleChange(e.target.value, 'CVV')}
                         value={dados.CVV}
                         maxlength="4"
                       />
@@ -565,13 +531,102 @@ const Checkout = () => {
                         id="phone"
                         mask="(99)99999-9999"
                         value={dados.phone}
-                        onChange={(e) => handleChange(e, 'phone')}
+                        onChange={(e) => handleChange(e.target.value, 'phone')}
                       />
                     </InputField.InsideLine>
                   </InputField.Line>
                   <InputField.Line>
                     <Button type="submit" onClick={handleProsseguir}>
                       Prosseguir
+                    </Button>
+                  </InputField.Line>
+                </>
+              )}
+              {dados.page === 1 && (
+                <>
+                  <InputField.Line>
+                    <InputField.InsideLine>
+                      <InputName.Inp2>Endereço da cobrança:</InputName.Inp2>
+                      <InputField
+                        type="text"
+                        placeholder="Endereço"
+                        onChange={(e) => handleChange(e.target.value, 'street')}
+                        value={dados.street}
+                      />
+                    </InputField.InsideLine>
+                  </InputField.Line>
+                  <InputField.Line>
+                    <InputField.InsideLine>
+                      <InputName.Inp2>Número</InputName.Inp2>
+                      <InputField
+                        type="text"
+                        placeholder="Número"
+                        onChange={(e) => handleChange(e.target.value, 'streetNumber')}
+                        value={dados.streetNumber}
+                      />
+                    </InputField.InsideLine>
+                    <FieldSpace />
+                    <InputField.InsideLine>
+                      <InputName.Inp2>Bairro: </InputName.Inp2>
+                      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                        <InputField
+                          type="text"
+                          placeholder="Bairro"
+                          onChange={(e) => handleChange(e.target.value, 'district')}
+                          value={dados.district}
+                        />
+                      </MuiPickersUtilsProvider>
+                    </InputField.InsideLine>
+                  </InputField.Line>
+                  <InputField.Line>
+                    <InputField.InsideLine>
+                      <InputName.Inp2>Cidade</InputName.Inp2>
+                      <InputField
+                        type="text"
+                        placeholder="Cidade"
+                        onChange={(e) => handleChange(e.target.value, 'city')}
+                        value={dados.city}
+                      />
+                    </InputField.InsideLine>
+                    <FieldSpace />
+                    <InputField.InsideLine>
+                      <InputName.Inp2>Estado</InputName.Inp2>
+                      <SelectState
+                        name="Estado"
+                        onChange={(e) => handleChange(e.target.value, 'state')}
+                        value={dados.state}
+                      />
+                    </InputField.InsideLine>
+                  </InputField.Line>
+                  <InputField.Line>
+                    <InputField.InsideLine>
+                      <InputName.Inp2>CEP</InputName.Inp2>
+                      <MaskedInput
+                        name="postalCode"
+                        id="postalCode"
+                        mask="99999-999"
+                        value={dados.postalCode}
+                        onChange={(e) => handleChange(e.target.value, 'postalCode')}
+                      />
+                    </InputField.InsideLine>
+                    <FieldSpace />
+                    <InputField.InsideLine>
+                      <InputName.Inp2>Complemento</InputName.Inp2>
+                      <InputField
+                        type="text"
+                        placeholder="Complemento"
+                        onChange={(e) => handleChange(e.target.value, 'complement')}
+                        value={dados.complement}
+                      />
+                    </InputField.InsideLine>
+                  </InputField.Line>
+                  <InputField.Line>
+                    <Button type="submit" onClick={handleReturn}>
+                      Retornar
+                    </Button>
+                    <Button type="submit" onClick={handleFinish}>
+                      {loading && <CircularProgress size={24} />}
+                      {!loading && 'Finalizar'}
                     </Button>
                   </InputField.Line>
                 </>
