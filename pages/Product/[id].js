@@ -20,8 +20,10 @@ toast.configure();
 export default function Product({ product, store }) {
   const cart = useCart();
   function add(newProduct) {
-    if (quantity > 0) {
-      cart.addToCart(newProduct);
+    if (cartStore === store.firebase_id_store || cartStore === ' ') {
+      if (quantity > 0) {
+        cart.addToCart(newProduct);
+      }
     }
   }
   const openingTime = store.opening_time.split(',');
