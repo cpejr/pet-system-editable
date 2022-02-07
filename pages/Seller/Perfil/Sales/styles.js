@@ -42,21 +42,9 @@ font-family: Roboto;
 export const ContainerDate1 = styled.div`
 display:flex;
 flex-direction:row;
-width:50%;
-margin-top:1.5%;
-margin-left: 145px;
-margin-bottom: 1.5%;
-@media(max-width:560px){
-  justify-content:center;
-  width:45%;
-}
-`;
-
-export const ContainerDate2 = styled.div`
-display:flex;
-align-items:center;
-margin-left:20px;
-width:50%;
+justify-content:center;
+width:100%;
+margin: 5% 0;
 @media(max-width:560px){
   justify-content:center;
   width:45%;

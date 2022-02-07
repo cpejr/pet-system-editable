@@ -4,7 +4,7 @@ import ptBR from 'date-fns/locale/pt-BR';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import MySales from '../../../../src/components/MySales';
 import { Title, PerfilStoreMenu } from '../../../../src/components/index';
-import { ContainerDate1, ContainerDate2 } from './styles';
+import { ContainerDate1 } from './styles';
 import withAuthStore from '../../../../src/components/WithAuth/WithAuthStore';
 
 const Perfil = () => {
@@ -26,7 +26,6 @@ const Perfil = () => {
           />
         </MuiPickersUtilsProvider>
       </ContainerDate1>
-      <ContainerDate2 />
 
       <MySales value={value} />
 

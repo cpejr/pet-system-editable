@@ -8,9 +8,7 @@ display:flex;
 align-items:center;
 justify-content:center;
 width:40vw;
-margin-top:2%;
-margin-bottom:2%;
-margin-right: 5%;
+margin:2% 5%;
 border-style:solid;
 border-width:1px;  
 border-color:${({ theme }) => theme.colors.borderBoxColor};
@@ -70,7 +68,7 @@ export default function MyProductRequest({ products }) {
               <p>{product.price}</p>
             </ProductContainer.Col2>
             <ProductContainer.Col3>
-              <h2>{product.amount}</h2>
+              <h3>{product.amount}</h3>
             </ProductContainer.Col3>
           </ProductContainer>
         </>
