@@ -57,7 +57,7 @@ export const CarrinhoCardIcon = styled.div`
   font-size: x-large;
   justify-content: flex-start;
   height: 100%;
-
+  cursor: pointer;
   @media screen and (max-width: 660px) {
     font-size: large;
 }
