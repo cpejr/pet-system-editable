@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import { AiOutlineArrowLeft, AiOutlineArrowRight } from 'react-icons/ai';
+
 
 const Ul = styled.ul`
 display:flex;
@@ -16,17 +18,19 @@ width:100%
 `;
 
 const List = styled.li`
+display:flex;
 list-style:none;
 padding: 0 2%;
 border: thin solid ${({ theme }) => theme.colors.mediumGreen};
 border-radius:8px;
+align-items:center;
 `;
 
 const Text = styled.a`
 color:black;
 `;
 
-const Pagination = ({ ordersPerPage, totalOrders, paginate }) => {
+const Pagination = ({ ordersPerPage, totalOrders, paginate, previousPage, nextPage }) => {
   const pageNumbers = [];
 
   for (let i = 1; i <= Math.ceil(totalOrders / ordersPerPage); i++) {
@@ -36,6 +40,9 @@ const Pagination = ({ ordersPerPage, totalOrders, paginate }) => {
   return (
     <Content>
       <Ul>
+        <List>
+          <AiOutlineArrowLeft onClick={() => paginate(previousPage)} />
+        </List>
         {pageNumbers.map((number) => (
           <List key={number}>
             <Text onClick={() => paginate(number)}>
@@ -43,6 +50,9 @@ const Pagination = ({ ordersPerPage, totalOrders, paginate }) => {
             </Text>
           </List>
         ))}
+        <List>
+          <AiOutlineArrowRight onClick={() => paginate(nextPage)} />
+        </List>
       </Ul>
     </Content>
   );

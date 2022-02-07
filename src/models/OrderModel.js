@@ -50,11 +50,13 @@ module.exports = {
   },
 
   async getOrdersByStoreId(filter, id) {
+    filter.month = 0 + filter.month;
+    console.log(filter.month);
     try {
       const orders = await connection('Order')
         .where('firebase_id_store', id)
-        .andWhere('Order.created_at', '>=', new Date(filter.year, filter.month, 1))
-        .andWhere('Order.created_at', '<=', new Date(filter.year, filter.month + 1, 0))
+        .where('created_at', '>=', `${filter.year}-${filter.month}-01T00:00:00Z`)
+        .where('created_at', '<', `${filter.year}-${parseInt(filter.month, 10) + 1}-01T00:00:00Z`)
         .select('*')
         .innerJoin(
           'User',
@@ -67,6 +69,7 @@ module.exports = {
           'Address.address_id',
         );
 
+      console.log(orders);
       for (const order of orders) {
         delete order.type;
         delete order.birth_date;
@@ -87,8 +90,8 @@ module.exports = {
     try {
       const orders = await connection('Order')
         .where('firebase_id_store', id)
-        .andWhere('created_at', '>=', new Date(filter.year, filter.month, 1))
-        .andWhere('created_at', '<=', new Date(filter.year, filter.month + 1, 0))
+        .where('Order.created_at', '>=', `${filter.year}-${filter.month}-01T00:00:00Z`)
+        .where('Order.created_at', '<', `${filter.year}-${parseInt(filter.month, 10) + 1}-01T00:00:00Z`)
         .select('*');
 
       let amount = 0;
@@ -100,7 +103,6 @@ module.exports = {
 
         order.order_products = await Cart_ProductsModel
           .getCart_ProductsByCartId(order.cart_id);
-        console.log(order.cart_id);
 
         for (const product of order.order_products) {
           amount += product.amount;
@@ -150,10 +152,11 @@ module.exports = {
     try {
       const orders = await connection('Order')
         .where('firebase_id_store', id)
-        .andWhere('created_at', '>=', new Date(filter.year, filter.month, 1))
-        .andWhere('created_at', '<=', new Date(filter.year, filter.month + 1, 0))
-        .sum('total_price')
-        .first();
+        .where('created_at', '>=', `${filter.year}-${filter.month}-01T00:00:00Z`)
+        .where('created_at', '<', `${filter.year}-${parseInt(filter.month, 10) + 1}-01T00:00:00Z`)
+        .first()
+        .sum('total_price');
+      console.log(orders.sum);
       if (orders.sum === null) {
         orders.sum = 0;
       }
@@ -189,8 +192,8 @@ module.exports = {
     try {
       const orders = await connection('Order')
         .where('firebase_id_store', id)
-        .andWhere('created_at', '>=', new Date(filter.year, filter.month, 1))
-        .andWhere('created_at', '<=', new Date(filter.year, filter.month + 1, 0))
+        .where('created_at', '>=', `${filter.year}-${filter.month}-01T00:00:00Z`)
+        .where('created_at', '<', `${filter.year}-${parseInt(filter.month, 10) + 1}-01T00:00:00Z`)
         .sum('admin_profit')
         .first();
       if (orders.sum === null) {

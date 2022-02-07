@@ -69,6 +69,8 @@ export default function MySellerRequest({ value }) {
   const indexOfLastOrder = currentPage * ordersPerPage;
   const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
   const currentOrders = orders.slice(indexOfFirstOrder, indexOfLastOrder);
+  const nextPage = currentPage + 1;
+  const previousPage = currentPage - 1;
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -118,6 +120,8 @@ export default function MySellerRequest({ value }) {
               ordersPerPage={ordersPerPage}
               totalOrders={totalOrders}
               paginate={paginate}
+              nextPage={nextPage}
+              previousPage={previousPage}
             />
           </BodyContainer>
         </DividerContainer.Col3>
