@@ -28,8 +28,17 @@ function AuthProvider({ children }) {
   // eslint-disable-next-line consistent-return
   async function login(email, password) {
     try {
-      const res = await api.get(`attempts/${email}`);
       const response = await api.post('login', { email, password });
+      const res = await api.get(`attempts/${email}`);
+
+      if (res.data.attempts < 4 && response.data.user !== undefined) {
+        const body = {
+          attempts: 0,
+        };
+        await api.put(`attempts/${email}`, body);
+        router.push('/Home');
+        toast('Login efetuado com sucesso', { position: toast.POSITION.BOTTOM_RIGHT });
+      }
       if (response.data === 'Loja sem cadastro' || response.data === 'Loja em espera') {
         return response.data;
       }
@@ -38,14 +47,6 @@ function AuthProvider({ children }) {
         setUser(response.data.user);
       } else {
         setStore(response.data.store);
-      }
-      if (res.data.attempts !== 3 && response.data.user !== undefined) {
-        const body = {
-          attempts: 0,
-        };
-        await api.put(`attempts/${email}`, body);
-        router.push('/Home');
-        toast('Login efetuado com sucesso', { position: toast.POSITION.BOTTOM_RIGHT });
       }
     } catch (error) {
       // eslint-disable-next-line no-console
