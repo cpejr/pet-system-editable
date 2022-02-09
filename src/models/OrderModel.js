@@ -50,13 +50,13 @@ module.exports = {
   },
 
   async getOrdersByStoreId(filter, id) {
-    filter.month = 0 + filter.month;
-    console.log(filter.month);
+    const monthBegin = (0 + filter.month).slice(-2);
+    const monthEnd = (0 + (parseInt(filter.month, 10) + 1).toString()).slice(-2);
     try {
       const orders = await connection('Order')
         .where('firebase_id_store', id)
-        .where('created_at', '>=', `${filter.year}-${filter.month}-01T00:00:00Z`)
-        .where('created_at', '<', `${filter.year}-${parseInt(filter.month, 10) + 1}-01T00:00:00Z`)
+        .where('Order.created_at', '>=', `${filter.year}-${monthBegin}-01T00:00:00.000Z`)
+        .where('Order.created_at', '<', `${filter.year}-${monthEnd}-01T00:00:00.000Z`)
         .select('*')
         .innerJoin(
           'User',
@@ -69,7 +69,6 @@ module.exports = {
           'Address.address_id',
         );
 
-      console.log(orders);
       for (const order of orders) {
         delete order.type;
         delete order.birth_date;
@@ -87,11 +86,13 @@ module.exports = {
   },
 
   async getOrderProductsAmount(filter, id) {
+    const monthBegin = (0 + filter.month).slice(-2);
+    const monthEnd = (0 + (parseInt(filter.month, 10) + 1).toString()).slice(-2);
     try {
       const orders = await connection('Order')
         .where('firebase_id_store', id)
-        .where('Order.created_at', '>=', `${filter.year}-${filter.month}-01T00:00:00Z`)
-        .where('Order.created_at', '<', `${filter.year}-${parseInt(filter.month, 10) + 1}-01T00:00:00Z`)
+        .where('Order.created_at', '>=', `${filter.year}-${monthBegin}-01T00:00:00.000Z`)
+        .where('Order.created_at', '<', `${filter.year}-${monthEnd}-01T00:00:00.000Z`)
         .select('*');
 
       let amount = 0;
@@ -128,13 +129,16 @@ module.exports = {
   },
 
   async getOrderRevenue(filter) {
+    const monthBegin = filter ? (0 + filter.month).slice(-2) : null;
+    const monthEnd = filter ? (0 + (parseInt(filter.month, 10) + 1).toString()).slice(-2) : null;
     try {
       const orders = await connection('Order')
         .sum('total_price')
         .where((builder) => {
           if (filter) {
             // eslint-disable-next-line quotes
-            builder.whereRaw(`EXTRACT(MONTH FROM created_at::date) = ? AND EXTRACT(YEAR FROM created_at::date) = ?`, [filter.month, filter.year]);
+            builder.where('Order.created_at', '>=', `${filter.year}-${monthBegin}-01T00:00:00.000Z`)
+              .where('Order.created_at', '<', `${filter.year}-${monthEnd}-01T00:00:00.000Z`);
           }
         })
         .first();
@@ -149,14 +153,15 @@ module.exports = {
   },
 
   async getOrderRevenueByStoreId(filter, id) {
+    const monthBegin = (0 + filter.month).slice(-2);
+    const monthEnd = (0 + (parseInt(filter.month, 10) + 1).toString()).slice(-2);
     try {
       const orders = await connection('Order')
         .where('firebase_id_store', id)
-        .where('created_at', '>=', `${filter.year}-${filter.month}-01T00:00:00Z`)
-        .where('created_at', '<', `${filter.year}-${parseInt(filter.month, 10) + 1}-01T00:00:00Z`)
+        .where('created_at', '>=', `${filter.year}-${monthBegin}-01T00:00:00.000Z`)
+        .where('created_at', '<', `${filter.year}-${monthEnd}-01T00:00:00.000Z`)
         .first()
         .sum('total_price');
-      console.log(orders.sum);
       if (orders.sum === null) {
         orders.sum = 0;
       }
@@ -168,13 +173,16 @@ module.exports = {
   },
 
   async getOrderProfit(filter) {
+    const monthBegin = (0 + filter.month).slice(-2);
+    const monthEnd = (0 + (parseInt(filter.month, 10) + 1).toString()).slice(-2);
     try {
       const orders = await connection('Order')
         .sum('admin_profit')
         .where((builder) => {
           if (filter) {
             // eslint-disable-next-line quotes
-            builder.whereRaw(`EXTRACT(MONTH FROM created_at::date) = ? AND EXTRACT(YEAR FROM created_at::date) = ?`, [filter.month, filter.year]);
+            builder.where('created_at', '>=', `${filter.year}-${monthBegin}-01T00:00:00.000Z`)
+              .where('created_at', '<', `${filter.year}-${monthEnd}-01T00:00:00.000Z`);
           }
         })
         .first();
@@ -189,11 +197,13 @@ module.exports = {
   },
 
   async getOrderProfitById(filter, id) {
+    const monthBegin = (0 + filter.month).slice(-2);
+    const monthEnd = (0 + (parseInt(filter.month, 10) + 1).toString()).slice(-2);
     try {
       const orders = await connection('Order')
         .where('firebase_id_store', id)
-        .where('created_at', '>=', `${filter.year}-${filter.month}-01T00:00:00Z`)
-        .where('created_at', '<', `${filter.year}-${parseInt(filter.month, 10) + 1}-01T00:00:00Z`)
+        .where('created_at', '>=', `${filter.year}-${monthBegin}-01T00:00:00.000Z`)
+        .where('created_at', '<', `${filter.year}-${monthEnd}-01T00:00:00.000Z`)
         .sum('admin_profit')
         .first();
       if (orders.sum === null) {
