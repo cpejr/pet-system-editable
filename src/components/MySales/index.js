@@ -69,8 +69,20 @@ export default function MySellerRequest({ value }) {
   const indexOfLastOrder = currentPage * ordersPerPage;
   const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
   const currentOrders = orders.slice(indexOfFirstOrder, indexOfLastOrder);
-  const nextPage = currentPage + 1;
-  const previousPage = currentPage - 1;
+
+  let previousPage;
+  let nextPage;
+
+  if (currentPage === 1) {
+    previousPage = totalOrders;
+    nextPage = currentPage + 1;
+  } else if (currentPage === totalOrders) {
+    nextPage = 1;
+    previousPage = currentPage - 1;
+  } else {
+    nextPage = currentPage + 1;
+    previousPage = currentPage - 1;
+  }
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 

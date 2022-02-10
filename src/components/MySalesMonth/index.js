@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { toast } from 'react-toastify';
-import { useAuth } from '../../../src/contexts/AuthContext';
-
 
 const SalesMonthContainer = styled.div`
 display:flex;
@@ -78,8 +76,9 @@ margin:0;
 
 toast.configure();
 
-export default function MySalesMonth({ value, totalOrders, revenue, share, storeProfit, amount}) {
-
+export default function MySalesMonth({
+  totalOrders, revenue, share, storeProfit, amount,
+}) {
   return (
     <div>
       <SalesMonthContainer>
@@ -100,7 +99,10 @@ export default function MySalesMonth({ value, totalOrders, revenue, share, store
           <SalesMonthContainer.Description.Col2>
             <p>{revenue.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</p>
             <p>{amount}</p>
-            <p>{share.toFixed(2)}%</p>
+            <p>
+              {share.toFixed(2)}
+              %
+            </p>
             <p>{storeProfit.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</p>
             <p>{totalOrders}</p>
           </SalesMonthContainer.Description.Col2>

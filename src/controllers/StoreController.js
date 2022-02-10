@@ -51,6 +51,7 @@ module.exports = {
     let firebase_id;
     // Criacao da Loja
     try {
+      // eslint-disable-next-line no-useless-escape
       const regex = new RegExp('.+@.+\..+');
       if (!regex.test(request.body.email)) {
         throw new Error('Formato de email inválido');
@@ -131,6 +132,7 @@ module.exports = {
       const revenue = await OrderModel.getOrderRevenueByStoreId(when, id);
       const adminProfit = await OrderModel.getOrderProfitById(when, id);
       const amount = await OrderModel.getOrderProductsAmount(when, id);
+      console.log(orders);
       let averageShare;
       if (revenue.sum === 0) {
         averageShare = 0;

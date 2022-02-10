@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from 'react-icons/ai';
 
-
 const Ul = styled.ul`
 display:flex;
 flex-direction:row;
@@ -30,7 +29,9 @@ const Text = styled.a`
 color:black;
 `;
 
-const Pagination = ({ ordersPerPage, totalOrders, paginate, previousPage, nextPage }) => {
+const Pagination = ({
+  ordersPerPage, totalOrders, paginate, previousPage, nextPage,
+}) => {
   const pageNumbers = [];
 
   for (let i = 1; i <= Math.ceil(totalOrders / ordersPerPage); i++) {
