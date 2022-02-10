@@ -26,8 +26,9 @@ export async function signIn(req, res) {
             attempts: attempt.attempts + 1,
           };
           await AttemptsModel.updateAttempt(body, email);
+          break;
         }
-        // eslint-disable-next-line no-fallthrough
+        // eslint - disable - next - line no - fallthrough
         case 2: {
           const body = {
             attempts: attempt.attempts + 1,
@@ -56,23 +57,23 @@ export async function signIn(req, res) {
           };
         }
       }
-      if (attempt.attempts >= 3 && attempt.attempts !== 5
+      if (attempt.attempts === 3
         && moment() <= moment(attempt.lock_time)) {
         return res.status(200).json('Bloqueado');
       }
-      if (attempt.attempts >= 3 && moment() > moment(attempt.lock_time)) {
-        const body = {
-          lock_time: moment().add(5, 'minutes'),
-          attempts: 0,
-        };
-        await AttemptsModel.updateAttempt(body, email);
-      }
-      if (attempt.attempts === 5 && moment() <= moment(attempt.lock_time)) {
+      if (attempt.attempts > 3 && moment() < moment(attempt.lock_time)) {
         const body = {
           lock_time: moment(attempt.lock_time).add(5, 'minutes'),
         };
         await AttemptsModel.updateAttempt(body, email);
         return res.status(200).json('Bloqueado');
+      }
+      if (attempt.attempts >= 2 && moment() > moment(attempt.lock_time)) {
+        const body = {
+          lock_time: moment().add(5, 'minutes'),
+          attempts: 0,
+        };
+        await AttemptsModel.updateAttempt(body, email);
       }
     }
     try {
@@ -80,24 +81,23 @@ export async function signIn(req, res) {
       const user = await UserModel.getUserById(firebase_id);
       const storeStatus = await StoreModel.getStatusByEmail(email);
       if (user) {
-        if (attempt.attempts <= 3) {
-          const accessToken = jwt.sign(
-            { user },
-            process.env.NEXT_PUBLIC_JWT_SECRET,
-          );
+        const accessToken = jwt.sign(
+          { user },
+          process.env.NEXT_PUBLIC_JWT_SECRET,
+        );
 
-          req.session.set('user', {
-            user,
-            accessToken,
-          });
-          const body = {
-            attempts: 0,
-          };
-          await AttemptsModel.updateAttempt(body, email);
-          await req.session.save();
+        req.session.set('user', {
+          user,
+          accessToken,
+        });
+        await req.session.save();
+        // eslint-disable-next-line no-unused-vars
+        const body = {
+          attempts: 0,
+        };
+        await AttemptsModel.updateAttempt(body, email);
 
-          return res.status(200).json({ accessToken, user });
-        }
+        return res.status(200).json({ accessToken, user });
       }
 
       if (storeStatus.status === false) {
@@ -105,7 +105,6 @@ export async function signIn(req, res) {
       }
 
       const store = await StoreModel.getStoreById(firebase_id);
-
       const accessToken = jwt.sign(
         { store },
         process.env.NEXT_PUBLIC_JWT_SECRET,
@@ -115,7 +114,11 @@ export async function signIn(req, res) {
         store,
         accessToken,
       });
-
+      // eslint-disable-next-line no-unused-vars
+      const body = {
+        attempts: 0,
+      };
+      await AttemptsModel.updateAttempt(body, email);
       await req.session.save();
 
       return res.status(200).json({ accessToken, store });

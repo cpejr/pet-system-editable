@@ -83,67 +83,7 @@ const Login = () => {
     try {
       if (await verify() === true) {
         const res = await api.get('attempts/' + email);
-        if (res.data.attempts === 0) {
-          const body = {
-            lock_time: moment().add(5, 'minutes'),
-            attempts: res.data.attempts + 1,
-          };
-          await api.put('attempts/' + email, body);
-        } else {
-          switch (res.data.attempts) {
-            case 1: {
-              const body = {
-                attempts: res.data.attempts + 1,
-              };
-              await api.put('attempts/' + email, body)
-              break;
-            }
-            case 2: {
-              const body = {
-                attempts: res.data.attempts + 1,
-              };
-              await api.put('attempts/' + email, body)
-              break;
-            }
-            case 3: {
-              const body = {
-                attempts: res.data.attempts + 1,
-              };
-              await api.put('attempts/' + email, body)
-              break;
-            }
-            case 4: {
-              const body = {
-                attempts: res.data.attempts + 1,
-              };
-              await api.put('attempts/' + email, body)
-              break;
-            }
-            default: {
-              const body = {
-                attempts: res.data.attempts + 1,
-              };
-            }
-          }
-        }
-        if (res.data.attempts >= 3 && res.data.attempts <= 4 && moment() <= moment(res.data.lock_time)) {
-          setShowModal(true);
-          const time = moment(res.data.lock_time).fromNow();
-          setContent(time);
-          toast('Usuário bloqueado', { position: toast.POSITION.BOTTOM_RIGHT });
-        }
-        if (res.data.attempts >= 3 && moment() > moment(res.data.lock_time)) {
-          const body = {
-            lock_time: moment().add(5, 'minutes'),
-            attempts: 0,
-          };
-          await api.put('attempts/' + email, body);
-        }
-        if (res.data.attempts >= 4 && moment() <= moment(res.data.lock_time)) {
-          const body = {
-            lock_time: moment(res.data.lock_time).add(5, 'minutes'),
-          };
-          await api.put('attempts/' + email, body);
+        if (res.data.attempts >= 3 && moment() <= moment(res.data.lock_time)) {
           setShowModal(true);
           const time = moment(res.data.lock_time).fromNow();
           setContent(time);
@@ -151,13 +91,11 @@ const Login = () => {
         }
       }
       const res = await api.get('attempts/' + email);
-      if (res.data.attempts <= 3) {
-        login(email, password).then((response) => {
-          if (response === 'Loja em espera') {
-            toast('Sua solicitação para se tornar um parceiro ainda não foi avaliada', { position: toast.POSITION.BOTTOM_RIGHT });
-          }
-        });
-      }
+      login(email, password).then((response) => {
+        if (response === 'Loja em espera') {
+          toast('Sua solicitação para se tornar um parceiro ainda não foi avaliada', { position: toast.POSITION.BOTTOM_RIGHT });
+        }
+      });
     } catch (error) {
       console.error(error); //eslint-disable-line
     }
