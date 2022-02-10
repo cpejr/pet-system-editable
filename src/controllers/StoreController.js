@@ -132,7 +132,6 @@ module.exports = {
       const revenue = await OrderModel.getOrderRevenueByStoreId(when, id);
       const adminProfit = await OrderModel.getOrderProfitById(when, id);
       const amount = await OrderModel.getOrderProductsAmount(when, id);
-      console.log(orders);
       let averageShare;
       if (revenue.sum === 0) {
         averageShare = 0;

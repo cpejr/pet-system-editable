@@ -83,7 +83,7 @@ export default function MySalesInfo({ orders }) {
             <UserBox>
               <UserBox.Col1>{order.name}</UserBox.Col1>
               <UserBox.Col2>{order.email}</UserBox.Col2>
-              <UserBox.Col3>{moment(order.created_at).format('DD-MM-YYYY')}</UserBox.Col3>
+              <UserBox.Col3>{moment(order.order_created_at).format('DD-MM-YYYY')}</UserBox.Col3>
             </UserBox>
             <MyProductRequestSmall products={order.order_products} />
           </>

@@ -57,7 +57,6 @@ module.exports = {
         .where('firebase_id_store', id)
         .where('Order.created_at', '>=', `${filter.year}-${monthBegin}-01T00:00:00.000Z`)
         .where('Order.created_at', '<', `${filter.year}-${monthEnd}-01T00:00:00.000Z`)
-        .select('*')
         .innerJoin(
           'User',
           'Order.firebase_id',
@@ -67,7 +66,8 @@ module.exports = {
           'Address',
           'Order.address_id',
           'Address.address_id',
-        );
+        )
+        .select('*', 'Order.created_at as order_created_at');
 
       for (const order of orders) {
         delete order.type;
