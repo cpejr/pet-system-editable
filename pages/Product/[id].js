@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import Image from 'next/image';
 import Link from 'next/link';
 import moment from 'moment';
+import { useRouter } from 'next/router';
 import api from '../../src/utils/api';
 import {
   Container, ProductContainer, ProductTitle, Price, Delivery,
@@ -19,22 +20,26 @@ toast.configure();
 
 export default function Product({ product, store }) {
   const cart = useCart();
-  function add(product) {
-    if (quantity > 0) {
-      cart.addToCart(product);
+  function add(newProduct) {
+    if (cartStore === store.firebase_id_store || cartStore === ' ') {
+      if (quantity > 0) {
+        cart.addToCart(newProduct);
+      }
     }
   }
   const openingTime = store.opening_time.split(',');
   const closingTime = store.closing_time.split(',');
+  // eslint-disable-next-line no-nested-ternary
   const regionShippingTax = store ? store?.shipping_tax.split(',') : product ? product?.shipping_tax.split(',') : null;
   const [shippingValue, setShippingValue] = useState();
   const [shippingMinValue, setShippingMinValue] = useState(0);
   const [shippingMaxValue, setShippingMaxValue] = useState(0);
-  const situation = store.working_days.split(',');
   const [today, setToday] = useState();
   const data = new Date();
   const day = moment(data).format('dddd');
   const [quantity, setQuantity] = useState(0);
+  const [cartStore, setCartStore] = useState(' ');
+  const router = useRouter();
 
   useEffect(() => {
     try {
@@ -83,7 +88,6 @@ export default function Product({ product, store }) {
         }
       });
     } catch (err) {
-      console.error(err);
       toast('Erro', { position: toast.POSITION.BOTTOM_RIGHT });
     }
   }, [regionShippingTax]);
@@ -122,7 +126,89 @@ export default function Product({ product, store }) {
     }
   }, [day]);
 
+  async function getProductStore() {
+    try {
+      const response = await api.get('/cart/firebase');
+      if (response.data.length !== 0) {
+        setCartStore(response.data[0].firebase_id_store);
+      }
+    } catch (error) {
+      notification.open({
+        message: 'Falha :(',
+        description:
+          'Erro ao obter produtos do carrinho',
+        className: 'ant-notification',
+        top: '100px',
+        style: {
+          width: 600,
+        },
+      });
+    }
+  }
+
+  useEffect(() => {
+    getProductStore();
+  }, []);
+
   async function handleAddCart() {
+    const body = {
+      product_id: product.product_id,
+      amount: quantity,
+      final_price: quantity * product.price,
+    };
+    if (cartStore === store.firebase_id_store || cartStore === ' ') {
+      if (quantity > 0) {
+        try {
+          await api.post('/CartProducts', body);
+          notification.open({
+            message: 'Sucesso!',
+            description:
+              'O produto foi adicionado ao seu carrinho.',
+            className: 'ant-notification',
+            top: '100px',
+            style: {
+              width: 600,
+            },
+          });
+        } catch (error) {
+          notification.open({
+            message: 'Falha :(',
+            description:
+              'Erro ao adicionar produto ao carrinho',
+            className: 'ant-notification',
+            top: '100px',
+            style: {
+              width: 600,
+            },
+          });
+        }
+      } else {
+        notification.open({
+          message: 'Falha :(',
+          description:
+            'A quantidade do produto deve ser maior que zero',
+          className: 'ant-notification',
+          top: '100px',
+          style: {
+            width: 600,
+          },
+        });
+      }
+    } else {
+      notification.open({
+        message: 'Falha :(',
+        description:
+          'Os produtos no carrinho devem ser da mesma loja',
+        className: 'ant-notification',
+        top: '100px',
+        style: {
+          width: 600,
+        },
+      });
+    }
+  }
+
+  async function handleAddCartAndBuy() {
     const body = {
       product_id: product.product_id,
       amount: quantity,
@@ -141,6 +227,7 @@ export default function Product({ product, store }) {
             width: 600,
           },
         });
+        router.push('/Checkout');
       } catch (error) {
         console.error(error);
         notification.open({
@@ -226,6 +313,7 @@ export default function Product({ product, store }) {
             <Delivery>
               Frete:
               {' '}
+              {/* eslint-disable-next-line no-nested-ternary */}
               {shippingValue ? (parseFloat(shippingValue) === 0 ? 'Gratis' : `R$${shippingValue}`) : (shippingMinValue === 0 ? `Gratis ~ R$${shippingMaxValue.toFixed(2)}` : `R$${shippingMinValue.toFixed(2)} ~ R$${shippingMaxValue.toFixed(2)}`) }
             </Delivery>
             <CarrinhoCardInfoQuantity>
@@ -236,7 +324,11 @@ export default function Product({ product, store }) {
             {(StoreIsOpen(openingTime[today], closingTime[today])) ? (
               <ButtonsContainer>
                 <ButtonsContainer.Col>
-                  <Button>
+                  <Button onClick={() => {
+                    handleAddCartAndBuy();
+                    add(product);
+                  }}
+                  >
                     Comprar
                   </Button>
                 </ButtonsContainer.Col>
