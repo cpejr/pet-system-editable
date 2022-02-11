@@ -270,10 +270,12 @@ export default function Product({ product, store }) {
   return (
     <div>
       <BackPage>
-       <a href="http://localhost:3000/Search?keyword="> <BackButton>
+       <a href="http://localhost:3000/Search?keyword=">
+          <BackButton>
           <FaArrowLeft size={24} />
           Voltar
-        </BackButton></a>
+        </BackButton>
+        </a>
       </BackPage>
       { product && (
       <Container>

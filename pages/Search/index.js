@@ -170,9 +170,7 @@ export default function Search({ keyword, id, categories }) {
         </ContainerCategory>
         <SearchContainer>
           <SearchContainer.Col1>
-            <OrderSearch />
             <Price setPrice={setPrice} />
-            <Brands categories={categories} key={categories.category_id} />
           </SearchContainer.Col1>
           <SearchContainer.Col2>
             {products.map((p) => (
