@@ -74,7 +74,6 @@ module.exports = {
 
   async create(request, response) {
     const address = request.body;
-    console.log(address);
     address.address_id = uuidv4();
     try {
       await AddressModel.createNewAddress(address, request);
@@ -109,7 +108,7 @@ module.exports = {
 
     const mainAddress = user ? await AddressModel.getUserMainAddressById(user.firebase_id) : null;
 
-    const orderAssociated = await AddressModel. getAddressOrderAssociated(id) ;
+    const orderAssociated = await AddressModel.getAddressOrderAssociated(id);
     try {
       await AddressModel.removeAddress(id, user, (id === mainAddress.address_id), orderAssociated);
     } catch (err) {
