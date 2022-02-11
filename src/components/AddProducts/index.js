@@ -10,6 +10,7 @@ import { Select } from '@material-ui/core';
 import 'antd/dist/antd.css';
 import InputMask from 'react-input-mask';
 import CurrencyFormat from 'react-currency-format';
+import moneyMask from '../moneyMask/moneyMask';
 
 const api = axios.create({ baseURL: 'http://localhost:3000/' });
 
@@ -108,7 +109,7 @@ font-family: Roboto;
   justify-content:center;
 }
 `;
-PriceAndDiscont.Col1.Row2 = styled(CurrencyFormat)`
+PriceAndDiscont.Col1.Row2 = styled.input`
 display:flex;
 align-items:center;
 justify-content:initial;
@@ -287,7 +288,7 @@ export default function AddProducts({
     setProductName(event.target.value);
   }
   function handlePriceChange(event) {
-    setPrice(event.target.value);
+    setPrice(moneyMask(event.target.value));
   }
   function handleDiscountChange(event) {
     setDiscount(event.target.value);
@@ -300,7 +301,7 @@ export default function AddProducts({
 
     formData.append('category_id', categoryId);
     formData.append('product_name', productName);
-    formData.append('price', price);
+    formData.append('price', price.replace('R$ ', ''));
     formData.append('discount', discount);
     formData.append('description', description);
     formData.append('available', 1);
@@ -359,7 +360,7 @@ export default function AddProducts({
               input={<OutlinedInput />}
               style={{ width: '80%', height: '40px' }}
             >
-              {categories.map((category) => (
+              {categories?.map((category) => (
                 <MenuItem
                   key={category.category_id}
                   value={category.name}
@@ -377,11 +378,12 @@ export default function AddProducts({
               </PriceAndDiscont.Col1.Row1>
               <DivInput>
                 <PriceAndDiscont.Col1.Row2
-                  placeholder="R$ 00,000"
+                  placeholder="R$ 000.00"
                   required
                   value={price}
                   onChange={handlePriceChange}
                   decimalSeparator="."
+                  thousandsSeparator=","
                 />
               </DivInput>
             </PriceAndDiscont.Col1>
