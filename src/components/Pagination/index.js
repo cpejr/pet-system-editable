@@ -20,9 +20,15 @@ const List = styled.li`
 display:flex;
 list-style:none;
 padding: 0 2%;
+margin: 0;
+width: 6%;
+justify-content: center;
 border: thin solid ${({ theme }) => theme.colors.mediumGreen};
 border-radius:8px;
 align-items:center;
+@media(max-width:500px){
+  width:7%;
+  }
 `;
 
 const Text = styled.a`

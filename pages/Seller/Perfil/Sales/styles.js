@@ -45,8 +45,4 @@ flex-direction:row;
 justify-content:center;
 width:100%;
 margin: 5% 0;
-@media(max-width:560px){
-  justify-content:center;
-  width:45%;
-}
 `;
