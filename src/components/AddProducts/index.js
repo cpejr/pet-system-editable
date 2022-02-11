@@ -322,10 +322,11 @@ export default function AddProducts({
           width: 600,
         },
       });
+      closeModal();
     } catch (error) {
       console.error(error);
       notification.open({
-        message: 'Sucesso!',
+        message: 'Erro!',
         description:
           'Erro ao cadastrar o produto',
         className: 'ant-notification',
@@ -430,7 +431,6 @@ export default function AddProducts({
           <ButtonConfirm onClick={(e) => {
             e.preventDefault();
             handleSubmit();
-            closeModal();
           }}
           >
             Confirmar Cadastro
