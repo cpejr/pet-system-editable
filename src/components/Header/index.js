@@ -64,9 +64,7 @@ Header.Bottom = styled.div`
 
 export default function Header({ categories }) {
   const cart = useCart();
-  console.log(cart);
   const itemsCount = cart ? Object?.keys(cart?.cart).length : undefined;
-  console.log(itemsCount);
   const { user, store, logout } = useAuth();
 
   const [searchText, setSearchText] = useState('');
