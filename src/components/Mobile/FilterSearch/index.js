@@ -3,6 +3,10 @@ import styled from 'styled-components';
 import { AiOutlineStar } from 'react-icons/ai';
 import { HiOutlineFire } from 'react-icons/hi';
 import { FaTemperatureHigh } from 'react-icons/fa';
+import { Slider } from '@material-ui/core';
+import {
+  Price,
+} from '../../index';
 
 const Container = styled.div`
 display:flex;
@@ -12,6 +16,7 @@ flex-direction:column;
 width:100%;
 margin-bottom:10%;
 font-family:Roboto;
+margin-top: 50px;
 `;
 Container.Title = styled.p`
 display:flex;
@@ -20,7 +25,6 @@ justify-content:center;
 margin:0;
 width:100%;
 font-size:28px;
-
 `;
 // Ordenar
 const OrderContainer = styled.div`
@@ -350,6 +354,7 @@ outline:none;
 `;
 
 export default function Order() {
+  const [price, setPrice] = useState([0, 5000]);
   const [checkedAvaliation, setCheckedAvaliation] = useState('#111111');
   const handleClickAvaliation = () => {
     if (checkedAvaliation === '#111111') {
@@ -465,7 +470,7 @@ export default function Order() {
     <div>
 
       <Container>
-        <Container.Title>Ordenar</Container.Title>
+        {/* <Container.Title>Ordenar</Container.Title>
         <OrderContainer>
 
           <OrderContainerRow1
@@ -638,8 +643,10 @@ export default function Order() {
               R$ 6,99+
             </PriceDeliveryButton>
           </PriceDelivery.Prices>
-        </PriceDelivery>
-        <Submit>Aplicar</Submit>
+        </PriceDelivery> */}
+        {/* <Submit>Aplicar</Submit> */}
+
+        <Price setPrice={setPrice} />
 
       </Container>
     </div>
