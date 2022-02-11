@@ -101,7 +101,6 @@ export default function MySellerRequest({ value }) {
       setAmount(response.data.amount);
       setOrders(response.data.orders);
     } catch (error) {
-      console.log(error);
       toast('Erro ao obter dados sobre as vendas.', { position: toast.POSITION.BOTTOM_RIGHT });
     }
   }
