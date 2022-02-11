@@ -83,14 +83,13 @@ const Login = () => {
     try {
       if (await verify() === true) {
         const res = await api.get('attempts/' + email);
-        if (res.data.attempts >= 3 && moment() <= moment(res.data.lock_time)) {
+        if (res.data.attempts >= 2 && moment() <= moment(res.data.lock_time)) {
           setShowModal(true);
           const time = moment(res.data.lock_time).fromNow();
           setContent(time);
           toast('Usuário bloqueado', { position: toast.POSITION.BOTTOM_RIGHT });
         }
       }
-      const res = await api.get('attempts/' + email);
       login(email, password).then((response) => {
         if (response === 'Loja em espera') {
           toast('Sua solicitação para se tornar um parceiro ainda não foi avaliada', { position: toast.POSITION.BOTTOM_RIGHT });
