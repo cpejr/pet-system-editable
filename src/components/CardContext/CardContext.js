@@ -51,6 +51,7 @@ const removeAllFromCart = () => {
 
 export const useCart = () => {
     const cart = useContext(CartContext);
+    console.log(cart);
     return cart;
 }
   

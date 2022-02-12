@@ -162,7 +162,7 @@ export default function Header({ categories }) {
               color="#AA4545"
               style={{ cursor: 'pointer' }}
             />
-            {(itemsCount > 0) ? (
+            {(itemsCount > 0 && user && user.type !== 'admin') ? (
               <Header.Carrinho>
                 {itemsCount > 0 && <span>{itemsCount}</span>}
               </Header.Carrinho>
