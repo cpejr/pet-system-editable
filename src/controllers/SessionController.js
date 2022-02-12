@@ -12,19 +12,64 @@ export async function signIn(req, res) {
   try {
     const { email, password } = req.body;
     let firebase_id;
-    const attempt = await AttemptsModel.getAttemptByEmail(email);
-    if (attempt.attempts === 3
+    let attempt = await AttemptsModel.getAttemptByEmail(email);
+    if (attempt.attempts === 0) {
+      const body = {
+        lock_time: moment().add(5, 'minutes'),
+        attempts: attempt.attempts + 1,
+      };
+      await AttemptsModel.updateAttempt(body, email);
+    } else {
+      switch (attempt.attempts) {
+        case 1: {
+          const body = {
+            attempts: attempt.attempts + 1,
+          };
+          await AttemptsModel.updateAttempt(body, email);
+          break;
+        }
+        case 2: {
+          const body = {
+            attempts: attempt.attempts + 1,
+          };
+          await AttemptsModel.updateAttempt(body, email);
+          break;
+        }
+        case 3: {
+          const body = {
+            attempts: attempt.attempts + 1,
+          };
+          await AttemptsModel.updateAttempt(body, email);
+          break;
+        }
+        case 4: {
+          const body = {
+            attempts: attempt.attempts + 1,
+          };
+          await AttemptsModel.updateAttempt(body, email);
+          break;
+        }
+        default: {
+          // eslint-disable-next-line no-unused-vars
+          const body = {
+            attempts: attempt.attempts + 1,
+          };
+        }
+      }
+    }
+    attempt = await AttemptsModel.getAttemptByEmail(email);
+    if (attempt.attempts === 4
       && moment() <= moment(attempt.lock_time)) {
       return res.status(200).json('Bloqueado');
     }
-    if (attempt.attempts > 3 && moment() < moment(attempt.lock_time)) {
+    if (attempt.attempts > 4 && moment() < moment(attempt.lock_time)) {
       const body = {
         lock_time: moment(attempt.lock_time).add(5, 'minutes'),
       };
       await AttemptsModel.updateAttempt(body, email);
       return res.status(200).json('Bloqueado');
     }
-    if (attempt.attempts >= 2 && moment() > moment(attempt.lock_time)) {
+    if (attempt.attempts >= 3 && moment() >= moment(attempt.lock_time)) {
       const body = {
         lock_time: moment().add(5, 'minutes'),
         attempts: 0,
@@ -78,51 +123,6 @@ export async function signIn(req, res) {
 
       return res.status(200).json({ accessToken, store });
     } catch (error) {
-      if (attempt.attempts === 0) {
-        const body = {
-          lock_time: moment().add(5, 'minutes'),
-          attempts: attempt.attempts + 1,
-        };
-        await AttemptsModel.updateAttempt(body, email);
-      } else {
-        switch (attempt.attempts) {
-          case 1: {
-            const body = {
-              attempts: attempt.attempts + 1,
-            };
-            await AttemptsModel.updateAttempt(body, email);
-            break;
-          }
-          // eslint - disable - next - line no - fallthrough
-          case 2: {
-            const body = {
-              attempts: attempt.attempts + 1,
-            };
-            await AttemptsModel.updateAttempt(body, email);
-            break;
-          }
-          case 3: {
-            const body = {
-              attempts: attempt.attempts + 1,
-            };
-            await AttemptsModel.updateAttempt(body, email);
-            break;
-          }
-          case 4: {
-            const body = {
-              attempts: attempt.attempts + 1,
-            };
-            await AttemptsModel.updateAttempt(body, email);
-            break;
-          }
-          default: {
-            // eslint-disable-next-line no-unused-vars
-            const body = {
-              attempts: attempt.attempts + 1,
-            };
-          }
-        }
-      }
       console.error(error); //eslint-disable-line
       return res.status(400).json({ message: 'Email ou senha incorreto' });
     }

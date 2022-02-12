@@ -1,9 +1,11 @@
-/* eslint-disable max-len */
 import React, { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import moment from 'moment';
 import api from '../utils/api';
+
+moment.locale('pt-br');
 
 toast.configure();
 
@@ -24,9 +26,8 @@ function AuthProvider({ children }) {
   const [store, setStore] = useState(undefined);
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
-
   // eslint-disable-next-line consistent-return
-  async function login(email, password) {
+  async function login(email, password, setShowModal, setContent) {
     try {
       const response = await api.post('login', { email, password });
       if (response.data === 'Loja sem cadastro' || response.data === 'Loja em espera') {
@@ -43,6 +44,13 @@ function AuthProvider({ children }) {
         toast('Login efetuado com sucesso', { position: toast.POSITION.BOTTOM_RIGHT });
       }
     } catch (error) {
+      const resp = await api.get(`attempts/${email}`);
+      if (resp.data.attempts === 3 && moment() < moment(resp.data.lock_time)) {
+        setShowModal(true);
+        const time = moment(resp.data.lock_time).fromNow();
+        setContent(time);
+        toast('Usuário bloqueado', { position: toast.POSITION.BOTTOM_RIGHT });
+      }
       // eslint-disable-next-line no-console
       console.error(error);
       toast('E-mail ou senha incorretos!', { position: toast.POSITION.BOTTOM_RIGHT });
@@ -93,6 +101,7 @@ function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider value={{
+      // eslint-disable-next-line max-len
       user, store, login, setUser, logout, forgottenPassword, setStore, isLoading,
     }}
     >

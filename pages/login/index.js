@@ -65,32 +65,20 @@ const Login = () => {
     setShowModal(false);
   };
 
-  async function verify() {
-    try {
-      const res = await api.get('attempts/' + email);
-      if (email === res.data.email) {
-        return true
-      } else {
-        return false
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  }
 
   async function handleSubmit(event) {
     event.preventDefault()
     try {
-      if (await verify() === true) {
-        const res = await api.get('attempts/' + email);
-        if (res.data.attempts >= 2 && moment() <= moment(res.data.lock_time)) {
-          setShowModal(true);
-          const time = moment(res.data.lock_time).fromNow();
-          setContent(time);
-          toast('Usuário bloqueado', { position: toast.POSITION.BOTTOM_RIGHT });
-        }
+      const res = await api.get('attempts/' + email);
+      let time;
+      if (res.data.attempts > 2 && moment() < moment(res.data.lock_time)) {
+        setShowModal(true);
+        if (res.data.attempts >= 4) time = moment(res.data.lock_time).add(5, 'minutes').fromNow();
+        else time = moment(res.data.lock_time).fromNow();
+        setContent(time);
+        toast('Usuário bloqueado', { position: toast.POSITION.BOTTOM_RIGHT });
       }
-      login(email, password).then((response) => {
+      login(email, password, setShowModal, setContent).then((response) => {
         if (response === 'Loja em espera') {
           toast('Sua solicitação para se tornar um parceiro ainda não foi avaliada', { position: toast.POSITION.BOTTOM_RIGHT });
         }
