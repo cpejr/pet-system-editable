@@ -28,17 +28,19 @@ MobileHeader.Carrinho = styled.span`
 export default function MobileHeader() {
   const { user, store } = useAuth();
   const router = useRouter();
-  const [searchText, setSearchText] = useState('');
+  const [searchText] = useState('');
   const cart = useCart();
-  const itemsCount = Object.keys(cart.cart).length;
+  const itemsCount = cart ? cart.cart : undefined;
 
+  // eslint-disable-next-line consistent-return
   const HandleProfileButton = () => {
     if (!user && !store) return router.push('/login');
     if (store) return router.push('/Seller/Perfil/Products');
-    if (user?.type != 'admin') return router.push('/User/Perfil/MyRequests');
+    if (user?.type !== 'admin') return router.push('/User/Perfil/MyRequests');
     if (user?.type === 'admin') return router.push('/Admin');
   };
 
+  // eslint-disable-next-line consistent-return
   const ProfileButton = () => {
     if (!user && !store) {
       return (
@@ -62,8 +64,9 @@ export default function MobileHeader() {
 
   const SearchButton = () => router.push({ pathname: '/Search', query: { keyword: searchText } });
 
+  // eslint-disable-next-line consistent-return
   const PersonalButton = () => {
-    if (!user && !store || user?.type != 'admin') {
+    if ((!user && !store) || user?.type !== 'admin') {
       return (
         <Link href="/Carrinho">
           <MobileHeaderContainer.Col3>

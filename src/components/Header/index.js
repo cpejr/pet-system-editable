@@ -81,6 +81,7 @@ export default function Header({ categories }) {
     }
   };
 
+  // eslint-disable-next-line consistent-return
   const PersonalButton = () => {
     if (!user && !store) {
       return (
