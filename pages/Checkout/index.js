@@ -33,7 +33,7 @@ import {
 } from './styles';
 import SelectState from '../../src/components/SelectState';
 import initialState from '../../src/components/checkoutInitialState';
-import { useCart } from '../../src/components/CardContext/CardContext';
+import { useCart } from '../../src/components/CartContext/CartContext';
 import withAuthUser from '../../src/components/WithAuth/WithAuthUser';
 
 const Checkout = () => {

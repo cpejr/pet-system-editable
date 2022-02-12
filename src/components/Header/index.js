@@ -19,7 +19,7 @@ import {
   ItemBottomHeader,
   LogOut,
 } from './styles';
-import { useCart } from '../CardContext/CardContext';
+import { useCart } from '../CartContext/CartContext';
 
 Header.Wrapper = styled.div`
   display: flex;
@@ -64,7 +64,7 @@ Header.Bottom = styled.div`
 
 export default function Header({ categories }) {
   const cart = useCart();
-  const itemsCount = cart ? Object?.keys(cart?.cart).length : undefined;
+  const itemsCount = cart ? cart.cart : undefined;
   const { user, store, logout } = useAuth();
 
   const [searchText, setSearchText] = useState('');
@@ -162,7 +162,7 @@ export default function Header({ categories }) {
               color="#AA4545"
               style={{ cursor: 'pointer' }}
             />
-            {(itemsCount > 0 && user && user.type !== 'admin') ? (
+            {(itemsCount > 0) ? (
               <Header.Carrinho>
                 {itemsCount > 0 && <span>{itemsCount}</span>}
               </Header.Carrinho>

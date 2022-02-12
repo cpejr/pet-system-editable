@@ -14,7 +14,7 @@ import {
   CarrinhoCardText, StoreStatusClosed, StatusContainer, StoreOpenedTime,
 } from './styles';
 import StoreIsOpen from '../../src/components/StoreIsOpen';
-import { useCart } from '../../src/components/CardContext/CardContext';
+import { useCart } from '../../src/components/CartContext/CartContext';
 import { useAuth } from '../../src/contexts/AuthContext';
 
 toast.configure();

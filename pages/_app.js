@@ -7,7 +7,7 @@ import { AuthProvider } from '../src/contexts/AuthContext';
 import 'antd/dist/antd.css';
 import Footer from '../src/components/Footer';
 import MobileHeader from '../src/components/Mobile/MobileHeader';
-import { CartProvider } from '../src/components/CardContext/CardContext';
+import { CartProvider } from '../src/components/CartContext/CartContext';
 
 const GlobalStyle = createGlobalStyle`
   body {

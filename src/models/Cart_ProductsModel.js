@@ -17,6 +17,26 @@ module.exports = {
     }
   },
 
+  async getCart_AmountByCartId(id) {
+    try {
+      const order_products = await connection('Cart_Products')
+        .where('cart_id', id)
+        .select('*').innerJoin(
+          'Product',
+          'Cart_Products.product_id',
+          'Product.product_id',
+        );
+      let amount = 0;
+      for (const product of order_products) {
+        amount += product.amount;
+      }
+      return amount;
+    } catch (error) {
+      console.error(error);
+      throw new Error(error);
+    }
+  },
+
   async getAllCart_Products() {
     try {
       const order_products = await connection('Cart_Products')
