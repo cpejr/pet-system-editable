@@ -57,6 +57,7 @@ module.exports = {
         .where('firebase_id_store', id)
         .where('Order.created_at', '>=', `${filter.year}-${monthBegin}-01T00:00:00.000Z`)
         .where('Order.created_at', '<', `${filter.year}-${monthEnd}-01T00:00:00.000Z`)
+        .where('status', 'Finalizado')
         .innerJoin(
           'User',
           'Order.firebase_id',
@@ -93,6 +94,7 @@ module.exports = {
         .where('firebase_id_store', id)
         .where('Order.created_at', '>=', `${filter.year}-${monthBegin}-01T00:00:00.000Z`)
         .where('Order.created_at', '<', `${filter.year}-${monthEnd}-01T00:00:00.000Z`)
+        .where('status', 'Finalizado')
         .select('*');
 
       let amount = 0;
@@ -160,6 +162,7 @@ module.exports = {
         .where('firebase_id_store', id)
         .where('created_at', '>=', `${filter.year}-${monthBegin}-01T00:00:00.000Z`)
         .where('created_at', '<', `${filter.year}-${monthEnd}-01T00:00:00.000Z`)
+        .where('status', 'Finalizado')
         .first()
         .sum('total_price');
       if (orders.sum === null) {
@@ -204,6 +207,7 @@ module.exports = {
         .where('firebase_id_store', id)
         .where('created_at', '>=', `${filter.year}-${monthBegin}-01T00:00:00.000Z`)
         .where('created_at', '<', `${filter.year}-${monthEnd}-01T00:00:00.000Z`)
+        .where('status', 'Finalizado')
         .sum('admin_profit')
         .first();
       if (orders.sum === null) {
