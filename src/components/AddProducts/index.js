@@ -263,7 +263,9 @@ cursor: pointer;
 margin-top: 1rem;
 `;
 
-export default function AddProducts({ closeModal, categories, att, setAtt }) {
+export default function AddProducts({
+  closeModal, categories, att, setAtt,
+}) {
   const [productName, setProductName] = useState('');
   const [price, setPrice] = useState('');
   const [discount, setDiscount] = useState('');

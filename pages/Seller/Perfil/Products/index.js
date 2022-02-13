@@ -1,6 +1,4 @@
 import { useState, useEffect } from 'react';
-import Order from '../../../../src/components/Filter/Order';
-import Category from '../../../../src/components/Filter/Category';
 import Products from '../../../../src/components/Products';
 import ModalAddProducts from '../../../../src/components/ModalAddProducts';
 import EditAddRemoveSection from '../../../../src/components/Mobile/EditAddRemoveSection';
@@ -9,8 +7,8 @@ import ModalGroupEdit from '../../../../src/components/ModalGroupEdit';
 import ModalGroupRemove from '../../../../src/components/ModalGroupRemove';
 import { Title, PerfilStoreMenu } from '../../../../src/components/index';
 import {
-  Subtitle, Section, ProductContainer, MarketContainer,
-  TitleMarket, EditGroup, RemoveGroup, Group, Groups, Botoes,
+  ProductContainer, MarketContainer,
+  EditGroup, RemoveGroup, Group, Groups, Botoes,
 } from './styles';
 import api from '../../../../src/utils/api';
 import withAuthStore from '../../../../src/components/WithAuth/WithAuthStore';
@@ -69,15 +67,10 @@ const Perfil = ({ categories }) => {
       <EditAddRemoveSection categories={categories} setAtt={setAtt} att={att} />
       <MarketContainer />
       <ProductContainer>
-        <ProductContainer.Col1>
-          <Order />
-          <Category />
-          <MarketContainer.Col2 />
-          <Botoes>
-            <ModalAddProducts categories={categories} setAtt={setAtt} att={att} />
-            <ModalGroup />
-          </Botoes>
-        </ProductContainer.Col1>
+        <Botoes>
+          <ModalAddProducts categories={categories} setAtt={setAtt} att={att} />
+          <ModalGroup />
+        </Botoes>
         <ProductContainer.Col2>
           <Group>
             <PersonalGroups />

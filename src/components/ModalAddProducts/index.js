@@ -19,6 +19,7 @@ const ButtonAdd = styled(Button)`
   border-radius: 5px;
   cursor: pointer;
   outline: none;
+  margin-right: 5%;
   @media (max-width: 1010px) {
     display: flex;
     align-items: center;
@@ -31,6 +32,15 @@ const ButtonAdd = styled(Button)`
     display: none;
   }
 `;
+
+const Content = styled.div`
+  margin-right: 1%;
+  width: 200px;
+  @media (max-width: 700px) {
+    width:150px;
+  }
+`;
+
 function getModalStyle() {
   const top = 50;
   const left = 50;
@@ -63,7 +73,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 /*eslint-disable*/
-export default function ModalAddProducts({ categories, att, setAtt}) {
+export default function ModalAddProducts({ categories, att, setAtt }) {
   const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = useState(getModalStyle);
@@ -86,8 +96,7 @@ export default function ModalAddProducts({ categories, att, setAtt}) {
   );
 
   return (
-    <div>
-
+    <Content>
       <ButtonAdd onClick={handleOpen}>
         Adicionar produto
       </ButtonAdd>
@@ -99,6 +108,6 @@ export default function ModalAddProducts({ categories, att, setAtt}) {
         >
         {body}
       </Modal>
-    </div>
+    </Content>
   );
 }

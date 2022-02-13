@@ -63,7 +63,7 @@ export default function MobileHeader() {
   const SearchButton = () => router.push({ pathname: '/Search', query: { keyword: searchText } });
 
   const PersonalButton = () => {
-    if (!user && !store || user?.type != 'admin') {
+    if ((!user && !store) || user?.type != 'admin') {
       return (
         <Link href="/Carrinho">
           <MobileHeaderContainer.Col3>
