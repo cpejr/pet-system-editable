@@ -266,6 +266,7 @@ margin-top: 1rem;
 export default function AddProducts({
   closeModal, categories, att, setAtt,
 }) {
+  console.log(categories);
   const [productName, setProductName] = useState('');
   const [price, setPrice] = useState('');
   const [discount, setDiscount] = useState('');

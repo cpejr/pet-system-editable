@@ -48,6 +48,7 @@ Section.Select = styled.button`
 
 const Perfil = (props) => {
   const { order } = props;
+  console.log(order);
   return (
     <div>
       <Title>Editar meus dados:</Title>
