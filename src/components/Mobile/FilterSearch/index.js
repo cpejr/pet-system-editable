@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { AiOutlineStar } from 'react-icons/ai';
 import { HiOutlineFire } from 'react-icons/hi';
@@ -356,6 +356,7 @@ outline:none;
 export default function Order() {
   const [price, setPrice] = useState([0, 5000]);
   const [checkedAvaliation, setCheckedAvaliation] = useState('#111111');
+  
   const handleClickAvaliation = () => {
     if (checkedAvaliation === '#111111') {
       setCheckedAvaliation('#609694');
