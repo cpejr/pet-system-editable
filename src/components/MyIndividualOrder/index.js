@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import api from '../../utils/api';
-import MyProductRequestSmall from '../MyProductRequestSmall';
+import MyOrder from '../MyOrder';
 
 const ContainerDatas = styled.div`
   display: flex;
@@ -10,43 +10,67 @@ const ContainerDatas = styled.div`
   flex-direction: row;
   justify-content: center;
   margin: 5% 10%;
-  @media (max-width: 560px) {
+  @media (max-width: 800px) {
     flex-direction: column;
+    justify-content: center;
   }
 `;
 
 const BoxDatas = styled.div`
   display: flex;
   font: 1.5rem Roboto;
+  font-weight: 300;
   padding: 4% 4% 0 4%;
   flex-direction: column;
   width: 90%; 
   margin-left: 5%;
-  border-color: black;
+  margin-bottom: 2%;
+  margin-top: 2%;
+  border-color: ${({ theme }) => theme.colors.borderBoxColor};
   align-items: left;
   line-height: 100%;
   border-style: solid;
   border-width: 1px;
   border-radius: 5px;
-  margin-bottom: 5%;
-  @media (max-width: 976px) {
-    width: 100%;
-    margin-bottom: 2%;
+  @media (max-width: 800px) {
+    display:flex;
+    justify-content: center;
+    width:60vw;
+    font-size: 100%;
+    margin-right: 0;
+    margin-left: 0;
   }
-  @media (max-width: 560px) {
-    width: 80%;
-    font-size: 87.5%;
+  @media (max-width: 500px) {
+    width: 100%;
   }
 `;
 
 ContainerDatas.Col1 = styled.div`
-  width: 100%;
+  width: 50%;
   margin-right: 4%;
+  @media (max-width: 800px) {
+    display:flex;
+    justify-content: center;
+    margin-right: 0;
+    width: 90%;
+  }
+  @media (max-width: 500px) {
+    width: 95%;
+  }
 `;
 
 ContainerDatas.Col2 = styled.div`
-  width: 70%;
+  width: 50%;
   margin-left: 4%;
+  @media (max-width: 800px) {
+    display:flex;
+    justify-content: center;
+    margin-left: 0;
+    width: 90%;
+  }
+  @media (max-width: 500px) {
+    width: 95%;
+  }
 `;
 
 const Content = styled.div`
@@ -144,7 +168,7 @@ export default function MyIndividualOrder({ order }) {
           </BoxDatas>
         </ContainerDatas.Col1>
         <ContainerDatas.Col2>
-          <MyProductRequestSmall order={order.cart_product} />
+          <MyOrder order={order.cart_product} />
         </ContainerDatas.Col2>
       </ContainerDatas>
     );

@@ -11,6 +11,8 @@ const Title = styled.h1`
   display: flex;
   margin-top: 5%;
   font-family: Roboto;
+  font-size: 30px;
+  font-weight: 400;
   @media (max-width: 560px) {
     display: flex;
     align-items: center;
@@ -67,7 +69,7 @@ const Perfil = () => {
 
   return (
     <div>
-      <Title>Meu pedido:</Title>
+      <Title>Meu pedido</Title>
       <MyIndividualOrder order={order} />
     </div>
   );

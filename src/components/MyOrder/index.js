@@ -6,19 +6,26 @@ const ProductContainer = styled.div`
 display:flex;
 align-items:center;
 justify-content:center;
-width:40vw;
+width:90%;
+height: 16vh;
 margin-top:2%;
 margin-bottom:2%;
 border-style:solid;
 border-width:1px;  
+border-radius:5px;
 border-color:${({ theme }) => theme.colors.borderBoxColor};
-@media(max-width:560px){
-  width:100%;
-  margin-top:0%;
-margin-bottom:0%;
-border-left:none;
-border-right:none;
+@media(max-width:800px){
+  margin-right:0;
+  height:14vh;
+  width:60vw; 
 }
+@media(max-width: 500px){
+  width:100%;
+}
+@media(max-width: 300px){
+    height:22vh;
+}
+
 `;
 
 ProductContainer.Col1 = styled.div`
@@ -34,12 +41,10 @@ align-items:center;
 justify-content:center;
 flex-direction:column;
 width:70%;
-@media(max-width:960px){
-  font-size:14px;
-}
 @media(max-width:560px){
   font-size:14px;
 }
+
 `;
 ProductContainer.Col3 = styled.div`
 display:flex;
@@ -48,9 +53,17 @@ justify-content:center;
 vertical-align:bottom;
 width:15%;
 `;
-export default function MyProductRequest() {
+
+const Content = styled.div`
+display:flex;
+justify-content:center;
+flex-direction:column;
+align-items:center;
+`;
+
+export default function MyOrder() {
   return (
-    <div>
+    <Content>
       <ProductContainer>
         <ProductContainer.Col1>
           <Image src="/images/shampoo.jpg" width="250" height="200" />
@@ -77,6 +90,6 @@ export default function MyProductRequest() {
           <h2>1</h2>
         </ProductContainer.Col3>
       </ProductContainer>
-    </div>
+    </Content>
   );
 }
