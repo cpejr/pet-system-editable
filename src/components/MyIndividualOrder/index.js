@@ -73,8 +73,18 @@ ContainerDatas.Col2 = styled.div`
   }
 `;
 
-const Content = styled.div`
+const Field = styled.div`
   margin-bottom: 4%;
+  font-weight: 400;
+`;
+
+const Value = styled.p`
+`;
+
+const DataLine = styled.div`
+ display: flex;
+ flex-direction: row;
+ align-items: center;
 `;
 
 export default function MyIndividualOrder({ order }) {
@@ -124,47 +134,43 @@ export default function MyIndividualOrder({ order }) {
       <ContainerDatas>
         <ContainerDatas.Col1>
           <BoxDatas>
-            {order?.cart_product?.map((p) => (
-              <div>
-                <Content>
-                  {p.amount}
-                  x
-                  {p.product_name}
-                  R$
-                  {valorTotal(p.amount, p.final_price)}
-                </Content>
-              </div>
-            ))}
-            <Content>
-              Entrega em:
-              {address.street}
-              -
-              {address.number}
-              -
-              {address.neighbourhood}
-              -
-              {address.city}
-              /
-              {address.state}
-            </Content>
-            <Content>Taxa de entrega:</Content>
-            <Content>
-              Total:
-              {order.total_price}
-            </Content>
-            <Content>
-              Data do pedido:
-              {dataFormatada(order.created_at)}
-            </Content>
-            <Content>
-              Tipo de pagamento:
-              {order.payment_type}
-            </Content>
-            <Content>
-              Status do pedido:
-              {order.status}
-            </Content>
-            <Content>Colocar previsão de entrega ? </Content>
+            <DataLine>
+              <Field>Entrega em: </Field>
+              <Value>
+                {address.street}
+                -
+                {address.number}
+                -
+                {address.neighbourhood}
+                -
+                {address.city}
+                /
+                {address.state}
+              </Value>
+            </DataLine>
+            <DataLine>
+              <Field>Taxa de entrega: </Field>
+              <Value />
+            </DataLine>
+            <DataLine>
+              <Field>Total: </Field>
+              <Value>{order.total_price}</Value>
+            </DataLine>
+            <DataLine>
+              <Field>Data do pedido: </Field>
+              <Value>{dataFormatada(order.created_at)}</Value>
+            </DataLine>
+            <DataLine>
+              <Field>Tipo de pagamento: </Field>
+              <Value>{order.payment_type}</Value>
+            </DataLine>
+            <DataLine>
+              <Field>Status do pedido: </Field>
+              <Value>{order.status}</Value>
+            </DataLine>
+            <DataLine>
+              <Field>Colocar previsão de entrega ? </Field>
+            </DataLine>
           </BoxDatas>
         </ContainerDatas.Col1>
         <ContainerDatas.Col2>

@@ -12,7 +12,7 @@ const Title = styled.h1`
   margin-top: 5%;
   font-family: Roboto;
   font-size: 30px;
-  font-weight: 400;
+  font-weight: 500;
   @media (max-width: 560px) {
     display: flex;
     align-items: center;
@@ -55,7 +55,8 @@ const Perfil = () => {
 
   async function getOrder() {
     try {
-      const response = await api.get('order/c3548d5c-6842-4011-bb6a-9819072fd406');
+      const id = 'c3548d5c-6842-4011-bb6a-9819072fd406';
+      const response = await api.get(`order/${id}`);
       console.log(response.data);
       setOrder(response.data);
     } catch (error) {
