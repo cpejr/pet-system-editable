@@ -4,33 +4,18 @@ import { MdEdit } from "react-icons/md";
 import Link from "next/link";
 import Button from "@material-ui/core/Button";
 import api from "../../utils/api";
+import MyProductRequestSmall from '../MyProductRequestSmall';
 
 const ContainerDatas = styled.div`
   display: flex;
-  width: 100%;
+  width: 80%;
   align-items: center;
   flex-direction: row;
   justify-content: center;
-  margin-top: 5%;
+  margin: 5% 10%;
   @media (max-width: 560px) {
     flex-direction: column;
   }
-`;
-
-
-const Title = styled.h1`
-align-items:initial;
-display:flex;
-margin-left:5%;
-margin-top:2%;
-margin-bottom:1%;
-font-family: Roboto;
-@media(max-width:560px){
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    margin-bottom:2%;
-    }
 `;
 
 const horizontalLine = styled.div`
@@ -54,14 +39,17 @@ const SectionText = styled.button`
 const BoxDatas = styled.div`
   display: flex;
   font: 1.5rem Roboto;
+  padding: 4% 4% 0 4%;
   flex-direction: column;
-  width: 65%;
+  width: 90%; 
+  margin-left: 5%;
   border-color: black;
   align-items: left;
   line-height: 100%;
   border-style: solid;
   border-width: 1px;
   border-radius: 5px;
+  margin-bottom: 5%;
   @media (max-width: 976px) {
     width: 100%;
     margin-bottom: 2%;
@@ -70,6 +58,20 @@ const BoxDatas = styled.div`
     width: 80%;
     font-size: 87.5%;
   }
+`;
+
+ContainerDatas.Col1 = styled.div`
+  width: 100%;
+  margin-right: 4%;
+`;
+
+ContainerDatas.Col2 = styled.div`
+  width: 70%;
+  margin-left: 4%;
+`;
+
+const Content = styled.div`
+  margin-bottom: 4%;
 `;
 
 const RowEdit = styled.div`
@@ -132,26 +134,36 @@ export default function MyIndividualOrder(req) {
     return valor_total;
   }
 
-  if(order){
+  if (order) {
     return (
       <ContainerDatas>
+        <ContainerDatas.Col1>
           <BoxDatas>
-          <Title>Seu pedido em: {order.product_name}</Title>
-          {order?.cart_product?.map((p) => (
+            {order?.cart_product?.map((p) => (
               <div>
-                 <p>{p.amount}x {p.product_name} R${valorTotal(p.amount,p.final_price)}</p>
-            </div>
+                <Content>
+                  {p.amount}
+                  x
+                  {p.product_name}
+                  R$
+                  {valorTotal(p.amount, p.final_price)}
+                </Content>
+              </div>
             ))}
-            <p>Entrega em: {address.street} - {address.number} - {address.neighbourhood} - {address.city}/{address.state}</p>
-            <p>Taxa de entrega:</p>
-            <p>Total: {order.total_price}</p>
-            <p>Data do pedido:{dataFormatada(order.created_at)}</p>
-            <p>Tipo de pagamento:{order.payment_type}</p>
-            <p>Status do pedido:{order.status}</p>
-            <p>Colocar previsão de entrega ? </p>
+            <Content>Entrega em: {address.street} - {address.number} - {address.neighbourhood} - {address.city}/{address.state}</Content>
+            <Content>Taxa de entrega:</Content>
+            <Content>Total: {order.total_price}</Content>
+            <Content>Data do pedido:{dataFormatada(order.created_at)}</Content>
+            <Content>Tipo de pagamento:{order.payment_type}</Content>
+            <Content>Status do pedido:{order.status}</Content>
+            <Content>Colocar previsão de entrega ? </Content>
           </BoxDatas>
-        </ContainerDatas>
-      );
+        </ContainerDatas.Col1>
+        <ContainerDatas.Col2>
+          <MyProductRequestSmall order={order} />
+        </ContainerDatas.Col2>
+      </ContainerDatas>
+    );
   }else{
     return (
       <ContainerDatas>

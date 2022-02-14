@@ -320,7 +320,16 @@ export default function AddProducts({
         },
       });
     } catch (error) {
-      console.error(error);
+      notification.open({
+        message: 'Falha! :(',
+        description:
+          'O registro do produto foi não foi concluído.',
+        className: 'ant-notification',
+        top: '100px',
+        style: {
+          width: 600,
+        },
+      });
     }
   }
   return (

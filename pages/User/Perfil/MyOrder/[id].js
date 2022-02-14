@@ -1,15 +1,17 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { toast } from 'react-toastify';
 import MyIndividualOrder from '../../../../src/components/MyIndividualOrder';
 import api from '../../../../src/utils/api';
 import withAuthUser from '../../../../src/components/WithAuth/WithAuthUser';
 
 const Title = styled.h1`
-  align-items: initial;
   display: flex;
-  margin-left: 5%;
-  margin-top: 2%;
-  margin-bottom: 1%;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  margin-top: 5%;
+  margin-bottom: 2%;
   font-family: Roboto;
   @media (max-width: 560px) {
     display: flex;
@@ -46,21 +48,32 @@ Section.Select = styled.button`
   font-family: Roboto;
 `;
 
-const Perfil = (props) => {
-  const { order } = props;
+toast.configure();
+
+const Perfil = (context) => {
+  const [order, setOrder] = useState({});
+
+  async function getOrder() {
+    console.log(context);
+    try {
+      const { id } = context.query;
+      const response = api.get(`/order/${id}`);
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+      toast('Erro ao obter pedido', { position: toast.POSITION.BOTTOM_RIGHT });
+    }
+  }
+
+  useEffect(() => {
+    getOrder();
+  }, []);
   return (
     <div>
-      <Title>Editar meus dados:</Title>
+      <Title>Dados do pedido:</Title>
       <MyIndividualOrder order={order} />
     </div>
   );
 };
 
 export default withAuthUser(Perfil);
-
-export async function getServerSideProps(context) {
-  const { id } = context.query;
-  const response = await api.get(`order/${id}`);
-  const order = response.data;
-  return { props: { order } };
-}
