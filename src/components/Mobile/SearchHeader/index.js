@@ -110,7 +110,7 @@ border-bottom:solid;
 border-width:1px;
 `;
 
-export default function SearchHeader({keyword}) {
+export default function SearchHeader({ keyword }) {
   const [checkedStore, setCheckedStore] = useState('#AAABB0');
   const handleClickStore = () => {
     if (checkedStore === '#AAABB0') {
@@ -139,9 +139,9 @@ export default function SearchHeader({keyword}) {
   const [searchText, setSearchText] = useState(keyword);
   const router = useRouter();
   const handleFilterSearchText = (e) => setSearchText(e.target.value);
-  const handleSubmit = () => router.push({ pathname: "/Search", query: { keyword: searchText } });
+  const handleSubmit = () => router.push({ pathname: '/Search', query: { keyword: searchText } });
   const handleKeypress = (e) => {
-    //it triggers by pressing the enter key
+    // it triggers by pressing the enter key
     if (e.key === 'Enter') {
       handleSubmit();
     }
@@ -152,26 +152,27 @@ export default function SearchHeader({keyword}) {
         <ContainerSearch>
           <TextBox>
             <TextBox.SearchContainer>
-            <Link href={{ pathname: "/Search" }}>
-            <BsSearch
-                size="30"
-                type="submit"
-                onSubmit={handleSubmit}
-                style={{ color: '#609694' }}
+              <Link href={{ pathname: '/Search' }}>
+                <BsSearch
+                  size="30"
+                  type="submit"
+                  onSubmit={handleSubmit}
+                  style={{ color: '#609694' }}
+                />
+              </Link>
+              <TextBox.Search
+                value={searchText}
+                type="text"
+                onChange={handleFilterSearchText}
+                onKeyPress={handleKeypress}
               />
-            </Link>
-            <TextBox.Search
-              value={searchText}
-              type="text"
-              onChange={handleFilterSearchText}
-              onKeyPress={handleKeypress}
-            />
               <TextBox.Search type="text" />
-            <Link
-              onKeyPress={handleKeypress} href={{ pathname: "/Search", query: { keyword: searchText } }}
-            >
-              <CgCloseO onClick={() => setSearchText("")} size="30" style={{ color: '#609694' }} />
-            </Link>
+              <Link
+                onKeyPress={handleKeypress}
+                href={{ pathname: '/Search', query: { keyword: searchText } }}
+              >
+                <CgCloseO onClick={() => setSearchText('')} size="30" style={{ color: '#609694' }} />
+              </Link>
             </TextBox.SearchContainer>
           </TextBox>
           <ContainerSearch.Col2>

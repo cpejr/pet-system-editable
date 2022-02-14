@@ -8,7 +8,7 @@ import {
   Price,
 } from '../../index';
 
-const Container = styled.div`
+const ContainerFilter = styled.div`
 display:flex;
 align-items:center;
 justify-content:center;
@@ -17,15 +17,19 @@ width:100%;
 margin-bottom:10%;
 font-family:Roboto;
 margin-top: 50px;
+@media(min-width:699px){
+      display:none;
+      margin: 100%;
+    }
 `;
-Container.Title = styled.p`
-display:flex;
-align-items:center;
-justify-content:center;
-margin:0;
-width:100%;
-font-size:28px;
-`;
+// Container.Title = styled.p`
+// display:flex;
+// align-items:center;
+// justify-content:center;
+// margin:0;
+// width:100%;
+// font-size:28px;
+// `;
 // Ordenar
 const OrderContainer = styled.div`
 display:flex;
@@ -350,13 +354,16 @@ border: 0;
 border-radius: 5px;
 cursor:pointer;
 outline:none;
+@media(max-width:320px){
+  width: 70%;
+    }
 
 `;
 
 export default function Order() {
   const [price, setPrice] = useState([0, 5000]);
   const [checkedAvaliation, setCheckedAvaliation] = useState('#111111');
-  
+
   const handleClickAvaliation = () => {
     if (checkedAvaliation === '#111111') {
       setCheckedAvaliation('#609694');
@@ -470,9 +477,9 @@ export default function Order() {
   return (
     <div>
 
-      <Container>
-        {/* <Container.Title>Ordenar</Container.Title>
-        <OrderContainer>
+      <ContainerFilter>
+        {/* <Container.Title>Faixa de Preço</Container.Title> */}
+        {/* <OrderContainer>
 
           <OrderContainerRow1
             onClick={handleClickAvaliation}
@@ -484,9 +491,9 @@ export default function Order() {
             <OrderContainerRow1.Col2>
               Avaliação
             </OrderContainerRow1.Col2>
-          </OrderContainerRow1>
+          </OrderContainerRow1> */
 
-          <OrderContainerRow2
+          /* <OrderContainerRow2
             onClick={handleClickPopular}
             style={{ color: checkedPopular }}
           >
@@ -574,10 +581,10 @@ export default function Order() {
             <CategoryContainer.Row7.Col2>
               Marca7
             </CategoryContainer.Row7.Col2>
-          </CategoryContainer.Row7>
+          </CategoryContainer.Row7> */}
 
-        </CategoryContainer>
-        <Container.Title>Faixa de preço</Container.Title>
+        {/* </CategoryContainer> */}
+        {/* <Container.Title>Faixa de preço</Container.Title>
         <ContainerButtons>
           <ContainerButtons.Col>
             <Button
@@ -644,12 +651,13 @@ export default function Order() {
               R$ 6,99+
             </PriceDeliveryButton>
           </PriceDelivery.Prices>
-        </PriceDelivery> */}
-        {/* <Submit>Aplicar</Submit> */}
+        </PriceDelivery>  */}
 
-        <Price setPrice={setPrice} />
+         <Price setPrice={setPrice} />
 
-      </Container>
+        <Submit type="submit">Aplicar</Submit>
+
+      </ContainerFilter>
     </div>
   );
 }
