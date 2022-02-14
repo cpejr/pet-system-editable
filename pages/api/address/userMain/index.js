@@ -1,4 +1,4 @@
-import { getUserMainAddressById } from '../../../../src/controllers/AddressController';
+import { getUserMainAddressById, changeMainAddress } from '../../../../src/controllers/AddressController';
 import { withAuthValidation } from '../../../../src/utils/Auth';
 
 export default function handler(req, res) {
@@ -7,6 +7,9 @@ export default function handler(req, res) {
     console.log(method);
     if (method === 'GET') {
       return withAuthValidation(getUserMainAddressById)(req, res);
+    }
+    if (method === 'PUT') {
+      return withAuthValidation(changeMainAddress)(req, res);
     }
     return res.status(500).json({ message: 'Internal Server Error' });
   } catch (err) {

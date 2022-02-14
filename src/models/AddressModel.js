@@ -39,8 +39,8 @@ module.exports = {
         .where('address_id', id)
         .first();
 
-      if(order) return true;
-      
+      if (order) return true;
+
       return false;
     } catch (error) {
       console.error(error);
@@ -184,13 +184,13 @@ module.exports = {
           .where({ address_id: id })
           .delete();
 
-        if(isMainAddress){
-          const nextAddress =  await connection('User_Address')
+        if (isMainAddress) {
+          const nextAddress = await connection('User_Address')
             .where({ firebase_id: user.firebase_id })
             .select('*')
             .first();
-           
-          if(nextAddress){
+
+          if (nextAddress) {
             nextAddress.main_address = true;
             await connection('User_Address')
               .where({ address_id: nextAddress.address_id })
@@ -205,7 +205,7 @@ module.exports = {
           .delete();
       }
 
-      const response = orderAssociated ? 'Order associated' : await connection('Address') 
+      const response = orderAssociated ? 'Order associated' : await connection('Address')
         .where({ address_id: id })
         .delete();
 
@@ -221,6 +221,23 @@ module.exports = {
       const response = await connection('Address')
         .where({ address_id: id })
         .update(address);
+      return response;
+    } catch (error) {
+      console.error(error);
+      throw new Error(error);
+    }
+  },
+
+  async changeMainAddress(firebase_id, address_id) {
+    try {
+      await connection('User_Address')
+        .where({ firebase_id })
+        .update({ main_address: false });
+
+      const response = await connection('User_Address')
+        .where({ address_id })
+        .update({ main_address: true });
+
       return response;
     } catch (error) {
       console.error(error);
