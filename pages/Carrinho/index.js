@@ -153,7 +153,7 @@ export default function Carrinho() {
 
   async function handleSubmit() {
     try {
-      await api.put(`/address/userMain/${address}`);
+      await api.put(`/address/userMain/${address.address_id}`);
       router.push('/Checkout');
     } catch (error) {
       console.error(error);

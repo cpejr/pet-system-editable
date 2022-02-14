@@ -41,23 +41,16 @@ export const SelectAddressBody = styled.div`
 `;
 
 export const SelectedAddressBody = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin-left: 10em;
-  margin-right: 10em;
+  margin-left: 2em;
+  margin-right: 2em;
   margin-bottom: 1em;
-  width: 80%;
+  width: 40%;
 
   @media screen and (max-width: 600px) {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin-top: 10em;
-    margin-bottom: 10em;
-    margin-right: 10em;
-    margin-left: 5em;
-    width: 80%;
+    margin-left: 4em;
+    margin-right: 3em;
+    margin-bottom: 3em;
+    width: 70%;
   }
 `;
 
