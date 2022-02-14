@@ -12,6 +12,7 @@ import WindowDivider from '../WindowDivider';
 import api from '../../utils/api';
 import Title from '../Title';
 import RegionsDelivery from '../RegionsDelivery';
+import WorkingDaysEdit from '../WorkingDaysEdit';
 import {
   Edit, MyFormGroup, Name, NumbersForms, DDD, PhoneFormControl,
   DDDFormControl, TimeFormControl, Register, Buttons, FormRegister,
@@ -28,6 +29,7 @@ export default function MyStoreDataEdit() {
   const [phone, setPhone] = useState(store.phone.substring(2));
   const [opening_time, setOpenTime] = useState(store.opening_time);
   const [closing_time, setCloseTime] = useState(store.closing_time);
+  const [situation, setSituation] = useState(store.situation);
   const [page, setPage] = useState(0);
   const router = useRouter();
 
@@ -101,6 +103,37 @@ export default function MyStoreDataEdit() {
       setDados({ ...dados, [field]: aux });
     }
   }
+  const opening = [
+    openingTimeSeg,
+    openingTimeTer,
+    openingTimeQua,
+    openingTimeQui,
+    openingTimeSex,
+    openingTimeSab,
+    openingTimeDom,
+  ];
+  const closing = [
+    closingTimeSeg,
+    closingTimeTer,
+    closingTimeQua,
+    closingTimeQui,
+    closingTimeSex,
+    closingTimeSab,
+    closingTimeDom,
+  ];
+  const Situation = [
+    situationSeg,
+    situationTer,
+    situationQua,
+    situationQui,
+    situationSex,
+    situationSab,
+    situationDom,
+  ];
+  const options = [
+    'Aberto',
+    'Fechado',
+  ];
 
   const handleOpen = () => {
     setOpen(true);
@@ -110,12 +143,12 @@ export default function MyStoreDataEdit() {
     setOpen(false);
   };
 
-  const handleNext = () => {
-    setPage(1);
+  const handleNext = (handlePage) => {
+    setPage(handlePage);
   };
 
-  const handleBack = () => {
-    setPage(0);
+  const handleBack = (handlePage) => {
+    setPage(handlePage);
   };
 
   async function handleSubmit(event) {
@@ -133,8 +166,9 @@ export default function MyStoreDataEdit() {
       firebase_id_store: store.firebase_id_store,
       company_name,
       phone: ddd + phone,
-      opening_time,
-      closing_time,
+      opening_time: String(opening),
+      closing_time: String(closing),
+      situation: String(Situation),
       shipping_tax: String(deliveryTax),
       delivery_time: String(deliveryTime),
     };
@@ -212,35 +246,25 @@ export default function MyStoreDataEdit() {
                     />
                   </MyFormGroup>
                 </NumbersForms>
-                <NumbersForms>
-                  <MyFormGroup>
-                    <FormLabel>Abertura</FormLabel>
-                    <TimeFormControl
-                      type="numbers"
-                      placeholder="00:00"
-                      required
-                      value={opening_time}
-                      onChange={(e) => setOpenTime(e.target.value)}
-                    />
-                  </MyFormGroup>
-                  <MyFormGroup>
-                    <FormLabel>Fechamento</FormLabel>
-                    <TimeFormControl
-                      type="numbers"
-                      placeholder="00:00"
-                      required
-                      value={closing_time}
-                      onChange={(e) => setCloseTime(e.target.value)}
-                    />
-                  </MyFormGroup>
-                </NumbersForms>
                 <Buttons>
                   <CancelSubmit onClick={handleClose}>Cancelar</CancelSubmit>
-                  <Submit onClick={handleNext}>Próximo</Submit>
+                  <Submit onClick={() => handleNext(1)}>Próximo</Submit>
                 </Buttons>
               </>
             )}
             {page === 1 && (
+              <>
+                <Title>Formulário de edição</Title>
+                <MyFormGroup>
+                <WorkingDaysEdit  />
+                </MyFormGroup>
+                <Buttons>
+                  <CancelSubmit onClick={() => handleBack(0)}>Voltar</CancelSubmit>
+                  <Submit onClick={() => handleNext(2)}>Próximo</Submit>
+                </Buttons>
+              </>
+            )}
+            {page === 2 && (
               <>
                 <MyFormGroup>
                   <RegionsDelivery
@@ -250,7 +274,7 @@ export default function MyStoreDataEdit() {
                   />
                 </MyFormGroup>
                 <Buttons>
-                  <CancelSubmit onClick={handleBack}>Voltar</CancelSubmit>
+                  <CancelSubmit onClick={() => handleBack(1)}>Voltar</CancelSubmit>
                   <Submit onClick={handleSubmit}>Atualizar</Submit>
                 </Buttons>
               </>
