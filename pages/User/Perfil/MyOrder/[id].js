@@ -54,6 +54,7 @@ const Perfil = () => {
   async function getOrder() {
     try {
       const response = await api.get('order/c3548d5c-6842-4011-bb6a-9819072fd406');
+      console.log(response.data);
       setOrder(response.data);
     } catch (error) {
       toast('Erro ao obter pedido', { position: toast.POSITION.BOTTOM_RIGHT });
