@@ -174,7 +174,7 @@ export default function MyIndividualOrder({ order }) {
           </BoxDatas>
         </ContainerDatas.Col1>
         <ContainerDatas.Col2>
-          <MyOrder order={order.cart_product} />
+          <MyOrder products={order.cart_product} />
         </ContainerDatas.Col2>
       </ContainerDatas>
     );

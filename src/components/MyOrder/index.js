@@ -40,7 +40,7 @@ display:flex;
 align-items:center;
 justify-content:center;
 flex-direction:column;
-width:70%;
+width:75%;
 @media(max-width:560px){
   font-size:14px;
 }
@@ -51,7 +51,7 @@ display:flex;
 align-items:center;
 justify-content:center;
 vertical-align:bottom;
-width:15%;
+width:10%;
 `;
 
 const Content = styled.div`
@@ -61,35 +61,34 @@ flex-direction:column;
 align-items:center;
 `;
 
-export default function MyOrder() {
-  return (
-    <Content>
-      <ProductContainer>
-        <ProductContainer.Col1>
-          <Image src="/images/shampoo.jpg" width="250" height="200" />
-        </ProductContainer.Col1>
-        <ProductContainer.Col2>
-          <h4>Shampoo para Cachorro Filhote Sanol 500ml</h4>
-          <p>R$ 17,00</p>
-        </ProductContainer.Col2>
-        <ProductContainer.Col3>
-          <h2>1</h2>
-        </ProductContainer.Col3>
-      </ProductContainer>
-      <ProductContainer>
-        <ProductContainer.Col1>
-          <Image src="/images/racao.jpg" width="250" height="200" />
-        </ProductContainer.Col1>
-        <ProductContainer.Col2>
-          <h4>
-            Golden Power Training Filhote para Cães Sabor Frango e Arroz - 15kg
-          </h4>
-          <p>R$ 170,00</p>
-        </ProductContainer.Col2>
-        <ProductContainer.Col3>
-          <h2>1</h2>
-        </ProductContainer.Col3>
-      </ProductContainer>
-    </Content>
-  );
+const Name = styled.div`
+display:flex;
+justify-content:center;
+align-items:center;
+font-weight:300;
+font-family:Roboto;
+font-size:1.2em;
+margin-bottom:2%;
+`;
+
+export default function MyOrder({ products }) {
+    const myLoader = ({ src }) => `https://s3-sa-east-1.amazonaws.com/petsystembucket/${src}`;
+    return (
+      <div>
+        { products.map((product) => (
+          <ProductContainer>
+            <ProductContainer.Col1>
+              <Image loader={myLoader} src={product.img} alt="" width="250" height="200" />
+            </ProductContainer.Col1>
+            <ProductContainer.Col2>
+              <Name>{product.product_name}</Name>
+              <p>{`R$${product.price}`}</p>
+            </ProductContainer.Col2>
+            <ProductContainer.Col3>
+              <h2>{product.amount}</h2>
+            </ProductContainer.Col3>
+          </ProductContainer>
+        ))}
+      </div>
+    );
 }
