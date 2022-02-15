@@ -68,7 +68,7 @@ margin:2%;
 `;
 
 export default function MySalesInfo({ orders }) {
-  if (orders.length === 0) {
+  if (orders?.length === 0) {
     return (
       <RequestContainer>
         Não existem pedidos nessa data.
@@ -78,7 +78,7 @@ export default function MySalesInfo({ orders }) {
   return (
     <RequestContainer>
       <OrderText>
-        {orders.map((order) => (
+        {orders?.map((order) => (
           <>
             <UserBox>
               <UserBox.Col1>{order.name}</UserBox.Col1>

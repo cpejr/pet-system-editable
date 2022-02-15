@@ -24,8 +24,8 @@ module.exports = {
         .where('firebase_id', firebase_id)
         .select('*');
       const orderProducts = await Cart_ProductsModel.getAllCart_Products(orders.cart_id);
-      orders.forEach((order) => {
-        const CartProductsFilter = orderProducts.filter(
+      orders?.forEach((order) => {
+        const CartProductsFilter = orderProducts?.filter(
           (CartProducts) => CartProducts.cart_id === order.cart_id,
         );
         order.CartProducts = CartProductsFilter;

@@ -56,7 +56,7 @@ export default function MyProductRequest({ products }) {
 
   return (
     <div>
-      {products.map((product) => (
+      {products?.map((product) => (
         <>
           <ProductContainer>
             <ProductContainer.Col1>

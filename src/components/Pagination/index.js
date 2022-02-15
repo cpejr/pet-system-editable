@@ -50,7 +50,7 @@ const Pagination = ({
         <List>
           <AiOutlineArrowLeft onClick={() => paginate(previousPage)} />
         </List>
-        {pageNumbers.map((number) => (
+        {pageNumbers?.map((number) => (
           <List key={number}>
             <Text onClick={() => paginate(number)}>
               {number}
