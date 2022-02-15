@@ -10,7 +10,7 @@ import { CgDollar } from 'react-icons/cg';
 import styled from 'styled-components';
 import { MobileHeaderContainer, MobileHeaderSpace } from './styles';
 import { useAuth } from '../../../contexts/AuthContext';
-import { useCart } from '../../CardContext/CardContext';
+import { useCart } from '../../CartContext/CartContext';
 
 MobileHeader.Carrinho = styled.span`
   font-size: 12px;
@@ -30,7 +30,7 @@ export default function MobileHeader() {
   const router = useRouter();
   const [searchText] = useState('');
   const cart = useCart();
-  const itemsCount = Object.keys(cart.cart).length;
+  const itemsCount = cart ? cart.cart : undefined;
 
   const HandleProfileButton = () => {
     if (!user && !store) return router.push('/login');
@@ -65,7 +65,7 @@ export default function MobileHeader() {
       return (
         <Link href="/Carrinho">
           <MobileHeaderContainer.Col3>
-            {(itemsCount > 0) ? (
+            {(itemsCount > 0 && user) ? (
               <MobileHeader.Carrinho>
                 {itemsCount > 0 && <span>{itemsCount}</span>}
               </MobileHeader.Carrinho>
