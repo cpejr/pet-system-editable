@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import { BsSearch } from 'react-icons/bs';
 import { CgCloseO } from 'react-icons/cg';
+import Link from 'next/link';
 import ModalFilterSearch from '../ModalFilterSearch';
 
 const Container = styled.div`
@@ -25,7 +27,6 @@ flex-direction:row;
 const TextBox = styled.div`
     display:flex;
     align-items:center;
-    justify-content: space-around;
     height: 100px;
     width: 70%;
     border-radius: 5px;
@@ -108,7 +109,7 @@ border-bottom:solid;
 border-width:1px;
 `;
 
-export default function SearchHeader() {
+export default function SearchHeader({ setPrice }) {
   const [checkedStore, setCheckedStore] = useState('#AAABB0');
   const handleClickStore = () => {
     if (checkedStore === '#AAABB0') {
@@ -133,20 +134,42 @@ export default function SearchHeader() {
       setCheckedService('#AAABB0');
     }
   };
+
+  const [searchText, setSearchText] = useState('');
+  const router = useRouter();
+  const handleFilterSearchText = (e) => setSearchText(e.target.value);
+  const handleSubmit = () => router.push({ pathname: '/Search', query: { keyword: searchText } });
+  const handleKeypress = (e) => {
+    // it triggers by pressing the enter key
+    if (e.key === 'Enter') {
+      handleSubmit();
+    }
+  };
   return (
     <div>
       <Container>
         <ContainerSearch>
           <TextBox>
             <TextBox.SearchContainer>
-              <BsSearch size="20" style={{ color: '#609694' }} />
-              <TextBox.Search type="text" />
-              <CgCloseO size="20" style={{ color: '#609694' }} />
+              <Link href={{ pathname: '/Search', query: { keyword: searchText } }}>
+                <BsSearch
+                  size="30"
+                  type="submit"
+                  onClick={handleSubmit}
+                  style={{ color: '#609694' }}
+                />
+              </Link>
+              <TextBox.Search
+                value={searchText}
+                type="text"
+                onChange={handleFilterSearchText}
+                onKeyPress={handleKeypress}
+              />
+              <Link href={{ pathname: '/Search' }}>
+                <CgCloseO onClick={() => setSearchText('')} />
+              </Link>
             </TextBox.SearchContainer>
           </TextBox>
-          <ContainerSearch.Col2>
-            Cancelar
-          </ContainerSearch.Col2>
         </ContainerSearch>
         <TypeContainer>
           <TypeContainer.Cols
@@ -168,7 +191,7 @@ export default function SearchHeader() {
             Serviços
           </TypeContainer.Cols3>
         </TypeContainer>
-        <ModalFilterSearch />
+        <ModalFilterSearch setPrice={setPrice} />
       </Container>
     </div>
   );

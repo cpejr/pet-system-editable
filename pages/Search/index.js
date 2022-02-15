@@ -119,7 +119,7 @@ export default function Search({ keyword, id, categories }) {
   if (checkedProducts === '#609694') {
     return (
       <div>
-        <SearchHeader />
+        <SearchHeader setPrice={setPrice} />
         <TypeContainer>
           <TypeContainer.Cols
             onClick={handleClickProducts}
