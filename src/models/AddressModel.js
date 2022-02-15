@@ -55,9 +55,9 @@ module.exports = {
         .where('main_address', true)
         .first();
 
-      const address = await connection('Address')
+      const address = addressRelation ? await connection('Address')
         .where('address_id', addressRelation.address_id)
-        .first();
+        .first() : undefined;
 
       return address;
     } catch (error) {

@@ -84,6 +84,12 @@ export default function Carrinho() {
         api.get(`/addresses/${user.firebase_id}`).then((response) => {
           setAddresses(response.data);
         });
+        api.get('address/userMain').then((response) => {
+          if (response?.data?.address_id) {
+            setAddress(response.data);
+            setAddressId(response.data.address_id);
+          }
+        });
       } catch (error) {
         console.error(error);
       }
@@ -153,14 +159,14 @@ export default function Carrinho() {
 
   async function handleSubmit() {
     try {
-      await api.put(`/address/userMain/${address.address_id}`);
+      await api.put('/address/userMain/', { address_id: address.address_id });
       router.push('/Checkout');
     } catch (error) {
       console.error(error);
     }
   }
 
-  if (!address) {
+  if (!address && products.length > 0) {
     return (
       <>
         <CarrinhoTitle>
@@ -220,8 +226,7 @@ export default function Carrinho() {
               </CarrinhoValorText>
               <CarrinhoValorText>Frete:</CarrinhoValorText>
               <CarrinhoValorText>
-                R$
-                {shippingTax}
+                {parseFloat(shippingTax) === 0 ? 'Gratis' : `R$${shippingTax}`}
               </CarrinhoValorText>
               <CarrinhoValorText>Total</CarrinhoValorText>
               <CarrinhoValorText>
