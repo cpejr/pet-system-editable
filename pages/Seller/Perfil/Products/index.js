@@ -9,24 +9,32 @@ import ModalGroupEdit from '../../../../src/components/ModalGroupEdit';
 import ModalGroupRemove from '../../../../src/components/ModalGroupRemove';
 import { Title, PerfilStoreMenu } from '../../../../src/components/index';
 import {
-  Subtitle, Section, ProductContainer, MarketContainer,
-  TitleMarket, EditGroup, RemoveGroup, Group, Groups, Botoes,
+  ProductContainer, MarketContainer,
+  EditGroup, RemoveGroup, Group, Groups, Botoes,
 } from './styles';
 import api from '../../../../src/utils/api';
 import withAuthStore from '../../../../src/components/WithAuth/WithAuthStore';
 
-const Perfil = ({ categories }) => {
+const Perfil = () => {
+  const [categories, setCategories] = useState([]);
   const [groups, setGroups] = useState([]);
   const [products, setProducts] = useState([]);
   const [att, setAtt] = useState(false);
 
   useEffect(() => {
-    api.get('group').then((res) => {
-      setGroups(res.data);
-    });
-    api.get('/product').then((res) => {
-      setProducts(res.data);
-    });
+    try {
+      api.get('category').then((res) => {
+        setCategories(res.data);
+      });
+      api.get('group').then((res) => {
+        setGroups(res.data);
+      });
+      api.get('/product').then((res) => {
+        setProducts(res.data);
+      });
+    } catch (error) {
+      console.error(error);
+    }
   }, [att]);
 
   const PersonalGroups = () => (
@@ -89,12 +97,3 @@ const Perfil = ({ categories }) => {
 };
 
 export default withAuthStore(Perfil);
-
-export async function getStaticProps() {
-  const { data: categories } = await api.get('category');
-
-  return {
-    props: { categories },
-    revalidate: 60, // 1 minuto
-  };
-}
