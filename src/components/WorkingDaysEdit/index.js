@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import 'antd/dist/antd.css';
-import { makeStyles } from '@material-ui/core/styles';
-import { toast } from 'react-toastify';
-import Input from '@material-ui/core/Input';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
+import React, { useState } from "react";
+import "antd/dist/antd.css";
+import { makeStyles } from "@material-ui/core/styles";
+import { toast } from "react-toastify";
+import Input from "@material-ui/core/Input";
+import MenuItem from "@material-ui/core/MenuItem";
+import Select from "@material-ui/core/Select";
 import {
   StoreBodyWrapper,
   StoreBody,
@@ -13,7 +13,7 @@ import {
   ItemFormulary,
   DividedItemFormulary,
   BottomFormulary,
-} from '../BodyForms';
+} from "../BodyForms";
 import {
   TitleStore,
   SubtitleStore,
@@ -21,36 +21,36 @@ import {
   SubText,
   TextBox,
   Submit,
-} from '../FormComponents';
-import MaskedInput from '../MasketInput';
-import 'react-toastify/dist/ReactToastify.css';
-import { CancelSubmit, Buttons } from './styles';
+} from "../FormComponents";
+import MaskedInput from "../MasketInput";
+import "react-toastify/dist/ReactToastify.css";
+import { CancelSubmit, Buttons } from "./styles";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(0),
     minWidth: 120,
     maxWidth: 300,
-    width: '90%',
-    marginTop: '10px',
-    marginBottom: '10px',
-    height: '25px',
-    borderRadius: '5px',
-    border: '1px solid #AAABB0',
-    background: '#F2F2F2',
-    padding: '1px 2px',
-    fontFamily: 'Roboto',
+    width: "90%",
+    marginTop: "10px",
+    marginBottom: "10px",
+    height: "25px",
+    borderRadius: "5px",
+    border: "1px solid #AAABB0",
+    background: "#F2F2F2",
+    padding: "1px 2px",
+    fontFamily: "Roboto",
   },
   chips: {
-    display: 'flex',
-    flexWrap: 'wrap',
+    display: "flex",
+    flexWrap: "wrap",
   },
   chip: {
     margin: 2,
   },
   noLabel: {
     marginTop: theme.spacing(3),
-    padding: '5px',
+    padding: "5px",
   },
 }));
 
@@ -66,10 +66,10 @@ export default function StoreCreate({
 }) {
   const classes = useStyles();
   const [openingTimeSeg, setOpeningTimeSeg] = useState(openingTimes[0]);
-  console.log('🚀 ~ file: index.js ~ line 52 ~ openingTimeSeg', openingTimeSeg);
+  console.log("🚀 ~ file: index.js ~ line 52 ~ openingTimeSeg", openingTimeSeg);
   const [closingTimeSeg, setClosingTimeSeg] = useState(closingTimes[0]);
   const [openingTimeTer, setOpeningTimeTer] = useState(openingTimes[1]);
-  console.log('🚀 ~ file: index.js ~ line 55 ~ openingTimeTer', openingTimeTer);
+  console.log("🚀 ~ file: index.js ~ line 55 ~ openingTimeTer", openingTimeTer);
   const [closingTimeTer, setClosingTimeTer] = useState(closingTimes[1]);
   const [openingTimeQua, setOpeningTimeQua] = useState(openingTimes[2]);
   const [closingTimeQua, setClosingTimeQua] = useState(closingTimes[2]);
@@ -96,121 +96,121 @@ export default function StoreCreate({
   }
   function handleOpeningTimeChangeSeg(event) {
     const aux = `${event.target.value}`;
-    const aux2 = addStr(aux, 2, ':');
+    const aux2 = addStr(aux, 2, ":");
     setOpeningTimeSeg(aux2);
   }
   function handleClosingTimeChangeSeg(event) {
     const aux = `${event.target.value}`;
-    const aux2 = addStr(aux, 2, ':');
+    const aux2 = addStr(aux, 2, ":");
     setClosingTimeSeg(aux2);
   }
   function handleOpeningTimeChangeTer(event) {
     const aux = `${event.target.value}`;
-    const aux2 = addStr(aux, 2, ':');
+    const aux2 = addStr(aux, 2, ":");
     setOpeningTimeTer(aux2);
   }
   function handleClosingTimeChangeTer(event) {
     const aux = `${event.target.value}`;
-    const aux2 = addStr(aux, 2, ':');
+    const aux2 = addStr(aux, 2, ":");
     setClosingTimeTer(aux2);
   }
   function handleOpeningTimeChangeQua(event) {
     const aux = `${event.target.value}`;
-    const aux2 = addStr(aux, 2, ':');
+    const aux2 = addStr(aux, 2, ":");
     setOpeningTimeQua(aux2);
   }
   function handleClosingTimeChangeQua(event) {
     const aux = `${event.target.value}`;
-    const aux2 = addStr(aux, 2, ':');
+    const aux2 = addStr(aux, 2, ":");
     setClosingTimeQua(aux2);
   }
   function handleOpeningTimeChangeQui(event) {
     const aux = `${event.target.value}`;
-    const aux2 = addStr(aux, 2, ':');
+    const aux2 = addStr(aux, 2, ":");
     setOpeningTimeQui(aux2);
   }
   function handleClosingTimeChangeQui(event) {
     const aux = `${event.target.value}`;
-    const aux2 = addStr(aux, 2, ':');
+    const aux2 = addStr(aux, 2, ":");
     setClosingTimeQui(aux2);
   }
   function handleOpeningTimeChangeSex(event) {
     const aux = `${event.target.value}`;
-    const aux2 = addStr(aux, 2, ':');
+    const aux2 = addStr(aux, 2, ":");
     setOpeningTimeSex(aux2);
   }
   function handleClosingTimeChangeSex(event) {
     const aux = `${event.target.value}`;
-    const aux2 = addStr(aux, 2, ':');
+    const aux2 = addStr(aux, 2, ":");
     setClosingTimeSex(aux2);
   }
   function handleOpeningTimeChangeSab(event) {
     const aux = `${event.target.value}`;
-    const aux2 = addStr(aux, 2, ':');
+    const aux2 = addStr(aux, 2, ":");
     setOpeningTimeSab(aux2);
   }
   function handleClosingTimeChangeSab(event) {
     const aux = `${event.target.value}`;
-    const aux2 = addStr(aux, 2, ':');
+    const aux2 = addStr(aux, 2, ":");
     setClosingTimeSab(aux2);
   }
   function handleOpeningTimeChangeDom(event) {
     const aux = `${event.target.value}`;
-    const aux2 = addStr(aux, 2, ':');
+    const aux2 = addStr(aux, 2, ":");
     setOpeningTimeDom(aux2);
   }
   function handleClosingTimeChangeDom(event) {
     const aux = `${event.target.value}`;
-    const aux2 = addStr(aux, 2, ':');
+    const aux2 = addStr(aux, 2, ":");
     setClosingTimeDom(aux2);
   }
   const handleChangeSeg = (event) => {
     setSituationSeg(event.target.value);
-    if (event.target.value === 'Fechado') {
-      setOpeningTimeSeg('00:00');
-      setClosingTimeSeg('00:00');
+    if (event.target.value === "Fechado") {
+      setOpeningTimeSeg("00:00");
+      setClosingTimeSeg("00:00");
     }
   };
   const handleChangeTer = (event) => {
     setSituationTer(event.target.value);
-    if (event.target.value === 'Fechado') {
-      setOpeningTimeTer('00:00');
-      setClosingTimeTer('00:00');
+    if (event.target.value === "Fechado") {
+      setOpeningTimeTer("00:00");
+      setClosingTimeTer("00:00");
     }
   };
   const handleChangeQua = (event) => {
     setSituationQua(event.target.value);
-    if (event.target.value === 'Fechado') {
-      setOpeningTimeQua('00:00');
-      setClosingTimeQua('00:00');
+    if (event.target.value === "Fechado") {
+      setOpeningTimeQua("00:00");
+      setClosingTimeQua("00:00");
     }
   };
   const handleChangeQui = (event) => {
     setSituationQui(event.target.value);
-    if (event.target.value === 'Fechado') {
-      setOpeningTimeQui('00:00');
-      setClosingTimeQui('00:00');
+    if (event.target.value === "Fechado") {
+      setOpeningTimeQui("00:00");
+      setClosingTimeQui("00:00");
     }
   };
   const handleChangeSex = (event) => {
     setSituationSex(event.target.value);
-    if (event.target.value === 'Fechado') {
-      setOpeningTimeSex('00:00');
-      setClosingTimeSex('00:00');
+    if (event.target.value === "Fechado") {
+      setOpeningTimeSex("00:00");
+      setClosingTimeSex("00:00");
     }
   };
   const handleChangeSab = (event) => {
     setSituationSab(event.target.value);
-    if (event.target.value === 'Fechado') {
-      setOpeningTimeSab('00:00');
-      setClosingTimeSab('00:00');
+    if (event.target.value === "Fechado") {
+      setOpeningTimeSab("00:00");
+      setClosingTimeSab("00:00");
     }
   };
   const handleChangeDom = (event) => {
     setSituationDom(event.target.value);
-    if (event.target.value === 'Fechado') {
-      setOpeningTimeDom('00:00');
-      setClosingTimeDom('00:00');
+    if (event.target.value === "Fechado") {
+      setOpeningTimeDom("00:00");
+      setClosingTimeDom("00:00");
     }
   };
 
@@ -242,7 +242,7 @@ export default function StoreCreate({
     situationDom,
   ];
 
-  const options = ['Aberto', 'Fechado'];
+  const options = ["Aberto", "Fechado"];
 
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
@@ -260,124 +260,124 @@ export default function StoreCreate({
   async function handleSubmit(event) {
     event.preventDefault();
     if (
-      situationSeg === ''
-      || situationTer === ''
-      || situationQua === ''
-      || situationQui === ''
-      || situationSex === ''
-      || situationSab === ''
-      || situationDom === ''
+      situationSeg === "" ||
+      situationTer === "" ||
+      situationQua === "" ||
+      situationQui === "" ||
+      situationSex === "" ||
+      situationSab === "" ||
+      situationDom === ""
     ) {
-      toast('Defina o Status de funcionamento para todos os dias da semana!', {
+      toast("Defina o Status de funcionamento para todos os dias da semana!", {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
       return;
     }
     if (
-      (openingTimeSeg === closingTimeSeg && situationSeg === 'Aberto')
-      || (openingTimeTer === closingTimeTer && situationTer === 'Aberto')
-      || (openingTimeQua === closingTimeQua && situationQua === 'Aberto')
-      || (openingTimeQui === closingTimeQui && situationQui === 'Aberto')
-      || (openingTimeSex === closingTimeSex && situationSex === 'Aberto')
-      || (openingTimeSab === closingTimeSab && situationSab === 'Aberto')
-      || (openingTimeDom === closingTimeDom && situationDom === 'Aberto')
+      (openingTimeSeg === closingTimeSeg && situationSeg === "Aberto") ||
+      (openingTimeTer === closingTimeTer && situationTer === "Aberto") ||
+      (openingTimeQua === closingTimeQua && situationQua === "Aberto") ||
+      (openingTimeQui === closingTimeQui && situationQui === "Aberto") ||
+      (openingTimeSex === closingTimeSex && situationSex === "Aberto") ||
+      (openingTimeSab === closingTimeSab && situationSab === "Aberto") ||
+      (openingTimeDom === closingTimeDom && situationDom === "Aberto")
     ) {
       toast(
         'Horários de abertura e encerramento precisam ser diferentes nos dias com Status "Aberto"!',
-        { position: toast.POSITION.BOTTOM_RIGHT },
+        { position: toast.POSITION.BOTTOM_RIGHT }
       );
       return;
     }
 
     if (
-      openingTimeSeg.length < 5
-      || openingTimeTer.length < 5
-      || openingTimeQua.length < 5
-      || openingTimeQui.length < 5
-      || openingTimeSex.length < 5
-      || openingTimeSab.length < 5
-      || openingTimeDom.length < 5
-      || closingTimeSeg.length < 5
-      || closingTimeTer.length < 5
-      || closingTimeQua.length < 5
-      || closingTimeQui.length < 5
-      || closingTimeSex.length < 5
-      || openingTimeSab.length < 5
-      || closingTimeDom.length < 5
+      openingTimeSeg.length < 5 ||
+      openingTimeTer.length < 5 ||
+      openingTimeQua.length < 5 ||
+      openingTimeQui.length < 5 ||
+      openingTimeSex.length < 5 ||
+      openingTimeSab.length < 5 ||
+      openingTimeDom.length < 5 ||
+      closingTimeSeg.length < 5 ||
+      closingTimeTer.length < 5 ||
+      closingTimeQua.length < 5 ||
+      closingTimeQui.length < 5 ||
+      closingTimeSex.length < 5 ||
+      openingTimeSab.length < 5 ||
+      closingTimeDom.length < 5
     ) {
-      toast('Favor inserir horários entre 00:00 e 23:59!', {
+      toast("Favor inserir horários entre 00:00 e 23:59!", {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
       return;
     }
 
     if (
-      parseInt(openingTimeSeg.substring(0, 2), 10) > 23
-      || parseInt(closingTimeSeg.substring(0, 2), 10) > 23
-      || parseInt(openingTimeSeg.substring(3, 5), 10) > 59
-      || parseInt(closingTimeSeg.substring(3, 5), 10) > 59
-      || parseInt(openingTimeTer.substring(0, 2), 10) > 23
-      || parseInt(closingTimeTer.substring(0, 2), 10) > 23
-      || parseInt(openingTimeTer.substring(3, 5), 10) > 59
-      || parseInt(closingTimeTer.substring(3, 5), 10) > 59
-      || parseInt(openingTimeQua.substring(0, 2), 10) > 23
-      || parseInt(closingTimeQua.substring(0, 2), 10) > 23
-      || parseInt(openingTimeQua.substring(3, 5), 10) > 59
-      || parseInt(closingTimeQua.substring(3, 5), 10) > 59
-      || parseInt(openingTimeQui.substring(0, 2), 10) > 23
-      || parseInt(closingTimeQui.substring(0, 2), 10) > 23
-      || parseInt(openingTimeQui.substring(3, 5), 10) > 59
-      || parseInt(closingTimeQui.substring(3, 5), 10) > 59
-      || parseInt(openingTimeSex.substring(0, 2), 10) > 23
-      || parseInt(closingTimeSex.substring(0, 2), 10) > 23
-      || parseInt(openingTimeSex.substring(3, 5), 10) > 59
-      || parseInt(closingTimeSex.substring(3, 5), 10) > 59
-      || parseInt(openingTimeSab.substring(0, 2), 10) > 23
-      || parseInt(closingTimeSab.substring(0, 2), 10) > 23
-      || parseInt(openingTimeSab.substring(3, 5), 10) > 59
-      || parseInt(closingTimeSab.substring(3, 5), 10) > 59
-      || parseInt(openingTimeDom.substring(0, 2), 10) > 23
-      || parseInt(closingTimeDom.substring(0, 2), 10) > 23
-      || parseInt(openingTimeDom.substring(3, 5), 10) > 59
-      || parseInt(closingTimeDom.substring(3, 5), 10) > 59
+      parseInt(openingTimeSeg.substring(0, 2), 10) > 23 ||
+      parseInt(closingTimeSeg.substring(0, 2), 10) > 23 ||
+      parseInt(openingTimeSeg.substring(3, 5), 10) > 59 ||
+      parseInt(closingTimeSeg.substring(3, 5), 10) > 59 ||
+      parseInt(openingTimeTer.substring(0, 2), 10) > 23 ||
+      parseInt(closingTimeTer.substring(0, 2), 10) > 23 ||
+      parseInt(openingTimeTer.substring(3, 5), 10) > 59 ||
+      parseInt(closingTimeTer.substring(3, 5), 10) > 59 ||
+      parseInt(openingTimeQua.substring(0, 2), 10) > 23 ||
+      parseInt(closingTimeQua.substring(0, 2), 10) > 23 ||
+      parseInt(openingTimeQua.substring(3, 5), 10) > 59 ||
+      parseInt(closingTimeQua.substring(3, 5), 10) > 59 ||
+      parseInt(openingTimeQui.substring(0, 2), 10) > 23 ||
+      parseInt(closingTimeQui.substring(0, 2), 10) > 23 ||
+      parseInt(openingTimeQui.substring(3, 5), 10) > 59 ||
+      parseInt(closingTimeQui.substring(3, 5), 10) > 59 ||
+      parseInt(openingTimeSex.substring(0, 2), 10) > 23 ||
+      parseInt(closingTimeSex.substring(0, 2), 10) > 23 ||
+      parseInt(openingTimeSex.substring(3, 5), 10) > 59 ||
+      parseInt(closingTimeSex.substring(3, 5), 10) > 59 ||
+      parseInt(openingTimeSab.substring(0, 2), 10) > 23 ||
+      parseInt(closingTimeSab.substring(0, 2), 10) > 23 ||
+      parseInt(openingTimeSab.substring(3, 5), 10) > 59 ||
+      parseInt(closingTimeSab.substring(3, 5), 10) > 59 ||
+      parseInt(openingTimeDom.substring(0, 2), 10) > 23 ||
+      parseInt(closingTimeDom.substring(0, 2), 10) > 23 ||
+      parseInt(openingTimeDom.substring(3, 5), 10) > 59 ||
+      parseInt(closingTimeDom.substring(3, 5), 10) > 59
     ) {
-      toast('Favor inserir horários entre 00:00 e 23:59!', {
+      toast("Favor inserir horários entre 00:00 e 23:59!", {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
       return;
     }
 
     if (
-      isNaN(parseInt(openingTimeSeg.substring(0, 2), 10))
-      || isNaN(parseInt(closingTimeSeg.substring(0, 2), 10))
-      || isNaN(parseInt(openingTimeSeg.substring(3, 5), 10))
-      || isNaN(parseInt(closingTimeSeg.substring(3, 5), 10))
-      || isNaN(parseInt(openingTimeTer.substring(0, 2), 10))
-      || isNaN(parseInt(closingTimeTer.substring(0, 2), 10))
-      || isNaN(parseInt(openingTimeTer.substring(3, 5), 10))
-      || isNaN(parseInt(closingTimeTer.substring(3, 5), 10))
-      || isNaN(parseInt(openingTimeQua.substring(0, 2), 10))
-      || isNaN(parseInt(closingTimeQua.substring(0, 2), 10))
-      || isNaN(parseInt(openingTimeQua.substring(3, 5), 10))
-      || isNaN(parseInt(closingTimeQua.substring(3, 5), 10))
-      || isNaN(parseInt(openingTimeQui.substring(0, 2), 10))
-      || isNaN(parseInt(closingTimeQui.substring(0, 2), 10))
-      || isNaN(parseInt(openingTimeQui.substring(3, 5), 10))
-      || isNaN(parseInt(closingTimeQui.substring(3, 5), 10))
-      || isNaN(parseInt(openingTimeSex.substring(0, 2), 10))
-      || isNaN(parseInt(closingTimeSex.substring(0, 2), 10))
-      || isNaN(parseInt(openingTimeSex.substring(3, 5), 10))
-      || isNaN(parseInt(closingTimeSex.substring(3, 5), 10))
-      || isNaN(parseInt(openingTimeSab.substring(0, 2), 10))
-      || isNaN(parseInt(closingTimeSab.substring(0, 2), 10))
-      || isNaN(parseInt(openingTimeSab.substring(3, 5), 10))
-      || isNaN(parseInt(closingTimeSab.substring(3, 5), 10))
-      || isNaN(parseInt(openingTimeDom.substring(0, 2), 10))
-      || isNaN(parseInt(closingTimeDom.substring(0, 2), 10))
-      || isNaN(parseInt(openingTimeDom.substring(3, 5), 10))
-      || isNaN(parseInt(closingTimeDom.substring(3, 5), 10))
+      isNaN(parseInt(openingTimeSeg.substring(0, 2), 10)) ||
+      isNaN(parseInt(closingTimeSeg.substring(0, 2), 10)) ||
+      isNaN(parseInt(openingTimeSeg.substring(3, 5), 10)) ||
+      isNaN(parseInt(closingTimeSeg.substring(3, 5), 10)) ||
+      isNaN(parseInt(openingTimeTer.substring(0, 2), 10)) ||
+      isNaN(parseInt(closingTimeTer.substring(0, 2), 10)) ||
+      isNaN(parseInt(openingTimeTer.substring(3, 5), 10)) ||
+      isNaN(parseInt(closingTimeTer.substring(3, 5), 10)) ||
+      isNaN(parseInt(openingTimeQua.substring(0, 2), 10)) ||
+      isNaN(parseInt(closingTimeQua.substring(0, 2), 10)) ||
+      isNaN(parseInt(openingTimeQua.substring(3, 5), 10)) ||
+      isNaN(parseInt(closingTimeQua.substring(3, 5), 10)) ||
+      isNaN(parseInt(openingTimeQui.substring(0, 2), 10)) ||
+      isNaN(parseInt(closingTimeQui.substring(0, 2), 10)) ||
+      isNaN(parseInt(openingTimeQui.substring(3, 5), 10)) ||
+      isNaN(parseInt(closingTimeQui.substring(3, 5), 10)) ||
+      isNaN(parseInt(openingTimeSex.substring(0, 2), 10)) ||
+      isNaN(parseInt(closingTimeSex.substring(0, 2), 10)) ||
+      isNaN(parseInt(openingTimeSex.substring(3, 5), 10)) ||
+      isNaN(parseInt(closingTimeSex.substring(3, 5), 10)) ||
+      isNaN(parseInt(openingTimeSab.substring(0, 2), 10)) ||
+      isNaN(parseInt(closingTimeSab.substring(0, 2), 10)) ||
+      isNaN(parseInt(openingTimeSab.substring(3, 5), 10)) ||
+      isNaN(parseInt(closingTimeSab.substring(3, 5), 10)) ||
+      isNaN(parseInt(openingTimeDom.substring(0, 2), 10)) ||
+      isNaN(parseInt(closingTimeDom.substring(0, 2), 10)) ||
+      isNaN(parseInt(openingTimeDom.substring(3, 5), 10)) ||
+      isNaN(parseInt(closingTimeDom.substring(3, 5), 10))
     ) {
-      toast('Favor inserir horários entre 00:00 e 23:59!', {
+      toast("Favor inserir horários entre 00:00 e 23:59!", {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
       return;
@@ -397,8 +397,7 @@ export default function StoreCreate({
               <TitleStore>Horários de Funcionamento</TitleStore>
               <SubtitleStore>
                 Por favor, preencha as informações referentes aos dias e
-                horários de funcionamento de sua loja:
-                {' '}
+                horários de funcionamento de sua loja:{" "}
               </SubtitleStore>
             </TopFormulary>
 
@@ -478,7 +477,13 @@ export default function StoreCreate({
                   onChange={handleChangeTer}
                   input={<Input />}
                   MenuProps={MenuProps}
-                />
+                >
+                  {options.map((option) => (
+                    <MenuItem key={option} value={option}>
+                      {option}
+                    </MenuItem>
+                  ))}
+                </Select>
               </ItemFormulary>
 
               <ItemFormulary>
@@ -516,7 +521,13 @@ export default function StoreCreate({
                   onChange={handleChangeQua}
                   input={<Input />}
                   MenuProps={MenuProps}
-                />
+                >
+                  {options.map((option) => (
+                    <MenuItem key={option} value={option}>
+                      {option}
+                    </MenuItem>
+                  ))}
+                </Select>
               </ItemFormulary>
 
               <ItemFormulary>
@@ -554,7 +565,13 @@ export default function StoreCreate({
                   onChange={handleChangeQui}
                   input={<Input />}
                   MenuProps={MenuProps}
-                />
+                >
+                  {options.map((option) => (
+                    <MenuItem key={option} value={option}>
+                      {option}
+                    </MenuItem>
+                  ))}
+                </Select>
               </ItemFormulary>
 
               <ItemFormulary>
@@ -592,7 +609,13 @@ export default function StoreCreate({
                   onChange={handleChangeSex}
                   input={<Input />}
                   MenuProps={MenuProps}
-                />
+                >
+                  {options.map((option) => (
+                    <MenuItem key={option} value={option}>
+                      {option}
+                    </MenuItem>
+                  ))}
+                </Select>
               </ItemFormulary>
 
               <ItemFormulary>
@@ -630,7 +653,13 @@ export default function StoreCreate({
                   onChange={handleChangeSab}
                   input={<Input />}
                   MenuProps={MenuProps}
-                />
+                >
+                  {options.map((option) => (
+                    <MenuItem key={option} value={option}>
+                      {option}
+                    </MenuItem>
+                  ))}
+                </Select>
               </ItemFormulary>
 
               <ItemFormulary>
@@ -668,7 +697,13 @@ export default function StoreCreate({
                   onChange={handleChangeDom}
                   input={<Input />}
                   MenuProps={MenuProps}
-                />
+                >
+                  {options.map((option) => (
+                    <MenuItem key={option} value={option}>
+                      {option}
+                    </MenuItem>
+                  ))}
+                </Select>
               </ItemFormulary>
 
               <ItemFormulary>
