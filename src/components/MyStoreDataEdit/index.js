@@ -21,7 +21,6 @@ import {
 
 export default function MyStoreDataEdit() {
   const { store, setStore } = useAuth();
-  console.log('🚀 ~ file: index.js ~ line 31 ~ MyStoreDataEdit ~ store', store);
   const regionShippingTax = store ? store?.shipping_tax.split(',') : null;
   const regionShippingTime = store ? store?.delivery_time.split(',') : null;
   const [open, setOpen] = useState(false);
@@ -30,8 +29,11 @@ export default function MyStoreDataEdit() {
   const [phone, setPhone] = useState(store.phone.substring(2));
   const openingTimes = store ? store?.opening_time.split(':') : null;
   const closingTimes = store ? store?.closing_time.split(':') : null;
-  const [situation, setSituation] = useState(store.working_days);
+  const situationStore = store ? store?.working_days.split(',') : null;
   const [page, setPage] = useState(0);
+  const [opening, setOpening] = useState(store?.opening_time);
+  const [closing, setClosing] = useState(store?.closing_time);
+  const [situation, setSituation] = useState(store?.working_days);
   const router = useRouter();
 
   const RegionsState = {
@@ -220,13 +222,15 @@ export default function MyStoreDataEdit() {
             )}
             {page === 1 && (
               <>
-                <Title>Formulário de edição</Title>
                 <MyFormGroup>
                   {openingTimes && closingTimes && situation && (
                   <WorkingDaysEdit
                     openingTimes={openingTimes}
                     closingTimes={closingTimes}
-                    situation={situation}
+                    situationStore={situationStore}
+                    setOpening={setOpening}
+                    setClosing={setClosing}
+                    setSituation={setSituation}
                   />
                   )}
                 </MyFormGroup>

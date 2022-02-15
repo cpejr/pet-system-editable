@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import 'antd/dist/antd.css';
+import { makeStyles } from '@material-ui/core/styles';
+import { toast } from 'react-toastify';
 import Input from '@material-ui/core/Input';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
-import { useRouter } from 'next/router';
 import {
   StoreBodyWrapper, StoreBody, StoreFormulary, TopFormulary, ItemFormulary,
   DividedItemFormulary, BottomFormulary,
@@ -14,30 +15,57 @@ import {
 import MaskedInput from '../MasketInput';
 import 'react-toastify/dist/ReactToastify.css';
 
-export default function StoreCreate({openingTimes, closingTimes, situation}) {
-  const router = useRouter();
+const useStyles = makeStyles((theme) => ({
+  formControl: {
+    margin: theme.spacing(0),
+    minWidth: 120,
+    maxWidth: 300,
+    width: '90%',
+    marginTop: '10px',
+    marginBottom: '10px',
+    height: '25px',
+    borderRadius: '5px',
+    border: '1px solid #AAABB0',
+    background: '#F2F2F2',
+    padding: '1px 2px',
+    fontFamily: 'Roboto',
+  },
+  chips: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  chip: {
+    margin: 2,
+  },
+  noLabel: {
+    marginTop: theme.spacing(3),
+    padding: '5px',
+  },
+}));
+
+export default function StoreCreate({openingTimes, closingTimes, situationStore, setOpening, setClosing, setSituation}) {
   const classes = useStyles();
   const [openingTimeSeg, setOpeningTimeSeg] = useState(openingTimes[0]);
-  const [closingTimeSeg, setClosingTimeSeg] = useState('');
-  const [openingTimeTer, setOpeningTimeTer] = useState(openingTimes[0]);
-  const [closingTimeTer, setClosingTimeTer] = useState('');
-  const [openingTimeQua, setOpeningTimeQua] = useState(openingTimes[0]);
-  const [closingTimeQua, setClosingTimeQua] = useState('');
-  const [openingTimeQui, setOpeningTimeQui] = useState(openingTimes[0]);
-  const [closingTimeQui, setClosingTimeQui] = useState('');
-  const [openingTimeSex, setOpeningTimeSex] = useState(openingTimes[0]);
-  const [closingTimeSex, setClosingTimeSex] = useState('');
-  const [openingTimeSab, setOpeningTimeSab] = useState(openingTimes[0]);
-  const [closingTimeSab, setClosingTimeSab] = useState('');
-  const [openingTimeDom, setOpeningTimeDom] = useState(openingTimes[0]);
-  const [closingTimeDom, setClosingTimeDom] = useState('');
-  const [situationSeg, setSituationSeg] = useState('');
-  const [situationTer, setSituationTer] = useState('');
-  const [situationQua, setSituationQua] = useState('');
-  const [situationQui, setSituationQui] = useState('');
-  const [situationSex, setSituationSex] = useState('');
-  const [situationSab, setSituationSab] = useState('');
-  const [situationDom, setSituationDom] = useState('');
+  const [closingTimeSeg, setClosingTimeSeg] = useState(closingTimes[0]);
+  const [openingTimeTer, setOpeningTimeTer] = useState(openingTimes[1]);
+  const [closingTimeTer, setClosingTimeTer] = useState(closingTimes[1]);
+  const [openingTimeQua, setOpeningTimeQua] = useState(openingTimes[2]);
+  const [closingTimeQua, setClosingTimeQua] = useState(closingTimes[2]);
+  const [openingTimeQui, setOpeningTimeQui] = useState(openingTimes[3]);
+  const [closingTimeQui, setClosingTimeQui] = useState(closingTimes[3]);
+  const [openingTimeSex, setOpeningTimeSex] = useState(openingTimes[4]);
+  const [closingTimeSex, setClosingTimeSex] = useState(closingTimes[4]);
+  const [openingTimeSab, setOpeningTimeSab] = useState(openingTimes[5]);
+  const [closingTimeSab, setClosingTimeSab] = useState(closingTimes[5]);
+  const [openingTimeDom, setOpeningTimeDom] = useState(openingTimes[6]);
+  const [closingTimeDom, setClosingTimeDom] = useState(closingTimes[6]);
+  const [situationSeg, setSituationSeg] = useState(situationStore[0]);
+  const [situationTer, setSituationTer] = useState(situationStore[1]);
+  const [situationQua, setSituationQua] = useState(situationStore[2]);
+  const [situationQui, setSituationQui] = useState(situationStore[3]);
+  const [situationSex, setSituationSex] = useState(situationStore[4]);
+  const [situationSab, setSituationSab] = useState(situationStore[5]);
+  const [situationDom, setSituationDom] = useState(situationStore[6]);
 
   function addStr(str, index, stringToAdd) {
     return str.substring(0, index) + stringToAdd + str.substring(index, str.length);
@@ -229,8 +257,11 @@ export default function StoreCreate({openingTimes, closingTimes, situation}) {
       || parseInt(openingTimeSab.substring(0, 2), 10) > 23 || parseInt(closingTimeSab.substring(0, 2), 10) > 23 || parseInt(openingTimeSab.substring(3, 5), 10) > 59 || parseInt(closingTimeSab.substring(3, 5), 10) > 59
       || parseInt(openingTimeDom.substring(0, 2), 10) > 23 || parseInt(closingTimeDom.substring(0, 2), 10) > 23 || parseInt(openingTimeDom.substring(3, 5), 10) > 59 || parseInt(closingTimeDom.substring(3, 5), 10) > 59) {
       toast('Favor inserir horários entre 00:00 e 23:59!', { position: toast.POSITION.BOTTOM_RIGHT });
+      return;
     }
-
+    setOpening(opening);
+    setClosing(closing);
+    setSituation(situation);
   }
 
   return (
