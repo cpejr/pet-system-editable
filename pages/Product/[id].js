@@ -294,16 +294,17 @@ export default function Product({ product, store }) {
       setQuantity(0);
     }
   }
-
   const myLoader = ({ src }) => `https://s3-sa-east-1.amazonaws.com/petsystembucket/${src}`;
 
   return (
     <div>
       <BackPage>
-        <BackButton>
+       <a href="http://localhost:3000/Search?keyword=">
+          <BackButton>
           <FaArrowLeft size={24} />
           Voltar
         </BackButton>
+        </a>
       </BackPage>
       { product && (
       <Container>

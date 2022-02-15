@@ -4,9 +4,9 @@ import Cards from '../Cards';
 const CardLine = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
   height: auto;
-  width: 90%;
+  width: 100%;
   flex-direction: row;
   flex-wrap: wrap;
   @media (max-width: 560px) {

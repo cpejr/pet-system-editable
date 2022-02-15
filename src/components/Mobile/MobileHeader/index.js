@@ -32,15 +32,13 @@ export default function MobileHeader() {
   const cart = useCart();
   const itemsCount = cart ? cart.cart : undefined;
 
-  // eslint-disable-next-line consistent-return
   const HandleProfileButton = () => {
     if (!user && !store) return router.push('/login');
     if (store) return router.push('/Seller/Perfil/Products');
     if (user?.type !== 'admin') return router.push('/User/Perfil/MyRequests');
-    if (user?.type === 'admin') return router.push('/Admin');
+    return router.push('/Admin');
   };
 
-  // eslint-disable-next-line consistent-return
   const ProfileButton = () => {
     if (!user && !store) {
       return (
@@ -50,21 +48,18 @@ export default function MobileHeader() {
         </MobileHeaderContainer.Col4>
       );
     }
-    if (user || store) {
-      return (
-        <MobileHeaderContainer.Col4 onClick={HandleProfileButton}>
-          <BsFillPersonFill size="40" />
-          Perfil
-        </MobileHeaderContainer.Col4>
-      );
-    }
+    return (
+      <MobileHeaderContainer.Col4 onClick={HandleProfileButton}>
+        <BsFillPersonFill size="40" />
+        Perfil
+      </MobileHeaderContainer.Col4>
+    );
   };
 
   const HomeButton = () => router.push('/Home');
 
   const SearchButton = () => router.push({ pathname: '/Search', query: { keyword: searchText } });
 
-  // eslint-disable-next-line consistent-return
   const PersonalButton = () => {
     if ((!user && !store) || user?.type !== 'admin') {
       return (
@@ -93,16 +88,14 @@ export default function MobileHeader() {
         </MobileHeaderContainer.Col3>
       );
     }
-    if (user?.type === 'admin') {
-      return (
-        <Link href="/Admin/Comissoes">
-          <MobileHeaderContainer.Col3>
-            <CgDollar size="40" />
-            Comissões
-          </MobileHeaderContainer.Col3>
-        </Link>
-      );
-    }
+    return (
+      <Link href="/Admin/Comissoes">
+        <MobileHeaderContainer.Col3>
+          <CgDollar size="40" />
+          Comissões
+        </MobileHeaderContainer.Col3>
+      </Link>
+    );
   };
 
   return (

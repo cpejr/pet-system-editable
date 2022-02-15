@@ -42,31 +42,24 @@ Section.Select = styled.button`
 
 export const ProductContainer = styled.div`
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
   width: 100%;
-  flex-direction: row;
-  margin-top: 1%;
+  flex-direction: column;
+  margin-top: 4%;
   min-height: 65vh;
 
   @media screen and (min-height: 1024px) {
     min-height: 83.3vh;
   }
-
-  @media (max-width: 1065px) {
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    flex-direction: row;
-  }
 `;
 
 ProductContainer.Col1 = styled.div`
-  width: 20%;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
+  flex-direction: row;
 
   @media screen and (min-height: 1024px) {
     min-height: 83.3vh;
@@ -85,10 +78,10 @@ ProductContainer.Col1 = styled.div`
 `;
 
 ProductContainer.Col2 = styled.div`
-  width: 80%;
+  width: 100%;
   display: flex;
   align-items: center;
-  justify-content: initial;
+  justify-content: center;
   @media (max-width: 560px) {
     width: 100%;
     justify-content: center;
@@ -219,7 +212,7 @@ export const Groups = styled.h2`
 export const Botoes = styled.div`
   width: 100%;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   align-content: center;
   justify-content: center;

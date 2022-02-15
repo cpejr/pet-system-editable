@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
-import Order from '../../../../src/components/Filter/Order';
-import Category from '../../../../src/components/Filter/Category';
+import { toast } from 'react-toastify';
 import Products from '../../../../src/components/Products';
 import ModalAddProducts from '../../../../src/components/ModalAddProducts';
 import EditAddRemoveSection from '../../../../src/components/Mobile/EditAddRemoveSection';
@@ -9,13 +8,16 @@ import ModalGroupEdit from '../../../../src/components/ModalGroupEdit';
 import ModalGroupRemove from '../../../../src/components/ModalGroupRemove';
 import { Title, PerfilStoreMenu } from '../../../../src/components/index';
 import {
-  Subtitle, Section, ProductContainer, MarketContainer,
-  TitleMarket, EditGroup, RemoveGroup, Group, Groups, Botoes,
+  ProductContainer, MarketContainer,
+  EditGroup, RemoveGroup, Group, Groups, Botoes,
 } from './styles';
 import api from '../../../../src/utils/api';
 import withAuthStore from '../../../../src/components/WithAuth/WithAuthStore';
 
-const Perfil = ({ categories }) => {
+toast.configure();
+
+const Perfil = () => {
+  const [categories, setCategories] = useState([]);
   const [groups, setGroups] = useState([]);
   const [products, setProducts] = useState([]);
   const [att, setAtt] = useState(false);
@@ -23,9 +25,18 @@ const Perfil = ({ categories }) => {
   useEffect(() => {
     api.get('group').then((res) => {
       setGroups(res.data);
+    }).catch(() => {
+      toast('Erro ao obter grupos', { position: toast.POSITION.BOTTOM_RIGHT });
     });
     api.get('/product').then((res) => {
       setProducts(res.data);
+    }).catch(() => {
+      toast('Erro ao obter produtos', { position: toast.POSITION.BOTTOM_RIGHT });
+    });
+    api.get('/category').then((res) => {
+      setCategories(res.data);
+    }).catch(() => {
+      toast('Erro ao obter cateogrias', { position: toast.POSITION.BOTTOM_RIGHT });
     });
   }, [att]);
 
@@ -69,15 +80,10 @@ const Perfil = ({ categories }) => {
       <EditAddRemoveSection categories={categories} setAtt={setAtt} att={att} />
       <MarketContainer />
       <ProductContainer>
-        <ProductContainer.Col1>
-          <Order />
-          <Category />
-          <MarketContainer.Col2 />
-          <Botoes>
-            <ModalAddProducts categories={categories} setAtt={setAtt} att={att} />
-            <ModalGroup />
-          </Botoes>
-        </ProductContainer.Col1>
+        <Botoes>
+          <ModalAddProducts categories={categories} setAtt={setAtt} att={att} />
+          <ModalGroup />
+        </Botoes>
         <ProductContainer.Col2>
           <Group>
             <PersonalGroups />
@@ -89,12 +95,3 @@ const Perfil = ({ categories }) => {
 };
 
 export default withAuthStore(Perfil);
-
-export async function getStaticProps() {
-  const { data: categories } = await api.get('category');
-
-  return {
-    props: { categories },
-    revalidate: 60, // 1 minuto
-  };
-}
