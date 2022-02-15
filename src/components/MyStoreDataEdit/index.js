@@ -27,8 +27,8 @@ export default function MyStoreDataEdit() {
   const [company_name, setName] = useState(store.company_name);
   const [ddd, setDdd] = useState(store.phone.substring(0, 2));
   const [phone, setPhone] = useState(store.phone.substring(2));
-  const openingTimes = store ? store?.opening_time.split(':') : null;
-  const closingTimes = store ? store?.closing_time.split(':') : null;
+  const openingTimes = store ? store?.opening_time.split(',') : null;
+  const closingTimes = store ? store?.closing_time.split(',') : null;
   const situationStore = store ? store?.working_days.split(',') : null;
   const [page, setPage] = useState(0);
   const [opening, setOpening] = useState(store?.opening_time);
@@ -122,21 +122,13 @@ export default function MyStoreDataEdit() {
   async function handleSubmit(event) {
     setOpen(false);
     event.preventDefault();
-    if (phone?.length !== 9) {
-      alert('Número inválido');
-      return;
-    }
-    if (ddd?.length !== 2) {
-      alert('Número inválido');
-      return;
-    }
     const body = {
       firebase_id_store: store.firebase_id_store,
       company_name,
       phone: ddd + phone,
       opening_time: String(opening),
       closing_time: String(closing),
-      situation: String(situation),
+      working_days: String(situation),
       shipping_tax: String(deliveryTax),
       delivery_time: String(deliveryTime),
     };
@@ -196,7 +188,6 @@ export default function MyStoreDataEdit() {
                         type="numbers"
                         placeholder="(00)"
                         pattern="[0-9]$"
-                        required
                         value={ddd}
                         onChange={(e) => setDdd(e.target.value)}
                       />
@@ -208,7 +199,6 @@ export default function MyStoreDataEdit() {
                       type="number"
                       placeholder="00000-0000"
                       pattern="[0-9]$"
-                      required
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
                     />
@@ -231,13 +221,12 @@ export default function MyStoreDataEdit() {
                     setOpening={setOpening}
                     setClosing={setClosing}
                     setSituation={setSituation}
+                    handleBack={handleBack}
+                    handleNext={handleNext}
                   />
                   )}
                 </MyFormGroup>
-                <Buttons>
-                  <CancelSubmit onClick={() => handleBack(0)}>Voltar</CancelSubmit>
-                  <Submit onClick={() => handleNext(2)}>Próximo</Submit>
-                </Buttons>
+
               </>
             )}
             {page === 2 && (

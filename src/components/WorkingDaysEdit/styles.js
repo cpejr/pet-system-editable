@@ -16,6 +16,26 @@ export const UploadContainer = styled.div`
   justify-content:center;
   flex-direction:column;
 `;
+export const CancelSubmit = styled.button`
+  height: 40px;
+  width: 150px;
+  font-family: Roboto;
+  font-size: 20px;
+  font-weight: 500;
+  background-color: ${({ theme }) => theme.colors.darkRed};
+  color: white;
+  border: 0;
+  border-radius: 5px;
+  cursor: pointer;
+`;
+
+export const Buttons = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-top: 5%;
+`;
 
 export const ImageSelected = styled.input`
 `;

@@ -14,6 +14,7 @@ import {
 } from '../FormComponents';
 import MaskedInput from '../MasketInput';
 import 'react-toastify/dist/ReactToastify.css';
+import { CancelSubmit, Buttons } from './styles';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -43,7 +44,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function StoreCreate({openingTimes, closingTimes, situationStore, setOpening, setClosing, setSituation}) {
+export default function StoreCreate({
+  openingTimes, closingTimes, situationStore, setOpening, setClosing, setSituation, handleNext, handleBack,
+}) {
   const classes = useStyles();
   const [openingTimeSeg, setOpeningTimeSeg] = useState(openingTimes[0]);
   const [closingTimeSeg, setClosingTimeSeg] = useState(closingTimes[0]);
@@ -262,6 +265,7 @@ export default function StoreCreate({openingTimes, closingTimes, situationStore,
     setOpening(opening);
     setClosing(closing);
     setSituation(situation);
+    handleNext(2);
   }
 
   return (
@@ -538,9 +542,10 @@ export default function StoreCreate({openingTimes, closingTimes, situationStore,
               <SubText>*Os campos com asterisco são obrigatórios</SubText>
             </ItemFormulary>
 
-            <BottomFormulary>
-              <Submit value="submit" onClick={handleSubmit}>Finalizar</Submit>
-            </BottomFormulary>
+            <Buttons>
+              <CancelSubmit onClick={() => handleBack(0)}>Voltar</CancelSubmit>
+              <Submit value="submit" onClick={handleSubmit}>Proximo</Submit>
+            </Buttons>
           </StoreFormulary>
         </StoreBody>
       </StoreBodyWrapper>
