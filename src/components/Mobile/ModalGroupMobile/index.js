@@ -2,19 +2,24 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
-import axios from 'axios';
 import { notification } from 'antd';
+import { Button } from 'react-bootstrap';
+import api from '../../../utils/api';
 
-const api = axios.create({ baseURL: 'http://localhost:3000/' });
+const AddGroup = styled(Button)`
+    background-color: transparent;
+    border: 0;
+    cursor:pointer;
+    outline:none;
+`;
 
 const ContainerModal = styled.div`
 display:flex;
 align-items:center;
-justify-content:space-between;
+justify-content:center;
 width:100%;
 height: 100%;
-flex-direction:column;
-margin-bottom: 300px;
+flex-direction:column;  
 `;
 
 const Row = styled.div`
@@ -22,6 +27,7 @@ display:flex;
 align-items:center;
 justify-content:center;
 width: 100%;
+margin: 2.5% 0 2.5%;
 `;
 
 const TitleModal = styled.div`
@@ -44,7 +50,7 @@ display:flex;
 align-items:center;
 justify-content:center;
 width:100%;
-margin-bottom:5%;
+margin-bottom: 10%;
 @media(max-width:860px){
         flex-direction:column;
     } 
@@ -79,7 +85,7 @@ border-color:${({ theme }) => theme.colors.borderBoxColor};
 
 const ButtonConfirm = styled.button`
     display:flex;
-    height: 55px;
+    height: 40px;
     width: 200px;
     font-family: Roboto;
     font-size: 18px;
@@ -106,39 +112,6 @@ const ButtonConfirm = styled.button`
     } 
 `;
 
-const AddGroup = styled.button`
-  height: 50px;
-  width: 100%;
-  font-family: Roboto;
-  font-size: 100%;
-  font-weight: 500;
-  background-color: ${({ theme }) => theme.colors.darkGreen};
-  color: white;
-  border: 0;
-  border-radius: 5px;
-  cursor: pointer;
-  outline: none;
-  margin-right: 5%;
-  @media (max-width: 1010px) {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    width: 100%;
-    height: 50px;
-  }
-  @media (max-width: 560px) {
-    display: none;
-  }
-`;
-const Content = styled.div`
-  margin-left: 1%;
-  width: 200px;
-  @media (max-width: 700px) {
-    width:150px;
-  }
-`;
-
 function getModalStyle() {
   const top = 50;
   const left = 50;
@@ -158,12 +131,13 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     position: 'absolute',
-    width: '60vw',
-    height: '35vh',
+    width: '80vw',
+    height: '50vh',
     backgroundColor: theme.palette.background.paper,
     border: '2px solid #609694',
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
+    overflow: 'auto',
 
   },
 
@@ -171,7 +145,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ModalGroup() {
   const [group, setGroup] = useState('');
-
   async function handleGroupChange(event) {
     setGroup(event.target.value);
   }
@@ -194,10 +167,18 @@ export default function ModalGroup() {
         },
       });
     } catch (error) {
-      console.error(error);
+      notification.open({
+        message: 'Sucesso!',
+        description:
+          'Não foi possível criar o grupo',
+        className: 'ant-notification',
+        top: '100px',
+        style: {
+          width: 600,
+        },
+      });
     }
   }
-
   const classes = useStyles();
   const [modalStyle] = useState(getModalStyle);
   const [open, setOpen] = useState(false);
@@ -238,9 +219,9 @@ export default function ModalGroup() {
     </div>
   );
   return (
-    <Content>
+    <div>
       <AddGroup onClick={handleOpen}>
-        Adicionar Grupo
+        Adicionar grupo
       </AddGroup>
       <Modal
         open={open}
@@ -250,6 +231,6 @@ export default function ModalGroup() {
       >
         {body}
       </Modal>
-    </Content>
+    </div>
   );
 }

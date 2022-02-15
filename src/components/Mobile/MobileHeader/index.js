@@ -28,15 +28,15 @@ MobileHeader.Carrinho = styled.span`
 export default function MobileHeader() {
   const { user, store } = useAuth();
   const router = useRouter();
-  const [searchText, setSearchText] = useState('');
+  const [searchText] = useState('');
   const cart = useCart();
   const itemsCount = Object.keys(cart.cart).length;
 
   const HandleProfileButton = () => {
     if (!user && !store) return router.push('/login');
     if (store) return router.push('/Seller/Perfil/Products');
-    if (user?.type != 'admin') return router.push('/User/Perfil/MyRequests');
-    if (user?.type === 'admin') return router.push('/Admin');
+    if (user?.type !== 'admin') return router.push('/User/Perfil/MyRequests');
+    return router.push('/Admin');
   };
 
   const ProfileButton = () => {
@@ -48,14 +48,12 @@ export default function MobileHeader() {
         </MobileHeaderContainer.Col4>
       );
     }
-    if (user || store) {
-      return (
-        <MobileHeaderContainer.Col4 onClick={HandleProfileButton}>
-          <BsFillPersonFill size="40" />
-          Perfil
-        </MobileHeaderContainer.Col4>
-      );
-    }
+    return (
+      <MobileHeaderContainer.Col4 onClick={HandleProfileButton}>
+        <BsFillPersonFill size="40" />
+        Perfil
+      </MobileHeaderContainer.Col4>
+    );
   };
 
   const HomeButton = () => router.push('/Home');
@@ -63,7 +61,7 @@ export default function MobileHeader() {
   const SearchButton = () => router.push({ pathname: '/Search', query: { keyword: searchText } });
 
   const PersonalButton = () => {
-    if (!user && !store || user?.type != 'admin') {
+    if ((!user && !store) || user?.type !== 'admin') {
       return (
         <Link href="/Carrinho">
           <MobileHeaderContainer.Col3>
@@ -90,16 +88,14 @@ export default function MobileHeader() {
         </MobileHeaderContainer.Col3>
       );
     }
-    if (user?.type === 'admin') {
-      return (
-        <Link href="/Admin/Comissoes">
-          <MobileHeaderContainer.Col3>
-            <CgDollar size="40" />
-            Comissões
-          </MobileHeaderContainer.Col3>
-        </Link>
-      );
-    }
+    return (
+      <Link href="/Admin/Comissoes">
+        <MobileHeaderContainer.Col3>
+          <CgDollar size="40" />
+          Comissões
+        </MobileHeaderContainer.Col3>
+      </Link>
+    );
   };
 
   return (
