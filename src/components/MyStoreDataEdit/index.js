@@ -12,6 +12,7 @@ import WindowDivider from '../WindowDivider';
 import api from '../../utils/api';
 import Title from '../Title';
 import RegionsDelivery from '../RegionsDelivery';
+import WorkingDaysEdit from '../WorkingDaysEdit';
 import {
   Edit, MyFormGroup, Name, NumbersForms, DDD, PhoneFormControl,
   DDDFormControl, TimeFormControl, Register, Buttons, FormRegister,
@@ -26,9 +27,13 @@ export default function MyStoreDataEdit() {
   const [company_name, setName] = useState(store.company_name);
   const [ddd, setDdd] = useState(store.phone.substring(0, 2));
   const [phone, setPhone] = useState(store.phone.substring(2));
-  const [opening_time, setOpenTime] = useState(store.opening_time);
-  const [closing_time, setCloseTime] = useState(store.closing_time);
+  const openingTimes = store ? store?.opening_time.split(',') : null;
+  const closingTimes = store ? store?.closing_time.split(',') : null;
+  const situationStore = store ? store?.working_days.split(',') : null;
   const [page, setPage] = useState(0);
+  const [opening, setOpening] = useState(store?.opening_time);
+  const [closing, setClosing] = useState(store?.closing_time);
+  const [situation, setSituation] = useState(store?.working_days);
   const router = useRouter();
 
   const RegionsState = {
@@ -52,10 +57,6 @@ export default function MyStoreDataEdit() {
     vendaNovaTime: regionShippingTime[8],
   };
   const [dados, setDados] = useState(RegionsState);
-
-  useEffect(() => {
-    setDados(RegionsState);
-  }, []);
 
   const deliveryTax = [
     dados?.barreiroTax,
@@ -110,31 +111,24 @@ export default function MyStoreDataEdit() {
     setOpen(false);
   };
 
-  const handleNext = () => {
-    setPage(1);
+  const handleNext = (handlePage) => {
+    setPage(handlePage);
   };
 
-  const handleBack = () => {
-    setPage(0);
+  const handleBack = (handlePage) => {
+    setPage(handlePage);
   };
 
   async function handleSubmit(event) {
     setOpen(false);
     event.preventDefault();
-    if (phone?.length !== 9) {
-      alert('Número inválido');
-      return;
-    }
-    if (ddd?.length !== 2) {
-      alert('Número inválido');
-      return;
-    }
     const body = {
       firebase_id_store: store.firebase_id_store,
       company_name,
       phone: ddd + phone,
-      opening_time,
-      closing_time,
+      opening_time: String(opening),
+      closing_time: String(closing),
+      working_days: String(situation),
       shipping_tax: String(deliveryTax),
       delivery_time: String(deliveryTime),
     };
@@ -194,7 +188,6 @@ export default function MyStoreDataEdit() {
                         type="numbers"
                         placeholder="(00)"
                         pattern="[0-9]$"
-                        required
                         value={ddd}
                         onChange={(e) => setDdd(e.target.value)}
                       />
@@ -206,41 +199,37 @@ export default function MyStoreDataEdit() {
                       type="number"
                       placeholder="00000-0000"
                       pattern="[0-9]$"
-                      required
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
                     />
                   </MyFormGroup>
                 </NumbersForms>
-                <NumbersForms>
-                  <MyFormGroup>
-                    <FormLabel>Abertura</FormLabel>
-                    <TimeFormControl
-                      type="numbers"
-                      placeholder="00:00"
-                      required
-                      value={opening_time}
-                      onChange={(e) => setOpenTime(e.target.value)}
-                    />
-                  </MyFormGroup>
-                  <MyFormGroup>
-                    <FormLabel>Fechamento</FormLabel>
-                    <TimeFormControl
-                      type="numbers"
-                      placeholder="00:00"
-                      required
-                      value={closing_time}
-                      onChange={(e) => setCloseTime(e.target.value)}
-                    />
-                  </MyFormGroup>
-                </NumbersForms>
                 <Buttons>
                   <CancelSubmit onClick={handleClose}>Cancelar</CancelSubmit>
-                  <Submit onClick={handleNext}>Próximo</Submit>
+                  <Submit onClick={() => handleNext(1)}>Próximo</Submit>
                 </Buttons>
               </>
             )}
             {page === 1 && (
+              <>
+                <MyFormGroup>
+                  {openingTimes && closingTimes && situation && (
+                  <WorkingDaysEdit
+                    openingTimes={openingTimes}
+                    closingTimes={closingTimes}
+                    situationStore={situationStore}
+                    setOpening={setOpening}
+                    setClosing={setClosing}
+                    setSituation={setSituation}
+                    handleBack={handleBack}
+                    handleNext={handleNext}
+                  />
+                  )}
+                </MyFormGroup>
+
+              </>
+            )}
+            {page === 2 && (
               <>
                 <MyFormGroup>
                   <RegionsDelivery
@@ -250,7 +239,7 @@ export default function MyStoreDataEdit() {
                   />
                 </MyFormGroup>
                 <Buttons>
-                  <CancelSubmit onClick={handleBack}>Voltar</CancelSubmit>
+                  <CancelSubmit onClick={() => handleBack(1)}>Voltar</CancelSubmit>
                   <Submit onClick={handleSubmit}>Atualizar</Submit>
                 </Buttons>
               </>
