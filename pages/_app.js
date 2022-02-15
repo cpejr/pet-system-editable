@@ -78,8 +78,10 @@ function MyApp({ Component, pageProps }) {
 
 MyApp.getInitialProps = async (ctx) => {
   const appProps = await App.getInitialProps(ctx);
-  const { data: categories } = await api.get('category');
-
+  let { data: categories } = await api.get('category');
+  if (categories === undefined) {
+    categories = null;
+  }
   return { ...appProps, pageProps: { categories } };
 };
 
