@@ -269,8 +269,8 @@ export default function AddProducts({
   closeModal, categories, att, setAtt,
 }) {
   const [productName, setProductName] = useState('');
-  const [price, setPrice] = useState('');
-  const [discount, setDiscount] = useState('');
+  const [price, setPrice] = useState('R$ 0.00');
+  const [discount, setDiscount] = useState('% 0.00');
   const [description, setDescription] = useState('');
   const [photo, setPhoto] = useState({ file: null, url: null }); /* Caminho da imagem no lugar de null */
   const [type, setType] = useState('');
@@ -291,7 +291,6 @@ export default function AddProducts({
   }
   function handleDiscountChange(event) {
     setDiscount(percentageMask(event.target.value));
-    console.log("🚀 ~ file: index.js ~ line 294 ~ handleDiscountChange ~ event.target.value", event.target.value)
   }
   function handleDescriptionChange(event) {
     setDescription(event.target.value);
@@ -302,7 +301,7 @@ export default function AddProducts({
     formData.append('category_id', categoryId);
     formData.append('product_name', productName);
     formData.append('price', price.replace('R$ ', ''));
-    formData.append('discount', discount);
+    formData.append('discount', discount.replace('% ', ''));
     formData.append('description', description);
     formData.append('available', 1);
     if (photo.file) {
