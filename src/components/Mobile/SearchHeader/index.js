@@ -27,7 +27,6 @@ flex-direction:row;
 const TextBox = styled.div`
     display:flex;
     align-items:center;
-    justify-content: space-around;
     height: 100px;
     width: 70%;
     border-radius: 5px;
@@ -175,9 +174,6 @@ export default function SearchHeader({ keyword, setPrice }) {
               </Link>
             </TextBox.SearchContainer>
           </TextBox>
-          <ContainerSearch.Col2>
-            Cancelar
-          </ContainerSearch.Col2>
         </ContainerSearch>
         <TypeContainer>
           <TypeContainer.Cols
