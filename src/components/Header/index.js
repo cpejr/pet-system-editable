@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { GrLocation } from 'react-icons/gr';
@@ -68,6 +68,11 @@ export default function Header({ categories }) {
   const { user, store, logout } = useAuth();
 
   const [searchText, setSearchText] = useState('');
+  const [aux, setAux] = useState();
+
+  useEffect(() => {
+    setAux(categories);
+  }, [categories]);
 
   const router = useRouter();
 
@@ -179,7 +184,7 @@ export default function Header({ categories }) {
         </LogOut>
       </Header.Top>
       <Header.Bottom>
-        {categories?.slice(0, 7).map((categoria) => (
+        {aux?.slice(0, 7)?.map((categoria) => (
           <Link
             key={categoria.category_id}
             href={{ pathname: '/Search', query: { id: categoria.category_id } }}
