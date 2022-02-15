@@ -7,7 +7,7 @@ display:flex;
 align-items:center;
 justify-content:center;
 width:90%;
-height: 16vh;
+height: auto;
 margin-top:2%;
 margin-bottom:2%;
 border-style:solid;
@@ -16,7 +16,6 @@ border-radius:5px;
 border-color:${({ theme }) => theme.colors.borderBoxColor};
 @media(max-width:800px){
   margin-right:0;
-  height:14vh;
   width:60vw; 
 }
 @media(max-width: 500px){
@@ -62,6 +61,7 @@ font-weight:300;
 font-family:Roboto;
 font-size:1.2em;
 margin-bottom:2%;
+margin-top: 3%;
 `;
 
 export default function MyOrder({ products }) {
