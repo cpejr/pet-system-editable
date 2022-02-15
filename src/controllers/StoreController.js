@@ -1,3 +1,5 @@
+import AttemptsModel from '../models/AttemptsModel';
+
 const { v4: uuidv4 } = require('uuid');
 const StoreModel = require('../models/StoreModel');
 const FirebaseModel = require('../models/FirebaseModel');
@@ -64,6 +66,7 @@ module.exports = {
       store.cover_img = cover.key;
       store.logo_img = logo.key;
       await StoreModel.createNewStore(store);
+      await AttemptsModel.createAttempt();
     } catch (err) {
       if (err.message) {
         return response.status(400).json({ notification: err.message });
