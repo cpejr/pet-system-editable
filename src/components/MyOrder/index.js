@@ -54,13 +54,6 @@ vertical-align:bottom;
 width:10%;
 `;
 
-const Content = styled.div`
-display:flex;
-justify-content:center;
-flex-direction:column;
-align-items:center;
-`;
-
 const Name = styled.div`
 display:flex;
 justify-content:center;
@@ -72,23 +65,23 @@ margin-bottom:2%;
 `;
 
 export default function MyOrder({ products }) {
-    const myLoader = ({ src }) => `https://s3-sa-east-1.amazonaws.com/petsystembucket/${src}`;
-    return (
-      <div>
-        { products.map((product) => (
-          <ProductContainer>
-            <ProductContainer.Col1>
-              <Image loader={myLoader} src={product.img} alt="" width="250" height="200" />
-            </ProductContainer.Col1>
-            <ProductContainer.Col2>
-              <Name>{product.product_name}</Name>
-              <p>{`R$${product.price}`}</p>
-            </ProductContainer.Col2>
-            <ProductContainer.Col3>
-              <h2>{product.amount}</h2>
-            </ProductContainer.Col3>
-          </ProductContainer>
-        ))}
-      </div>
-    );
+  const myLoader = ({ src }) => `https://s3-sa-east-1.amazonaws.com/petsystembucket/${src}`;
+  return (
+    <div>
+      { products.map((product) => (
+        <ProductContainer>
+          <ProductContainer.Col1>
+            <Image loader={myLoader} src={product.img} alt="" width="250" height="200" />
+          </ProductContainer.Col1>
+          <ProductContainer.Col2>
+            <Name>{product.product_name}</Name>
+            <p>{`R$${product.price}`}</p>
+          </ProductContainer.Col2>
+          <ProductContainer.Col3>
+            <h2>{product.amount}</h2>
+          </ProductContainer.Col3>
+        </ProductContainer>
+      ))}
+    </div>
+  );
 }

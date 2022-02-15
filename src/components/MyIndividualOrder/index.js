@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import api from '../../utils/api';
 import MyOrder from '../MyOrder';
@@ -88,6 +89,8 @@ const DataLine = styled.div`
  align-items: center;
 `;
 
+toast.configure();
+
 export default function MyIndividualOrder({ order }) {
   const [address, setAddress] = useState('');
 
@@ -100,34 +103,18 @@ export default function MyIndividualOrder({ order }) {
     }
   }
 
-  // async function obterDados() {
-  //   try {
-  //     await api.get('order/'+ req.order.order_id).then((res) => {
-  //       setOrder(res.data);
-  //     });
-  //   } catch (error) {
-  //     console.error(error); //eslint-disable-line
-  //   }
-  // }
-
   useEffect(() => {
-    // obterDados();
     loadAddress();
   }, []);
 
   function dataFormatada(bdate) {
-    var data = new Date(bdate),
-    dia = data.getDate().toString(),
-    diaF = dia.length == 1 ? "0" + dia : dia,
-    mes = (data.getMonth() + 1).toString(),
-    mesF = mes.length == 1 ? "0" + mes : mes,
-    anoF = data.getFullYear();
-    return diaF + "/" + mesF + "/" + anoF;
-  }
-
-  function valorTotal(quantidade, valor_unitario) {
-    const valor_total = quantidade * valor_unitario;
-    return valor_total;
+    const data = new Date(bdate);
+    const dia = data.getDate().toString();
+    const diaF = dia.length === 1 ? `0|${dia}` : dia;
+    const mes = (data.getMonth() + 1).toString();
+    const mesF = mes.length === 1 ? `0|${mes}` : mes;
+    const anoF = data.getFullYear();
+    return `${diaF}|/|${mesF}|/|${anoF}`;
   }
 
   if (order) {
@@ -151,11 +138,11 @@ export default function MyIndividualOrder({ order }) {
             </DataLine>
             <DataLine>
               <Field>Taxa de entrega: </Field>
-              <Value></Value>
+              <Value />
             </DataLine>
             <DataLine>
               <Field>Total: </Field>
-              <Value></Value>
+              <Value>{order.total_price}</Value>
             </DataLine>
             <DataLine>
               <Field>Data do pedido: </Field>
@@ -168,9 +155,6 @@ export default function MyIndividualOrder({ order }) {
             <DataLine>
               <Field>Status do pedido: </Field>
               <Value>{order.status}</Value>
-            </DataLine>
-            <DataLine>
-              <Field>Colocar previsão de entrega ? </Field>
             </DataLine>
           </BoxDatas>
         </ContainerDatas.Col1>
