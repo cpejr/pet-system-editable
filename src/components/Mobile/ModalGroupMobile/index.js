@@ -142,88 +142,95 @@ const useStyles = makeStyles((theme) => ({
   },
 
 }));
-/*eslint-disable*/
+
 export default function ModalGroup() {
-    const [group, setGroup] = useState('');
-  
-    async function handleGroupChange(event) {
-      setGroup(event.target.value);
-    }
-  
-    async function handleSubmit() {
-      const body = {
-        name: group,
-      };
-  
-      try {
-        await api.post('/api/group', body);
-        notification.open({
-          message: 'Sucesso!',
-          description:
-            'O grupo foi criado com sucesso.',
-          className: 'ant-notification',
-          top: '100px',
-          style: {
-            width: 600,
-          },
-        });
-      } catch (error) {
-        console.error(error);
-      }
-    }
-  
-    const classes = useStyles();
-    const [modalStyle] = useState(getModalStyle);
-    const [open, setOpen] = useState(false);
-  
-    const handleOpen = () => {
-      setOpen(true);
-    };
-  
-    const handleClose = () => {
-      setOpen(false);
-    };
-    const body = (
-      <div style={modalStyle} className={classes.paper}>
-        <ContainerModal>
-          <Row>
-            <TitleModal>Adicione um grupo</TitleModal>
-          </Row>
-          <Row>
-            <Ajust>
-              <Ajust.Col1>
-                Nome do grupo:
-              </Ajust.Col1>
-              <InputNameGroup placeholder="" require value={group} onChange={handleGroupChange} />
-            </Ajust>
-          </Row>
-          <Row>
-            <ButtonConfirm onClick={(e) => {
-              e.preventDefault();
-              handleSubmit();
-              handleClose();
-            }}
-            >
-              Confirmar grupo
-  
-            </ButtonConfirm>
-          </Row>
-        </ContainerModal>
-      </div>
-    );
-    return (
-      <div>
-        <AddGroup onClick={handleOpen}>
-          Adicionar grupo
-        </AddGroup>
-        <Modal
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="simple-modal-title"
-          aria-describedby="simple-modal-description"
-        >
-          {body}
-        </Modal>
-      </div>
-    );
+  const [group, setGroup] = useState('');
+  async function handleGroupChange(event) {
+    setGroup(event.target.value);
   }
+
+  async function handleSubmit() {
+    const body = {
+      name: group,
+    };
+
+    try {
+      await api.post('/api/group', body);
+      notification.open({
+        message: 'Sucesso!',
+        description:
+          'O grupo foi criado com sucesso.',
+        className: 'ant-notification',
+        top: '100px',
+        style: {
+          width: 600,
+        },
+      });
+    } catch (error) {
+      notification.open({
+        message: 'Sucesso!',
+        description:
+          'Não foi possível criar o grupo',
+        className: 'ant-notification',
+        top: '100px',
+        style: {
+          width: 600,
+        },
+      });
+    }
+  }
+  const classes = useStyles();
+  const [modalStyle] = useState(getModalStyle);
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const body = (
+    <div style={modalStyle} className={classes.paper}>
+      <ContainerModal>
+        <Row>
+          <TitleModal>Adicione um grupo</TitleModal>
+        </Row>
+        <Row>
+          <Ajust>
+            <Ajust.Col1>
+              Nome do grupo:
+            </Ajust.Col1>
+            <InputNameGroup placeholder="" require value={group} onChange={handleGroupChange} />
+          </Ajust>
+        </Row>
+        <Row>
+          <ButtonConfirm onClick={(e) => {
+            e.preventDefault();
+            handleSubmit();
+            handleClose();
+          }}
+          >
+            Confirmar grupo
+
+          </ButtonConfirm>
+        </Row>
+      </ContainerModal>
+    </div>
+  );
+  return (
+    <div>
+      <AddGroup onClick={handleOpen}>
+        Adicionar grupo
+      </AddGroup>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+      >
+        {body}
+      </Modal>
+    </div>
+  );
+}
