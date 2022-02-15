@@ -21,7 +21,7 @@ import {
 
 export default function MyStoreDataEdit() {
   const { store, setStore } = useAuth();
-  console.log("🚀 ~ file: index.js ~ line 31 ~ MyStoreDataEdit ~ store", store)
+  console.log('🚀 ~ file: index.js ~ line 31 ~ MyStoreDataEdit ~ store', store);
   const regionShippingTax = store ? store?.shipping_tax.split(',') : null;
   const regionShippingTime = store ? store?.delivery_time.split(',') : null;
   const [open, setOpen] = useState(false);
@@ -30,7 +30,7 @@ export default function MyStoreDataEdit() {
   const [phone, setPhone] = useState(store.phone.substring(2));
   const openingTimes = store ? store?.opening_time.split(':') : null;
   const closingTimes = store ? store?.closing_time.split(':') : null;
-  const [Situation, setSituation] = useState(store.situation);
+  const [situation, setSituation] = useState(store.working_days);
   const [page, setPage] = useState(0);
   const router = useRouter();
 
@@ -100,71 +100,6 @@ export default function MyStoreDataEdit() {
       setDados({ ...dados, [field]: aux });
     }
   }
-  const InfoState = {
-    openingTimeSeg: openingTimes[0],
-    closingTimeSeg: closingTimes[0],
-    openingTimeTer: openingTimes[1],
-    closingTimeTer: closingTimes[1],
-    openingTimeQua: openingTimes[2],
-    closingTimeQua: closingTimes[2],
-    openingTimeQui: openingTimes[3],
-    closingTimeQui: closingTimes[3],
-    openingTimeSex: openingTimes[4],
-    closingTimeSex: closingTimes[4],
-    openingTimeSab: openingTimes[5],
-    closingTimeSab: closingTimes[5],
-    openingTimeDom: openingTimes[6],
-    closingTimeDom: closingTimes[6],
-  };
-  const [info, setInfo] = useState(InfoState);
-
-  const opening = [
-    info?.openingTimeSeg,
-    info?.openingTimeTer,
-    info?.openingTimeQua,
-    info?.openingTimeQui,
-    info?.openingTimeSex,
-    info?.openingTimeSab,
-    info?.openingTimeDom,
-  ];
-  const closing = [
-    info?.closingTimeSeg,
-    info?.closingTimeTer,
-    info?.closingTimeQua,
-    info?.closingTimeQui,
-    info?.closingTimeSex,
-    info?.closingTimeSab,
-    info?.closingTimeDom,
-  ];
-  // const situation = [
-  //   info?.situationSeg,
-  //   info?.situationTer,
-  //   info?.situationQua,
-  //   info?.situationQui,
-  //   info?.situationSex,
-  //   info?.situationSab,
-  //   info?.situationDom,
-  // ];
-  // const options = [
-  //   'Aberto',
-  //   'Fechado',
-  // ];
-
-  function handleOpening(event, field) {
-    const regex = /^[0-9\b]+$/;
-    if (event.target.value === '' || regex.test(event.target.value)) {
-      setInfo({ ...info, [field]: event.target.value });
-    }
-  }
-  function handleClosing(event, field) {
-    const rege = /^[0-9\b]+$/;
-    if (event.target.value === '' || rege.test(event.target.value)) {
-      setInfo({ ...info, [field]: event.target.value });
-    }
-  }
-  // function situation(str, index, stringToAdd) {
-  //   return str.(index, str.length);
-  // }
 
   const handleOpen = () => {
     setOpen(true);
@@ -199,7 +134,7 @@ export default function MyStoreDataEdit() {
       phone: ddd + phone,
       opening_time: String(opening),
       closing_time: String(closing),
-      situation: String(Situation),
+      situation: String(situation),
       shipping_tax: String(deliveryTax),
       delivery_time: String(deliveryTime),
     };
@@ -287,11 +222,13 @@ export default function MyStoreDataEdit() {
               <>
                 <Title>Formulário de edição</Title>
                 <MyFormGroup>
+                  {openingTimes && closingTimes && situation && (
                   <WorkingDaysEdit
-                    info={info}
-                    handleOpening={handleOpening}
-                    handleClosing={handleClosing}
+                    openingTimes={openingTimes}
+                    closingTimes={closingTimes}
+                    situation={situation}
                   />
+                  )}
                 </MyFormGroup>
                 <Buttons>
                   <CancelSubmit onClick={() => handleBack(0)}>Voltar</CancelSubmit>
