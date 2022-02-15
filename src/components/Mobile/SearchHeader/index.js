@@ -109,7 +109,7 @@ border-bottom:solid;
 border-width:1px;
 `;
 
-export default function SearchHeader({ keyword, setPrice }) {
+export default function SearchHeader({ setPrice }) {
   const [checkedStore, setCheckedStore] = useState('#AAABB0');
   const handleClickStore = () => {
     if (checkedStore === '#AAABB0') {
@@ -135,7 +135,7 @@ export default function SearchHeader({ keyword, setPrice }) {
     }
   };
 
-  const [searchText, setSearchText] = useState(keyword);
+  const [searchText, setSearchText] = useState('');
   const router = useRouter();
   const handleFilterSearchText = (e) => setSearchText(e.target.value);
   const handleSubmit = () => router.push({ pathname: '/Search', query: { keyword: searchText } });
@@ -151,7 +151,7 @@ export default function SearchHeader({ keyword, setPrice }) {
         <ContainerSearch>
           <TextBox>
             <TextBox.SearchContainer>
-              <Link href={{ pathname: '/Search' }}>
+              <Link href={{ pathname: '/Search', query: { keyword: searchText } }}>
                 <BsSearch
                   size="30"
                   type="submit"
@@ -165,12 +165,8 @@ export default function SearchHeader({ keyword, setPrice }) {
                 onChange={handleFilterSearchText}
                 onKeyPress={handleKeypress}
               />
-              <TextBox.Search type="text" />
-              <Link
-                onKeyPress={handleKeypress}
-                href={{ pathname: '/Search', query: { keyword: searchText } }}
-              >
-                <CgCloseO onClick={() => setSearchText('')} size="30" style={{ color: '#609694' }} />
+              <Link href={{ pathname: '/Search' }}>
+                <CgCloseO onClick={() => setSearchText('')} />
               </Link>
             </TextBox.SearchContainer>
           </TextBox>
