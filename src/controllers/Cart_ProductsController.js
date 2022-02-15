@@ -63,8 +63,7 @@ module.exports = {
     try {
       const cart = await CartModel.getCartByFirebaseId(firebase_id);
       cart_product.cart_id = cart.cart_id;
-      // eslint-disable-next-line no-unused-vars
-      const result = await Cart_ProductsModel.createCart_Products(cart_product);
+      await Cart_ProductsModel.createCart_Products(cart_product);
       return res.status(200).json({ notification: 'Cart Product Created Successfully!' });
     } catch (error) {
       if (error.message) {
@@ -76,8 +75,7 @@ module.exports = {
   async deleteByID(req, res) {
     const product_id = req.query.id;
     try {
-      // eslint-disable-next-line no-unused-vars
-      const result = await Cart_ProductsModel.deleteCart_Products(product_id);
+      await Cart_ProductsModel.deleteCart_Products(product_id);
       return res.status(200).json({ notification: 'Cart Product Deleted Successfully!' });
     } catch (error) {
       if (error.message) {
@@ -91,8 +89,7 @@ module.exports = {
     try {
       const cart = await CartModel.getCartByFirebaseId(firebase_id);
       const { cart_id } = cart;
-      // eslint-disable-next-line no-unused-vars
-      const result = await Cart_ProductsModel.deleteAllProductsCart(cart_id);
+      await Cart_ProductsModel.deleteAllProductsCart(cart_id);
       return res.status(200).json({ notification: 'Cart Products Deleted Successfully!' });
     } catch (error) {
       if (error.message) {
