@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import api from '../../utils/api';
 import MyOrder from '../MyOrder';
-import { useAuth } from '../../contexts/AuthContext';
+import FullPageLoader from '../FullPageLoader';
 
 const ContainerDatas = styled.div`
   display: flex;
@@ -94,8 +94,6 @@ toast.configure();
 
 export default function MyIndividualOrder({ order }) {
   const [address, setAddress] = useState('');
-  const { user } = useAuth();
-  console.log(user);
 
   async function loadAddress() {
     try {
@@ -165,7 +163,7 @@ export default function MyIndividualOrder({ order }) {
   }
   return (
     <ContainerDatas>
-      <p>Loading</p>
+      <FullPageLoader />
     </ContainerDatas>
   );
 }
