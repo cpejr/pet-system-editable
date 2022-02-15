@@ -30,6 +30,22 @@ module.exports = {
       return res.status(500).json({ notification: 'Internal Server Error' });
     }
   },
+
+  async getCartAmount(req, res) {
+    const { firebase_id } = req.session.get('user').user;
+    try {
+      const { cart_id } = await CartModel.getCartByFirebaseId(firebase_id);
+      const cart_products = await Cart_ProductsModel
+        .getCart_AmountByCartId(cart_id);
+      return res.status(200).json(cart_products);
+    } catch (error) {
+      if (error.message) {
+        return res.status(400).json({ notification: error.message });
+      }
+      return res.status(500).json({ notification: 'Internal Server Error' });
+    }
+  },
+
   async getAll(req, res) {
     try {
       const cart_products = await Cart_ProductsModel.getAllCart_Products();
@@ -47,7 +63,7 @@ module.exports = {
     try {
       const cart = await CartModel.getCartByFirebaseId(firebase_id);
       cart_product.cart_id = cart.cart_id;
-      const result = await Cart_ProductsModel.createCart_Products(cart_product);
+      await Cart_ProductsModel.createCart_Products(cart_product);
       return res.status(200).json({ notification: 'Cart Product Created Successfully!' });
     } catch (error) {
       if (error.message) {
@@ -59,7 +75,7 @@ module.exports = {
   async deleteByID(req, res) {
     const product_id = req.query.id;
     try {
-      const result = await Cart_ProductsModel.deleteCart_Products(product_id);
+      await Cart_ProductsModel.deleteCart_Products(product_id);
       return res.status(200).json({ notification: 'Cart Product Deleted Successfully!' });
     } catch (error) {
       if (error.message) {
@@ -73,7 +89,7 @@ module.exports = {
     try {
       const cart = await CartModel.getCartByFirebaseId(firebase_id);
       const { cart_id } = cart;
-      const result = await Cart_ProductsModel.deleteAllProductsCart(cart_id);
+      await Cart_ProductsModel.deleteAllProductsCart(cart_id);
       return res.status(200).json({ notification: 'Cart Products Deleted Successfully!' });
     } catch (error) {
       if (error.message) {

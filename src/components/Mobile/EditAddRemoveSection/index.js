@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import ModalAddProductsMobile from '../ModalAddProductsMobile';
+import ModalGroupMobile from '../ModalGroupMobile';
 
 const Container = styled.div`
 display:none;
@@ -20,7 +21,7 @@ Container.Col1 = styled.div`
 display:flex;
 align-items:center;
 justify-content:center;
-width:33%;
+width:45%;
 font-family:Roboto;
 font-size:12px;
 `;
@@ -29,16 +30,7 @@ Container.Col2 = styled.div`
 display:flex;
 align-items:center;
 justify-content:center;
-width:33%;
-font-family:Roboto;
-font-size:12px;
-`;
-
-Container.Col3 = styled.div`
-display:flex;
-align-items:center;
-justify-content:center;
-width:34%;
+width:45%;
 font-family:Roboto;
 font-size:12px;
 `;
@@ -48,14 +40,11 @@ export default function LocationAndFilter({ categories, att, setAtt }) {
     <div>
       <Container>
         <Container.Col1>
-          Editar categorias
+          <ModalAddProductsMobile categories={categories} setAtt={setAtt} att={att} />
         </Container.Col1>
         <Container.Col2>
-          <ModalAddProductsMobile categories={categories} setAtt={setAtt} att={att} />
+          <ModalGroupMobile />
         </Container.Col2>
-        <Container.Col3>
-          Remover categorias
-        </Container.Col3>
       </Container>
     </div>
   );

@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
-import Order from '../../../../src/components/Filter/Order';
-import Category from '../../../../src/components/Filter/Category';
+import { toast } from 'react-toastify';
 import Products from '../../../../src/components/Products';
 import ModalAddProducts from '../../../../src/components/ModalAddProducts';
 import EditAddRemoveSection from '../../../../src/components/Mobile/EditAddRemoveSection';
@@ -15,6 +14,8 @@ import {
 import api from '../../../../src/utils/api';
 import withAuthStore from '../../../../src/components/WithAuth/WithAuthStore';
 
+toast.configure();
+
 const Perfil = () => {
   const [categories, setCategories] = useState([]);
   const [groups, setGroups] = useState([]);
@@ -22,19 +23,21 @@ const Perfil = () => {
   const [att, setAtt] = useState(false);
 
   useEffect(() => {
-    try {
-      api.get('category').then((res) => {
-        setCategories(res.data);
-      });
-      api.get('group').then((res) => {
-        setGroups(res.data);
-      });
-      api.get('/product').then((res) => {
-        setProducts(res.data);
-      });
-    } catch (error) {
-      console.error(error);
-    }
+    api.get('group').then((res) => {
+      setGroups(res.data);
+    }).catch(() => {
+      toast('Erro ao obter grupos', { position: toast.POSITION.BOTTOM_RIGHT });
+    });
+    api.get('/product').then((res) => {
+      setProducts(res.data);
+    }).catch(() => {
+      toast('Erro ao obter produtos', { position: toast.POSITION.BOTTOM_RIGHT });
+    });
+    api.get('/category').then((res) => {
+      setCategories(res.data);
+    }).catch(() => {
+      toast('Erro ao obter cateogrias', { position: toast.POSITION.BOTTOM_RIGHT });
+    });
   }, [att]);
 
   const PersonalGroups = () => (
@@ -77,15 +80,10 @@ const Perfil = () => {
       <EditAddRemoveSection categories={categories} setAtt={setAtt} att={att} />
       <MarketContainer />
       <ProductContainer>
-        <ProductContainer.Col1>
-          <Order />
-          <Category />
-          <MarketContainer.Col2 />
-          <Botoes>
-            <ModalAddProducts categories={categories} setAtt={setAtt} att={att} />
-            <ModalGroup />
-          </Botoes>
-        </ProductContainer.Col1>
+        <Botoes>
+          <ModalAddProducts categories={categories} setAtt={setAtt} att={att} />
+          <ModalGroup />
+        </Botoes>
         <ProductContainer.Col2>
           <Group>
             <PersonalGroups />
