@@ -81,7 +81,7 @@ export const YourSpace = styled.button`
     align-items:center;
     justify-content:space-around;
     width: 100%;
-    height:45%;
+    height:48%;
     font-family: Roboto;
     font-size: 20px;
     font-weight: 300;
@@ -96,7 +96,7 @@ YourSpace.Word = styled.p`
 display:flex;
 align-items:center;
 justify-content:center;
-font-size: 100%;
+font-size: 70%;
 margin: 0;
 `;
 

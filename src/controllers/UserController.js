@@ -1,6 +1,7 @@
 import FirebaseModel from '../models/FirebaseModel';
 import UserModel from '../models/UserModel';
 import CartModel from '../models/CartModel';
+import AttemptsModel from '../models/AttemptsModel';
 
 const { v4: uuidv4 } = require('uuid');
 
@@ -50,6 +51,7 @@ export async function create(request, response) {
       cart_id,
     };
     await UserModel.createNewUser(user);
+    await AttemptsModel.createAttempt();
     const createNewCart = await CartModel.createNewCart(newCart);
   } catch (err) {
     if (firebase_id) {
@@ -72,7 +74,7 @@ export async function deleteBoth(request, response) {
 
     return response.status(200).json({ message: 'Sucesso!' });
   } catch (error) {
-      console.error(error); //eslint-disable-line
+    console.error(error); //eslint-disable-line
     return response.status(500).json({ notification: 'Internal Server Error' });
   }
 }
@@ -102,7 +104,7 @@ export async function update(request, response) {
     const updatedUser = await UserModel.getUserById(id);
     return response.status(200).json(updatedUser, { message: 'Sucesso!' });
   } catch (error) {
-      console.error(error); //eslint-disable-line
+    console.error(error); //eslint-disable-line
     return response.status(500).json({ notification: 'Internal Server Error' });
   }
 }
