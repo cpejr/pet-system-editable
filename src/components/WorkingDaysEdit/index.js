@@ -316,13 +316,7 @@ export default function StoreCreate({
                   onChange={handleChangeSeg}
                   input={<Input />}
                   MenuProps={MenuProps}
-                >
-                  {options.map((option) => (
-                    <MenuItem key={option} value={option}>
-                      {option}
-                    </MenuItem>
-                  ))}
-                </Select>
+                />
 
               </ItemFormulary>
 
@@ -351,13 +345,7 @@ export default function StoreCreate({
                   onChange={handleChangeTer}
                   input={<Input />}
                   MenuProps={MenuProps}
-                >
-                  {options.map((option) => (
-                    <MenuItem key={option} value={option}>
-                      {option}
-                    </MenuItem>
-                  ))}
-                </Select>
+                />
               </ItemFormulary>
 
               <ItemFormulary>
@@ -383,13 +371,7 @@ export default function StoreCreate({
                   onChange={handleChangeQua}
                   input={<Input />}
                   MenuProps={MenuProps}
-                >
-                  {options.map((option) => (
-                    <MenuItem key={option} value={option}>
-                      {option}
-                    </MenuItem>
-                  ))}
-                </Select>
+                />
               </ItemFormulary>
 
               <ItemFormulary>
@@ -417,13 +399,7 @@ export default function StoreCreate({
                   onChange={handleChangeQui}
                   input={<Input />}
                   MenuProps={MenuProps}
-                >
-                  {options.map((option) => (
-                    <MenuItem key={option} value={option}>
-                      {option}
-                    </MenuItem>
-                  ))}
-                </Select>
+                />
               </ItemFormulary>
 
               <ItemFormulary>
@@ -451,13 +427,7 @@ export default function StoreCreate({
                   onChange={handleChangeSex}
                   input={<Input />}
                   MenuProps={MenuProps}
-                >
-                  {options.map((option) => (
-                    <MenuItem key={option} value={option}>
-                      {option}
-                    </MenuItem>
-                  ))}
-                </Select>
+                />
               </ItemFormulary>
 
               <ItemFormulary>
@@ -485,13 +455,7 @@ export default function StoreCreate({
                   onChange={handleChangeSab}
                   input={<Input />}
                   MenuProps={MenuProps}
-                >
-                  {options.map((option) => (
-                    <MenuItem key={option} value={option}>
-                      {option}
-                    </MenuItem>
-                  ))}
-                </Select>
+                />
               </ItemFormulary>
 
               <ItemFormulary>
@@ -519,13 +483,7 @@ export default function StoreCreate({
                   onChange={handleChangeDom}
                   input={<Input />}
                   MenuProps={MenuProps}
-                >
-                  {options.map((option) => (
-                    <MenuItem key={option} value={option}>
-                      {option}
-                    </MenuItem>
-                  ))}
-                </Select>
+                />
               </ItemFormulary>
 
               <ItemFormulary>
