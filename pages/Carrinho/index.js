@@ -75,9 +75,6 @@ export default function Carrinho() {
   }, [address]);
 
   useEffect(() => {
-  }, [products]);
-
-  useEffect(() => {
     let somaPrecos = 0;
     if (user) {
       try {
