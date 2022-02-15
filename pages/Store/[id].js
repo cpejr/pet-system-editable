@@ -193,18 +193,7 @@ export default function Store({
   );
 }
 
-export async function getStaticPaths() {
-  const { data: stores } = await api.get('store');
-
-  return {
-    paths: stores.map((store) => ({
-      params: { id: store.firebase_id_store },
-    })),
-    fallback: 'blocking',
-  };
-}
-
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
   const [{ data: store },
     { data: address },
     { data: products },
@@ -221,6 +210,5 @@ export async function getStaticProps({ params }) {
       products,
       groups,
     },
-    revalidate: 20, // 20 segundos
   };
 }
