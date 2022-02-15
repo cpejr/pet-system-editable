@@ -1,23 +1,24 @@
 import React from 'react';
 import Link from 'next/link';
 import { SubTitle, Section, StyledSpan } from './styles';
+import URL_BASE from '../../utils/urlBase';
 
 const menuItens = [
   {
     text: 'Meus produtos',
-    url: 'http://localhost:3000/Seller/Perfil/Products',
+    url: `${URL_BASE}/Seller/Perfil/Products`,
   },
   {
     text: 'Minha loja',
-    url: 'http://localhost:3000/Seller/Perfil/Store',
+    url: `${URL_BASE}/Seller/Perfil/Store`,
   },
   {
     text: 'Pedidos',
-    url: 'http://localhost:3000/Seller/Perfil/SellerRequests',
+    url: `${URL_BASE}/Seller/Perfil/SellerRequests`,
   },
   {
     text: 'Minhas vendas',
-    url: 'http://localhost:3000/Seller/Perfil/Sales',
+    url: `${URL_BASE}/Seller/Perfil/Sales`,
   },
 ];
 

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import 'antd/dist/antd.css';
-import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
 import { toast } from 'react-toastify';
 import Input from '@material-ui/core/Input';
@@ -16,8 +15,8 @@ import {
 } from '../FormComponents';
 import MaskedInput from '../MasketInput';
 import 'react-toastify/dist/ReactToastify.css';
+import api from '../../utils/api';
 
-const api = axios.create({ baseURL: 'http://localhost:3000/' });
 toast.configure();
 
 const useStyles = makeStyles((theme) => ({
@@ -304,7 +303,7 @@ export default function StoreCreate(props) {
     formData.append('working_days', situation);
 
     try {
-      const response = await api.post('api/store', formData, {
+      const response = await api.post('store', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

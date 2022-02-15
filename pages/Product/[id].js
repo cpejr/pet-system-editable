@@ -7,6 +7,7 @@ import Link from 'next/link';
 import moment from 'moment';
 import { useRouter } from 'next/router';
 import api from '../../src/utils/api';
+import URL_BASE from '../../src/utils/urlBase';
 import {
   Container, ProductContainer, ProductTitle, Price, Delivery,
   ButtonsContainer, Button, AddCarButton, Store, Description,
@@ -299,11 +300,11 @@ export default function Product({ product, store }) {
   return (
     <div>
       <BackPage>
-       <a href="http://localhost:3000/Search?keyword=">
+        <a href={`${URL_BASE}/Search?keyword=`}>
           <BackButton>
-          <FaArrowLeft size={24} />
-          Voltar
-        </BackButton>
+            <FaArrowLeft size={24} />
+            Voltar
+          </BackButton>
         </a>
       </BackPage>
       { product && (

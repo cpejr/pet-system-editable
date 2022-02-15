@@ -2,11 +2,9 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
-import axios from 'axios';
 import { notification } from 'antd';
 import { BsTrash } from 'react-icons/bs';
-
-const api = axios.create({ baseURL: 'http://localhost:3000/' });
+import api from '../../utils/api';
 
 const ContainerModal = styled.div`
 display:flex;
@@ -159,7 +157,7 @@ const useStyles = makeStyles((theme) => ({
 export default function ModalGroup({ group, setAtt, att }) {
   async function handleSubmit() {
     try {
-      await api.delete(`api/group/${group.group_id}`);
+      await api.delete(`group/${group.group_id}`);
       setAtt(!att);
       notification.open({
         message: 'Sucesso!',

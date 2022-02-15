@@ -12,6 +12,7 @@ module.exports = {
   images: {
     domains: ["s3-sa-east-1.amazonaws.com"],
   },
+  basePath: process.env.NODE_ENV === 'production' ? '/docs' : '',
   async redirects() {
     return [
       {

@@ -8,6 +8,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useAuth } from '../../contexts/AuthContext';
 import { Section } from './styles';
+import URL_BASE from '../../utils/urlBase';
 
 export default function MyLogOut() {
   const [open, setOpen] = React.useState(false);
@@ -42,7 +43,7 @@ export default function MyLogOut() {
           <Button onClick={handleClose} color="primary">
             Cancelar
           </Button>
-          <Link href="http://localhost:3000/login" rel="login">
+          <Link href={`${URL_BASE}/login`} rel="login">
             <Button onClick={handleClose, logout} color="secondary" autoFocus>
               Sair
             </Button>

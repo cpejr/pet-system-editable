@@ -6,9 +6,7 @@ import { HiOutlineHome } from 'react-icons/hi';
 import { FiUserPlus } from 'react-icons/fi';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
-import axios from 'axios';
-
-const api = axios.create({ baseURL: 'http://localhost:3000/' });
+import api from '../../utils/api';
 
 const Container = styled.div`
 display:flex;
@@ -231,9 +229,9 @@ export default function AdminCards() {
     };
     try {
       if (commission != null) {
-        await api.put('/api/admin', body);
+        await api.put('/admin', body);
       } else {
-        await api.post('/api/admin', body);
+        await api.post('/admin', body);
       }
     } catch (error) {
       console.error(error);

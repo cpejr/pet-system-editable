@@ -2,23 +2,24 @@ import React from 'react';
 import Link from 'next/link';
 import MyLogOut from '../MyLogOut';
 import { SubTitle, Section, StyledSpan } from './styles';
+import URL_BASE from '../../utils/urlBase';
 
 const menuItens = [
   {
     text: 'Meus Pedidos',
-    url: 'http://localhost:3000/User/Perfil/MyRequests',
+    url: `${URL_BASE}/User/Perfil/MyRequests`,
   },
   {
     text: 'Meus Endereços',
-    url: 'http://localhost:3000/User/Perfil/MyAdresses',
+    url: `${URL_BASE}/User/Perfil/MyAdresses`,
   },
   {
     text: 'Meus Dados',
-    url: 'http://localhost:3000/User/Perfil/MyDatas',
+    url: `${URL_BASE}/User/Perfil/MyDatas`,
   },
   {
     text: 'Alterar Senha',
-    url: 'http://localhost:3000/User/Perfil/ChangePassword',
+    url: `${URL_BASE}/User/Perfil/ChangePassword`,
   },
 ];
 

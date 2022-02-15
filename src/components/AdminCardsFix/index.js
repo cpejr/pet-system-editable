@@ -7,6 +7,7 @@ import { notification } from 'antd';
 import { HiOutlineHome } from 'react-icons/hi';
 import { FiUserPlus } from 'react-icons/fi';
 import { MdBuild } from 'react-icons/md';
+import URL_BASE from '../../utils/urlBase';
 import JsonToCSV from '../JsonToCSV';
 import api from '../../utils/api';
 
@@ -82,7 +83,7 @@ export default function Cards() {
     <div>
       <Container>
         <Container.Line>
-          <Link href="http://localhost:3000/Admin/PerfilControle">
+          <Link href={`${URL_BASE}/Admin/PerfilControle`}>
             <Card>
               <CgTikcode size={50} style={{ color: '#609694' }} />
               <Card.Title>Perfil de Controle</Card.Title>
@@ -96,7 +97,7 @@ export default function Cards() {
               setLoading={setStoreCSVLoading}
             />
           </Card>
-          <Link href="http://localhost:3000/Admin/Comissoes">
+          <Link href={`${URL_BASE}/Admin/Comissoes`}>
             <Card>
               <CgDollar size={50} style={{ color: '#609694' }} />
               <Card.Title>Comissões</Card.Title>
@@ -104,19 +105,19 @@ export default function Cards() {
           </Link>
         </Container.Line>
         <Container.Line>
-          <Link href="http://localhost:3000/Admin/EditarHome">
+          <Link href={`${URL_BASE}/Admin/EditarHome`}>
             <Card>
               <BiImageAdd size={50} style={{ color: '#609694' }} />
               <Card.Title>Editar Home</Card.Title>
             </Card>
           </Link>
-          <Link href="http://localhost:3000/Admin/EditarCategorias">
+          <Link href={`${URL_BASE}/Admin/EditarCategorias`}>
             <Card>
               <MdBuild size={50} style={{ color: '#609694' }} />
               <Card.Title>Editar Categorias</Card.Title>
             </Card>
           </Link>
-          <Link href="http://localhost:3000/Admin/SolicitacaoLojas">
+          <Link href={`${URL_BASE}/Admin/SolicitacaoLojas`}>
             <Card>
               <FiUserPlus size={50} style={{ color: '#609694' }} />
               <Card.Title>Solicitação de Lojas</Card.Title>

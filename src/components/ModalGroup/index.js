@@ -2,10 +2,8 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
-import axios from 'axios';
 import { notification } from 'antd';
-
-const api = axios.create({ baseURL: 'http://localhost:3000/' });
+import api from '../../utils/api';
 
 const ContainerModal = styled.div`
 display:flex;
@@ -182,7 +180,7 @@ export default function ModalGroup() {
     };
 
     try {
-      await api.post('/api/group', body);
+      await api.post('/group', body);
       notification.open({
         message: 'Sucesso!',
         description:

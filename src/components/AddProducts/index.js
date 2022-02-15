@@ -2,7 +2,6 @@
 /* eslint-disable react/jsx-no-bind */
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
 import { notification } from 'antd';
 import MenuItem from '@material-ui/core/MenuItem';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
@@ -10,8 +9,7 @@ import { Select } from '@material-ui/core';
 import 'antd/dist/antd.css';
 import moneyMask from '../moneyMask/moneyMask';
 import percentageMask from '../percentageMask/percentageMask';
-
-const api = axios.create({ baseURL: 'http://localhost:3000/' });
+import api from '../../utils/api';
 
 const AddProductsContainer = styled.div`
 display:flex;
@@ -309,7 +307,7 @@ export default function AddProducts({
     }
 
     try {
-      await api.post('/api/product', formData);
+      await api.post('/product', formData);
       setAtt(!att);
       notification.open({
         message: 'Sucesso!',

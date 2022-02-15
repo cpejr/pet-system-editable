@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
-import axios from 'axios';
 import { notification } from 'antd';
 import { BsTrash } from 'react-icons/bs';
 import {
   ContainerModal, Row, TitleModal, Ajust, ButtonConfirm,
   ButtonCancel, GarbageIcon,
 } from './styles';
-
-const api = axios.create({ baseURL: 'http://localhost:3000/' });
+import api from '../../utils/api';
 
 function getModalStyle() {
   const top = 50;
@@ -44,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
 export default function ModalDeleteAddress({ address_id, loadAddresses }) {
   async function handleSubmit() {
     try {
-      await api.delete(`api/address/${address_id}`);
+      await api.delete(`address/${address_id}`);
       notification.open({
         message: 'Sucesso!',
         description: 'Endereço deletado com sucesso.',

@@ -5,11 +5,9 @@ import Modal from '@material-ui/core/Modal';
 import { Select } from '@material-ui/core';
 import MenuItem from '@material-ui/core/MenuItem';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
-import axios from 'axios';
 import { notification } from 'antd';
 import { BiEditAlt } from 'react-icons/bi';
-
-const api = axios.create({ baseURL: 'http://localhost:3000/' });
+import api from '../../utils/api';
 
 const ContainerModal = styled.div`
 display:flex;
@@ -159,7 +157,7 @@ export default function ModalGroup({ order, att, setAtt }) {
     };
 
     try {
-      await api.put('/api/order/', body);
+      await api.put('/order/', body);
       setAtt(!att);
       notification.open({
         message: 'Sucesso!',

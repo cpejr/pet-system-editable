@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
-import axios from 'axios';
 import { notification } from 'antd';
 import { BiEditAlt } from 'react-icons/bi';
 import { useAuth } from '../../contexts/AuthContext';
@@ -10,8 +9,7 @@ import {
   ContainerModal, Row, Ajust, Ajust2, InputNameGroup, ButtonConfirm, EditGroup,
   CategoryContainer, DivInput,
 } from './styles';
-
-const api = axios.create({ baseURL: 'http://localhost:3000/' });
+import api from '../../utils/api';
 
 function getModalStyle() {
   const top = 50;
@@ -70,8 +68,8 @@ export default function ModalGroup({ group, setAtt, att }) {
     };
 
     try {
-      await api.put(`/api/group/${group.group_id}`, body);
-      await api.put('/api/productsOfGroup', { currentProducts, groupId: group.group_id });
+      await api.put(`/group/${group.group_id}`, body);
+      await api.put('/productsOfGroup', { currentProducts, groupId: group.group_id });
       setAtt(!att);
       notification.open({
         message: 'Sucesso!',
@@ -100,10 +98,10 @@ export default function ModalGroup({ group, setAtt, att }) {
     setOpen(false);
   };
   useEffect(() => {
-    api.get(`/api/productsByStore/${store.firebase_id_store}`).then((res) => {
+    api.get(`/productsByStore/${store.firebase_id_store}`).then((res) => {
       setProducts(res.data);
     });
-    api.get(`/api/productsOfGroup/${group.group_id}`).then((res) => {
+    api.get(`/productsOfGroup/${group.group_id}`).then((res) => {
       setCurrentProducts(res.data);
     });
   }, []);
