@@ -76,6 +76,7 @@ ContainerDatas.Col2 = styled.div`
 const Field = styled.div`
   margin-bottom: 4%;
   font-weight: 400;
+  margin-right:1%;
 `;
 
 const Value = styled.p`
@@ -135,7 +136,7 @@ export default function MyIndividualOrder({ order }) {
         <ContainerDatas.Col1>
           <BoxDatas>
             <DataLine>
-              <Field>Entrega em: </Field>
+              <Field>{'Entrega em: '}</Field>
               <Value>
                 {address.street}
                 -
@@ -150,11 +151,11 @@ export default function MyIndividualOrder({ order }) {
             </DataLine>
             <DataLine>
               <Field>Taxa de entrega: </Field>
-              <Value />
+              <Value></Value>
             </DataLine>
             <DataLine>
               <Field>Total: </Field>
-              <Value>{order.total_price}</Value>
+              <Value></Value>
             </DataLine>
             <DataLine>
               <Field>Data do pedido: </Field>
