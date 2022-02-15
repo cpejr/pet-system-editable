@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { toast } from 'react-toastify';
 import api from '../../src/utils/api';
-import { ContainerCategory, SearchContainer, TypeContainer } from './styles';
+import { ContainerCategory, SearchContainer, TypeContainer } from './searchStyles';
 import {
   OrderSearch,
   Brands,

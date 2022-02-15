@@ -30,7 +30,7 @@ import {
   Data,
   Subtotal,
   Space,
-} from './styles';
+} from '../../src/styles/checkoutStyles';
 import SelectState from '../../src/components/SelectState';
 import initialState from '../../src/components/checkoutInitialState';
 import { useCart } from '../../src/components/CartContext/CartContext';

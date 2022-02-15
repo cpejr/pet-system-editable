@@ -16,7 +16,7 @@ import {
 } from '../../src/components/BodyForms';
 import {
   Img, UploadContainer, ImageSelected, Label,
-} from './styles';
+} from '../../src/styles/createStorestyles';
 import {
   TitleStore, SubtitleStore, Text, SubText, TextBox, Submit,
 } from '../../src/components/FormComponents';

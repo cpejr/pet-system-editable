@@ -12,7 +12,7 @@ import {
   ButtonsContainer, Button, AddCarButton, Store, Description,
   BackPage, BackButton, CarrinhoCardInfoQuantity,
   CarrinhoCardText, StoreStatusClosed, StatusContainer, StoreOpenedTime,
-} from './styles';
+} from '../../src/styles/productStyles';
 import StoreIsOpen from '../../src/components/StoreIsOpen';
 import { useCart } from '../../src/components/CartContext/CartContext';
 import { useAuth } from '../../src/contexts/AuthContext';

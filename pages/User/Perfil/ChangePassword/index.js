@@ -1,5 +1,5 @@
 import React from 'react';
-import { ContainerChangePassword, OutterContainer } from './styles';
+import { ContainerChangePassword, OutterContainer } from '../../../../src/styles/userPerfilChangePasswordStyles';
 import {
   Title, PerfilMenu, MyChangePassword,
 } from '../../../../src/components';

@@ -10,7 +10,7 @@ import { Title, PerfilStoreMenu } from '../../../../src/components/index';
 import {
   ProductContainer, MarketContainer,
   EditGroup, RemoveGroup, Group, Groups, Botoes,
-} from './styles';
+} from './sellerPerfilProductsStyles';
 import api from '../../../../src/utils/api';
 import withAuthStore from '../../../../src/components/WithAuth/WithAuthStore';
 

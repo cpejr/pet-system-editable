@@ -12,7 +12,7 @@ import {
   BigBanner,
   MediumBanner,
   LittleBanner,
-} from './styles';
+} from '../../src/styles/storeStyles';
 import api from '../../src/utils/api';
 import { StoreTabs } from '../../src/components';
 import StoreIsOpen from '../../src/components/StoreIsOpen';
