@@ -8,9 +8,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import { Select } from '@material-ui/core';
 import 'antd/dist/antd.css';
-import InputMask from 'react-input-mask';
-import CurrencyFormat from 'react-currency-format';
 import moneyMask from '../moneyMask/moneyMask';
+import percentageMask from '../percentageMask/percentageMask';
 
 const api = axios.create({ baseURL: 'http://localhost:3000/' });
 
@@ -291,7 +290,8 @@ export default function AddProducts({
     setPrice(moneyMask(event.target.value));
   }
   function handleDiscountChange(event) {
-    setDiscount(event.target.value);
+    setDiscount(percentageMask(event.target.value));
+    console.log("🚀 ~ file: index.js ~ line 294 ~ handleDiscountChange ~ event.target.value", event.target.value)
   }
   function handleDescriptionChange(event) {
     setDescription(event.target.value);
@@ -395,11 +395,10 @@ export default function AddProducts({
               </PriceAndDiscont.Col2.Row1>
               <DivInput>
                 <PriceAndDiscont.Col2.Row2
-                  as={InputMask}
                   placeholder="% 00.00"
-                  mask="99.99"
                   value={discount}
                   onChange={handleDiscountChange}
+                  decimalSeparator="."
                 />
               </DivInput>
             </PriceAndDiscont.Col2>
