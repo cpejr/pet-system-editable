@@ -160,7 +160,7 @@ export default function Store({
           <StoreContainer.Col2>
             <StoreName>{store.company_name}</StoreName>
             <StoreDatas>
-              Taxa de entrega: 
+              Taxa de entrega:
               {' '}
               {shippingValue ? (parseFloat(shippingValue) === 0 ? 'Gratis' : `R$${shippingValue}`) : (shippingMinValue === 0 ? `Gratis ~ R$${shippingMaxValue.toFixed(2)}` : `R$${shippingMinValue.toFixed(2)} ~ R$${shippingMaxValue.toFixed(2)}`) }
             </StoreDatas>
@@ -194,21 +194,28 @@ export default function Store({
 }
 
 export async function getServerSideProps({ params }) {
-  const [{ data: store },
-    { data: address },
-    { data: products },
-    { data: groups }] = await axios.all([
-    api.get(`store/${params.id}`),
-    api.get(`storeAddress/${params.id}`),
-    api.get(`productsByStore/${params.id}`),
-    api.get(`groups/${params.id}`),
-  ]);
-  return {
-    props: {
-      store,
-      address,
-      products,
-      groups,
-    },
-  };
+  try {
+    const [{ data: store },
+      { data: address },
+      { data: products },
+      { data: groups }] = await axios.all([
+      api.get(`store/${params.id}`),
+      api.get(`storeAddress/${params.id}`),
+      api.get(`productsByStore/${params.id}`),
+      api.get(`groups/${params.id}`),
+    ]);
+    return {
+      props: {
+        store,
+        address,
+        products,
+        groups,
+      },
+    };
+  } catch (error) {
+    console.error(error);
+    return {
+      notFound: true,
+    };
+  }
 }
