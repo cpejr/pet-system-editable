@@ -170,9 +170,7 @@ export default function Search({ keyword, id, categories }) {
         </ContainerCategory>
         <SearchContainer>
           <SearchContainer.Col1>
-            <OrderSearch />
             <Price setPrice={setPrice} />
-            <Brands categories={categories} key={categories.category_id} />
           </SearchContainer.Col1>
           <SearchContainer.Col2>
             {products.map((p) => (
@@ -206,11 +204,11 @@ export default function Search({ keyword, id, categories }) {
         </TypeContainer>
         <SearchContainer>
           <SearchContainer.Col>
-            {stores.map((store) => (
-              <SearchCardsStore address={address} store={store} key={store.firebase_id_store} />
+            {stores?.map((store) => (
+              (store.status && <SearchCardsStore address={address} store={store} key={store.firebase_id_store} />)
             ))}
-            {stores.map((store) => (
-              <SearchCardsStoreClosed address={address} store={store} key={store.firebase_id_store} />
+            {stores?.map((store) => (
+              (store.status && <SearchCardsStoreClosed address={address} store={store} key={store.firebase_id_store} />)
             ))}
           </SearchContainer.Col>
         </SearchContainer>

@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable react/jsx-no-bind */
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
@@ -6,8 +8,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import { Select } from '@material-ui/core';
 import 'antd/dist/antd.css';
-import InputMask from 'react-input-mask';
-import CurrencyFormat from 'react-currency-format';
+import moneyMask from '../moneyMask/moneyMask';
+import percentageMask from '../percentageMask/percentageMask';
 
 const api = axios.create({ baseURL: 'http://localhost:3000/' });
 
@@ -106,7 +108,7 @@ font-family: Roboto;
   justify-content:center;
 }
 `;
-PriceAndDiscont.Col1.Row2 = styled(CurrencyFormat)`
+PriceAndDiscont.Col1.Row2 = styled.input`
 display:flex;
 align-items:center;
 justify-content:initial;
@@ -263,10 +265,12 @@ cursor: pointer;
 margin-top: 1rem;
 `;
 
-export default function AddProducts({ closeModal, categories, att, setAtt }) {
+export default function AddProducts({
+  closeModal, categories, att, setAtt,
+}) {
   const [productName, setProductName] = useState('');
-  const [price, setPrice] = useState('');
-  const [discount, setDiscount] = useState('');
+  const [price, setPrice] = useState('R$ 0.00');
+  const [discount, setDiscount] = useState('% 0.00');
   const [description, setDescription] = useState('');
   const [photo, setPhoto] = useState({ file: null, url: null }); /* Caminho da imagem no lugar de null */
   const [type, setType] = useState('');
@@ -283,10 +287,10 @@ export default function AddProducts({ closeModal, categories, att, setAtt }) {
     setProductName(event.target.value);
   }
   function handlePriceChange(event) {
-    setPrice(event.target.value);
+    setPrice(moneyMask(event.target.value));
   }
   function handleDiscountChange(event) {
-    setDiscount(event.target.value);
+    setDiscount(percentageMask(event.target.value));
   }
   function handleDescriptionChange(event) {
     setDescription(event.target.value);
@@ -296,8 +300,8 @@ export default function AddProducts({ closeModal, categories, att, setAtt }) {
 
     formData.append('category_id', categoryId);
     formData.append('product_name', productName);
-    formData.append('price', price);
-    formData.append('discount', discount);
+    formData.append('price', price.replace('R$ ', ''));
+    formData.append('discount', discount.replace('% ', ''));
     formData.append('description', description);
     formData.append('available', 1);
     if (photo.file) {
@@ -317,8 +321,19 @@ export default function AddProducts({ closeModal, categories, att, setAtt }) {
           width: 600,
         },
       });
+      closeModal();
     } catch (error) {
       console.error(error);
+      notification.open({
+        message: 'Erro!',
+        description:
+          'Erro ao cadastrar o produto',
+        className: 'ant-notification',
+        top: '100px',
+        style: {
+          width: 600,
+        },
+      });
     }
   }
   return (
@@ -345,7 +360,7 @@ export default function AddProducts({ closeModal, categories, att, setAtt }) {
               input={<OutlinedInput />}
               style={{ width: '80%', height: '40px' }}
             >
-              {categories.map((category) => (
+              {categories?.map((category) => (
                 <MenuItem
                   key={category.category_id}
                   value={category.name}
@@ -363,11 +378,12 @@ export default function AddProducts({ closeModal, categories, att, setAtt }) {
               </PriceAndDiscont.Col1.Row1>
               <DivInput>
                 <PriceAndDiscont.Col1.Row2
-                  placeholder="R$ 00,000"
+                  placeholder="R$ 000.00"
                   required
                   value={price}
                   onChange={handlePriceChange}
                   decimalSeparator="."
+                  thousandsSeparator=","
                 />
               </DivInput>
             </PriceAndDiscont.Col1>
@@ -378,12 +394,10 @@ export default function AddProducts({ closeModal, categories, att, setAtt }) {
               </PriceAndDiscont.Col2.Row1>
               <DivInput>
                 <PriceAndDiscont.Col2.Row2
-                  as={InputMask}
                   placeholder="% 00.00"
-                  mask="99.99"
-                  required
                   value={discount}
                   onChange={handleDiscountChange}
+                  decimalSeparator="."
                 />
               </DivInput>
             </PriceAndDiscont.Col2>
@@ -415,7 +429,6 @@ export default function AddProducts({ closeModal, categories, att, setAtt }) {
           <ButtonConfirm onClick={(e) => {
             e.preventDefault();
             handleSubmit();
-            closeModal();
           }}
           >
             Confirmar Cadastro

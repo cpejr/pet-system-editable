@@ -85,7 +85,7 @@ const CardTitle = styled.div`
 
 const Title = styled.div`
 font-size:30px;
-wieght:bold;
+weight:bold;
 font-family:Roboto;
 `;
 
