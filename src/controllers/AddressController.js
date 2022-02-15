@@ -101,6 +101,20 @@ module.exports = {
     return response.status(200).json({ notification: 'Address updated' });
   },
 
+  async changeMainAddress(request, response) {
+    const address = request.body;
+    const { user } = await request.session.get('user');
+    try {
+      await AddressModel.changeMainAddress(user.firebase_id, address.address_id);
+    } catch (err) {
+      if (err.message) {
+        return response.status(400).json({ notification: err.message });
+      }
+      return response.status(500).json({ notification: 'Internal Server Error' });
+    }
+    return response.status(200).json({ notification: 'Main Address updated' });
+  },
+
   async remove(request, response) {
     const { id } = request.query;
 

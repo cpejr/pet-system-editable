@@ -6,7 +6,7 @@ export const CarrinhoCardWrapper = styled.div`
   justify-content: space-between;
   width: 65vw;
   margin-bottom: 1em;
-  margin-left: 0.3em;
+  margin-left: 1em;
   border: 1px solid #f2f2f2;     
   box-shadow: 0px 1px 4px rgb(0 0 0 / 7%);
   border-radius: 4px;

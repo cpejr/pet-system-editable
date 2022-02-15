@@ -5,26 +5,91 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {
   CarrinhoBody, CarrinhoFinalButton, CarrinhoIcon, CarrinhoText,
-  CarrinhoTitle, CarrinhoTotal, CarrinhoValor, CarrinhoValorText,
+  CarrinhoTitle, CarrinhoTotal, CarrinhoValor, CarrinhoValorText, SelectAddressBody, SelectDiv, SelectTitle, SelectedAddressBody,
 } from '../../src/components/CarrinhoComponents';
 import CarrinhoCard from '../../src/components/CarrinhoComponents/CarrinhoCard';
 import { useAuth } from '../../src/contexts/AuthContext';
-import Title from '../../src/components/Title';
-import { ContainerDatas, BoxDatas, BoxDatasCart } from '../../src/components/MyAdresses/styles';
+import SelectAddress from '../../src/components/SelectAddress';
+import { ContainerDatas, BoxDatasCart } from '../../src/components/MyAdresses/styles';
 import api from '../../src/utils/api';
 
 toast.configure();
 
 export default function Carrinho() {
   const [products, setProducts] = useState([]);
+  const [addresses, setAddresses] = useState([]);
+  const [address, setAddress] = useState();
+  const [addressId, setAddressId] = useState();
+  const [taxByRegion, setTaxByRegion] = useState();
   const [att, setAtt] = useState(false);
   const [subTotal, setSubTotal] = useState(0);
+  const [shippingTax, setShippingTax] = useState();
   const { user } = useAuth();
   const router = useRouter();
+
+  const handleChange = (value) => {
+    setAddress(addresses?.find((addressFilter) => addressFilter.address_id === value));
+    setAddressId(value);
+  };
+
+  useEffect(() => {
+    if (user && address && taxByRegion) {
+      switch (address?.region) {
+        case 'Barreiro':
+          setShippingTax(taxByRegion[0]);
+          break;
+
+        case 'Centro Sul':
+          setShippingTax(taxByRegion[1]);
+          break;
+
+        case 'Leste':
+          setShippingTax(taxByRegion[2]);
+          break;
+
+        case 'Nordeste':
+          setShippingTax(taxByRegion[3]);
+          break;
+
+        case 'Noroeste':
+          setShippingTax(taxByRegion[4]);
+          break;
+
+        case 'Norte':
+          setShippingTax(taxByRegion[5]);
+          break;
+
+        case 'Oeste':
+          setShippingTax(taxByRegion[6]);
+          break;
+
+        case 'Pampulha':
+          setShippingTax(taxByRegion[7]);
+          break;
+
+        default:
+          setShippingTax(taxByRegion[8]); // Venda Nova
+          break;
+      }
+    }
+  }, [address]);
 
   useEffect(() => {
     let somaPrecos = 0;
     if (user) {
+      try {
+        api.get(`/addresses/${user.firebase_id}`).then((response) => {
+          setAddresses(response.data);
+        });
+        api.get('address/userMain').then((response) => {
+          if (response?.data?.address_id) {
+            setAddress(response.data);
+            setAddressId(response.data.address_id);
+          }
+        });
+      } catch (error) {
+        console.error(error);
+      }
       try {
         api.get('/cart/firebase').then((res) => {
           if (res?.data?.length > 0) {
@@ -34,43 +99,44 @@ export default function Carrinho() {
             setSubTotal(parseFloat(somaPrecos.toFixed(2)));
             api.get(`/store/${res.data[0].firebase_id_store}`).then((store) => {
               const regionShippingTax = store?.data?.shipping_tax.split(',');
+              setTaxByRegion(regionShippingTax);
               api.get('address/userMain').then((responseMainAddress) => {
-                if (regionShippingTax && responseMainAddress?.data !== 'Usuário não está logado') {
+                if (regionShippingTax && responseMainAddress?.data !== 'Usuário não está logado' && !shippingTax) {
                   switch (responseMainAddress?.data?.region) {
                     case 'Barreiro':
-                      res.data.shipping_tax = regionShippingTax[0];
+                      setShippingTax(regionShippingTax[0]);
                       break;
 
                     case 'Centro Sul':
-                      res.data.shipping_tax = regionShippingTax[1];
+                      setShippingTax(regionShippingTax[1]);
                       break;
 
                     case 'Leste':
-                      res.data.shipping_tax = regionShippingTax[2];
+                      setShippingTax(regionShippingTax[2]);
                       break;
 
                     case 'Nordeste':
-                      res.data.shipping_tax = regionShippingTax[3];
+                      setShippingTax(regionShippingTax[3]);
                       break;
 
                     case 'Noroeste':
-                      res.data.shipping_tax = regionShippingTax[4];
+                      setShippingTax(regionShippingTax[4]);
                       break;
 
                     case 'Norte':
-                      res.data.shipping_tax = regionShippingTax[5];
+                      setShippingTax(regionShippingTax[5]);
                       break;
 
                     case 'Oeste':
-                      res.data.shipping_tax = regionShippingTax[6];
+                      setShippingTax(regionShippingTax[6]);
                       break;
 
                     case 'Pampulha':
-                      res.data.shipping_tax = regionShippingTax[7];
+                      setShippingTax(regionShippingTax[7]);
                       break;
 
                     default:
-                      res.data.shipping_tax = regionShippingTax[8]; // Venda Nova
+                      setShippingTax(regionShippingTax[8]); // Venda Nova
                       break;
                   }
                   setProducts(res.data);
@@ -89,10 +155,15 @@ export default function Carrinho() {
   }, [user, att]);
 
   async function handleSubmit() {
-    router.push('/Checkout');
+    try {
+      await api.put('/address/userMain/', { address_id: address.address_id });
+      router.push('/Checkout');
+    } catch (error) {
+      console.error(error);
+    }
   }
 
-  if (products.length > 0) {
+  if (!address && products.length > 0) {
     return (
       <>
         <CarrinhoTitle>
@@ -101,6 +172,42 @@ export default function Carrinho() {
             <MdShoppingCart size="100%" color="#609694" />
           </CarrinhoIcon>
         </CarrinhoTitle>
+        <SelectAddressBody>
+          <SelectDiv>
+            <SelectTitle>Selecione Seu Endereço: </SelectTitle>
+            {addresses && (
+              <SelectAddress
+                name="Endereco"
+                onChange={handleChange}
+                value={addressId}
+                addresses={addresses}
+              />
+            )}
+          </SelectDiv>
+        </SelectAddressBody>
+      </>
+    );
+  }
+  if (products.length > 0 && address && shippingTax) {
+    return (
+      <>
+        <CarrinhoTitle>
+          <CarrinhoText>Carrinho de Compras</CarrinhoText>
+          <CarrinhoIcon>
+            <MdShoppingCart size="100%" color="#609694" />
+          </CarrinhoIcon>
+        </CarrinhoTitle>
+        <SelectedAddressBody>
+          {addresses && (
+          <SelectAddress
+            name="Endereco"
+            onChange={handleChange}
+            value={addressId}
+            addresses={addresses}
+          />
+          )}
+        </SelectedAddressBody>
+
         <CarrinhoBody>
           <div>
             {products.map((p) => (
@@ -116,13 +223,12 @@ export default function Carrinho() {
               </CarrinhoValorText>
               <CarrinhoValorText>Frete:</CarrinhoValorText>
               <CarrinhoValorText>
-                R$
-                {products.shipping_tax}
+                {parseFloat(shippingTax) === 0 ? 'Gratis' : `R$${shippingTax}`}
               </CarrinhoValorText>
               <CarrinhoValorText>Total</CarrinhoValorText>
               <CarrinhoValorText>
                 R$
-                {subTotal + parseFloat(products.shipping_tax)}
+                {subTotal + parseFloat(shippingTax)}
               </CarrinhoValorText>
             </CarrinhoTotal>
             <CarrinhoFinalButton onClick={handleSubmit}>Continuar</CarrinhoFinalButton>
@@ -131,6 +237,7 @@ export default function Carrinho() {
       </>
     );
   }
+
   return (
     <ContainerDatas>
       <BoxDatasCart>
