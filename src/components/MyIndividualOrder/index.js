@@ -138,7 +138,7 @@ export default function MyIndividualOrder({ order }) {
             </DataLine>
             <DataLine>
               <Field>Taxa de entrega: </Field>
-              <Value />
+              <Value>4,50</Value>
             </DataLine>
             <DataLine>
               <Field>Total: </Field>
