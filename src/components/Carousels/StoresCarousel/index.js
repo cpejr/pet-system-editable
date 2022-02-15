@@ -1,9 +1,12 @@
-import React from "react";
-import styled from "styled-components";
-import Link from "next/link";
-import Carousel from "react-multi-carousel";
+import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
+import Link from 'next/link';
+import Carousel from 'react-multi-carousel';
+import { toast } from 'react-toastify';
 import Image from 'next/image';
-import "react-multi-carousel/lib/styles.css";
+import StoresCarouselCard from '../../storesCarouselCard';
+import api from '../../../utils/api';
+import 'react-multi-carousel/lib/styles.css';
 
 const Item = styled.div`
   display: flex;
@@ -128,9 +131,20 @@ const ImgNormal = styled.div`
 export default function StoresCarousel(props) {
   const { stores } = props;
 
-  const myLoader = ({ src }) => {
-    return `https://s3-sa-east-1.amazonaws.com/petsystembucket/${src}`;
-  };
+  const myLoader = ({ src }) => `https://s3-sa-east-1.amazonaws.com/petsystembucket/${src}`;
+
+  const [address, setAddress] = useState('Usuário não está logado');
+
+  useEffect(() => {
+    try {
+      api.get('address/userMain').then((response) => {
+        setAddress(response.data);
+      });
+    } catch (err) {
+      console.error(err);
+      toast('Erro!', { position: toast.POSITION.BOTTOM_RIGHT });
+    }
+  }, []);
 
   const responsive = {
     desktop: {
@@ -152,44 +166,9 @@ export default function StoresCarousel(props) {
   };
   return (
     <Carousel responsive={responsive} infinite>
-      {stores?.length > 0 &&
-        stores.map((store) => (
-          <Link href={{ pathname: `/Store/${store.firebase_id_store}` }}>
-            <Item key={store.firebase_id_store}>
-              <div>
-                <Container>
-                  <ContainerRow>
-                    <ContainerRow.Cols>
-                      <ImgNormal>
-                        <Image
-                          loader={myLoader}
-                          src={store.logo_img}
-                          alt=""
-                          width="300"
-                          height="320"
-                        />
-                      </ImgNormal>
-                      <CardDescription>
-                        <CardDescription.Col1>
-                          <CardDescription.Col1.Row1>
-                            {store.company_name}
-                          </CardDescription.Col1.Row1>
-                          <CardDescription.Col1.Row2>
-                            <CardDescription.Col1.Row2.Delivery>
-                              • Taxa de entrega: R$ {store.shipping_tax}
-                            </CardDescription.Col1.Row2.Delivery>
-                          </CardDescription.Col1.Row2>
-                        </CardDescription.Col1>
-                        <CardDescription.Col2>
-                          <Button>{store.evaluation}</Button>
-                        </CardDescription.Col2>
-                      </CardDescription>
-                    </ContainerRow.Cols>
-                  </ContainerRow>
-                </Container>
-              </div>
-            </Item>
-          </Link>
+      {stores?.length > 0
+        && stores.map((store) => (
+          <StoresCarouselCard store={store} address={address} />
         ))}
     </Carousel>
   );
