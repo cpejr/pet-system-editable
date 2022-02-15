@@ -16,6 +16,6 @@ exports.down = async function (knex) {
                   ALTER COLUMN "email"
                   `);
   await knex.schema.alterTable('User', (table) => {
-    table.dropColumn('email');
+    table.dropUnique('email'); // dropUnique
   });
 };
