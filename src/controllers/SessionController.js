@@ -31,6 +31,7 @@ export async function signIn(req, res) {
         case 2: {
           const body = {
             attempts: attempt.attempts + 1,
+            lock_time: moment().add(5, 'minutes'),
           };
           await AttemptsModel.updateAttempt(body, email);
           break;
@@ -72,7 +73,7 @@ export async function signIn(req, res) {
     if (attempt.attempts >= 3 && moment() >= moment(attempt.lock_time)) {
       const body = {
         lock_time: moment().add(5, 'minutes'),
-        attempts: 0,
+        attempts: 1,
       };
       await AttemptsModel.updateAttempt(body, email);
     }
@@ -123,6 +124,12 @@ export async function signIn(req, res) {
 
       return res.status(200).json({ accessToken, store });
     } catch (error) {
+      if (attempt.attempts === 3 && moment() < moment(attempt.lock_time)) {
+        const body = {
+          lock_time: moment().add(1, 'minutes'),
+        };
+        await AttemptsModel.updateAttempt(body, email);
+      }
       console.error(error); //eslint-disable-line
       return res.status(400).json({ message: 'Email ou senha incorreto' });
     }
