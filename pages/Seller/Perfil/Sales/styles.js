@@ -39,41 +39,10 @@ outline:none;
 font-family: Roboto;
 `;
 
-export const ContainerDate = styled.div`
+export const ContainerDate1 = styled.div`
 display:flex;
-align-items:center;
-justify-content:center;
 flex-direction:row;
-width:100%;
-margin-top:2%;
-`;
-
-ContainerDate.Col1 = styled.div`
-display:flex;
-align-items:center;
-justify-content:flex-end;
-width:30%;
-@media(max-width:560px){
-  justify-content:center;
-  width:45%;
-}
-`;
-ContainerDate.Col2 = styled.div`
-display:flex;
-align-items:center;
 justify-content:center;
-width:4%;
-@media(max-width:560px){
-  justify-content:center;
-  width:10%;
-}
-`;
-ContainerDate.Col3 = styled.div`
-display:flex;
-align-items:center;
-width:66%;
-@media(max-width:560px){
-  justify-content:center;
-  width:45%;
-}
+width:100%;
+margin: 5% 0;
 `;

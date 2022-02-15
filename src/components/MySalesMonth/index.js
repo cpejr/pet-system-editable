@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { toast } from 'react-toastify';
 
 const SalesMonthContainer = styled.div`
 display:flex;
@@ -10,6 +11,7 @@ width:100%;
 border:solid;
 border-width:1px;
 border-radius:5px;
+margin-bottom:5%;
 @media(max-width:960px){
   display:flex;
   align-items:center;
@@ -40,6 +42,7 @@ align-items:center;
 justify-content:center;
 flex-direction:row;
 width:100%;
+margin:0;
 @media(max-width:560px){
  margin:0;
 }
@@ -50,6 +53,7 @@ align-items:center;
 justify-content:center;
 flex-direction:column;
 width:65%;
+margin:0;
 @media(max-width:560px){
  margin:0;
  line-height:10px;
@@ -62,6 +66,7 @@ justify-content:center;
 flex-direction:column;
 font-weight:bold;
 width:35%;
+margin:0;
 @media(max-width:560px){
  margin:0;
  line-height:10px;
@@ -69,7 +74,11 @@ width:35%;
 }
 `;
 
-export default function MySalesMonth() {
+toast.configure();
+
+export default function MySalesMonth({
+  totalOrders, revenue, share, storeProfit, amount,
+}) {
   return (
     <div>
       <SalesMonthContainer>
@@ -85,12 +94,17 @@ export default function MySalesMonth() {
             </p>
             <p>Comissão:</p>
             <p>Total de ganhos:</p>
+            <p>Número de pedidos:</p>
           </SalesMonthContainer.Description.Col1>
           <SalesMonthContainer.Description.Col2>
-            <p>R$ 187,00</p>
-            <p>2</p>
-            <p>10%</p>
-            <p>R$ 168,30</p>
+            <p>{revenue.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</p>
+            <p>{amount}</p>
+            <p>
+              {share.toFixed(2)}
+              %
+            </p>
+            <p>{storeProfit.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</p>
+            <p>{totalOrders}</p>
           </SalesMonthContainer.Description.Col2>
         </SalesMonthContainer.Description>
       </SalesMonthContainer>
