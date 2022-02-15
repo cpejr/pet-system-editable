@@ -12,7 +12,11 @@ const ContainerDatas = styled.div`
   flex-direction: row;
   justify-content: center;
   margin: 5% 10%;
-  @media (max-width: 800px) {
+  @media (max-width: 1480px) {
+    width: 95%;
+    margin: 5% 2.5%;
+  }
+  @media (max-width: 875px) {
     flex-direction: column;
     justify-content: center;
   }
@@ -34,7 +38,11 @@ const BoxDatas = styled.div`
   border-style: solid;
   border-width: 1px;
   border-radius: 5px;
-  @media (max-width: 800px) {
+  @media (max-width: 1480px) {
+    margin-left: 0;
+    width: 95%;
+  }
+  @media (max-width: 875px) {
     display:flex;
     justify-content: center;
     width:60vw;
@@ -50,7 +58,7 @@ const BoxDatas = styled.div`
 ContainerDatas.Col1 = styled.div`
   width: 50%;
   margin-right: 4%;
-  @media (max-width: 800px) {
+  @media (max-width: 875px) {
     display:flex;
     justify-content: center;
     margin-right: 0;
@@ -64,7 +72,7 @@ ContainerDatas.Col1 = styled.div`
 ContainerDatas.Col2 = styled.div`
   width: 50%;
   margin-left: 4%;
-  @media (max-width: 800px) {
+  @media (max-width: 875px) {
     display:flex;
     justify-content: center;
     margin-left: 0;
@@ -76,12 +84,20 @@ ContainerDatas.Col2 = styled.div`
 `;
 
 const Field = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-bottom: 4%;
   font-weight: 400;
-  margin-right:1%;
+  margin-right: 1vw;
 `;
 
 const Value = styled.p`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4%;
+
 `;
 
 const DataLine = styled.div`
@@ -146,11 +162,11 @@ export default function MyIndividualOrder({ order }) {
               <Value>{dataFormatada(order.created_at)}</Value>
             </DataLine>
             <DataLine>
-              <Field>Tipo de pagamento: </Field>
+              <Field>Pagamento: </Field>
               <Value>{order.payment_type}</Value>
             </DataLine>
             <DataLine>
-              <Field>Status do pedido: </Field>
+              <Field>Status: </Field>
               <Value>{order.status}</Value>
             </DataLine>
           </BoxDatas>

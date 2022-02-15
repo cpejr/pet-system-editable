@@ -14,7 +14,10 @@ border-style:solid;
 border-width:1px;  
 border-radius:5px;
 border-color:${({ theme }) => theme.colors.borderBoxColor};
-@media(max-width:800px){
+@media (max-width: 1480px) {
+  margin-right:0;
+}
+@media(max-width:875px){
   margin-right:0;
   height:14vh;
   width:60vw; 
@@ -22,7 +25,7 @@ border-color:${({ theme }) => theme.colors.borderBoxColor};
 @media(max-width: 500px){
   width:100%;
 }
-@media(max-width: 300px){
+@media(max-width: 315px){
     height:22vh;
 }
 
