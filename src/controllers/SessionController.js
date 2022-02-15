@@ -126,7 +126,7 @@ export async function signIn(req, res) {
     } catch (error) {
       if (attempt.attempts === 3 && moment() < moment(attempt.lock_time)) {
         const body = {
-          lock_time: moment().add(1, 'minutes'),
+          lock_time: moment().add(5, 'minutes'),
         };
         await AttemptsModel.updateAttempt(body, email);
       }
