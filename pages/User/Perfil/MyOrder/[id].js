@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { toast } from 'react-toastify';
+import { useRouter } from 'next/router';
 import MyIndividualOrder from '../../../../src/components/MyIndividualOrder';
 import api from '../../../../src/utils/api';
 import withAuthUser from '../../../../src/components/WithAuth/WithAuthUser';
@@ -52,14 +53,16 @@ toast.configure();
 
 const Perfil = () => {
   const [order, setOrder] = useState('');
+  const router = useRouter();
+  const { id } = router.query;
 
   async function getOrder() {
     try {
-      const id = '6f792129-6fad-4801-a37b-c037bc3ed59f';
       const response = await api.get(`order/${id}`);
       setOrder(response.data);
     } catch (error) {
       toast('Erro ao obter pedido', { position: toast.POSITION.BOTTOM_RIGHT });
+      router.push('/404');
     }
   }
 
