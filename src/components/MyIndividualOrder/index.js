@@ -3,6 +3,7 @@ import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import api from '../../utils/api';
 import MyOrder from '../MyOrder';
+import { useAuth } from '../../contexts/AuthContext';
 
 const ContainerDatas = styled.div`
   display: flex;
@@ -91,13 +92,14 @@ const DataLine = styled.div`
 
 toast.configure();
 
-export default function MyIndividualOrder({ order, price }) {
+export default function MyIndividualOrder({ order }) {
   const [address, setAddress] = useState('');
-  const tax = (order.total_price - price);
+  const { user } = useAuth();
+  console.log(user);
 
   async function loadAddress() {
     try {
-      const response = await api.get('/address/d8acc954-f49e-4d87-ac41-f2e76c690551');
+      const response = await api.get('/address/userMain');
       setAddress(response.data);
     } catch (error) {
       console.error(error); //eslint-disable-line
@@ -136,10 +138,6 @@ export default function MyIndividualOrder({ order, price }) {
                 /
                 {address.state}
               </Value>
-            </DataLine>
-            <DataLine>
-              <Field>Taxa de entrega: </Field>
-              <Value>{tax.toFixed(2)}</Value>
             </DataLine>
             <DataLine>
               <Field>Total: </Field>

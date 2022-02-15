@@ -52,23 +52,12 @@ toast.configure();
 
 const Perfil = () => {
   const [order, setOrder] = useState('');
-  const [price, setPrice] = useState(0);
 
   async function getOrder() {
-    let sum = 0;
     try {
       const id = '6f792129-6fad-4801-a37b-c037bc3ed59f';
       const response = await api.get(`order/${id}`);
-      console.log(response.data);
       setOrder(response.data);
-      response.data.cart_product.forEach((product) => {
-        console.log(product.final_price);
-        // eslint-disable-next-line operator-assignment
-        sum = sum + product.final_price;
-        console.log(sum);
-      }).then(() => {
-        setPrice(sum);
-      });
     } catch (error) {
       toast('Erro ao obter pedido', { position: toast.POSITION.BOTTOM_RIGHT });
     }
@@ -81,7 +70,7 @@ const Perfil = () => {
   return (
     <div>
       <Title>Meu pedido</Title>
-      <MyIndividualOrder order={order} price={price} />
+      <MyIndividualOrder order={order} />
     </div>
   );
 };
