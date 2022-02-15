@@ -99,7 +99,7 @@ export default function Home({ stores, image }) {
   );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   try {
     const { data: stores } = await api.get('store');
     const { data: image } = await api.get('image');
@@ -111,4 +111,5 @@ export async function getStaticProps() {
     console.warn(error);
     alert('Algo deu errado');
   }
+  return null;
 }
