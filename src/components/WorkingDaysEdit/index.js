@@ -6,11 +6,21 @@ import Input from '@material-ui/core/Input';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import {
-  StoreBodyWrapper, StoreBody, StoreFormulary, TopFormulary, ItemFormulary,
-  DividedItemFormulary, BottomFormulary,
+  StoreBodyWrapper,
+  StoreBody,
+  StoreFormulary,
+  TopFormulary,
+  ItemFormulary,
+  DividedItemFormulary,
+  BottomFormulary,
 } from '../BodyForms';
 import {
-  TitleStore, SubtitleStore, Text, SubText, TextBox, Submit,
+  TitleStore,
+  SubtitleStore,
+  Text,
+  SubText,
+  TextBox,
+  Submit,
 } from '../FormComponents';
 import MaskedInput from '../MasketInput';
 import 'react-toastify/dist/ReactToastify.css';
@@ -45,12 +55,21 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function StoreCreate({
-  openingTimes, closingTimes, situationStore, setOpening, setClosing, setSituation, handleNext, handleBack,
+  openingTimes,
+  closingTimes,
+  situationStore,
+  setOpening,
+  setClosing,
+  setSituation,
+  handleNext,
+  handleBack,
 }) {
   const classes = useStyles();
   const [openingTimeSeg, setOpeningTimeSeg] = useState(openingTimes[0]);
+  console.log('🚀 ~ file: index.js ~ line 52 ~ openingTimeSeg', openingTimeSeg);
   const [closingTimeSeg, setClosingTimeSeg] = useState(closingTimes[0]);
   const [openingTimeTer, setOpeningTimeTer] = useState(openingTimes[1]);
+  console.log('🚀 ~ file: index.js ~ line 55 ~ openingTimeTer', openingTimeTer);
   const [closingTimeTer, setClosingTimeTer] = useState(closingTimes[1]);
   const [openingTimeQua, setOpeningTimeQua] = useState(openingTimes[2]);
   const [closingTimeQua, setClosingTimeQua] = useState(closingTimes[2]);
@@ -71,7 +90,9 @@ export default function StoreCreate({
   const [situationDom, setSituationDom] = useState(situationStore[6]);
 
   function addStr(str, index, stringToAdd) {
-    return str.substring(0, index) + stringToAdd + str.substring(index, str.length);
+    return (
+      str.substring(0, index) + stringToAdd + str.substring(index, str.length)
+    );
   }
   function handleOpeningTimeChangeSeg(event) {
     const aux = `${event.target.value}`;
@@ -221,10 +242,7 @@ export default function StoreCreate({
     situationDom,
   ];
 
-  const options = [
-    'Aberto',
-    'Fechado',
-  ];
+  const options = ['Aberto', 'Fechado'];
 
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
@@ -237,29 +255,131 @@ export default function StoreCreate({
     },
   };
 
+  console.log(openingTimeSeg.length);
+
   async function handleSubmit(event) {
     event.preventDefault();
-    if (situationSeg === '' || situationTer === '' || situationQua === ''
-      || situationQui === '' || situationSex === ''
-      || situationSab === '' || situationDom === '') {
-      toast('Defina o Status de funcionamento para todos os dias da semana!', { position: toast.POSITION.BOTTOM_RIGHT });
+    if (
+      situationSeg === ''
+      || situationTer === ''
+      || situationQua === ''
+      || situationQui === ''
+      || situationSex === ''
+      || situationSab === ''
+      || situationDom === ''
+    ) {
+      toast('Defina o Status de funcionamento para todos os dias da semana!', {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
       return;
     }
-    if ((openingTimeSeg === closingTimeSeg && situationSeg === 'Aberto') || (openingTimeTer === closingTimeTer && situationTer === 'Aberto')
-      || (openingTimeQua === closingTimeQua && situationQua === 'Aberto') || (openingTimeQui === closingTimeQui && situationQui === 'Aberto')
-      || (openingTimeSex === closingTimeSex && situationSex === 'Aberto') || (openingTimeSab === closingTimeSab && situationSab === 'Aberto')
-      || (openingTimeDom === closingTimeDom && situationDom === 'Aberto')) {
-      toast('Horários de abertura e encerramento precisam ser diferentes nos dias com Status "Aberto"!', { position: toast.POSITION.BOTTOM_RIGHT });
+    if (
+      (openingTimeSeg === closingTimeSeg && situationSeg === 'Aberto')
+      || (openingTimeTer === closingTimeTer && situationTer === 'Aberto')
+      || (openingTimeQua === closingTimeQua && situationQua === 'Aberto')
+      || (openingTimeQui === closingTimeQui && situationQui === 'Aberto')
+      || (openingTimeSex === closingTimeSex && situationSex === 'Aberto')
+      || (openingTimeSab === closingTimeSab && situationSab === 'Aberto')
+      || (openingTimeDom === closingTimeDom && situationDom === 'Aberto')
+    ) {
+      toast(
+        'Horários de abertura e encerramento precisam ser diferentes nos dias com Status "Aberto"!',
+        { position: toast.POSITION.BOTTOM_RIGHT },
+      );
       return;
     }
-    if (parseInt(openingTimeSeg.substring(0, 2), 10) > 23 || parseInt(closingTimeSeg.substring(0, 2), 10) > 23 || parseInt(openingTimeSeg.substring(3, 5), 10) > 59 || parseInt(closingTimeSeg.substring(3, 5), 10) > 59
-      || parseInt(openingTimeTer.substring(0, 2), 10) > 23 || parseInt(closingTimeTer.substring(0, 2), 10) > 23 || parseInt(openingTimeTer.substring(3, 5), 10) > 59 || parseInt(closingTimeTer.substring(3, 5), 10) > 59
-      || parseInt(openingTimeQua.substring(0, 2), 10) > 23 || parseInt(closingTimeQua.substring(0, 2), 10) > 23 || parseInt(openingTimeQua.substring(3, 5), 10) > 59 || parseInt(closingTimeQua.substring(3, 5), 10) > 59
-      || parseInt(openingTimeQui.substring(0, 2), 10) > 23 || parseInt(closingTimeQui.substring(0, 2), 10) > 23 || parseInt(openingTimeQui.substring(3, 5), 10) > 59 || parseInt(closingTimeQui.substring(3, 5), 10) > 59
-      || parseInt(openingTimeSex.substring(0, 2), 10) > 23 || parseInt(closingTimeSex.substring(0, 2), 10) > 23 || parseInt(openingTimeSex.substring(3, 5), 10) > 59 || parseInt(closingTimeSex.substring(3, 5), 10) > 59
-      || parseInt(openingTimeSab.substring(0, 2), 10) > 23 || parseInt(closingTimeSab.substring(0, 2), 10) > 23 || parseInt(openingTimeSab.substring(3, 5), 10) > 59 || parseInt(closingTimeSab.substring(3, 5), 10) > 59
-      || parseInt(openingTimeDom.substring(0, 2), 10) > 23 || parseInt(closingTimeDom.substring(0, 2), 10) > 23 || parseInt(openingTimeDom.substring(3, 5), 10) > 59 || parseInt(closingTimeDom.substring(3, 5), 10) > 59) {
-      toast('Favor inserir horários entre 00:00 e 23:59!', { position: toast.POSITION.BOTTOM_RIGHT });
+
+    if (
+      openingTimeSeg.length < 5
+      || openingTimeTer.length < 5
+      || openingTimeQua.length < 5
+      || openingTimeQui.length < 5
+      || openingTimeSex.length < 5
+      || openingTimeSab.length < 5
+      || openingTimeDom.length < 5
+      || closingTimeSeg.length < 5
+      || closingTimeTer.length < 5
+      || closingTimeQua.length < 5
+      || closingTimeQui.length < 5
+      || closingTimeSex.length < 5
+      || openingTimeSab.length < 5
+      || closingTimeDom.length < 5
+    ) {
+      toast('Favor inserir horários entre 00:00 e 23:59!', {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
+      return;
+    }
+
+    if (
+      parseInt(openingTimeSeg.substring(0, 2), 10) > 23
+      || parseInt(closingTimeSeg.substring(0, 2), 10) > 23
+      || parseInt(openingTimeSeg.substring(3, 5), 10) > 59
+      || parseInt(closingTimeSeg.substring(3, 5), 10) > 59
+      || parseInt(openingTimeTer.substring(0, 2), 10) > 23
+      || parseInt(closingTimeTer.substring(0, 2), 10) > 23
+      || parseInt(openingTimeTer.substring(3, 5), 10) > 59
+      || parseInt(closingTimeTer.substring(3, 5), 10) > 59
+      || parseInt(openingTimeQua.substring(0, 2), 10) > 23
+      || parseInt(closingTimeQua.substring(0, 2), 10) > 23
+      || parseInt(openingTimeQua.substring(3, 5), 10) > 59
+      || parseInt(closingTimeQua.substring(3, 5), 10) > 59
+      || parseInt(openingTimeQui.substring(0, 2), 10) > 23
+      || parseInt(closingTimeQui.substring(0, 2), 10) > 23
+      || parseInt(openingTimeQui.substring(3, 5), 10) > 59
+      || parseInt(closingTimeQui.substring(3, 5), 10) > 59
+      || parseInt(openingTimeSex.substring(0, 2), 10) > 23
+      || parseInt(closingTimeSex.substring(0, 2), 10) > 23
+      || parseInt(openingTimeSex.substring(3, 5), 10) > 59
+      || parseInt(closingTimeSex.substring(3, 5), 10) > 59
+      || parseInt(openingTimeSab.substring(0, 2), 10) > 23
+      || parseInt(closingTimeSab.substring(0, 2), 10) > 23
+      || parseInt(openingTimeSab.substring(3, 5), 10) > 59
+      || parseInt(closingTimeSab.substring(3, 5), 10) > 59
+      || parseInt(openingTimeDom.substring(0, 2), 10) > 23
+      || parseInt(closingTimeDom.substring(0, 2), 10) > 23
+      || parseInt(openingTimeDom.substring(3, 5), 10) > 59
+      || parseInt(closingTimeDom.substring(3, 5), 10) > 59
+    ) {
+      toast('Favor inserir horários entre 00:00 e 23:59!', {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
+      return;
+    }
+
+    if (
+      isNaN(parseInt(openingTimeSeg.substring(0, 2), 10))
+      || isNaN(parseInt(closingTimeSeg.substring(0, 2), 10))
+      || isNaN(parseInt(openingTimeSeg.substring(3, 5), 10))
+      || isNaN(parseInt(closingTimeSeg.substring(3, 5), 10))
+      || isNaN(parseInt(openingTimeTer.substring(0, 2), 10))
+      || isNaN(parseInt(closingTimeTer.substring(0, 2), 10))
+      || isNaN(parseInt(openingTimeTer.substring(3, 5), 10))
+      || isNaN(parseInt(closingTimeTer.substring(3, 5), 10))
+      || isNaN(parseInt(openingTimeQua.substring(0, 2), 10))
+      || isNaN(parseInt(closingTimeQua.substring(0, 2), 10))
+      || isNaN(parseInt(openingTimeQua.substring(3, 5), 10))
+      || isNaN(parseInt(closingTimeQua.substring(3, 5), 10))
+      || isNaN(parseInt(openingTimeQui.substring(0, 2), 10))
+      || isNaN(parseInt(closingTimeQui.substring(0, 2), 10))
+      || isNaN(parseInt(openingTimeQui.substring(3, 5), 10))
+      || isNaN(parseInt(closingTimeQui.substring(3, 5), 10))
+      || isNaN(parseInt(openingTimeSex.substring(0, 2), 10))
+      || isNaN(parseInt(closingTimeSex.substring(0, 2), 10))
+      || isNaN(parseInt(openingTimeSex.substring(3, 5), 10))
+      || isNaN(parseInt(closingTimeSex.substring(3, 5), 10))
+      || isNaN(parseInt(openingTimeSab.substring(0, 2), 10))
+      || isNaN(parseInt(closingTimeSab.substring(0, 2), 10))
+      || isNaN(parseInt(openingTimeSab.substring(3, 5), 10))
+      || isNaN(parseInt(closingTimeSab.substring(3, 5), 10))
+      || isNaN(parseInt(openingTimeDom.substring(0, 2), 10))
+      || isNaN(parseInt(closingTimeDom.substring(0, 2), 10))
+      || isNaN(parseInt(openingTimeDom.substring(3, 5), 10))
+      || isNaN(parseInt(closingTimeDom.substring(3, 5), 10))
+    ) {
+      toast('Favor inserir horários entre 00:00 e 23:59!', {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
       return;
     }
     setOpening(opening);
@@ -276,8 +396,8 @@ export default function StoreCreate({
             <TopFormulary>
               <TitleStore>Horários de Funcionamento</TitleStore>
               <SubtitleStore>
-                Por favor, preencha as informações referentes
-                aos dias e horários de funcionamento de sua loja:
+                Por favor, preencha as informações referentes aos dias e
+                horários de funcionamento de sua loja:
                 {' '}
               </SubtitleStore>
             </TopFormulary>
@@ -301,13 +421,11 @@ export default function StoreCreate({
             </DividedItemFormulary>
 
             <DividedItemFormulary>
-
               <ItemFormulary>
                 <TextBox type="text" value="Segunda" />
               </ItemFormulary>
 
               <ItemFormulary>
-
                 <Select
                   className={classes.formControl}
                   labelId="demo-mutiple-option-label"
@@ -316,22 +434,37 @@ export default function StoreCreate({
                   onChange={handleChangeSeg}
                   input={<Input />}
                   MenuProps={MenuProps}
+                >
+                  {options.map((option) => (
+                    <MenuItem key={option} value={option}>
+                      {option}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </ItemFormulary>
+
+              <ItemFormulary>
+                <MaskedInput
+                  name="opening_time"
+                  id="opening_time"
+                  mask="99:99"
+                  value={openingTimeSeg}
+                  onChange={handleOpeningTimeChangeSeg}
                 />
-
               </ItemFormulary>
 
               <ItemFormulary>
-                <MaskedInput name="opening_time" id="opening_time" mask="99:99" value={openingTimeSeg} onChange={handleOpeningTimeChangeSeg} />
+                <MaskedInput
+                  name="closing_time"
+                  id="closing_time"
+                  mask="99:99"
+                  value={closingTimeSeg}
+                  onChange={handleClosingTimeChangeSeg}
+                />
               </ItemFormulary>
-
-              <ItemFormulary>
-                <MaskedInput name="closing_time" id="closing_time" mask="99:99" value={closingTimeSeg} onChange={handleClosingTimeChangeSeg} />
-              </ItemFormulary>
-
             </DividedItemFormulary>
 
             <DividedItemFormulary>
-
               <ItemFormulary>
                 <TextBox type="text" value="Terça" />
               </ItemFormulary>
@@ -349,11 +482,23 @@ export default function StoreCreate({
               </ItemFormulary>
 
               <ItemFormulary>
-                <MaskedInput name="opening_time" id="opening_time" mask="99:99" value={openingTimeTer} onChange={handleOpeningTimeChangeTer} />
+                <MaskedInput
+                  name="opening_time"
+                  id="opening_time"
+                  mask="99:99"
+                  value={openingTimeTer}
+                  onChange={handleOpeningTimeChangeTer}
+                />
               </ItemFormulary>
 
               <ItemFormulary>
-                <MaskedInput name="closing_time" id="closing_time" mask="99:99" value={closingTimeTer} onChange={handleClosingTimeChangeTer} />
+                <MaskedInput
+                  name="closing_time"
+                  id="closing_time"
+                  mask="99:99"
+                  value={closingTimeTer}
+                  onChange={handleClosingTimeChangeTer}
+                />
               </ItemFormulary>
             </DividedItemFormulary>
 
@@ -375,17 +520,27 @@ export default function StoreCreate({
               </ItemFormulary>
 
               <ItemFormulary>
-                <MaskedInput name="opening_time" id="opening_time" mask="99:99" value={openingTimeQua} onChange={handleOpeningTimeChangeQua} />
+                <MaskedInput
+                  name="opening_time"
+                  id="opening_time"
+                  mask="99:99"
+                  value={openingTimeQua}
+                  onChange={handleOpeningTimeChangeQua}
+                />
               </ItemFormulary>
 
               <ItemFormulary>
-                <MaskedInput name="closing_time" id="closing_time" mask="99:99" value={closingTimeQua} onChange={handleClosingTimeChangeQua} />
+                <MaskedInput
+                  name="closing_time"
+                  id="closing_time"
+                  mask="99:99"
+                  value={closingTimeQua}
+                  onChange={handleClosingTimeChangeQua}
+                />
               </ItemFormulary>
-
             </DividedItemFormulary>
 
             <DividedItemFormulary>
-
               <ItemFormulary>
                 <TextBox type="text" value="Quinta" />
               </ItemFormulary>
@@ -403,17 +558,27 @@ export default function StoreCreate({
               </ItemFormulary>
 
               <ItemFormulary>
-                <MaskedInput name="opening_time" id="opening_time" mask="99:99" value={openingTimeQui} onChange={handleOpeningTimeChangeQui} />
+                <MaskedInput
+                  name="opening_time"
+                  id="opening_time"
+                  mask="99:99"
+                  value={openingTimeQui}
+                  onChange={handleOpeningTimeChangeQui}
+                />
               </ItemFormulary>
 
               <ItemFormulary>
-                <MaskedInput name="closing_time" id="closing_time" mask="99:99" value={closingTimeQui} onChange={handleClosingTimeChangeQui} />
+                <MaskedInput
+                  name="closing_time"
+                  id="closing_time"
+                  mask="99:99"
+                  value={closingTimeQui}
+                  onChange={handleClosingTimeChangeQui}
+                />
               </ItemFormulary>
-
             </DividedItemFormulary>
 
             <DividedItemFormulary>
-
               <ItemFormulary>
                 <TextBox type="text" value="Sexta" />
               </ItemFormulary>
@@ -431,17 +596,27 @@ export default function StoreCreate({
               </ItemFormulary>
 
               <ItemFormulary>
-                <MaskedInput name="opening_time" id="opening_time" mask="99:99" value={openingTimeSex} onChange={handleOpeningTimeChangeSex} />
+                <MaskedInput
+                  name="opening_time"
+                  id="opening_time"
+                  mask="99:99"
+                  value={openingTimeSex}
+                  onChange={handleOpeningTimeChangeSex}
+                />
               </ItemFormulary>
 
               <ItemFormulary>
-                <MaskedInput name="closing_time" id="closing_time" mask="99:99" value={closingTimeSex} onChange={handleClosingTimeChangeSex} />
+                <MaskedInput
+                  name="closing_time"
+                  id="closing_time"
+                  mask="99:99"
+                  value={closingTimeSex}
+                  onChange={handleClosingTimeChangeSex}
+                />
               </ItemFormulary>
-
             </DividedItemFormulary>
 
             <DividedItemFormulary>
-
               <ItemFormulary>
                 <TextBox type="text" value="Sábado" />
               </ItemFormulary>
@@ -459,17 +634,27 @@ export default function StoreCreate({
               </ItemFormulary>
 
               <ItemFormulary>
-                <MaskedInput name="opening_time" id="opening_time" mask="99:99" value={openingTimeSab} onChange={handleOpeningTimeChangeSab} />
+                <MaskedInput
+                  name="opening_time"
+                  id="opening_time"
+                  mask="99:99"
+                  value={openingTimeSab}
+                  onChange={handleOpeningTimeChangeSab}
+                />
               </ItemFormulary>
 
               <ItemFormulary>
-                <MaskedInput name="closing_time" id="closing_time" mask="99:99" value={closingTimeSab} onChange={handleClosingTimeChangeSab} />
+                <MaskedInput
+                  name="closing_time"
+                  id="closing_time"
+                  mask="99:99"
+                  value={closingTimeSab}
+                  onChange={handleClosingTimeChangeSab}
+                />
               </ItemFormulary>
-
             </DividedItemFormulary>
 
             <DividedItemFormulary>
-
               <ItemFormulary>
                 <TextBox type="text" value="Domingo" />
               </ItemFormulary>
@@ -487,13 +672,24 @@ export default function StoreCreate({
               </ItemFormulary>
 
               <ItemFormulary>
-                <MaskedInput name="opening_time" id="opening_time" mask="99:99" value={openingTimeDom} onChange={handleOpeningTimeChangeDom} />
+                <MaskedInput
+                  name="opening_time"
+                  id="opening_time"
+                  mask="99:99"
+                  value={openingTimeDom}
+                  onChange={handleOpeningTimeChangeDom}
+                />
               </ItemFormulary>
 
               <ItemFormulary>
-                <MaskedInput name="closing_time" id="closing_time" mask="99:99" value={closingTimeDom} onChange={handleClosingTimeChangeDom} />
+                <MaskedInput
+                  name="closing_time"
+                  id="closing_time"
+                  mask="99:99"
+                  value={closingTimeDom}
+                  onChange={handleClosingTimeChangeDom}
+                />
               </ItemFormulary>
-
             </DividedItemFormulary>
 
             <ItemFormulary>
@@ -502,7 +698,9 @@ export default function StoreCreate({
 
             <Buttons>
               <CancelSubmit onClick={() => handleBack(0)}>Voltar</CancelSubmit>
-              <Submit value="submit" onClick={handleSubmit}>Proximo</Submit>
+              <Submit value="submit" onClick={handleSubmit}>
+                Proximo
+              </Submit>
             </Buttons>
           </StoreFormulary>
         </StoreBody>
