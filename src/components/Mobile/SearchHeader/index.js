@@ -110,7 +110,7 @@ border-bottom:solid;
 border-width:1px;
 `;
 
-export default function SearchHeader({ keyword }) {
+export default function SearchHeader({ keyword, setPrice }) {
   const [checkedStore, setCheckedStore] = useState('#AAABB0');
   const handleClickStore = () => {
     if (checkedStore === '#AAABB0') {
@@ -199,7 +199,7 @@ export default function SearchHeader({ keyword }) {
             Serviços
           </TypeContainer.Cols3>
         </TypeContainer>
-        <ModalFilterSearch />
+        <ModalFilterSearch setPrice={setPrice} />
       </Container>
     </div>
   );
