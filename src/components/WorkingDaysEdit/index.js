@@ -1,8 +1,5 @@
 import React, { useState } from 'react';
 import 'antd/dist/antd.css';
-import axios from 'axios';
-import { makeStyles } from '@material-ui/core/styles';
-import { toast } from 'react-toastify';
 import Input from '@material-ui/core/Input';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
@@ -17,7 +14,7 @@ import {
 import MaskedInput from '../MasketInput';
 import 'react-toastify/dist/ReactToastify.css';
 
-export default function StoreCreate({ opening, closing, situation }) {
+export default function StoreCreate({ info, opening, closing, Situation }) {
   return (
     <>
       <StoreBodyWrapper>
