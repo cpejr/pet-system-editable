@@ -68,7 +68,7 @@ export default function MyOrder({ products }) {
   const myLoader = ({ src }) => `https://s3-sa-east-1.amazonaws.com/petsystembucket/${src}`;
   return (
     <div>
-      { products.map((product) => (
+      { products?.map((product) => (
         <ProductContainer>
           <ProductContainer.Col1>
             <Image loader={myLoader} src={product.img} alt="" width="250" height="200" />

@@ -91,8 +91,9 @@ const DataLine = styled.div`
 
 toast.configure();
 
-export default function MyIndividualOrder({ order }) {
+export default function MyIndividualOrder({ order, price }) {
   const [address, setAddress] = useState('');
+  const tax = (order.total_price - price);
 
   async function loadAddress() {
     try {
@@ -110,11 +111,11 @@ export default function MyIndividualOrder({ order }) {
   function dataFormatada(bdate) {
     const data = new Date(bdate);
     const dia = data.getDate().toString();
-    const diaF = dia.length === 1 ? `0|${dia}` : dia;
+    const diaF = dia.length === 1 ? `0${dia}` : dia;
     const mes = (data.getMonth() + 1).toString();
-    const mesF = mes.length === 1 ? `0|${mes}` : mes;
+    const mesF = mes.length === 1 ? `0${mes}` : mes;
     const anoF = data.getFullYear();
-    return `${diaF}|/|${mesF}|/|${anoF}`;
+    return `${diaF}/${mesF}/${anoF}`;
   }
 
   if (order) {
@@ -138,7 +139,7 @@ export default function MyIndividualOrder({ order }) {
             </DataLine>
             <DataLine>
               <Field>Taxa de entrega: </Field>
-              <Value>4,50</Value>
+              <Value>{tax.toFixed(2)}</Value>
             </DataLine>
             <DataLine>
               <Field>Total: </Field>
