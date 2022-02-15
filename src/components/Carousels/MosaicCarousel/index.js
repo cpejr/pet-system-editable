@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Carousel from 'react-multi-carousel';
 import Image from 'next/image';
@@ -8,16 +8,25 @@ const Item = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  @media screen and (max-width: 500px) {
-      margin: 8%;
-  }
+   margin: 8%;
+   @media screen and (max-width: 500px) {
+    margin: 8%;
+   }
 `;
 
-export default function MosaicCarousel() {
+export default function MosaicCarousel({ image }) {
+  const [imagesFiltered, setImagesFiltered] = useState([]);
+  const myLoader = ({ src }) => {
+    return `https://s3-sa-east-1.amazonaws.com/petsystembucket/${src}`;
+  };
+  useEffect(() => {
+    setImagesFiltered(image?.filter((item) => item.type === "Principais Marcas"));
+  }, [image])
+
   const responsive = {
     others: {
-      breakpoint: { max: 1060, min: 913 },
-      items: 0,
+      breakpoint: { max: 5000, min: 913 },
+      items: 4,
     },
     tablet: {
       breakpoint: { max: 912, min: 465 },
@@ -34,31 +43,17 @@ export default function MosaicCarousel() {
       responsive={responsive}
       infinite
     >
-      <Item>
-        <Image src="/images/brands/Pedigree.png" alt="" width="400" height="200" />
-      </Item>
-      <Item>
-        <Image src="/images/brands/JamboPet.png" alt="" width="400" height="200" />
-      </Item>
-      <Item>
-        <Image src="/images/brands/RoyalCanin.png" alt="" width="400" height="200" />
-      </Item>
-      <Item>
-        <Image src="/images/brands/Frontline.jpg" alt="" width="400" height="200" />
-      </Item>
-
-      <Item>
-        <Image src="/images/brands/Bayer.jpg" alt="" width="400" height="200" />
-      </Item>
-      <Item>
-        <Image src="/images/brands/Whiskas.png" alt="" width="400" height="200" />
-      </Item>
-      <Item>
-        <Image src="/images/brands/Ferplast.png" alt="" width="400" height="200" />
-      </Item>
-      <Item>
-        <Image src="/images/brands/Premier.png" alt="" width="400" height="200" />
-      </Item>
+      {imagesFiltered?.map((img) => (
+        <Item>
+          <Image
+            loader={myLoader}
+            src={img.image_id}
+            alt=""
+            width="400"
+            height="200"
+          />
+        </Item>
+      ))}
     </Carousel>
 
   );
