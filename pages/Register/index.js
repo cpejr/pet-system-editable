@@ -18,7 +18,7 @@ import {
   WordFormGroup, MyFormGroup, Phone, Pass, NumbersForms, DDD,
   Subtitle, Register,
   Buttons, FormRegister, Submit, ButtonLogin,
-} from './registerStyles';
+} from '../../src/styles/registerStyles';
 import { TextBox2 } from '../../src/components/FormComponents';
 
 toast.configure();
