@@ -1,36 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import Link from 'next/link';
 import Carousel from 'react-multi-carousel';
 import { toast } from 'react-toastify';
-import Image from 'next/image';
 import StoresCarouselCard from '../../storesCarouselCard';
 import api from '../../../utils/api';
 import 'react-multi-carousel/lib/styles.css';
 
-const Item = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 1%;
-
-  @media screen and (max-width: 281px) {
-    width: 50%;
-  }
-`;
-
-const Container = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  flex-direction: column;
-  font-family: Roboto;
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 2px -2px gray;
-  cursor: pointer;
-`;
 const ContainerRow = styled.div`
   display: flex;
   align-items: center;
@@ -107,31 +82,8 @@ CardDescription.Col2 = styled.div`
   width: 15%;
 `;
 
-const Button = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  width: 35px;
-  height: 35px;
-  background-color: ${({ theme }) => theme.colors.mediumRed};
-  font-family: Roboto;
-  color: white;
-  border: none;
-`;
-
-const ImgNormal = styled.div`
-  display: flex;
-  width: 300px;
-  height: 320px;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-`;
-
 export default function StoresCarousel(props) {
   const { stores } = props;
-
-  const myLoader = ({ src }) => `https://s3-sa-east-1.amazonaws.com/petsystembucket/${src}`;
 
   const [address, setAddress] = useState('Usuário não está logado');
 
