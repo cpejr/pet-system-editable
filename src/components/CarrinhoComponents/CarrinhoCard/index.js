@@ -13,7 +13,7 @@ import {
   CarrinhoCardInfoQuantity,
   CarrinhoCardIcon,
 } from './styles';
-import { useCart } from '../../CardContext/CardContext';
+import { useCart } from '../../CartContext/CartContext';
 
 export default function CarrinhoCard({
   product, subTotal, setSubTotal, setAtt, att,

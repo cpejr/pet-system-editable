@@ -1,31 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
+import DateFnsUtils from '@date-io/date-fns';
+import ptBR from 'date-fns/locale/pt-BR';
+import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import MySales from '../../../../src/components/MySales';
-import MySearchDateMonth from '../../../../src/components/MySearchDateMonth';
-import MySearchDateYear from '../../../../src/components/MySearchDateYear';
 import { Title, PerfilStoreMenu } from '../../../../src/components/index';
-import { ContainerDate } from './styles';
+import { ContainerDate1 } from './styles';
 import withAuthStore from '../../../../src/components/WithAuth/WithAuthStore';
 
-const Perfil = () => (
-  <div>
-    <Title>Perfil da loja:</Title>
-    <PerfilStoreMenu selectedItem="Minhas vendas" />
-    <ContainerDate>
-      <ContainerDate.Col1>
-        <MySearchDateMonth />
-      </ContainerDate.Col1>
+const Perfil = () => {
+  const [value, setValue] = useState(new Date());
 
-      <ContainerDate.Col2 />
+  return (
+    <div>
+      <Title>Perfil da loja:</Title>
+      <PerfilStoreMenu selectedItem="Minhas vendas" />
+      <ContainerDate1>
+        <MuiPickersUtilsProvider locale={ptBR} utils={DateFnsUtils}>
+          <KeyboardDatePicker
+            views={['month', 'year']}
+            value={value}
+            onChange={(newDate) => { setValue(newDate); }}
+            variant="inline"
+            label="Mês e Ano"
+            InputProps={{ readOnly: true }}
+          />
+        </MuiPickersUtilsProvider>
+      </ContainerDate1>
 
-      <ContainerDate.Col3>
-        <MySearchDateYear />
-      </ContainerDate.Col3>
+      <MySales value={value} />
 
-    </ContainerDate>
-
-    <MySales />
-
-  </div>
-);
+    </div>
+  );
+};
 
 export default withAuthStore(Perfil);

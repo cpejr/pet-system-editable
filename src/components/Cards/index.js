@@ -26,7 +26,7 @@ const Card = styled.div`
   border: 2px;
   width: 200px;
   height: fit-content;
-  margin-top: 20px;
+  margin: 4% 2%;
 `;
 const Price = styled.div`
   background-color: ${({ theme }) => theme.colors.mediumRed};
