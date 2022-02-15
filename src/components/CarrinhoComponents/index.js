@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
 export const CarrinhoText = styled.p`
-color: #609694;
-font-family: Roboto;
-font-size: 1.3em;
-text-align: center;
-margin: 0;
+  color: #609694;
+  font-family: Roboto;
+  font-size: 1.3em;
+  text-align: center;
+  margin: 0;
   @media screen and (max-width: 900px) {
     font-size: 1em;
   }
@@ -15,58 +15,124 @@ margin: 0;
 `;
 
 export const CarrinhoTitle = styled.div`
-display: flex;
-border-bottom: 1px solid #e5e5e5;
-margin: 3em 0em 2em 0em;
-padding: 0em 0em 0.8em 1.5em;
-height: auto;
-align-items: center;
+  display: flex;
+  border-bottom: 1px solid #e5e5e5;
+  margin: 3em 0em 2em 3em;
+  padding: 0em 0em 0.8em 1.5em;
+  height: auto;
+  align-items: center;
+`;
+
+export const SelectAddressBody = styled.div`
+  display: flex;
+  border-bottom: 1px solid #e5e5e5;
+  margin: 3em 0em 2em 3em;
+  padding: 0em 0em 0.8em 1.5em;
+  height: auto;
+  align-items: center;
+
+  @media screen and (max-height: 1024px) {
+    min-height: 73.2vh;
+  }
+
+  @media screen and (max-width: 600px) {
+    flex-direction: column;
+  }
+`;
+
+export const SelectedAddressBody = styled.div`
+  margin-left: 2em;
+  margin-right: 2em;
+  margin-bottom: 1em;
+  width: 40%;
+
+  @media screen and (max-width: 600px) {
+    margin-left: 4em;
+    margin-right: 3em;
+    margin-bottom: 3em;
+    width: 70%;
+  }
+`;
+
+export const SelectDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-left: 10em;
+  margin-right: 10em;
+  width: 80%;
+
+  @media screen and (max-width: 600px) {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 10em;
+    margin-bottom: 10em;
+    margin-right: 10em;
+    margin-left: 5em;
+    width: 80%;
+  }
+`;
+
+export const SelectTitle = styled.div`
+  color: #609694;
+  font-family: Roboto;
+  font-size: 1.3em;
+  width: 100%;
+  margin: 0;
+  @media screen and (max-width: 900px) {
+    font-size: 1em;
+  }
+  @media screen and (max-width: 600px) {
+    font-size: 0.8em;
+  }
 `;
 
 export const CarrinhoIcon = styled.div`
-display: flex;
-height: 2em;
-@media screen and (max-width: 900px) {
-  height: 1.7em;
-}
-@media screen and (max-width: 600px) {
-  height: 1.3em;
-}
+  display: flex;
+  height: 2em;
+  @media screen and (max-width: 900px) {
+    height: 1.7em;
+  }
+  @media screen and (max-width: 600px) {
+    height: 1.3em;
+  }
 `;
 
 export const CarrinhoBody = styled.div`
-display: flex;
-flex-direction: row;
-min-height: 60vh;
+  display: flex;
+  flex-direction: row;
+  min-height: 60vh;
 
-@media screen and (max-height: 1024px) {
-  min-height: 73.2vh;
-}
+  @media screen and (max-height: 1024px) {
+    min-height: 73.2vh;
+  }
 
-@media screen and (max-width: 600px) {
-  flex-direction: column;
-}
+  @media screen and (max-width: 600px) {
+    flex-direction: column;
+  }
 `;
 
 export const CarrinhoValor = styled.div`
-display: flex;
-flex-direction: column;
-align-items: center;
-margin-left: 5em;
-width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 5em;
+  margin-left: 5em;
+  width: 100%;
 
-@media screen and (max-width: 600px) {
-  margin-left: 0;
-  margin-top: 5em;
-}
+  @media screen and (max-width: 600px) {
+    margin-left: 0;
+    margin-top: 5em;
+  }
 `;
 
 export const CarrinhoValorTitle = styled.div`
-color: #609694;
-font-family: Roboto;
-font-size: 1.3em;
-width: 100%;
-margin: 0;
+  color: #609694;
+  font-family: Roboto;
+  font-size: 1.3em;
+  width: 100%;
+  margin: 0;
   @media screen and (max-width: 900px) {
     font-size: 1em;
   }
@@ -76,26 +142,26 @@ margin: 0;
 `;
 
 export const CarrinhoTotal = styled.div`
-display: grid;
-grid-template-columns: 1fr 1fr;
-justify-items: center;
-width: 100%;
-margin-bottom: 2em;
-padding: 0em 1em;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-items: center;
+  width: 100%;
+  margin-bottom: 2em;
+  padding: 0em 1em;
 `;
 
 export const CarrinhoValorText = styled.div`
-font-family: Roboto;
-font-size: 1.2em;
+  font-family: Roboto;
+  font-size: 1.2em;
 `;
 
 export const CarrinhoFinalButton = styled.button`
-display: flex;
-background-color: #609694;
-color: #ffffff;
-cursor: pointer;
-height: 3em;
-width: 80%;
-align-items: center;
-justify-content: center;
+  display: flex;
+  background-color: #609694;
+  color: #ffffff;
+  cursor: pointer;
+  height: 3em;
+  width: 80%;
+  align-items: center;
+  justify-content: center;
 `;

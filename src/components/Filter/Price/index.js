@@ -30,7 +30,7 @@ margin-top:10%;
 
 export default function Price({ setPrice }) {
   const [localPrice, setLocalPrice] = useState();
-  const [val, setVal] = useState([0, 5000]);
+  const [val, setVal] = useState([0, 1000]);
 
   const updateVal = (e, data) => setVal(data);
 
@@ -45,7 +45,6 @@ export default function Price({ setPrice }) {
       setPrice(localPrice);
     }
   }, [localPrice]);
-
   return (
     <div>
       <Container>

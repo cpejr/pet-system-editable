@@ -1,4 +1,4 @@
-import { getUserMainAddressById, changeMainAddress } from '../../../../src/controllers/AddressController';
+import { getCartAmount } from '../../../../src/controllers/Cart_ProductsController';
 import { withAuthValidation } from '../../../../src/utils/Auth';
 
 export default function handler(req, res) {
@@ -6,10 +6,7 @@ export default function handler(req, res) {
     const { method } = req;
     console.log(method);
     if (method === 'GET') {
-      return withAuthValidation(getUserMainAddressById)(req, res);
-    }
-    if (method === 'PUT') {
-      return withAuthValidation(changeMainAddress)(req, res);
+      return withAuthValidation(getCartAmount)(req, res);
     }
     return res.status(500).json({ message: 'Internal Server Error' });
   } catch (err) {
