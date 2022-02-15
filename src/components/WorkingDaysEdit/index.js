@@ -66,10 +66,8 @@ export default function StoreCreate({
 }) {
   const classes = useStyles();
   const [openingTimeSeg, setOpeningTimeSeg] = useState(openingTimes[0]);
-  console.log("🚀 ~ file: index.js ~ line 52 ~ openingTimeSeg", openingTimeSeg);
   const [closingTimeSeg, setClosingTimeSeg] = useState(closingTimes[0]);
   const [openingTimeTer, setOpeningTimeTer] = useState(openingTimes[1]);
-  console.log("🚀 ~ file: index.js ~ line 55 ~ openingTimeTer", openingTimeTer);
   const [closingTimeTer, setClosingTimeTer] = useState(closingTimes[1]);
   const [openingTimeQua, setOpeningTimeQua] = useState(openingTimes[2]);
   const [closingTimeQua, setClosingTimeQua] = useState(closingTimes[2]);
