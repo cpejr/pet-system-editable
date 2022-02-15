@@ -390,22 +390,8 @@ export default function Product({ product, store }) {
   );
 }
 
-export async function getStaticPaths() {
-  const { data: products } = await api.get('products');
-
-  return {
-    paths: products.map((product) => ({
-      params: { id: product.product_id },
-    })),
-    fallback: 'blocking',
-  };
-}
-
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
   const { data: product } = await api.get(`product/${params.id}`);
   const { data: store } = await api.get(`store/${product.firebase_id_store}`);
-  return {
-    props: { store, product },
-    revalidate: 60, // 1 minuto
-  };
+  return { props: { store, product } };
 }
