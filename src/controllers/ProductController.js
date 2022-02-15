@@ -18,7 +18,6 @@ module.exports = {
 
   async create(request, response) {
     const product = request.body;
-    console.log("🚀 ~ file: ProductController.js ~ line 21 ~ create ~ product", product)
     const file = request.files;
     product.product_id = uuidv4();
     file.img.name = uuidv4();
