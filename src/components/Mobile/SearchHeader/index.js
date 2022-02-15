@@ -156,7 +156,7 @@ export default function SearchHeader({ keyword, setPrice }) {
                 <BsSearch
                   size="30"
                   type="submit"
-                  onSubmit={handleSubmit}
+                  onClick={handleSubmit}
                   style={{ color: '#609694' }}
                 />
               </Link>

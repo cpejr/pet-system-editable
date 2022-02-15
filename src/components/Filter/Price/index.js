@@ -10,9 +10,6 @@ flex-direction:column;
 width:260px;
 font-family:Roboto;
 margin-bottom:10%;
-/* @media(max-width:560px){
-      display:none;
-    } */
 `;
 
 Container.Title = styled.p`
