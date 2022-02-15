@@ -24,8 +24,10 @@ module.exports = {
         .where('firebase_id', firebase_id)
         .select('*');
       const orderProducts = await Cart_ProductsModel.getAllCart_Products(orders.cart_id);
-      orders.forEach((order) => {
-        const CartProductsFilter = orderProducts.filter((CartProducts) => CartProducts.cart_id === order.cart_id);
+      orders?.forEach((order) => {
+        const CartProductsFilter = orderProducts?.filter(
+          (CartProducts) => CartProducts.cart_id === order.cart_id,
+        );
         order.CartProducts = CartProductsFilter;
       });
       return orders;
@@ -47,11 +49,15 @@ module.exports = {
     }
   },
 
-  async getOrdersByStoreId(id) {
+  async getOrdersByStoreId(filter, id) {
+    const monthBegin = (0 + filter.month).slice(-2);
+    const monthEnd = (0 + (parseInt(filter.month, 10) + 1).toString()).slice(-2);
     try {
       const orders = await connection('Order')
         .where('firebase_id_store', id)
-        .select('*')
+        .where('Order.created_at', '>=', `${filter.year}-${monthBegin}-01T00:00:00.000Z`)
+        .where('Order.created_at', '<', `${filter.year}-${monthEnd}-01T00:00:00.000Z`)
+        .where('status', 'Finalizado')
         .innerJoin(
           'User',
           'Order.firebase_id',
@@ -61,7 +67,8 @@ module.exports = {
           'Address',
           'Order.address_id',
           'Address.address_id',
-        );
+        )
+        .select('*', 'Order.created_at as order_created_at');
 
       for (const order of orders) {
         delete order.type;
@@ -73,6 +80,39 @@ module.exports = {
       }
 
       return orders;
+    } catch (error) {
+      console.error(error);
+      throw new Error(error);
+    }
+  },
+
+  async getOrderProductsAmount(filter, id) {
+    const monthBegin = (0 + filter.month).slice(-2);
+    const monthEnd = (0 + (parseInt(filter.month, 10) + 1).toString()).slice(-2);
+    try {
+      const orders = await connection('Order')
+        .where('firebase_id_store', id)
+        .where('Order.created_at', '>=', `${filter.year}-${monthBegin}-01T00:00:00.000Z`)
+        .where('Order.created_at', '<', `${filter.year}-${monthEnd}-01T00:00:00.000Z`)
+        .where('status', 'Finalizado')
+        .select('*');
+
+      let amount = 0;
+
+      for (const order of orders) {
+        delete order.type;
+        delete order.birth_date;
+        delete order.cpf;
+
+        order.order_products = await Cart_ProductsModel
+          .getCart_ProductsByCartId(order.cart_id);
+
+        for (const product of order.order_products) {
+          amount += product.amount;
+        }
+      }
+
+      return amount;
     } catch (error) {
       console.error(error);
       throw new Error(error);
@@ -91,13 +131,16 @@ module.exports = {
   },
 
   async getOrderRevenue(filter) {
+    const monthBegin = filter ? (0 + filter.month).slice(-2) : null;
+    const monthEnd = filter ? (0 + (parseInt(filter.month, 10) + 1).toString()).slice(-2) : null;
     try {
       const orders = await connection('Order')
         .sum('total_price')
         .where((builder) => {
           if (filter) {
             // eslint-disable-next-line quotes
-            builder.whereRaw(`EXTRACT(MONTH FROM created_at::date) = ? AND EXTRACT(YEAR FROM created_at::date) = ?`, [filter.month, filter.year]);
+            builder.where('Order.created_at', '>=', `${filter.year}-${monthBegin}-01T00:00:00.000Z`)
+              .where('Order.created_at', '<', `${filter.year}-${monthEnd}-01T00:00:00.000Z`);
           }
         })
         .first();
@@ -111,17 +154,17 @@ module.exports = {
     }
   },
 
-  async getOrderProfit(filter) {
+  async getOrderRevenueByStoreId(filter, id) {
+    const monthBegin = (0 + filter.month).slice(-2);
+    const monthEnd = (0 + (parseInt(filter.month, 10) + 1).toString()).slice(-2);
     try {
-      const orders = await connection('Order')  
-        .sum('admin_profit')
-        .where((builder) => {
-          if (filter) {
-            // eslint-disable-next-line quotes
-            builder.whereRaw(`EXTRACT(MONTH FROM created_at::date) = ? AND EXTRACT(YEAR FROM created_at::date) = ?`, [filter.month, filter.year]);
-          }
-        })
+      const orders = await connection('Order')
+        .where('firebase_id_store', id)
+        .where('created_at', '>=', `${filter.year}-${monthBegin}-01T00:00:00.000Z`)
+        .where('created_at', '<', `${filter.year}-${monthEnd}-01T00:00:00.000Z`)
+        .where('status', 'Finalizado')
         .first()
+        .sum('total_price');
       if (orders.sum === null) {
         orders.sum = 0;
       }
@@ -132,12 +175,57 @@ module.exports = {
     }
   },
 
+  async getOrderProfit(filter) {
+    const monthBegin = (0 + filter.month).slice(-2);
+    const monthEnd = (0 + (parseInt(filter.month, 10) + 1).toString()).slice(-2);
+    try {
+      const orders = await connection('Order')
+        .sum('admin_profit')
+        .where((builder) => {
+          if (filter) {
+            // eslint-disable-next-line quotes
+            builder.where('created_at', '>=', `${filter.year}-${monthBegin}-01T00:00:00.000Z`)
+              .where('created_at', '<', `${filter.year}-${monthEnd}-01T00:00:00.000Z`);
+          }
+        })
+        .first();
+      if (orders.sum === null) {
+        orders.sum = 0;
+      }
+      return orders;
+    } catch (error) {
+      console.error(error);
+      throw new Error(error);
+    }
+  },
+
+  async getOrderProfitById(filter, id) {
+    const monthBegin = (0 + filter.month).slice(-2);
+    const monthEnd = (0 + (parseInt(filter.month, 10) + 1).toString()).slice(-2);
+    try {
+      const orders = await connection('Order')
+        .where('firebase_id_store', id)
+        .where('created_at', '>=', `${filter.year}-${monthBegin}-01T00:00:00.000Z`)
+        .where('created_at', '<', `${filter.year}-${monthEnd}-01T00:00:00.000Z`)
+        .where('status', 'Finalizado')
+        .sum('admin_profit')
+        .first();
+      if (orders.sum === null) {
+        orders.sum = 0;
+      }
+      return orders;
+    } catch (error) {
+      console.error(error);
+      throw new Error(error);
+    }
+  },
 
   async createNewOrder(order) {
     try {
       const response = await connection('Admin_share')
         .select('*').first();
-      const profit = (response.share * order.total_price/100);
+      const profit = (response.share * order.total_price) / 100;
+      order.admin_profit = profit;
       const order_aux = await connection('Order')
         .insert(order);
       return order_aux;

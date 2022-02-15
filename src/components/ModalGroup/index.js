@@ -107,25 +107,36 @@ const ButtonConfirm = styled.button`
 `;
 
 const AddGroup = styled.button`
-  display:flex;
-    align-items:center;
-    justify-content:center;
-    font-family: Roboto;
-    font-size: 100%;
-    font-weight: 500;
-    background-color: ${({ theme }) => theme.colors.background};
-    color: ${({ theme }) => theme.colors.mediumGreen};
-    border: 0;
-    cursor:pointer;
-    outline:none;    
-    margin-top: 5%;
-    margin-bottom: 2%;
-    @media(max-width:1000px){
-      display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:14px;
-}
+  height: 50px;
+  width: 100%;
+  font-family: Roboto;
+  font-size: 100%;
+  font-weight: 500;
+  background-color: ${({ theme }) => theme.colors.darkGreen};
+  color: white;
+  border: 0;
+  border-radius: 5px;
+  cursor: pointer;
+  outline: none;
+  margin-right: 5%;
+  @media (max-width: 1010px) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    width: 100%;
+    height: 50px;
+  }
+  @media (max-width: 560px) {
+    display: none;
+  }
+`;
+const Content = styled.div`
+  margin-left: 1%;
+  width: 200px;
+  @media (max-width: 700px) {
+    width:150px;
+  }
 `;
 
 function getModalStyle() {
@@ -227,7 +238,7 @@ export default function ModalGroup() {
     </div>
   );
   return (
-    <div>
+    <Content>
       <AddGroup onClick={handleOpen}>
         Adicionar Grupo
       </AddGroup>
@@ -239,6 +250,6 @@ export default function ModalGroup() {
       >
         {body}
       </Modal>
-    </div>
+    </Content>
   );
 }

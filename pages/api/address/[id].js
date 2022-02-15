@@ -1,5 +1,5 @@
 import { getOne, remove } from '../../../src/controllers/AddressController';
-import { withAuthValidation,isAdminOrSelf } from '../../../src/utils/Auth';
+import { withAuthValidation } from '../../../src/utils/Auth';
 
 export default function handler(req, res) {
   try {

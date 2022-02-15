@@ -14,16 +14,19 @@ import {
   CarrinhoCardText, StoreStatusClosed, StatusContainer, StoreOpenedTime,
 } from './styles';
 import StoreIsOpen from '../../src/components/StoreIsOpen';
-import { useCart } from '../../src/components/CardContext/CardContext';
+import { useCart } from '../../src/components/CartContext/CartContext';
+import { useAuth } from '../../src/contexts/AuthContext';
 
 toast.configure();
 
 export default function Product({ product, store }) {
   const cart = useCart();
   function add(newProduct) {
-    if (cartStore === store.firebase_id_store || cartStore === ' ') {
-      if (quantity > 0) {
-        cart.addToCart(newProduct);
+    if (user && user.type !== 'admin') {
+      if (cartStore === store.firebase_id_store || cartStore === ' ') {
+        if (quantity > 0) {
+          cart.addToCart(newProduct);
+        }
       }
     }
   }
@@ -40,6 +43,7 @@ export default function Product({ product, store }) {
   const [quantity, setQuantity] = useState(0);
   const [cartStore, setCartStore] = useState(' ');
   const router = useRouter();
+  const { user } = useAuth();
 
   useEffect(() => {
     try {
@@ -156,7 +160,78 @@ export default function Product({ product, store }) {
       amount: quantity,
       final_price: quantity * product.price,
     };
-    if (cartStore === store.firebase_id_store || cartStore === ' ') {
+    if (user && user.type !== 'admin') {
+      if (cartStore === store.firebase_id_store || cartStore === ' ') {
+        if (quantity > 0) {
+          try {
+            await api.post('/CartProducts', body);
+            notification.open({
+              message: 'Sucesso!',
+              description:
+                'O produto foi adicionado ao seu carrinho.',
+              className: 'ant-notification',
+              top: '100px',
+              style: {
+                width: 600,
+              },
+            });
+          } catch (error) {
+            notification.open({
+              message: 'Falha :(',
+              description:
+                'Erro ao adicionar produto ao carrinho',
+              className: 'ant-notification',
+              top: '100px',
+              style: {
+                width: 600,
+              },
+            });
+          }
+        } else {
+          notification.open({
+            message: 'Falha :(',
+            description:
+              'A quantidade do produto deve ser maior que zero',
+            className: 'ant-notification',
+            top: '100px',
+            style: {
+              width: 600,
+            },
+          });
+        }
+      } else {
+        notification.open({
+          message: 'Falha :(',
+          description:
+            'Os produtos no carrinho devem ser da mesma loja',
+          className: 'ant-notification',
+          top: '100px',
+          style: {
+            width: 600,
+          },
+        });
+      }
+    } else {
+      notification.open({
+        message: 'Falha :(',
+        description:
+          'É necessário estar logado como comprador para adicionar produto ao carrinho',
+        className: 'ant-notification',
+        top: '100px',
+        style: {
+          width: 600,
+        },
+      });
+    }
+  }
+
+  async function handleAddCartAndBuy() {
+    const body = {
+      product_id: product.product_id,
+      amount: quantity,
+      final_price: quantity * product.price,
+    };
+    if (user && user.type !== 'admin') {
       if (quantity > 0) {
         try {
           await api.post('/CartProducts', body);
@@ -170,6 +245,7 @@ export default function Product({ product, store }) {
               width: 600,
             },
           });
+          router.push('/Checkout');
         } catch (error) {
           notification.open({
             message: 'Falha :(',
@@ -198,54 +274,7 @@ export default function Product({ product, store }) {
       notification.open({
         message: 'Falha :(',
         description:
-          'Os produtos no carrinho devem ser da mesma loja',
-        className: 'ant-notification',
-        top: '100px',
-        style: {
-          width: 600,
-        },
-      });
-    }
-  }
-
-  async function handleAddCartAndBuy() {
-    const body = {
-      product_id: product.product_id,
-      amount: quantity,
-      final_price: quantity * product.price,
-    };
-    if (quantity > 0) {
-      try {
-        await api.post('/CartProducts', body);
-        notification.open({
-          message: 'Sucesso!',
-          description:
-            'O produto foi adicionado ao seu carrinho.',
-          className: 'ant-notification',
-          top: '100px',
-          style: {
-            width: 600,
-          },
-        });
-        router.push('/Checkout');
-      } catch (error) {
-        console.error(error);
-        notification.open({
-          message: 'Falha :(',
-          description:
-            'Erro ao adicionar produto ao carrinho',
-          className: 'ant-notification',
-          top: '100px',
-          style: {
-            width: 600,
-          },
-        });
-      }
-    } else {
-      notification.open({
-        message: 'Falha :(',
-        description:
-          'A quantidade do produto deve ser maior que zero',
+          'É necessário estar logado como comprador para realizar a compra',
         className: 'ant-notification',
         top: '100px',
         style: {
@@ -265,16 +294,17 @@ export default function Product({ product, store }) {
       setQuantity(0);
     }
   }
-
   const myLoader = ({ src }) => `https://s3-sa-east-1.amazonaws.com/petsystembucket/${src}`;
 
   return (
     <div>
       <BackPage>
-        <BackButton>
+       <a href="http://localhost:3000/Search?keyword=">
+          <BackButton>
           <FaArrowLeft size={24} />
           Voltar
         </BackButton>
+        </a>
       </BackPage>
       { product && (
       <Container>

@@ -1,7 +1,7 @@
 const { v4: uuidv4 } = require('uuid');
 const StoreModel = require('../models/StoreModel');
 const FirebaseModel = require('../models/FirebaseModel');
-const AwsModel = require('../models/AwsModel');
+const OrderModel = require('../models/OrderModel');
 
 module.exports = {
   async getOne(request, response) {
@@ -51,6 +51,7 @@ module.exports = {
     let firebase_id;
     // Criacao da Loja
     try {
+      // eslint-disable-next-line no-useless-escape
       const regex = new RegExp('.+@.+\..+');
       if (!regex.test(request.body.email)) {
         throw new Error('Formato de email inválido');
@@ -120,5 +121,32 @@ module.exports = {
       return response.status(500).json({ notification: 'Internal Server Error' });
     }
     return response.status(200).json({ notification: 'Store deleted' });
+  },
+
+  async getSalesInfo(request, response) {
+    const { month, year } = request.query;
+    try {
+      const id = request.session.get('store').store.firebase_id_store;
+      const when = { month, year };
+      const orders = await OrderModel.getOrdersByStoreId(when, id);
+      const revenue = await OrderModel.getOrderRevenueByStoreId(when, id);
+      const adminProfit = await OrderModel.getOrderProfitById(when, id);
+      const amount = await OrderModel.getOrderProductsAmount(when, id);
+      let averageShare;
+      if (revenue.sum === 0) {
+        averageShare = 0;
+      } else {
+        averageShare = (adminProfit.sum * 100) / revenue.sum;
+      }
+      const storeProfit = revenue.sum - adminProfit.sum;
+      return response.status(200).json({
+        totalOrders: orders.length, averageShare, revenue, storeProfit, amount, orders,
+      });
+    } catch (err) {
+      if (err.message) {
+        return response.status(400).json({ notification: err.message });
+      }
+      return response.status(500).json({ notification: 'Internal Server Error' });
+    }
   },
 };
