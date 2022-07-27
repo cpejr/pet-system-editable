@@ -85,46 +85,42 @@ export const ContainerDatas = styled.div`
   }
 `;
 
-export const BoxDatas = styled.div`
+export const ProductNotFound = styled.div`
   display: flex;
-  font: 1.5rem Roboto;
-  flex-direction: column;
-  width: 65%;
-  border-color: black;
-  border-radius: 5px;
-  align-items: left;
-  line-height: 100%;
-  border-style: solid;
-  border-width: 1px;
-  border-radius: 5px;
-  @media (max-width: 976px) {
-    width: 100%;
-    margin-bottom: 2%;
-  }
-  @media (max-width: 560px) {
-    width: 80%;
-    font-size: 87.5%;
-  }
-`;
-export const BoxDatasCart = styled.div`
-  display: flex;
-  font: 1.5rem Roboto;
+  font: 2.3rem Roboto;
   flex-direction: column;
   width: 45%;
-  border-color: black;
-  border-radius: 5px;
   align-items: center;
   justify-content: center;
   padding: 5px;
   line-height: 100%;
-  border-style: solid;
-  border-width: 1px;
-  border-radius: 5px;
   @media (max-width: 560px) {
-    font-size: 1rem;
+    font-size: 1.2rem;
   }
   @media (max-width: 320px) {
-    font-size: 0.8rem;
+    font-size: 1rem;
+  }
+`;
+export const ProductNotFoundImage = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom:5%;
+  @media (max-width: 850px) {
+    width:300px;
+    height: 316.71px;
+  }
+  @media (max-width: 770px) {
+    width:240px;
+    height: 253.37px;
+  }
+  @media (max-width: 560px) {
+    width:200px;
+    height: 211.14px;
+  }
+  @media (max-width: 320px) {
+    width:150px;
+    height: 158.35px;
   }
 `;
 export const GarbageIcon = styled.button`

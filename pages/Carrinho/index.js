@@ -3,6 +3,7 @@ import { MdShoppingCart } from 'react-icons/md';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Image from 'next/image';
 import {
   CarrinhoBody, CarrinhoFinalButton, CarrinhoIcon, CarrinhoText,
   CarrinhoTitle, CarrinhoTotal, CarrinhoValor, CarrinhoValorText, SelectAddressBody, SelectDiv, SelectTitle, SelectedAddressBody,
@@ -10,7 +11,7 @@ import {
 import CarrinhoCard from '../../src/components/CarrinhoComponents/CarrinhoCard';
 import { useAuth } from '../../src/contexts/AuthContext';
 import SelectAddress from '../../src/components/SelectAddress';
-import { ContainerDatas, BoxDatasCart } from '../../src/components/MyAdresses/styles';
+import { ContainerDatas, ProductNotFound, ProductNotFoundImage } from '../../src/components/MyAdresses/styles';
 import api from '../../src/utils/api';
 
 toast.configure();
@@ -240,9 +241,12 @@ export default function Carrinho() {
 
   return (
     <ContainerDatas>
-      <BoxDatasCart>
-        <p>Nenhum produto em seu carrinho</p>
-      </BoxDatasCart>
+      <ProductNotFoundImage>
+        <Image src="/images/CatNotFoundPage.png" alt="" width="375" height="395.88" />
+      </ProductNotFoundImage>
+      <ProductNotFound>
+        <p>Nenhum produto em seu carrinho.</p>
+      </ProductNotFound>
     </ContainerDatas>
   );
 }
