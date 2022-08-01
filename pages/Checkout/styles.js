@@ -136,6 +136,12 @@ export const Subtitle = styled.div`
   display: flex;
   width: 80%;
   font-size: 24px;
+  @media screen and (max-width: 1200px) {
+    font-size: 18px;
+  }
+  @media screen and (max-width: 800px) {
+    font-size: 12px;
+  }
 `;
 export const Qnt = styled.div`
   width: 10%;
@@ -162,6 +168,9 @@ export const Subtotal = styled.div`
 
 export const Data = styled.div`
   font-size: 20px;
+  @media screen and (max-width: 800px) {
+    font-size: 15px;
+  }
 `;
 
 export const Space = styled.div`

@@ -40,4 +40,8 @@ export const StyledSpan = styled.span`
   @media (max-width: 560px) {
    font-size: 10px;
   }
+
+  @media (max-width: 300px) {
+    font-size: 8px;
+  }
 `;

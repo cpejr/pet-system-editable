@@ -55,7 +55,7 @@ const Perfil = () => {
 
   async function getOrder() {
     try {
-      const id = '6f792129-6fad-4801-a37b-c037bc3ed59f';
+      const id = window.location.href.split("/").pop();
       const response = await api.get(`order/${id}`);
       setOrder(response.data);
     } catch (error) {
