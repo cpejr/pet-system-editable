@@ -13,8 +13,12 @@ MainContainer.Data = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding-bottom: 10%;
+  margin-bottom: 15%;
   justify-content: center;
+  @media screen and (max-width: 830px) {
+    flex-direction: column;
+    height: 100%;
+  }
 `;
 
 export const RightContainer = styled.div`
@@ -66,6 +70,9 @@ InputField.Line = styled.div`
   margin-bottom: 10px;
   justify-content: center;
   width: 100%;
+  @media (max-height: 700px) {
+    margin-bottom: 1px;
+  }
 `;
 InputField.LineField = styled.input`
   width: 100px;
@@ -130,17 +137,23 @@ export const Button = styled.button`
   margin-top: 30px;
   align-items: center;
   justify-content: center;
+  @media screen and (max-height: 700px) {
+    margin-top: 15px;
+    height: 2em;
+  }
 `;
 
 export const Subtitle = styled.div`
   display: flex;
   width: 80%;
+  column-gap: 15px;
   font-size: 24px;
   @media screen and (max-width: 1200px) {
     font-size: 18px;
   }
-  @media screen and (max-width: 800px) {
-    font-size: 12px;
+  @media screen and (max-width: 830px) {
+    width: 400px;
+    max-width: 80%
   }
 `;
 export const Qnt = styled.div`
@@ -159,21 +172,22 @@ Product.Subtotal = styled.div`
 `;
 
 export const Price = styled.div`
-  width: 20%;
+  width: 35%;
 `;
 
 export const Subtotal = styled.div`
+  width: 35%;
   font-size: 20px;
 `;
 
 export const Data = styled.div`
   font-size: 20px;
-  @media screen and (max-width: 800px) {
+  @media screen and (max-width: 1200px) {
     font-size: 15px;
   }
 `;
 
 export const Space = styled.div`
   width: 100%;
-  height: 10%;
+  height: 3vh;
 `;
