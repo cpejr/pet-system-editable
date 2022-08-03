@@ -58,7 +58,7 @@ display:none;
 }
 `;
 /*eslint-disable*/
-export default function ModalAddProducts({ setPrice }) {
+export default function ModalAddProducts({ setPrice, filterOpen, setFilterOpen }) {
   const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = useState(getModalStyle);
@@ -74,7 +74,7 @@ export default function ModalAddProducts({ setPrice }) {
 
   const body = (
     <div style={modalStyle} className={classes.paper}>
-      <FilterSearch setPrice={setPrice} />
+      <FilterSearch setPrice={setPrice} filterOpen={filterOpen} setFilterOpen={setFilterOpen} />
     </div>
   );
 

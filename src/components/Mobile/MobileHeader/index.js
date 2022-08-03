@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import {
-  MdHome, MdReceipt, MdLogin, MdShoppingCart,
+  MdHome, MdReceipt, MdShoppingCart, MdLabel
 } from 'react-icons/md';
 import { BsFillPersonFill } from 'react-icons/bs';
 import { AiOutlineSearch } from 'react-icons/ai';
@@ -43,7 +43,7 @@ export default function MobileHeader() {
     if (!user && !store) {
       return (
         <MobileHeaderContainer.Col4 onClick={HandleProfileButton}>
-          <MdLogin size="40" />
+          <MdLabel size="40" />
           Login
         </MobileHeaderContainer.Col4>
       );

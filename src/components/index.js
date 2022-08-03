@@ -13,6 +13,7 @@ export { default as MyStoreData } from './MyStoreData';
 export { default as OrderSearch } from './Filter/OrderSearch';
 export { default as Brands } from './Filter/Brands';
 export { default as Price } from './Filter/Price';
+export { default as OpenStore } from './Filter/OpenStore';
 export { default as SearchCards } from './SearchCards';
 export { default as SearchHeader } from './Mobile/SearchHeader';
 export { default as StoreTabs } from './StoreTabs';

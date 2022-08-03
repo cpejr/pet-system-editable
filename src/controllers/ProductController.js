@@ -78,7 +78,6 @@ module.exports = {
     try {
       const { category_id } = request.query;
       const price = request.query['price[]'];
-
       const products = await ProductModel.getAllProducts(price, category_id);
       return response.status(200).json(products);
     } catch (err) {

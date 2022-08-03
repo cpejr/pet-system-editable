@@ -7,14 +7,14 @@ import Link from 'next/link';
 import ModalFilterSearch from '../ModalFilterSearch';
 
 const Container = styled.div`
-display:none;
-@media(max-width:800px){
-display:flex;
-align-items:center;
-justify-content:center;
-width:100%;
-flex-direction:column;
-font-family:Roboto; 
+  display:none;
+  @media(max-width:700px){
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:100%;
+    flex-direction:column;
+    font-family:Roboto; 
 }
 `;
 const ContainerSearch = styled.div`
@@ -109,7 +109,7 @@ border-bottom:solid;
 border-width:1px;
 `;
 
-export default function SearchHeader({ setPrice }) {
+export default function SearchHeader({ setPrice, filterOpen, setFilterOpen }) {
   const [checkedStore, setCheckedStore] = useState('#AAABB0');
   const handleClickStore = () => {
     if (checkedStore === '#AAABB0') {
@@ -191,7 +191,7 @@ export default function SearchHeader({ setPrice }) {
             Serviços
           </TypeContainer.Cols3>
         </TypeContainer>
-        <ModalFilterSearch setPrice={setPrice} />
+        <ModalFilterSearch setPrice={setPrice} filterOpen={filterOpen} setFilterOpen={setFilterOpen} />
       </Container>
     </div>
   );

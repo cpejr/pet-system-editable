@@ -20,7 +20,7 @@ export default function SearchCardsStore({ store, address }) {
   const [shippingMaxValue, setShippingMaxValue] = useState(0);
   const [today, setToday] = useState();
   const data = new Date();
-  const day = moment(data).format('dddd');
+  const day = data.getDay();
 
   useEffect(() => {
     if (regionShippingTax && address !== 'Usuário não está logado') {
@@ -68,38 +68,9 @@ export default function SearchCardsStore({ store, address }) {
   }, [regionShippingTax, address]);
 
   useEffect(() => {
-    if (day) {
-      switch (day) {
-        case 'Monday':
-          setToday(0);
-          break;
-
-        case 'Tuesday':
-          setToday(1);
-          break;
-
-        case 'Wednesday':
-          setToday(2);
-          break;
-
-        case 'Thursday':
-          setToday(3);
-          break;
-
-        case 'Friday':
-          setToday(4);
-          break;
-
-        case 'Saturday':
-          setToday(5);
-          break;
-
-        default:
-          setToday(6);
-          break;
-      }
-    }
+    setToday(day ?? 6);
   }, [day]);
+  
   if (StoreIsOpen(openingTime[today], closingTime[today]) && situation[today] === 'Aberto') {
     return (
       <Link href={`/Store/${store.firebase_id_store}`}>

@@ -5,9 +5,8 @@ import { toast } from 'react-toastify';
 import api from '../../src/utils/api';
 import { ContainerCategory, SearchContainer, TypeContainer } from './styles';
 import {
-  OrderSearch,
-  Brands,
   Price,
+  OpenStore,
   SearchCardsClosed,
   SearchCards,
   SearchCardsStore,
@@ -17,15 +16,31 @@ import {
 
 toast.configure();
 
+function isOpened(store) {
+  const date = new Date();
+  const todayIndex = date.getDay();
+
+  const openingTime = store?.opening_time.split(',')[todayIndex];
+  const closingTime = store?.closing_time.split(',')[todayIndex];
+
+  const time = date.toLocaleTimeString().slice(0, 5); // Pega apenas as horas e os minutos no formato HH:MM
+  return openingTime < time && closingTime > time;
+}
+
 export default function Search({ keyword, id, categories }) {
   const [products, setProducts] = useState([]);
   const [address, setAddress] = useState('Usuário não está logado');
   const [allStores, setAllStores] = useState([]);
   const [stores, setStores] = useState([]);
-  const [price, setPrice] = useState([0, 5000]);
+
+  const maxPrice = 5000;
+  const [price, setPrice] = useState([0, maxPrice]);
+
   const [categoria, setCategoria] = useState(id);
   const [checkedStore, setCheckedStore] = useState('#AAABB0');
   const [checkedProducts, setCheckedProducts] = useState('#609694');
+
+  const [filterOpen, setFilterOpen] = useState(false);
 
   const handleClickStore = () => {
     setCheckedStore('#609694');
@@ -49,7 +64,6 @@ export default function Search({ keyword, id, categories }) {
         setAddress(response.data);
       });
     } catch (err) {
-      console.error(err);
       toast('Erro', { position: toast.POSITION.BOTTOM_RIGHT });
     }
   }, []);
@@ -60,39 +74,39 @@ export default function Search({ keyword, id, categories }) {
         api
           .get('products', { params: { price, category_id: categoria } })
           .then((res) => {
-            if (keyword) {
-              const FilteredProducts = res.data.filter((item) => item.product_name
-                .toLowerCase()
-                .includes(keyword.toLowerCase()));
-              allStores.forEach((store) => {
-                FilteredProducts.forEach((product) => {
-                  if (product.firebase_id_store === store.firebase_id_store) {
-                    product.shipping_tax = store.shipping_tax;
-                    product.opening_time = store.opening_time;
-                    product.closing_time = store.closing_time;
-                  }
-                });
-              });
-              setProducts(FilteredProducts);
-            } else {
-              allStores.forEach((store) => {
-                res.data.forEach((product) => {
-                  if (product.firebase_id_store === store.firebase_id_store) {
-                    product.shipping_tax = store.shipping_tax;
-                    product.opening_time = store.opening_time;
-                    product.closing_time = store.closing_time;
-                  }
-                });
-              });
-              setProducts(res.data);
-            }
+            const data = [...(res.data)];
+
+            const storesInfo = allStores.reduce((acc, store) => {
+              const {
+                firebase_id_store, shipping_tax, opening_time, closing_time,
+              } = store;
+
+              acc[firebase_id_store] = { shipping_tax, opening_time, closing_time };
+              return acc;
+            }, {});
+
+            const filteredProducts = data?.reduce((acc, product) => {
+              const storeInfo = storesInfo[product.firebase_id_store];
+
+              if (
+                keyword && !product.product_name.toLowerCase().includes(keyword.toLowerCase())
+              ) return acc;
+
+              if (
+                filterOpen && !isOpened(storeInfo)
+              ) return acc;
+
+              acc.push({ ...product, ...storeInfo });
+              return acc;
+            }, []);
+
+            setProducts(filteredProducts);
           });
       } catch (err) {
-        console.error(err);
         toast('Erro', { position: toast.POSITION.BOTTOM_RIGHT });
       }
     }
-  }, [categoria, price, keyword, allStores]);
+  }, [categoria, price, keyword, allStores, filterOpen]);
 
   useEffect(() => {
     try {
@@ -111,7 +125,6 @@ export default function Search({ keyword, id, categories }) {
         }
       });
     } catch (err) {
-      console.error(err);
       toast('Erro', { position: toast.POSITION.BOTTOM_RIGHT });
     }
   }, [keyword]);
@@ -119,7 +132,7 @@ export default function Search({ keyword, id, categories }) {
   if (checkedProducts === '#609694') {
     return (
       <div>
-        <SearchHeader setPrice={setPrice} />
+        <SearchHeader setPrice={setPrice} filterOpen={filterOpen} setFilterOpen={setFilterOpen} />
         <TypeContainer>
           <TypeContainer.Cols
             onClick={handleClickProducts}
@@ -170,7 +183,8 @@ export default function Search({ keyword, id, categories }) {
         </ContainerCategory>
         <SearchContainer>
           <SearchContainer.Col1>
-            <Price setPrice={setPrice} />
+            <Price setPrice={setPrice} maxPrice={maxPrice} />
+            <OpenStore setFilterOpen={setFilterOpen} />
           </SearchContainer.Col1>
           <SearchContainer.Col2>
             {products.map((p) => (

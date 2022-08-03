@@ -5,7 +5,8 @@ import { HiOutlineFire } from 'react-icons/hi';
 import { FaTemperatureHigh } from 'react-icons/fa';
 import { Slider } from '@material-ui/core';
 import {
-  Price,
+  Price, 
+  OpenStore,
 } from '../../index';
 
 const ContainerFilter = styled.div`
@@ -360,12 +361,12 @@ outline:none;
 
 `;
 
-export default function Order({ setPrice }) {
-
+export default function Order({ setPrice, filterOpen, setFilterOpen }) {
   return (
     <div>
       <ContainerFilter>
         <Price setPrice={setPrice} />
+        <OpenStore filterOpen={filterOpen} setFilterOpen={setFilterOpen} />
       </ContainerFilter>
     </div>
   );

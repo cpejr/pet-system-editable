@@ -41,9 +41,9 @@ margin-top:10%;
     }
 `;
 
-export default function Price({ setPrice }) {
+export default function Price({ setPrice, maxPrice }) {
   const [localPrice, setLocalPrice] = useState();
-  const [val, setVal] = useState([0, 1000]);
+  const [val, setVal] = useState([0, maxPrice ?? 1000]);
 
   const updateVal = (e, data) => setVal(data);
 
@@ -66,7 +66,7 @@ export default function Price({ setPrice }) {
           <Slider
             value={val}
             min={0}
-            max={1000}
+            max={maxPrice ?? 1000}
             onChange={updateVal}
             onChangeCommitted={handleRange}
             valueLabelDisplay="auto"
