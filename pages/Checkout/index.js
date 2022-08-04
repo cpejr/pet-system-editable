@@ -12,7 +12,7 @@ import {
 } from '@material-ui/pickers';
 import api from '../../src/utils/api';
 import { useAuth } from '../../src/contexts/AuthContext';
-import { Title, WindowDivider } from '../../src/components/index';
+import { WindowDivider } from '../../src/components/index';
 import MaskedInput from '../../src/components/MasketInput';
 import {
   MainContainer,
@@ -23,6 +23,7 @@ import {
   LeftContainer,
   RightContainer,
   Button,
+  Title,
   Subtitle,
   Qnt,
   Product,
@@ -516,7 +517,7 @@ const Checkout = () => {
                     <FieldSpace />
                     <InputField.InsideLine>
                       <InputName.Inp2>CVV:</InputName.Inp2>
-                      <InputField.LineField
+                      <MaskedInput
                         type="text"
                         placeholder="000"
                         onChange={(e) => handleChange(e.target.value, 'CVV')}

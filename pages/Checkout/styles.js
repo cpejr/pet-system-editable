@@ -13,7 +13,7 @@ MainContainer.Data = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-bottom: 15%;
+  margin-bottom: 20%;
   justify-content: center;
   @media screen and (max-width: 830px) {
     flex-direction: column;
@@ -70,7 +70,7 @@ InputField.Line = styled.div`
   margin-bottom: 10px;
   justify-content: center;
   width: 100%;
-  @media (max-height: 700px) {
+  @media (max-height: 600px) {
     margin-bottom: 1px;
   }
 `;
@@ -114,11 +114,9 @@ export const Forms = styled.div`
   justify-content: center;
   align-items: center;
   height: 100%;
-  width: 100%;
+  width: 80%;
   max-width: 350px;
   margin: 10px;
-  @media screen and (max-width: 1200px) {
-  }
 `;
 
 export const FieldSpace = styled.div`
@@ -137,10 +135,23 @@ export const Button = styled.button`
   margin-top: 30px;
   align-items: center;
   justify-content: center;
-  @media screen and (max-height: 700px) {
+  @media screen and (max-height: 600px) {
     margin-top: 15px;
     height: 2em;
   }
+`;
+
+export const Title = styled.div`
+color: black;
+font-weight: 600;
+font-size: 2.5em;
+margin-bottom: 5%;
+@media (max-width: 500px) {
+    font-size: 2em;
+  }
+@media screen and (max-width: 400px) {
+  font-size: 1.5em;
+}
 `;
 
 export const Subtitle = styled.div`
@@ -182,8 +193,11 @@ export const Subtotal = styled.div`
 
 export const Data = styled.div`
   font-size: 20px;
-  @media screen and (max-width: 1200px) {
+  @media screen and (max-width: 1000px) {
     font-size: 15px;
+  }
+  @media screen and (max-width: 500px) {
+    font-size: 12px;
   }
 `;
 

@@ -13,7 +13,7 @@ export const TextBox = styled.div`
 `;
 
 export default function MaskedInput({
-  value, onChange, name, mask,
+  value, onChange, name, mask, placeholder
 }) {
   const onlyNumbers = (str) => str.replace(/[^0-9]/g, '');
 
@@ -34,6 +34,7 @@ export default function MaskedInput({
         name={name}
         mask={mask}
         value={value}
+        placeholder={placeholder}
         onChange={handleChange}
         style={{
           border: 'none', outline: 'none', backgroundColor: 'transparent', width: '100%',
