@@ -13,11 +13,17 @@ MainContainer.Data = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-bottom: 20%;
+  margin-bottom: 10%;
   justify-content: center;
   @media screen and (max-width: 830px) {
     flex-direction: column;
     height: 100%;
+  }
+  @media screen and (max-height: 650px) {
+    margin-bottom: 15%;
+  }
+  @media screen and (max-height: 500px) {
+    margin-bottom: 20%;
   }
 `;
 
@@ -29,10 +35,14 @@ export const RightContainer = styled.div`
   height: 100%;
 `;
 
-export const Divider = styled.hr`
-  height: 500px;
-  @media screen and (max-width: 1200px) {
-    display: none !important;
+
+export const RowDivider = styled.hr`
+  display: none;
+  color:  #AAABB0;
+  background-color: rgb(170, 171, 176);
+  width: 50%;
+  @media screen and (max-width: 830px) {
+    display: block;
   }
 `;
 
@@ -70,7 +80,7 @@ InputField.Line = styled.div`
   margin-bottom: 10px;
   justify-content: center;
   width: 100%;
-  @media (max-height: 600px) {
+  @media (max-height: 650px) {
     margin-bottom: 1px;
   }
 `;
@@ -111,12 +121,15 @@ InputName.Inp2 = styled.div`
 export const Forms = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   height: 100%;
   width: 80%;
-  max-width: 350px;
+  max-width: 390px;
   margin: 10px;
+  @media (max-height: 650px) {
+    justify-content: center;
+  }
 `;
 
 export const FieldSpace = styled.div`
@@ -135,7 +148,7 @@ export const Button = styled.button`
   margin-top: 30px;
   align-items: center;
   justify-content: center;
-  @media screen and (max-height: 600px) {
+  @media screen and (max-height: 650px) {
     margin-top: 15px;
     height: 2em;
   }

@@ -29,6 +29,7 @@ import {
   Product,
   Price,
   Data,
+  RowDivider,
   Subtotal,
   Space,
 } from './styles';
@@ -375,6 +376,7 @@ const Checkout = () => {
     <>
       <MainContainer>
         <Title>Finalizar Compra</Title>
+        <RowDivider/>
         <MainContainer.Data>
           <LeftContainer>
             <Title>Revisão do Pedido</Title>
@@ -432,6 +434,7 @@ const Checkout = () => {
             </Subtitle>
           </LeftContainer>
           <WindowDivider />
+          <RowDivider/>
           <RightContainer>
             <Title>Dados de Pagamento</Title>
             <Forms>
