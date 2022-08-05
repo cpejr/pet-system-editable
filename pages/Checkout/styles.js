@@ -145,6 +145,7 @@ export const Title = styled.div`
 color: black;
 font-weight: 600;
 font-size: 2.5em;
+margin-top: 5%;
 margin-bottom: 5%;
 @media (max-width: 500px) {
     font-size: 2em;
