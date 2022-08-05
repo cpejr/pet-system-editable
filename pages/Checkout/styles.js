@@ -35,7 +35,6 @@ export const RightContainer = styled.div`
   height: 100%;
 `;
 
-
 export const RowDivider = styled.hr`
   display: none;
   color:  #AAABB0;

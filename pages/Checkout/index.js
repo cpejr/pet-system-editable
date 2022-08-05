@@ -376,7 +376,7 @@ const Checkout = () => {
     <>
       <MainContainer>
         <Title>Finalizar Compra</Title>
-        <RowDivider/>
+        <RowDivider />
         <MainContainer.Data>
           <LeftContainer>
             <Title>Revisão do Pedido</Title>
@@ -434,7 +434,7 @@ const Checkout = () => {
             </Subtitle>
           </LeftContainer>
           <WindowDivider />
-          <RowDivider/>
+          <RowDivider />
           <RightContainer>
             <Title>Dados de Pagamento</Title>
             <Forms>
