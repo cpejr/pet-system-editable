@@ -13,5 +13,6 @@ export default function ExampleScreen({ text, ...props }) {
     <BaseExampleScreen {...props}>
       {text}
     </BaseExampleScreen>
+    //teste
   );
 }
