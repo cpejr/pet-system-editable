@@ -2,7 +2,6 @@ const { v4: uuidv4 } = require('uuid');
 const CategoryModel = require('../models/CategoriesModel');
 const AwsModel = require('../models/AwsModel');
 
-
 module.exports = {
   async getOne(request, response) {
     const { id } = request.query;
@@ -39,7 +38,7 @@ module.exports = {
       const category = {
         category_id: uuidv4(),
         name: info.name,
-        img: image_id.key
+        img: image_id.key,
       };
       const newCategory = await CategoryModel.createNewCategory(category);
       return response.status(200).json(newCategory);

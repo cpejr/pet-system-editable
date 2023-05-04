@@ -36,7 +36,7 @@ export async function create(request, response) {
   let firebase_id;
 
   try {
-    const regex = new RegExp('.+@.+\..+');
+    const regex = new RegExp('.+@.+..+');
     if (!regex.test(request.body.email)) {
       throw new Error('Formato de email inválido');
     }

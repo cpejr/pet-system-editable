@@ -47,7 +47,7 @@ module.exports = {
         .select('*');
 
       for (const group of groups) {
-        const product_groups = await connection('Product_Group')
+        const product_groups = connection('Product_Group')
           .where('group_id', group.group_id)
           .select('*')
           .innerJoin(
@@ -82,7 +82,7 @@ module.exports = {
         .select('*');
 
       for (const group of groups) {
-        const product_groups = await connection('Product_Group')
+        const product_groups = connection('Product_Group')
           .where('group_id', group.group_id)
           .select('*')
           .innerJoin(

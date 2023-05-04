@@ -40,7 +40,7 @@ module.exports = {
     let firebase_id;
     // Criacao da Loja
     try {
-      const regex = new RegExp('.+@.+\..+');
+      const regex = new RegExp('.+@.+..+');
       if (!regex.test(request.body.email)) {
         throw new Error('Formato de email inválido');
       }

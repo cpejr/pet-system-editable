@@ -43,7 +43,7 @@ export default function MyLogOut() {
             Cancelar
           </Button>
           <Link href="http://localhost:3000/login" rel="login">
-            <Button onClick={handleClose, logout} color="secondary" autoFocus>
+            <Button onClick={() => { handleClose(); logout(); }} color="secondary" autoFocus>
               Sair
             </Button>
           </Link>

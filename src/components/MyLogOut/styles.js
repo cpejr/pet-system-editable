@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Section = styled.button`
+export default Section = styled.button`
   flex-direction: column;
   font-size: 20px;
   margin-top: 1%;

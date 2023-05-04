@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useAuth } from '../../contexts/AuthContext';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -8,6 +7,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { notification } from 'antd';
+import { useAuth } from '../../contexts/AuthContext';
 
 const Container = styled.div`
 display:flex;
@@ -25,7 +25,7 @@ font-family:Roboto;
 margin-bottom:2%;
 `;
 
-const Fields = styled.div`
+/* const Fields = styled.div`
 display:flex;
 align-items:center;
 justify-items:center;
@@ -46,7 +46,7 @@ const InputFields = styled.input`
     border-radius: 5px;
     margin-bottom:2%;
 }
-`;
+`; */
 
 const ConfirmButton = styled.div`
 display:flex;
@@ -150,7 +150,6 @@ export default function MyDatasMobile() {
 
   const [checkedBoleto, setCheckedBoleto] = useState(false);
   const handleClickBoleto = () => setCheckedBoleto(!checkedBoleto);
-  
   const { user, forgottenPassword } = useAuth();
 
   const [Open, setOpen] = React.useState(false);
@@ -171,20 +170,19 @@ export default function MyDatasMobile() {
       notification.open({
         message: 'Sucesso!',
         description:
-            'Email enviado com sucesso.',
+          'Email enviado com sucesso.',
         className: 'ant-notification',
         top: '100px',
         style: {
           width: 600,
         },
       });
-     
     } catch (error) {
       console.log(error);
       notification.open({
         message: 'Erro!',
         description:
-            'Erro ao cadastrar usuário.',
+          'Erro ao cadastrar usuário.',
         className: 'ant-notification',
         top: '100px',
         style: {
@@ -199,26 +197,26 @@ export default function MyDatasMobile() {
       <Container>
         <Title>Alterar Senha:</Title>
         <Dialog
-        open={Open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
+          open={Open}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
         >
-        <DialogTitle id="alert-dialog-title">Recuperação de senha</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Você tem certeza que deseja enviar um email para recuperação de senha ?
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="secondary">
-            Cancelar
-          </Button>
-            <Button onClick={sendResetEmail} color="primary" autoFocus>
+          <DialogTitle id="alert-dialog-title">Recuperação de senha</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Você tem certeza que deseja enviar um email para recuperação de senha ?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} color="secondary">
+              Cancelar
+            </Button>
+            <Button onClick={() => sendResetEmail()} color="primary" autoFocus>
               Enviar
             </Button>
-        </DialogActions>
-      </Dialog>
+          </DialogActions>
+        </Dialog>
         <ConfirmButton onClick={handleClickOpen}>
           <Submit>Confirmar</Submit>
         </ConfirmButton>

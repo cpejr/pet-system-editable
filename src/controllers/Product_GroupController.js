@@ -19,7 +19,7 @@ module.exports = {
     const group_id = req.query.id;
     const product = req.body;
     try {
-      const product_group = await Product_GroupModel.getProduct_GroupByProductId(group_id,product.product_id);
+      const product_group = await Product_GroupModel.getProduct_GroupByProductId(group_id, product.product_id);
       return res.status(200).json(product_group);
     } catch (error) {
       if (error.message) {
@@ -45,7 +45,7 @@ module.exports = {
     const group_id = req.query.id;
     const product = req.body;
     try {
-      await Product_GroupModel.DeleteProduct_GroupById(group_id,product.product_id);
+      await Product_GroupModel.DeleteProduct_GroupById(group_id, product.product_id);
     } catch (error) {
       if (error.message) {
         return res.status(400).json({ notification: error.message });
@@ -54,5 +54,4 @@ module.exports = {
     }
     return res.status(200).json({ notification: 'Product Removed From Group' });
   },
-
-}
+};

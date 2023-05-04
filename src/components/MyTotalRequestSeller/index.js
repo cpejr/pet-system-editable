@@ -129,7 +129,7 @@ export default function MyTotalRequestSellerOpen({ order }) {
     <div>
       <TotalSellerContainer>
         <TotalSellerContainer.Col1>
-          <Submit onClick={HandleChange}>{insideButton ? 'Fechar detalhes' : 'Detalhes' }</Submit>
+          <Submit onClick={HandleChange}>{insideButton ? 'Fechar detalhes' : 'Detalhes'}</Submit>
         </TotalSellerContainer.Col1>
 
         <TotalSellerContainer.Col2>
@@ -142,9 +142,18 @@ export default function MyTotalRequestSellerOpen({ order }) {
           <p>Total:</p>
         </TotalSellerContainer.Col2>
         <TotalSellerContainer.Col3>
-          <p>R$ {order.total_price}</p>
-          <p>R$ {store.shipping_tax}</p>
-          <p>R$ {order.total_price + parseFloat(store.shipping_tax)}</p>
+          <p>
+            R$
+            {order.total_price}
+          </p>
+          <p>
+            R$
+            {store.shipping_tax}
+          </p>
+          <p>
+            R$
+            {order.total_price + parseFloat(store.shipping_tax)}
+          </p>
         </TotalSellerContainer.Col3>
 
       </TotalSellerContainer>
