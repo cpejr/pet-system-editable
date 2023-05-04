@@ -9,8 +9,7 @@ import {
   Price,
   SearchCardsClosed,
   SearchCards,
-  SearchCardsStore,
-  SearchCardsStoreClosed,
+
   FooterMobile,
   SearchHeader,
 } from '../../src/components/index';
@@ -18,7 +17,6 @@ import {
 export default function Search({ keyword, id, categories }) {
   const [products, setProducts] = useState([]);
   const [allStores, setAllStores] = useState([]);
-  const [stores, setStores] = useState([]);
   const [price, setPrice] = useState([0, 5000]);
   const [categoria, setCategoria] = useState(id);
   const [checkedStore, setCheckedStore] = useState('#AAABB0');
@@ -182,14 +180,14 @@ export default function Search({ keyword, id, categories }) {
           </TypeContainer.Cols2>
         </TypeContainer>
         <SearchContainer>
-          <SearchContainer.Col>
+          {/* <SearchContainer.Col>
             {stores.map((store) => (
               <SearchCardsStore store={store} key={store.firebase_id_store} />
             ))}
             {stores.map((store) => (
               <SearchCardsStoreClosed store={store} key={store.firebase_id_store} />
             ))}
-          </SearchContainer.Col>
+          </SearchContainer.Col> */}
         </SearchContainer>
         <FooterMobile />
       </div>
