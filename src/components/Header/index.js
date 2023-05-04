@@ -14,7 +14,6 @@ import {
   TextBox,
   YourSpace,
   YourSpaceContainer,
-  ItemBottomHeader,
   LogOut,
 } from './styles';
 
@@ -46,7 +45,7 @@ Header.Bottom = styled.div`
   background-color: ${({ theme }) => theme.colors.mediumGreen};
 `;
 
-export default function Header({ categories }) {
+export default function Header() {
   const { user, store, logout } = useAuth();
 
   const [searchText, setSearchText] = useState('');

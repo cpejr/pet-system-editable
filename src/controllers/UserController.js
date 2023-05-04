@@ -50,7 +50,7 @@ export async function create(request, response) {
       cart_id,
     };
     await UserModel.createNewUser(user);
-    const createNewCart = await CartModel.createNewCart(newCart);
+    await CartModel.createNewCart(newCart);
   } catch (err) {
     if (firebase_id) {
       await FirebaseModel.deleteUser(firebase_id);

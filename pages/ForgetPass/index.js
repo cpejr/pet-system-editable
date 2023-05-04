@@ -65,7 +65,7 @@ const ForgetPass = () => {
         </Body.Left>
         <Divider width="1" display="block" size="300" />
         <Body.Right>
-          <Formulary onSubmit={sendResetEmail}>
+          <Formulary onSubmit={() => sendResetEmail()}>
             <TopFormulary>
               <TitleLogin>Esqueceu sua senha?</TitleLogin>
               <SubtitleLogin>
@@ -76,7 +76,7 @@ const ForgetPass = () => {
                 <TextBox
                   type="text"
                   placeholder="Email"
-                  onChange={handleEmailChange}
+                  onChange={() => handleEmailChange()}
                   value={email}
                 />
               </ItemFormulary>

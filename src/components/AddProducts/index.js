@@ -263,7 +263,9 @@ cursor: pointer;
 margin-top: 1rem;
 `;
 
-export default function AddProducts({ closeModal, categories, att, setAtt }) {
+export default function AddProducts({
+  closeModal, categories, att, setAtt,
+}) {
   const [productName, setProductName] = useState('');
   const [price, setPrice] = useState('');
   const [discount, setDiscount] = useState('');
@@ -332,7 +334,7 @@ export default function AddProducts({ closeModal, categories, att, setAtt }) {
               type="text"
               required
               value={productName}
-              onChange={handleProductNameChange}
+              onChange={() => handleProductNameChange()}
             />
           </DivInput>
           <SubTitleProduct>Categoria:</SubTitleProduct>
@@ -366,7 +368,7 @@ export default function AddProducts({ closeModal, categories, att, setAtt }) {
                   placeholder="R$ 00,000"
                   required
                   value={price}
-                  onChange={handlePriceChange}
+                  onChange={() => handlePriceChange()}
                   decimalSeparator="."
                 />
               </DivInput>
@@ -383,7 +385,7 @@ export default function AddProducts({ closeModal, categories, att, setAtt }) {
                   mask="99.99"
                   required
                   value={discount}
-                  onChange={handleDiscountChange}
+                  onChange={() => handleDiscountChange()}
                 />
               </DivInput>
             </PriceAndDiscont.Col2>
@@ -397,7 +399,7 @@ export default function AddProducts({ closeModal, categories, att, setAtt }) {
               as="textarea"
               required
               value={description}
-              onChange={handleDescriptionChange}
+              onChange={() => handleDescriptionChange()}
             />
           </DivInput>
         </AddProductsContainer.Col1>
@@ -405,7 +407,7 @@ export default function AddProducts({ closeModal, categories, att, setAtt }) {
         <AddProductsContainer.Col2>
           <SelectImage>Selecionar imagem</SelectImage>
           <UploadContainer>
-            <ImageSelected type="file" id="upload" hidden onChange={handleChange} />
+            <ImageSelected type="file" id="upload" hidden onChange={() => handleChange()} />
             <Label for="upload">Escolha a imagem</Label>
             <Img alt="" src={photo.url} />
           </UploadContainer>

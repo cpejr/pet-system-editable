@@ -154,7 +154,7 @@ export default function MyDatasEdit() {
             </NumbersForms>
             <Buttons>
               <CancelSubmit onClick={handleClose}>Cancelar</CancelSubmit>
-              <Submit onClick={handleSubmit}>Atualizar</Submit>
+              <Submit onClick={() => handleSubmit()}>Atualizar</Submit>
             </Buttons>
           </FormRegister>
         </Register>

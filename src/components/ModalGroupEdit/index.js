@@ -206,7 +206,7 @@ export default function ModalGroup({ group, setAtt, att }) {
             <Ajust.Col1>
               Novo nome:
             </Ajust.Col1>
-            <InputNameGroup placeholder="" require value={groupName} onChange={handleGroupChange} />
+            <InputNameGroup placeholder="" require value={groupName} onChange={() => handleGroupChange()} />
           </Ajust>
         </Row>
         <Row>

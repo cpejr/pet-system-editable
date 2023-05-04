@@ -118,7 +118,7 @@ export default function Signup() {
                     placeholder="Nome"
                     required
                     value={name}
-                    onChange={handleNameChange}
+                    onChange={() => handleNameChange()}
                   />
                 </MyFormGroup>
               </Name>
@@ -144,7 +144,7 @@ export default function Signup() {
                   required
                   title="Digite um email válido"
                   value={email}
-                  onChange={handleEmailChange}
+                  onChange={() => handleEmailChange()}
                 />
               </MyFormGroup>
               <Pass>
@@ -157,7 +157,7 @@ export default function Signup() {
                     pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                     title="Deve conter pelo menos um número e uma letra maiúscula e minúscula e pelo menos 8 ou mais caracteres"
                     value={password}
-                    onChange={handlePasswordChange}
+                    onChange={() => handlePasswordChange()}
                   />
                 </MyFormGroup>
                 <WordFormGroup>
@@ -168,7 +168,7 @@ export default function Signup() {
                     required
                     pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                     value={confirmPassword}
-                    onChange={handleConfirmPasswordChange}
+                    onChange={() => handleConfirmPasswordChange()}
                   />
                 </WordFormGroup>
               </Pass>
@@ -182,7 +182,7 @@ export default function Signup() {
                     required
                     title="Digite um CPF válido"
                     value={cpf}
-                    onChange={handleCpfChange}
+                    onChange={() => handleCpfChange()}
                   />
                 </MyFormGroup>
                 <Phone>
@@ -195,7 +195,7 @@ export default function Signup() {
                         pattern="[0-9]$"
                         required
                         value={ddd}
-                        onChange={handleDddChange}
+                        onChange={() => handleDddChange()}
                       />
                     </MyFormGroup>
                   </DDD>
@@ -207,13 +207,13 @@ export default function Signup() {
                       pattern="[0-9]$"
                       required
                       value={telephone}
-                      onChange={handleTelephoneChange}
+                      onChange={() => handleTelephoneChange()}
                     />
                   </MyFormGroup>
                 </Phone>
               </NumbersForms>
               <Buttons>
-                <Submit onClick={handleSubmit}>Cadastrar</Submit>
+                <Submit onClick={() => handleSubmit()}>Cadastrar</Submit>
 
                 <br />
                 <FormGroup>

@@ -261,9 +261,11 @@ export default function AdminCards() {
           <Ajust.Col1>
             Porcentagem:
           </Ajust.Col1>
-          <Ajust.Col2 placeholder="% 00,0" require value={commission} onChange={handleCommissionChange} />
+          <Ajust.Col2 placeholder="% 00,0" require value={commission} onChange={() => handleCommissionChange()} />
         </Ajust>
-        <ButtonConfirm onClick={handleSubmit}>Confirmar ajuste</ButtonConfirm>
+        <ButtonConfirm onClick={() => handleSubmit()}>
+          Confirmar ajuste
+        </ButtonConfirm>
       </ContainerModal>
     </div>
   );

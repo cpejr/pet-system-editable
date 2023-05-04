@@ -104,7 +104,7 @@ export default function MyAdresses() {
             </BoxAdress>
           ))}
         </ContainerAdresses>
-        <ModalAddAddress loadAddresses={loadAddresses} />
+        <ModalAddAddress loadAddresses={() => loadAddresses()} />
       </Geral>
     );
   }

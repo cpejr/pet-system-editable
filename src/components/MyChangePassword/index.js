@@ -76,7 +76,7 @@ export default function MyDatasMobile() {
             <Button onClick={handleClose} color="secondary">
               Cancelar
             </Button>
-            <Button onClick={sendResetEmail} color="primary" autoFocus>
+            <Button onClick={() => sendResetEmail()} color="primary" autoFocus>
               Enviar
             </Button>
           </DialogActions>

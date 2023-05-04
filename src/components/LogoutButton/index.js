@@ -27,7 +27,7 @@ function LogoutButton() {
   }
 
   return (
-    <CustomButton onClick={logout}> Sair</CustomButton>
+    <CustomButton onClick={() => logout()}> Sair</CustomButton>
   );
 }
 

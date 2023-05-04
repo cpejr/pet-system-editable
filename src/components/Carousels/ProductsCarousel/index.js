@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import Image from "next/image";
-import styled from "styled-components";
-import Carousel from "react-multi-carousel";
-import "react-multi-carousel/lib/styles.css";
-import { AiFillHeart } from "react-icons/ai";
-import Link from "next/link";
+import React, { useState } from 'react';
+import Image from 'next/image';
+import styled from 'styled-components';
+import Carousel from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles.css';
+import { AiFillHeart } from 'react-icons/ai';
+import Link from 'next/link';
 
 const Container = styled.div`
   display: flex;
@@ -67,12 +67,12 @@ const FavButton = styled.button`
 `;
 
 export default function ProductsCarousel({ products, myLoader }) {
-  const [checkedFav, setCheckedFav] = useState("#C4C4C4");
+  const [checkedFav, setCheckedFav] = useState('#C4C4C4');
   const handleClickFav = () => {
-    if (checkedFav === "#C4C4C4") {
-      setCheckedFav("#F6C8CA");
+    if (checkedFav === '#C4C4C4') {
+      setCheckedFav('#F6C8CA');
     } else {
-      setCheckedFav("#C4C4C4");
+      setCheckedFav('#C4C4C4');
     }
   };
   const responsive = {
@@ -99,8 +99,8 @@ export default function ProductsCarousel({ products, myLoader }) {
   };
   return (
     <Carousel responsive={responsive} infinite>
-      {products?.length > 0 &&
-        products.map((product) => (
+      {products?.length > 0
+        && products.map((product) => (
           <Container>
             <ProductCard>
               <Image
@@ -116,7 +116,8 @@ export default function ProductsCarousel({ products, myLoader }) {
                 </Link>
               </ProductName>
               <PriceAndFav>
-                R$ : {product.price}
+                R$ :
+                {product.price}
                 <FavButton>
                   <AiFillHeart
                     size={24}

@@ -277,14 +277,14 @@ export default function Filter() {
         <OrderContainer>
           <OrderContainer.Col1>
             <ButtonOrder
-              onClick={changeBackgroundAvaliacao}
+              onClick={() => changeBackgroundAvaliacao()}
               style={{ backgroundColor: backgroundAvaliacao, borderColor: '#609694', color: fontAvaliacao }}
             >
               Avaliação
 
             </ButtonOrder>
             <ButtonOrder
-              onClick={changeBackgroundMaisVistos}
+              onClick={() => changeBackgroundMaisVistos()}
               style={{ backgroundColor: backgroundMaisVistos, borderColor: '#609694', color: fontMaisVistos }}
             >
               Mais vistos
@@ -292,7 +292,7 @@ export default function Filter() {
           </OrderContainer.Col1>
           <OrderContainer.Col2>
             <ButtonOrder
-              onClick={changeBackgroundMaisPopulares}
+              onClick={() => changeBackgroundMaisPopulares()}
               style={{ backgroundColor: backgroundMaisPopulares, borderColor: '#609694', color: fontMaisPopulares }}
             >
               Mais populares
@@ -306,25 +306,25 @@ export default function Filter() {
         <CategoryContainer>
           <CategoryContainer.Col1>
             <ButtonCategory
-              onClick={changeBackgroundRacao}
+              onClick={() => changeBackgroundRacao()}
               style={{ backgroundColor: backgroundRacao, borderColor: '#BD2B2B', color: fontRacao }}
             >
               Raçao
             </ButtonCategory>
             <ButtonCategory
-              onClick={changeBackgroundCasinhas}
+              onClick={() => changeBackgroundCasinhas()}
               style={{ backgroundColor: backgroundCasinhas, borderColor: '#BD2B2B', color: fontCasinhas }}
             >
               Casinhas
             </ButtonCategory>
             <ButtonCategory
-              onClick={changeBackgroundShampoo}
+              onClick={() => changeBackgroundShampoo()}
               style={{ backgroundColor: backgroundShampoo, borderColor: '#BD2B2B', color: fontShampoo }}
             >
               Shampoo
             </ButtonCategory>
             <ButtonCategory
-              onClick={changeBackgroundPerfumes}
+              onClick={() => changeBackgroundPerfumes()}
               style={{ backgroundColor: backgroundPerfumes, borderColor: '#BD2B2B', color: fontPerfumes }}
             >
               Perfumes
@@ -332,19 +332,19 @@ export default function Filter() {
           </CategoryContainer.Col1>
           <OrderContainer.Col2>
             <ButtonCategory
-              onClick={changeBackgroundBrinquedos}
+              onClick={() => changeBackgroundBrinquedos()}
               style={{ backgroundColor: backgroundBrinquedos, borderColor: '#BD2B2B', color: fontBrinquedos }}
             >
               Brinquedos
             </ButtonCategory>
             <ButtonCategory
-              onClick={changeBackgroundVasilhas}
+              onClick={() => changeBackgroundVasilhas()}
               style={{ backgroundColor: backgroundVasilhas, borderColor: '#BD2B2B', color: fontVasilhas }}
             >
               Vasilhas
             </ButtonCategory>
             <ButtonCategory
-              onClick={changeBackgroundPetiscos}
+              onClick={() => changeBackgroundPetiscos()}
               style={{ backgroundColor: backgroundPetiscos, borderColor: '#BD2B2B', color: fontPetiscos }}
             >
               Petiscos

@@ -108,7 +108,7 @@ export default function Store() {
       toast('Email vazio!', { position: toast.POSITION.BOTTOM_RIGHT });
       return;
     }
-    const regex = new RegExp('.+@.+\..+');
+    const regex = new RegExp('.+@.+..+');
     if (!regex.test(email)) {
       toast('Email inválido!', { position: toast.POSITION.BOTTOM_RIGHT });
       return;
@@ -205,18 +205,18 @@ export default function Store() {
 
             <ItemFormulary>
               <Text>Razão Social: *</Text>
-              <TextBox type="text" id="birthDate" onChange={handleCompanyNameChange} value={companyName} />
+              <TextBox type="text" id="birthDate" onChange={() => handleCompanyNameChange()} value={companyName} />
             </ItemFormulary>
 
             <DividedItemFormulary>
 
               <ItemFormulary>
                 <Text>Email: *</Text>
-                <TextBox type="text" id="email" onChange={handleEmailChange} value={email} />
+                <TextBox type="text" id="email" onChange={() => handleEmailChange()} value={email} />
               </ItemFormulary>
               <ItemFormulary>
                 <Text>CNPJ: *</Text>
-                <MaskedInput name="cnpj" id="cnpj" mask="99.999.999/9999-99" value={cnpj} onChange={handleCnpjChange} />
+                <MaskedInput name="cnpj" id="cnpj" mask="99.999.999/9999-99" value={cnpj} onChange={() => handleCnpjChange()} />
               </ItemFormulary>
 
             </DividedItemFormulary>
@@ -224,24 +224,24 @@ export default function Store() {
             <DividedItemFormulary>
               <ItemFormulary>
                 <Text>DDD + phone: *</Text>
-                <MaskedInput name="phone" id="phone" mask="(99)9999-9999" value={phone} onChange={handlePhoneChange} />
+                <MaskedInput name="phone" id="phone" mask="(99)9999-9999" value={phone} onChange={() => handlePhoneChange()} />
               </ItemFormulary>
 
               <ItemFormulary>
                 <Text>DDD + cellphone: *</Text>
-                <MaskedInput name="cellphone" id="cellphone" mask="(99)99999-9999" value={cellphone} onChange={handleCellphoneChange} />
+                <MaskedInput name="cellphone" id="cellphone" mask="(99)99999-9999" value={cellphone} onChange={() => handleCellphoneChange()} />
               </ItemFormulary>
             </DividedItemFormulary>
 
             <DividedItemFormulary>
               <ItemFormulary>
                 <Text>Taxa de envio: *</Text>
-                <CurrencyInput name="shippingTax" decimalSeparator="," decimalScale="2" allowNegative={false} prefix="R$" value={shippingTax} onChange={handleShippingTaxChange} />
+                <CurrencyInput name="shippingTax" decimalSeparator="," decimalScale="2" allowNegative={false} prefix="R$" value={shippingTax} onChange={() => handleShippingTaxChange()} />
               </ItemFormulary>
 
               <ItemFormulary>
                 <Text>Tempo de entrega em minutos: *</Text>
-                <MaskedInput name="delivery_time" id="delivery_time" value={deliveryTime} onChange={handleDeliveryTimeChange} />
+                <MaskedInput name="delivery_time" id="delivery_time" value={deliveryTime} onChange={() => handleDeliveryTimeChange()} />
               </ItemFormulary>
 
             </DividedItemFormulary>
@@ -249,12 +249,12 @@ export default function Store() {
             <DividedItemFormulary>
               <ItemFormulary>
                 <Text>Horário de abertura: *</Text>
-                <MaskedInput name="opening_time" id="opening_time" mask="99:99" value={openingTime} onChange={handleOpeningTimeChange} />
+                <MaskedInput name="opening_time" id="opening_time" mask="99:99" value={openingTime} onChange={() => handleOpeningTimeChange()} />
               </ItemFormulary>
 
               <ItemFormulary>
                 <Text>Horário de encerramento: *</Text>
-                <MaskedInput name="closing_time" id="closing_time" mask="99:99" value={closingTime} onChange={handleClosingTimeChange} />
+                <MaskedInput name="closing_time" id="closing_time" mask="99:99" value={closingTime} onChange={() => handleClosingTimeChange()} />
               </ItemFormulary>
 
             </DividedItemFormulary>
@@ -262,11 +262,11 @@ export default function Store() {
             <DividedItemFormulary>
               <ItemFormulary>
                 <Text>Password: *</Text>
-                <TextBox type="password" id="password" placeholder="" onChange={handlePasswordChange} value={password} />
+                <TextBox type="password" id="password" placeholder="" onChange={() => handlePasswordChange()} value={password} />
               </ItemFormulary>
               <ItemFormulary>
                 <Text>Confirma password: *</Text>
-                <TextBox type="password" id="confPassword" placeholder="" onChange={handleConfPasswordChange} value={confPassword} />
+                <TextBox type="password" id="confPassword" placeholder="" onChange={() => handleConfPasswordChange()} value={confPassword} />
               </ItemFormulary>
             </DividedItemFormulary>
 
@@ -293,7 +293,7 @@ export default function Store() {
               <ItemFormulary>
                 <Text>Imagem da Loja: *   </Text>
                 <UploadContainer>
-                  <ImageSelected type="file" id="cover" hidden onChange={handleCover_img} />
+                  <ImageSelected type="file" id="cover" hidden onChange={() => handleCover_img()} />
                   <Label for="cover">Escolha a imagem</Label>
                   <Img alt="" src={cover_img.url} />
                 </UploadContainer>
@@ -301,7 +301,7 @@ export default function Store() {
               <ItemFormulary>
                 <Text>Logo da Loja: *</Text>
                 <UploadContainer>
-                  <ImageSelected type="file" id="logo" hidden onChange={handleLogo_img} />
+                  <ImageSelected type="file" id="logo" hidden onChange={() => handleLogo_img()} />
                   <Label for="logo">Escolha a imagem</Label>
                   <Img alt="" src={logo_img.url} />
                 </UploadContainer>
@@ -314,7 +314,7 @@ export default function Store() {
 
             <BottomFormulary>
               <Link href="/Seller/Perfil/Products">
-                <Submit value="submit" onClick={handleSubmit}>Finalizar</Submit>
+                <Submit value="submit" onClick={() => handleSubmit()}>Finalizar</Submit>
               </Link>
             </BottomFormulary>
           </StoreFormulary>

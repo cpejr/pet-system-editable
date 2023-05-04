@@ -74,7 +74,7 @@ export default function ModalDeleteCategory({
         <Text>Você realmente deseja apagar esta Categoria?</Text>
       </Fields>
       <Buttons>
-        <Button onClick={handleSubmit}>
+        <Button onClick={() => handleSubmit()}>
           Confirmar
         </Button>
         <Button.Cancel onClick={(e) => {

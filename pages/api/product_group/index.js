@@ -1,5 +1,5 @@
 import { isSeller } from '../../../src/utils/Auth';
-import { getAll,create } from '../../../src/controllers/Product_GroupController';
+import { getAll, create } from '../../../src/controllers/Product_GroupController';
 
 export default function handleGroup(req, res) {
   try {

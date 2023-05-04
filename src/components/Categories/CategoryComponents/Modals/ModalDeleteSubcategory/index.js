@@ -73,7 +73,7 @@ export default function ModalDeleteSubcategory({
         <Text>Você realmente deseja apagar esta Subcategoria?</Text>
       </Fields>
       <Buttons>
-        <Button onClick={handleSubmit}>
+        <Button onClick={() => handleSubmit()}>
           Confirmar
         </Button>
         <Button.Cancel onClick={(e) => {

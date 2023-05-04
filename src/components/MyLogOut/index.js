@@ -7,7 +7,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useAuth } from '../../contexts/AuthContext';
-import { Section } from './styles';
+import Section from './styles';
 
 export default function MyLogOut() {
   const [open, setOpen] = React.useState(false);

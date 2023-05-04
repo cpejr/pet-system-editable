@@ -5,7 +5,7 @@ module.exports = {
   async create(req, res) {
     const product_group = req.body;
     try {
-      const result = await Product_GroupModel.createProduct_Group(product_group);
+      await Product_GroupModel.createProduct_Group(product_group);
       return res.status(200).json({ notification: 'Product Successfully added to group' });
     } catch (error) {
       if (error.message) {

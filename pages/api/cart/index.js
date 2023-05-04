@@ -1,5 +1,5 @@
 import {
-  create, deleteAll, update,getAll,
+  create, deleteAll, update, getAll,
 } from '../../../src/controllers/CartController';
 import { withAuthValidation } from '../../../src/utils/Auth';
 

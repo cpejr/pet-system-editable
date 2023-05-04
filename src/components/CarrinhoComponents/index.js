@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const CarrinhoText = styled.p`
 color: #609694;

@@ -35,8 +35,9 @@ export default function ModalEditAddresses(addressId) {
       alert('Número inválido');
       return;
     }
+    const { address_id } = addressId;
     const body = {
-      address_id: addressId.address_id,
+      address_id,
       street,
       address_num,
       district,
@@ -80,7 +81,7 @@ export default function ModalEditAddresses(addressId) {
 
   async function loadAddress() {
     try {
-      const response = await api.get(`/address/${addressId.address_id}`);
+      const response = await api.get(`/address/${address_id}`);
       setStreet(response.data.street);
       setNumber(response.data.address_num);
       setDistrict(response.data.district);
@@ -182,7 +183,7 @@ export default function ModalEditAddresses(addressId) {
             </MyFormGroup>
             <Buttons>
               <CancelSubmit onClick={handleClose}>Cancelar</CancelSubmit>
-              <Submit onClick={handleSubmit}>Atualizar</Submit>
+              <Submit onClick={() => handleSubmit()}>Atualizar</Submit>
             </Buttons>
           </FormRegister>
         </Register>

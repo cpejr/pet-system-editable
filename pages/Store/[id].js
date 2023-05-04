@@ -11,7 +11,8 @@ import {
   LittleBanner,
 } from '../../src/styles/storeStyles';
 import api from '../../src/utils/api';
-import { FooterMobile, StoreTabs } from '../../src/components';
+import { FooterMobile } from '../../src/components';
+import StoreTabs from '../../src/components/StoreTabs/StoreTabs';
 import StoreIsOpen from '../../src/components/StoreIsOpen';
 
 export default function Store({

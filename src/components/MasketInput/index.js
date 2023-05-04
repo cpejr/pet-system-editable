@@ -34,7 +34,7 @@ export default function MaskedInput({
         name={name}
         mask={mask}
         value={value}
-        onChange={handleChange}
+        onChange={() => handleChange()}
         style={{
           border: 'none', outline: 'none', backgroundColor: 'transparent', width: '100%',
         }}

@@ -109,10 +109,10 @@ module.exports = {
     }
   },
 
-  async createNewAddress(address, req) {
+  async createNewAddress(newAddress, req) {
     try {
       const address_aux = await connection('Address')
-        .insert(address);
+        .insert(newAddress);
 
       const user = await req.session.get('user');
 

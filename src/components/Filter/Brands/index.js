@@ -217,13 +217,13 @@ export default function Category(props) {
 
           {categories.map((categoria) => (
             <CategoryContainer.Row1>
-            <CategoryContainer.Row1.Col1>
-              <input onClick={handleClickPedigree} checked={checkedPedigree} type="radio" />
-            </CategoryContainer.Row1.Col1>
-            <CategoryContainer.Row1.Col2>
-              {categoria.name}
-            </CategoryContainer.Row1.Col2>
-          </CategoryContainer.Row1>
+              <CategoryContainer.Row1.Col1>
+                <input onClick={handleClickPedigree} checked={checkedPedigree} type="radio" />
+              </CategoryContainer.Row1.Col1>
+              <CategoryContainer.Row1.Col2>
+                {categoria.name}
+              </CategoryContainer.Row1.Col2>
+            </CategoryContainer.Row1>
           ))}
 
           <CategoryContainer.Row1>

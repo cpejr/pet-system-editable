@@ -98,10 +98,10 @@ export default function ModalEditSubcategory({
     <Box>
       <Fields>
         <Text>Digite o novo nome da Subcategoria: </Text>
-        <Input type="text" value={subcategoryName} onChange={handleSubcategoryChange} />
+        <Input type="text" value={subcategoryName} onChange={() => handleSubcategoryChange()} />
       </Fields>
       <Buttons>
-        <Button onClick={handleSubmit}>
+        <Button onClick={() => handleSubmit()}>
           Confirmar
         </Button>
         <Button.Cancel onClick={(e) => {

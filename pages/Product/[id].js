@@ -124,7 +124,7 @@ export default function Product({ product, store }) {
                   </Button>
                 </ButtonsContainer.Col>
                 <ButtonsContainer.Col>
-                  <AddCarButton onClick={handleAddCart}>
+                  <AddCarButton onClick={() => handleAddCart()}>
                     Adicionar ao carrinho
                   </AddCarButton>
                 </ButtonsContainer.Col>

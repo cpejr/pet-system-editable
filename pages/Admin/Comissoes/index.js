@@ -138,9 +138,9 @@ export default function Admin() {
             <Title>Ajustar comissão:</Title>
             <ContainerComission.Field>
               <Text>Porcentagem: </Text>
-              <Input type="text" placeholder="00,00 %" value={comission} onChange={handleCommissionChange} />
+              <Input type="text" placeholder="00,00 %" value={comission} onChange={() => handleCommissionChange()} />
             </ContainerComission.Field>
-            <Button onClick={handleSubmit}>Confirmar</Button>
+            <Button onClick={() => handleSubmit()}>Confirmar</Button>
           </ContainerComission>
         </Container.Col2>
       </Container>

@@ -82,27 +82,24 @@ const Icon = styled.div`
   justify-content: center;
 `; */
 
-export default function MyIndividualOrder(req) {
-  const [order, setOrder] = useState(req.order);
-  /* const [store, setStore] = useState('');
-  const [order_products, setOrderProducts] = useState(''); */
+export default function MyIndividualOrder({ order }) {
   const [address, setAddress] = useState('');
-  /* const [product, setProduct] = useState(''); */
+
   async function loadAddress() {
     try {
-      const response = await api.get('/address/d8acc954-f49e-4d87-ac41-f2e76c690551');
+      const response = await api.get(`/address/${addressId.address_id}`);
       setAddress(response.data);
     } catch (error) {
-      console.error(error); //eslint-disable-line
+      console.error(error);
     }
   }
+
   async function obterDados() {
     try {
-      await api.get(`order/${req.order.order_id}`).then((res) => {
-        setOrder(res.data);
-      });
+      const res = await api.get(`order/${order.order_id}`);
+      setOrderState(res.data);
     } catch (error) {
-      console.error(error); //eslint-disable-line
+      console.error(error);
     }
   }
 

@@ -1,9 +1,9 @@
-import React from "react";
-import styled from "styled-components";
-import Link from "next/link";
-import Carousel from "react-multi-carousel";
+import React from 'react';
+import styled from 'styled-components';
+import Link from 'next/link';
+import Carousel from 'react-multi-carousel';
 import Image from 'next/image';
-import "react-multi-carousel/lib/styles.css";
+import 'react-multi-carousel/lib/styles.css';
 
 const Item = styled.div`
   display: flex;
@@ -124,9 +124,7 @@ const ImgNormal = styled.div`
 export default function StoresCarousel(props) {
   const { stores } = props;
 
-  const myLoader = ({ src }) => {
-    return `https://s3-sa-east-1.amazonaws.com/petsystembucket/${src}`;
-  };
+  const myLoader = ({ src }) => `https://s3-sa-east-1.amazonaws.com/petsystembucket/${src}`;
 
   const responsive = {
     desktop: {
@@ -148,8 +146,8 @@ export default function StoresCarousel(props) {
   };
   return (
     <Carousel responsive={responsive} infinite>
-      {stores?.length > 0 &&
-        stores.map((store) => (
+      {stores?.length > 0
+        && stores.map((store) => (
           <Link href={{ pathname: `/Store/${store.firebase_id_store}` }}>
             <Item key={store.firebase_id_store}>
               <div>
@@ -172,7 +170,8 @@ export default function StoresCarousel(props) {
                           </CardDescription.Col1.Row1>
                           <CardDescription.Col1.Row2>
                             <CardDescription.Col1.Row2.Delivery>
-                              • Taxa de entrega: R$ {store.shipping_tax}
+                              • Taxa de entrega: R$
+                              {store.shipping_tax}
                             </CardDescription.Col1.Row2.Delivery>
                           </CardDescription.Col1.Row2>
                         </CardDescription.Col1>

@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const CarrinhoFreteWrapper = styled.div`
 display: flex;
@@ -11,7 +11,7 @@ padding-top: 1em;
 margin-bottom: 7.5em;
 `;
 
-const CarrinhoFreteInputFalso = styled.div`
+/* const CarrinhoFreteInputFalso = styled.div`
 display: flex;
 background-color: #C4C4C4;
 width: 6em;
@@ -22,7 +22,7 @@ font-family: Roboto;
 font-size: 1.5em;
 color: #8E8585;
 border-radius: 6px;
-`;
+`; */
 
 const CarrinhoFreteButton = styled.button`
 display: flex;
@@ -36,9 +36,9 @@ justify-content: center;
 `;
 
 export default function CarrinhoFrete() {
-    return (
-        <CarrinhoFreteWrapper>
-            <CarrinhoFreteButton>Calcular</CarrinhoFreteButton>
-        </CarrinhoFreteWrapper>
-    )
+  return (
+    <CarrinhoFreteWrapper>
+      <CarrinhoFreteButton>Calcular</CarrinhoFreteButton>
+    </CarrinhoFreteWrapper>
+  );
 }

@@ -1,14 +1,14 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import styled from "styled-components";
-import Image from "next/image";
-import { GrLocation } from "react-icons/gr";
-import { BsSearch, BsFillPersonFill } from "react-icons/bs";
-import { MdShoppingCart } from "react-icons/md";
-import { FiLogIn } from "react-icons/fi";
-import { CgCloseO } from "react-icons/cg";
-import Link from "next/link";
-import { useAuth } from "../../contexts/AuthContext";
+import styled from 'styled-components';
+import Image from 'next/image';
+import { GrLocation } from 'react-icons/gr';
+import { BsSearch, BsFillPersonFill } from 'react-icons/bs';
+import { MdShoppingCart } from 'react-icons/md';
+import { FiLogIn } from 'react-icons/fi';
+import { CgCloseO } from 'react-icons/cg';
+import Link from 'next/link';
+import { useAuth } from '../../contexts/AuthContext';
 
 Header.Wrapper = styled.div`
   display: flex;
@@ -145,10 +145,9 @@ export default function Header({ keyword }) {
 
   const handleFilterSearchText = (e) => setSearchText(e.target.value);
 
-  const handleSubmit = () => router.push({ pathname: "/Search", query: { keyword: searchText } });
+  const handleSubmit = () => router.push({ pathname: '/Search', query: { keyword: searchText } });
 
   const handleKeypress = (e) => {
-    //it triggers by pressing the enter key
     if (e.key === 'Enter') {
       handleSubmit();
     }
@@ -163,13 +162,13 @@ export default function Header({ keyword }) {
       );
     }
     switch (user.type) {
-      case "admin":
+      case 'admin':
         return (
           <Link href="/admin">
             <YourSpace.Word>{user.first_name}</YourSpace.Word>
           </Link>
         );
-      case "seller":
+      case 'seller':
         return (
           <Link href="/Seller/Perfil/Products">
             <YourSpace.Word>{user.first_name}</YourSpace.Word>
@@ -197,8 +196,8 @@ export default function Header({ keyword }) {
             <TextBox.Location type="" placeholder="Localização" />
           </TextBox.LocationContainer>
           <TextBox.SearchContainer>
-            <Link href={{ pathname: "/Search" }}>
-              <CgCloseO onClick={() => setSearchText("")} />
+            <Link href={{ pathname: '/Search' }}>
+              <CgCloseO onClick={() => setSearchText('')} />
             </Link>
             <TextBox.Search
               value={searchText}
@@ -208,13 +207,14 @@ export default function Header({ keyword }) {
               onKeyPress={handleKeypress}
             />
             <Link
-              onKeyPress={handleKeypress} href={{ pathname: "/Search", query: { keyword: searchText } }}
+              onKeyPress={handleKeypress}
+              href={{ pathname: '/Search', query: { keyword: searchText } }}
             >
               <BsSearch
                 size="15"
                 type="submit"
                 onSubmit={handleSubmit}
-                style={{ cursor: "pointer" }}
+                style={{ cursor: 'pointer' }}
               />
             </Link>
           </TextBox.SearchContainer>
@@ -228,11 +228,11 @@ export default function Header({ keyword }) {
         <MdShoppingCart
           size="30"
           color="#AA4545"
-          style={{ cursor: "pointer" }}
+          style={{ cursor: 'pointer' }}
         />
         <LogOut onClick={logout}>
           <Link href="/login">
-            <FiLogIn size="30" color="#AA4545" style={{ cursor: "pointer" }} />
+            <FiLogIn size="30" color="#AA4545" style={{ cursor: 'pointer' }} />
           </Link>
         </LogOut>
       </Header.Top>

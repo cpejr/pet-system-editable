@@ -362,7 +362,7 @@ export default function EditProducts({
               type="text"
               required
               value={productName}
-              onChange={handleProductNameChange}
+              onChange={() => handleProductNameChange()}
             />
           </DivInput>
 
@@ -396,7 +396,7 @@ export default function EditProducts({
                   placeholder="R$ 00,000"
                   required
                   value={price}
-                  onChange={handlePriceChange}
+                  onChange={() => handlePriceChange()}
                   decimalSeparator="."
                 />
               </DivInput>
@@ -411,7 +411,7 @@ export default function EditProducts({
                   mask="99.99"
                   required
                   value={discount}
-                  onChange={handleDiscountChange}
+                  onChange={() => handleDiscountChange()}
                 />
               </DivInput>
             </PriceAndDiscont.Col2>
@@ -424,7 +424,7 @@ export default function EditProducts({
               as="textarea"
               required
               value={description}
-              onChange={handleDescriptionChange}
+              onChange={() => handleDescriptionChange()}
             />
           </DivInput>
         </EditProductsContainer.Col1>
@@ -436,7 +436,7 @@ export default function EditProducts({
               type="file"
               id="upload"
               hidden
-              onChange={handleChange}
+              onChange={() => handleChange()}
             />
             <Label for="upload">Escolha a imagem</Label>
             <Img alt="" src={photo.url} />

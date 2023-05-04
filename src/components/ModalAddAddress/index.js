@@ -158,7 +158,7 @@ export default function ModalAddProducts({ loadAddresses }) {
             </MyFormGroup>
             <Buttons>
               <CancelSubmit onClick={handleClose}>Cancelar</CancelSubmit>
-              <Submit onClick={handleSubmit}>Adicionar</Submit>
+              <Submit onClick={() => handleSubmit()}>Adicionar</Submit>
             </Buttons>
           </FormRegister>
         </Register>

@@ -92,10 +92,10 @@ export default function ModalAddCategory({ addCategory, closeModal }) {
     <Box>
       <Fields>
         <Text>Digite o nome da Categoria a ser criada: </Text>
-        <Input type="text" value={categoryName} onChange={handleCategoryChange} />
+        <Input type="text" value={categoryName} onChange={() => handleCategoryChange()} />
       </Fields>
       <Buttons>
-        <Button onClick={handleSubmit}>
+        <Button onClick={() => handleSubmit()}>
           Confirmar
         </Button>
         <Button.Cancel onClick={(e) => {

@@ -3,7 +3,7 @@ const firebase = require('firebase/app');
 
 require('firebase/auth');
 
-const serviceAccount = require('../../serviceAccountKey.json');
+const serviceAccount = require('../../next.config');
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_APIKEY,

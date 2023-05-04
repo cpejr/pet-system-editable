@@ -106,7 +106,7 @@ export default function Categories() {
     <ContainerCategories>
       <ContainerCategories.Top>
         <Title>Edição de Categorias</Title>
-        <AddCategory addCategory={createCategory} />
+        <AddCategory addCategory={() => createCategory()} />
       </ContainerCategories.Top>
       <Table>
         <Collapse>
@@ -116,9 +116,9 @@ export default function Categories() {
                 key={category.id}
                 category={category}
                 catIndex={catIndex}
-                addSubcategory={addSubcategory}
-                editCategory={editCategory}
-                deleteCategory={deleteCategory}
+                addSubcategory={() => addSubcategory()}
+                editCategory={() => editCategory()}
+                deleteCategory={() => deleteCategory()}
               />
               <Ul>
                 {category.subcategories.map((subcategory, subcatIndex) => (
@@ -129,8 +129,8 @@ export default function Categories() {
                       subcategory={subcategory}
                       catIndex={catIndex}
                       subcatIndex={subcatIndex}
-                      editSubcategory={editSubcategory}
-                      deleteSubcategory={deleteSubcategory}
+                      editSubcategory={() => editSubcategory()}
+                      deleteSubcategory={() => deleteSubcategory()}
                     />
                   </ListItem>
                 ))}
